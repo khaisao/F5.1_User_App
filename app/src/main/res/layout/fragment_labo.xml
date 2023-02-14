@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background_common">
+
+        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:src_left="@drawable/ic_back_left"
+            app:string_title="@string/tab_lab" />
+
+        <ImageView
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/margin_16"
+            android:paddingVertical="@dimen/padding_10"
+            android:src="@drawable/ic_iconbordersearch"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="@dimen/_0sdp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_search"
+            app:layout_constraintTop_toTopOf="@+id/btn_search"
+            app:tabBackground="@color/color_background_common"
+            app:tabIndicatorColor="@color/color_978DFF"
+            app:tabTextAppearance="@style/TabLayoutTextStyle" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tab_click"
+            android:layout_width="@dimen/_0sdp"
+            android:layout_height="@dimen/_0sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/tab_layout"
+            app:layout_constraintEnd_toEndOf="@+id/tab_layout"
+            app:layout_constraintStart_toStartOf="@+id/tab_layout"
+            app:layout_constraintTop_toTopOf="@+id/btn_search">
+
+            <View
+                android:id="@+id/tab_one"
+                android:layout_width="@dimen/_0sdp"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toStartOf="@id/tab_two"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <View
+                android:id="@+id/tab_two"
+                android:layout_width="@dimen/_0sdp"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toStartOf="@id/tab_three"
+                app:layout_constraintStart_toEndOf="@+id/tab_one" />
+
+            <View
+                android:id="@+id/tab_three"
+                android:layout_width="@dimen/_0sdp"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tab_two" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/line_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_6D5D9A"
+            app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pagger"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_0sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line_bottom">
+
+        </androidx.viewpager.widget.ViewPager>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_0sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line_bottom">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_search_lab_result"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_0sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:paddingHorizontal="@dimen/margin_16"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/line_bottom"
+                tools:listitem="@layout/item_labo" />
+
+            <TextView
+                android:id="@+id/tv_empty"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_0sdp"
+                android:gravity="center"
+                android:text="@string/no_labo_data"
+                android:textAlignment="center"
+                android:textColor="@color/color_6D5D9A"
+                android:textSize="@dimen/margin_16"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/line_bottom" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <ImageView
+            android:id="@+id/newQuestionBtn"
+            android:layout_width="@dimen/size_72"
+            android:layout_height="@dimen/size_72"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:layout_marginBottom="@dimen/margin_40dp"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:scaleX="2"
+            android:scaleY="2"
+            android:src="@drawable/ic_labo_question"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <View
+            android:id="@+id/viewDisable"
+            android:layout_width="@dimen/size_72"
+            android:layout_height="@dimen/size_72"
+            android:background="@drawable/bg_oval_gray"
+            app:layout_constraintBottom_toBottomOf="@+id/newQuestionBtn"
+            app:layout_constraintEnd_toEndOf="@+id/newQuestionBtn"
+            app:layout_constraintStart_toStartOf="@+id/newQuestionBtn"
+            app:layout_constraintTop_toTopOf="@+id/newQuestionBtn" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

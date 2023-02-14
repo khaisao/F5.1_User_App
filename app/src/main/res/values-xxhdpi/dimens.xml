@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="rating_40dp">40dp</dimen>
+    <dimen name="with_avatar_110dp">110dp</dimen>
+    <dimen name="text_size_user_profile_12">12sp</dimen>
+
+    <dimen name="padding_68">68dp</dimen>
+
+    <!--input email-->
+    <dimen name="text_size_title_28">28sp</dimen>
+    <dimen name="margin_title_email_32">32dp</dimen>
+    <dimen name="margin_top_email_24">24dp</dimen>
+    <dimen name="text_size_input_email_16">16sp</dimen>
+    <dimen name="text_size_error_email_12">12sp</dimen>
+    <dimen name="text_size_send_email_14">14sp</dimen>
+
+    <!--verify code-->
+    <dimen name="margin_title_verify_code_55">55dp</dimen>
+    <dimen name="margin_layout_verify_code_65">65dp</dimen>
+    <dimen name="margin_verify_26">26dp</dimen>
+    <dimen name="margin_verify_32">32dp</dimen>
+
+    <!--tutorial-->
+    <dimen name="text_size_title_tutorial_24">24sp</dimen>
+    <dimen name="text_size_content_tutorial_14">14sp</dimen>
+    <dimen name="margin_tutorial_20">20dp</dimen>
+    <dimen name="margin_tutorial_24">24dp</dimen>
+
+    <!--reRegister-->
+    <dimen name="text_title_re_register_16">16sp</dimen>
+    <dimen name="margin_re_register_34">34dp</dimen>
+    <dimen name="margin_re_register_28">28dp</dimen>
+    <dimen name="margin_re_register_32">32dp</dimen>
+    <dimen name="height_button_re_register_14">14dp</dimen>
+    <dimen name="height_button_re_register_44">44dp</dimen>
+</resources>

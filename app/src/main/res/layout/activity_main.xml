@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/layoutBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/status_bar_view"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/color_background_common" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/status_bar_view">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/nav_host"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/main_navigation"
+                tools:context=".MainActivity" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clActiveCall"
+                style="@style/size_auto"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.1"
+                app:layout_constraintWidth_percent="0.213">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivAvatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_avatar_default" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_call_active"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"
+                    app:layout_constraintEnd_toEndOf="@+id/ivAvatar" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            android:id="@+id/notification_view_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:alpha="0.0"
+            android:onClick="openChatByNotification"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            tools:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/padding_60dp"
+                android:layout_marginStart="@dimen/dimen_6"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginEnd="@dimen/dimen_6"
+                android:background="@drawable/bg_noti">
+
+                <ImageView
+                    android:id="@+id/iv_notification_1"
+                    android:layout_width="@dimen/margin_32"
+                    android:layout_height="@dimen/margin_32"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/margin_16"
+                    android:background="@drawable/ic_push_message" />
+
+                <TextView
+                    android:id="@+id/tv_content_view_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="@dimen/margin_10"
+                    android:layout_toEndOf="@id/iv_notification_1"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textSize="@dimen/text_size_15"
+                    android:textStyle="bold"
+                    tools:text="◯◯◯さんからメッセージが届きました" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/iv_close_view_1"
+                android:layout_width="@dimen/margin_22"
+                android:layout_height="@dimen/margin_22"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/ic_notification_close"
+                android:clickable="true"
+                android:onClick="closeNotification" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/notification_view_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:alpha="0.0"
+            android:onClick="openChatByNotification"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            tools:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/padding_60dp"
+                android:layout_marginStart="@dimen/dimen_6"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginEnd="@dimen/dimen_6"
+                android:background="@drawable/bg_noti">
+
+                <ImageView
+                    android:id="@+id/iv_notification_2"
+                    android:layout_width="@dimen/margin_32"
+                    android:layout_height="@dimen/margin_32"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/margin_16"
+                    android:background="@drawable/ic_push_message" />
+
+                <TextView
+                    android:id="@+id/tv_content_view_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="@dimen/margin_10"
+                    android:layout_toEndOf="@id/iv_notification_2"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textSize="@dimen/text_size_15"
+                    android:textStyle="bold"
+                    tools:text="◯◯◯さんからメッセージが届きました" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/iv_close_view_2"
+                android:layout_width="@dimen/margin_22"
+                android:layout_height="@dimen/margin_22"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/ic_notification_close"
+                android:clickable="true"
+                android:onClick="closeNotification" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/notification_view_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:alpha="0.0"
+            android:onClick="openChatByNotification"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            tools:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/padding_60dp"
+                android:layout_marginStart="@dimen/dimen_6"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginEnd="@dimen/dimen_6"
+                android:background="@drawable/bg_noti">
+
+                <ImageView
+                    android:id="@+id/iv_notification_3"
+                    android:layout_width="@dimen/margin_32"
+                    android:layout_height="@dimen/margin_32"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/margin_16"
+                    android:background="@drawable/ic_push_message" />
+
+                <TextView
+                    android:id="@+id/tv_content_view_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="@dimen/margin_10"
+                    android:layout_toEndOf="@id/iv_notification_3"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textSize="@dimen/text_size_15"
+                    android:textStyle="bold"
+                    tools:text="◯◯◯さんからメッセージが届きました" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/iv_close_view_3"
+                android:layout_width="@dimen/margin_22"
+                android:layout_height="@dimen/margin_22"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/ic_notification_close"
+                android:clickable="true"
+                android:onClick="closeNotification" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</layout>

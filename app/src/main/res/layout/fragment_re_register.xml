@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background_common"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        tools:context=".ui.verifyCode.ReregisterFragment">
+
+        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+            android:id="@+id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:src_left="@drawable/ic_back_left"
+            app:string_title="@string/title_reregister" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tool_bar"
+            app:layout_constraintTop_toBottomOf="@+id/tool_bar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_24"
+                android:layout_marginEnd="@dimen/margin_24"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text_re_register_16"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/margin_re_register_34"
+                    android:gravity="center_horizontal"
+                    android:text="@string/account_has_been_withdrawn"
+                    android:textColor="@color/color_text_E3DFEF" />
+
+                <TextView
+                    style="@style/text_verify_code_14"
+                    android:layout_marginTop="@dimen/margin_re_register_28"
+                    android:text="@string/tutorial_reregister"
+                    android:textColor="@color/color_text_E3DFEF" />
+
+                <TextView
+                    style="@style/text_re_register_16"
+                    android:layout_marginTop="@dimen/margin_re_register_32"
+                    android:text="@string/sub_title_edt_reregister"
+                    android:textColor="@color/color_text_E3DFEF" />
+
+
+                <EditText
+                    android:id="@+id/et_input_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_button_re_register_44"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:background="@drawable/bg_input_text"
+                    android:hint="@string/hint_edit_reregister"
+                    android:importantForAutofill="no"
+                    android:inputType="textEmailAddress"
+                    android:lines="1"
+                    android:paddingLeft="@dimen/padding_10"
+                    android:textColor="@color/color_text_E3DFEF"
+                    android:textColorHint="@color/color_6D5D9A"
+                    android:textSize="@dimen/text_title_re_register_16"
+                    android:textStyle="normal"
+                    tools:ignore="RtlSymmetry" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_error_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:text="@string/alert_error_email"
+                    android:textColor="@color/color_alert_error"
+                    android:textSize="@dimen/text_size_error_email_12"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btReRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_button_re_register_44"
+                    android:layout_marginStart="@dimen/margin_8"
+                    android:layout_marginTop="@dimen/margin_re_register_32"
+                    android:layout_marginEnd="@dimen/margin_8"
+                    android:background="@drawable/bg_gradient"
+                    android:enabled="false"
+                    android:text="@string/would_like_re_enroll"
+                    android:textColor="@drawable/text_common"
+                    android:textSize="@dimen/text_size_send_email_14"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
+
+</layout>

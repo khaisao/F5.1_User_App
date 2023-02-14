@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="data"
+            type="jp.careapp.counseling.android.model.user_profile.ReviewUserProfile" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/margin_16"
+        android:paddingBottom="@dimen/margin_16">
+
+        <TextView
+            style="@style/text_12"
+            android:text="@{data.member.name}"
+            android:textColor="@color/color_text_E3DFEF" />
+
+        <RatingBar
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:numStars="5"
+            android:progressBackgroundTint="@color/color_978DFF"
+            android:progressTint="@color/color_E1D600"
+            android:rating="@{data.point}"
+            android:secondaryProgressTint="@color/color_978DFF" />
+
+        <TextView
+            android:id="@+id/content_tv"
+            style="@style/text_14"
+            android:layout_marginTop="@dimen/margin_8"
+            android:text="@{data.review}"
+            android:textColor="@color/purple_AEA2D1" />
+
+    </LinearLayout>
+</layout>

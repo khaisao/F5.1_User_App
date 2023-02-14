@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/welcome_navigation">
+
+    <include app:graph="@navigation/welcome_navigation" />
+    <include app:graph="@navigation/start_navigation" />
+
+    <action
+        android:id="@+id/action_splashFragment_to_TopFragment"
+        app:destination="@id/topFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left"
+        app:popUpTo="@id/splashFragment"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_startFragment_to_TopFragment"
+        app:destination="@id/topFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left"
+        app:popUpTo="@id/startFragment"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_tutorial_to_TopFragment"
+        app:destination="@id/topFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+
+    <action
+        android:id="@+id/action_registrationFragment_to_topFragment"
+        app:destination="@id/topFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+
+    <action
+        android:id="@+id/action_registrationFragment_to_selectCategoryFragment"
+        app:destination="@id/selectCategoryFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+
+    <action
+        android:id="@+id/action_verifyCode_to_TopFragment"
+        app:destination="@id/topFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+
+    <fragment
+        android:id="@+id/topFragment"
+        android:name="jp.careapp.counseling.android.ui.top.TopFragment"
+        android:label="TopFragment"
+        tools:layout="@layout/fragment_top">
+
+        <action
+            android:id="@+id/action_TopFragment_to_UserProfile"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_BannerFirstTimeUseFragment"
+            app:destination="@id/webViewFragment"
+            app:enterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
+        <action
+            android:id="@+id/action_tabMyPage_to_UpdateTrouble"
+            app:destination="@id/troubleSheetUpdateFragment" />
+
+        <action
+            android:id="@+id/action_TopFragment_to_SearchFragment"
+            app:destination="@id/search_navigation"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_TopFragment_to_BuyPointFragment"
+        app:destination="@id/buyPointFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_fragmentEditProfile_to_editEmailfragment"
+        app:destination="@id/login_navigation" />
+
+    <action
+        android:id="@+id/action_ranking_to_userProfilefragment"
+        app:destination="@id/userProfileFragment" />
+
+    <include app:graph="@navigation/login_navigation" />
+
+    <fragment
+        android:id="@+id/buyPointFragment"
+        android:name="jp.careapp.counseling.android.ui.buy_point.BuyPointFragment"
+        android:label="BuyPointFragment"
+        tools:layout="@layout/fragment_buy_point">
+
+        <action
+            android:id="@+id/action_buyPoint_to_TopFragment"
+            app:destination="@id/topFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_searchResult_to_profileFragment"
+        app:destination="@id/userProfileFragment" />
+
+    <action
+        android:id="@+id/action_homeFragment_to_UserProfileFragment"
+        app:destination="@id/userProfileFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left"
+        app:popUpToInclusive="true" />
+
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="jp.careapp.counseling.android.ui.profile.list_user_profile.UserProfileFragment"
+        android:label="UserProfileFragment"
+        tools:layout="@layout/fragment_user_profile">
+        <action
+            android:id="@+id/action_UserProfile_to_BuyPoint"
+            app:destination="@id/buyPointFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_UserProfile_to_TroubleSheet"
+            app:destination="@id/troubleSheetFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_UserProfile_to_ReportUser"
+            app:destination="@id/reportUserFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_UserProfile_to_ChatMessage"
+            app:destination="@id/chatMessageFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_UserProfile_to_TroubleSheetUpdate"
+            app:destination="@id/troubleSheetUpdateFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_UserProfile_to_TopFragment"
+            app:destination="@id/topFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/troubleSheetFragment"
+        android:name="jp.careapp.counseling.android.ui.profile.trouble_sheet.TroubleSheetFragment"
+        android:label="TroubleSheetFragment"
+        tools:layout="@layout/fragment_user_profile">
+        <action
+            android:id="@+id/action_TroubleSheet_to_ChooseTypeTroubleFragment"
+            app:destination="@id/chooseTypeFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_TroubleSheet_to_ChatMessage"
+            app:destination="@id/chatMessageFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/troubleSheetFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_troubleSheetFragment_to_topFragment"
+            app:destination="@id/topFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_troubleSheetFragment_to_tutorialFragment"
+            app:destination="@id/tutorialFragment" />
+
+        <action
+            android:id="@+id/action_troubleSheetFragment_to_partnerInfoFragment"
+            app:destination="@id/partnerInfoFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/partnerInfoFragment"
+        android:name="jp.careapp.counseling.android.ui.partner.PartnerInfoFragment"
+        android:label="PartnerInfoFragment">
+
+        <action
+            android:id="@+id/action_partnerInfoFragment_to_topFragment"
+            app:destination="@id/topFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_partnerInfoFragment_to_tutorialFragment"
+            app:destination="@id/tutorialFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="jp.careapp.counseling.android.ui.favourite.FavoriteFragment"
+        android:label="FavoriteFragment" />
+
+    <action
+        android:id="@+id/action_Top_to_NewsFragment"
+        app:destination="@id/newsFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left"
+        app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_tabMyPage_to_favoriteFragment"
+        app:destination="@id/favoriteFragment" />
+
+    <fragment
+        android:id="@+id/laboFragment"
+        android:name="jp.careapp.counseling.android.ui.labo.LaboFragment"
+        android:label="LaboFragment"
+        tools:layout="@layout/fragment_labo" />
+
+    <action
+        android:id="@+id/action_tabMyPage_to_laboFragment"
+        app:destination="@id/laboFragment" />
+
+    <fragment
+        android:id="@+id/contactEditFragment"
+        android:name="jp.careapp.counseling.android.ui.contact_edit.ContactEditFragment"
+        android:label="ContactEditFragment">
+        <action
+            android:id="@+id/action_contactEditFragment_to_contactConfirmFragment"
+            app:destination="@id/contactConfirmFragment" />
+        <argument
+            android:name="type_contact"
+            app:argType="string" />
+    </fragment>
+    <action
+        android:id="@+id/action_tabMyPage_to_contactEditFragment"
+        app:destination="@id/contactEditFragment" />
+    <fragment
+        android:id="@+id/contactConfirmFragment"
+        android:name="jp.careapp.counseling.android.ui.contact_confirm.ContactConfirmFragment"
+        android:label="ContactConfirmFragment">
+        <argument
+            android:name="contact"
+            app:argType="jp.careapp.counseling.android.ui.contact_edit.ContactEdit" />
+        <argument
+            android:name="type_contact"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_contactConfirmFragment_to_contactDoneFragment"
+            app:destination="@id/contactDoneFragment"
+            app:popUpTo="@+id/contactConfirmFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <action
+        android:id="@+id/action_tabMyPage_to_fragmentNotification"
+        app:destination="@id/fragmentNotification" />
+    <fragment
+        android:id="@+id/fragmentNotification"
+        android:name="jp.careapp.counseling.android.ui.notification.NotificationFragment"
+        android:label="FragmentNotification">
+        <argument
+            android:name="member"
+            app:argType="jp.careapp.counseling.android.data.network.MemberResponse" />
+    </fragment>
+    <fragment
+        android:id="@+id/contactDoneFragment"
+        android:name="jp.careapp.counseling.android.ui.contact_done.ContactDoneFragment"
+        android:label="ContactDoneFragment" />
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="jp.careapp.counseling.android.ui.news.NewsFragment"
+        android:label="NewsFragment">
+        <action
+            android:id="@+id/action_news_to_TopFragment"
+            app:destination="@id/topFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <action
+        android:id="@+id/action_tabMyPage_to_newsFragment"
+        app:destination="@id/newsFragment" />
+    <fragment
+        android:id="@+id/fragmentEditProfile"
+        android:name="jp.careapp.counseling.android.ui.edit_profile.EditProfileFragment"
+        android:label="FragmentEditProfile">
+        <action
+            android:id="@+id/action_fragmentEditProfile_to_registerNameFragment2"
+            app:destination="@id/registerNameFragment2" />
+    </fragment>
+    <action
+        android:id="@+id/action_tabMyPage_to_fragmentEditProfile"
+        app:destination="@id/fragmentEditProfile" />
+    <fragment
+        android:id="@+id/registerNameFragment2"
+        android:name="jp.careapp.counseling.android.ui.registerName.RegisterNameFragment"
+        android:label="RegisterNameFragment" />
+
+    <fragment
+        android:id="@+id/Emailfragment"
+        android:name="jp.careapp.counseling.android.ui.edit_email.EditEmailfragment"
+        android:label="EditEmailfragment" />
+    <fragment
+        android:id="@+id/chooseTypeFragment"
+        android:name="jp.careapp.counseling.android.ui.profile.trouble_sheet.ChooseTypeTroubleFragment"
+        android:label="ChooseTypeTroubleFragment"
+        tools:layout="@layout/fragment_user_profile" />
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="jp.careapp.counseling.android.ui.webView.WebViewFragment"
+        android:label="WebViewFragment"
+        tools:layout="@layout/fragment_web_view">
+        <argument
+            android:name="TITLE_WEB_VIEW"
+            app:argType="string" />
+    </fragment>
+    <action
+        android:id="@+id/action_screen_to_webview"
+        app:destination="@id/webViewFragment"
+        app:enterAnim="@anim/slide_up"
+        app:popExitAnim="@anim/slide_down" />
+    <fragment
+        android:id="@+id/reportUserFragment"
+        android:name="jp.careapp.counseling.android.ui.profile.block_report.ReportFragment"
+        android:label="ReportFragment"
+        tools:layout="@layout/fragment_user_report" />
+
+    <fragment
+        android:id="@+id/troubleSheetUpdateFragment"
+        android:name="jp.careapp.counseling.android.ui.profile.update_trouble_sheet.TroubleSheetUpdateFragment"
+        android:label="TroubleSheetUpdateFragment"
+        tools:layout="@layout/fragment_trouble_sheet_update">
+        <action
+            android:id="@+id/action_TroubleSheetUpdate_to_ChooseTypeTroubleFragment"
+            app:destination="@id/chooseTypeFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_TroubleSheetUpdate_to_ChatMessage"
+            app:destination="@id/chatMessageFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/troubleSheetUpdateFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="jp.careapp.counseling.android.ui.setting.SettingFragment"
+        android:label="SettingFragment">
+        <action
+            android:id="@+id/action_settingFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment"
+            app:enterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
+        <action
+            android:id="@+id/action_settingFragment_to_blockedFragment"
+            app:destination="@id/blockedFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_withdrawalFragment"
+            app:destination="@id/withdrawalFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_withdrawalStartFragment"
+            app:destination="@id/withdrawalStartFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_deleteAccountFragment"
+            app:destination="@id/deleteAccountFragment" />
+
+        <action
+            android:id="@+id/action_settingFragment_to_partnerInfoFragment"
+            app:destination="@id/partnerInfoFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_tabMyPage_to_Setting"
+        app:destination="@+id/settingFragment" />
+    <fragment
+        android:id="@+id/blockedFragment"
+        android:name="jp.careapp.counseling.android.ui.blocked.BlockedFragment"
+        android:label="BlockedFragment" />
+    <fragment
+        android:id="@+id/withdrawalFragment"
+        android:name="jp.careapp.counseling.android.ui.withdrawal.WithdrawalFragment"
+        android:label="WithdrawalFragment">
+
+        <action
+            android:id="@+id/action_withdrawalFragment_to_withdrawalFinishFragment"
+            app:destination="@id/withdrawalFinishFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/withdrawalStartFragment"
+        android:name="jp.careapp.counseling.android.ui.withdrawal.WithdrawalStartFragment"
+        android:label="WithdrawalStartFragment">
+
+        <action
+            android:id="@+id/action_withdrawalStartFragment_to_editProfileFragment"
+            app:destination="@id/fragmentEditProfile" />
+        <action
+            android:id="@+id/action_withdrawalStartFragment_to_withdrawalFragment"
+            app:destination="@id/withdrawalFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/welcomeActivity"
+        android:name="jp.careapp.counseling.android.ui.welcome.WelcomeActivity"
+        android:label="WelcomeActivity" />
+    <action
+        android:id="@+id/action_mypage_to_buyPoint"
+        app:destination="@id/buyPointFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+    <include app:graph="@navigation/search_navigation" />
+    <include app:graph="@navigation/maintenance_navigation" />
+
+    <action
+        android:id="@+id/action_splashFragment_to_maintenance_navigation"
+        app:destination="@id/maintenance_navigation"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_chat_list_to_chat_message"
+        app:destination="@id/chatMessageFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left"
+        app:popUpToInclusive="true" />
+
+    <fragment
+        android:id="@+id/chatMessageFragment"
+        android:name="jp.careapp.counseling.android.ui.message.ChatMessageFragment"
+        android:label="BlockedFragment">
+
+        <action
+            android:id="@+id/action_ChatMessage_to_BuyPoint"
+            app:destination="@id/buyPointFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_ChatMessgae_to_TroubleSheet"
+            app:destination="@id/troubleSheetUpdateFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_ChatMessgae_to_UserProfile"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_ChatMessage_to_ReviewConsultant"
+            app:destination="@id/reviewConsultant"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_webBuy_Point_to_buyPointGoogle"
+        app:destination="@id/buyPointFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+
+    <fragment
+        android:id="@+id/reviewConsultant"
+        android:name="jp.careapp.counseling.android.ui.reviewConsultant.ReviewConsultantFragment"
+        android:label="ReviewConsultantFragment" />
+
+    <include app:graph="@navigation/start_navigation" />
+    <action
+        android:id="@+id/action_to_login"
+        app:destination="@id/start_navigation"
+        app:popUpTo="@+id/main_navigation"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_MainActivity_to_ChatMessage"
+        app:destination="@id/chatMessageFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+    <action
+        android:id="@+id/action_Top_to_ChatMessage"
+        app:destination="@id/chatMessageFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+    <fragment
+        android:id="@+id/withdrawalFinishFragment"
+        android:name="jp.careapp.counseling.android.ui.withdrawal.WithdrawalFinishFragment"
+        android:label="WithdrawalFinishFragment">
+        <action
+            android:id="@+id/action_withdrawalFragment_to_welcomeActivity"
+            app:destination="@id/welcomeActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectCategoryFragment"
+        android:name="jp.careapp.counseling.android.ui.select_category.SelectCategoryFragment"
+        android:label="SelectCategoryFragment">
+        <action
+            android:id="@+id/action_selectCategoryFragment_to_troubleSheetFragment"
+            app:destination="@id/troubleSheetFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/tutorialFragment"
+        android:name="jp.careapp.counseling.android.ui.tutorial.TutorialFragment"
+        android:label="TutorialFragment" />
+    <fragment
+        android:id="@+id/newQuestionFragment"
+        android:name="jp.careapp.counseling.android.ui.new_question.NewQuestionFragment"
+        android:label="NewQuestionFragment">
+        <action
+            android:id="@+id/action_newQuestionFragment_to_chooseTypeCategoryFragment"
+            app:destination="@id/chooseTypeCategoryFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_laboFragment_to_newQuestionFragment"
+        app:destination="@id/newQuestionFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+    <fragment
+        android:id="@+id/chooseTypeCategoryFragment"
+        android:name="jp.careapp.counseling.android.ui.new_question.ChooseTypeCategoryFragment"
+        android:label="ChooseTypeCategoryFragment" />
+
+    <action
+        android:id="@+id/action_labFragment_to_labDetailFragment"
+        app:destination="@id/labDetailFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left"
+        app:popUpToInclusive="true" />
+
+    <fragment
+        android:id="@+id/labDetailFragment"
+        android:name="jp.careapp.counseling.android.ui.labo.detail.LabDetailFragment"
+        android:label="LabDetailFragment"
+        tools:layout="@layout/fragment_lab_detail">
+
+        <action
+            android:id="@+id/action_labDetailFragment_to_buyPointFragment"
+            app:destination="@id/buyPointFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_labDetailFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_labDetailFragment_to_reportLaboFragment"
+            app:destination="@id/reportLaboFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/searchLabFragment"
+        android:name="jp.careapp.counseling.android.ui.search_lab.SearchLabFragment"
+        android:label="SearchLabFragment">
+        <action
+            android:id="@+id/action_searchLabFragment_to_selectionCategoryFragment"
+            app:destination="@id/selectionCategoryFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/reportLaboFragment"
+        android:name="jp.careapp.counseling.android.ui.labo.report.ReportLaboFragment"
+        android:label="ReportLaboFragment" />
+
+    <action
+        android:id="@+id/action_to_search_lab"
+        app:destination="@id/searchLabFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+    <fragment
+        android:id="@+id/selectionCategoryFragment"
+        android:name="jp.careapp.counseling.android.ui.search_lab.SelectionCategoryFragment"
+        android:label="SelectionCategoryFragment" />
+
+    <action
+        android:id="@+id/action_homeFragment_to_LabDetailFragment"
+        app:destination="@id/labDetailFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_global_troubleSheetUpdateFragment"
+        app:destination="@id/troubleSheetUpdateFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left"
+        app:popUpTo="@id/splashFragment"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_global_fragmentNotification"
+        app:destination="@id/fragmentNotification"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left"
+        app:popUpTo="@id/splashFragment"
+        app:popUpToInclusive="true" />
+
+    <fragment
+        android:id="@+id/deleteAccountFragment"
+        android:name="jp.careapp.counseling.android.ui.delete_account.DeleteAccountFragment"
+        android:label="DeleteAccountFragment"
+        tools:layout="@layout/fragment_delete_account" />
+
+    <action
+        android:id="@+id/action_global_to_calling"
+        app:destination="@id/callingFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+
+    <fragment
+        android:id="@+id/callingFragment"
+        android:name="jp.careapp.counseling.android.ui.calling.CallingFragment"
+        android:label="CallingFragment"
+        tools:layout="@layout/fragment_calling">
+
+        <action
+            android:id="@+id/action_callingFragment_to_updateTroubleSheet"
+            app:destination="@id/troubleSheetUpdateFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/callingFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_callingFragment_to_ChatMessage"
+            app:destination="@id/chatMessageFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/callingFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_callingFragment_to_buyPointFragment"
+            app:destination="@id/buyPointFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/callingFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+</navigation>

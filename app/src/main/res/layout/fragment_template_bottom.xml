@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_50090E1B">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_corner_top_12dp_1d1045"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="35dp"
+                android:layout_height="5dp"
+                android:layout_marginTop="@dimen/margin_6dp"
+                android:background="@drawable/bg_corner_3dp_523f8a"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/text_bold_16"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingTop="@dimen/margin_33"
+                android:paddingBottom="@dimen/margin_26"
+                android:text="@string/title_free"
+                android:textColor="@color/color_text_E3DFEF" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_diver_line"
+                android:alpha="0.15"
+                android:background="@color/white" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/item_template_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_template" />
+
+            <TextView
+                android:id="@+id/cancel_button_tv"
+                style="@style/text_bold_16"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/margin_8"
+                android:layout_marginTop="@dimen/margin_22"
+                android:layout_marginRight="@dimen/margin_8"
+                android:layout_marginBottom="@dimen/margin_46"
+                android:background="@drawable/bg_corner_24dp_332167"
+                android:gravity="center"
+                android:paddingTop="@dimen/margin_16"
+                android:paddingBottom="@dimen/margin_16"
+                android:text="@string/cancel"
+                android:textColor="@color/purple_AEA2D1" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

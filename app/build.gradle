@@ -1,0 +1,218 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+    id 'kotlin-parcelize'
+    id 'realm-android'
+    id 'com.google.firebase.appdistribution'
+}
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "jp.careapp.counseling.android"
+        minSdkVersion 27
+        targetSdkVersion versions.targetSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
+
+    }
+    signingConfigs {
+        stagging {
+            //keystore
+            storeFile file("../keystore/key_store_careapp.jks")
+            storePassword "careapp123456789a@"
+            keyAlias "key_alias_careapp"
+            keyPassword "careapp123456789a@"
+        }
+
+        release {
+            //keystore
+            storeFile file("../keystore/key_store_careapp.jks")
+            storePassword "careapp123456789a@"
+            keyAlias "key_alias_careapp"
+            keyPassword "careapp123456789a@"
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".dev"
+            buildConfigField "String", "BASE_URL", "\"https://mem-api.flax5.com/\""
+            buildConfigField "String", "WS_URL", "\"wss://sc.flax5.com/socket/member\""
+            buildConfigField "String", "WS_ORIGIN", "\"https://web.flax5.com\""
+            buildConfigField "String", "WS_OWNER", "\"Flax5\""
+            buildConfigField "String", "WEB_DOMAIN", "\"https://web.flax5.com\""
+            buildConfigField "String", "WEB_PURCHASE_DOMAIN", "\"https://pay.flax5.com\""
+            buildConfigField "String", "ADJUST_APP_TOKEN", "\"zudv85o5ps74\""
+            buildConfigField "String", "REGISTRATION_EVENT_TOKEN", "\"77s3io\""
+            buildConfigField "String", "REGISTRATION_EVENT_TOKEN_2", "\"6d85mg\""
+            buildConfigField "String", "IN_APP_PURCHASE_EVENT_TOKEN", "\"ssmm20\""
+            buildConfigField "String", "ADJUST_EVENT_TOKEN", "\"uyy2fx\""
+            buildConfigField "String", "APPS_FLYER_APP_ID", "\"jp.careapp.counseling.android.dev\""
+            buildConfigField "String", "URL_GET_CALL_CONFIG", "\"https://app.flax5.com/\""
+            buildConfigField "String", "WS_URL_LOGIN_CALL", "\"wss://sc.flax5.com/jetty_flax/login/\""
+        }
+
+        stagging {
+            applicationIdSuffix ".dev"
+            firebaseAppDistribution {
+                releaseNotesFile = "/path/to/releasenotes.txt"
+                groups = "rikkei-test"
+            }
+            initWith buildTypes.debug
+            signingConfig signingConfigs.stagging
+            debuggable true
+            buildConfigField "String", "BASE_URL", "\"https://mem-api.flax5.com/\""
+            buildConfigField "String", "WS_URL", "\"wss://sc.flax5.com/socket/member\""
+            buildConfigField "String", "WS_ORIGIN", "\"https://web.flax5.com\""
+            buildConfigField "String", "WS_OWNER", "\"Flax5\""
+            buildConfigField "String", "WEB_DOMAIN", "\"https://web.flax5.com\""
+            buildConfigField "String", "WEB_PURCHASE_DOMAIN", "\"https://pay.flax5.com\""
+            buildConfigField "String", "ADJUST_APP_TOKEN", "\"zudv85o5ps74\""
+            buildConfigField "String", "REGISTRATION_EVENT_TOKEN", "\"77s3io\""
+            buildConfigField "String", "REGISTRATION_EVENT_TOKEN_2", "\"6d85mg\""
+            buildConfigField "String", "IN_APP_PURCHASE_EVENT_TOKEN", "\"ssmm20\""
+            buildConfigField "String", "ADJUST_EVENT_TOKEN", "\"uyy2fx\""
+            buildConfigField "String", "APPS_FLYER_APP_ID", "\"jp.careapp.counseling.android.dev\""
+            buildConfigField "String", "URL_GET_CALL_CONFIG", "\"https://app.flax5.com/\""
+            buildConfigField "String", "WS_URL_LOGIN_CALL", "\"wss://sc.flax5.com/jetty_flax/login/\""
+        }
+
+        release {
+            buildConfigField "String", "BASE_URL", "\"https://mem-api.careapp.jp/\""
+            buildConfigField "String", "WS_URL", "\"wss://sc.careapp.jp/socket/member\""
+            buildConfigField "String", "WS_ORIGIN", "\"https://web.careapp.jp\""
+            buildConfigField "String", "WS_OWNER", "\"careapp\""
+            buildConfigField "String", "WEB_DOMAIN", "\"https://web.careapp.jp\""
+            buildConfigField "String", "WEB_PURCHASE_DOMAIN", "\"https://pay.careapp.jp\""
+            buildConfigField "String", "ADJUST_APP_TOKEN", "\"u9iestwac3r4\""
+            buildConfigField "String", "REGISTRATION_EVENT_TOKEN", "\"9h0pzd\""
+            buildConfigField "String", "REGISTRATION_EVENT_TOKEN_2", "\"35yund\""
+            buildConfigField "String", "IN_APP_PURCHASE_EVENT_TOKEN", "\"v9fp8y\""
+            buildConfigField "String", "ADJUST_EVENT_TOKEN", "\"e3czfn\""
+            buildConfigField "String", "APPS_FLYER_APP_ID", "\"jp.careapp.counseling.android\""
+            buildConfigField "String", "URL_GET_CALL_CONFIG", "\"https://app.careapp.jp/\""
+            buildConfigField "String", "WS_URL_LOGIN_CALL", "\"wss://sc.careapp.jp/jetty_flax/login/\""
+
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        dataBinding = true
+    }
+}
+
+dependencies {
+
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation project(':core')
+
+    //appcompat
+    implementation libraries.appcompat
+    implementation libraries.fragment
+
+    implementation libraries.hilt
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    kapt libraries.hiltSupport
+    implementation libraries.hiltViewModel
+    kapt libraries.hiltCompiler
+
+    //kotlin
+    implementation libraries.kotlin
+
+    //view
+    implementation libraries.material
+    implementation libraries.constraintlayout
+
+    //navigation
+    implementation libraries.navigation
+    implementation libraries.navigationUi
+
+    //network
+    implementation libraries.retrofit
+    implementation libraries.gson
+    implementation libraries.interceptor
+
+    //logger
+    implementation libraries.timber
+
+//    //ViewModel
+    implementation libraries.viewmodel
+    implementation libraries.lifecycleExt
+    kapt libraries.liveData
+    implementation libraries.lifecycleSavedState
+    implementation libraries.lifecycleRuntime
+
+    // Loading Image
+    implementation libraries.glide
+    kapt libraries.glideCompiler
+
+    implementation libraries.crashlytics
+    implementation libraries.fcm
+    implementation libraries.analytics
+
+    //coroutines
+    implementation libraries.liveData
+
+    //viewpager2
+    implementation libraries.viewpager2
+
+    implementation libraries.biling
+
+    //In-app review
+    implementation libraries.coreKtx
+    implementation libraries.wear
+    compileOnly libraries.wearable
+
+    // CHat
+    implementation libraries.eventbus
+
+    //badge in icon app
+    implementation libraries.badge
+
+    //tracking adjust
+    implementation libraries.adjust
+    implementation libraries.installreferrer
+    implementation libraries.adsIdentifier
+
+    // Rating
+    implementation libraries.rating
+    //recycleview selection
+    implementation libraries.recycleview_selection
+
+    //paging
+    implementation libraries.paging
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+
+    implementation libraries.flexbox
+
+    implementation libraries.appsflyer
+
+    implementation libraries.dimenDp
+    implementation libraries.dimenSp
+
+    implementation(libraries.socketIoClient) {
+        exclude group: 'org.json', module: 'json'
+    }
+    implementation files(libraries.marucastClient)
+    implementation files(libraries.mediasoupClient)
+}

@@ -1,0 +1,125 @@
+package jp.careapp.counseling.android.data.pref
+
+import jp.careapp.counseling.android.data.model.CreditItem
+import jp.careapp.counseling.android.data.model.HistorySelection
+import jp.careapp.counseling.android.data.network.*
+import javax.inject.Singleton
+
+@Singleton
+interface RxPreferences {
+    fun put(key: String, value: String)
+
+    fun get(key: String): String?
+
+    fun clear()
+
+    fun remove(key: String)
+
+    fun getToken(): String?
+
+    fun setUserToken(userToken: String)
+
+    fun logout()
+
+    fun saveEmail(email: String)
+
+    fun getEmail(): String?
+
+    fun saveUserInfor(token: String, tokenExpire: String, passWord: String, memberCode: String)
+
+    fun getTokenExpire(): String?
+
+    fun getPassword(): String?
+
+    fun isFirstTimeUse(): Boolean
+
+    fun isFirstTimeUseLab(): Boolean
+
+    fun setIsFirstTimeUse(state: Boolean)
+
+    fun setIsFirstTimeUseLab(state: Boolean)
+
+    fun getMemberCode(): String?
+
+    fun saveNewLastViewDateTime(dateTime: String)
+
+    fun getNewLastViewDateTime(): String?
+
+    fun saveMemberInfo(memberResponse: MemberResponse)
+
+    fun getPoint(): Int
+
+    fun setPoint(point: Int)
+
+    fun getTimeBuy(): Long
+
+    fun saveDeviceToken(deviceToken: String)
+
+    fun getDeviceToken(): String?
+
+    fun saveNumberUnreadMessage(number: Int)
+
+    fun getNumberUnreadMessage(): Int
+
+    fun saveDeepLink(deepLink: String)
+
+    fun getDeepLink(): String?
+
+    fun isFirstShowGuideUser(): Boolean
+
+    fun saveFirstShowGuideUser(isFirstUse: Boolean)
+
+    fun getTroubleInfo(): TroubleSheetResponse?
+
+    fun saveTroubleSheet(troubleSheetResponse: TroubleSheetResponse)
+
+    fun saveListCategory(listCategory: List<CategoryResponse>)
+
+    fun getListCategory(): List<CategoryResponse>?
+
+    fun saveListTemplate(listCategory: List<FreeTemplateResponse>)
+
+    fun getListTemplate(): List<FreeTemplateResponse>?
+
+    fun saveHistorySearchSelection(historySelection: HistorySelection)
+
+    fun getHistorySearchSelection(): HistorySelection
+
+    fun setFirstRegister(isTheFirst: Boolean)
+
+    fun getFirstRegister(): Boolean
+
+    fun getFirstBuyCredit(): Boolean
+
+    fun isFullMode(): Boolean
+
+    fun saveFirstReview(isTheFirst: Boolean, memberCode: String?, performerCode: String)
+
+    fun isFirstReview(memberCode: String?, performerCode: String): Boolean
+
+    fun getSignedUpStatus(): Int
+
+    fun setSignedUpStatus(status: Int)
+
+    fun getDesiredResponse(): Int
+
+    fun setDesiredResponse(status: Int)
+
+    fun getGenre(): Int
+
+    fun setGenre(id: Int)
+
+    fun getLastBuyLog(): LastBuyLog?
+
+    fun saveCreditPrices(data: List<CreditItem>)
+
+    fun getCreditPrices(): List<CreditItem>
+
+    fun setCallToken(token: String)
+
+    fun getCallToken(): String
+
+    fun saveConfigCall(config: ConfigCallResponse)
+
+    fun getConfigCall(): ConfigCallResponse
+}

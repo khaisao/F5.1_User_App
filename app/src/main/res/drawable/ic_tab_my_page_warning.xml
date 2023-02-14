@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="31dp"
+        android:height="30dp"
+        android:drawable="@drawable/ic_tab_mypage"
+        android:gravity="center"/>
+    <item
+        android:width="14dp"
+        android:height="12dp"
+        android:left="25dp"
+        android:bottom="15dp"
+        android:drawable="@drawable/ic_my_page_caution"
+        android:gravity="center"/>
+</layer-list>

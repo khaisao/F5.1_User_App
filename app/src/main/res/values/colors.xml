@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1d1045</color>
+    <color name="colorPrimaryDark">#1d1045</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="gray">#BEBEBE</color>
+
+    <color name="color_button_common_blue">#4356B4</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="transparent">#00000000</color>
+
+    <color name="color_background_common">#1D1045</color> <!--rgb 29 16 69-->
+    <color name="color_978DFF">#978DFF</color> <!--rgb 151 141 255-->
+    <color name="right_color_btn_common">#61C1FF</color> <!--rgb 97 193 255-->
+    <color name="purple_AEA2D1">#AEA2D1</color> <!--rgb 174 162 209-->
+    <color name="color_text_E3DFEF">#E3DFEF</color> <!--rgb 227 223 239-->
+    <color name="color_disable_button">#332167</color> <!--rgb 51 33 103-->
+    <color name="color_alert_error">#FF2875</color> <!--rgb 255 40 117-->
+    <color name="color_6D5D9A">#6D5D9A</color><!--rgb 109 93 154-->
+    <color name="color_FF1D1D">#FF1D1D</color><!--rgb 255 29 29-->
+    <color name="color_FFA900">#FFA900</color><!--rgb 255 169 0-->
+    <color name="color_FFFF00">#FFFF00 </color><!--rgb 255 255 0-->
+
+
+    <!--    Top screen colors-->
+    <color name="action_bar">#1d1045</color>
+    <color name="bottom_bar">#1d1045</color>
+    <color name="bottom_bar_text">#978dff</color>
+
+    <!--color common-->
+    <color name="background_common">@color/white</color>
+    <color name="background_color_white">@color/white</color>
+    <color name="background_color_gray">#EFEFF4</color>
+    <color name="start_color_btn_common">#087EFF</color>
+    <color name="end_color_btn_common">#05E8BA</color>
+
+    <color name="color_hint_edit_text">#333333</color>
+    <color name="color_332167">#332167</color>
+    <color name="color_CC332167">#CC332167</color>
+    <color name="color_FF2875">#FF2875</color>
+    <color name="color_E3DFEF">#E3DFEF</color>
+    <color name="color_1D1045">#1D1045</color><!--rgb 29 16 69-->
+    <color name="color_FFD600">#FFD600</color>
+    <color name="color_E2B700">#E2B700</color>
+    <color name="color_1D1345">#1D1345</color>
+    <color name="color_523F8A">#523F8A</color>
+    <color name="color_D8D8D8">#D8D8D8</color>
+    <color name="color_B3A2D1">#B3A2D1</color>
+    <color name="color_23242F">#23242F</color>
+    <color name="color_AEA2D1">#AEA2D1</color>
+    <color name="color_14D284">#14D284</color>
+    <color name="color_1C120">#01C120</color>
+    <color name="color_white_O_15">#26ffffff</color>
+    <color name="color_E1D600">#E1D600</color>
+    <color name="color_61C1FF">#61C1FF</color><!--    rgb 20 210 132-->
+
+    <color name="color_130933">#130933</color> <!--    rgb 19 9 51-->
+    <color name="color_white_opacity_15">#26ffffff</color>
+    <color name="color_0B002C">#0B002C</color>
+    <color name="color_7F73FF">#7F73FF</color><!-- rgb 127 115 255 -->
+    <color name="color_483381">#483381</color>
+    <color name="color_50090E1B">#50090E1B</color> <!-- rgb 72 52 129 -->
+    <color name="color_483481">#483481</color> <!-- rgb 72 52 129 -->
+    <color name="color_271658">#271658</color> <!-- rgb 39 22 88 -->
+    <color name="color_383A2D2D">#383A2D2D</color>
+    <color name="color_504194">#504194</color>
+    <color name="color_887CE7">#887CE7</color>
+    <color name="white_16">#33ffffff</color>
+    <color name="color_523A99">#523A99</color><!--    rgb 82 58 153-->
+    <color name="color_FF57A9">#FF57A9</color><!--    rgb 255, 87, 169-->
+    <color name="color_00CD5C">#00CD5C</color>
+    <color name="color_51F38A">#51F38A</color>
+    <color name="black_65">#A6000000</color>
+    <color name="white_20">#33FFFFFF</color>
+    <color name="white_60">#99FFFFFF</color>
+
+
+</resources>

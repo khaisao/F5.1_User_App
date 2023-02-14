@@ -1,0 +1,88 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="RtlCompat">
+
+        <View
+            android:id="@+id/view_status_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_25"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/padding_12"
+            android:paddingTop="@dimen/margin_8"
+            android:paddingEnd="@dimen/padding_15"
+            android:paddingBottom="@dimen/margin_8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_status_bar"
+            tools:src="@drawable/ic_back_left" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_search"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvRight"
+            app:layout_constraintStart_toEndOf="@+id/btn_left"
+            app:layout_constraintTop_toBottomOf="@id/view_status_bar">
+
+            <ImageView
+                android:id="@+id/ic_search"
+                android:layout_width="@dimen/margin_20"
+                android:layout_height="@dimen/margin_20"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/margin_8"
+                tools:src="@drawable/ic_search" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_input_search"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_input_common"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/ic_search"
+                android:background="@color/transparent"
+                android:hint="@string/hint_search"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:lines="1"
+                android:paddingLeft="@dimen/padding_10"
+                android:textColor="@color/white"
+                android:textColorHint="@color/color_6D5D9A"
+                android:textSize="@dimen/text_size_16"
+                android:textStyle="normal"
+                tools:ignore="RtlSymmetry" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tvRight"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/height_toolbar_common"
+            android:padding="@dimen/padding_15"
+            android:text="@string/cancel_search"
+            android:textColor="@color/color_978DFF"
+            app:layout_constraintBottom_toBottomOf="@id/btn_left"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btn_left" />
+
+        <View
+            android:id="@+id/line_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_6D5D9A"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

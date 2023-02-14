@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background_common"
+        android:orientation="vertical">
+
+        <jp.careapp.counseling.android.utils.customView.DisableScrollNestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_background_common"
+            android:fillViewport="true"
+            android:fitsSystemWindows="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusableInTouchMode="true">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/message_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_above="@+id/bottom_bar"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/color_background_common"
+                    android:clipToPadding="false"
+                    android:descendantFocusability="beforeDescendants"
+                    android:paddingLeft="@dimen/margin_16"
+                    android:paddingTop="@dimen/margin_12"
+                    android:paddingRight="@dimen/margin_16"
+                    android:paddingBottom="@dimen/margin_16"
+                    app:layout_constraintBottom_toTopOf="@+id/bottom_bar"
+                    app:reverseLayout="true"
+                    app:stackFromEnd="true"
+                    tools:listitem="@layout/item_message_performer" />
+
+                <View
+                    android:id="@+id/viewPointFree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_above="@id/layoutPointFree"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:visibility="invisible" />
+
+                <include
+                    android:id="@+id/layoutPointFree"
+                    layout="@layout/dialog_recommend_use_point_free"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/bottom_bar"
+                    android:visibility="invisible" />
+
+                <RelativeLayout
+                    android:id="@+id/bottom_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/color_background_common"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <View
+                        android:id="@+id/line_bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:alpha="0.15"
+                        android:background="@color/white" />
+
+                    <RelativeLayout
+                        android:id="@+id/content_send_mess_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/template_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/content_message_edt"
+                            android:layout_alignParentStart="true"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/margin_17">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_message_template" />
+
+                            <TextView
+                                style="@style/text_bold_8"
+                                android:layout_marginTop="@dimen/view_size_3"
+                                android:text="@string/template"
+                                android:textColor="@color/color_978DFF" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/review_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/content_message_edt"
+                            android:layout_toRightOf="@id/template_btn"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/margin_17"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_write_review" />
+
+                            <TextView
+                                style="@style/text_bold_8"
+                                android:layout_marginTop="@dimen/view_size_3"
+                                android:text="@string/review"
+                                android:textColor="@color/color_978DFF" />
+                        </LinearLayout>
+
+                        <EditText
+                            android:id="@+id/content_message_edt"
+                            style="@style/text_14"
+                            android:layout_width="0dp"
+                            android:layout_marginLeft="@dimen/margin_16"
+                            android:layout_marginTop="@dimen/margin_8"
+                            android:layout_toLeftOf="@+id/send_message_iv"
+                            android:layout_toRightOf="@id/review_btn"
+                            android:background="@drawable/bg_corner_18dp_332167"
+                            android:hint="@string/input_content_message"
+                            android:inputType="textMultiLine"
+                            android:maxHeight="180dp"
+                            android:paddingLeft="@dimen/margin_16"
+                            android:paddingTop="@dimen/margin_11"
+                            android:paddingRight="@dimen/margin_16"
+                            android:paddingBottom="@dimen/margin_11"
+                            android:scrollbars="vertical"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/purple_AEA2D1" />
+
+                        <ImageView
+                            android:id="@+id/send_message_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/content_message_edt"
+                            android:layout_alignParentEnd="true"
+                            android:paddingLeft="@dimen/margin_14"
+                            android:paddingTop="@dimen/margin_16"
+                            android:paddingRight="@dimen/padding_16dp"
+                            android:paddingBottom="@dimen/margin_8"
+                            android:src="@drawable/ic_message_send_disable" />
+
+                        <TextView
+                            android:id="@+id/count_point_tv"
+                            style="@style/text_10"
+                            android:layout_below="@+id/content_message_edt"
+                            android:layout_alignEnd="@+id/content_message_edt"
+                            android:layout_marginTop="@dimen/margin_4dp"
+                            android:layout_marginBottom="@dimen/margin_8"
+                            android:text="@string/format_point_of_message"
+                            android:textColor="@color/purple_AEA2D1" />
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:id="@+id/user_quit_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:paddingLeft="@dimen/margin_34"
+                        android:paddingTop="@dimen/margin_8"
+                        android:paddingRight="@dimen/margin_34"
+                        android:paddingBottom="@dimen/margin_34"
+                        android:src="@drawable/ic_user_quit"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/user_bad_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:paddingLeft="@dimen/margin_34"
+                        android:paddingTop="@dimen/margin_8"
+                        android:paddingRight="@dimen/margin_34"
+                        android:paddingBottom="@dimen/margin_34"
+                        android:src="@drawable/ic_user_bad"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+        </jp.careapp.counseling.android.utils.customView.DisableScrollNestedScrollView>
+
+        <jp.careapp.counseling.android.utils.customView.ToolbarPoint
+            android:id="@+id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_background_common"
+            app:is_show_call="true"
+            app:is_show_point="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:src_left_p="@drawable/ic_back_left"
+            app:src_right_p="@drawable/ic_right_trouble_sheet" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:alpha="0.15"
+            android:background="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tool_bar" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutBaloonMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_8"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:id="@+id/viewOne"
+                android:layout_width="@dimen/margin_20"
+                android:layout_height="1dp"
+                android:layout_marginTop="27.5dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvPointBaloon"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_marginRight="56dp"
+                android:background="@drawable/bg_corner_14dp_332167"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:paddingStart="4dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="14dp"
+                android:paddingBottom="4dp"
+                android:textColor="@color/color_978DFF"
+                android:textSize="@dimen/text_size_12"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:drawableStartCompat="@drawable/ic_minipoint"
+                app:layout_constraintBottom_toBottomOf="@id/viewOne"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/viewOne"
+                tools:text="10,000pt" />
+
+            <include
+                android:id="@+id/layout_item_baloon_message"
+                layout="@layout/item_baloon_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@id/tvPointBaloon"
+                app:layout_constraintHorizontal_bias="0.82"
+                app:layout_constraintStart_toStartOf="@id/tvPointBaloon"
+                app:layout_constraintTop_toBottomOf="@id/tvPointBaloon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

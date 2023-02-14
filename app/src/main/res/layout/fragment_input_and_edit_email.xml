@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/rlInputEmail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background_common"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <include
+            android:id="@+id/tool_bar"
+            layout="@layout/tool_bar_common"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tool_bar"
+            android:fillViewport="true"
+            android:fitsSystemWindows="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/btnEmail"
+                    android:layout_alignParentTop="true"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_title"
+                        style="@style/text_title_bold_28"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="@dimen/margin_24dp"
+                        android:layout_marginTop="@dimen/margin_title_email_32"
+                        android:layout_marginRight="@dimen/margin_24dp"
+                        android:maxLines="2"
+                        android:text="@string/title_input_email"
+                        android:textColor="@color/white"
+                        android:visibility="visible" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_input_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_title"
+                        android:layout_marginLeft="@dimen/margin_24dp"
+                        android:layout_marginTop="@dimen/margin_top_email_24"
+                        android:layout_marginRight="@dimen/margin_24dp"
+                        android:background="@drawable/bg_input_text"
+                        android:importantForAutofill="no"
+                        android:inputType="textEmailAddress"
+                        android:lines="1"
+                        android:paddingLeft="@dimen/padding_10"
+                        android:paddingTop="@dimen/padding_12"
+                        android:paddingRight="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_12"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/color_6D5D9A"
+                        android:textSize="@dimen/text_size_input_email_16"
+                        android:textStyle="bold"
+                        tools:hint="@string/hint_input_email"
+                        tools:ignore="RtlSymmetry" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_error_email"
+                        style="@style/text_error_email_bold_12"
+                        android:layout_below="@+id/et_input_email"
+                        android:layout_marginLeft="@dimen/margin_24dp"
+                        android:layout_marginTop="@dimen/margin_8"
+                        android:layout_marginRight="@dimen/margin_24dp"
+                        android:textColor="@color/color_alert_error"
+                        android:visibility="gone"
+                        tools:text="@string/alert_error_email" />
+
+                    <TextView
+                        android:id="@+id/link_privacy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_24dp"
+                        android:layout_marginTop="@dimen/margin_top_email_24"
+                        android:layout_marginRight="@dimen/margin_24dp"
+                        android:clickable="true"
+                        android:text="@string/link_privacy" />
+
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="@dimen/margin_24dp"
+                    android:layout_marginEnd="@dimen/margin_24dp"
+                    android:layout_marginBottom="@dimen/margin_12"
+                    android:background="@drawable/bg_gradient"
+                    android:enabled="false"
+                    android:textColor="@drawable/text_common"
+                    android:textSize="@dimen/text_size_send_email_14"
+                    android:textStyle="bold"
+                    tools:ignore="RtlCompat"
+                    tools:text="@string/input_email"
+                    tools:textColor="@color/color_6D5D9A" />
+
+            </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+</layout>

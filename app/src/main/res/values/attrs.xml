@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ToolBarCommon">
+        <attr name="src_left" format="reference" />
+        <attr name="trans_status_bar" format="boolean" />
+        <attr name="src_right" format="string|reference" />
+        <attr name="iv_right" format="reference" />
+        <attr name="rotation_src_left" format="boolean" />
+        <attr name="string_title" format="string|reference" />
+        <attr name="hide_line_bottom" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="DialogFragmentNavigator">
+        <attr name="android:name" />
+    </declare-styleable>
+    <declare-styleable name="FragmentNavigator">
+        <attr name="android:name" />
+    </declare-styleable>
+    <declare-styleable name="NavHostFragment">
+        <attr name="defaultNavHost" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="TagView">
+        <attr name="vertical_spacing" format="dimension" />
+        <attr name="horizontal_spacing" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ToolBarPoint">
+        <attr name="src_left_p" format="reference" />
+        <attr name="is_show_status_bar_p" format="boolean" />
+        <attr name="src_right_p" format="reference" />
+        <attr name="is_show_point" format="boolean" />
+        <attr name="is_show_call" format="boolean" />
+        <attr name="string_title_p" format="string|reference" />
+        <attr name="string_title_back_p" format="string|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ToolBarSearch">
+        <attr name="src_left_search" format="reference" />
+        <attr name="is_show_status_bar" format="boolean" />
+        <attr name="ic_search" format="reference" />
+        <attr name="tv_right_search" format="string" />
+        <attr name="string_hint_search" format="string" />
+    </declare-styleable>
+</resources>

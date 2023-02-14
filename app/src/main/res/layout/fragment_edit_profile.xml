@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="jp.careapp.counseling.android.ui.edit_profile.EditProfileViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background_common">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/app_bar"
+                    layout="@layout/tool_bar_common"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_130933"
+                    android:paddingHorizontal="@dimen/margin_16"
+                    android:paddingTop="@dimen/_17sdp"
+                    android:paddingBottom="@dimen/_9sdp"
+                    android:text="@string/profile_information"
+                    android:textColor="@color/purple_AEA2D1"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold" />
+
+                <include
+                    android:id="@+id/tv_name"
+                    layout="@layout/item_carelear_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    android:id="@+id/tv_gender"
+                    layout="@layout/item_carelear_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    android:id="@+id/tv_age"
+                    layout="@layout/item_carelear_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/color_white_opacity_15" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_130933"
+                    android:paddingHorizontal="@dimen/margin_16"
+                    android:paddingTop="@dimen/_17sdp"
+                    android:paddingBottom="@dimen/_9sdp"
+                    android:text="@string/account_information"
+                    android:textColor="@color/purple_AEA2D1"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold" />
+
+                <include
+                    android:id="@+id/tv_code"
+                    layout="@layout/item_carelear_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    android:id="@+id/tv_point"
+                    layout="@layout/item_carelear_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    android:id="@+id/tv_mail"
+                    layout="@layout/item_carelear_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/color_white_opacity_15" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_caution"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit_profile_unregister_mail_caution"
+                    android:textColor="@color/color_alert_error"
+                    android:textSize="@dimen/text_size_14"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:layout_marginStart="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/margin_16"
+                    android:layout_marginEnd="@dimen/margin_16" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <jp.careapp.counseling.android.utils.customView.GenderSelectView
+            android:id="@+id/genderSelectView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

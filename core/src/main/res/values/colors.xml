@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_button_common_blue">#4356B4</color>
+    <!--color common-->
+    <color name="background_color_white">#FFFFFF</color>
+    <color name="background_color_gray">#EFEFF4</color>
+    <color name="color_FF2875">#FF2875</color>
+
+    <color name="color_background_common">#1D1045</color> <!--rgb 29 16 69-->
+    <color name="color_disable_button">#332167</color> <!--rgb 51 33 103-->
+    <color name="color_text_E3DFEF">#E3DFEF</color> <!--rgb 51 33 103-->
+    <color name="purple_AEA2D1">#AEA2D1</color> <!--rgb 174 162 209-->
+    <color name="right_color_btn_common">#61C1FF</color> <!--rgb 97 193 255-->
+    <color name="color_978DFF">#978DFF</color> <!--rgb 97 193 255-->
+    <color name="white">#978DFF</color> <!--rgb 97 193 255-->
+    <color name="black_65">#A6000000</color> <!--rgba 0 0 0, 0.65-->
+</resources>

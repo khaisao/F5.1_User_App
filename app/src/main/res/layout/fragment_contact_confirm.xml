@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="contact"
+            type="jp.careapp.counseling.android.ui.contact_edit.ContactEdit" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background_common"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/app_bar"
+            layout="@layout/tool_bar_common"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/text_size_24"
+                    android:text="@string/member_code"
+                    android:textColor="@color/color_text_E3DFEF"
+                    android:textSize="@dimen/margin_16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_code_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/text_size_12"
+                    android:text="@{contact.code}"
+                    android:textColor="@color/purple_AEA2D1"
+                    android:textSize="@dimen/margin_16"
+                    tools:text="123456" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/text_size_32"
+                    android:text="@string/sub_title_edt_reregister"
+                    android:textColor="@color/color_text_E3DFEF"
+                    android:textSize="@dimen/margin_16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/text_size_12"
+                    android:text="@{contact.mail}"
+                    android:textColor="@color/purple_AEA2D1"
+                    android:textSize="@dimen/margin_16"
+                    tools:text="duynk3@rikkeisoft.com" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/text_size_32"
+                    android:text="@string/Inquiry_items"
+                    android:textColor="@color/color_text_E3DFEF"
+                    android:textSize="@dimen/margin_16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_request"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/text_size_12"
+                    android:gravity="top"
+                    android:text="@{contact.contactMemberRequest.category}"
+                    tools:text="カウンセラーについて" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/text_size_32"
+                    android:text="@string/content_of_inquiry"
+                    android:textColor="@color/color_text_E3DFEF"
+                    android:textSize="@dimen/margin_16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:text="@{contact.contactMemberRequest.content}"
+                    android:textSize="@dimen/margin_16" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/text_size_32"
+                    android:text="@string/absence_of_reply"
+                    android:textColor="@color/color_text_E3DFEF"
+                    android:textSize="@dimen/margin_16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/text_size_12"
+                    android:text="@{contact.contactMemberRequest.reply == 1 ? @string/necessary:@string/unnecessary}"
+                    tools:text="必要" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_send"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginHorizontal="@dimen/text_size_24"
+                    android:layout_marginTop="@dimen/text_size_32"
+                    android:background="@drawable/bg_gradient_common"
+                    android:textStyle="bold"
+                    android:text="@string/send"
+                    android:textSize="@dimen/margin_14" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_back_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginHorizontal="@dimen/text_size_24"
+                    android:layout_marginVertical="@dimen/margin_16"
+                    android:background="@drawable/bg_text_25"
+                    android:textColor="@color/bottom_bar_text"
+                    android:textStyle="bold"
+                    android:text="@string/change_content"
+                    android:textSize="@dimen/margin_14" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,92 @@
+{
+  "project_info": {
+    "project_number": "445107914622",
+    "project_id": "careapp-61a5c",
+    "storage_bucket": "careapp-61a5c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445107914622:android:4c67cfd9533d340488952f",
+        "android_client_info": {
+          "package_name": "jp.careapp.counseling.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445107914622-oaugisdtnf1oh6glhi8dghelbkjidll3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "jp.careapp.counseling.android",
+            "certificate_hash": "4e4345fbd0994356c588306fb94627989c5f9151"
+          }
+        },
+        {
+          "client_id": "445107914622-bkhd9b2k5e3d0mlg6vfu9a11vrqum7ju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALgqjU9XDVqsFKbBdXIB9maGxtc5IJvdo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445107914622-bkhd9b2k5e3d0mlg6vfu9a11vrqum7ju.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "445107914622-oijf3oli2ob96iggmouhedulj2nhsa5n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "jp.careapp.counseling.ios",
+                "app_store_id": "1571062356"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445107914622:android:64d89ddcc4c02bbf88952f",
+        "android_client_info": {
+          "package_name": "jp.careapp.counseling.android.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445107914622-bkhd9b2k5e3d0mlg6vfu9a11vrqum7ju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALgqjU9XDVqsFKbBdXIB9maGxtc5IJvdo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445107914622-bkhd9b2k5e3d0mlg6vfu9a11vrqum7ju.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "445107914622-oijf3oli2ob96iggmouhedulj2nhsa5n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "jp.careapp.counseling.ios",
+                "app_store_id": "1571062356"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

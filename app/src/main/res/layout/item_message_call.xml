@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_item_owner_cl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_12">
+
+        <TextView
+            android:id="@+id/tvStatusMessage"
+            style="@style/text_10"
+            android:layout_marginRight="@dimen/margin_4dp"
+            android:text="@string/read"
+            android:textColor="@color/color_6D5D9A"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/tvTimeSend"
+            app:layout_constraintEnd_toStartOf="@+id/clContentMessage" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTimeSend"
+            style="@style/text_10"
+            android:layout_marginRight="@dimen/margin_4dp"
+            android:layout_marginBottom="@dimen/margin_4dp"
+            android:textColor="@color/color_6D5D9A"
+            app:layout_constraintBottom_toBottomOf="@+id/clContentMessage"
+            app:layout_constraintEnd_toStartOf="@+id/clContentMessage"
+            tools:text="12:23" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clContentMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_corner_owner_message"
+            android:minWidth="172dp"
+            android:padding="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_balloon_call"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/iconEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:barrierDirection="end"
+                app:barrierMargin="10dp"
+                app:constraint_referenced_ids="ivCall" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitle"
+                style="@style/text_bold_14"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/tvReason"
+                app:layout_constraintStart_toEndOf="@+id/iconEnd"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="音声通話" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCaution"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="2dp"
+                android:src="@drawable/ic_caution"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/tvReason"
+                app:layout_constraintEnd_toStartOf="@+id/tvReason"
+                app:layout_constraintStart_toEndOf="@+id/iconEnd"
+                app:layout_constraintTop_toTopOf="@+id/tvReason"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvReason"
+                style="@style/text_10"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/tvDuration"
+                app:layout_constraintStart_toEndOf="@+id/ivCaution"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="正常終了" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDuration"
+                style="@style/text_10"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/color_E3DFEF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iconEnd"
+                app:layout_constraintTop_toBottomOf="@+id/tvReason"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="30:15" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

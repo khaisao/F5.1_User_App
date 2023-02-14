@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_item_performer_cl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_12">
+
+        <ImageView
+            android:id="@+id/avatar_iv"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_avatar_default"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/time_send_tv"
+            style="@style/text_10"
+            android:layout_marginStart="@dimen/margin_4dp"
+            android:layout_marginRight="@dimen/margin_4dp"
+            android:layout_marginBottom="@dimen/margin_4dp"
+            android:text="12:23"
+            android:textColor="@color/color_6D5D9A"
+            app:layout_constraintBottom_toBottomOf="@+id/rl_content_message"
+            app:layout_constraintStart_toEndOf="@+id/rl_content_message" />
+
+        <RelativeLayout
+            android:id="@+id/rl_content_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_8"
+            android:background="@drawable/bg_corner_performer_message"
+            android:paddingLeft="@dimen/margin_12"
+            android:paddingTop="@dimen/margin_11"
+            android:paddingRight="@dimen/margin_12"
+            android:paddingBottom="@dimen/margin_11"
+            app:layout_constraintStart_toEndOf="@+id/avatar_iv"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_max="wrap"
+            app:layout_constraintWidth_percent="0.7">
+
+            <TextView
+                android:id="@+id/content_message_tv"
+                style="@style/text_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_text_E3DFEF"
+                android:textIsSelectable="true"
+                tools:text="abc" />
+
+            <LinearLayout
+                android:id="@+id/ll_unlock_fee_message"
+                android:layout_width="@dimen/dimen_168"
+                android:layout_height="@dimen/dimen_54"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/margin_8"
+                android:layout_marginTop="@dimen/margin_18"
+                android:layout_marginEnd="@dimen/margin_8"
+                android:layout_marginBottom="@dimen/margin_18"
+                android:background="@drawable/bg_btn_unlock_fee_message"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/dimen_8"
+                android:paddingTop="@dimen/padding_12"
+                android:paddingEnd="@dimen/dimen_8"
+                android:paddingBottom="@dimen/padding_12"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/text_bold_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:lineSpacingMultiplier="0.7"
+                    android:text="@string/unlock_title"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tv_unlock_message"
+                    style="@style/text_10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:lineSpacingMultiplier="0.5"
+                    android:text="@string/unlock_message"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

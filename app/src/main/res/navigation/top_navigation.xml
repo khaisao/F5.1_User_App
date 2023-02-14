@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/top_navigation"
+    app:startDestination="@id/tabHome"
+    tools:ignore="ExtraText">
+    <!--    app:startDestination="@id/tabHome"-->
+
+    <fragment
+        android:id="@+id/tabHome"
+        android:name="jp.careapp.counseling.android.ui.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/tabMessage"
+        android:name="jp.careapp.counseling.android.ui.chatList.ChatListFragment"
+        android:label="ChatListFragment"
+        tools:layout="@layout/chat_list_fragment" />
+
+    <fragment
+        android:id="@+id/tabRank"
+        android:name="jp.careapp.counseling.android.ui.rank.RankFragment"
+        android:label="RankFragment"
+        tools:layout="@layout/rank_fragment" />
+
+    <fragment
+        android:id="@+id/tabFavorite"
+        android:name="jp.careapp.counseling.android.ui.favourite.FavoriteFragment"
+        android:label="FavoriteFragment"
+        tools:layout="@layout/fragment_favourite" />
+
+    <fragment
+        android:id="@+id/tabMyPage"
+        android:name="jp.careapp.counseling.android.ui.mypage.MyPageFragment"
+        android:label="MyPageFragment"
+        tools:layout="@layout/fragment_mypage" />
+
+    <include app:graph="@navigation/main_navigation" />
+
+</navigation>

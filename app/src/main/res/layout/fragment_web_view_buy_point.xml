@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/padding_15"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_15"
+            android:background="@drawable/bg_border_top_radius_12" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_20"
+            android:background="@drawable/bg_border_top_radius_12"
+            tools:ignore="RtlCompat">
+
+            <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+                android:id="@+id/tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iv_right="@drawable/ic_cancel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:src_left="@drawable/ic_back_left"
+                tools:string_title="@string/title_difficult_with_login" />
+            <LinearLayout
+                android:gravity="center"
+                android:background="@color/color_disable_button"
+                android:padding="@dimen/_15sdp"
+                android:id="@+id/my_point"
+                app:layout_constraintTop_toBottomOf="@+id/tool_bar"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_point"
+                    android:textColor="@color/color_text_E3DFEF"
+                    android:textSize="@dimen/text_size_12"
+                    />
+                <TextView
+                    android:id="@+id/point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    tools:text="10,000pts"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_15sdp"
+                    android:textColor="@color/color_text_E3DFEF"
+                    android:drawableStart="@drawable/ic_point"
+                    android:drawablePadding="@dimen/margin_2"
+                    />
+            </LinearLayout>
+            <WebView
+                android:id="@+id/webView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_0sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/my_point" />
+<!--            <TextView-->
+<!--                android:id="@+id/tv"-->
+<!--                android:background="@color/color_130933"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/webView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:paddingTop="@dimen/_17sdp"-->
+<!--                android:paddingBottom="@dimen/padding_10"-->
+<!--                android:paddingHorizontal="@dimen/margin_16"-->
+<!--                android:text="@string/my_point"-->
+<!--                android:textColor="@color/color_text_E3DFEF"-->
+<!--                android:textSize="@dimen/text_size_12"-->
+<!--                />-->
+<!--            <include-->
+<!--                android:id="@+id/tv_buy"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                layout="@layout/item_carelear_text"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tv"-->
+<!--                />-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

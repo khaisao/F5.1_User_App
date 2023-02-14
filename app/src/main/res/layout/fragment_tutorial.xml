@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background_common"
+        tools:context=".android.ui.tutorial.TutorialFragment">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPagerTutorial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/tabLayout"
+            android:layout_marginBottom="@dimen/margin_tutorial_20" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnNext"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/margin_tutorial_20"
+            android:background="@color/color_background_common"
+            android:paddingStart="@dimen/margin_2"
+            android:paddingEnd="@dimen/margin_2"
+            app:tabBackground="@drawable/tab_selector"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp"
+            app:tabMaxWidth="@dimen/margin_15" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/margin_40dp"
+            android:background="@drawable/bg_gradient_common"
+            android:paddingStart="@dimen/padding_68"
+            android:paddingEnd="@dimen/padding_68"
+            android:text="@string/tv_next"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</layout>

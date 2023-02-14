@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background_common">
+
+        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+            android:id="@+id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:src_left="@drawable/ic_back_left"
+            app:string_title="@string/report" />
+
+        <TextView
+            android:id="@+id/title_report_tv"
+            style="@style/text_bold_16"
+            android:paddingLeft="@dimen/margin_16"
+            android:paddingTop="@dimen/margin_24"
+            android:text="@string/title_report"
+            android:textColor="@color/color_text_E3DFEF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tool_bar" />
+
+        <EditText
+            android:id="@+id/content_report_edt"
+            style="@style/text_16"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginRight="@dimen/margin_16"
+            android:background="@drawable/bg_strock_8dp_978dff"
+            android:gravity="top|left"
+            android:hint="@string/hint_report"
+            android:padding="@dimen/margin_16"
+            android:scrollbars="vertical"
+            android:textColor="@color/color_text_E3DFEF"
+            android:inputType="textMultiLine"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_report_tv" />
+
+        <TextView
+            android:id="@+id/report_btn"
+            style="@style/text_bold_14"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/margin_24"
+            android:layout_marginTop="@dimen/margin_32"
+            android:layout_marginRight="@dimen/margin_24"
+            android:background="@drawable/bg_gradient"
+            android:enabled="false"
+            android:gravity="center"
+            android:paddingTop="@dimen/margin_15"
+            android:paddingBottom="@dimen/margin_15"
+            android:text="@string/report_btn"
+            android:textColor="@drawable/text_common"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/content_report_edt" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

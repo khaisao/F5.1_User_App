@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/rootLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_1D1045"
+        android:orientation="vertical">
+
+        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:src_left="@drawable/ic_back_left"
+            app:src_right="@string/port_new_question"
+            app:string_title="@string/title_new_question" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_background_common">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/titleNewQuestionEdt"
+                style="@style/text_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:gravity="top|start"
+                android:hint="@string/title_new_question_sheet"
+                android:inputType="text"
+                android:lines="1"
+                android:maxLength="10"
+                android:paddingHorizontal="@dimen/margin_16"
+                android:paddingVertical="@dimen/margin_14"
+                android:textColor="@color/purple_AEA2D1"
+                android:textColorHint="@color/color_6D5D9A" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/titleNewQuestionEdt"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:layout_marginRight="@dimen/margin_16"
+                android:background="@color/color_978DFF" />
+
+            <EditText
+                android:id="@+id/contentNewQuestionEdt"
+                style="@style/text_16"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/countLimitCharTv"
+                android:layout_below="@id/divider"
+                android:layout_marginTop="@dimen/margin_24"
+                android:background="@color/transparent"
+                android:gravity="top|left"
+                android:hint="@string/hint_content_new_question"
+                android:inputType="textNoSuggestions|textMultiLine"
+                android:paddingHorizontal="@dimen/margin_16"
+                android:scrollbars="vertical"
+                android:textColor="@color/purple_AEA2D1"
+                android:textColorHint="@color/color_6D5D9A"
+                tools:ignore="RtlHardcoded" />
+
+            <TextView
+                android:id="@+id/countLimitCharTv"
+                style="@style/text_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/countCharTv"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:paddingEnd="@dimen/margin_16"
+                android:paddingBottom="@dimen/margin_6"
+                android:text="@{@string/format_limit_character_of_content(30)}"
+                android:textColor="@color/color_alert_error" />
+
+            <TextView
+                android:id="@+id/errorImojiTv"
+                style="@style/text_bold_10"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/countCharTv"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_toStartOf="@+id/countCharTv"
+                android:paddingBottom="@dimen/margin_10"
+                android:text="@string/donot_input_emoji"
+                android:textColor="@color/color_alert_error"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/countCharTv"
+                style="@style/text_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/dividerBottom"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:paddingEnd="@dimen/margin_16"
+                android:paddingBottom="@dimen/margin_10"
+                android:text="@{@string/format_character_of_content(128)}"
+                android:textColor="@color/purple_AEA2D1" />
+
+            <View
+                android:id="@+id/dividerBottom"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_above="@id/chooseCategoryRl"
+                android:alpha="0.15"
+                android:background="@color/white" />
+
+            <RelativeLayout
+                android:id="@+id/chooseCategoryRl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:paddingVertical="@dimen/margin_14"
+                android:paddingStart="@dimen/margin_16"
+                android:paddingEnd="@dimen/margin_8">
+
+                <TextView
+                    android:id="@+id/categoryTv"
+                    style="@style/text_16"
+                    android:layout_centerVertical="true"
+                    android:text="@string/type_question"
+                    android:textColor="@color/color_text_E3DFEF" />
+
+                <TextView
+                    android:id="@+id/typeCategoryTv"
+                    style="@style/text_16"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/margin_4dp"
+                    android:layout_toStartOf="@+id/nextIv"
+                    android:ellipsize="end"
+                    android:gravity="end"
+                    android:lines="1"
+                    android:text="@string/please_select"
+                    android:textColor="@color/color_978DFF" />
+
+                <ImageView
+                    android:id="@+id/nextIv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_alignTop="@+id/categoryTv"
+                    android:layout_alignBottom="@+id/categoryTv"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:rotation="180"
+                    android:src="@drawable/ic_back_aea2d1" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>

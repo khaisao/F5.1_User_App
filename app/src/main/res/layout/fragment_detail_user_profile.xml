@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_1D1045">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_above="@id/divider"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
+                    app:layout_scrollFlags="scroll">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_1D1045">
+
+                        <ImageView
+                            android:id="@+id/banner_user_iv"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_banner_user"
+                            android:adjustViewBounds="true"
+                            android:scaleType="centerCrop" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/layout_info"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/banner_user_iv">
+
+                            <ImageView
+                                android:id="@+id/avatar_iv"
+                                android:layout_width="96dp"
+                                android:layout_height="96dp"
+                                android:layout_marginTop="@dimen/margin_16"
+                                android:adjustViewBounds="true"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/img_ranking"
+                                android:layout_width="73dp"
+                                android:layout_height="@dimen/dimen_54"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/layout_tweet_tv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/margin_24"
+                                android:visibility="invisible"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <include
+                                    android:id="@+id/layout_tweet_tv_pattern_1"
+                                    layout="@layout/layout_tweet_pattern_1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <include
+                                    android:id="@+id/layout_tweet_tv_pattern_2"
+                                    layout="@layout/layout_tweet_pattern_2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <TextView
+                                android:id="@+id/presence_status_tv"
+                                style="@style/text_bold_10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_24"
+                                android:gravity="center"
+                                android:paddingStart="@dimen/margin_6dp"
+                                android:paddingTop="@dimen/margin_3"
+                                android:paddingEnd="@dimen/margin_6dp"
+                                android:paddingBottom="@dimen/margin_3"
+                                android:textColor="@color/color_1D1045"
+                                app:layout_constraintBottom_toBottomOf="@id/stage_iv"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@id/stage_iv"
+                                tools:text="@string/receiving" />
+
+                            <ImageView
+                                android:id="@+id/stage_iv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/margin_30"
+                                android:layout_alignStart="@+id/avatar_iv"
+                                android:layout_alignEnd="@+id/avatar_iv"
+                                android:layout_alignBottom="@+id/avatar_iv"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="@dimen/margin_10"
+                                android:minWidth="70dp"
+                                android:scaleType="fitCenter"
+                                app:layout_constraintStart_toEndOf="@id/presence_status_tv"
+                                app:layout_constraintTop_toBottomOf="@id/layout_tweet_tv" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/margin_24"
+                                android:layout_marginTop="@dimen/margin_6dp"
+                                android:layout_marginRight="@dimen/margin_24"
+                                android:orientation="vertical"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/stage_iv">
+
+                                <TextView
+                                    android:id="@+id/user_name_tv"
+                                    style="@style/text_bold_16"
+                                    android:textColor="@color/color_E3DFEF"
+                                    tools:text="名前なまえ名前なまえ" />
+
+                                <RatingBar
+                                    android:id="@+id/rating_user_rb"
+                                    style="?android:attr/ratingBarStyleSmall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/user_name_tv"
+                                    android:layout_marginTop="@dimen/margin_8"
+                                    android:numStars="5"
+                                    android:progressBackgroundTint="@color/gray"
+                                    android:progressTint="@color/color_E1D600"
+                                    android:secondaryProgressTint="@color/gray" />
+
+                                <TextView
+                                    android:id="@+id/rating_user_tv"
+                                    style="@style/text_12"
+                                    android:layout_alignBottom="@+id/rating_user_rb"
+                                    android:layout_marginLeft="@dimen/margin_5dp"
+                                    android:layout_toRightOf="@+id/rating_user_rb"
+                                    android:textColor="@color/color_E1D600"
+                                    tools:text="4.0" />
+
+                                <ImageView
+                                    android:id="@+id/price_chat_iv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/rating_user_rb"
+                                    android:layout_marginTop="@dimen/margin_8"
+                                    android:src="@drawable/ic_price_chat" />
+
+                                <TextView
+                                    android:id="@+id/price_chat_tv"
+                                    style="@style/text_bold_11"
+                                    android:layout_alignTop="@+id/price_chat_iv"
+                                    android:layout_marginLeft="@dimen/margin_4dp"
+                                    android:layout_toRightOf="@+id/price_chat_iv"
+                                    android:textColor="@color/color_E3DFEF"
+                                    tools:text="@string/price_point" />
+
+                                <ImageView
+                                    android:id="@+id/ivPriceCall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/rating_user_rb"
+                                    android:layout_marginStart="@dimen/dimen_8"
+                                    android:layout_marginTop="@dimen/margin_8"
+                                    android:layout_toRightOf="@+id/price_chat_tv"
+                                    android:src="@drawable/ic_price_call" />
+
+                                <TextView
+                                    android:id="@+id/tvPriceCall"
+                                    style="@style/text_bold_11"
+                                    android:layout_alignTop="@+id/ivPriceCall"
+                                    android:layout_marginLeft="@dimen/margin_4dp"
+                                    android:layout_toRightOf="@+id/ivPriceCall"
+                                    android:textColor="@color/color_E3DFEF"
+                                    tools:text="@string/price_point" />
+
+                                <TextView
+                                    android:id="@+id/add_favorite_tv"
+                                    style="@style/text_user_profile_12"
+                                    android:layout_alignTop="@+id/rating_user_tv"
+                                    android:layout_alignParentRight="true"
+                                    android:background="@drawable/bg_strock_25dp_e3dfef"
+                                    android:drawableLeft="@drawable/ic_button_add"
+                                    android:drawablePadding="@dimen/margin_4dp"
+                                    android:gravity="center_vertical"
+                                    android:padding="@dimen/margin_11"
+                                    android:text="@string/add_favorite"
+                                    android:textColor="@color/color_E3DFEF"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:id="@+id/remove_favorite_tv"
+                                    style="@style/text_user_profile_12"
+                                    android:layout_alignTop="@+id/rating_user_tv"
+                                    android:layout_alignParentRight="true"
+                                    android:background="@drawable/bg_corner_16dp_1d1045"
+                                    android:drawableLeft="@drawable/ic_button_check"
+                                    android:drawablePadding="@dimen/margin_4dp"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="@dimen/margin_24"
+                                    android:paddingTop="@dimen/margin_10"
+                                    android:paddingRight="@dimen/margin_24"
+                                    android:paddingBottom="@dimen/margin_10"
+                                    android:text="@string/remove_favorite"
+                                    android:textColor="@color/color_978DFF"
+                                    android:visibility="gone" />
+                            </RelativeLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <com.google.android.material.tabs.TabLayout
+                            android:id="@+id/tab_infor_user_tl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/layout_info"
+                            android:layout_marginTop="@dimen/margin_6"
+                            android:background="@color/color_1D1045"
+                            android:scrollIndicators="bottom"
+                            app:tabIndicator="@color/color_6D5D9A"
+                            app:tabIndicatorColor="@color/color_978DFF"
+                            app:tabIndicatorFullWidth="true"
+                            app:tabIndicatorGravity="bottom"
+                            app:tabIndicatorHeight="2dp"
+                            app:tabSelectedTextColor="@color/color_E3DFEF"
+                            app:tabTextAppearance="@style/text_bold_14"
+                            app:tabTextColor="@color/color_6D5D9A" />
+
+                        <View
+                            android:id="@+id/divider2"
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_below="@+id/tab_infor_user_tl"
+                            android:background="@color/color_6D5D9A" />
+
+                    </RelativeLayout>
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/infor_user_vp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_above="@+id/clAction"
+            android:layout_marginBottom="@dimen/margin_12"
+            android:background="@color/color_6D5D9A" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clAction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingHorizontal="8dp"
+            android:paddingBottom="@dimen/margin_24"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/send_consult_ll"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_marginHorizontal="@dimen/margin_4dp"
+                android:background="@drawable/bg_corner_26dp_978dff_alpha"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ll_call_consult"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_btn_message_active" />
+
+                <TextView
+                    style="@style/text_bold_16"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_5dp"
+                    android:gravity="center"
+                    android:text="@string/consult_by_chat"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_call_consult"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_marginHorizontal="@dimen/margin_4dp"
+                android:background="@drawable/bg_button_call"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/send_consult_ll"
+                app:layout_constraintWidth_percent="0.48">
+
+                <ImageView
+                    android:id="@+id/ivCall"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_price_call" />
+
+                <TextView
+                    android:id="@+id/tvCall"
+                    style="@style/text_bold_16"
+                    android:layout_marginLeft="@dimen/margin_5dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="0dp"
+                    android:text="@string/consult_by_call"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/ball_next_online_tv"
+            style="@style/text_bold_14"
+            android:layout_above="@+id/send_noti_ll"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ic_balloon_next_online"
+            android:gravity="center_horizontal"
+            android:paddingLeft="@dimen/margin_15"
+            android:paddingTop="@dimen/margin_7"
+            android:paddingRight="@dimen/margin_15"
+            android:paddingBottom="@dimen/margin_18"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            tools:text="次回：12月02日 23時～" />
+
+        <LinearLayout
+            android:id="@+id/send_noti_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_marginRight="@dimen/margin_16"
+            android:layout_marginBottom="@dimen/margin_24"
+            android:background="@drawable/bg_strock_26dp_978dff"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_alert" />
+
+            <TextView
+                style="@style/text_bold_16"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/margin_6dp"
+                android:gravity="center"
+                android:paddingTop="@dimen/margin_18"
+                android:paddingBottom="@dimen/margin_18"
+                android:text="@string/title_noti"
+                android:textColor="@color/color_978DFF" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

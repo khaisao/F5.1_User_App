@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background_common"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        tools:context=".android.ui.searchCategory.SearchFragment">
+
+        <jp.careapp.counseling.android.utils.customView.ToolbarSearch
+            android:id="@+id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:ic_search="@drawable/ic_search"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:src_left_search="@drawable/ic_cancel"
+            app:string_hint_search="@string/hint_search"
+            app:tv_right_search="@string/cancel_search" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/viewFinal"
+            app:layout_constraintTop_toBottomOf="@+id/tool_bar">
+
+            <LinearLayout
+                android:id="@+id/llCondition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/margin_16">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/your_worries"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/genres_chip_group"
+                    style="@style/CommonChipGroupMultipleChoiceStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_12"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_32"
+                    android:text="@string/label_gender"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/gender_chip_group"
+                    style="@style/CommonChipGroupChoiceStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_12">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/gender_male_chip"
+                        style="@style/CommonChipChoiceStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_male" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/gender_female_chip"
+                        style="@style/CommonChipChoiceStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_female" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_32"
+                    android:text="@string/teacher_stage"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/ranking_chip_group"
+                    style="@style/CommonChipGroupMultipleChoiceStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_12">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/ranking_diamond_chip"
+                        style="@style/CommonChipChoiceStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/diamond" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/ranking_platinum_chip"
+                        style="@style/CommonChipChoiceStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/platinum" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/ranking_gold_chip"
+                        style="@style/CommonChipChoiceStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gold" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/ranking_silver_chip"
+                        style="@style/CommonChipChoiceStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/silver" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/ranking_bronze_chip"
+                        style="@style/CommonChipChoiceStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bronze" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/ranking_basic_chip"
+                        style="@style/CommonChipChoiceStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/basic" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/margin_32"
+                    android:text="@string/review"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/review_chip_group"
+                    style="@style/CommonChipGroupChoiceStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_12">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/has_review_chip"
+                        style="@style/CommonChipChoiceStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/number_review" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/three_or_more_chip"
+                        style="@style/CommonChipChoiceStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/three_or_more" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/four_or_more_chip"
+                        style="@style/CommonChipChoiceStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/four_or_more" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_32"
+                    android:text="@string/status"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/status_chip_group"
+                    style="@style/CommonChipGroupChoiceStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_12">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/status_chip"
+                        style="@style/CommonChipChoiceStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/review_average" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <View
+            android:id="@+id/viewFinal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_1"
+            android:layout_marginBottom="@dimen/margin_12"
+            android:alpha="0.15"
+            android:background="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/btnSearch"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_24dp"
+            android:layout_marginEnd="@dimen/margin_24dp"
+            android:layout_marginBottom="@dimen/margin_12"
+            android:background="@drawable/bg_gradient_common"
+            android:text="@string/start"
+            android:textSize="@dimen/text_size_16"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="loading"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
+        android:background="@color/color_background_common"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/app_bar"
+            layout="@layout/tool_bar_common"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <androidx.recyclerview.widget.RecyclerView
+            app:layout_constraintTop_toBottomOf="@+id/app_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/rv_blocked"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_0sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNoData"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_30"
+            android:layout_marginTop="@dimen/height_80"
+            android:layout_marginEnd="@dimen/margin_30"
+            android:gravity="center_horizontal"
+            android:visibility="gone"
+            android:textSize="@dimen/text_size_16"
+            android:text="@string/no_block_data"
+            android:textColor="@color/color_6D5D9A"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_bar"
+            app:layout_goneMarginEnd="@dimen/margin_24" />
+
+        <ProgressBar
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:goneIf="@{!loading}"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

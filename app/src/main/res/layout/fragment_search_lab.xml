@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background_common"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_toolbar_common"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/btn_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close_purple_24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/edt_search"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginEnd="@dimen/margin_8"
+                app:layout_constraintTop_toTopOf="@+id/edt_search" />
+
+            <EditText
+                android:id="@+id/edt_search"
+                android:layout_width="@dimen/_0sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_10"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginTop="@dimen/view_size_4"
+                android:background="@drawable/bg_input_search_lab"
+                android:drawableStart="@drawable/ic_search"
+                android:paddingVertical="@dimen/margin_11"
+                android:drawablePadding="@dimen/margin_8"
+                android:paddingHorizontal="@dimen/margin_8"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:lines="1"
+                android:textSize="@dimen/margin_14"
+                android:hint="@string/search_key"
+                android:textColor="@color/color_text_E3DFEF"
+                android:textColorHint="@color/color_6D5D9A"
+                app:layout_constraintEnd_toStartOf="@+id/btn_clear"
+                app:layout_constraintStart_toEndOf="@+id/btn_close"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpUsage" />
+
+            <TextView
+                android:id="@+id/btn_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel_search"
+                app:layout_constraintBottom_toBottomOf="@+id/edt_search"
+                android:textColor="@color/color_978DFF"
+                android:textSize="@dimen/margin_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edt_search" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            app:layout_constraintTop_toBottomOf="@+id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginBottom="@dimen/margin_12"
+            android:background="@color/white_16" />
+        <include
+            android:id="@+id/category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tool_bar"
+            layout="@layout/item_carelear_text"/>
+        <include
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/category"
+            layout="@layout/item_carelear_text"/>
+        <include
+            android:id="@+id/sort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/status"
+            layout="@layout/item_carelear_text"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginBottom="@dimen/margin_12"
+            android:background="@color/white_16"
+            app:layout_constraintBottom_toTopOf="@+id/btn_search" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_search"
+            style="@style/text_bold_14"
+            android:layout_marginBottom="@dimen/margin_16"
+            android:background="@drawable/bg_gradient_common"
+            android:paddingHorizontal="@dimen/_123sdp"
+            android:paddingVertical="@dimen/_15sdp"
+            android:text="@string/start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

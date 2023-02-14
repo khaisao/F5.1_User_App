@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/content_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_strock_11dp_6d5d9a"
+        android:paddingLeft="@dimen/margin_10"
+        android:paddingTop="@dimen/margin_4dp"
+        android:paddingRight="@dimen/margin_10"
+        android:paddingBottom="@dimen/margin_4dp"
+        android:textColor="@color/color_AEA2D1"
+        tools:text="復縁" />
+</layout>

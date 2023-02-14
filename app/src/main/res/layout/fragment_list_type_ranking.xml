@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:id="@+id/scrollViewRanking"
+            android:layout_height="match_parent"
+            android:background="@color/color_background_common">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_background_common">
+
+                <RelativeLayout
+                    android:id="@+id/llTopRanking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_ranking_daily"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RelativeLayout
+                        android:id="@+id/rlRanking2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="@dimen/margin_16"
+                        android:layout_marginTop="70dp"
+                        android:layout_toLeftOf="@+id/rlRanking1"
+                        android:gravity="start"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/avatarRank2"
+                            android:layout_width="@dimen/height_83"
+                            android:layout_height="@dimen/height_83"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/ic_avatar_default" />
+
+                        <View
+                            android:id="@+id/viewAvatarRank2"
+                            android:layout_width="@dimen/height_83"
+                            android:layout_height="@dimen/height_90"
+                            android:layout_alignStart="@+id/avatarRank2"
+                            android:layout_alignTop="@+id/avatarRank2"
+                            android:background="@drawable/ic_ranking_rank2" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/name_rank2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAvatarRank2"
+                            android:layout_alignStart="@+id/viewAvatarRank2"
+                            android:layout_alignEnd="@+id/viewAvatarRank2"
+                            android:layout_marginTop="@dimen/margin_8"
+                            android:ellipsize="end"
+                            android:gravity="center_horizontal"
+                            android:paddingStart="@dimen/margin_5dp"
+                            android:paddingEnd="@dimen/margin_5dp"
+                            android:singleLine="true"
+                            android:textSize="@dimen/text_size_16"
+                            android:textStyle="bold"
+                            tools:text="なまえ" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/status_rank2"
+                            style="@style/text_bold_10"
+                            android:paddingStart="@dimen/margin_6dp"
+                            android:paddingTop="@dimen/margin_3"
+                            android:paddingEnd="@dimen/margin_6dp"
+                            android:paddingBottom="@dimen/margin_3"
+                            android:layout_below="@+id/name_rank2"
+                            android:layout_alignLeft="@+id/avatarRank2"
+                            android:layout_alignRight="@+id/avatarRank2"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:layout_marginStart="@dimen/margin_15"
+                            android:layout_marginTop="@dimen/margin_8"
+                            android:layout_marginEnd="@dimen/margin_15"
+                            android:background="@drawable/ic_status_offline"
+                            android:padding="@dimen/margin_5dp"
+                            android:text="@string/status_offline"
+                            android:textSize="@dimen/text_size_12" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlRanking1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/avatarRank1"
+                            android:layout_width="@dimen/height_115"
+                            android:layout_height="@dimen/height_115"
+                            android:paddingBottom="@dimen/margin_5dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/ic_avatar_default" />
+
+                        <View
+                            android:id="@+id/viewAvatarRank1"
+                            android:layout_width="@dimen/height_115"
+                            android:layout_height="125dp"
+                            android:layout_alignStart="@+id/avatarRank1"
+                            android:layout_alignTop="@+id/avatarRank1"
+                            android:background="@drawable/ic_ranking_rank1" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/name_rank1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAvatarRank1"
+                            android:layout_alignStart="@+id/viewAvatarRank1"
+                            android:layout_alignEnd="@+id/viewAvatarRank1"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/margin_8"
+                            android:ellipsize="end"
+                            android:gravity="center_horizontal"
+                            android:paddingStart="@dimen/margin_5dp"
+                            android:paddingEnd="@dimen/margin_5dp"
+                            android:singleLine="true"
+                            android:textSize="@dimen/text_size_16"
+                            android:textStyle="bold"
+                            tools:text="なまえ" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/status_rank1"
+                            style="@style/text_bold_10"
+                            android:paddingStart="@dimen/margin_6dp"
+                            android:paddingTop="@dimen/margin_3"
+                            android:paddingEnd="@dimen/margin_6dp"
+                            android:paddingBottom="@dimen/margin_3"
+                            android:layout_below="@+id/name_rank1"
+                            android:layout_alignStart="@+id/viewAvatarRank1"
+                            android:layout_alignEnd="@+id/viewAvatarRank1"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="@dimen/margin_30"
+                            android:layout_marginTop="@dimen/margin_8"
+                            android:layout_marginEnd="@dimen/margin_30"
+                            android:background="@drawable/ic_status_offline"
+                            android:gravity="center_horizontal"
+                            android:padding="@dimen/margin_5dp"
+                            android:text="@string/status_offline"
+                            android:textSize="@dimen/text_size_12" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlRanking3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="70dp"
+                        android:layout_marginEnd="@dimen/margin_16"
+                        android:layout_toRightOf="@+id/rlRanking1"
+                        android:gravity="end"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/avatarRank3"
+                            android:layout_width="@dimen/height_83"
+                            android:layout_height="@dimen/height_83"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/ic_avatar_default" />
+
+                        <View
+                            android:id="@+id/viewAvatarRank3"
+                            android:layout_width="@dimen/height_83"
+                            android:layout_height="@dimen/height_90"
+                            android:layout_alignStart="@+id/avatarRank3"
+                            android:layout_alignTop="@+id/avatarRank3"
+                            android:background="@drawable/ic_ranking_rank3" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/name_rank3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAvatarRank3"
+                            android:layout_alignLeft="@+id/avatarRank3"
+                            android:layout_alignRight="@+id/avatarRank3"
+                            android:layout_marginTop="@dimen/margin_8"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:paddingStart="@dimen/margin_5dp"
+                            android:paddingEnd="@dimen/margin_5dp"
+                            android:singleLine="true"
+                            android:textSize="@dimen/text_size_16"
+                            android:textStyle="bold"
+                            tools:text="なまえ" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/status_rank3"
+                            style="@style/text_bold_10"
+                            android:paddingStart="@dimen/margin_6dp"
+                            android:paddingTop="@dimen/margin_3"
+                            android:paddingEnd="@dimen/margin_6dp"
+                            android:paddingBottom="@dimen/margin_3"
+                            android:layout_below="@+id/name_rank3"
+                            android:layout_alignLeft="@+id/avatarRank3"
+                            android:layout_alignRight="@+id/avatarRank3"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="@dimen/margin_15"
+                            android:layout_marginTop="@dimen/margin_8"
+                            android:layout_marginEnd="@dimen/margin_15"
+                            android:background="@drawable/ic_status_offline"
+                            android:gravity="center"
+                            android:padding="@dimen/margin_5dp"
+                            android:text="@string/status_offline"
+                            android:textSize="@dimen/text_size_12" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvRanking"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/margin_16"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/llTopRanking"
+                    tools:itemCount="10"
+                    tools:listitem="@layout/item_ranking" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvNoRanking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_100"
+                    android:text="@string/no_ranking_result"
+                    android:textColor="@color/color_6D5D9A"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="normal"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="data"
+            type="jp.careapp.counseling.android.model.buy_point.ItemPoint" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_1D1045"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/point_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:src="@drawable/ic_point" />
+
+        <TextView
+            android:id="@+id/point_tv"
+            style="@style/text_bold_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_8"
+            android:layout_toRightOf="@+id/point_iv"
+            android:text="@{data.pointCount}"
+            android:textColor="@color/color_E3DFEF" />
+
+        <LinearLayout
+            android:id="@+id/first_buy_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/margin_4dp"
+            android:layout_toEndOf="@+id/point_tv"
+            android:orientation="horizontal"
+            app:goneIf="@{data.costFirst.isEmpty()}">
+
+            <TextView
+                style="@style/text_bold_8"
+                android:background="@drawable/bg_corner_8dp_ffd600"
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_4dp"
+                android:text="@string/first_buy_point"
+                android:textColor="@color/color_1D1045"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/first_point_tv"
+                style="@style/text_bold_10"
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_4dp"
+                android:text="@{data.costFirst}"
+                android:textColor="@color/color_FFD600" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/action_buy_point_tv"
+            style="@style/text_bold_14"
+            android:layout_width="@dimen/dimen_110"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/margin_12"
+            android:layout_marginRight="@dimen/margin_16"
+            android:layout_marginBottom="@dimen/margin_12"
+            android:background="@drawable/bg_corner_3dp_e2b700"
+            android:gravity="center"
+            android:paddingLeft="@dimen/margin_22"
+            android:paddingTop="@dimen/margin_9"
+            android:paddingRight="@dimen/margin_22"
+            android:paddingBottom="@dimen/margin_9"
+            android:text="@{data.money}"
+            android:textColor="@color/color_1D1045" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/action_buy_point_tv"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:alpha="0.15"
+            android:background="@color/white" />
+    </RelativeLayout>
+</layout>

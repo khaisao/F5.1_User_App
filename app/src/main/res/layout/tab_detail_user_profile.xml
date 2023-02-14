@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_background_common"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/margin_24"
+            android:paddingTop="@dimen/margin_32"
+            android:paddingRight="@dimen/margin_24"
+            android:paddingBottom="@dimen/margin_32">
+
+            <TextView
+                style="@style/text_bold_14"
+                android:text="@string/message_teacher"
+                android:textColor="@color/color_E3DFEF" />
+
+            <TextView
+                android:id="@+id/message_tv"
+                style="@style/text_14"
+                android:layout_marginTop="@dimen/margin_8"
+                android:textColor="@color/color_AEA2D1" />
+
+            <TextView
+                style="@style/text_bold_14"
+                android:layout_marginTop="@dimen/margin_32"
+                android:text="@string/specialty_genre"
+                android:textColor="@color/color_E3DFEF" />
+
+            <jp.careapp.counseling.android.utils.customView.TagView
+                android:id="@+id/tagview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8"
+                app:horizontal_spacing="@dimen/margin_8"
+                app:vertical_spacing="@dimen/margin_6dp" />
+
+            <TextView
+                style="@style/text_bold_14"
+                android:layout_marginTop="@dimen/margin_32"
+                android:text="@string/reception_schedule"
+                android:textColor="@color/color_E3DFEF"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/schedule_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_8"
+                android:visibility="gone"
+                tools:listitem="@layout/item_schedule_chat" />
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

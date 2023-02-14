@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:toos="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:paddingHorizontal="@dimen/margin_16"
+            android:id="@+id/item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingVertical="@dimen/margin_14"
+                android:textColor="@color/color_text_E3DFEF"
+                android:textSize="@dimen/margin_16"
+                android:maxLines="1"
+                app:layout_constraintEnd_toStartOf="@+id/tv_end"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                toos:ignore="SpUsage" />
+
+            <TextView
+                android:id="@+id/tv_end"
+                android:layout_width="@dimen/_0sdp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:paddingVertical="@dimen/margin_14"
+                android:textColor="@color/color_978DFF"
+                android:textSize="@dimen/margin_16"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_marginStart="@dimen/margin_55"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_start"
+                app:layout_constraintEnd_toStartOf="@+id/iv_end"
+                app:layout_constraintStart_toEndOf="@id/tv_start"
+                app:layout_constraintTop_toTopOf="@+id/tv_start"
+                toos:ignore="SpUsage" />
+
+            <ImageView
+                android:id="@+id/iv_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_icoarrowright_purple"
+                android:layout_marginStart="@dimen/_6sdp"
+                app:layout_constraintStart_toEndOf="@+id/tv_end"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_start" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_2"
+            android:layout_marginStart="@dimen/margin_16"
+            android:background="@color/color_white_opacity_15"
+            app:layout_constraintTop_toBottomOf="@id/tv_start" />
+    </LinearLayout>
+</layout>

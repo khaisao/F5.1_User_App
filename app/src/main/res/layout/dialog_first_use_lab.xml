@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:gravity="center">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:background="@drawable/bg_dialog_point_free">
+
+        <TextView
+            android:id="@+id/tv_title_first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_size_32"
+            android:text="@string/what_consultation_lab"
+            android:textSize="@dimen/margin_20"
+            android:textColor="@color/color_text_E3DFEF"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_size_24"
+            android:textStyle="bold"
+            android:textSize="@dimen/margin_16"
+            android:text="@string/title_second_dialog_lab"
+            android:textColor="@color/color_text_E3DFEF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_first" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="@dimen/_0sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_size_24"
+            android:paddingHorizontal="@dimen/text_size_24"
+            android:text="@string/message_dialog_lab"
+            android:textSize="@dimen/margin_14"
+            android:textColor="@color/color_text_E3DFEF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_second"
+            tools:ignore="SpUsage" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_ok"
+            android:layout_width="@dimen/_0sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_title_verify_code_55"
+            android:layout_marginTop="@dimen/text_size_24"
+            android:background="@drawable/bg_gradient_common"
+            android:text="@string/text_OK"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="@+id/tv_message"
+            app:layout_constraintStart_toStartOf="@+id/tv_message"
+            app:layout_constraintTop_toBottomOf="@+id/tv_message" />
+
+        <View
+            android:layout_width="@dimen/_0sdp"
+            android:layout_height="@dimen/_0sdp"
+            android:layout_marginTop="@dimen/text_size_24"
+            app:layout_constraintEnd_toEndOf="@+id/tv_message"
+            app:layout_constraintStart_toStartOf="@+id/tv_message"
+            app:layout_constraintTop_toBottomOf="@+id/btn_ok" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

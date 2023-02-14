@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background_common"
+        android:orientation="vertical"
+        tools:context=".ui.verifyCode.VerifyCodeHelpFragment">
+
+
+        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+            android:id="@+id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:src_left="@drawable/ic_back_left" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/llContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/margin_24"
+                android:layout_marginEnd="@dimen/margin_24"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/height_80">
+
+                <TextView
+                    style="@style/text_bold_18"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/title_do_not_receive_email"
+                    android:textColor="@color/color_text_E3DFEF" />
+
+                <TextView
+                    style="@style/text_14"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/please_sure_email_address_correct"
+                    android:textColor="@color/color_text_E3DFEF" />
+
+                <TextView
+                    android:id="@+id/tvYourEmail"
+                    style="@style/text_bold_18"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/margin_32"
+                    android:textColor="@color/color_text_E3DFEF"
+                    tools:text="1234@abc.net" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_edit_contact"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_44"
+                    android:layout_marginStart="@dimen/margin_48"
+                    android:layout_marginTop="@dimen/margin_32"
+                    android:layout_marginEnd="@dimen/margin_48"
+                    android:background="@drawable/bg_gradient_common"
+                    android:text="@string/correct_your_email_address"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_14"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_1"
+                    android:layout_marginTop="34dp"
+                    android:alpha="0.15"
+                    android:background="@color/white" />
+
+                <TextView
+                    style="@style/text_bold_18"
+                    android:layout_marginTop="@dimen/margin_32"
+                    android:text="@string/please_check_email_reception_setting"
+                    android:textColor="@color/color_text_E3DFEF" />
+
+                <TextView
+                    android:id="@+id/tvContentHelp"
+                    style="@style/text_14"
+                    android:layout_marginTop="@dimen/margin_32"
+                    android:textColor="@color/color_text_E3DFEF"
+                    tools:text="@string/description_information_help"
+                    tools:textColor="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btReSendEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_44"
+                    android:layout_marginStart="@dimen/margin_48"
+                    android:layout_marginTop="@dimen/margin_32"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="@dimen/margin_48"
+                    android:background="@drawable/bg_gradient_common"
+                    android:text="@string/resend_confirmation_email"
+                    android:textColor="@color/white" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_1"
+                    android:layout_marginTop="@dimen/margin_34"
+                    android:alpha="0.15"
+                    android:background="@color/white" />
+
+                <TextView
+                    style="@style/text_bold_18"
+                    android:layout_marginTop="@dimen/margin_32"
+                    android:text="@string/above_method_not_solve_problem"
+                    android:textColor="@color/color_text_E3DFEF" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btContactUs"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_44"
+                    android:layout_marginStart="@dimen/margin_48"
+                    android:layout_marginTop="@dimen/margin_32"
+                    android:layout_marginEnd="@dimen/margin_48"
+                    android:background="@drawable/bg_gradient_common"
+                    android:text="@string/contact_us"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_14"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+</layout>

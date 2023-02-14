@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background_common"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/app_bar"
+            layout="@layout/tool_bar_common"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_130933"
+            android:paddingHorizontal="@dimen/margin_16"
+            android:paddingTop="@dimen/_17sdp"
+            android:paddingBottom="@dimen/_9sdp"
+            android:text="@string/notification_setting"
+            android:textColor="@color/purple_AEA2D1"
+            android:textSize="@dimen/text_size_12"
+            android:textStyle="bold" />
+
+        <include
+            android:id="@+id/notifi_web"
+            layout="@layout/item_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/notifi_receive_mess"
+            layout="@layout/item_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/notifi_online"
+            layout="@layout/item_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/notifi_lab"
+            layout="@layout/item_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/color_white_opacity_15" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_130933"
+            android:paddingHorizontal="@dimen/margin_16"
+            android:paddingTop="@dimen/_17sdp"
+            android:paddingBottom="@dimen/_9sdp"
+            android:text="@string/email_setting"
+            android:textColor="@color/purple_AEA2D1"
+            android:textSize="@dimen/text_size_12"
+            android:textStyle="bold" />
+
+        <include
+            android:id="@+id/notifi_receive_email"
+            layout="@layout/item_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/color_white_opacity_15" />
+
+        <include
+            android:id="@+id/receive_notice_email"
+            layout="@layout/item_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/color_white_opacity_15" />
+    </LinearLayout>
+</layout>

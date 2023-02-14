@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_empty" />
+
+    <!--    setting-->
+    <string name="ok">はい</string>
+    <string name="cancel">キャンセル</string>
+    <string name="setting">設定</string>
+
+    <string name="support">サポート</string>
+    <!--    <string name="support_information">サポート情報</string>-->
+    <string name="help">ヘルプ</string>
+    <string name="guid_to_use_app">このアプリの使い方</string>
+    <string name="privacy_policy">プライバシーポリシー</string>
+
+    <string name="app_info">アプリの情報</string>
+    <string name="version">バージョン</string>
+    <string name="term_of_service">利用規約</string>
+
+    <string name="not_connected_internet">ネットワーク接続をご確認ください。</string>
+    <string name="bulk_packing">一括パッキング</string>
+    <string name="text_OK">OK</string>
+    <string name="errors">errors</string>
+
+    <string name="title_favorite_alert">先生をお気に入りに追加しますか？</string>
+    <string name="sub_title_favorite_alert">お気に入り登録するとオンラインになった時に通知を受け取ることができます。</string>
+    <string name="confirm_favorite_alert">お気に入りに追加する</string>
+    <string name="cancel_block_alert">キャンセル</string>
+    <string name="no_internet">ケアプリにアクセスできません。\nインターネット接続を確認してください。</string>
+    <string name="retry">リトライ</string>
+</resources>

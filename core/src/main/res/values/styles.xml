@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="text_bold_16" parent="text_bold">
+        <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+
+    <style name="text_14" parent="text_normal">
+        <item name="android:textSize">@dimen/text_size_14</item>
+    </style>
+    <style name="text_normal">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="text_bold">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_bold_10"
+            android:layout_width="46dp"
+            android:background="@drawable/bg_corner_2dp_aea2d1"
+            android:gravity="center"
+            android:padding="@dimen/margin_6dp"
+            android:textColor="@color/color_1D1045"
+            tools:text="12/20" />
+
+        <TextView
+            style="@style/text_12"
+            android:layout_marginLeft="@dimen/margin_5dp"
+            android:padding="@dimen/margin_6dp"
+            android:textColor="@color/color_AEA2D1"
+            tools:text="14:00-18:00, 20:00-24:00" />
+    </LinearLayout>
+</layout>

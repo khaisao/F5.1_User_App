@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLabelName"
+            style="@style/text_bold_14"
+            android:layout_marginStart="16dp"
+            android:text="@string/partner_name"
+            android:textColor="@color/color_E3DFEF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSkipName"
+            style="@style/text_12"
+            android:layout_marginStart="8dp"
+            android:text="@string/skip_possible"
+            android:textColor="@color/color_AEA2D1"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/tvLabelName"
+            app:layout_constraintStart_toEndOf="@+id/tvLabelName"
+            app:layout_constraintTop_toTopOf="@+id/tvLabelName" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edtName"
+            style="@style/text_bold_16"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_input_text"
+            android:hint="@string/example_partner_name"
+            android:maxLength="10"
+            android:paddingVertical="16dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="20dp"
+            android:textColor="@color/color_E3DFEF"
+            android:textColorHint="@color/color_6D5D9A"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabelName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCountName"
+            style="@style/text_10"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/partner_name_max_length"
+            android:textColor="@color/color_AEA2D1"
+            app:layout_constraintBottom_toBottomOf="@+id/edtName"
+            app:layout_constraintEnd_toEndOf="@+id/edtName"
+            app:layout_constraintTop_toTopOf="@+id/edtName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLabelGender"
+            style="@style/text_bold_14"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/partner_gender"
+            android:textColor="@color/color_E3DFEF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSkipGender"
+            style="@style/text_12"
+            android:layout_marginStart="8dp"
+            android:text="@string/skip_possible"
+            android:textColor="@color/color_AEA2D1"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/tvLabelGender"
+            app:layout_constraintStart_toEndOf="@+id/tvLabelGender"
+            app:layout_constraintTop_toTopOf="@+id/tvLabelGender" />
+
+        <RadioGroup
+            android:id="@+id/rgGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabelGender">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rbMale"
+                style="@style/text_bold_16"
+                android:button="@drawable/checkbox_selector"
+                android:paddingHorizontal="8dp"
+                android:text="@string/label_male"
+                android:textColor="@color/color_E3DFEF" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rbFemale"
+                style="@style/text_bold_16"
+                android:layout_marginStart="40dp"
+                android:button="@drawable/checkbox_selector"
+                android:paddingHorizontal="8dp"
+                android:text="@string/label_female"
+                android:textColor="@color/color_E3DFEF" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rbOther"
+                style="@style/text_bold_16"
+                android:layout_marginStart="40dp"
+                android:button="@drawable/checkbox_selector"
+                android:paddingHorizontal="8dp"
+                android:text="@string/label_other"
+                android:textColor="@color/color_E3DFEF" />
+
+        </RadioGroup>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLabelBirthday"
+            style="@style/text_bold_14"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/partner_birthday"
+            android:textColor="@color/color_E3DFEF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rgGender" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSkipBirthday"
+            style="@style/text_12"
+            android:layout_marginStart="8dp"
+            android:text="@string/skip_possible"
+            android:textColor="@color/color_AEA2D1"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/tvLabelBirthday"
+            app:layout_constraintStart_toEndOf="@+id/tvLabelBirthday"
+            app:layout_constraintTop_toTopOf="@+id/tvLabelBirthday" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edtBirthday"
+            style="@style/text_bold_16"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_menu_contact"
+            android:focusable="false"
+            android:hint="@string/example_birthday"
+            android:longClickable="false"
+            android:paddingHorizontal="@dimen/padding_10"
+            android:paddingVertical="@dimen/margin_14"
+            android:textColor="@color/color_E3DFEF"
+            android:textColorHint="@color/color_6D5D9A"
+            app:drawableEndCompat="@drawable/ic_triangle"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabelBirthday" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

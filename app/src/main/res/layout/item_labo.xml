@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="labo"
+            type="jp.careapp.counseling.android.data.model.labo.LaboResponse" />
+        <variable
+            name="event"
+            type="jp.careapp.counseling.android.ui.labo.LabEvent" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:onClick="@{()->event.labOnClick(labo)}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_10"
+        android:backgroundTint="@color/color_disable_button"
+        app:cardCornerRadius="@dimen/margin_8">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_size_12"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_category_lab"
+                    android:paddingHorizontal="@dimen/margin_16"
+                    android:paddingVertical="@dimen/_3sdp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="仕事" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/purple_AEA2D1"
+                    android:textSize="@dimen/_9sdp"
+                    app:goneIf="@{labo.status != 1}"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_category"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_status"
+                    app:layout_constraintStart_toEndOf="@+id/tv_category"
+                    app:layout_constraintTop_toTopOf="@+id/tv_category"
+                    tools:text="回答受付期限：残り23時間20分" />
+
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/margin_8"
+                    android:paddingVertical="@dimen/view_size_4"
+                    android:textSize="@dimen/padding_10"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_category"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_category"
+                    tools:text="回答受付中" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:ellipsize="end"
+                android:maxLines="4"
+                android:text="@{labo.body}"
+                android:textColor="@color/color_text_E3DFEF"
+                android:textSize="@dimen/margin_14"
+                android:textStyle="bold"
+                tools:text="今の仕事は保険の営業をしています。今の仕事が自分に合っていないのではと感じ始めました。自分に合った天職が何か知りたいです。今年36歳になるので次の仕事こそ腰を据えてやっていきた…" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginVertical="@dimen/text_size_12"
+                android:background="@color/color_523A99" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:maxWidth="@dimen/_150sdp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/purple_AEA2D1"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@{labo.member.counseleeName}"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size_12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="名前" />
+
+                <TextView
+                    android:id="@+id/tv_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/purple_AEA2D1"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size_12"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    app:layout_constraintStart_toEndOf="@+id/tv_name"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="35歳" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8"
+                    android:textColor="@color/purple_AEA2D1"
+                    android:textSize="@dimen/_9sdp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_age"
+                    app:layout_constraintStart_toEndOf="@+id/tv_age"
+                    app:layout_constraintTop_toTopOf="@+id/tv_age"
+                    tools:text="2020/11/30 11:40" />
+
+                <TextView
+                    android:id="@+id/num_reply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/margin_8"
+                    android:paddingVertical="@dimen/view_size_4"
+                    android:drawablePadding="@dimen/view_size_4"
+                    android:drawableStart="@drawable/ic_icolabocomment"
+                    android:textColor="@color/color_978DFF"
+                    android:text="@{String.valueOf(labo.answerCount)}"
+                    android:textSize="@dimen/text_size_12"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_age"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_age"
+                    tools:text="2" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
