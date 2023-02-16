@@ -6,5 +6,5 @@
     <gradient
         android:angle="0"
         android:endColor="@color/right_color_btn_common"
-        android:startColor="@color/color_978DFF" />
+        android:startColor="@color/color_FF32BD" />
 </shape>

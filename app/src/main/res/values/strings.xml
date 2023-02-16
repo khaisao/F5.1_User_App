@@ -15,13 +15,15 @@
     <string name="title_register_name">ニックネーム</string>
     <string name="limit_number_character">10</string>
     <string name="hint_input_email">メールアドレスを入力</string>
-    <string name="input_email">確認メールを送信"</string>
-    <string name="title_input_email">メールアドレスを\n入力してください</string>
-    <string name="alert_error_email">入力内容が正しくありません</string>
+    <string name="hint_input_email_register">メールアドレス</string>
+    <string name="input_email">登録"</string>
+    <string name="title_input_email">会員登録</string>
+    <string name="alert_error_email">メールアドレスが正しくありません</string>
     <string name="title_search_category">お悩み</string>
     <string name="please_enter_valid_email">有効なメールアドレスを入力してください</string>
     <string name="please_enter_valid_name">ニックネームを入力してください</string>
-    <string name="link_privacy"><a href="link">プライバシーポリシー</a>に同意し、メールアドレスを入力します。</string>
+    <string name="link_privacy">利用を継続する事でPEAK LIVEの<![CDATA[<b><font color=#B47AFF><a href="link">利用規約</a></font></b>]]>に同意したものとみなされます。</string>
+    <string name="already_have_acc">アカウントをお持ちですか？<![CDATA[<b><font color=#B47AFF><a href="link">ログインする</a></font></b>]]></string>
     <string name="start_consultation">相談をはじめる</string>
 
     <!--favorite dialog-->
@@ -561,5 +563,8 @@
     <string name="please_enter_review_less_than_140">先生へのレビューは 140 文 字以内で入力して下さい。</string>
     <string name="can_not_add_new_question">相談ラボへの新規投稿は終了いたしました。</string>
     <string name="free_message_consult_call">【無料】通話で相談できますか？</string>
+
+
+
 
 </resources>

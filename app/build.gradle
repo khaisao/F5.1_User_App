@@ -215,4 +215,7 @@ dependencies {
     }
     implementation files(libraries.marucastClient)
     implementation files(libraries.mediasoupClient)
+
+    implementation 'com.google.android.material:material:1.0.0'
+
 }

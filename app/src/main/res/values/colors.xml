@@ -17,17 +17,22 @@
     <color name="transparent">#00000000</color>
 
     <color name="color_background_common">#1D1045</color> <!--rgb 29 16 69-->
+    <color name="color_2C2147">#2C2147</color> <!--rgb 44 33 71-->
     <color name="color_978DFF">#978DFF</color> <!--rgb 151 141 255-->
-    <color name="right_color_btn_common">#61C1FF</color> <!--rgb 97 193 255-->
+    <color name="color_56467D">#56467D</color> <!--rgb 151 141 255-->
+    <color name="right_color_btn_common">#9D31FF</color> <!--rgb 97 193 255-->
     <color name="purple_AEA2D1">#AEA2D1</color> <!--rgb 174 162 209-->
     <color name="color_text_E3DFEF">#E3DFEF</color> <!--rgb 227 223 239-->
     <color name="color_disable_button">#332167</color> <!--rgb 51 33 103-->
-    <color name="color_alert_error">#FF2875</color> <!--rgb 255 40 117-->
+    <color name="color_alert_error">#FF288B</color> <!--rgb 255 40 117-->
     <color name="color_6D5D9A">#6D5D9A</color><!--rgb 109 93 154-->
     <color name="color_FF1D1D">#FF1D1D</color><!--rgb 255 29 29-->
     <color name="color_FFA900">#FFA900</color><!--rgb 255 169 0-->
     <color name="color_FFFF00">#FFFF00 </color><!--rgb 255 255 0-->
-
+    <color name="color_background_modal">#A6000000</color><!--rgba 0 0 0 0.65-->
+    <color name="color_background_dialog">#0D002C</color><!--rgb 13 0 44 -->
+    <color name="color_dialog_border_shadow">#9D52FF</color><!--rgba 157 82 255 -->
+    <color name="color_B47AFF">#B47AFF</color>
 
     <!--    Top screen colors-->
     <color name="action_bar">#1d1045</color>
@@ -78,8 +83,10 @@
     <color name="color_00CD5C">#00CD5C</color>
     <color name="color_51F38A">#51F38A</color>
     <color name="black_65">#A6000000</color>
+    <color name="color_70658D">#70658D</color> <!--    rgb 112 101 141-->
     <color name="white_20">#33FFFFFF</color>
     <color name="white_60">#99FFFFFF</color>
+    <color name="color_FF32BD">#FF32BD</color>
 
 
 </resources>
