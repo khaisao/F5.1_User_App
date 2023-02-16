@@ -56,6 +56,7 @@ class VerificationCodeHelpFragment :
             getString(R.string.description_information_help),
             HtmlCompat.FROM_HTML_MODE_LEGACY
         )
+
     }
 
     override fun setOnClick() {

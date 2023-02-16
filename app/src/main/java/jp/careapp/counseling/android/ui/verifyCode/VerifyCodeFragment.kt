@@ -8,6 +8,7 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -69,6 +70,10 @@ class VerifyCodeFragment :
         }
         clearAllValueCode()
         setUpEditText()
+        binding.tvNotReceive.text = HtmlCompat.fromHtml(
+            getString(R.string.click_to_not_receive_email),
+            HtmlCompat.FROM_HTML_MODE_LEGACY
+        )
     }
 
     private fun handleShowOrHideKeyBoard(isEnable: Boolean) {
@@ -306,15 +311,11 @@ class VerifyCodeFragment :
 
     override fun setOnClick() {
         super.setOnClick()
-        binding.toolBar.setOnToolBarClickListener(
-            object : ToolBarCommon.OnToolBarClickListener() {
-                override fun onClickLeft() {
-                    super.onClickLeft()
-                    shareViewModel.setFocusEditText(isFocusEditTextEmail)
-                    appNavigation.navigateUp()
-                }
-            }
-        )
+
+        binding.ivCloseDialog.setOnClickListener {
+            shareViewModel.setFocusEditText(isFocusEditTextEmail)
+            appNavigation.navigateUp()
+        }
 
         with(binding.tvNotReceive) {
             setOnClickListener {
@@ -458,7 +459,23 @@ class VerifyCodeFragment :
     }
 
     private fun showLabelError(isShow: Boolean) {
-        binding.tvErrorCode.visibility = if (isShow) View.VISIBLE else View.GONE
+        if (isShow) {
+            binding.llErrorCode.visibility = View.VISIBLE
+            binding.apply {
+                etFirstCode.setBackgroundResource(R.drawable.bg_input_code_error)
+                etSecondCode.setBackgroundResource(R.drawable.bg_input_code_error)
+                etThirdCode.setBackgroundResource(R.drawable.bg_input_code_error)
+                etFourCode.setBackgroundResource(R.drawable.bg_input_code_error)
+            }
+        } else {
+            binding.llErrorCode.visibility = View.GONE
+            binding.apply {
+                etFirstCode.setBackgroundResource(R.drawable.bg_input_code)
+                etSecondCode.setBackgroundResource(R.drawable.bg_input_code)
+                etThirdCode.setBackgroundResource(R.drawable.bg_input_code)
+                etFourCode.setBackgroundResource(R.drawable.bg_input_code)
+            }
+        }
     }
 
     private fun clearAllValueCode() {

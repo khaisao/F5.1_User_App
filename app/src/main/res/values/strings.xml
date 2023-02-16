@@ -72,10 +72,10 @@
     <string name="title_privacy">プライバシーポリシー</string>
 
     <!--verify Code-->
-    <string name="title_verify_code">認証コードを\n入力してください</string>
+    <string name="title_verify_code">認証コード入力</string>
     <string name="please_enter_exactly_code">正しいコードを入力してください</string>
     <string name="please_enter_code">届いたメールに記載されている4桁の数字を入力してください。</string>
-    <string name="click_to_not_receive_email">メールが届かない場合はコチラ</string>
+    <string name="click_to_not_receive_email"><![CDATA[<b><font color=#B47AFF><a href="link">メールが届かない場合はコチラ</a></font></b>]]></string>
     <string name="content_error_over_five_times">認証に失敗しました。\nお手数ですが最初からやり直してください。</string>
 
     <!--verification Code Help-->

@@ -89,11 +89,15 @@ class InputAndEditEmailFragment :
             binding.btnEmail.text = getString(R.string.input_email)
         }
 
-        val alreadyHaveAccountText = resources.getString(R.string.already_have_acc)
         binding.tvAlreadyHaveAcc.text =
-            Html.fromHtml(alreadyHaveAccountText, HtmlCompat.FROM_HTML_MODE_LEGACY)
-        val linkPrivacyText = resources.getString(R.string.link_privacy)
-        binding.linkPrivacy.text = Html.fromHtml(linkPrivacyText, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            Html.fromHtml(
+                resources.getString(R.string.already_have_acc),
+                HtmlCompat.FROM_HTML_MODE_LEGACY
+            )
+        binding.linkPrivacy.text = Html.fromHtml(
+            resources.getString(R.string.link_privacy),
+            HtmlCompat.FROM_HTML_MODE_LEGACY
+        )
     }
 
     private fun handleInputName() {
