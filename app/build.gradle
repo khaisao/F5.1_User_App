@@ -43,20 +43,20 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix ".dev"
-            buildConfigField "String", "BASE_URL", "\"https://mem-api.flax5.com/\""
-            buildConfigField "String", "WS_URL", "\"wss://sc.flax5.com/socket/member\""
-            buildConfigField "String", "WS_ORIGIN", "\"https://web.flax5.com\""
-            buildConfigField "String", "WS_OWNER", "\"Flax5\""
-            buildConfigField "String", "WEB_DOMAIN", "\"https://web.flax5.com\""
-            buildConfigField "String", "WEB_PURCHASE_DOMAIN", "\"https://pay.flax5.com\""
+            buildConfigField "String", "BASE_URL", "\"https://mem-sl.flax5.com/\""
+            buildConfigField "String", "WS_URL", "\"wss://sc-sl.flax5.com/socket/member\""
+            buildConfigField "String", "WS_ORIGIN", "\"https://web-sl.flax5.com\""
+            buildConfigField "String", "WS_OWNER", "\"Flax5sl\""
+            buildConfigField "String", "WEB_DOMAIN", "\"https://web-sl.flax5.com\""
+            buildConfigField "String", "WEB_PURCHASE_DOMAIN", "\"https://pay-sl.flax5.com\""
             buildConfigField "String", "ADJUST_APP_TOKEN", "\"zudv85o5ps74\""
             buildConfigField "String", "REGISTRATION_EVENT_TOKEN", "\"77s3io\""
             buildConfigField "String", "REGISTRATION_EVENT_TOKEN_2", "\"6d85mg\""
             buildConfigField "String", "IN_APP_PURCHASE_EVENT_TOKEN", "\"ssmm20\""
             buildConfigField "String", "ADJUST_EVENT_TOKEN", "\"uyy2fx\""
             buildConfigField "String", "APPS_FLYER_APP_ID", "\"jp.careapp.counseling.android.dev\""
-            buildConfigField "String", "URL_GET_CALL_CONFIG", "\"https://app.flax5.com/\""
-            buildConfigField "String", "WS_URL_LOGIN_CALL", "\"wss://sc.flax5.com/jetty_flax/login/\""
+            buildConfigField "String", "URL_GET_CALL_CONFIG", "\"https://app-sl.flax5.com/\""
+            buildConfigField "String", "WS_URL_LOGIN_CALL", "\"wss://sc-sl.flax5.com/jetty_flax/login/\""
         }
 
         stagging {
@@ -68,20 +68,20 @@ android {
             initWith buildTypes.debug
             signingConfig signingConfigs.stagging
             debuggable true
-            buildConfigField "String", "BASE_URL", "\"https://mem-api.flax5.com/\""
-            buildConfigField "String", "WS_URL", "\"wss://sc.flax5.com/socket/member\""
-            buildConfigField "String", "WS_ORIGIN", "\"https://web.flax5.com\""
-            buildConfigField "String", "WS_OWNER", "\"Flax5\""
-            buildConfigField "String", "WEB_DOMAIN", "\"https://web.flax5.com\""
-            buildConfigField "String", "WEB_PURCHASE_DOMAIN", "\"https://pay.flax5.com\""
+            buildConfigField "String", "BASE_URL", "\"https://mem-sl.flax5.com/\""
+            buildConfigField "String", "WS_URL", "\"wss://sc-sl.flax5.com/socket/member\""
+            buildConfigField "String", "WS_ORIGIN", "\"https://web-sl.flax5.com\""
+            buildConfigField "String", "WS_OWNER", "\"Flax5sl\""
+            buildConfigField "String", "WEB_DOMAIN", "\"https://web-sl.flax5.com\""
+            buildConfigField "String", "WEB_PURCHASE_DOMAIN", "\"https://pay-sl.flax5.com\""
             buildConfigField "String", "ADJUST_APP_TOKEN", "\"zudv85o5ps74\""
             buildConfigField "String", "REGISTRATION_EVENT_TOKEN", "\"77s3io\""
             buildConfigField "String", "REGISTRATION_EVENT_TOKEN_2", "\"6d85mg\""
             buildConfigField "String", "IN_APP_PURCHASE_EVENT_TOKEN", "\"ssmm20\""
             buildConfigField "String", "ADJUST_EVENT_TOKEN", "\"uyy2fx\""
             buildConfigField "String", "APPS_FLYER_APP_ID", "\"jp.careapp.counseling.android.dev\""
-            buildConfigField "String", "URL_GET_CALL_CONFIG", "\"https://app.flax5.com/\""
-            buildConfigField "String", "WS_URL_LOGIN_CALL", "\"wss://sc.flax5.com/jetty_flax/login/\""
+            buildConfigField "String", "URL_GET_CALL_CONFIG", "\"https://app-sl.flax5.com/\""
+            buildConfigField "String", "WS_URL_LOGIN_CALL", "\"wss://sc-sl.flax5.com/jetty_flax/login/\""
         }
 
         release {
