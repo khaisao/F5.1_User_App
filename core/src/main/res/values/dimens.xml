@@ -10,4 +10,8 @@
     <dimen name="text_size_14">14sp</dimen>
     <dimen name="padding_5dp">5dp</dimen>
     <dimen name="margin_48dp">48dp</dimen>
+    <dimen name="common_dialog_corner">8dp</dimen>
+    <dimen name="common_dialog_stroke_width">1dp</dimen>
+    <dimen name="common_dialog_padding">0.5dp</dimen>
+    <dimen name="common_dialog_padding2">1dp</dimen>
 </resources>
