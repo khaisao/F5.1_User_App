@@ -14,4 +14,11 @@
     <color name="color_978DFF">#978DFF</color> <!--rgb 97 193 255-->
     <color name="white">#978DFF</color> <!--rgb 97 193 255-->
     <color name="black_65">#A6000000</color> <!--rgba 0 0 0, 0.65-->
+    <color name="primary">#9d52ff</color> <!--rgba 0 0 0, 0.65-->
+    <color name="primary_50">#509d52ff</color> <!--rgba 0 0 0, 0.65-->
+    <color name="barbie_pink">#ff32bd</color> <!--rgba 0 0 0, 0.65-->
+    <color name="electric_purple">#9645ff</color> <!--rgba 0 0 0, 0.65-->
+    <color name="gray_lite">#b2a9cc</color> <!--rgba 0 0 0, 0.65-->
+    <color name="background_lite">#2c2147</color> <!--rgba 0 0 0, 0.65-->
+    <color name="background_dark">#0d002c</color> <!--rgba 0 0 0, 0.65-->
 </resources>

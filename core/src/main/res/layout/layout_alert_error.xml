@@ -70,12 +70,12 @@
             style="@style/text_14"
             android:layout_marginTop="@dimen/padding_16dp"
             android:padding="@dimen/padding_5dp"
-            android:textColor="@color/purple_AEA2D1"
+            android:background="@drawable/bg_cancel_btn"
             android:visibility="gone"
+            android:textColor="@color/gray_lite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_confirm"
             tools:text="@string/cancel_block_alert" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
