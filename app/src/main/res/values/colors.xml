@@ -16,7 +16,8 @@
 
     <color name="transparent">#00000000</color>
 
-    <color name="color_background_common">#1D1045</color> <!--rgb 29 16 69-->
+<!--    <color name="color_background_common">#1D1045</color> &lt;!&ndash;rgb 29 16 69&ndash;&gt;-->
+    <color name="color_background_common">#0D002C</color> <!--rgb 13 0 44 -->
     <color name="color_2C2147">#2C2147</color> <!--rgb 44 33 71-->
     <color name="color_978DFF">#978DFF</color> <!--rgb 151 141 255-->
     <color name="color_56467D">#56467D</color> <!--rgb 86 70 125-->
