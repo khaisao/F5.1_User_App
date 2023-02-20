@@ -84,7 +84,6 @@ dependencies {
     implementation libraries.glide
     kapt libraries.glideCompiler
     implementation libraries.glideTransform
-
     implementation "androidx.core:core-ktx:1.6.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

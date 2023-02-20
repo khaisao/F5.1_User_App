@@ -20,6 +20,7 @@ class InputAndEditMailViewModel @ViewModelInject constructor(
     companion object {
         val SCREEN_LOGIN_WITH_EMAIL = 0
         val SCREEN_EDIT_EMAIL = 1
+        val SCREEN_REGISTER_WITH_EMAIL = 2
     }
 
     var isSuccess = MutableLiveData(false)

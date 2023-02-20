@@ -11,133 +11,173 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cv_input_email"
+        <com.lihang.ShadowLayout
+            android:id="@+id/sl_input_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_32"
-            app:cardBackgroundColor="@color/color_background_dialog"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="15dp"
+            app:hl_cornerRadius="@dimen/margin_20"
+            app:hl_shadowColor="@color/background_color_white"
+            app:hl_shadowLimit="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="@color/color_dialog_border_shadow"
-            app:strokeWidth="1dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:id="@+id/ll_input_email"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="@dimen/margin_24dp"
-                    android:layout_marginTop="@dimen/margin_title_email_32"
-                    android:layout_marginRight="@dimen/margin_24dp"
-                    android:fontFamily="@font/hiragino_sans_w6"
-                    android:maxLines="2"
-                    android:text="@string/title_input_email"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_16"
-                    android:visibility="visible" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_input_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_24dp"
-                    android:layout_marginTop="@dimen/margin_top_email_24"
-                    android:layout_marginRight="@dimen/margin_24dp"
-                    android:background="@drawable/bg_input_text"
-                    android:drawableStart="@drawable/icon_form_mail"
-                    android:drawablePadding="@dimen/margin_12"
-                    android:elevation="4dp"
-                    android:fontFamily="@font/hiragino_sans_w3"
-                    android:importantForAutofill="no"
-                    android:inputType="textEmailAddress"
-                    android:lines="1"
-                    android:paddingLeft="@dimen/padding_10"
-                    android:paddingTop="@dimen/padding_12"
-                    android:paddingRight="@dimen/padding_10"
-                    android:paddingBottom="@dimen/padding_12"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/color_70658D"
-                    android:textSize="@dimen/text_size_input_email_14"
-                    android:textStyle="bold"
-                    tools:hint="@string/hint_input_email_register"
-                    tools:ignore="RtlSymmetry" />
+                app:cardBackgroundColor="@color/color_background_dialog"
+                app:cardCornerRadius="@dimen/margin_20"
+                app:strokeColor="@color/color_dialog_border_shadow"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
-                    android:id="@+id/ll_error_email"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/ll_input_email"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_24dp"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:layout_marginRight="@dimen/margin_24dp"
-                    android:visibility="invisible">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_4dp"
-                        android:src="@drawable/icon_error_email" />
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/margin_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_error_email"
-                        style="@style/text_error_email_bold_12"
-                        android:textColor="@color/color_alert_error"
-                        tools:text="@string/alert_error_email" />
+                        android:id="@+id/tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="@dimen/margin_24dp"
+                        android:layout_marginTop="@dimen/margin_title_email_32"
+                        android:layout_marginRight="@dimen/margin_24dp"
+                        android:fontFamily="@font/hiragino_sans_w6"
+                        android:maxLines="2"
+                        android:text="@string/title_input_email"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_16"
+                        android:visibility="visible" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_input_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_24dp"
+                        android:layout_marginTop="@dimen/margin_top_email_24"
+                        android:layout_marginRight="@dimen/margin_24dp"
+                        android:background="@drawable/bg_input_text"
+                        android:drawableStart="@drawable/icon_form_mail"
+                        android:drawablePadding="@dimen/margin_12"
+                        android:elevation="4dp"
+                        android:fontFamily="@font/hiragino_sans_w3"
+                        android:importantForAutofill="no"
+                        android:inputType="textEmailAddress"
+                        android:lines="1"
+                        android:paddingLeft="@dimen/padding_10"
+                        android:paddingTop="@dimen/padding_12"
+                        android:paddingRight="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_12"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/color_70658D"
+                        android:textSize="@dimen/text_size_input_email_14"
+                        android:textStyle="bold"
+                        tools:hint="@string/hint_input_email_register"
+                        tools:ignore="RtlSymmetry" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_error_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_24dp"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginRight="@dimen/margin_24dp"
+                        android:visibility="invisible">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/margin_4dp"
+                            android:src="@drawable/icon_error_email" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_error_email"
+                            style="@style/text_error_email_bold_12"
+                            android:textColor="@color/color_alert_error"
+                            tools:text="@string/alert_error_email" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_24dp"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:layout_marginEnd="@dimen/margin_24dp"
+                        android:layout_marginBottom="@dimen/margin_12"
+                        android:background="@drawable/bg_gradient"
+                        android:enabled="false"
+                        android:fontFamily="@font/hiragino_sans_w6"
+                        android:textColor="@drawable/text_common"
+                        android:textSize="@dimen/text_size_send_email_14"
+                        android:textStyle="bold"
+                        tools:ignore="RtlCompat"
+                        tools:text="@string/input_email"
+                        tools:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_already_have_acc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_24dp"
+                        android:layout_marginTop="@dimen/margin_top_email_24"
+                        android:layout_marginRight="@dimen/margin_24dp"
+                        android:clickable="true"
+                        android:text="@string/already_have_acc" />
+
+                    <TextView
+                        android:id="@+id/link_privacy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_24dp"
+                        android:layout_marginTop="@dimen/margin_top_email_24"
+                        android:layout_marginRight="@dimen/margin_24dp"
+                        android:clickable="true"
+                        android:text="@string/link_privacy"
+                        android:textAlignment="center" />
+
+                    <View
+                        android:id="@+id/straight_line_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_1"
+                        android:layout_marginHorizontal="@dimen/margin_24"
+                        android:layout_marginTop="@dimen/margin_34"
+                        android:alpha="0.15"
+                        android:background="@color/white" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cv_register_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/margin_16"
+                        app:cardBackgroundColor="@android:color/transparent"
+                        app:cardCornerRadius="@dimen/margin_24"
+                        app:strokeColor="@color/color_70658D"
+                        app:strokeWidth="1dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/padding_24"
+                            android:paddingVertical="@dimen/padding_10"
+                            android:text="@string/new_member_registration"
+                            android:textColor="@color/color_text_F0F0F0" />
+                    </com.google.android.material.card.MaterialCardView>
+
                 </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_24dp"
-                    android:layout_marginTop="@dimen/margin_16"
-                    android:layout_marginEnd="@dimen/margin_24dp"
-                    android:layout_marginBottom="@dimen/margin_12"
-                    android:background="@drawable/bg_gradient"
-                    android:enabled="false"
-                    android:fontFamily="@font/hiragino_sans_w6"
-                    android:textColor="@drawable/text_common"
-                    android:textSize="@dimen/text_size_send_email_14"
-                    android:textStyle="bold"
-                    tools:ignore="RtlCompat"
-                    tools:text="@string/input_email"
-                    tools:textColor="@color/white" />
+            </com.google.android.material.card.MaterialCardView>
 
-                <TextView
-                    android:id="@+id/tv_already_have_acc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_24dp"
-                    android:layout_marginTop="@dimen/margin_top_email_24"
-                    android:layout_marginRight="@dimen/margin_24dp"
-                    android:clickable="true"
-                    android:text="@string/already_have_acc" />
-
-                <TextView
-                    android:id="@+id/link_privacy"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_24dp"
-                    android:layout_marginTop="@dimen/margin_top_email_24"
-                    android:layout_marginRight="@dimen/margin_24dp"
-                    android:layout_marginBottom="@dimen/margin_24"
-                    android:clickable="true"
-                    android:text="@string/link_privacy"
-                    android:textAlignment="center" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
+        </com.lihang.ShadowLayout>
 
         <ImageView
             android:id="@+id/iv_close_dialog"
@@ -147,7 +187,7 @@
             android:src="@drawable/ic_dialog_close"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cv_input_email" />
+            app:layout_constraintTop_toBottomOf="@id/sl_input_email" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

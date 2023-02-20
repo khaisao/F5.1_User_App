@@ -71,6 +71,7 @@
     <dimen name="padding_16dp">16dp</dimen>
     <dimen name="padding_60dp">60dp</dimen>
     <dimen name="padding_20">20dp</dimen>
+    <dimen name="padding_24">24dp</dimen>
     <dimen name="padding_12">12dp</dimen>
     <dimen name="padding_15">15dp</dimen>
     <dimen name="padding_13">13dp</dimen>
@@ -170,5 +171,8 @@
     <dimen name="view_size_120">120dp</dimen>
     <dimen name="view_size_94">94dp</dimen>
     <dimen name="view_size_100">100dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="fragment_horizontal_margin">16dp</dimen>
+    <dimen name="fragment_vertical_margin">16dp</dimen>
 
 </resources>

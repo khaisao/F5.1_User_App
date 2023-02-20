@@ -13,7 +13,9 @@ import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.utils.Define
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
+import jp.careapp.counseling.android.ui.email.InputAndEditMailViewModel
 import jp.careapp.counseling.android.ui.splash.SplashViewModel
+import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.SignedUpStatus
 import me.leolin.shortcutbadger.ShortcutBadger
 import javax.inject.Inject
@@ -55,7 +57,13 @@ class StartFragment : BaseFragment<FragmentStartBinding, StartViewModel>() {
         with(binding.rlSignInWithEmail) {
             setOnClickListener {
                 rxPreferences.setSignedUpStatus(SignedUpStatus.UNKNOWN)
-                appNavigation.openStartToInputAndEditEmailScreen()
+                val bundle = Bundle().apply {
+                    putInt(
+                        BUNDLE_KEY.CODE_SCREEN,
+                        InputAndEditMailViewModel.SCREEN_REGISTER_WITH_EMAIL
+                    )
+                }
+                appNavigation.openStartToInputAndEditEmailScreen(bundle)
             }
         }
         with(binding.tvDifficult) {

@@ -37,6 +37,10 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_startFragment_to_InputEmailFragment, bundle)
     }
 
+    override fun openLoginEmailScreen(bundle: Bundle?) {
+        openScreen(R.id.action_inputEmailFragment_self,bundle)
+    }
+
     override fun openSplashToStartScreen(bundle: Bundle?) {
         openScreen(R.id.action_splashFragment_to_startFragment, bundle)
     }
