@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_background_common"
+        android:background="@color/color_background_dialog"
         android:orientation="vertical"
         tools:context=".ui.verifyCode.VerifyCodeHelpFragment">
 
@@ -14,114 +14,409 @@
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:src_left="@drawable/ic_back_left" />
+            app:src_left="@drawable/ic_arrow_left" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/llContent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/margin_24"
-                android:layout_marginEnd="@dimen/margin_24"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/height_80">
-
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
                 <TextView
+                    android:layout_marginStart="@dimen/margin_16"
                     style="@style/text_bold_18"
+                    android:layout_marginBottom="@dimen/margin_16"
                     android:layout_marginTop="32dp"
                     android:text="@string/title_do_not_receive_email"
                     android:textColor="@color/color_text_E3DFEF" />
+                <com.google.android.material.card.MaterialCardView
+                    app:cardBackgroundColor="@color/color_2C2147"
+                    android:layout_width="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16"
+                    app:cardCornerRadius="@dimen/margin_12"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/text_14"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/please_sure_email_address_correct"
-                    android:textColor="@color/color_text_E3DFEF" />
+                    <LinearLayout
+                        android:id="@+id/llContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/margin_24"
+                        android:layout_marginEnd="@dimen/margin_24"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/height_80">
 
-                <TextView
-                    android:id="@+id/tvYourEmail"
-                    style="@style/text_bold_18"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/margin_32"
-                    android:textColor="@color/color_text_E3DFEF"
-                    tools:text="1234@abc.net" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_edit_contact"
+
+                        <TextView
+                            style="@style/text_14"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/please_sure_email_address_correct"
+                            android:textColor="@color/color_text_E3DFEF" />
+
+                        <TextView
+                            android:id="@+id/tvYourEmail"
+                            style="@style/text_bold_18"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/margin_32"
+                            android:textColor="@color/color_text_E3DFEF"
+                            tools:text="1234@abc.net" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_edit_contact"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_44"
+                            android:layout_marginStart="@dimen/margin_48"
+                            android:layout_marginTop="@dimen/margin_32"
+                            android:layout_marginEnd="@dimen/margin_48"
+                            android:background="@drawable/bg_gradient_common"
+                            android:text="@string/correct_your_email_address"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_14"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_1"
+                            android:layout_marginTop="34dp"
+                            android:alpha="0.15"
+                            android:background="@color/white" />
+
+                        <TextView
+                            style="@style/text_bold_18"
+                            android:layout_marginTop="@dimen/margin_32"
+                            android:text="@string/please_check_email_reception_setting"
+                            android:textColor="@color/color_text_E3DFEF" />
+
+                        <TextView
+                            android:id="@+id/tvContentHelp"
+                            style="@style/text_14"
+                            android:layout_marginTop="@dimen/margin_32"
+                            android:textColor="@color/color_text_E3DFEF"
+                            tools:text="@string/description_information_help"
+                            tools:textColor="@color/white" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btReSendEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_44"
+                            android:layout_marginStart="@dimen/margin_48"
+                            android:layout_marginTop="@dimen/margin_32"
+                            android:layout_marginEnd="@dimen/margin_48"
+                            android:background="@drawable/bg_gradient_common"
+                            android:text="@string/resend_confirmation_email"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_1"
+                            android:layout_marginTop="@dimen/margin_34"
+                            android:alpha="0.15"
+                            android:background="@color/white" />
+
+                        <TextView
+                            android:fontFamily="@font/hiragino_sans_w6"
+                            style="@style/text_bold_18"
+                            android:layout_marginTop="@dimen/margin_32"
+                            android:text="@string/above_method_not_solve_problem"
+                            android:textColor="@color/color_text_E3DFEF" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btContactUs"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_44"
+                            android:layout_marginStart="@dimen/margin_48"
+                            android:layout_marginTop="@dimen/margin_32"
+                            android:layout_marginEnd="@dimen/margin_48"
+                            android:background="@drawable/bg_gradient_common"
+                            android:text="@string/contact_us"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_14"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_44"
-                    android:layout_marginStart="@dimen/margin_48"
-                    android:layout_marginTop="@dimen/margin_32"
-                    android:layout_marginEnd="@dimen/margin_48"
-                    android:background="@drawable/bg_gradient_common"
-                    android:text="@string/correct_your_email_address"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_14"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_1"
-                    android:layout_marginTop="34dp"
-                    android:alpha="0.15"
-                    android:background="@color/white" />
+                    <LinearLayout
+                        android:layout_marginStart="@dimen/margin_16"
+                        android:id="@+id/ll_app_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_42"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    style="@style/text_bold_18"
-                    android:layout_marginTop="@dimen/margin_32"
-                    android:text="@string/please_check_email_reception_setting"
-                    android:textColor="@color/color_text_E3DFEF" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/hiragino_sans_w3"
+                            android:text="SPARK LIVE "
+                            android:textColor="@color/color_70658D"
+                            android:textSize="@dimen/text_size_10" />
 
-                <TextView
-                    android:id="@+id/tvContentHelp"
-                    style="@style/text_14"
-                    android:layout_marginTop="@dimen/margin_32"
-                    android:textColor="@color/color_text_E3DFEF"
-                    tools:text="@string/description_information_help"
-                    tools:textColor="@color/white" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/hiragino_sans_w3"
+                            android:text="メールが届かない場合"
+                            android:textColor="@color/color_70658D"
+                            android:textSize="@dimen/text_size_10" />
+                    </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btReSendEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_44"
-                    android:layout_marginStart="@dimen/margin_48"
-                    android:layout_marginTop="@dimen/margin_32"
-                    android:textStyle="bold"
-                    android:layout_marginEnd="@dimen/margin_48"
-                    android:background="@drawable/bg_gradient_common"
-                    android:text="@string/resend_confirmation_email"
-                    android:textColor="@color/white" />
+                    <View
+                        android:id="@+id/straight_line_app_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_1"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:alpha="0.15"
+                        android:background="@color/white"
+                        app:layout_constraintTop_toBottomOf="@id/ll_app_name" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_1"
-                    android:layout_marginTop="@dimen/margin_34"
-                    android:alpha="0.15"
-                    android:background="@color/white" />
+                    <LinearLayout
+                        android:id="@+id/ll_des"
+                        android:layout_marginTop="@dimen/margin_33"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/straight_line_app_name">
 
-                <TextView
-                    style="@style/text_bold_18"
-                    android:layout_marginTop="@dimen/margin_32"
-                    android:text="@string/above_method_not_solve_problem"
-                    android:textColor="@color/color_text_E3DFEF" />
+                        <LinearLayout
+                            android:paddingStart="@dimen/padding_16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btContactUs"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_44"
-                    android:layout_marginStart="@dimen/margin_48"
-                    android:layout_marginTop="@dimen/margin_32"
-                    android:layout_marginEnd="@dimen/margin_48"
-                    android:background="@drawable/bg_gradient_common"
-                    android:text="@string/contact_us"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_14"
-                    android:textStyle="bold" />
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w6"
+                                android:text="@string/list_of_women"
+                                android:textSize="@dimen/text_size_14" />
 
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w3"
+                                android:text="@string/girl_live_streaming"
+                                android:textSize="@dimen/text_size_12" />
+
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w3"
+                                android:text="@string/recommended_girl"
+                                android:textSize="@dimen/text_size_12" />
+
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w3"
+                                android:text="@string/delivery_ranking"
+                                android:textSize="@dimen/text_size_12" />
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w6"
+                                android:text="@string/about_service"
+                                android:textSize="@dimen/text_size_14" />
+
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w3"
+                                android:text="@string/fee_explanation"
+                                android:textSize="@dimen/text_size_12" />
+
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w3"
+                                android:text="@string/terms_of_service"
+                                android:textSize="@dimen/text_size_12" />
+
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w3"
+                                android:text="@string/title_privacy"
+                                android:textSize="@dimen/text_size_12" />
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w3"
+                                android:text="@string/faq"
+                                android:textSize="@dimen/text_size_12" />
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w3"
+                                android:text="@string/inquiry"
+                                android:textSize="@dimen/text_size_12" />
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w3"
+                                android:text="@string/operating_company"
+                                android:textSize="@dimen/text_size_12" />
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w3"
+                                android:text="@string/twitter"
+                                android:textSize="@dimen/text_size_12" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:paddingStart="@dimen/padding_16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w6"
+                                android:text="@string/communication"
+                                android:textSize="@dimen/text_size_14" />
+
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w3"
+                                android:text="@string/message"
+                                android:textSize="@dimen/text_size_12" />
+
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w3"
+                                android:text="@string/history_follow"
+                                android:textSize="@dimen/text_size_12" />
+
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w6"
+                                android:text="@string/point_code_helper"
+                                android:textSize="@dimen/text_size_14" />
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w3"
+                                android:text="@string/point_purchase"
+                                android:textSize="@dimen/text_size_12" />
+
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w3"
+                                android:text="@string/free_points"
+                                android:textSize="@dimen/text_size_12" />
+
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w6"
+                                android:text="@string/my_page"
+                                android:textSize="@dimen/text_size_14" />
+
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w3"
+                                android:text="@string/profile"
+                                android:textSize="@dimen/text_size_12" />
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w3"
+                                android:text="@string/block_list_code_help"
+                                android:textSize="@dimen/text_size_12" />
+                            <TextView
+                                android:textColor="@color/color_B2A9CC"
+                                android:layout_marginTop="@dimen/margin_20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/hiragino_sans_w3"
+                                android:text="@string/notification_settings"
+                                android:textSize="@dimen/text_size_12" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/iv_logo"
+                        android:layout_marginTop="@dimen/margin_32"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ll_des"
+                        android:src="@drawable/logo"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:paddingBottom="@dimen/margin_16"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:textColor="@color/color_B2A9CC"
+                        android:textSize="@dimen/text_size_10"
+                        app:layout_constraintTop_toBottomOf="@id/iv_logo"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="@string/app_name_code_help"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
+
+
         </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>

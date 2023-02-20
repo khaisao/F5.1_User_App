@@ -563,8 +563,28 @@
     <string name="please_enter_review_less_than_140">先生へのレビューは 140 文 字以内で入力して下さい。</string>
     <string name="can_not_add_new_question">相談ラボへの新規投稿は終了いたしました。</string>
     <string name="free_message_consult_call">【無料】通話で相談できますか？</string>
-
-
+    <string name="list_of_women">女性一覧</string>
+    <string name="girl_live_streaming">ライブ配信中の女の子</string>
+    <string name="recommended_girl">おすすめの女の子</string>
+    <string name="delivery_ranking">配信ランキング</string>
+    <string name="about_service">サービスについて</string>
+    <string name="fee_explanation">料金説明</string>
+    <string name="terms_of_service">利用規約</string>
+    <string name="faq">よくある質問</string>
+    <string name="inquiry">お問い合わせ</string>
+    <string name="operating_company">運営会社</string>
+    <string name="twitter">Twitter</string>
+    <string name="communication">コミュニケーション</string>
+    <string name="message">メッセージ</string>
+    <string name="history_follow">履歴/フォロー</string>
+    <string name="point_code_helper">ポイント</string>
+    <string name="point_purchase">ポイント購入</string>
+    <string name="free_points">無料ポイント</string>
+    <string name="my_page">マイページ</string>
+    <string name="profile">プロフィール</string>
+    <string name="block_list_code_help">ブロック一覧</string>
+    <string name="notification_settings">通知設定</string>
+    <string name="app_name_code_help">© 2023 SPARK LIVE</string>
 
 
 </resources>
