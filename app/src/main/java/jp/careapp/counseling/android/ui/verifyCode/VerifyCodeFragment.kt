@@ -338,7 +338,7 @@ class VerifyCodeFragment :
                 binding.etThirdCode.text.toString().trim() +
                 binding.etFourCode.text.toString().trim()
 
-            if (codeScreen == InputAndEditMailViewModel.SCREEN_LOGIN_WITH_EMAIL) {
+            if (codeScreen == InputAndEditMailViewModel.SCREEN_LOGIN_WITH_EMAIL || codeScreen==InputAndEditMailViewModel.SCREEN_REGISTER_WITH_EMAIL) {
                 viewModel.sendVerifyCode(email, authCode)
             } else {
                 viewModel.sendVerifyCodeWhenEditEmail(email, authCode)

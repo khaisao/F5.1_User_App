@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_background_common"
+        android:focusableInTouchMode="true"
         android:orientation="vertical"
         tools:context=".android.ui.registration.RegistrationFragment">
 
@@ -56,7 +56,6 @@
                     android:lines="1"
                     android:paddingLeft="@dimen/padding_10"
                     android:paddingTop="@dimen/padding_12"
-                    android:paddingRight="@dimen/padding_10"
                     android:paddingBottom="@dimen/padding_12"
                     android:textColor="@color/white"
                     android:textColorHint="@color/color_70658D"
@@ -65,7 +64,6 @@
                     tools:hint="@string/title_register_name"
                     tools:ignore="RtlSymmetry" />
 
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -73,14 +71,13 @@
                     android:layout_marginTop="@dimen/margin_26"
                     android:orientation="horizontal">
 
-
                     <androidx.appcompat.widget.AppCompatCheckBox
                         android:id="@+id/cbTerm"
                         android:layout_width="@dimen/margin_20"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_7"
                         android:background="@color/color_background_common"
-                        android:button="@drawable/bg_select_check_box"
+                        android:button="@drawable/cb_circular"
                         android:paddingTop="@dimen/margin_5dp"
                         android:paddingBottom="@dimen/margin_5dp" />
 
@@ -106,8 +103,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/margin_30"
-                            android:text="メールを許可していただくと、ご登録メールアドレス宛に女の子からのメッセージが届いたことやお気に入りの女の子のログインをメールでお知らせします。
-また、サイトからのお得なキャンペーン情報もご覧いただけます。"
+                            android:text="@string/title_receive_email"
                             android:textColor="@color/color_B2A9CC"
                             android:textSize="@dimen/text_size_12" />
                     </LinearLayout>
@@ -128,8 +124,6 @@
                     android:textStyle="bold" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-
-
 
         <jp.careapp.counseling.android.utils.customView.GenderSelectView
             android:id="@+id/genderSelectView"
