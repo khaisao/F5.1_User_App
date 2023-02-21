@@ -18,7 +18,6 @@ import jp.careapp.counseling.android.ui.registerName.RegisterNameFragment
 import jp.careapp.counseling.android.ui.registerName.RegisterNameFragment.Companion.setOnFragmentCallBack
 import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
-import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.SignedUpStatus
 import jp.careapp.counseling.databinding.FragmentRegistrationBinding
 import javax.inject.Inject
@@ -90,14 +89,6 @@ class RegistrationFragment :
             }.let {
                 appNavigation.openRegistrationToSelectCategoryScreen(it)
             }
-        }
-
-        binding.tvTermAndService.setOnClickListener {
-            val webViewBundle = Bundle().apply {
-                putString(Define.TITLE_WEB_VIEW, getString(R.string.title_terms))
-                putString(Define.URL_WEB_VIEW, Define.URL_TERMS)
-            }
-            appNavigation.openRegistrationToTermsOfServiceScreen(webViewBundle)
         }
     }
 

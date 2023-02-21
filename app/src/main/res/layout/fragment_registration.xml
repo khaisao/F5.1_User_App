@@ -88,7 +88,6 @@
                         android:paddingTop="@dimen/padding_5dp">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvTermAndService"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/hiragino_sans_w6"
@@ -99,7 +98,6 @@
                             android:textSize="@dimen/text_size_14" />
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvAgree"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/margin_30"
