@@ -90,6 +90,7 @@
     <dimen name="text_size_10">10sp</dimen>
     <dimen name="text_size_11">11sp</dimen>
     <dimen name="text_size_12">12sp</dimen>
+    <dimen name="text_size_13">13sp</dimen>
     <dimen name="text_size_user_profile_12">12sp</dimen>
     <dimen name="text_size_14">14sp</dimen>
     <dimen name="text_size_15">15sp</dimen>
@@ -175,5 +176,13 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="fragment_horizontal_margin">16dp</dimen>
     <dimen name="fragment_vertical_margin">16dp</dimen>
+
+    <!--chat list-->
+    <dimen name="chat_list_avatar_width">70dp</dimen>
+    <dimen name="chat_list_avatar_height">94dp</dimen>
+    <dimen name="chat_list_monthly_rank_width">57.5dp</dimen>
+    <dimen name="chat_list_monthly_rank_height">24dp</dimen>
+    <dimen name="ic_message_status_size">18dp</dimen>
+    <dimen name="ic_message_status_padding">3.5dp</dimen>
 
 </resources>

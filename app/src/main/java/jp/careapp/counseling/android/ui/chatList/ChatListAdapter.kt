@@ -56,11 +56,9 @@ class ChatListAdapter constructor(
                         if (!data.fromOwnerMail && it != null) {
                             avatarIv.loadImage(it.imageUrl, R.drawable.ic_avatar_default, true)
                             if (it.presenceStatus == DetailUserProfileFragment.ACCEPTING) {
-                                statusOnlineTv.visibility = VISIBLE
-                                statusOfflineTv.visibility = INVISIBLE
+                                // TODO (Handle presence status)
                             } else {
-                                statusOfflineTv.visibility = VISIBLE
-                                statusOnlineTv.visibility = INVISIBLE
+                                // TODO (Handle presence status)
                             }
                             nameUserTv.text = it.name
                         } else {
@@ -72,13 +70,23 @@ class ChatListAdapter constructor(
                             )
                                 .circleCrop()
                                 .into(avatarIv)
-                            statusOnlineTv.visibility = GONE
-                            statusOfflineTv.visibility = GONE
+                            // TODO (Handle presence status)
                             nameUserTv.text =
                                 context.resources.getString(R.string.notice_from_management)
                         }
                     }
                     lastMessageTv.text = data.body
+                    // TODO (Handle rank - Waiting for design)
+                    Glide.with(monthlyRank).load(
+                        context.resources.getIdentifier(
+                            "ic_daily_rank1",
+                            "drawable", context.packageName
+                        )
+                    ).into(monthlyRank)
+                    // TODO (Handle user cup - Waiting for API)
+                    userCupTv.text = "Eカップ"
+                    // TODO (Handle user age - Waiting for API)
+                    userAgeTv.text = "30歳"
                     if (data.unreadCount > 0) {
                         statusOpenTv.text = data.unreadCount.toString()
                         statusOpenTv.visibility = VISIBLE

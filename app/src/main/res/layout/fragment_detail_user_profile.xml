@@ -99,7 +99,7 @@
                                 app:layout_constraintBottom_toBottomOf="@id/stage_iv"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="@id/stage_iv"
-                                tools:text="@string/receiving" />
+                                tools:text="@string/presence_status_live_streaming" />
 
                             <ImageView
                                 android:id="@+id/stage_iv"

@@ -493,15 +493,15 @@ class DetailUserProfileFragment :
                 }
 
                 if (user.presenceStatus == ACCEPTING) {
-                    presenceStatusTv.text = getString(R.string.receiving)
-                    presenceStatusTv.setBackgroundResource(R.drawable.bg_corner_2dp_14d284)
+                    presenceStatusTv.text = getString(R.string.presence_status_live_streaming)
+                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_waiting)
                     presenceStatusTv.setTextColor(resources.getColor(R.color.color_1D1045))
                     clAction.visibility = VISIBLE
                     ballNextOnlineTv.visibility = INVISIBLE
                     sendNotiLl.visibility = INVISIBLE
                 } else {
-                    presenceStatusTv.text = getString(R.string.away)
-                    presenceStatusTv.setBackgroundResource(R.drawable.bg_strock_2dp_aea2d1)
+                    presenceStatusTv.text = getString(R.string.presence_status_waiting)
+                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
                     presenceStatusTv.setTextColor(resources.getColor(R.color.purple_AEA2D1))
                     if (TextUtils.isEmpty(user.loginPlansDatetime)) {
                         ballNextOnlineTv.visibility = GONE
