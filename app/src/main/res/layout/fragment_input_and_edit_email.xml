@@ -1,60 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rlInputEmail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_background_common"
+        android:background="@color/color_background_modal"
         android:focusable="true"
         android:focusableInTouchMode="true">
 
-        <include
-            android:id="@+id/tool_bar"
-            layout="@layout/tool_bar_common"
+        <com.lihang.ShadowLayout
+            android:id="@+id/sl_input_email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_19"
+            app:hl_cornerRadius="@dimen/margin_20"
+            app:hl_shadowColor="@color/color_dialog_border_shadow"
+            app:hl_shadowLimit="@dimen/margin_13"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tool_bar"
-            android:fillViewport="true"
-            android:fitsSystemWindows="true">
-
-            <RelativeLayout
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_input_email"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/color_background_dialog"
+                app:cardCornerRadius="@dimen/margin_20"
+                app:strokeColor="@color/color_dialog_border"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
+                    android:id="@+id/ll_input_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_above="@+id/btnEmail"
-                    android:layout_alignParentTop="true"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/margin_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_title"
-                        style="@style/text_title_bold_28"
-                        android:layout_alignParentTop="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginLeft="@dimen/margin_24dp"
                         android:layout_marginTop="@dimen/margin_title_email_32"
                         android:layout_marginRight="@dimen/margin_24dp"
+                        android:fontFamily="@font/hiragino_sans_w6"
                         android:maxLines="2"
                         android:text="@string/title_input_email"
                         android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_16"
                         android:visibility="visible" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_input_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_title"
                         android:layout_marginLeft="@dimen/margin_24dp"
                         android:layout_marginTop="@dimen/margin_top_email_24"
                         android:layout_marginRight="@dimen/margin_24dp"
                         android:background="@drawable/bg_input_text"
+                        android:drawableStart="@drawable/icon_form_mail"
+                        android:drawablePadding="@dimen/margin_12"
+                        android:elevation="4dp"
+                        android:fontFamily="@font/hiragino_sans_w3"
                         android:importantForAutofill="no"
                         android:inputType="textEmailAddress"
                         android:lines="1"
@@ -63,22 +77,61 @@
                         android:paddingRight="@dimen/padding_10"
                         android:paddingBottom="@dimen/padding_12"
                         android:textColor="@color/white"
-                        android:textColorHint="@color/color_6D5D9A"
-                        android:textSize="@dimen/text_size_input_email_16"
+                        android:textColorHint="@color/color_70658D"
+                        android:textSize="@dimen/text_size_input_email_14"
                         android:textStyle="bold"
-                        tools:hint="@string/hint_input_email"
+                        tools:hint="@string/hint_input_email_register"
                         tools:ignore="RtlSymmetry" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_error_email"
-                        style="@style/text_error_email_bold_12"
-                        android:layout_below="@+id/et_input_email"
+                    <LinearLayout
+                        android:id="@+id/ll_error_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_24dp"
-                        android:layout_marginTop="@dimen/margin_8"
+                        android:layout_marginTop="@dimen/margin_10"
                         android:layout_marginRight="@dimen/margin_24dp"
-                        android:textColor="@color/color_alert_error"
-                        android:visibility="gone"
-                        tools:text="@string/alert_error_email" />
+                        android:visibility="invisible">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/margin_4dp"
+                            android:src="@drawable/icon_error_email" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_error_email"
+                            style="@style/text_error_email_bold_12"
+                            android:textColor="@color/color_alert_error"
+                            tools:text="@string/alert_error_email" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_24dp"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:layout_marginEnd="@dimen/margin_24dp"
+                        android:layout_marginBottom="@dimen/margin_12"
+                        android:background="@drawable/bg_gradient"
+                        android:enabled="false"
+                        android:fontFamily="@font/hiragino_sans_w6"
+                        android:textColor="@drawable/text_common"
+                        android:textSize="@dimen/text_size_send_email_14"
+                        android:textStyle="bold"
+                        tools:ignore="RtlCompat"
+                        tools:text="@string/input_email"
+                        tools:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_already_have_acc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_24dp"
+                        android:layout_marginTop="@dimen/margin_top_email_24"
+                        android:layout_marginRight="@dimen/margin_24dp"
+                        android:clickable="true"
+                        android:text="@string/already_have_acc" />
 
                     <TextView
                         android:id="@+id/link_privacy"
@@ -88,31 +141,54 @@
                         android:layout_marginTop="@dimen/margin_top_email_24"
                         android:layout_marginRight="@dimen/margin_24dp"
                         android:clickable="true"
-                        android:text="@string/link_privacy" />
+                        android:text="@string/link_privacy"
+                        android:textAlignment="center" />
 
+                    <View
+                        android:id="@+id/straight_line_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_1"
+                        android:layout_marginHorizontal="@dimen/margin_24"
+                        android:layout_marginTop="@dimen/margin_34"
+                        android:alpha="0.15"
+                        android:background="@color/white" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cv_register_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/margin_16"
+                        app:cardBackgroundColor="@android:color/transparent"
+                        app:cardCornerRadius="@dimen/margin_24"
+                        app:strokeColor="@color/color_70658D"
+                        app:strokeWidth="1dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/padding_24"
+                            android:paddingVertical="@dimen/padding_10"
+                            android:text="@string/new_member_registration"
+                            android:textColor="@color/color_text_F0F0F0" />
+                    </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="@dimen/margin_24dp"
-                    android:layout_marginEnd="@dimen/margin_24dp"
-                    android:layout_marginBottom="@dimen/margin_12"
-                    android:background="@drawable/bg_gradient"
-                    android:enabled="false"
-                    android:textColor="@drawable/text_common"
-                    android:textSize="@dimen/text_size_send_email_14"
-                    android:textStyle="bold"
-                    tools:ignore="RtlCompat"
-                    tools:text="@string/input_email"
-                    tools:textColor="@color/color_6D5D9A" />
+            </com.google.android.material.card.MaterialCardView>
 
-            </RelativeLayout>
+        </com.lihang.ShadowLayout>
 
-        </androidx.core.widget.NestedScrollView>
+        <ImageView
+            android:id="@+id/iv_close_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_16"
+            android:src="@drawable/ic_dialog_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sl_input_email" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

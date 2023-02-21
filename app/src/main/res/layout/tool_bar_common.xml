@@ -7,7 +7,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/color_background_common"
+        android:background="@color/color_background_dialog"
         android:elevation="@dimen/_1sdp"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"

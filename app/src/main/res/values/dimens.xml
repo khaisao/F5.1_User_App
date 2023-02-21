@@ -37,12 +37,15 @@
     <dimen name="margin_18">18dp</dimen>
     <dimen name="margin_19">19dp</dimen>
     <dimen name="margin_20">20dp</dimen>
+    <dimen name="margin_44">44dp</dimen>
     <dimen name="margin_6">6dp</dimen>
     <dimen name="margin_2">2dp</dimen>
+    <dimen name="margin_1">1dp</dimen>
     <dimen name="margin_22">22dp</dimen>
     <dimen name="margin_25">25dp</dimen>
     <dimen name="margin_100">100dp</dimen>
     <dimen name="margin_30">30dp</dimen>
+    <dimen name="margin_42">42dp</dimen>
 
     <!--height layout-->
     <dimen name="height_diver_line">0.5dp</dimen>
@@ -69,6 +72,7 @@
     <dimen name="padding_16dp">16dp</dimen>
     <dimen name="padding_60dp">60dp</dimen>
     <dimen name="padding_20">20dp</dimen>
+    <dimen name="padding_24">24dp</dimen>
     <dimen name="padding_12">12dp</dimen>
     <dimen name="padding_15">15dp</dimen>
     <dimen name="padding_13">13dp</dimen>
@@ -122,7 +126,7 @@
     <dimen name="text_size_title_28">28sp</dimen>
     <dimen name="margin_title_email_32">32dp</dimen>
     <dimen name="margin_top_email_24">24dp</dimen>
-    <dimen name="text_size_input_email_16">16sp</dimen>
+    <dimen name="text_size_input_email_14">14sp</dimen>
     <dimen name="text_size_error_email_12">12sp</dimen>
     <dimen name="text_size_send_email_14">14sp</dimen>
     <dimen name="height_input_email">44dp</dimen>
@@ -169,6 +173,9 @@
     <dimen name="view_size_120">120dp</dimen>
     <dimen name="view_size_94">94dp</dimen>
     <dimen name="view_size_100">100dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="fragment_horizontal_margin">16dp</dimen>
+    <dimen name="fragment_vertical_margin">16dp</dimen>
 
     <!--chat list-->
     <dimen name="chat_list_avatar_width">70dp</dimen>

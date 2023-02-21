@@ -4,13 +4,16 @@ import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.text.Html
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MotionEvent
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View
+import android.view.View.*
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.WindowManager
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -25,6 +28,7 @@ import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.email.InputAndEditMailViewModel.Companion.SCREEN_EDIT_EMAIL
 import jp.careapp.counseling.android.ui.email.InputAndEditMailViewModel.Companion.SCREEN_LOGIN_WITH_EMAIL
+import jp.careapp.counseling.android.ui.email.InputAndEditMailViewModel.Companion.SCREEN_REGISTER_WITH_EMAIL
 import jp.careapp.counseling.android.ui.main.MainViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.Define
@@ -60,12 +64,15 @@ class InputAndEditEmailFragment :
         try {
             if (arguments != null) {
                 codeScreen = arguments?.getInt(BUNDLE_KEY.CODE_SCREEN) ?: SCREEN_LOGIN_WITH_EMAIL
-                email = if (rxPreferences.getSignedUpStatus() == SignedUpStatus.LOGIN_WITHOUT_EMAIL) {
-                    ""
-                } else {
-                    arguments?.getString(BUNDLE_KEY.EMAIL) ?: ""
-                }
+                email =
+                    if (rxPreferences.getSignedUpStatus() == SignedUpStatus.LOGIN_WITHOUT_EMAIL) {
+                        ""
+                    } else {
+                        arguments?.getString(BUNDLE_KEY.EMAIL) ?: ""
+                    }
                 binding.etInputEmail.setText(email)
+            } else {
+                codeScreen = SCREEN_REGISTER_WITH_EMAIL
             }
         } catch (e: Exception) {
         }
@@ -76,20 +83,51 @@ class InputAndEditEmailFragment :
     }
 
     private fun displayView() {
-        binding.toolBar.viewStatusBar.visibility = GONE
         if (codeScreen == SCREEN_EDIT_EMAIL) {
-            binding.tvTitle.visibility = GONE
-            binding.toolBar.btnLeft.setImageDrawable(resources.getDrawable(R.drawable.ic_back_left))
-            binding.toolBar.tvTitle.text = getString(R.string.sub_title_edt_reregister)
-            binding.tvErrorEmail.text = getString(R.string.please_enter_valid_email)
-            binding.etInputEmail.hint = getString(R.string.hint_edit_email)
-            binding.btnEmail.text = getString(R.string.edit_email)
+            binding.apply {
+                tvTitle.visibility = GONE
+                tvErrorEmail.text = getString(R.string.please_enter_valid_email)
+                etInputEmail.hint = getString(R.string.hint_edit_email)
+                btnEmail.text = getString(R.string.edit_email)
+                tvAlreadyHaveAcc.visibility = GONE
+                straightLineLogin.visibility = GONE
+                cvRegisterButton.visibility = GONE
+            }
+        } else if (codeScreen == SCREEN_REGISTER_WITH_EMAIL) {
+            binding.apply {
+                tvTitle.visibility = VISIBLE
+                tvErrorEmail.text = getString(R.string.alert_error_email)
+                etInputEmail.hint = getString(R.string.hint_input_email_register)
+                btnEmail.text = getString(R.string.input_email)
+                tvAlreadyHaveAcc.text =
+                    Html.fromHtml(
+                        resources.getString(R.string.already_have_acc),
+                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                    )
+                linkPrivacy.text = Html.fromHtml(
+                    resources.getString(R.string.link_privacy),
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
+                tvAlreadyHaveAcc.visibility = VISIBLE
+                straightLineLogin.visibility = GONE
+                cvRegisterButton.visibility = GONE
+            }
         } else {
-            binding.tvTitle.visibility = VISIBLE
-            binding.toolBar.btnLeft.setImageDrawable(resources.getDrawable(R.drawable.ic_cancel))
-            binding.tvErrorEmail.text = getString(R.string.alert_error_email)
-            binding.etInputEmail.hint = getString(R.string.hint_input_email)
-            binding.btnEmail.text = getString(R.string.input_email)
+            binding.apply {
+                tvTitle.visibility = VISIBLE
+                tvErrorEmail.text = getString(R.string.alert_error_email)
+                etInputEmail.hint = getString(R.string.hint_input_email_register)
+                btnEmail.text = getString(R.string.input_email)
+                tvTitle.text = getString(R.string.login)
+                btnEmail.text = getString(R.string.login)
+                tvAlreadyHaveAcc.visibility = GONE
+                linkPrivacy.text = Html.fromHtml(
+                    resources.getString(R.string.link_privacy_login),
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
+                straightLineLogin.visibility = VISIBLE
+                cvRegisterButton.visibility = VISIBLE
+            }
         }
     }
 
@@ -145,7 +183,7 @@ class InputAndEditEmailFragment :
 
     private fun validateEmailPattern(content: String) {
         if (content.isValidEmail()) {
-            binding.tvErrorEmail.visibility = GONE
+            binding.llErrorEmail.visibility = INVISIBLE
             if (codeScreen == SCREEN_EDIT_EMAIL) {
                 if (content == email) {
                     disableButton()
@@ -156,8 +194,8 @@ class InputAndEditEmailFragment :
                 enableButton()
             }
         } else {
-            binding.tvErrorEmail.visibility =
-                if (!TextUtils.isEmpty(content)) VISIBLE else GONE
+            binding.llErrorEmail.visibility =
+                if (!TextUtils.isEmpty(content)) VISIBLE else INVISIBLE
             disableButton()
         }
     }
@@ -166,6 +204,7 @@ class InputAndEditEmailFragment :
         super.onStart()
         binding.rlInputEmail.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)
     }
+
     override fun onResume() {
         super.onResume()
         viewModel.isComeBackFromBackGround.observe(viewLifecycleOwner, isFocusObserver)
@@ -185,7 +224,7 @@ class InputAndEditEmailFragment :
     override fun setOnClick() {
         super.setOnClick()
 
-        binding.toolBar.btnLeft.setOnClickListener {
+        binding.ivCloseDialog.setOnClickListener {
             appNavigation.navigateUp()
         }
 
@@ -198,6 +237,20 @@ class InputAndEditEmailFragment :
                     mainViewModel.setMail(getEmail())
                 }
             }
+        }
+
+        binding.tvAlreadyHaveAcc.setOnClickListener {
+            val bundle = Bundle().apply {
+                putInt(BUNDLE_KEY.CODE_SCREEN, SCREEN_LOGIN_WITH_EMAIL)
+            }
+            appNavigation.openLoginEmailScreen(bundle)
+        }
+
+        binding.cvRegisterButton.setOnClickListener {
+            val bundle = Bundle().apply {
+                putInt(BUNDLE_KEY.CODE_SCREEN, SCREEN_REGISTER_WITH_EMAIL)
+            }
+            appNavigation.openLoginEmailScreen(bundle)
         }
     }
 
@@ -253,7 +306,7 @@ class InputAndEditEmailFragment :
         }
         binding.etInputEmail.setOnFocusChangeListener { view, b ->
             if (view.isFocused && binding.etInputEmail.text.toString()
-                .isNotEmpty()
+                    .isNotEmpty()
             ) {
                 binding.etInputEmail.requestFocus()
                 isFocusEditEmail = true
