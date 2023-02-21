@@ -90,12 +90,10 @@ class InputAndEditEmailFragment :
                 etInputEmail.hint = getString(R.string.hint_edit_email)
                 btnEmail.text = getString(R.string.edit_email)
                 tvAlreadyHaveAcc.visibility = GONE
-                straightLineLogin.visibility= GONE
-                cvRegisterButton.visibility= GONE
+                straightLineLogin.visibility = GONE
+                cvRegisterButton.visibility = GONE
             }
-
-        }
-        if (codeScreen == SCREEN_REGISTER_WITH_EMAIL) {
+        } else if (codeScreen == SCREEN_REGISTER_WITH_EMAIL) {
             binding.apply {
                 tvTitle.visibility = VISIBLE
                 tvErrorEmail.text = getString(R.string.alert_error_email)
@@ -111,12 +109,10 @@ class InputAndEditEmailFragment :
                     HtmlCompat.FROM_HTML_MODE_LEGACY
                 )
                 tvAlreadyHaveAcc.visibility = VISIBLE
-                straightLineLogin.visibility= GONE
-                cvRegisterButton.visibility= GONE
+                straightLineLogin.visibility = GONE
+                cvRegisterButton.visibility = GONE
             }
-
-        }
-        if (codeScreen == SCREEN_LOGIN_WITH_EMAIL) {
+        } else {
             binding.apply {
                 tvTitle.visibility = VISIBLE
                 tvErrorEmail.text = getString(R.string.alert_error_email)
@@ -129,11 +125,9 @@ class InputAndEditEmailFragment :
                     resources.getString(R.string.link_privacy_login),
                     HtmlCompat.FROM_HTML_MODE_LEGACY
                 )
-                straightLineLogin.visibility= VISIBLE
-                cvRegisterButton.visibility= VISIBLE
+                straightLineLogin.visibility = VISIBLE
+                cvRegisterButton.visibility = VISIBLE
             }
-
-
         }
     }
 

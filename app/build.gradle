@@ -211,7 +211,7 @@ dependencies {
 
     implementation libraries.dimenDp
     implementation libraries.dimenSp
-    implementation("com.github.lihangleo2:ShadowLayout:2.0.1")
+    implementation libraries.ShadowLayout
 
     implementation(libraries.socketIoClient) {
         exclude group: 'org.json', module: 'json'

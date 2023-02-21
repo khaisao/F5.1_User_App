@@ -9,6 +9,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.DateUtil
+import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.InfoRegistrationWithoutEmailRequest
 import jp.careapp.counseling.android.data.model.InforRegistrationRequest
 import jp.careapp.counseling.android.data.network.ApiObjectResponse
@@ -67,8 +68,6 @@ class RegistrationViewModel @ViewModelInject constructor(
 
     fun setReceiveMail(isNeedReceiveMail: Boolean) {
         receiveMail = if (isNeedReceiveMail) 1 else 0
-
-
     }
 
     fun openDatePicker(birthDay: String, context: Context) {
@@ -117,7 +116,7 @@ class RegistrationViewModel @ViewModelInject constructor(
             pushMail = 1,
             pushOnline = 1,
             pushCounseling = 1,
-            birth = "1900-01-01",
+            birth = application.getString(R.string.birth_default),
             androidId = getAndroidId()
         )
     }
@@ -130,7 +129,7 @@ class RegistrationViewModel @ViewModelInject constructor(
             pushMail = 1,
             pushOnline = 1,
             pushCounseling = 1,
-            birth = "1900-01-01",
+            birth = application.getString(R.string.birth_default),
             androidId = getAndroidId()
         )
     }

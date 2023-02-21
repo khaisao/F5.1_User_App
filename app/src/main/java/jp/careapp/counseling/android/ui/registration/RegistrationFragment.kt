@@ -64,10 +64,9 @@ class RegistrationFragment :
         super.setOnClick()
 
         binding.cbTerm.setOnClickListener {
-            if(binding.cbTerm.isChecked){
+            if (binding.cbTerm.isChecked) {
                 viewModel.setReceiveMail(true)
-            }
-            else{
+            } else {
                 viewModel.setReceiveMail(false)
             }
         }
@@ -97,8 +96,7 @@ class RegistrationFragment :
     }
 
     private fun updateStatusButtonRegister() {
-        if (TextUtils.isEmpty(binding.tvName.text.toString().trim())
-        ) {
+        if (TextUtils.isEmpty(binding.tvName.text.toString().trim())) {
             binding.btnRegistration.isEnabled = false
             return
         }
