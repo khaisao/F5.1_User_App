@@ -6,123 +6,146 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/margin_5dp"
-        android:paddingStart="@dimen/margin_16"
+        android:paddingStart="@dimen/margin_4dp"
         tools:ignore="RtlSymmetry">
 
         <ImageView
             android:id="@+id/avatar_iv"
-            android:layout_width="@dimen/margin_55"
-            android:layout_height="@dimen/margin_55"
-            android:src="@drawable/ic_avatar_default"
+            android:layout_width="@dimen/chat_list_avatar_width"
+            android:layout_height="@dimen/chat_list_avatar_height"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_avatar_default_chat"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <RelativeLayout
-            android:id="@+id/content_messgae_rl"
-            android:layout_width="@dimen/_0sdp"
+            android:id="@+id/performer_info_rl"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_10"
-            android:layout_toStartOf="@+id/status_meesage_ll"
-            android:layout_toEndOf="@+id/avatar_iv"
-            app:layout_constraintBottom_toBottomOf="@+id/avatar_iv"
-            app:layout_constraintEnd_toStartOf="@+id/status_meesage_ll"
+            android:layout_marginHorizontal="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_6"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/avatar_iv"
-            app:layout_constraintTop_toTopOf="@+id/avatar_iv">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/status_online_tv"
-                style="@style/text_bold_12"
-                android:layout_marginEnd="@dimen/_6sdp"
-                android:background="@drawable/bg_corner_2dp_14d284"
-                android:paddingLeft="@dimen/margin_5dp"
-                android:paddingTop="@dimen/margin_3"
-                android:paddingRight="@dimen/margin_5dp"
-                android:paddingBottom="@dimen/margin_3"
-                android:text="@string/receiving"
-                android:textColor="@color/color_1D1045"
-                android:visibility="invisible" />
+                style="@style/text_bold_9"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_performer_status_waiting"
+                android:paddingHorizontal="@dimen/margin_4dp"
+                android:paddingVertical="@dimen/margin_2"
+                android:text="@string/presence_status_live_streaming"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:id="@+id/monthly_rank"
+                android:layout_width="@dimen/chat_list_monthly_rank_width"
+                android:layout_height="@dimen/chat_list_monthly_rank_height"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/margin_2"
+                android:layout_toEndOf="@+id/status_online_tv"
+                android:background="@drawable/ic_daily_rank1"
+                android:contentDescription="@null" />
 
             <TextView
-                android:id="@+id/status_offline_tv"
-                style="@style/text_bold_12"
-                android:background="@drawable/bg_strock_2dp_aea2d1"
-                android:paddingLeft="@dimen/margin_5dp"
-                android:paddingTop="@dimen/margin_3"
-                android:paddingRight="@dimen/margin_5dp"
-                android:paddingBottom="@dimen/margin_3"
-                android:text="@string/away"
-                android:textColor="@color/purple_AEA2D1" />
+                android:id="@+id/date_sent_tv"
+                style="@style/text_10"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:gravity="end"
+                android:minWidth="50dp"
+                android:textColor="@color/gray_purple"
+                tools:text="22:30" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/performer_info_line2_rl"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_6"
+            app:layout_constraintEnd_toEndOf="@+id/performer_info_rl"
+            app:layout_constraintStart_toStartOf="@+id/performer_info_rl"
+            app:layout_constraintTop_toBottomOf="@+id/performer_info_rl">
+
+            <TextView
+                android:id="@+id/status_open_tv"
+                style="@style/text_10"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/ic_status_new"
+                android:gravity="center"
+                android:minWidth="@dimen/ic_message_status_size"
+                android:minHeight="@dimen/ic_message_status_size"
+                android:padding="@dimen/ic_message_status_padding"
+                android:text="@string/message_status_new"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/name_user_tv"
                 style="@style/text_bold_14"
-                android:layout_alignBottom="@+id/status_online_tv"
-                android:layout_toRightOf="@+id/status_online_tv"
-                android:ellipsize="end"
+                android:layout_alignBottom="@+id/status_open_tv"
+                android:layout_alignParentStart="true"
                 android:lines="1"
-                android:paddingEnd="@dimen/margin_4dp"
-                android:textColor="@color/color_text_E3DFEF"
+                android:textColor="@color/gray_default"
                 tools:ignore="RtlSymmetry"
-                tools:text="なまえ" />
+                tools:text="。なみ。*" />
+
+            <TextView
+                android:id="@+id/user_cup_tv"
+                style="@style/text_13"
+                android:layout_alignBottom="@+id/status_open_tv"
+                android:layout_marginStart="@dimen/margin_6"
+                android:layout_toEndOf="@+id/name_user_tv"
+                android:gravity="start"
+                android:lines="1"
+                android:textColor="@color/gray_default"
+                tools:ignore="RtlSymmetry"
+                tools:text="Eカップ" />
+
+            <TextView
+                android:id="@+id/user_age_tv"
+                style="@style/text_13"
+                android:layout_alignBottom="@+id/status_open_tv"
+                android:layout_marginStart="@dimen/margin_6"
+                android:layout_toEndOf="@+id/user_cup_tv"
+                android:gravity="start"
+                android:lines="1"
+                android:textColor="@color/gray_default"
+                tools:ignore="RtlSymmetry"
+                tools:text="30歳" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/content_message_rl"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_11"
+            app:layout_constraintBottom_toBottomOf="@+id/avatar_iv"
+            app:layout_constraintEnd_toEndOf="@+id/performer_info_line2_rl"
+            app:layout_constraintStart_toStartOf="@+id/performer_info_line2_rl"
+            app:layout_constraintTop_toBottomOf="@+id/performer_info_line2_rl">
 
             <TextView
                 android:id="@+id/last_message_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/name_user_tv"
-                android:layout_marginTop="@dimen/view_size_5"
                 android:ellipsize="end"
                 android:lineSpacingExtra="@dimen/spacing_2"
                 android:lines="2"
                 android:textSize="@dimen/text_size_14"
-                tools:text="【通知】チャットが終了しました【通知】チャットが終了しました【通知】チャットが終了しました" />
+                tools:text="遅くなっちゃったけど今日は今からINします！まだ起きてるかな？？おきてたら是..." />
 
             <TextView
                 android:id="@+id/tvPayMessage"
                 style="@style/text_14"
-                android:layout_below="@+id/name_user_tv"
-                android:layout_marginTop="@dimen/view_size_10"
+                android:layout_marginTop="@dimen/view_size_5"
                 android:text="@string/pay_message"
                 android:textColor="@color/color_FF57A9"
                 android:visibility="gone" />
-
         </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/status_meesage_ll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingEnd="@dimen/margin_16"
-            app:layout_constraintBottom_toBottomOf="@+id/avatar_iv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/avatar_iv">
-
-            <TextView
-                android:id="@+id/date_sent_tv"
-                style="@style/text_10"
-                android:gravity="end"
-                android:minWidth="50dp"
-                android:textColor="@color/purple_AEA2D1"
-                tools:text="11:28" />
-
-            <TextView
-                android:id="@+id/status_open_tv"
-                style="@style/text_10"
-                android:layout_gravity="end"
-                android:layout_marginTop="@dimen/margin_10"
-                android:background="@drawable/ic_status_new"
-                android:gravity="center"
-                android:minWidth="16dp"
-                android:minHeight="16dp"
-                android:paddingHorizontal="@dimen/margin_4dp"
-                android:paddingVertical="@dimen/margin_2"
-                android:text="N"
-                android:textColor="@color/white" />
-        </LinearLayout>
 
         <View
             android:id="@+id/line_bottom"
@@ -132,7 +155,7 @@
             android:alpha="0.15"
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/content_messgae_rl"
-            app:layout_constraintTop_toBottomOf="@id/content_messgae_rl" />
+            app:layout_constraintStart_toStartOf="@+id/performer_info_rl"
+            app:layout_constraintTop_toBottomOf="@id/performer_info_rl" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

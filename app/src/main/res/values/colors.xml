@@ -26,7 +26,10 @@
     <color name="color_6D5D9A">#6D5D9A</color><!--rgb 109 93 154-->
     <color name="color_FF1D1D">#FF1D1D</color><!--rgb 255 29 29-->
     <color name="color_FFA900">#FFA900</color><!--rgb 255 169 0-->
-    <color name="color_FFFF00">#FFFF00 </color><!--rgb 255 255 0-->
+    <color name="color_FFFF00">#FFFF00</color><!--rgb 255 255 0-->
+    <color name="gray_purple">#736a8a</color><!--rgb 115 106 138-->
+    <color name="gray_dark">#70658d</color><!--rgb 112 101 141-->
+    <color name="gray_default">#f0f0f0</color><!--rgb 240 240 240-->
 
 
     <!--    Top screen colors-->

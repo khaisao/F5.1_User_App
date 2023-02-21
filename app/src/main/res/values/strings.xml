@@ -203,9 +203,11 @@
     <string name="specialty_genre">得意ジャンル</string>
     <string name="message_teacher">先生からのメッセージ</string>
     <string name="reception_schedule">受付スケジュール</string>
-    <string name="receiving">受付中</string>
     <string name="title_noti">相談可能になったら通知する</string>
-    <string name="away">退席中</string>
+    <string name="presence_status_waiting">待機中</string>
+    <string name="presence_status_live_streaming">ライブ配信中</string>
+    <string name="presence_status_private_delivery">プライベート配信中</string>
+    <string name="presence_status_offline">オフライン</string>
     <string name="remove_favorite">追加済</string>
     <string name="status_rank_daily">前日%d位</string>
     <string name="status_rank_weekly">週間%d位</string>
@@ -561,5 +563,6 @@
     <string name="please_enter_review_less_than_140">先生へのレビューは 140 文 字以内で入力して下さい。</string>
     <string name="can_not_add_new_question">相談ラボへの新規投稿は終了いたしました。</string>
     <string name="free_message_consult_call">【無料】通話で相談できますか？</string>
+    <string name="message_status_new">N</string>
 
 </resources>
