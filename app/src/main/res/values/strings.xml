@@ -15,13 +15,18 @@
     <string name="title_register_name">ニックネーム</string>
     <string name="limit_number_character">10</string>
     <string name="hint_input_email">メールアドレスを入力</string>
-    <string name="input_email">確認メールを送信"</string>
-    <string name="title_input_email">メールアドレスを\n入力してください</string>
-    <string name="alert_error_email">入力内容が正しくありません</string>
+    <string name="hint_input_email_register">メールアドレス</string>
+    <string name="input_email">登録</string>
+    <string name="title_input_email">会員登録</string>
+    <string name="login">ログイン</string>
+    <string name="alert_error_email">メールアドレスが正しくありません</string>
     <string name="title_search_category">お悩み</string>
     <string name="please_enter_valid_email">有効なメールアドレスを入力してください</string>
     <string name="please_enter_valid_name">ニックネームを入力してください</string>
-    <string name="link_privacy"><a href="link">プライバシーポリシー</a>に同意し、メールアドレスを入力します。</string>
+    <string name="link_privacy">利用を継続する事でPEAK LIVEの<![CDATA[<b><font color=#B47AFF><a href="link">利用規約</a></font></b>]]>に同意したものとみなされます。</string>
+    <string name="link_privacy_login">ログインすると<![CDATA[<b><font color=#B47AFF><a href="link">利用規約</a></font></b>]]>に承認します。</string>
+    <string name="already_have_acc">アカウントをお持ちですか？<![CDATA[<b><font color=#B47AFF><a href="link">ログインする</a></font></b>]]></string>
+    <string name="login_note">ログインすると<![CDATA[<b><font color=#B47AFF><a href="link">利用規約</a></font></b>]]>に承認します。</string>
     <string name="start_consultation">相談をはじめる</string>
 
     <!--favorite dialog-->
@@ -70,10 +75,10 @@
     <string name="title_privacy">プライバシーポリシー</string>
 
     <!--verify Code-->
-    <string name="title_verify_code">認証コードを\n入力してください</string>
+    <string name="title_verify_code">認証コード入力</string>
     <string name="please_enter_exactly_code">正しいコードを入力してください</string>
     <string name="please_enter_code">届いたメールに記載されている4桁の数字を入力してください。</string>
-    <string name="click_to_not_receive_email">メールが届かない場合はコチラ</string>
+    <string name="click_to_not_receive_email"><![CDATA[<b><font color=#B47AFF><a href="link">メールが届かない場合はコチラ</a></font></b>]]></string>
     <string name="content_error_over_five_times">認証に失敗しました。\nお手数ですが最初からやり直してください。</string>
 
     <!--verification Code Help-->
@@ -168,6 +173,7 @@
 
     <!--   Registration-->
     <string name="enter_your_profile_to_start">プロフィールを入力して\n早速はじめましょう！</string>
+    <string name="register_complete">認証が完了しました</string>
     <string name="change_your_profile">プロフィールはあとから変更できます</string>
     <string name="lb_name">お名前</string>
     <string name="lb_gender">性別</string>
@@ -415,6 +421,7 @@
     <string name="authentication_code_incorrect">認証コードが正しくありません</string>
     <string name="edit_email">変更する</string>
     <string name="registration">はじめる</string>
+    <string name="register_with_this_content">この内容で登録</string>
     <string name="duplicate_email_address">FLAXで会員メールアドレスが重複しています</string>
 
     <string name="review">レビュー</string>
@@ -561,5 +568,19 @@
     <string name="please_enter_review_less_than_140">先生へのレビューは 140 文 字以内で入力して下さい。</string>
     <string name="can_not_add_new_question">相談ラボへの新規投稿は終了いたしました。</string>
     <string name="free_message_consult_call">【無料】通話で相談できますか？</string>
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="new_member_registration">新規会員登録</string>
+    <string name="receive_email_from_spark_live">SPARK LIVEからのメールを受け取る</string>
+    <string name="title_receive_email">メールを許可していただくと、ご登録メールアドレス宛に女の子からのメッセージが届いたことやお気に入りの女の子のログインをメールでお知らせします。 また、サイトからのお得なキャンペーン情報もご覧いただけます。</string>
+    <string name="birth_default">1900-01-01</string>
 </resources>

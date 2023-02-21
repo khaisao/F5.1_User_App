@@ -20,6 +20,8 @@ interface AppNavigation : BaseNavigator {
 
     fun openStartToInputAndEditEmailScreen(bundle: Bundle? = null)
 
+    fun openLoginEmailScreen(bundle: Bundle? = null)
+
     fun openSplashToStartScreen(bundle: Bundle? = null)
 
     fun openStartToDifficultLoginScreen(bundle: Bundle? = null)

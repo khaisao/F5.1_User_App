@@ -1,9 +1,9 @@
 package jp.careapp.counseling.android.ui.registration
 
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
-import android.view.View
-import androidx.core.view.isVisible
+import android.text.TextWatcher
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -18,9 +18,7 @@ import jp.careapp.counseling.android.ui.registerName.RegisterNameFragment
 import jp.careapp.counseling.android.ui.registerName.RegisterNameFragment.Companion.setOnFragmentCallBack
 import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
-import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.SignedUpStatus
-import jp.careapp.counseling.android.utils.customView.GenderSelectView
 import jp.careapp.counseling.databinding.FragmentRegistrationBinding
 import javax.inject.Inject
 
@@ -48,45 +46,29 @@ class RegistrationFragment :
     override fun initView() {
         super.initView()
         setOnFragmentCallBack(this)
-        binding.cbTerm.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.setPrivacyTerm(if (isChecked) 1 else 0)
-            updateStatusButtonRegister()
-        }
+        binding.tvName.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                viewModel.setName(binding.tvName.text.toString().trim())
+                updateStatusButtonRegister()
+            }
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+        })
+
     }
 
     override fun setOnClick() {
         super.setOnClick()
-        binding.ivBack.apply {
-            isVisible = isLoginWithoutEmail
-            setOnClickListener {
-                if (!isDoubleClick) {
-                    appNavigation.navigateUp()
-                }
-            }
-        }
 
-        binding.viewEnterName.setOnClickListener {
-            val nameBundle = Bundle().apply {
-                putString(BUNDLE_KEY.NAME, getName())
+        binding.cbTerm.setOnClickListener {
+            if (binding.cbTerm.isChecked) {
+                viewModel.setReceiveMail(true)
+            } else {
+                viewModel.setReceiveMail(false)
             }
-            appNavigation.openRegistrationToRegisterNameScreen(nameBundle)
-        }
-
-        binding.viewChooseGender.setOnClickListener {
-            binding.genderSelectView.visibility = View.VISIBLE
-            binding.genderSelectView.setOnChooseGender(
-                object : GenderSelectView.ChooseGender {
-                    override fun choose(pos: Int, title: String?) {
-                        binding.genderSelectView.visibility = View.GONE
-                        binding.tvGender.setText(title)
-                        viewModel.setGender(pos)
-                        updateStatusButtonRegister()
-                    }
-                }
-            )
-        }
-        binding.viewDateOfBirth.setOnClickListener {
-            context?.let { it1 -> viewModel.openDatePicker(getBirthDay(), it1) }
         }
 
         binding.btnRegistration.setOnClickListener {
@@ -107,30 +89,14 @@ class RegistrationFragment :
                 appNavigation.openRegistrationToSelectCategoryScreen(it)
             }
         }
-
-        binding.tvTermAndService.setOnClickListener {
-            val webViewBundle = Bundle().apply {
-                putString(Define.TITLE_WEB_VIEW, getString(R.string.title_terms))
-                putString(Define.URL_WEB_VIEW, Define.URL_TERMS)
-            }
-            appNavigation.openRegistrationToTermsOfServiceScreen(webViewBundle)
-        }
-    }
-
-    private fun getBirthDay(): String {
-        return binding.tvBirthday.text.trim().toString()
     }
 
     private fun getName(): String {
-        return binding.tvName.text.trim().toString()
+        return binding.tvName.text?.trim().toString()
     }
 
     private fun updateStatusButtonRegister() {
-        if (TextUtils.isEmpty(binding.tvName.text.toString().trim()) ||
-            TextUtils.isEmpty(binding.tvGender.text.toString().trim()) ||
-            TextUtils.isEmpty(binding.tvBirthday.text.toString().trim()) ||
-            viewModel.getPrivacyTerm() != 1
-        ) {
+        if (TextUtils.isEmpty(binding.tvName.text.toString().trim())) {
             binding.btnRegistration.isEnabled = false
             return
         }
@@ -138,7 +104,6 @@ class RegistrationFragment :
     }
 
     private var dateOfBirthObserver: Observer<String> = Observer {
-        binding.tvBirthday.setText(it)
         updateStatusButtonRegister()
     }
 

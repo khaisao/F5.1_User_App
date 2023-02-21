@@ -83,7 +83,8 @@ ext {
             sdp                  : "1.0.6",
 
             glideTransform       : "4.3.0",
-            socketIoClient       : "1.0.0"
+            socketIoClient       : "1.0.0",
+            ShadowLayout         : "2.0.1"
     ]
     libraries = [
             fragment             : "androidx.fragment:fragment-ktx:${versions.fragment}",
@@ -181,6 +182,8 @@ ext {
             flexbox              : "com.google.android.flexbox:flexbox:${versions.flexbox}",
 
             appsflyer            : "com.appsflyer:af-android-sdk:${versions.appsflyer}",
+
+            ShadowLayout         : "com.github.lihangleo2:ShadowLayout:${versions.ShadowLayout}",
 
             // import sdp, ssp
             dimenDp              : "com.intuit.sdp:sdp-android:${versions.sdp}",
