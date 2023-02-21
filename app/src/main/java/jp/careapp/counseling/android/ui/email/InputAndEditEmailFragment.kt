@@ -71,6 +71,8 @@ class InputAndEditEmailFragment :
                         arguments?.getString(BUNDLE_KEY.EMAIL) ?: ""
                     }
                 binding.etInputEmail.setText(email)
+            } else {
+                codeScreen = SCREEN_REGISTER_WITH_EMAIL
             }
         } catch (e: Exception) {
         }
