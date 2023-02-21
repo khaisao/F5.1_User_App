@@ -31,6 +31,7 @@ class RegistrationViewModel @ViewModelInject constructor(
     private var statusPrivacyTerm: Int = 0
     private var name: String = ""
     private var sex: Int = 0
+    private var receiveMail = 0
     private lateinit var mCalendar: Calendar
 
     val codeScreenAfterRegistration = MutableLiveData<Int>()
@@ -62,6 +63,12 @@ class RegistrationViewModel @ViewModelInject constructor(
 
     fun getPrivacyTerm(): Int {
         return statusPrivacyTerm
+    }
+
+    fun setReceiveMail(isNeedReceiveMail: Boolean) {
+        receiveMail = if (isNeedReceiveMail) 1 else 0
+
+
     }
 
     fun openDatePicker(birthDay: String, context: Context) {
@@ -103,18 +110,14 @@ class RegistrationViewModel @ViewModelInject constructor(
         return InforRegistrationRequest(
             token = rxPreferences.getToken().toString().replace(PARAM_BEARER, "").trim(),
             name = name,
-            sex = sex,
-            receiveNewsLetterEmail = 1,
-            receiveNoticeMail = 1,
+            sex = 1,
+            receiveNewsLetterEmail = receiveMail,
+            receiveNoticeMail = receiveMail,
             pushNewsletter = 1,
             pushMail = 1,
             pushOnline = 1,
             pushCounseling = 1,
-            birth = if (::mCalendar.isInitialized) {
-                DateUtil.getDateTimeDisplayByFormat(DateUtil.DATE_FORMAT_3, mCalendar)
-            } else {
-                ""
-            },
+            birth = "1900-01-01",
             androidId = getAndroidId()
         )
     }
@@ -122,16 +125,12 @@ class RegistrationViewModel @ViewModelInject constructor(
     fun getRegisterRequestWithoutMail(): InfoRegistrationWithoutEmailRequest {
         return InfoRegistrationWithoutEmailRequest(
             name = name,
-            sex = sex,
+            sex = 1,
             pushNewsletter = 1,
             pushMail = 1,
             pushOnline = 1,
             pushCounseling = 1,
-            birth = if (::mCalendar.isInitialized) {
-                DateUtil.getDateTimeDisplayByFormat(DateUtil.DATE_FORMAT_3, mCalendar)
-            } else {
-                ""
-            },
+            birth = "1900-01-01",
             androidId = getAndroidId()
         )
     }
