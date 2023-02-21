@@ -15,10 +15,10 @@
             android:id="@+id/sl_input_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_32"
+            android:layout_marginHorizontal="@dimen/margin_19"
             app:hl_cornerRadius="@dimen/margin_20"
-            app:hl_shadowColor="@color/background_color_white"
-            app:hl_shadowLimit="20dp"
+            app:hl_shadowColor="@color/color_dialog_border_shadow"
+            app:hl_shadowLimit="@dimen/margin_13"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="@color/color_background_dialog"
                 app:cardCornerRadius="@dimen/margin_20"
-                app:strokeColor="@color/color_dialog_border_shadow"
+                app:strokeColor="@color/color_dialog_border"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
