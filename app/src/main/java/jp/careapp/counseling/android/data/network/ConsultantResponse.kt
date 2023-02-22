@@ -31,6 +31,7 @@ data class ConsultantResponse(
     @SerializedName("is_favorite") val isFavorite: Boolean = false,
     @SerializedName("point_per_minute") val pointPerMinute: Int = 0,
     @SerializedName("call_status") val callStatus: Int = DEFAULT_CALL_STATUS,
+    @SerializedName("chat_status") val chatStatus: Int = DEFAULT_CALL_STATUS,
     @SerializedName("call_restriction") val callRestriction: Int? = 0, // 1=possible, null=not possible
 ) : Serializable {
     companion object {
