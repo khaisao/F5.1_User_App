@@ -1,241 +1,353 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/rlConsultant"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/color_background_common"
-        android:minHeight="@dimen/view_size_100">
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="@dimen/margin_3"
+        android:layout_marginBottom="@dimen/margin_6"
+        android:background="@color/color_background_common">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/avatar_layout"
-            android:layout_width="wrap_content"
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_12"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:cardCornerRadius="@dimen/margin_12">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivAvatar"
-                android:layout_width="@dimen/view_size_94"
-                android:layout_height="0dp"
-                android:padding="@dimen/view_size_4"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_avatar_default" />
-
-            <TextView
-                android:id="@+id/tvPresenceStatus"
-                style="@style/text_bold_10"
-                android:gravity="center"
-                android:padding="@dimen/margin_2"
-                android:textColor="@color/color_1D1045"
-                app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"
-                app:layout_constraintLeft_toLeftOf="@+id/ivAvatar"
-                app:layout_constraintRight_toRightOf="@+id/ivAvatar"
-                tools:background="@drawable/ic_status_online"
-                tools:text="Label" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <RelativeLayout
-            android:id="@+id/rlName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="@dimen/margin_8"
-            android:layout_marginTop="@dimen/margin_16"
-            android:layout_marginRight="@dimen/margin_4dp"
-            android:orientation="horizontal"
-            app:layout_constraintLeft_toRightOf="@+id/avatar_layout"
-            app:layout_constraintRight_toLeftOf="@id/ivRanking"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/name"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:ellipsize="end"
-                android:gravity="start"
-                android:paddingEnd="@dimen/padding_5dp"
-                android:singleLine="true"
-                android:textColor="@color/color_text_E3DFEF"
-                android:textSize="@dimen/text_size_14"
-                android:textStyle="bold"
-                tools:text="JUNKO" />
+                android:orientation="vertical">
 
-        </RelativeLayout>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/default_avt_performer"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/ivRanking"
-            android:layout_width="52dp"
-            android:layout_height="@dimen/margin_40dp"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="@dimen/margin_2dp"
-            android:layout_marginRight="@dimen/margin_12"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_rank_daily_1" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_2A1F45"
+                    android:paddingHorizontal="@dimen/margin_4dp"
+                    android:paddingBottom="@dimen/padding_6dp">
 
-        <TextView
-            android:id="@+id/tweet_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_8"
-            android:layout_marginRight="@dimen/margin_16"
-            android:background="@drawable/bg_tweet"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingVertical="@dimen/view_size_4"
-            android:paddingLeft="@dimen/margin_8"
-            android:paddingRight="@dimen/view_size_4"
-            android:text="テキストテキストテキストテキストテキストテキ"
-            android:textColor="@color/color_887CE7"
-            android:textSize="@dimen/text_size_12"
-            app:layout_constraintLeft_toRightOf="@+id/avatar_layout"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rlName" />
+                    <TextView
+                        android:id="@+id/tv_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_2"
+                        android:background="@drawable/bg_performer_status_offline"
+                        android:fontFamily="@font/hiragino_sans_w6"
+                        android:paddingHorizontal="@dimen/padding_4"
+                        android:paddingVertical="@dimen/padding_2"
+                        android:text="@string/presence_status_offline"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_9"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_ranking"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/iv_ranking" />
 
-        <TextView
-            android:id="@+id/tvGenres"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/margin_8"
-            android:layout_marginTop="@dimen/margin_8"
-            android:layout_marginRight="@dimen/margin_16"
-            android:layout_marginBottom="@dimen/margin_8"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textColor="@color/purple_AEA2D1"
-            android:textSize="@dimen/text_size_12"
-            android:textStyle="normal"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/llStar"
-            app:layout_constraintLeft_toRightOf="@+id/avatar_layout"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tweet_tv"
-            tools:text="出会い・別れ・片思い・不倫・浮気・復縁" />
+                    <ImageView
+                        android:id="@+id/iv_ranking"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/margin_26"
+                        android:layout_marginStart="@dimen/margin_2"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_rank_daily_1"
+                        app:layout_constraintStart_toEndOf="@id/tv_status"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/rlPoint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvGenres"
-            android:layout_marginLeft="@dimen/margin_8"
-            android:gravity="center_vertical"
-            app:layout_constraintLeft_toRightOf="@+id/avatar_layout"
-            app:layout_constraintTop_toBottomOf="@id/tweet_tv">
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/ll_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@id/tv_status"
+                        app:layout_constraintTop_toBottomOf="@id/iv_ranking">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivStatusCall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/margin_2dp"
-                android:src="@drawable/ic_status_call"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:id="@+id/tv_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/hiragino_sans_w6"
+                            android:text="Name"
+                            android:textColor="@color/color_text_F0F0F0"
+                            android:textSize="@dimen/text_size_10" />
 
-            <ImageView
-                android:id="@+id/ivStage"
-                android:layout_width="55dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ivStatusCall"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_basic_home" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/margin_2"
+                            android:fontFamily="@font/hiragino_sans_w6"
+                            android:text="Size"
+                            android:textColor="@color/color_text_F0F0F0"
+                            android:textSize="@dimen/text_size_10" />
 
-            <TextView
-                android:id="@+id/tvNumberPoint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_4dp"
-                android:layout_toRightOf="@+id/ivStage"
-                android:textColor="@color/purple_AEA2D1"
-                android:textSize="@dimen/text_size_10"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ivStage"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="4pts" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/tv_age"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/hiragino_sans_w6"
+                            android:text="AgeasfasfasfasfasfasfasfasAgeasfasfasfasfasfasfasfasffAgeasfasfasfasfasfasfasfasf"
+                            android:paddingBottom="@dimen/padding_6dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textColor="@color/color_text_F0F0F0"
+                            android:textSize="@dimen/text_size_10" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
-            android:id="@+id/llStar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvGenres"
-            android:layout_marginLeft="@dimen/margin_8"
-            android:layout_marginRight="@dimen/margin_16"
-            android:layout_toRightOf="@+id/rlPoint"
-            android:gravity="center_vertical"
-            app:layout_constraintBottom_toBottomOf="@+id/rlPoint"
-            app:layout_constraintLeft_toRightOf="@+id/rlPoint"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/rlPoint">
+                    <TextView
+                        android:id="@+id/tv_tweet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/margin_34"
+                        android:layout_marginTop="@dimen/margin_6"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/hiragino_sans_w3"
+                        android:lines="2"
+                        android:maxLines="2"
+                        android:text=" say"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textColor="@color/color_E5E5E5"
+                        android:textSize="@dimen/text_size_11"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ll_info" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <ImageView
-                android:id="@+id/ivStarFirst"
-                android:layout_width="@dimen/margin_12"
-                android:layout_height="@dimen/margin_12"
-                tools:src="@drawable/ic_review_full" />
+        </com.google.android.material.card.MaterialCardView>
 
-            <ImageView
-                android:id="@+id/ivStarSecond"
-                android:layout_width="@dimen/margin_12"
-                android:layout_height="@dimen/margin_12"
-                android:layout_marginStart="@dimen/margin_2"
-                tools:src="@drawable/ic_review_half" />
 
-            <ImageView
-                android:id="@+id/ivStarThird"
-                android:layout_width="@dimen/margin_12"
-                android:layout_height="@dimen/margin_12"
-                android:layout_marginStart="@dimen/margin_2"
-                tools:src="@drawable/ic_review_half" />
+        <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--            android:id="@+id/avatar_layout"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginLeft="@dimen/margin_12"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent">-->
 
-            <ImageView
-                android:id="@+id/ivStarFour"
-                android:layout_width="@dimen/margin_12"
-                android:layout_height="@dimen/margin_12"
-                android:layout_marginStart="@dimen/margin_2"
-                tools:src="@drawable/ic_review_empty" />
+        <!--            <androidx.appcompat.widget.AppCompatImageView-->
+        <!--                android:id="@+id/ivAvatar"-->
+        <!--                android:layout_width="@dimen/view_size_94"-->
+        <!--                android:layout_height="0dp"-->
+        <!--                android:padding="@dimen/view_size_4"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                app:layout_constraintDimensionRatio="1:1"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toTopOf="parent"-->
+        <!--                tools:src="@drawable/ic_avatar_default" />-->
 
-            <ImageView
-                android:id="@+id/ivStarFive"
-                android:layout_width="@dimen/margin_12"
-                android:layout_height="@dimen/margin_12"
-                android:layout_marginStart="@dimen/margin_2"
-                android:src="@drawable/ic_review_empty" />
+        <!--            <TextView-->
+        <!--                android:id="@+id/tvPresenceStatus"-->
+        <!--                style="@style/text_bold_10"-->
+        <!--                android:gravity="center"-->
+        <!--                android:padding="@dimen/margin_2"-->
+        <!--                android:textColor="@color/color_1D1045"-->
+        <!--                app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"-->
+        <!--                app:layout_constraintLeft_toLeftOf="@+id/ivAvatar"-->
+        <!--                app:layout_constraintRight_toRightOf="@+id/ivAvatar"-->
+        <!--                tools:background="@drawable/ic_status_online"-->
+        <!--                tools:text="Label" />-->
 
-            <TextView
-                android:id="@+id/tvTotalReview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_5dp"
-                android:textColor="@color/purple_AEA2D1"
-                android:textSize="@dimen/text_size_10"
-                tools:text="(123)" />
-        </LinearLayout>
+        <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-        <View
-            android:id="@+id/view_divider"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/height_1"
-            android:alpha="0.15"
-            android:background="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="@+id/rlPoint"
-            app:layout_constraintRight_toRightOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <!--        <RelativeLayout-->
+        <!--            android:id="@+id/rlName"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_alignParentTop="true"-->
+        <!--            android:layout_marginLeft="@dimen/margin_8"-->
+        <!--            android:layout_marginTop="@dimen/margin_16"-->
+        <!--            android:layout_marginRight="@dimen/margin_4dp"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            app:layout_constraintLeft_toRightOf="@+id/avatar_layout"-->
+        <!--            app:layout_constraintRight_toLeftOf="@id/ivRanking"-->
+        <!--            app:layout_constraintTop_toTopOf="parent">-->
+
+        <!--            <androidx.appcompat.widget.AppCompatTextView-->
+        <!--                android:id="@+id/name"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_alignParentEnd="true"-->
+        <!--                android:ellipsize="end"-->
+        <!--                android:gravity="start"-->
+        <!--                android:paddingEnd="@dimen/padding_5dp"-->
+        <!--                android:singleLine="true"-->
+        <!--                android:textColor="@color/color_text_E3DFEF"-->
+        <!--                android:textSize="@dimen/text_size_14"-->
+        <!--                android:textStyle="bold"-->
+        <!--                tools:text="JUNKO" />-->
+
+        <!--        </RelativeLayout>-->
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/ivRanking"-->
+        <!--            android:layout_width="52dp"-->
+        <!--            android:layout_height="@dimen/margin_40dp"-->
+        <!--            android:layout_centerVertical="true"-->
+        <!--            android:layout_marginTop="@dimen/margin_2dp"-->
+        <!--            android:layout_marginRight="@dimen/margin_12"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            tools:src="@drawable/ic_rank_daily_1" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/tweet_tv"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="@dimen/margin_8"-->
+        <!--            android:layout_marginRight="@dimen/margin_16"-->
+        <!--            android:background="@drawable/bg_tweet"-->
+        <!--            android:ellipsize="end"-->
+        <!--            android:gravity="center_vertical"-->
+        <!--            android:maxLines="1"-->
+        <!--            android:paddingVertical="@dimen/view_size_4"-->
+        <!--            android:paddingLeft="@dimen/margin_8"-->
+        <!--            android:paddingRight="@dimen/view_size_4"-->
+        <!--            android:text="テキストテキストテキストテキストテキストテキ"-->
+        <!--            android:textColor="@color/color_887CE7"-->
+        <!--            android:textSize="@dimen/text_size_12"-->
+        <!--            app:layout_constraintLeft_toRightOf="@+id/avatar_layout"-->
+        <!--            app:layout_constraintRight_toRightOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/rlName" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/tvGenres"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_marginLeft="@dimen/margin_8"-->
+        <!--            android:layout_marginTop="@dimen/margin_8"-->
+        <!--            android:layout_marginRight="@dimen/margin_16"-->
+        <!--            android:layout_marginBottom="@dimen/margin_8"-->
+        <!--            android:ellipsize="end"-->
+        <!--            android:maxLines="2"-->
+        <!--            android:textColor="@color/purple_AEA2D1"-->
+        <!--            android:textSize="@dimen/text_size_12"-->
+        <!--            android:textStyle="normal"-->
+        <!--            android:visibility="gone"-->
+        <!--            app:layout_constraintBottom_toTopOf="@+id/llStar"-->
+        <!--            app:layout_constraintLeft_toRightOf="@+id/avatar_layout"-->
+        <!--            app:layout_constraintRight_toRightOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/tweet_tv"-->
+        <!--            tools:text="出会い・別れ・片思い・不倫・浮気・復縁" />-->
+
+        <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--            android:id="@+id/rlPoint"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/tvGenres"-->
+        <!--            android:layout_marginLeft="@dimen/margin_8"-->
+        <!--            android:gravity="center_vertical"-->
+        <!--            app:layout_constraintLeft_toRightOf="@+id/avatar_layout"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/tweet_tv">-->
+
+        <!--            <androidx.appcompat.widget.AppCompatImageView-->
+        <!--                android:id="@+id/ivStatusCall"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:paddingEnd="@dimen/margin_2dp"-->
+        <!--                android:src="@drawable/ic_status_call"-->
+        <!--                android:visibility="visible"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+        <!--            <ImageView-->
+        <!--                android:id="@+id/ivStage"-->
+        <!--                android:layout_width="55dp"-->
+        <!--                android:layout_height="30dp"-->
+        <!--                android:layout_centerVertical="true"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                app:layout_constraintStart_toEndOf="@+id/ivStatusCall"-->
+        <!--                app:layout_constraintTop_toTopOf="parent"-->
+        <!--                tools:src="@drawable/ic_basic_home" />-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/tvNumberPoint"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginStart="@dimen/margin_4dp"-->
+        <!--                android:layout_toRightOf="@+id/ivStage"-->
+        <!--                android:textColor="@color/purple_AEA2D1"-->
+        <!--                android:textSize="@dimen/text_size_10"-->
+        <!--                android:textStyle="bold"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                app:layout_constraintStart_toEndOf="@id/ivStage"-->
+        <!--                app:layout_constraintTop_toTopOf="parent"-->
+        <!--                tools:text="4pts" />-->
+        <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/llStar"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/tvGenres"-->
+        <!--            android:layout_marginLeft="@dimen/margin_8"-->
+        <!--            android:layout_marginRight="@dimen/margin_16"-->
+        <!--            android:layout_toRightOf="@+id/rlPoint"-->
+        <!--            android:gravity="center_vertical"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/rlPoint"-->
+        <!--            app:layout_constraintLeft_toRightOf="@+id/rlPoint"-->
+        <!--            app:layout_constraintRight_toRightOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/rlPoint">-->
+
+        <!--            <ImageView-->
+        <!--                android:id="@+id/ivStarFirst"-->
+        <!--                android:layout_width="@dimen/margin_12"-->
+        <!--                android:layout_height="@dimen/margin_12"-->
+        <!--                tools:src="@drawable/ic_review_full" />-->
+
+        <!--            <ImageView-->
+        <!--                android:id="@+id/ivStarSecond"-->
+        <!--                android:layout_width="@dimen/margin_12"-->
+        <!--                android:layout_height="@dimen/margin_12"-->
+        <!--                android:layout_marginStart="@dimen/margin_2"-->
+        <!--                tools:src="@drawable/ic_review_half" />-->
+
+        <!--            <ImageView-->
+        <!--                android:id="@+id/ivStarThird"-->
+        <!--                android:layout_width="@dimen/margin_12"-->
+        <!--                android:layout_height="@dimen/margin_12"-->
+        <!--                android:layout_marginStart="@dimen/margin_2"-->
+        <!--                tools:src="@drawable/ic_review_half" />-->
+
+        <!--            <ImageView-->
+        <!--                android:id="@+id/ivStarFour"-->
+        <!--                android:layout_width="@dimen/margin_12"-->
+        <!--                android:layout_height="@dimen/margin_12"-->
+        <!--                android:layout_marginStart="@dimen/margin_2"-->
+        <!--                tools:src="@drawable/ic_review_empty" />-->
+
+        <!--            <ImageView-->
+        <!--                android:id="@+id/ivStarFive"-->
+        <!--                android:layout_width="@dimen/margin_12"-->
+        <!--                android:layout_height="@dimen/margin_12"-->
+        <!--                android:layout_marginStart="@dimen/margin_2"-->
+        <!--                android:src="@drawable/ic_review_empty" />-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/tvTotalReview"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginStart="@dimen/margin_5dp"-->
+        <!--                android:textColor="@color/purple_AEA2D1"-->
+        <!--                android:textSize="@dimen/text_size_10"-->
+        <!--                tools:text="(123)" />-->
+        <!--        </LinearLayout>-->
+
+        <!--        <View-->
+        <!--            android:id="@+id/view_divider"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="@dimen/height_1"-->
+        <!--            android:alpha="0.15"-->
+        <!--            android:background="@color/white"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintLeft_toLeftOf="@+id/rlPoint"-->
+        <!--            app:layout_constraintRight_toRightOf="parent" />-->
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

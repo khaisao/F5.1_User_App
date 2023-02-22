@@ -557,6 +557,16 @@ object CallStatus {
     const val DEFAULT_CALL_STATUS = ONLINE
 }
 
+object ChatStatus {
+    const val CHATSTATUS0 = 0
+    const val CHATSTATUS1 = 1
+    const val CHATSTATUS2 = 2
+    const val CHATSTATUS3 = 3
+    const val DEFAULT_CHAT_STATUS = ChatStatus.CHATSTATUS0
+
+
+}
+
 object CallRestriction {
     const val POSSIBLE = 1
 }
