@@ -1,0 +1,81 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_background_common"
+        android:elevation="1dp"
+        tools:ignore="RtlCompat">
+
+        <View
+            android:id="@+id/view_status_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_25"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_left"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@null"
+            android:padding="@dimen/padding_16dp"
+            android:src="@drawable/ic_arrow_left"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_status_bar"
+            app:layout_constraintWidth_percent="0.13" />
+
+        <TextView
+            android:id="@+id/title_back_tv"
+            style="@style/text_bold_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:textColor="@color/color_E3DFEF"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_left"
+            app:layout_constraintEnd_toStartOf="@+id/btnCamera"
+            app:layout_constraintStart_toEndOf="@+id/btn_left"
+            app:layout_constraintTop_toTopOf="@+id/btn_left"
+            tools:text="ハイ・ダン" />
+
+        <ImageView
+            android:id="@+id/btnCamera"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@null"
+            android:padding="@dimen/padding_16dp"
+            android:src="@drawable/ic_video"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/btnMore"
+            app:layout_constraintWidth_percent="0.13" />
+
+        <ImageView
+            android:id="@+id/btnMore"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@null"
+            android:padding="@dimen/padding_16dp"
+            android:src="@drawable/ic_more"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_status_bar"
+            app:layout_constraintWidth_percent="0.13" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupRightButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="btnCamera, btnMore" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

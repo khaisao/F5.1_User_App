@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_00CD5C"
+        android:orientation="vertical"
+        tools:context=".android.ui.review_mode.settingContact.RMSettingContactFragment">
+
+        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:src_left="@drawable/ic_arrow_left"
+            app:string_title="@string/contact_us" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_24">
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/text_bold_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/enquiry"
+                android:textColor="@color/color_E3DFEF" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@null"
+                android:dropDownSelector="@drawable/ic_rm_drop_down_spinner"
+                android:minHeight="48dp"
+                android:textColor="@color/color_E3DFEF"
+                android:textSize="14sp"
+                tools:listitem="@layout/list_popup_window_item" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#9d52ff" />
+
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/text_bold_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_32"
+                android:text="@string/contact_us_content"
+                android:textColor="@color/color_E3DFEF" />
+
+            <EditText
+                android:id="@+id/edtContactContent"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="@dimen/margin_8"
+                android:background="@null"
+                android:ems="10"
+                android:gravity="top|start"
+                android:hint="@string/please_enter_contact_us_content"
+                android:inputType="textMultiLine"
+                android:maxLines="9"
+                android:textColor="@color/color_E3DFEF"
+                android:textColorHint="#70658d"
+                tools:lines="9" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_8"
+                android:background="@color/color_978DFF" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_32"
+                android:text="@string/reply_option"
+                android:textColor="@color/color_E3DFEF"
+                android:textSize="14sp" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_4dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/radioBtnNecessary"
+                    style="@style/RMRadioButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:padding="8dp"
+                    android:text="@string/necessary"
+                    tools:checked="true" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/radioBtnUnnecessary"
+                    style="@style/RMRadioButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_24"
+                    android:padding="8dp"
+                    android:text="@string/unnecessary" />
+            </RadioGroup>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btnSend"
+                style="@style/text_bold_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_24"
+                android:background="@drawable/bg_nm_btn_primary"
+                android:enabled="false"
+                android:gravity="center_horizontal"
+                android:minHeight="@dimen/height_44"
+                android:paddingVertical="@dimen/padding_14"
+                android:text="@string/send_report"
+                android:textColor="@color/color_btn_primary"
+                tools:enabled="true" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

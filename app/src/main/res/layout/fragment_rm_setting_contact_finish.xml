@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_0B002C"
+        android:orientation="vertical"
+        tools:context=".android.ui.review_mode.settingContact.finish.RMSettingContactFinishFragment">
+
+        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:src_left="@drawable/ic_arrow_left"
+            app:string_title="@string/contact_us" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_24">
+
+            <TextView
+                android:id="@+id/textView5"
+                style="@style/text_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/thanks_for_contact_us"
+                android:textColor="@color/color_E3DFEF" />
+
+            <TextView
+                android:id="@+id/textView6"
+                style="@style/text_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_24dp"
+                android:text="@string/setting_contact_finish_text_1"
+                android:textColor="@color/color_E3DFEF" />
+
+            <TextView
+                android:id="@+id/textView7"
+                style="@style/text_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                android:text="@string/setting_contact_finish_text_2"
+                android:textColor="@color/color_E3DFEF" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

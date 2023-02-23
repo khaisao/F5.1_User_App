@@ -424,4 +424,67 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     override fun openCallingToBuyPoint(bundle: Bundle?) {
         openScreen(R.id.action_callingFragment_to_buyPointFragment, bundle)
     }
+
+    override fun openRMEnterNameToRmTop(bundle: Bundle?) {
+        openScreen(R.id.action_rmStartFragment_to_rmTopFragment, bundle)
+    }
+
+    override fun openSplashToRMStart(bundle: Bundle?) {
+        openScreen(R.id.action_splashFragment_to_rmStartFragment, bundle)
+    }
+
+    override fun openRMStartToRMEnterName(bundle: Bundle?) {
+        openScreen(R.id.action_rmStartFragment_to_rmEnterNameFragment, bundle)
+    }
+
+    override fun openRMMyMenuToSettingPush(bundle: Bundle?) {
+        openScreen(R.id.action_rmTopFragment_to_RMSettingPushFragment, bundle)
+    }
+
+    override fun openRMTopToRMSettingNickName(bundle: Bundle?) {
+        openScreen(R.id.action_rmTopFragment_to_rmSettingNickNameFragment, bundle)
+    }
+
+    override fun openRMTopToRMSettingProfileMessage(bundle: Bundle?) {
+        openScreen(R.id.action_rmTopFragment_to_rmSettingProfileMessageFragment, bundle)
+    }
+
+    override fun openRMTopToRMUserDetail(bundle: Bundle?) {
+        openScreen(R.id.action_rmTopFragment_to_rmUserDetailFragment, bundle)
+    }
+
+    override fun openSplashToRMTop(bundle: Bundle?) {
+        openScreen(R.id.action_splashFragment_to_rmTopFragment, bundle)
+    }
+
+    override fun openRMTopToRMBLockList(bundle: Bundle?) {
+        openScreen(R.id.action_rmTopFragment_to_rmBlockListFragment, bundle)
+    }
+
+    override fun openRMUserDetailToRMUserDetailReport(bundle: Bundle?) {
+        openScreen(R.id.action_RMUserDetailFragment_to_RMUserDetailReportFragment, bundle)
+    }
+
+    override fun openRMMyMenuToRMSettingContact(bundle: Bundle?) {
+        openScreen(R.id.action_rmTopFragment_to_RMSettingContactFragment, bundle)
+    }
+
+    override fun openRMSettingContactToRMSettingContactFinish(bundle: Bundle?) {
+        openScreen(R.id.action_RMSettingContactFragment_to_RMSettingContactFinishFragment, bundle)
+    }
+
+    override fun openTabRMMyMenuToRMStart(bundle: Bundle?) {
+        openScreen(R.id.actionToRMStart, bundle)
+    }
+
+    override fun openRMUserDetailToUserDetailMsg(bundle: Bundle?) {
+        openScreen(R.id.action_RMUserDetailFragment_to_userDetailMsgFragment, bundle)
+    }
+
+    override fun openUserDetailMsgToRMUserDetailReport(bundle: Bundle?) {
+        openScreen(R.id.action_userDetailMsgFragment_to_RMUserDetailReportFragment, bundle)
+    }
+    override fun openUserDetailMessageToRMTop(bundle: Bundle?) {
+        openScreen(R.id.action_UserDetailMessageFragment_to_RMTopFragment, bundle)
+    }
 }

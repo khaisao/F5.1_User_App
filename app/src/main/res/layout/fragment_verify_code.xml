@@ -159,6 +159,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/margin_1"
+                            android:contentDescription="@null"
                             android:src="@drawable/icon_error_email" />
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -177,39 +178,35 @@
 
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/text_14"
                         android:id="@+id/tvEnterCode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_24"
                         android:layout_marginTop="@dimen/margin_24"
                         android:layout_marginEnd="@dimen/margin_24"
-                        android:fontFamily="@font/hiragino_sans_w3"
                         android:text="@string/please_enter_code"
                         android:textAlignment="center"
                         android:textColor="@color/color_text_E3DFEF"
-                        android:textSize="@dimen/text_size_send_email_14"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/ll_error_code" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/text_12"
                         android:id="@+id/tvNotReceive"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_24"
                         android:layout_marginTop="@dimen/margin_16"
                         android:layout_marginEnd="@dimen/margin_24"
-                        android:fontFamily="@font/hiragino_sans_w3"
                         android:text="@string/click_to_not_receive_email"
                         android:textColor="@color/color_978DFF"
-                        android:textSize="@dimen/text_size_12"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvEnterCode" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
-
         </com.lihang.ShadowLayout>
-
 
         <ImageView
             android:id="@+id/iv_close_dialog"
@@ -219,8 +216,7 @@
             android:src="@drawable/ic_dialog_close"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@null"
             app:layout_constraintTop_toBottomOf="@id/sl_input_code" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

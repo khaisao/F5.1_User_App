@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="performerResponse"
+            type="jp.careapp.counseling.android.model.network.BasePerformerResponse" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="5dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_no_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/image"
+            app:layout_constraintEnd_toEndOf="@+id/image"
+            app:layout_constraintStart_toStartOf="@+id/image">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_video"
+                cameraPerformerResponse="@{performerResponse}"
+                android:layout_width="14dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/iv_video" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_message"
+                msgPerformerResponse="@{performerResponse}"
+                android:layout_width="14dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_message" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_name"
+            style="@style/text_bold_9"
+            sttPerformerResponse="@{performerResponse}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="6dp"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="3dp"
+            android:text="@string/online"
+            app:layout_constraintBottom_toTopOf="@+id/appCompatTextView"
+            app:layout_constraintStart_toEndOf="@+id/image"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SmallSp"
+            tools:text="オンライン" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView"
+            style="@style/text_bold_14"
+            namePerformerResponse="@{performerResponse}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="5dp"
+            android:includeFontPadding="false"
+            android:textColor="@color/color_E3DFEF"
+            app:layout_constraintBottom_toBottomOf="@+id/image"
+            app:layout_constraintEnd_toStartOf="@+id/btn_delete"
+            app:layout_constraintStart_toEndOf="@+id/image"
+            app:layout_constraintTop_toTopOf="@+id/image"
+            tools:text="ニックネーム" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_delete"
+            style="@style/text_bold_12"
+            performerResponse="@{performerResponse}"
+            android:layout_width="56dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/btn_lifted"
+            android:text="@string/lifted"
+            android:textColor="@color/color_70658D"
+            app:layout_constraintBottom_toBottomOf="@+id/image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/image" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

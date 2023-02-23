@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/review_mode_navigation"
+    app:startDestination="@id/rmTopFragment">
+
+    <action
+        android:id="@+id/action_UserDetailMessageFragment_to_RMTopFragment"
+        app:destination="@id/rmTopFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left"
+        app:popUpTo="@id/rmTopFragment"
+        app:popUpToInclusive="true" />
+
+    <fragment
+        android:id="@+id/rmTopFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.top.RMTopFragment"
+        android:label="RMTopFragment"
+        tools:layout="@layout/fragment_rm_top">
+        <action
+            android:id="@+id/action_rmTopFragment_to_rmBlockListFragment"
+            app:destination="@id/RMBlockListFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_rmTopFragment_to_rmSettingNickNameFragment"
+            app:destination="@id/RMSettingNickNameFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_rmTopFragment_to_rmUserDetailFragment"
+            app:destination="@id/RMUserDetailFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_rmTopFragment_to_rmSettingProfileMessageFragment"
+            app:destination="@id/RMSettingProfileMessageFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_rmTopFragment_to_RMSettingPushFragment"
+            app:destination="@id/RMSettingPushFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_rmTopFragment_to_RMSettingContactFragment"
+            app:destination="@id/RMSettingContactFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/RMSettingNickNameFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.settingNickName.RMSettingNickNameFragment"
+        android:label="RMSettingNickNameFragment"
+        tools:layout="@layout/fragment_rm_setting_nick_name" />
+
+    <fragment
+        android:id="@+id/RMBlockListFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.block_list.RMBlockListFragment"
+        android:label="RMBlockListFragment"
+        tools:layout="@layout/fragment_block_list">
+        <action
+            android:id="@+id/action_rmBlockListFragment_to_rmUserDetailFragment"
+            app:destination="@id/RMUserDetailFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/RMUserDetailFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.userDetail.RMUserDetailFragment"
+        android:label="RMUserDetailFragment"
+        tools:layout="@layout/fragment_rm_user_detail">
+        <action
+            android:id="@+id/action_RMUserDetailFragment_to_RMUserDetailReportFragment"
+            app:destination="@id/RMUserDetailReportFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_RMUserDetailFragment_to_userDetailMsgFragment"
+            app:destination="@id/userDetailMsgFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/RMSettingProfileMessageFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.settingProfileMessage.RMSettingProfileMessageFragment"
+        android:label="RMSettingProfileMessageFragment"
+        tools:layout="@layout/fragment_rm_setting_profile_message" />
+
+    <fragment
+        android:id="@+id/RMUserDetailReportFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.userDetailReport.RMUserDetailReportFragment"
+        android:label="RMUserDetailReportFragment"
+        tools:layout="@layout/fragment_rm_user_detail_report" />
+    <fragment
+        android:id="@+id/RMSettingPushFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.setting_push.RMSettingPushFragment"
+        android:label="RMSettingPushFragment"
+        tools:layout="@layout/fragment_notification" />
+
+    <fragment
+        android:id="@+id/RMSettingContactFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.settingContact.finish.RMSettingContactFinishFragment"
+        android:label="RMSettingContactFragment"
+        tools:layout="@layout/fragment_rm_setting_contact">
+        <action
+            android:id="@+id/action_RMSettingContactFragment_to_RMSettingContactFinishFragment"
+            app:destination="@id/RMSettingContactFinishFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/RMSettingContactFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/RMSettingContactFinishFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.settingContact.finish.RMSettingContactFinishFragment"
+        android:label="RMSettingContactFinishFragment"
+        tools:layout="@layout/fragment_rm_setting_contact_finish" />
+    <fragment
+        android:id="@+id/userDetailMsgFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.user_detail_message.UserDetailMsgFragment"
+        android:label="UserDetailMsgFragment"
+        tools:layout="@layout/fragment_rm_user_detail_message">
+        <action
+            android:id="@+id/action_userDetailMsgFragment_to_RMUserDetailReportFragment"
+            app:destination="@id/RMUserDetailReportFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+</navigation>

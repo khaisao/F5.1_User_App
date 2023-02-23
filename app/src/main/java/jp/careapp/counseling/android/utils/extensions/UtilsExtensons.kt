@@ -18,6 +18,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.realm.RealmModel
 import io.realm.RealmResults
 import jp.careapp.counseling.android.utils.realmUtil.LiveRealmData
@@ -149,3 +151,15 @@ fun String.toPayLength() = this.replace("\n", "").replace("\r", "").trim().lengt
 
 fun String.toPayPoint(pointPerChar: Int) =
     pointPerChar * (((this.toPayLength() - 1) / 10) + 1)
+
+inline fun <reified T> Any.toListData(): List<T> {
+    return if (this is List<*>) {
+        val gson = Gson()
+        gson.fromJson<List<T>>(
+            gson.toJson(this),
+            TypeToken.getParameterized(List::class.java, T::class.java).type
+        ) ?: emptyList()
+    } else {
+        emptyList()
+    }
+}

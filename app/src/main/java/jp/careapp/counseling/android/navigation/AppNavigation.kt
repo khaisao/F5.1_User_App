@@ -213,4 +213,36 @@ interface AppNavigation : BaseNavigator {
     fun openCallingToChatMessage(bundle: Bundle? = null)
 
     fun openCallingToBuyPoint(bundle: Bundle? = null)
+
+    fun openRMEnterNameToRmTop(bundle: Bundle? = null)
+
+    fun openSplashToRMStart(bundle: Bundle? = null)
+
+    fun openRMStartToRMEnterName(bundle: Bundle? = null)
+
+    fun openRMTopToRMBLockList(bundle: Bundle? = null)
+
+    fun openRMMyMenuToSettingPush(bundle: Bundle? = null)
+
+    fun openRMTopToRMSettingNickName(bundle: Bundle? = null)
+
+    fun openRMTopToRMSettingProfileMessage(bundle: Bundle? = null)
+
+    fun openRMTopToRMUserDetail(bundle: Bundle? = null)
+
+    fun openSplashToRMTop(bundle: Bundle? = null)
+
+    fun openRMUserDetailToRMUserDetailReport(bundle: Bundle? = null)
+
+    fun openRMMyMenuToRMSettingContact(bundle: Bundle? = null)
+
+    fun openRMSettingContactToRMSettingContactFinish(bundle: Bundle? = null)
+
+    fun openTabRMMyMenuToRMStart(bundle: Bundle? = null)
+
+    fun openRMUserDetailToUserDetailMsg(bundle: Bundle? = null)
+
+    fun openUserDetailMsgToRMUserDetailReport(bundle: Bundle? = null)
+
+    fun openUserDetailMessageToRMTop(bundle: Bundle? = null)
 }

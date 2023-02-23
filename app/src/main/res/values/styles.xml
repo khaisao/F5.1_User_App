@@ -21,14 +21,14 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/hiragino_sans_w6</item>
     </style>
 
     <style name="text_normal">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">@font/hiragino_sans_w3</item>
     </style>
 
     <style name="text_bold_16" parent="text_bold">
@@ -85,6 +85,10 @@
 
     <style name="text_12" parent="text_normal">
         <item name="android:textSize">@dimen/text_size_12</item>
+    </style>
+
+    <style name="text_11" parent="text_normal">
+        <item name="android:textSize">@dimen/text_size_11</item>
     </style>
 
     <style name="text_user_profile_12" parent="text_normal">
@@ -227,5 +231,32 @@
     <style name="size_auto">
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_width">0dp</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetBackgroundTransparent</item>
+    </style>
+
+    <style name="BottomSheetBackgroundTransparent" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="RMRadioButtonStyle" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/bg_rm_rbtn</item>
+    </style>
+
+    <style name="BottomNavigationReviewModeTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/color_F0F0F0</item>
+        <item name="android:textColorSecondary">@color/color_F0F0F0</item>
+        <item name="itemTextAppearanceActive">@style/BottomNavigationReviewMode.TextAppearance
+        </item>
+        <item name="itemTextAppearanceInactive">@style/BottomNavigationReviewMode.TextAppearance
+        </item>
+    </style>
+
+    <style name="BottomNavigationReviewMode.TextAppearance" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">@dimen/text_size_9</item>
+        <item name="fontFamily">@font/hiragino_sans_w6</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 </resources>

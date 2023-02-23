@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="menu"
+            type="jp.careapp.counseling.android.data.model.MenuItem" />
+    </data>
+
+    <TextView
+        android:id="@+id/tvLabel"
+        style="@style/text_bold_12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="10dp"
+        android:text="@{menu.label}"
+        android:textColor="@color/color_70658D" />
+</layout>

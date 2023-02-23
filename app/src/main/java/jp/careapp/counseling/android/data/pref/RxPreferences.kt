@@ -122,4 +122,30 @@ interface RxPreferences {
     fun saveConfigCall(config: ConfigCallResponse)
 
     fun getConfigCall(): ConfigCallResponse
+
+    fun isReviewMode(): Boolean
+
+    fun saveUserInformationRM(
+        memberCode: String?,
+        email: String?,
+        password: String?,
+        token: String?,
+        tokenExpire: String?
+    )
+
+    fun setNickName(nickName: String)
+
+    fun getNickName(): String?
+
+    fun setContent(content: String)
+
+    fun getContent(): String?
+
+    fun setPushMail(pushMail: Int)
+
+    fun getPushMail(): Int
+
+    fun setAppMode(appMode: Int)
+
+    fun getAppMode(): Int
 }

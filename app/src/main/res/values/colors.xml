@@ -95,6 +95,7 @@
     <color name="white_60">#99FFFFFF</color>
     <color name="color_FF32BD">#FF32BD</color>
     <color name="color_B2A9CC">#B2A9CC</color> <!--    rgb 178 169 204-->
+    <color name="color_F0F0F0">#F0F0F0</color>
 
 
 </resources>
