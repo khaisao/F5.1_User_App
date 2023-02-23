@@ -1,11 +1,15 @@
 package jp.careapp.counseling.android.ui.favourite
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.counseling.R
@@ -13,7 +17,13 @@ import jp.careapp.counseling.android.data.network.FavoriteResponse
 import jp.careapp.counseling.databinding.FragmentFavouriteBinding
 import jp.careapp.counseling.android.utils.event.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
+import jp.careapp.counseling.android.adapter.ConsultantAdapter
+import jp.careapp.counseling.android.data.network.ConsultantResponse
+import jp.careapp.counseling.android.data.shareData.ShareViewModel
+import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
+import jp.careapp.counseling.android.utils.GenresUtil
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewModel>() {
@@ -21,16 +31,43 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
     private val viewModels: FavoriteViewModel by viewModels()
     override val layoutId: Int = R.layout.fragment_favourite
     override fun getVM(): FavoriteViewModel = viewModels
-    private lateinit var adapter: FavoriteAdapter
+    private lateinit var adapterFavorite: FavoriteAdapter
+    private lateinit var adapterFavoriteHome: FavoriteHomeAdapter
+
+    private var typeFavoriteScreen: Int? = 0
+
     private var favorites: MutableList<FavoriteResponse> = mutableListOf()
+    private val shareViewModel: ShareViewModel by activityViewModels()
+    @Inject
+    lateinit var appNavigation: AppNavigation
+
+
+
+
+    override fun initView() {
+        super.initView()
+
+        arguments?.let {
+            typeFavoriteScreen = it.getInt(BUNDLE_KEY.TYPE_ONLINE_LIST_SCREEN)
+        }
+    }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun bindingStateView() {
         super.bindingStateView()
         viewModels.forceRefresh()
-        adapter = FavoriteAdapter(lifecycleOwner = viewLifecycleOwner, events = viewModels)
+        adapterFavorite = FavoriteAdapter(lifecycleOwner = viewLifecycleOwner, events = viewModels)
+        adapterFavoriteHome = FavoriteHomeAdapter(lifecycleOwner = viewLifecycleOwner, events = viewModels)
         binding.apply {
-            rvFavorite.adapter = adapter
+            if (typeFavoriteScreen != BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW) {
+                rvFavorite.layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                rvFavorite.adapter = adapterFavorite
+            } else {
+
+                rvFavorite.layoutManager = GridLayoutManager(requireContext(), 2)
+                rvFavorite.adapter = adapterFavoriteHome
+            }
             appBar.apply {
                 btnLeft.setImageDrawable(resources.getDrawable(R.drawable.ic_arrow_left))
                 btnLeft.setOnClickListener {
@@ -74,7 +111,8 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
                 it ?: return@Observer
                 favorites.clear()
                 favorites.addAll(it)
-                adapter.submitList(it.toMutableList())
+                adapterFavorite.submitList(it.toMutableList())
+                adapterFavoriteHome.submitList(it.toMutableList())
             }
         )
         viewModels.showDialogAction.observe(
@@ -94,7 +132,7 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
                             it.code == data.code
                         }
                         )
-                            adapter.submitList(favorites)
+                            adapterFavorite.submitList(favorites)
                         if (favorites.isEmpty())
                             viewModels.isShowNoData.postValue(true)
                         it.dismiss()
@@ -117,5 +155,26 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
             binding.tvNoData.visibility = View.GONE
             binding.rvFavorite.visibility = View.VISIBLE
         }
+    }
+
+    private fun onClickDetailConsultant(
+        position: Int,
+        listData: List<ConsultantResponse>
+    ) {
+        val bundle = Bundle()
+        bundle.putInt(BUNDLE_KEY.POSITION_SELECT, position)
+        shareViewModel.setListPerformer(listData)
+        appNavigation.openTopToUserProfileScreen(bundle)
+    }
+
+
+    companion object {
+        @JvmStatic
+        fun newInstance(typeOnlineListScreen: Int) =
+            FavoriteFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(BUNDLE_KEY.TYPE_ONLINE_LIST_SCREEN, typeOnlineListScreen)
+                }
+            }
     }
 }

@@ -92,11 +92,11 @@
                             android:id="@+id/tv_age"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/hiragino_sans_w6"
-                            android:text="AgeasfasfasfasfasfasfasfasAgeasfasfasfasfasfasfasfasffAgeasfasfasfasfasfasfasfasf"
-                            android:paddingBottom="@dimen/padding_6dp"
                             android:ellipsize="end"
+                            android:fontFamily="@font/hiragino_sans_w6"
                             android:maxLines="1"
+                            android:paddingBottom="@dimen/padding_6dp"
+                            android:text="AgeasfasfasfasfasfasfasfasAgeasfasfasfasfasfasfasfasffAgeasfasfasfasfasfasfasfasf"
                             android:textColor="@color/color_text_F0F0F0"
                             android:textSize="@dimen/text_size_10" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -111,9 +111,9 @@
                         android:lines="2"
                         android:maxLines="2"
                         android:text=" say"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:textColor="@color/color_E5E5E5"
                         android:textSize="@dimen/text_size_11"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/ll_info" />
                 </androidx.constraintlayout.widget.ConstraintLayout>

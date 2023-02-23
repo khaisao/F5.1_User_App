@@ -50,7 +50,6 @@ class ConsultantAdapter(
 
         fun bind(consultant: ConsultantResponse) {
             binding.tvName.text = consultant.name
-
             if (consultant.ranking != null && consultant.ranking.ranking > 0 && consultant.ranking.ranking < 31) {
                 binding.ivRanking.visibility = View.VISIBLE
                 when (consultant.ranking.interval) {
