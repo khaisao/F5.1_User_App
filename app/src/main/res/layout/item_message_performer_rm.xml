@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_item_performer_cl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_12">
+
+        <ImageView
+            android:id="@+id/avatar_iv"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_no_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/time_send_tv"
+            style="@style/text_9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginBottom="@dimen/margin_4dp"
+            android:textColor="@color/color_70658D"
+            app:layout_constraintBottom_toBottomOf="@+id/content_message_tv"
+            app:layout_constraintStart_toEndOf="@+id/content_message_tv"
+            tools:ignore="SmallSp"
+            tools:text="12:23" />
+
+        <TextView
+            android:id="@+id/content_message_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_8"
+            android:background="@drawable/bg_message_perfomer_rm"
+            android:fontFamily="@font/hiragino_sans_w3"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="11dp"
+            android:textColor="@color/color_E3DFEF"
+            android:textIsSelectable="true"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/avatar_iv"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_max="wrap"
+            app:layout_constraintWidth_percent="0.7"
+            tools:text="テキスト内容" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

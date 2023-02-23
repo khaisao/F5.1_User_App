@@ -11,6 +11,8 @@ import jp.careapp.core.utils.Constants
 import jp.careapp.counseling.android.data.model.CreditItem
 import jp.careapp.counseling.android.data.model.HistorySelection
 import jp.careapp.counseling.android.data.network.*
+import jp.careapp.counseling.android.ui.review_mode.setting_push.RMSettingPushFragment.Companion.PUSH_RECEIVE
+import jp.careapp.counseling.android.ui.splash.SplashViewModel.Companion.NORMAL_MODE
 import jp.careapp.counseling.android.utils.MODE_USER
 import jp.careapp.counseling.android.utils.SignedUpStatus
 import javax.inject.Inject
@@ -55,6 +57,10 @@ class AppPreferences @Inject constructor(
         const val PREF_KEY_CREDIT_PRICES = "PREF_KEY_CREDIT_PRICES"
         const val PREF_KEY_CALL_TOKEN = "PREF_KEY_CALL_TOKEN"
         const val PREF_KEY_CONFIG_CALL = "PREF_KEY_CONFIG_CALL"
+        const val PREF_KEY_IS_REVIEW_MODE = "PREF_KEY_IS_REVIEW_MODE"
+        const val PREF_KEY_NICK_NAME = "PREF_KEY_NICK_NAME"
+        const val PREF_KEY_CONTENT = "PREF_KEY_CONTENT"
+        const val PREF_KEY_PUSH_MAIL = "PREF_KEY_PUSH_MAIL"
     }
 
     private val mPrefs: SharedPreferences = context.getSharedPreferences(
@@ -352,5 +358,57 @@ class AppPreferences @Inject constructor(
         } catch (e: Exception) {
             defaultConfigCall()
         }
+    }
+
+    override fun isReviewMode(): Boolean {
+        return mPrefs.getBoolean(PREF_KEY_IS_REVIEW_MODE, false)
+    }
+
+    override fun saveUserInformationRM(
+        memberCode: String?,
+        email: String?,
+        password: String?,
+        token: String?,
+        tokenExpire: String?
+    ) {
+        mPrefs.edit().apply {
+            putString(PREF_PARAM_MEMBER_CODE, memberCode)
+            putString(PREF_PARAM_EMAIL_USER, email)
+            putString(PREF_PARAM_PASSWORD, password)
+            putString(PREF_PARAM_ACCESS_TOKEN, token)
+            putString(PREF_PARAM_TOKEN_EXPIRE, tokenExpire)
+        }.also { it.apply() }
+    }
+
+    override fun setNickName(nickName: String) {
+        mPrefs.edit().putString(PREF_KEY_NICK_NAME, nickName).apply()
+    }
+
+    override fun getNickName(): String? {
+        return mPrefs.getString(PREF_KEY_NICK_NAME, "")
+    }
+
+    override fun setContent(content: String) {
+        mPrefs.edit().putString(PREF_KEY_CONTENT, content).apply()
+    }
+
+    override fun getContent(): String? {
+        return mPrefs.getString(PREF_KEY_CONTENT, "")
+    }
+
+    override fun setPushMail(pushMail: Int) {
+        mPrefs.edit().putInt(PREF_KEY_PUSH_MAIL, pushMail).apply()
+    }
+
+    override fun getPushMail(): Int {
+        return mPrefs.getInt(PREF_KEY_PUSH_MAIL, PUSH_RECEIVE)
+    }
+
+    override fun setAppMode(appMode: Int) {
+        mPrefs.edit().putInt(PREF_KEY_IS_REVIEW_MODE, appMode).apply()
+    }
+
+    override fun getAppMode(): Int {
+        return mPrefs.getInt(PREF_KEY_IS_REVIEW_MODE, NORMAL_MODE)
     }
 }

@@ -12,10 +12,7 @@ import dagger.hilt.components.SingletonComponent
 import jp.careapp.core.utils.Constants
 import jp.careapp.counseling.BuildConfig
 import jp.careapp.counseling.android.data.pref.RxPreferences
-import jp.careapp.counseling.android.network.ApiInterface
-import jp.careapp.counseling.android.network.AuthApiInterface
-import jp.careapp.counseling.android.network.NetworkEventInterceptor
-import jp.careapp.counseling.android.network.TokenAuthenticator
+import jp.careapp.counseling.android.network.*
 import jp.careapp.counseling.android.utils.event.NetworkEvent
 import okhttp3.Cache
 import okhttp3.Interceptor
@@ -58,6 +55,18 @@ class ApiModule {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
         return retrofit.create(ApiInterface::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRMApiInterface(gson: Gson, client: OkHttpClient): RMApiInterface {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .client(client)
+            .addConverterFactory(NullOnEmptyConverterFactory())
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+        return retrofit.create(RMApiInterface::class.java)
     }
 
     @Provides

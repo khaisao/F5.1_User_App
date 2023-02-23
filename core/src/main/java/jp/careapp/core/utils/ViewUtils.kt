@@ -3,10 +3,7 @@ package jp.careapp.core.utils
 import android.app.Activity
 import android.content.Context
 import android.text.Editable
-import android.view.ActionMode
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.ImageView
@@ -125,4 +122,15 @@ fun Activity.toastMessage(message: String) {
 
 fun Fragment.toastMessage(message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+}
+
+fun View.setMargins(start: Int, top: Int, end: Int, bottom: Int) {
+    if (this.layoutParams is ViewGroup.MarginLayoutParams) {
+        (this.layoutParams as ViewGroup.MarginLayoutParams).setMargins(start, top, end, bottom)
+        this.requestLayout()
+    }
+}
+
+fun Context.convertSourceToPixel(dimenSource: Int): Int {
+    return this.resources.getDimension(dimenSource).toInt()
 }

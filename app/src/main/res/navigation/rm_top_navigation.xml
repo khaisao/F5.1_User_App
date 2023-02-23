@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/review_mode_navigation"
+    app:startDestination="@id/tabOnlineList">
+
+    <fragment
+        android:id="@+id/tabOnlineList"
+        android:name="jp.careapp.counseling.android.ui.review_mode.online_list.RMOnlineListFragment"
+        android:label="RvOnlineListFragment"
+        tools:layout="@layout/fragment_rm_online_list" />
+    <fragment
+        android:id="@+id/tabFavoriteList"
+        android:name="jp.careapp.counseling.android.ui.review_mode.favorite_list.RMFavoriteListFragment"
+        android:label="RvFavoriteListFragment"
+        tools:layout="@layout/fragment_rm_favorite_list" />
+    <fragment
+        android:id="@+id/tabMyMenu"
+        android:name="jp.careapp.counseling.android.ui.review_mode.my_menu.RMMyMenuFragment"
+        android:label="RvMyMenuFragment"
+        tools:layout="@layout/fragment_rm_my_menu" />
+</navigation>

@@ -57,6 +57,7 @@ android {
             buildConfigField "String", "APPS_FLYER_APP_ID", "\"jp.careapp.counseling.android.dev\""
             buildConfigField "String", "URL_GET_CALL_CONFIG", "\"https://app-sl.flax5.com/\""
             buildConfigField "String", "WS_URL_LOGIN_CALL", "\"wss://sc-sl.flax5.com/jetty_flax/login/\""
+            buildConfigField "String", "BROWSER_DOMAIN", "\"https://counselor.flax5.com/\""
         }
 
         stagging {
@@ -82,6 +83,7 @@ android {
             buildConfigField "String", "APPS_FLYER_APP_ID", "\"jp.careapp.counseling.android.dev\""
             buildConfigField "String", "URL_GET_CALL_CONFIG", "\"https://app-sl.flax5.com/\""
             buildConfigField "String", "WS_URL_LOGIN_CALL", "\"wss://sc-sl.flax5.com/jetty_flax/login/\""
+            buildConfigField "String", "BROWSER_DOMAIN", "\"https://counselor.flax5.com/\""
         }
 
         release {
@@ -99,6 +101,7 @@ android {
             buildConfigField "String", "APPS_FLYER_APP_ID", "\"jp.careapp.counseling.android\""
             buildConfigField "String", "URL_GET_CALL_CONFIG", "\"https://app.careapp.jp/\""
             buildConfigField "String", "WS_URL_LOGIN_CALL", "\"wss://sc.careapp.jp/jetty_flax/login/\""
+            buildConfigField "String", "BROWSER_DOMAIN", "\"https://counselor.careapp.jp/\""
 
             signingConfig signingConfigs.release
             minifyEnabled false

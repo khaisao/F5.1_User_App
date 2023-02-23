@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_item_owner_cl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_12">
+
+        <TextView
+            android:id="@+id/status_message_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_4dp"
+            android:layout_marginBottom="@dimen/margin_4dp"
+            android:fontFamily="@font/hiragino_sans_w3"
+            android:text="@string/read"
+            android:textColor="@color/color_70658D"
+            android:textSize="9sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/time_send_tv"
+            app:layout_constraintEnd_toStartOf="@+id/content_message_tv"
+            tools:ignore="SmallSp"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/time_send_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_4dp"
+            android:layout_marginBottom="@dimen/margin_4dp"
+            android:fontFamily="@font/hiragino_sans_w3"
+            android:textColor="@color/color_70658D"
+            android:textSize="9sp"
+            app:layout_constraintBottom_toBottomOf="@+id/content_message_tv"
+            app:layout_constraintEnd_toStartOf="@+id/content_message_tv"
+            tools:ignore="SmallSp"
+            tools:text="12:23" />
+
+        <TextView
+            android:id="@+id/content_message_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_message_ferformer_rm"
+            android:fontFamily="@font/hiragino_sans_w3"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="11dp"
+            android:textColor="@color/white"
+            android:textIsSelectable="true"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_max="wrap"
+            app:layout_constraintWidth_percent="0.7"
+            tools:text="テキスト内容" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

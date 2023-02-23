@@ -39,6 +39,25 @@
             app:popExitAnim="@anim/slide_out_left"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_splashFragment_to_rmStartFragment"
+            app:destination="@id/RMStartFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_rmTopFragment"
+            app:destination="@+id/review_mode_navigation"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <include app:graph="@navigation/start_navigation" />
@@ -58,4 +77,40 @@
         android:id="@+id/action_splashFragment_to_maintenance_navigation"
         app:destination="@id/maintenance_navigation" />
 
+    <action
+        android:id="@+id/actionToRMStart"
+        app:destination="@id/RMStartFragment"
+        app:popUpTo="@id/rmTopFragment"
+        app:popUpToInclusive="true"/>
+
+    <fragment
+        android:id="@+id/RMStartFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.start.RMStartFragment"
+        android:label="RMStartFragment"
+        tools:layout="@layout/fragment_rm_start">
+        <action
+            android:id="@+id/action_rmStartFragment_to_rmEnterNameFragment"
+            app:destination="@id/RMEnterNameFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/RMEnterNameFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.enterName.RMEnterNameFragment"
+        android:label="RMEnterNameFragment"
+        tools:layout="@layout/fragment_rm_enter_name">
+
+        <action
+            android:id="@+id/action_rmStartFragment_to_rmTopFragment"
+            app:destination="@id/review_mode_navigation"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/RMStartFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
 </navigation>

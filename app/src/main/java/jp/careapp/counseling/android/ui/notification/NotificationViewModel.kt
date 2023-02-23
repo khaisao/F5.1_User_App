@@ -24,14 +24,7 @@ class NotificationViewModel @ViewModelInject constructor(
     val saveStateSwitch: LiveData<SaveStateSwitch> = _saveStateSwitch
     fun setSaveStateSwitchFromMemberResponse(memberResponse: MemberResponse) {
         memberResponse.let {
-            _saveStateSwitch.value = SaveStateSwitch(
-                it.receiveNewsletterMail,
-                it.pushNewsletter,
-                it.pushMail,
-                it.pushOnline,
-                it.pushCounseling,
-                it.receiveNoticeMail
-            )
+            _saveStateSwitch.value = SaveStateSwitch(it.pushMail)
         }
     }
 
@@ -40,14 +33,7 @@ class NotificationViewModel @ViewModelInject constructor(
 
     init {
         savedStateHandle.get<MemberResponse>("member")?.let {
-            _saveStateSwitch.value = SaveStateSwitch(
-                it.receiveNewsletterMail,
-                it.pushNewsletter,
-                it.pushMail,
-                it.pushOnline,
-                it.pushCounseling,
-                it.receiveNoticeMail
-            )
+            _saveStateSwitch.value = SaveStateSwitch(it.pushOnline)
         }
         savedStateHandle.get<Boolean>(Define.Intent.OPEN_DIRECT)?.let {
             _openDirect.value = it

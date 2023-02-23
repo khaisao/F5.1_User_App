@@ -95,6 +95,12 @@ class Define {
 
         const val BLOG_ID = "id"
         const val TYPE_CONTACT = "type_contact"
+
+        const val BLOG_PATH = "support/blogs"
+        const val PRIVACY_POLICY_PATH = "support/privacy"
+        const val TERM_PATH = "support/terms"
+        const val RE_APPROACH_SUPPORT_PATH = "support/blogs/80"
+        const val NEW_APPROACH_SUPPORT_PATH = "support/blogs/79"
     }
 
     class SearchCondition {
@@ -313,7 +319,7 @@ class BUNDLE_KEY {
 
         const val IS_SHOW_TOOLBAR = "IS_SHOW_TOOLBAR"
         const val LIST_TEMPLATE = "LIST_TEMPLATE"
-
+        const val BACK_TO_CHAT_BOX = "BACK_TO_CHAT_BOX"
     }
 }
 
@@ -587,4 +593,30 @@ object SocketInfo {
     const val ACTION_PERFORMER_RESPONSE = "PerformerResponse"
     const val ACTION_CANCEL_CALL = "CancelCall"
     const val ACTION_CHAT_LOG = "ChatLog"
+}
+
+object MenuItemType {
+    const val TITLE = 1
+    const val FIELD = 2
+}
+
+object RMCallStatus {
+    const val OFFLINE = 0
+    const val WAITING_OFFLINE = 1
+    const val INCOMING_CALL = 2
+}
+
+object RMPresenceStatus {
+    const val AWAY = 0
+    const val ACCEPTING = 1
+}
+
+sealed class ActionState {
+    class SaveNickNameSuccess(val isSuccess: Boolean) : ActionState()
+    class SaveProfileMessageSuccess(val isSuccess: Boolean) : ActionState()
+    class WithdrawalSuccess(val isSuccess: Boolean) : ActionState()
+    class BlockUserSuccess(val isSuccess: Boolean) : ActionState()
+    class AddAndDeleteFavoriteSuccess(val isSuccess: Boolean) : ActionState()
+    class SendReportSuccess(val isSuccess: Boolean) : ActionState()
+    class SendContactSuccess(val isSuccess: Boolean) : ActionState()
 }

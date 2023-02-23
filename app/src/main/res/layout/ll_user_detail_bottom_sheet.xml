@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:id="@+id/ll_user_detail_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:background="@drawable/bg_bottom_sheet_user_detail"
+        tools:context=".android.ui.review_mode.userDetail.userDetailBottomSheet.UserDetailBottomSheetFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/padding_12">
+
+            <TextView
+                android:id="@+id/llItemBlockUser"
+                style="@style/text_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="18dp"
+                android:text="@string/block_user"
+                android:textColor="#e5e5e5"
+                app:drawableStartCompat="@drawable/ic_block_user" />
+
+            <TextView
+                android:id="@+id/llItemReportUser"
+                style="@style/text_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="18dp"
+                android:text="@string/report_user"
+                android:textColor="#e5e5e5"
+                app:drawableStartCompat="@drawable/ic_report_user" />
+        </LinearLayout>
+    </FrameLayout>
+</layout>

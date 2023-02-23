@@ -59,6 +59,7 @@
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_input_email"
+                        style="@style/text_bold_14"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_24dp"
@@ -68,7 +69,6 @@
                         android:drawableStart="@drawable/icon_form_mail"
                         android:drawablePadding="@dimen/margin_12"
                         android:elevation="4dp"
-                        android:fontFamily="@font/hiragino_sans_w3"
                         android:importantForAutofill="no"
                         android:inputType="textEmailAddress"
                         android:lines="1"
@@ -78,8 +78,6 @@
                         android:paddingBottom="@dimen/padding_12"
                         android:textColor="@color/white"
                         android:textColorHint="@color/color_70658D"
-                        android:textSize="@dimen/text_size_input_email_14"
-                        android:textStyle="bold"
                         tools:hint="@string/hint_input_email_register"
                         tools:ignore="RtlSymmetry" />
 

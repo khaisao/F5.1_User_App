@@ -40,6 +40,7 @@
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    style="@style/text_bold_14"
                     android:id="@+id/tv_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -50,7 +51,6 @@
                     android:drawableStart="@drawable/ic_form_user"
                     android:drawablePadding="@dimen/margin_12"
                     android:elevation="4dp"
-                    android:fontFamily="@font/hiragino_sans_w3"
                     android:importantForAutofill="no"
                     android:inputType="textEmailAddress"
                     android:lines="1"
@@ -59,8 +59,6 @@
                     android:paddingBottom="@dimen/padding_12"
                     android:textColor="@color/white"
                     android:textColorHint="@color/color_70658D"
-                    android:textSize="@dimen/text_size_input_email_14"
-                    android:textStyle="bold"
                     tools:hint="@string/title_register_name"
                     tools:ignore="RtlSymmetry" />
 

@@ -25,10 +25,12 @@ class SplashViewModel @ViewModelInject constructor(
 ) : BaseViewModel() {
 
     companion object {
-        val SCREEN_CODE_TOP = 0
-        val SCREEN_CODE_START = 1
-        val SCREEN_CODE_BAD_USER = 2
-        val SCREEN_CODE_REREGISTER = 3
+        const val SCREEN_CODE_TOP = 0
+        const val SCREEN_CODE_START = 1
+        const val SCREEN_CODE_BAD_USER = 2
+        const val SCREEN_CODE_REREGISTER = 3
+        const val NORMAL_MODE = 1
+        const val REVIEW_MODE = 98
     }
 
     val actionSPlash = SingleLiveEvent<SplashActionState>()

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="menu"
+            type="jp.careapp.counseling.android.data.model.MenuItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rootLayout"
+        typeField="@{menu.typeField}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:background="@drawable/bg_none_field">
+
+        <TextView
+            android:id="@+id/tvField"
+            style="@style/text_14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="15dp"
+            android:paddingStart="16dp"
+            android:text="@{menu.label}"
+            android:textColor="@color/color_E3DFEF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivNext"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlSymmetry"
+            tools:text="ニックネーム変更" />
+
+        <View
+            typeField="@{menu.typeField}"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginStart="16dp"
+            android:alpha="0.15"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/tvField" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_next"
+            app:layout_constraintBottom_toBottomOf="@+id/tvField"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvField" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

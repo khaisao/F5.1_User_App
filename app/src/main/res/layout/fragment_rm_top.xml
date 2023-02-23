@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_0B002C">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/text_bold_18"
+            android:paddingHorizontal="16dp"
+            android:includeFontPadding="false"
+            android:paddingVertical="13dp"
+            android:textColor="@color/color_E3DFEF"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="オンライン一覧" />
+
+        <fragment
+            android:id="@+id/fragmentContainerView"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:navGraph="@navigation/rm_top_navigation" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_0B002C"
+            android:paddingBottom="30dp"
+            android:theme="@style/BottomNavigationReviewModeTheme"
+            app:itemRippleColor="@color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/rm_bottom_nav" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
