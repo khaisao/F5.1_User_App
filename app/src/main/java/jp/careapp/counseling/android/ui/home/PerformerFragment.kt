@@ -3,7 +3,6 @@ package jp.careapp.counseling.android.ui.home
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -93,23 +92,14 @@ class PerformerFragment : BaseFragment<FragmentPerformerBinding,HomeViewModel>()
                 if (!it.isNullOrEmpty()) {
                     shareViewModel.saveListPerformerSearch(it)
                 }
-                Log.d("lkjaawerhwerh", "bindingStateView: refresh")
                 mConsultantAdapter.submitList(it)
             } else {
             favoriteViewModel.uiDataResult.observe(
                 viewLifecycleOwner,
                 Observer {
-//                    it ?: return@Observer
-//                    favorites.clear()
-//                    favorites.addAll(it)
-//                    adapter.submitList(it.toMutableList())
                 }
             )
         }
-    }
-
-    fun loadData(isShowLoading: Boolean) {
-//        activity?.let { act -> viewModel.getListTypeRanking(typeRanking!!, act, isShowLoading) }
     }
 
     private fun onClickDetailConsultant(

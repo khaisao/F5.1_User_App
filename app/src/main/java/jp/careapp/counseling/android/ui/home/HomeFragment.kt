@@ -11,9 +11,6 @@ import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -102,9 +99,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         }
         binding.tlMain.setTabTextColors(Color.parseColor(resources.getString(R.color.gray_dark)), Color.parseColor(resources.getString(R.color.white)));
 
-        binding.rvConsultant.layoutManager = GridLayoutManager(context, 2)
-        binding.rvConsultant.adapter = mConsultantAdapter
-
         binding.swipeRefreshLayout.setOnRefreshListener {
             if (binding.vpMain.currentItem == 0) {
                 if (!binding.progressBar.isVisible) {
@@ -119,21 +113,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             binding.swipeRefreshLayout.isRefreshing = false
         }
 
-        binding.rvConsultant.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val listDataSize = viewModel.listConsultantResult.value?.size ?: 0
-                if (listDataSize > 0) {
-                    val layoutManager = binding.rvConsultant.layoutManager as LinearLayoutManager
-                    if (!viewModel.isLoadMoreData) {
-                        if (layoutManager != null && (layoutManager.findLastCompletelyVisibleItemPosition() == listDataSize - 1) && viewModel.isCanLoadMoreData()) {
-                            viewModel.isLoadMoreData = true
-                            viewModel.loadMoreData()
-                        }
-                    }
-                }
-            }
-        })
         setupViewPager()
     }
 
@@ -158,7 +137,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 }
 
                 override fun onPageSelected(position: Int) {
-                    forceLoadData(position)
                 }
 
                 override fun onPageScrollStateChanged(state: Int) {
@@ -166,31 +144,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
             })
             currentItem = 0
-//            binding.viewPager.post {
-//                forceLoadData(0)
-//            }
+
         }
     }
 
-    private fun forceLoadData(position: Int) {
-//        when (position) {
-//            0 -> {
-//                fragmentAllPerformer.loadData(dailyFirstLoading)
-//                if (dailyFirstLoading) {
-//                    dailyFirstLoading = false
-//                }
-//            }
-//            1 -> {
-//                fragmentAllPerformerFollow.loadData(weeklyFirstLoading)
-//                if (weeklyFirstLoading) {
-//                    weeklyFirstLoading = false
-//                }
-//            }
-//        }
-    }
-
     override fun onDestroyView() {
-        binding.rvConsultant.clearOnScrollListeners()
         viewModel.clearData()
         super.onDestroyView()
     }
