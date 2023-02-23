@@ -109,7 +109,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             } else {
                 shareViewModel.detectRefreshDataFollower.value = !shareViewModel.detectRefreshDataFollower.value!!
             }
-
             binding.swipeRefreshLayout.isRefreshing = false
         }
 

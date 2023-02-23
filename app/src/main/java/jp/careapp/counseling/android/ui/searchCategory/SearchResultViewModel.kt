@@ -103,9 +103,6 @@ class SearchResultViewModel @ViewModelInject constructor(
         }
     }
 
-
-
-
     private fun getTotalNumberConsultant() {
         isShowHideLoading.value=true
         _dataPerformer.value?.let {

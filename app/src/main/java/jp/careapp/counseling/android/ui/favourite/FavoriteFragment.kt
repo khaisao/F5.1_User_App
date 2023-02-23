@@ -28,19 +28,20 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
 
     private val viewModels: FavoriteViewModel by viewModels()
     override val layoutId: Int = R.layout.fragment_favourite
+
     override fun getVM(): FavoriteViewModel = viewModels
+
     private lateinit var adapterFavorite: FavoriteAdapter
+
     private lateinit var adapterFavoriteHome: FavoriteHomeAdapter
 
     private var typeFavoriteScreen: Int? = 0
 
     private var favorites: MutableList<FavoriteResponse> = mutableListOf()
+
     private val shareViewModel: ShareViewModel by activityViewModels()
     @Inject
     lateinit var appNavigation: AppNavigation
-
-
-
 
     override fun initView() {
         super.initView()
