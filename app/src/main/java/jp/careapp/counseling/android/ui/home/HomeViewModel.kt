@@ -123,33 +123,6 @@ class HomeViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun getAllListConsultantFollow(page: Int = 1, isShowLoading: Boolean = true) {
-//        val params: MutableMap<String, Any> = HashMap()
-//        params[BUNDLE_KEY.PARAM_SORT] = BUNDLE_KEY.PRESENCE_STATUS
-//        params[BUNDLE_KEY.PARAM_ODER] = BUNDLE_KEY.DESC
-//        params[BUNDLE_KEY.PARAM_SORT_2] = BUNDLE_KEY.REVIEW_TOTAL_SCORE
-//        params[BUNDLE_KEY.PARAM_ODER_2] = BUNDLE_KEY.DESC
-//        params[BUNDLE_KEY.LIMIT] = LIMIT_NUMBER
-//        params[BUNDLE_KEY.PAGE] = page
-//        viewModelScope.launch {
-//            if (isShowLoading) isLoading.value = true
-//            try {
-//                apiInterface.getMemberFavorite(params).let {
-//                    isLoading.value = false
-//                    val currentListData =
-//                        if (page == 1) mutableListOf() else listConsultantTemp.toMutableList()
-//                    currentListData.addAll(it.dataResponse)
-//                    listConsultantTemp = currentListData as ArrayList<ConsultantResponse>
-//                    currentPage = page
-//                    getListConsultant()
-//                    if (isLoadMoreData) isLoadMoreData = false
-//                }
-//            } catch (throwable: Throwable) {
-//                isLoading.value = false
-//            }
-//        }
-    }
-
     fun isCanLoadMoreData(): Boolean {
         return currentPage < totalPage
     }
@@ -187,29 +160,6 @@ class HomeViewModel @ViewModelInject constructor(
 
     private val runnable = Runnable {
         isLoading.value = false
-    }
-
-    private fun saveListConsultantToDatabase() {
-        val listDatabase = ArrayList<ConsultantDatabase>()
-        // clear All
-        Realm.getDefaultInstance().use { realm ->
-            realm.executeTransaction {
-                val oldData: RealmResults<ConsultantDatabase> =
-                    realm.where(ConsultantDatabase::class.java).findAll()
-                oldData.deleteAllFromRealm()
-            }
-        }
-        for (i in 0 until listConsultantTemp.size) {
-            val consultant =
-                ConsultantDatabase(i, Gson().toJson(listConsultantTemp[i]))
-            listDatabase.add(consultant)
-        }
-
-        Realm.getDefaultInstance().use { realm ->
-            realm.executeTransaction {
-                realm.copyToRealmOrUpdate(listDatabase)
-            }
-        }
     }
 
     override fun onCleared() {

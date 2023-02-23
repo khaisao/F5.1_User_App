@@ -45,17 +45,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
     @Inject
     lateinit var rxPreferences: RxPreferences
 
-    private val listCategory: List<CategoryResponse>? by lazy {
-        val listCategoryResponse = rxPreferences.getListCategory()
-        val temp = mutableListOf<CategoryResponse>()
-        listCategoryResponse?.let {
-            for (i in it) {
-                if (i.registEnable) temp.add(i)
-            }
-        }
-        temp
-    }
-
     override val layoutId = R.layout.fragment_search
     private val viewModel: SearchViewModel by viewModels()
     private val searchResultViewModel: SearchResultViewModel by viewModels()
@@ -73,12 +62,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
     }
 
     private val handleBackStackEntry: Observer<IntArray> = Observer { data ->
-//        for (i in 0 until binding.genresChipGroup.childCount) {
-//            (binding.genresChipGroup.getChildAt(i) as Chip).isChecked = false
-//            if (i in data) {
-//                (binding.genresChipGroup.getChildAt(i) as Chip).isChecked = true
-//            }
-//        }
+
     }
 
     override fun initView() {
@@ -86,19 +70,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
         shareViewModel.getListPerformerSearch()?.let {
             viewModel.setListConsultantResult(it)
         }
-//        listCategory?.let {
-//            for (i in listCategory!!.indices) {
-//                val chip = layoutInflater.inflate(
-//                    R.layout.single_chip_layout,
-//                    binding.genresChipGroup,
-//                    false
-//                ) as Chip
-//                binding.genresChipGroup.addView(chip!!.apply {
-//                    text = listCategory!![i].name
-//                    isChecked = false
-//                }, i)
-//            }
-//        }
+
         DeviceUtil.showKeyboardWithFocus(binding.edtInputName,requireActivity())
         initRecyclerView()
 
@@ -106,9 +78,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
             showHideLoading(true)
 
             if (!binding.progressBar.isVisible) {
-                searchResultViewModel.getListBlockedConsultant()
                 searchResultViewModel.isShowHideLoading.value = true
-//                    viewModel.getListBlockedConsultant()
+                searchResultViewModel.getListBlockedConsultant()
                 }
             binding.swipeRefreshLayout.isRefreshing = false
         }
@@ -249,11 +220,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
             title.append(binding.edtInputName.text.toString())
                 .append("、 ")
         }
-//        if (binding.toolBar.etSearch.text.toString().isNotEmpty()) {
-//            title.append(binding.toolBar.etSearch.text.toString())
-//                .append("、 ")
-//        }
-//        title = appendConditionChecked(title)
+
         if (title.trim().toString().isNotEmpty()) {
             return title.trim().toString().trim().substring(0, title.trim().toString().length - 1)
         }
@@ -287,40 +254,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
         shareViewModel.setListPerformer(listData)
         appNavigation.openSearchResultToProfileScreen(bundle)
     }
-
-//    private fun appendConditionChecked(title: StringBuilder): StringBuilder {
-//        for (i in 0 until binding.genresChipGroup.childCount) {
-//            val chip: Chip = binding.genresChipGroup.getChildAt(i) as Chip
-//            if (chip.isChecked) {
-//                title.append(chip.text).append("、 ")
-//            }
-//        }
-//        for (i in 0 until binding.genderChipGroup.childCount) {
-//            val chip: Chip = binding.genderChipGroup.getChildAt(i) as Chip
-//            if (chip.isChecked) {
-//                title.append(chip.text).append("、 ")
-//            }
-//        }
-//        for (i in 0 until binding.rankingChipGroup.childCount) {
-//            val chip: Chip = binding.rankingChipGroup.getChildAt(i) as Chip
-//            if (chip.isChecked) {
-//                title.append(chip.text).append("、 ")
-//            }
-//        }
-//        for (i in 0 until binding.reviewChipGroup.childCount) {
-//            val chip: Chip = binding.reviewChipGroup.getChildAt(i) as Chip
-//            if (chip.isChecked) {
-//                title.append(chip.text).append("、 ")
-//            }
-//        }
-//        for (i in 0 until binding.statusChipGroup.childCount) {
-//            val chip: Chip = binding.statusChipGroup.getChildAt(i) as Chip
-//            if (chip.isChecked) {
-//                title.append(chip.text).append("、 ")
-//            }
-//        }
-//        return title
-//    }
 
     override fun onDestroyView() {
         binding.rvConsultantSearch.clearOnScrollListeners()
