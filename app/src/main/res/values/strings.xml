@@ -170,6 +170,7 @@
     <string name="cancel">キャンセル</string>
     <string name="buy_point_suscess">ポイント購入が完了しました。</string>
     <string name="let_buy_point">まずはポイントを購入しましょう</string>
+    <string name="not_found_performer">該当の女性は見つかりませんでした</string>
 
     <!--   Registration-->
     <string name="enter_your_profile_to_start">プロフィールを入力して\n早速はじめましょう！</string>

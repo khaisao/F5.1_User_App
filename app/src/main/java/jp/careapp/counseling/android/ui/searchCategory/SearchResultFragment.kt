@@ -84,7 +84,6 @@ class SearchResultFragment : BaseFragment<FragmentSearchResultBinding, SearchRes
                 }
             }
         })
-
     }
 
     override fun onDestroyView() {
