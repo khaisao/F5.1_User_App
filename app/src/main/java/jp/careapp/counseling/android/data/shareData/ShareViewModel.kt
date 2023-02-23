@@ -47,6 +47,8 @@ class ShareViewModel @ViewModelInject constructor(
     var isShowRankLoading = MutableLiveData<Boolean>()
     val needUpdateProfile = MutableLiveData(false)
     var isBlockConsultant = MutableLiveData(false)
+    val detectRefreshDataFollower = MutableLiveData(true)
+
 
     fun setTabSelected(tab: Int) {
         tabSelected.value = tab

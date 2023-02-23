@@ -33,7 +33,7 @@ class PerformerFragment : BaseFragment<FragmentPerformerBinding,HomeViewModel>()
     lateinit var rxPreferences: RxPreferences
     override val layoutId: Int = R.layout.fragment_performer
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by activityViewModels()
 
     private val favoriteViewModel: FavoriteViewModel by activityViewModels()
 
@@ -86,15 +86,16 @@ class PerformerFragment : BaseFragment<FragmentPerformerBinding,HomeViewModel>()
 
     override fun bindingStateView() {
         super.bindingStateView()
-        if(typeOnlineListScreen==BUNDLE_KEY.TYPE_ALL_PERFORMER)
-        viewModel.listConsultantResult.observe(
-            viewLifecycleOwner
-        ) {
-            if (!it.isNullOrEmpty()) {
-                shareViewModel.saveListPerformerSearch(it)
-            }
-            mConsultantAdapter.submitList(it)
-        }else{
+        if (typeOnlineListScreen == BUNDLE_KEY.TYPE_ALL_PERFORMER)
+            viewModel.listConsultantResult.observe(
+                viewLifecycleOwner
+            ) {
+                if (!it.isNullOrEmpty()) {
+                    shareViewModel.saveListPerformerSearch(it)
+                }
+                Log.d("lkjaawerhwerh", "bindingStateView: refresh")
+                mConsultantAdapter.submitList(it)
+            } else {
             favoriteViewModel.uiDataResult.observe(
                 viewLifecycleOwner,
                 Observer {

@@ -18,19 +18,30 @@
                 android:background="@color/color_background_common"
                 android:nestedScrollingEnabled="true">
 
+                <ImageView
+                    android:id="@+id/iv_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_14"
+                    android:layout_marginTop="@dimen/margin_12"
+                    android:adjustViewBounds="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_navigation_search" />
+
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tl_main"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:tabIndicatorFullWidth="false"
+                    app:tabIndicatorColor="@color/white"
                     android:background="@color/color_background_common"
-                    app:tabTextColor="@color/white"
-                    app:tabTextAppearance="@style/tab_text"
-                    android:layout_width="match_parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_search"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:layout_height="wrap_content">
-
-                </com.google.android.material.tabs.TabLayout>
+                    app:tabTextAppearance="@style/tab_text"
+                     />
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/vp_banner"
@@ -58,8 +69,8 @@
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/vp_main"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/margin_6"
                     android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/margin_6"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/vp_banner" />
 
@@ -67,8 +78,8 @@
                     android:id="@+id/rvConsultant"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:visibility="gone"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

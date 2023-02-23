@@ -462,6 +462,10 @@
     <string name="answer_asc">回答が少ない順</string>
     <string name="new_answer">回答の新しい順</string>
 
+    <!--    home-->
+    <string name="all">すべて</string>
+    <string name="follow">フォロー</string>
+
     <!--    labo-->
     <string name="labo_all"><b>すべて</b></string>
     <string name="labo_resolved">解決済</string>

@@ -27,6 +27,7 @@ class FavoriteViewModel @ViewModelInject constructor(
     fun forceRefresh() {
         _refreshFavorite.value = Unit
     }
+
     private val _codeDelete = MutableLiveData<String>()
 
     var isShowNoData = MutableLiveData(false)

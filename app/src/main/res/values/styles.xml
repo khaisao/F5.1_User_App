@@ -109,6 +109,10 @@
         <item name="android:textSize">@dimen/text_size_10</item>
     </style>
 
+    <style name="text_11" parent="text_normal">
+        <item name="android:textSize">@dimen/text_size_11</item>
+    </style>
+
     <style name="text_title_bold_28" parent="text_bold">
         <item name="android:textSize">@dimen/text_size_title_28</item>
     </style>
