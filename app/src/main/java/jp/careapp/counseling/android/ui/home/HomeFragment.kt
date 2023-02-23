@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.webkit.URLUtil
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
@@ -14,17 +15,20 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.adapter.BannerAdapter
+import jp.careapp.counseling.android.adapter.BasePagerAdapter
 import jp.careapp.counseling.android.adapter.ConsultantAdapter
 import jp.careapp.counseling.android.data.network.BannerResponse
 import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.navigation.AppNavigation
+import jp.careapp.counseling.android.ui.favourite.FavoriteFragment
 import jp.careapp.counseling.android.ui.main.MainActivity
 import jp.careapp.counseling.android.ui.main.MainViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
@@ -83,6 +87,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         }
     }
 
+    lateinit var pagerAdapter: BasePagerAdapter
+    private val fragmentAllPerformer = PerformerFragment.newInstance(BUNDLE_KEY.TYPE_ALL_PERFORMER)
+    private val fragmentAllPerformerFollow = FavoriteFragment.newInstance(BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW)
+
+
     override fun initView() {
         super.initView()
         binding.vpBanner.apply {
@@ -91,17 +100,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
             }.attach()
         }
-//        val layoutManager = LinearLayoutManager(context)
-//        binding.rvConsultant.layoutManager = layoutManager
+
         binding.rvConsultant.layoutManager = GridLayoutManager(context, 2)
         binding.rvConsultant.adapter = mConsultantAdapter
 
         binding.swipeRefreshLayout.setOnRefreshListener {
-            if (!binding.progressBar.isVisible) {
-                viewModel.isShowHideLoading = true
-                viewModel.clearData()
-                viewModel.getListBlockedConsultant()
+            if (binding.vpMain.currentItem == 0) {
+                if (!binding.progressBar.isVisible) {
+                    viewModel.isShowHideLoading = true
+                    viewModel.clearData()
+                    viewModel.getListBlockedConsultant()
+                }
+            } else {
+                //refresher data favorite
             }
+
             binding.swipeRefreshLayout.isRefreshing = false
         }
 
@@ -120,6 +133,51 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 }
             }
         })
+        setupViewPager()
+    }
+
+    private fun setupViewPager() {
+        pagerAdapter = BasePagerAdapter(childFragmentManager)
+        pagerAdapter.addFragment(fragmentAllPerformer, resources.getString(R.string.all))
+        pagerAdapter.addFragment(fragmentAllPerformerFollow, resources.getString(R.string.follow))
+        binding.vpMain.adapter = pagerAdapter
+        binding.tlMain.setupWithViewPager(binding.vpMain)
+        binding.vpMain.apply {
+            addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                }
+
+                override fun onPageSelected(position: Int) {
+                    Log.d("lkjawegwaeg", "onPageSelected: $position")
+                    forceLoadData(position)
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+                }
+
+            })
+            currentItem = 0
+//            binding.viewPager.post {
+//                forceLoadData(0)
+//            }
+        }
+    }
+
+    private fun forceLoadData(position: Int) {
+//        when (position) {
+//            0 -> {
+//                fragmentAllPerformer.loadData(dailyFirstLoading)
+//                if (dailyFirstLoading) {
+//                    dailyFirstLoading = false
+//                }
+//            }
+//            1 -> {
+//                fragmentAllPerformerFollow.loadData(weeklyFirstLoading)
+//                if (weeklyFirstLoading) {
+//                    weeklyFirstLoading = false
+//                }
+//            }
+//        }
     }
 
     override fun onDestroyView() {
@@ -152,14 +210,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         viewModel.isLoading.observe(viewLifecycleOwner, isLoadingObserver)
 
         viewModel.listConsultantResult.observe(
-            viewLifecycleOwner,
-            Observer {
-                if (!it.isNullOrEmpty()) {
-                    shareViewModel.saveListPerformerSearch(it)
-                }
-                mConsultantAdapter.submitList(it)
+            viewLifecycleOwner
+        ) {
+            if (!it.isNullOrEmpty()) {
+                shareViewModel.saveListPerformerSearch(it)
             }
-        )
+            mConsultantAdapter.submitList(it)
+        }
 
         mainViewModels.currentFragment.observe(
             viewLifecycleOwner,
