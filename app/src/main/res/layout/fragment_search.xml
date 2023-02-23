@@ -16,6 +16,7 @@
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:ic_search="@drawable/ic_search"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -23,9 +24,62 @@
             app:string_hint_search="@string/hint_search"
             app:tv_right_search="@string/cancel_search" />
 
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_input_name"
+            style="@style/text_bold_14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/tv_back"
+            android:layout_marginTop="@dimen/margin_top_email_24"
+            android:layout_marginStart="@dimen/margin_12"
+            android:background="@drawable/bg_input_name_search"
+            android:drawableStart="@drawable/ic_search_grey"
+            android:drawablePadding="@dimen/margin_12"
+            android:hint="@string/input_name"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:inputType="textEmailAddress"
+            android:lines="1"
+            android:paddingLeft="@dimen/padding_10"
+            android:paddingTop="@dimen/padding_12"
+            android:paddingRight="@dimen/padding_10"
+            android:paddingBottom="@dimen/padding_12"
+            android:textColor="@color/white"
+            android:textColorHint="@color/color_70658D"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlSymmetry" />
+
+        <ImageView
+            android:id="@+id/iv_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_20"
+            android:src="@drawable/ic_cancel_grey"
+            app:layout_constraintBottom_toBottomOf="@id/edt_input_name"
+            app:layout_constraintEnd_toEndOf="@id/edt_input_name"
+            app:layout_constraintTop_toTopOf="@id/edt_input_name" />
+
+        <TextView
+
+            android:paddingEnd="@dimen/padding_16dp"
+            android:paddingVertical="@dimen/padding_4"
+            android:id="@+id/tv_back"
+            android:textColor="@color/color_B2A9CC"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/edt_input_name"
+            app:layout_constraintTop_toTopOf="@id/edt_input_name"
+            android:text="@string/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="RtlSymmetry" />
+
+
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/viewFinal"
             app:layout_constraintTop_toBottomOf="@+id/tool_bar">
 
@@ -48,7 +102,7 @@
                     style="@style/CommonChipGroupMultipleChoiceStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_12"/>
+                    android:layout_marginTop="@dimen/margin_12" />
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -96,10 +96,6 @@
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
 
-    <style name="text_11" parent="text_normal">
-        <item name="android:textSize">@dimen/text_size_11</item>
-    </style>
-
     <style name="text_user_profile_12" parent="text_normal">
         <item name="android:textSize">@dimen/text_size_user_profile_12</item>
     </style>

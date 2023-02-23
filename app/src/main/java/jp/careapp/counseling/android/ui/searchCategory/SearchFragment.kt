@@ -3,6 +3,7 @@ package jp.careapp.counseling.android.ui.searchCategory
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.fragment.app.activityViewModels
@@ -180,14 +181,44 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
                 viewModel.setNameConsultant(s.trim().toString())
             }
         })
+
+        binding.edtInputName.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(
+                s: CharSequence, start: Int, before: Int,
+                count: Int
+            ) {
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int, count: Int,
+                after: Int
+            ) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                viewModel.setNameConsultant(s.trim().toString())
+            }
+        })
+
+        binding.ivClear.setOnClickListener {
+            binding.edtInputName.text?.clear()
+        }
+
+        binding.tvBack.setOnClickListener {
+            appNavigation.navigateUp()
+        }
     }
 
     private fun getTitle(): String {
         var title: StringBuilder = StringBuilder()
-        if (binding.toolBar.etSearch.text.toString().isNotEmpty()) {
-            title.append(binding.toolBar.etSearch.text.toString())
+        if (binding.edtInputName.text.toString().isNotEmpty()) {
+            title.append(binding.edtInputName.text.toString())
                 .append("、 ")
         }
+//        if (binding.toolBar.etSearch.text.toString().isNotEmpty()) {
+//            title.append(binding.toolBar.etSearch.text.toString())
+//                .append("、 ")
+//        }
         title = appendConditionChecked(title)
         if (title.trim().toString().isNotEmpty()) {
             return title.trim().toString().trim().substring(0, title.trim().toString().length - 1)
