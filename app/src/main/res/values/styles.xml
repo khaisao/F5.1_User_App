@@ -13,8 +13,8 @@
     </style>
 
     <style name="BottomNavigationTheme" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/bottom_bar_text</item>
-        <item name="android:textColorSecondary">@color/bottom_bar_text</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
     </style>
 
     <style name="text_bold">

@@ -156,7 +156,8 @@
             android:id="@+id/bottom_nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/bottom_bar"
+            app:itemIconSize="@dimen/margin_20"
+            android:background="@color/color_background_common"
             android:theme="@style/BottomNavigationTheme"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_nav" />
