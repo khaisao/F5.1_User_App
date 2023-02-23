@@ -17,12 +17,10 @@ import jp.careapp.counseling.android.data.network.FavoriteResponse
 import jp.careapp.counseling.databinding.FragmentFavouriteBinding
 import jp.careapp.counseling.android.utils.event.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
-import jp.careapp.counseling.android.adapter.ConsultantAdapter
 import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
-import jp.careapp.counseling.android.utils.GenresUtil
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -60,11 +58,13 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
         adapterFavoriteHome = FavoriteHomeAdapter(lifecycleOwner = viewLifecycleOwner, events = viewModels)
         binding.apply {
             if (typeFavoriteScreen != BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW) {
+                binding.swipeRefreshLayout.isEnabled = true
                 rvFavorite.layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 rvFavorite.adapter = adapterFavorite
             } else {
-
+                binding.swipeRefreshLayout.isRefreshing = false
+                binding.swipeRefreshLayout.isEnabled = false
                 rvFavorite.layoutManager = GridLayoutManager(requireContext(), 2)
                 rvFavorite.adapter = adapterFavoriteHome
             }
@@ -94,6 +94,13 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
                 showHideLoading(it)
             }
         )
+
+        shareViewModel.detectRefreshDataFollower.observe(
+            viewLifecycleOwner
+        ) {
+            viewModels.forceRefresh()
+        }
+
         viewModels.error.observe(
             viewLifecycleOwner,
             Observer {

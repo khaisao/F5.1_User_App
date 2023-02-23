@@ -1,16 +1,15 @@
 package jp.careapp.counseling.android.ui.home
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.webkit.URLUtil
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,7 +47,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     @Inject
     lateinit var rxPreferences: RxPreferences
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by activityViewModels()
+
     override fun getVM(): HomeViewModel = viewModel
     private val mainViewModels: MainViewModel by activityViewModels()
     override val layoutId = R.layout.fragment_home
@@ -100,6 +100,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
             }.attach()
         }
+        binding.tlMain.setTabTextColors(Color.parseColor(resources.getString(R.color.gray_dark)), Color.parseColor(resources.getString(R.color.white)));
 
         binding.rvConsultant.layoutManager = GridLayoutManager(context, 2)
         binding.rvConsultant.adapter = mConsultantAdapter
@@ -112,7 +113,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                     viewModel.getListBlockedConsultant()
                 }
             } else {
-                //refresher data favorite
+                shareViewModel.detectRefreshDataFollower.value = !shareViewModel.detectRefreshDataFollower.value!!
             }
 
             binding.swipeRefreshLayout.isRefreshing = false
@@ -136,6 +137,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         setupViewPager()
     }
 
+    override fun setOnClick() {
+        super.setOnClick()
+        binding.ivSearch.setOnClickListener {
+            if (!isDoubleClick) {
+                appNavigation.openTopToSearchScreen()
+            }
+        }
+    }
+
     private fun setupViewPager() {
         pagerAdapter = BasePagerAdapter(childFragmentManager)
         pagerAdapter.addFragment(fragmentAllPerformer, resources.getString(R.string.all))
@@ -148,7 +158,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 }
 
                 override fun onPageSelected(position: Int) {
-                    Log.d("lkjawegwaeg", "onPageSelected: $position")
                     forceLoadData(position)
                 }
 

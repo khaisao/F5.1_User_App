@@ -464,6 +464,10 @@
     <string name="answer_asc">回答が少ない順</string>
     <string name="new_answer">回答の新しい順</string>
 
+    <!--    home-->
+    <string name="all">すべて</string>
+    <string name="follow">フォロー</string>
+
     <!--    labo-->
     <string name="labo_all"><b>すべて</b></string>
     <string name="labo_resolved">解決済</string>
@@ -587,5 +591,4 @@
     <string name="receive_email_from_spark_live">SPARK LIVEからのメールを受け取る</string>
     <string name="title_receive_email">メールを許可していただくと、ご登録メールアドレス宛に女の子からのメッセージが届いたことやお気に入りの女の子のログインをメールでお知らせします。 また、サイトからのお得なキャンペーン情報もご覧いただけます。</string>
     <string name="birth_default">1900-01-01</string>
->>>>>>> ba97e027be5dd6537ed40232f1a672928995c143
 </resources>

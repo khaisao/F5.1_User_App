@@ -237,15 +237,12 @@ class ConsultantAdapter(
                 tvTweet.visibility =
                     if (consultant.messageOfTheDay.isNullOrEmpty()) View.INVISIBLE else View.VISIBLE
                 tvTweet.text = consultant.messageOfTheDay?.replace("\n", "")
-//
-//                ivStatusCall.isVisible =
-//                    consultant.callStatus == CallStatus.ONLINE && consultant.callRestriction == CallRestriction.POSSIBLE
             }
-//            if (absoluteAdapterPosition % 2 == 0) {
-//                binding.tvTweet.visibility = View.VISIBLE
-//                binding.tvTweet.text =
-//                    "lkjglkaerjhlkjaerhlkjerahjlkerhlkjerhajlkerhaljerhljkerhljkhraeljrhlhrlrhlarhlarhlarhlarhlarhlarhlarhlarhlarhlarhlarhla"
-//            }
+            if (absoluteAdapterPosition % 2 == 0) {
+                binding.tvTweet.visibility = View.VISIBLE
+                binding.tvTweet.text =
+                    "lkjglkaerjhlkjaerhlkjerahjlkerhlkjerhajlkerhaljerhljkerhljkhraeljrhlhrlrhlarhlarhlarhlarhlarhlarhlarhlarhlarhlarhlarhla"
+            }
             when (consultant.callStatus) {
                 CallStatus.OFFLINE -> {
                     binding.tvStatus.text =
