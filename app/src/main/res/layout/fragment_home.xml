@@ -34,14 +34,13 @@
                     android:id="@+id/tl_main"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:tabIndicatorFullWidth="false"
-                    app:tabIndicatorColor="@color/white"
                     android:background="@color/color_background_common"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/iv_search"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tabTextAppearance="@style/tab_text"
-                     />
+                    app:tabIndicatorColor="@color/white"
+                    app:tabIndicatorFullWidth="false"
+                    app:tabTextAppearance="@style/tab_text" />
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/vp_banner"

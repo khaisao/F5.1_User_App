@@ -21,22 +21,9 @@
                 android:orientation="vertical"
                 tools:context=".android.ui.searchCategory.SearchFragment">
 
-                <jp.careapp.counseling.android.utils.customView.ToolbarSearch
-                    android:id="@+id/tool_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:ic_search="@drawable/ic_search"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:src_left_search="@drawable/ic_cancel"
-                    app:string_hint_search="@string/hint_search"
-                    app:tv_right_search="@string/cancel_search" />
-
-
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edt_input_name"
-                    style="@style/text_bold_14"
+                    style="@style/text_13"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_12"
@@ -124,19 +111,6 @@
                         android:textColor="@color/gray_dark" />
                 </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnSearch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_24dp"
-                    android:layout_marginEnd="@dimen/margin_24dp"
-                    android:layout_marginBottom="@dimen/margin_12"
-                    android:background="@drawable/bg_gradient_common"
-                    android:text="@string/start"
-                    android:textSize="@dimen/text_size_16"
-                    android:textStyle="bold"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

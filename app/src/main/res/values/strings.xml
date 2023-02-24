@@ -467,6 +467,11 @@
     <string name="all">すべて</string>
     <string name="follow">フォロー</string>
 
+
+    <string name="view_history">視聴履歴</string>
+
+
+
     <!--    labo-->
     <string name="labo_all"><b>すべて</b></string>
     <string name="labo_resolved">解決済</string>

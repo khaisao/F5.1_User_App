@@ -50,7 +50,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
     private val searchResultViewModel: SearchResultViewModel by viewModels()
     override fun getVM(): SearchViewModel = viewModel
     private val shareViewModel: ShareViewModel by activityViewModels()
-
     private var mConsultantAdapter: ConsultantAdapter? = null
 
 
@@ -112,13 +111,18 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
         }
 
         searchResultViewModel.listConsultantTemp.observe(viewLifecycleOwner) {
-            if (!it.isNullOrEmpty()) {
-                binding.llNoResult.visibility = View.GONE
-                binding.rvConsultantSearch.visibility=View.VISIBLE
-                mConsultantAdapter!!.submitList(it)
+            if (binding.edtInputName.text.toString().isNotBlank()) {
+                if (!it.isNullOrEmpty()) {
+                    binding.llNoResult.visibility = View.GONE
+                    binding.rvConsultantSearch.visibility = View.VISIBLE
+                    mConsultantAdapter!!.submitList(it)
+                } else {
+                    binding.llNoResult.visibility = View.VISIBLE
+                    binding.rvConsultantSearch.visibility = View.GONE
+                }
             } else {
-                binding.llNoResult.visibility = View.VISIBLE
-                binding.rvConsultantSearch.visibility=View.GONE
+                binding.llNoResult.visibility = View.GONE
+                binding.rvConsultantSearch.visibility = View.GONE
             }
         }
 
@@ -137,32 +141,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
 
     override fun setOnClick() {
         super.setOnClick()
-
-        binding.btnSearch.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString(BUNDLE_KEY.TITLE, getTitle())
-            bundle.putIntArray(
-                BUNDLE_KEY.GENRES_SELECTED,
-                viewModel.listGenresSelectedPosition.toIntArray()
-            )
-            val dataPerformer = PerformerSearch(viewModel.getStatusConsultant(), viewModel.getNameConsultant(), viewModel.getHaveNumberReview(),
-                viewModel.getGenderChecked(), viewModel.getListGenresSelected(), viewModel.getListRankingSelected(), viewModel.getReviewAverageChecked())
-            bundle.putSerializable(BUNDLE_KEY.DATA_PERFORMER, dataPerformer)
-            appNavigation.openSearchToSearchResultScreen(bundle)
-        }
-
-        binding.toolBar.setToolBarSearchListener(object : ToolbarSearch.ToolBarSearchListener() {
-            override fun clickLeftBtn() {
-                super.clickLeftBtn()
-                appNavigation.navigateUp()
-            }
-
-            override fun clickRightBtn() {
-                super.clickRightBtn()
-                binding.toolBar.etSearch.setText("")
-                binding.toolBar.etSearch.clearFocus()
-            }
-        })
 
         binding.edtInputName.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(
@@ -186,17 +164,24 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
                     object : TimerTask() {
                         override fun run() {
                             lifecycleScope.launch(Dispatchers.Main) {
-                                viewModel.setNameConsultant(s.trim().toString())
-                                val dataPerformer = PerformerSearch(
-                                    viewModel.getStatusConsultant(),
-                                    viewModel.getNameConsultant(),
-                                    viewModel.getHaveNumberReview(),
-                                    viewModel.getGenderChecked(),
-                                    viewModel.getListGenresSelected(),
-                                    viewModel.getListRankingSelected(),
-                                    viewModel.getReviewAverageChecked()
-                                )
-                                searchResultViewModel.setDataPerformer(dataPerformer)
+                                if (s.trim().toString() == "") {
+                                    binding.rvConsultantSearch.visibility = View.GONE
+                                    binding.llNoResult.visibility = View.GONE
+                                    mConsultantAdapter?.submitList(emptyList())
+                                } else {
+                                    viewModel.setNameConsultant(s.trim().toString())
+                                    val dataPerformer = PerformerSearch(
+                                        viewModel.getStatusConsultant(),
+                                        viewModel.getNameConsultant(),
+                                        viewModel.getHaveNumberReview(),
+                                        viewModel.getGenderChecked(),
+                                        viewModel.getListGenresSelected(),
+                                        viewModel.getListRankingSelected(),
+                                        viewModel.getReviewAverageChecked()
+                                    )
+                                    searchResultViewModel.setDataPerformer(dataPerformer)
+                                }
+
                             }
                         }
                     },
@@ -206,6 +191,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
         })
 
         binding.ivClear.setOnClickListener {
+            mConsultantAdapter?.submitList(emptyList())
+            binding.rvConsultantSearch.visibility = View.GONE
+            binding.llNoResult.visibility = View.GONE
             binding.edtInputName.text?.clear()
         }
 

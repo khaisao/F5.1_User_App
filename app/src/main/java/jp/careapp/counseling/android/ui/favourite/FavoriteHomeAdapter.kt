@@ -47,7 +47,7 @@ class FavoriteHomeViewModel(
             executePendingBindings()
         }
         binding.tvName.text = consultant.name
-        Glide.with(binding.root.context).load(consultant.imageUrl)
+        Glide.with(binding.root.context).load(consultant.thumbnailImageUrl)
             .apply(
                 RequestOptions()
                     .placeholder(R.drawable.default_avt_performer)

@@ -2,6 +2,7 @@ package jp.careapp.counseling.android.ui.home
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -91,6 +92,11 @@ class PerformerFragment : BaseFragment<FragmentPerformerBinding,HomeViewModel>()
             ) {
                 if (!it.isNullOrEmpty()) {
                     shareViewModel.saveListPerformerSearch(it)
+                    binding.llNoResult.visibility = View.GONE
+                    binding.rvConsultant.visibility = View.VISIBLE
+                } else {
+                    binding.llNoResult.visibility = View.VISIBLE
+                    binding.rvConsultant.visibility = View.GONE
                 }
                 mConsultantAdapter.submitList(it)
             } else {

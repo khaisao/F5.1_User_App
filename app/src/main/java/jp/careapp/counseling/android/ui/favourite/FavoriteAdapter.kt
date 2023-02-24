@@ -6,6 +6,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.FavoriteResponse
 import jp.careapp.counseling.databinding.ItemFavouriteBinding
 
@@ -46,6 +49,13 @@ class FavoriteViewHolder(
             lifecycleOwner = this@FavoriteViewHolder.lifecycleOwner
             executePendingBindings()
         }
+        binding.tvName.text=item.name
+        Glide.with(binding.root.context).load(item.thumbnailImageUrl)
+            .apply(
+                RequestOptions()
+                    .placeholder(R.drawable.default_avt_performer)
+            )
+            .into(binding.ivPerson)
     }
 
     companion object {

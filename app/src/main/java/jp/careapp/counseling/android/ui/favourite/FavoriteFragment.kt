@@ -58,7 +58,7 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
         adapterFavorite = FavoriteAdapter(lifecycleOwner = viewLifecycleOwner, events = viewModels)
         adapterFavoriteHome = FavoriteHomeAdapter(lifecycleOwner = viewLifecycleOwner, events = viewModels)
         binding.apply {
-            if (typeFavoriteScreen != BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW) {
+            if (typeFavoriteScreen != BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_HOME) {
                 binding.swipeRefreshLayout.isEnabled = true
                 rvFavorite.layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -96,7 +96,19 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
             }
         )
 
-        shareViewModel.detectRefreshDataFollower.observe(
+        shareViewModel.detectRefreshDataFollowerHome.observe(
+            viewLifecycleOwner
+        ) {
+            viewModels.forceRefresh()
+        }
+
+        shareViewModel.detectRefreshDataHistory.observe(
+            viewLifecycleOwner
+        ) {
+            viewModels.forceRefresh()
+        }
+
+        shareViewModel.detectRefreshDataFavorite.observe(
             viewLifecycleOwner
         ) {
             viewModels.forceRefresh()

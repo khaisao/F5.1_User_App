@@ -86,7 +86,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
     lateinit var pagerAdapter: BasePagerAdapter
     private val fragmentAllPerformer = PerformerFragment.newInstance(BUNDLE_KEY.TYPE_ALL_PERFORMER)
-    private val fragmentAllPerformerFollow = FavoriteFragment.newInstance(BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW)
+    private val fragmentAllPerformerFollow = FavoriteFragment.newInstance(BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_HOME)
 
 
     override fun initView() {
@@ -97,6 +97,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
             }.attach()
         }
+
         binding.tlMain.setTabTextColors(Color.parseColor(resources.getString(R.color.gray_dark)), Color.parseColor(resources.getString(R.color.white)));
 
         binding.swipeRefreshLayout.setOnRefreshListener {
@@ -107,7 +108,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                     viewModel.getListBlockedConsultant()
                 }
             } else {
-                shareViewModel.detectRefreshDataFollower.value = !shareViewModel.detectRefreshDataFollower.value!!
+                shareViewModel.detectRefreshDataFollowerHome.value = !shareViewModel.detectRefreshDataFollowerHome.value!!
             }
             binding.swipeRefreshLayout.isRefreshing = false
         }

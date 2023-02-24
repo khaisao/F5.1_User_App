@@ -241,7 +241,7 @@ class ConsultantAdapter(
             if (absoluteAdapterPosition % 2 == 0) {
                 binding.tvTweet.visibility = View.VISIBLE
                 binding.tvTweet.text =
-                    "lkjglkaerjhlkjaerhlkjerahjlkerhlkjerhajlkerhaljerhljkerhljkhraeljrhlhrlrhlarhlarhlarhlarhlarhlarhlarhlarhlarhlarhlarhla"
+                    "一緒に触っちゃうの特にキュンとしちゃう♡"
             }
             when (consultant.callStatus) {
                 CallStatus.OFFLINE -> {
