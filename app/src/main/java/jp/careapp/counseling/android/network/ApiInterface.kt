@@ -55,6 +55,9 @@ interface ApiInterface {
     @GET("api/member/favorites")
     suspend fun getMemberFavorite(): JsonObject
 
+    @GET("api/member/watch-latest-histories")
+    suspend fun getMemberHistory(): JsonObject
+
     @GET("api/member/blocks")
     suspend fun getMemberBlocked(): JsonObject
 

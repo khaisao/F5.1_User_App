@@ -1,6 +1,7 @@
 package jp.careapp.counseling.android.ui.favourite
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
@@ -8,9 +9,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import jp.careapp.core.utils.getDurationBreakdown
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.FavoriteResponse
+import jp.careapp.counseling.android.utils.CallStatus
+import jp.careapp.counseling.android.utils.ChatStatus
+import jp.careapp.counseling.android.utils.extensions.getBustSize
 import jp.careapp.counseling.databinding.ItemFavouriteBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FavoriteAdapter(
     private val lifecycleOwner: LifecycleOwner,
@@ -56,6 +63,55 @@ class FavoriteViewHolder(
                     .placeholder(R.drawable.default_avt_performer)
             )
             .into(binding.ivPerson)
+        val dateString = "2023-01-15 08:57:10"
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.US)
+        val date = sdf.parse(dateString)
+        val startDate = date?.time
+        if (startDate != null) {
+            binding.tvTime.text =
+                binding.root.context.getDurationBreakdown(System.currentTimeMillis() - startDate)
+        }
+
+        if (item.callStatus == CallStatus.ONLINE && item.chatStatus == ChatStatus.OFFLINE) {
+            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
+            binding.tvStatus.text =
+                binding.root.context.resources.getString(R.string.presence_status_offline)
+        } else if (item.callStatus == CallStatus.INCOMING_CALL && item.chatStatus == ChatStatus.OFFLINE) {
+            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
+            binding.tvStatus.text =
+                binding.root.context.resources.getString(R.string.presence_status_offline)
+        } else if (item.callStatus == CallStatus.OFFLINE && item.chatStatus == ChatStatus.WAITING) {
+            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
+            binding.tvStatus.text =
+                binding.root.context.resources.getString(R.string.presence_status_live_streaming)
+        } else if (item.callStatus == CallStatus.OFFLINE && item.chatStatus == ChatStatus.CHATTING) {
+            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
+            binding.tvStatus.text =
+                binding.root.context.resources.getString(R.string.presence_status_live_streaming)
+        } else if (item.callStatus == CallStatus.OFFLINE && item.chatStatus == ChatStatus.TWO_SHOT_CHAT) {
+            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
+            binding.tvStatus.text =
+                binding.root.context.resources.getString(R.string.presence_status_private_delivery)
+        } else if (item.callStatus == CallStatus.OFFLINE && item.chatStatus == ChatStatus.OFFLINE) {
+            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_waiting)
+            binding.tvStatus.text =
+                binding.root.context.resources.getString(R.string.presence_status_waiting)
+        } else {
+            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
+            binding.tvStatus.text =
+                binding.root.context.resources.getString(R.string.presence_status_offline)
+        }
+
+        val bustSize = binding.root.context.getBustSize(item.bust)
+        if (bustSize == "") {
+            binding.tvSize.visibility = View.GONE
+        } else {
+            binding.tvSize.visibility = View.VISIBLE
+            binding.tvSize.text = bustSize
+        }
+
+        binding.tvAge.text = item.age.toString() + binding.root.context.resources.getString(R.string.age_raw)
+
     }
 
     companion object {

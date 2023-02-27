@@ -59,13 +59,11 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
         adapterFavoriteHome = FavoriteHomeAdapter(lifecycleOwner = viewLifecycleOwner, events = viewModels)
         binding.apply {
             if (typeFavoriteScreen != BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_HOME) {
-                binding.swipeRefreshLayout.isEnabled = true
                 rvFavorite.layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 rvFavorite.adapter = adapterFavorite
             } else {
-                binding.swipeRefreshLayout.isRefreshing = false
-                binding.swipeRefreshLayout.isEnabled = false
+
                 rvFavorite.layoutManager = GridLayoutManager(requireContext(), 2)
                 rvFavorite.adapter = adapterFavoriteHome
             }
@@ -81,12 +79,6 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
                 arguments?.apply {
                     binding.appBar.root.isVisible = getBoolean(BUNDLE_KEY.IS_SHOW_TOOLBAR, false)
                 }
-            }
-            swipeRefreshLayout.setOnRefreshListener {
-                if (!progressBar.isVisible) {
-                    viewModels.forceRefresh()
-                }
-                swipeRefreshLayout.isRefreshing = false
             }
         }
         viewModels.favoriteLoading.observe(
@@ -169,10 +161,10 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
 
     private fun showNoData(isShow: Boolean) {
         if (isShow) {
-            binding.tvNoData.visibility = View.VISIBLE
+            binding.llNoResult.visibility = View.VISIBLE
             binding.rvFavorite.visibility = View.GONE
         } else {
-            binding.tvNoData.visibility = View.GONE
+            binding.llNoResult.visibility = View.GONE
             binding.rvFavorite.visibility = View.VISIBLE
         }
     }

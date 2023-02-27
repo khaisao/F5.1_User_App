@@ -10,6 +10,7 @@ data class ConsultantResponse(
     @SerializedName("name") val name: String? = "",
     @SerializedName("sex") val sex: Int = 3,
     @SerializedName("age") val age: Int = 0,
+    @SerializedName("bust") val bust: Int = 0,
     @SerializedName("exists_image") val existsImage: Boolean = false,
     @SerializedName("image_url") val imageUrl: String? = "",
     @SerializedName("thumbnail_image_url") val thumbnailImageUrl: String? = "",

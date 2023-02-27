@@ -74,7 +74,7 @@
                             android:id="@+id/tv_name"
                             style="@style/text_bold_10"
                             android:layout_width="wrap_content"
-                            android:maxWidth="100dp"
+                            android:maxWidth="150dp"
                             android:maxLines="1"
                             android:ellipsize="end"
                             android:layout_height="wrap_content"
@@ -84,6 +84,7 @@
                             android:textColor="@color/color_text_F0F0F0" />
 
                         <TextView
+                            android:id="@+id/tv_size"
                             style="@style/text_bold_10"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -103,7 +104,7 @@
                             android:fontFamily="@font/hiragino_sans_w6"
                             android:maxLines="1"
                             android:paddingBottom="@dimen/padding_6dp"
-                            android:text="AgeasfasfasfasfasfasfasfasAgeasfasfasfasfasfasfasfasffAgeasfasfasfasfasfasfasfasf"
+                            android:text="Age"
                             android:textColor="@color/color_text_F0F0F0" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 

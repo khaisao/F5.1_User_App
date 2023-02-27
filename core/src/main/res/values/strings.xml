@@ -28,4 +28,10 @@
     <string name="cancel_block_alert">キャンセル</string>
     <string name="no_internet">ケアプリにアクセスできません。\nインターネット接続を確認してください。</string>
     <string name="retry">リトライ</string>
+
+    <string name="within_minutes">分以内</string>
+    <string name="within_hour">時間以内</string>
+    <string name="within_days">日以内</string>
+    <string name="within_week">週間以内</string>
+    <string name="within_month">ヶ月以内</string>
 </resources>

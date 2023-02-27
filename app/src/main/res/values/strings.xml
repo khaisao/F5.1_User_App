@@ -128,6 +128,7 @@
     <string name="nick_name">ニックネーム</string>
     <string name="gender">性別</string>
     <string name="age">年齢</string>
+    <string name="age_raw">歳</string>
     <string name="member_code">会員CODE</string>
     <string name="retention_point">保持ポイント</string>
     <string name="email_address">メールアドレス</string>
@@ -271,6 +272,8 @@
     <string name="ranking_weekly">週間</string>
     <string name="ranking_daily">前日</string>
     <string name="number_point_per_char">%dpts</string>
+    <string name="cup">カップ</string>
+    <string name="secret">ひみつ</string>
 
     <!--    trouble sheet  -->
     <string name="trouble_title">お悩みシート</string>
@@ -469,6 +472,7 @@
 
 
     <string name="view_history">視聴履歴</string>
+
 
 
 

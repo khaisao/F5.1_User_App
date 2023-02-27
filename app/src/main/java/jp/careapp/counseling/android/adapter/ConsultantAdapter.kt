@@ -4,8 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,8 +13,9 @@ import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.GenResItem
 import jp.careapp.counseling.android.data.network.ConsultantResponse
-import jp.careapp.counseling.android.utils.CallRestriction
 import jp.careapp.counseling.android.utils.CallStatus
+import jp.careapp.counseling.android.utils.ChatStatus
+import jp.careapp.counseling.android.utils.extensions.getBustSize
 import jp.careapp.counseling.databinding.ItemConsultantBinding
 
 class ConsultantAdapter(
@@ -160,66 +159,6 @@ class ConsultantAdapter(
                 binding.ivRanking.visibility = View.INVISIBLE
             }
 
-//            if (consultant.presenceStatus == 1) {
-//                binding.tvPresenceStatus.text = context.getString(R.string.status_online)
-//                binding.tvPresenceStatus.setBackgroundResource(R.drawable.ic_status_online)
-//            } else {
-//                binding.tvPresenceStatus.text = context.getString(R.string.status_offline)
-//                binding.tvPresenceStatus.setBackgroundResource(R.drawable.ic_status_offline_solid)
-//            }
-//
-//            val value = consultant.reviewAverage
-//            val fraction = value % 1
-//            val integerAverage = value.toInt()
-//            val ivArr =
-//                arrayOf<ImageView>(
-//                    binding.ivStarFirst,
-//                    binding.ivStarSecond,
-//                    binding.ivStarThird,
-//                    binding.ivStarFour,
-//                    binding.ivStarFive
-//                )
-//            for (i in 0 until integerAverage) {
-//                ivArr[i].setImageResource(R.drawable.ic_review_full)
-//            }
-//
-//            if (fraction in 0.5..1.0) {
-//                ivArr[integerAverage].setImageResource(R.drawable.ic_review_half)
-//                for (i in (integerAverage + 1) until 5) {
-//                    ivArr[i].setImageResource(R.drawable.ic_review_empty)
-//                }
-//            } else {
-//                for (i in integerAverage until 5) {
-//                    ivArr[i].setImageResource(R.drawable.ic_review_empty)
-//                }
-//            }
-//            binding.tvTotalReview.text =
-//                context.getString(R.string.total_review_number, consultant.reviewTotalNumber)
-//            var textGenRes = ""
-//
-//            for (j in consultant.genres) {
-//                for (i in 0 until listGenRes.size) {
-//                    if (j == listGenRes[i].id) {
-//                        if (!textGenRes.contains(listGenRes[i].name)) {
-//                            textGenRes += " " + listGenRes[i].name + " "
-//                            textGenRes += "・"
-//                        }
-//                    }
-//                }
-//            }
-//
-//            when (consultant.stage) {
-//                1 -> binding.ivStage.setImageResource(R.drawable.ic_basic_home)
-//                2 -> binding.ivStage.setImageResource(R.drawable.ic_silver_home)
-//                3 -> binding.ivStage.setImageResource(R.drawable.ic_gold_home)
-//                4 -> binding.ivStage.setImageResource(R.drawable.ic_platinum_home)
-//                5 -> binding.ivStage.setImageResource(R.drawable.ic_bronze_home)
-//                6 -> binding.ivStage.setImageResource(R.drawable.ic_diamond_home)
-//            }
-//
-//            binding.tvNumberPoint.text =
-//                context.getString(R.string.number_point_per_char, consultant.pointPerChar)
-
             Glide.with(context).load(consultant.imageUrl)
                 .apply(
                     RequestOptions()
@@ -243,27 +182,41 @@ class ConsultantAdapter(
                 binding.tvTweet.text =
                     "一緒に触っちゃうの特にキュンとしちゃう♡"
             }
-            when (consultant.callStatus) {
-                CallStatus.OFFLINE -> {
-                    binding.tvStatus.text =
-                        context.resources.getString(R.string.presence_status_offline)
-                    binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
-                }
-                CallStatus.ONLINE -> {
-                    binding.tvStatus.text =
-                        context.resources.getString(R.string.presence_status_waiting)
-                    binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_waiting)
-                }
-                CallStatus.INCOMING_CALL -> {
-                    binding.tvStatus.text =
-                        context.resources.getString(R.string.presence_status_live_streaming)
-                    binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
-                }
-                else -> {
-                    binding.tvStatus.text =
-                        context.resources.getString(R.string.presence_status_private_delivery)
-                    binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
-                }
+            if (consultant.callStatus == CallStatus.ONLINE && consultant.chatStatus == ChatStatus.OFFLINE) {
+                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
+                binding.tvStatus.text =
+                    binding.root.context.resources.getString(R.string.presence_status_offline)
+            } else if (consultant.callStatus == CallStatus.INCOMING_CALL && consultant.chatStatus == ChatStatus.OFFLINE) {
+                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
+                binding.tvStatus.text =
+                    binding.root.context.resources.getString(R.string.presence_status_offline)
+            } else if (consultant.callStatus == CallStatus.OFFLINE && consultant.chatStatus == ChatStatus.WAITING) {
+                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
+                binding.tvStatus.text =
+                    binding.root.context.resources.getString(R.string.presence_status_live_streaming)
+            } else if (consultant.callStatus == CallStatus.OFFLINE && consultant.chatStatus == ChatStatus.CHATTING) {
+                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
+                binding.tvStatus.text =
+                    binding.root.context.resources.getString(R.string.presence_status_live_streaming)
+            } else if (consultant.callStatus == CallStatus.OFFLINE && consultant.chatStatus == ChatStatus.TWO_SHOT_CHAT) {
+                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
+                binding.tvStatus.text =
+                    binding.root.context.resources.getString(R.string.presence_status_private_delivery)
+            } else if (consultant.callStatus == CallStatus.OFFLINE && consultant.chatStatus == ChatStatus.OFFLINE) {
+                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_waiting)
+                binding.tvStatus.text =
+                    binding.root.context.resources.getString(R.string.presence_status_waiting)
+            } else {
+                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
+                binding.tvStatus.text =
+                    binding.root.context.resources.getString(R.string.presence_status_offline)
+            }
+            val bustSize = binding.root.context.getBustSize(consultant.bust)
+            if (bustSize == "") {
+                binding.tvSize.visibility = View.GONE
+            } else {
+                binding.tvSize.visibility = View.VISIBLE
+                binding.tvSize.text = bustSize
             }
         }
     }
