@@ -80,7 +80,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/hiragino_sans_w6"
                             android:paddingBottom="@dimen/padding_6dp"
-                            android:text="Name"
+                            android:text="This is very long name"
                             android:textColor="@color/color_text_F0F0F0" />
 
                         <TextView
