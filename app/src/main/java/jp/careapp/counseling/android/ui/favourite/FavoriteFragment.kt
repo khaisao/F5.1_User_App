@@ -132,7 +132,7 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
             EventObserver { data ->
                 CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
                     .showDialog()
-                    .setDialogTitleWithString("${data.name} さんのお気に入りを解除しますか？")
+                    .setDialogTitleWithString("${data.name} " + resources.getString(R.string.remove_favorite_ques))
                     .setTextNegativeButton(R.string.no_block_alert)
                     .setTextPositiveButton(R.string.confirm_block_alert)
                     .setOnNegativePressed {
