@@ -2,14 +2,10 @@ package jp.careapp.counseling.android.ui.profile.detail_user
 
 import android.Manifest.permission.RECORD_AUDIO
 import android.content.Intent
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.text.SpannableString
 import android.text.TextUtils
-import android.text.style.RelativeSizeSpan
-import android.text.style.StyleSpan
 import android.view.View
 import android.view.View.*
 import androidx.activity.result.contract.ActivityResultContracts
@@ -26,7 +22,6 @@ import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.handle.HandleBuyPoint
-import jp.careapp.counseling.android.model.user_profile.UserProfileTab
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.BuyPointBottomFragment
 import jp.careapp.counseling.android.ui.calling.CallingViewModel
@@ -100,7 +95,7 @@ class DetailUserProfileFragment :
     override fun initView() {
         super.initView()
         consultantResponseLocal?.let {
-            initViewpager(it)
+//            initViewpager(it)
         }
     }
 
@@ -145,29 +140,29 @@ class DetailUserProfileFragment :
         }
 
         // user offline
-        binding.sendNotiLl.setOnClickListener {
-            if (!isDoubleClick) {
-                if (isFirstChat == null) {
-                    consultantResponseLocal?.code?.let { it1 ->
-                        viewModel.loadMailInfo(
-                            it1
-                        )
-                    }
-                } else {
-                    isFirstChat?.let {
-                        if (it) {
-                            showDialogFavorite()
-                        } else {
-                            if ((rxPreferences.getPoint() == 0)) {
-                                doBuyPoint()
-                            } else {
-                                handleOpenChatScreen()
-                            }
-                        }
-                    }
-                }
-            }
-        }
+//        binding.sendNotiLl.setOnClickListener {
+//            if (!isDoubleClick) {
+//                if (isFirstChat == null) {
+//                    consultantResponseLocal?.code?.let { it1 ->
+//                        viewModel.loadMailInfo(
+//                            it1
+//                        )
+//                    }
+//                } else {
+//                    isFirstChat?.let {
+//                        if (it) {
+//                            showDialogFavorite()
+//                        } else {
+//                            if ((rxPreferences.getPoint() == 0)) {
+//                                doBuyPoint()
+//                            } else {
+//                                handleOpenChatScreen()
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
     private fun openChatScreen(isShowFreeMess: Boolean = false) {
@@ -441,96 +436,46 @@ class DetailUserProfileFragment :
     private fun showDataUserProfile(consultantResponse: ConsultantResponse) {
         consultantResponse.also { user ->
             binding.apply {
-                if (consultantResponse.messageOfTheDay.isNullOrEmpty()) {
-                    layoutTweetTv.visibility = INVISIBLE
-                } else {
-                    layoutTweetTv.visibility = VISIBLE
-                }
 
                 when (user.stage) {
                     SILVER -> {
-                        bannerUserIv.setImageResource(R.drawable.bg_stage_silver)
                         stageIv.setImageResource(R.drawable.ic_silver_home)
                     }
                     GOLD -> {
-                        bannerUserIv.setImageResource(R.drawable.bg_state_gold)
                         stageIv.setImageResource(R.drawable.ic_gold_home)
                     }
                     PLATINUM -> {
-                        bannerUserIv.setImageResource(R.drawable.bg_stage_platinum)
                         stageIv.setImageResource(R.drawable.ic_platinum_home)
                     }
                     BRONZE -> {
-                        bannerUserIv.setImageResource(R.drawable.bg_stage_basic)
                         stageIv.setImageResource(R.drawable.ic_bronze_home)
                     }
                     DIAMOND -> {
-                        bannerUserIv.setImageResource(R.drawable.bg_stage_basic)
                         stageIv.setImageResource(R.drawable.ic_diamond_home)
                     }
                     else -> {
-                        bannerUserIv.setImageResource(R.drawable.bg_stage_basic)
                         stageIv.setImageResource(R.drawable.ic_basic_home)
                     }
                 }
 
                 if (user.profilePattern == 1) {
                     avatarIv.visibility = VISIBLE
-                    avatarIv.loadImage(user.imageUrl, R.drawable.ic_avatar_default, true)
-                    layoutTweetTvPattern1.root.visibility = VISIBLE
-                    layoutTweetTvPattern2.root.visibility = GONE
-                    layoutTweetTvPattern1.tweetTvPattern1.text = consultantResponse.messageOfTheDay
+                    avatarIv.loadImage(user.imageUrl, R.drawable.ic_avatar_default, false)
                 } else {
                     avatarIv.visibility = GONE
-                    layoutTweetTvPattern1.root.visibility = GONE
-                    layoutTweetTvPattern2.root.visibility = VISIBLE
-                    layoutTweetTvPattern2.tweetTvPattern2.text = consultantResponse.messageOfTheDay
-                    bannerUserIv.loadImage(
-                        user.profileImages?.imagePatternTwo?.imageUrl,
-                        R.drawable.bg_stage_basic,
-                        false
-                    )
                 }
 
                 if (user.presenceStatus == ACCEPTING) {
                     presenceStatusTv.text = getString(R.string.presence_status_live_streaming)
                     presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_waiting)
-                    presenceStatusTv.setTextColor(resources.getColor(R.color.color_1D1045))
                     clAction.visibility = VISIBLE
-                    ballNextOnlineTv.visibility = INVISIBLE
-                    sendNotiLl.visibility = INVISIBLE
                 } else {
                     presenceStatusTv.text = getString(R.string.presence_status_waiting)
                     presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
                     presenceStatusTv.setTextColor(resources.getColor(R.color.purple_AEA2D1))
-                    if (TextUtils.isEmpty(user.loginPlansDatetime)) {
-                        ballNextOnlineTv.visibility = GONE
-                    } else {
-                        ballNextOnlineTv.visibility = VISIBLE
-                    }
-                    ballNextOnlineTv.text = DateUtil.convertStringToDateString(
-                        user.loginPlansDatetime,
-                        DateUtil.DATE_FORMAT_1,
-                        DateUtil.DATE_FORMAT_4
-                    )
                     clAction.visibility = INVISIBLE
-                    sendNotiLl.visibility = VISIBLE
                 }
                 userNameTv.text = user.name
-                ratingUserRb.rating = user.reviewAverage.toFloat()
-                ratingUserTv.text = user.reviewAverage.toFloat().toString()
-                priceChatTv.text = String.format(
-                    getString(R.string.price_point),
-                    user.pointPerChar
-                )
-                ivPriceCall.isVisible = user.callRestriction == CallRestriction.POSSIBLE
-                tvPriceCall.apply {
-                    text = String.format(
-                        getString(R.string.price_point),
-                        user.pointPerMinute
-                    )
-                    isVisible = user.callRestriction == CallRestriction.POSSIBLE
-                }
                 llCallConsult.apply {
                     isEnabled = user.callStatus == CallStatus.ONLINE
                     isVisible = user.callRestriction == CallRestriction.POSSIBLE
@@ -644,51 +589,6 @@ class DetailUserProfileFragment :
                         }
                     }
                 }
-            }
-        }
-    }
-
-    private fun initViewpager(consultantResponse: ConsultantResponse) {
-        tabDetailUserProfileFragment =
-            TabDetailUserProfileFragment.getInstance(consultantResponse)
-        tabReviewFragment = TabReviewFragment.getInstance(consultantResponse)
-        var tabs = listOf(
-            UserProfileTab(
-                getString(R.string.user_profile_detail),
-                tabDetailUserProfileFragment!!
-            ),
-            UserProfileTab(
-                String.format(getString(R.string.user_profile_review), 0),
-                tabReviewFragment!!
-            )
-        )
-        tabReviewFragment?.setContentUpdateTitle(
-            object : TabReviewFragment.UpdateTitle {
-                override fun onUpdate(title: String) {
-                    updateTitleTablayout(title)
-                }
-            }
-        )
-        userInforTabAdapter = UserInforTabAdapter(childFragmentManager, tabs)
-        binding.inforUserVp.adapter = userInforTabAdapter
-        binding.tabInforUserTl.setupWithViewPager(binding.inforUserVp)
-        binding.tabInforUserTl.tabRippleColor = null
-        updateTitleTablayout(String.format(getString(R.string.user_profile_review), 0))
-    }
-
-    fun updateTitleTablayout(title: String) {
-        if (binding.tabInforUserTl.tabCount >= 2) {
-            val tabItem = binding.tabInforUserTl.getTabAt(1)
-            if (tabItem != null) {
-                var spanString = SpannableString(title)
-                spanString.setSpan(
-                    StyleSpan(Typeface.BOLD),
-                    0,
-                    4,
-                    0
-                )
-                spanString.setSpan(RelativeSizeSpan(0.85f), 4, spanString.length, 0)
-                tabItem.text = spanString
             }
         }
     }
