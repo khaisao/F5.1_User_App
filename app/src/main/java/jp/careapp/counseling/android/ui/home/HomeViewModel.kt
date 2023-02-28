@@ -162,29 +162,6 @@ class HomeViewModel @ViewModelInject constructor(
         isLoading.value = false
     }
 
-    private fun saveListConsultantToDatabase() {
-        val listDatabase = ArrayList<ConsultantDatabase>()
-        // clear All
-        Realm.getDefaultInstance().use { realm ->
-            realm.executeTransaction {
-                val oldData: RealmResults<ConsultantDatabase> =
-                    realm.where(ConsultantDatabase::class.java).findAll()
-                oldData.deleteAllFromRealm()
-            }
-        }
-        for (i in 0 until listConsultantTemp.size) {
-            val consultant =
-                ConsultantDatabase(i, Gson().toJson(listConsultantTemp[i]))
-            listDatabase.add(consultant)
-        }
-
-        Realm.getDefaultInstance().use { realm ->
-            realm.executeTransaction {
-                realm.copyToRealmOrUpdate(listDatabase)
-            }
-        }
-    }
-
     override fun onCleared() {
         mHandler.removeCallbacks(runnable)
         super.onCleared()

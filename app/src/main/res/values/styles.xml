@@ -13,8 +13,8 @@
     </style>
 
     <style name="BottomNavigationTheme" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/bottom_bar_text</item>
-        <item name="android:textColorSecondary">@color/bottom_bar_text</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
     </style>
 
     <style name="text_bold">
@@ -24,11 +24,20 @@
         <item name="android:fontFamily">@font/hiragino_sans_w6</item>
     </style>
 
+    <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/hiragino_sans_w6</item>
+        <item name="android:textSize">@dimen/text_size_13</item>
+
+    </style>
+
+
     <style name="text_normal">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:includeFontPadding">false</item>
+        <item name="android:textStyle">normal</item>
         <item name="android:fontFamily">@font/hiragino_sans_w3</item>
+
     </style>
 
     <style name="text_bold_16" parent="text_bold">
@@ -87,10 +96,6 @@
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
 
-    <style name="text_11" parent="text_normal">
-        <item name="android:textSize">@dimen/text_size_11</item>
-    </style>
-
     <style name="text_user_profile_12" parent="text_normal">
         <item name="android:textSize">@dimen/text_size_user_profile_12</item>
     </style>
@@ -101,6 +106,10 @@
 
     <style name="text_10" parent="text_normal">
         <item name="android:textSize">@dimen/text_size_10</item>
+    </style>
+
+    <style name="text_11" parent="text_normal">
+        <item name="android:textSize">@dimen/text_size_11</item>
     </style>
 
     <style name="text_title_bold_28" parent="text_bold">

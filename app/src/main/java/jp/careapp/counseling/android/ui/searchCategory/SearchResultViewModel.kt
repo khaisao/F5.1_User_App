@@ -38,6 +38,7 @@ class SearchResultViewModel @ViewModelInject constructor(
     private val _dataPerformer = MutableLiveData<PerformerSearch>()
     val dataPerformer: LiveData<PerformerSearch> get() = _dataPerformer
     private var consultantSearch: ConsultantSearch = ConsultantSearch()
+    var isShowHideLoading= MutableLiveData<Boolean>(false)
 
     private var currentPage = 1
     var isLoadMoreData: Boolean = false
@@ -52,6 +53,7 @@ class SearchResultViewModel @ViewModelInject constructor(
 
     init {
 //        listConsultantResult.value = getListConsultantDatabase()!!
+
     }
 
     fun listenerEventSocket() {
@@ -102,6 +104,7 @@ class SearchResultViewModel @ViewModelInject constructor(
     }
 
     private fun getTotalNumberConsultant() {
+        isShowHideLoading.value=true
         _dataPerformer.value?.let {
             consultantSearch.statusConsultant = if (it.statusConsultant != Define.SearchCondition.DEFAULT) it.statusConsultant else null
             consultantSearch.nameConsultant = if (it.nameConsultant != "") it.nameConsultant else null
@@ -133,7 +136,9 @@ class SearchResultViewModel @ViewModelInject constructor(
                             getSearchListConsultant()
                         }
                     }
+                    isShowHideLoading.value=false
                 } catch (throwable: Throwable){
+                    isShowHideLoading.value=false
                 }
             }
 

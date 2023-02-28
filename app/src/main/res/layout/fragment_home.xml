@@ -18,52 +18,61 @@
                 android:background="@color/color_background_common"
                 android:nestedScrollingEnabled="true">
 
+                <ImageView
+                    android:id="@+id/iv_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_14"
+                    android:layout_marginTop="@dimen/margin_12"
+                    android:adjustViewBounds="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_navigation_search" />
+
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tl_main"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_background_common"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_search"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tabIndicatorColor="@color/white"
+                    app:tabIndicatorFullWidth="false"
+                    app:tabTextAppearance="@style/tab_text" />
+
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/vp_banner"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/margin_6"
                     android:visibility="gone"
                     app:layout_constraintDimensionRatio="375:96"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@id/tl_main" />
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabIndicator"
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
-                    android:visibility="gone"
                     android:layout_marginBottom="4dp"
                     android:background="@color/transparent"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/vp_banner"
                     app:tabBackground="@drawable/tab_indicator"
                     app:tabGravity="center"
                     app:tabIndicatorHeight="0dp" />
 
-                <TextView
-                    android:id="@+id/tvTitleHome"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/padding_60dp"
-                    android:gravity="center_vertical"
-                    android:paddingHorizontal="@dimen/margin_16"
-                    android:text="@string/you_can_talk_now"
-                    android:textColor="@color/color_text_E3DFEF"
-                    android:textSize="@dimen/text_size_18"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/vp_banner" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvConsultant"
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/vp_main"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_marginTop="@dimen/margin_6"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvTitleHome"
-                    tools:itemCount="10"
-                    tools:listitem="@layout/item_consultant" />
+                    app:layout_constraintTop_toBottomOf="@id/vp_banner" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

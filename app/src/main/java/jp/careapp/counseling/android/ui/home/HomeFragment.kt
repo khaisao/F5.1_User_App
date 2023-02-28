@@ -1,6 +1,7 @@
 package jp.careapp.counseling.android.ui.home
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -9,21 +10,21 @@ import android.webkit.URLUtil
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.adapter.BannerAdapter
+import jp.careapp.counseling.android.adapter.BasePagerAdapter
 import jp.careapp.counseling.android.adapter.ConsultantAdapter
 import jp.careapp.counseling.android.data.network.BannerResponse
 import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.navigation.AppNavigation
+import jp.careapp.counseling.android.ui.favourite.FavoriteFragment
 import jp.careapp.counseling.android.ui.main.MainActivity
 import jp.careapp.counseling.android.ui.main.MainViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
@@ -43,7 +44,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     @Inject
     lateinit var rxPreferences: RxPreferences
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by activityViewModels()
+
     override fun getVM(): HomeViewModel = viewModel
     private val mainViewModels: MainViewModel by activityViewModels()
     override val layoutId = R.layout.fragment_home
@@ -82,6 +84,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         }
     }
 
+    lateinit var pagerAdapter: BasePagerAdapter
+    private val fragmentAllPerformer = PerformerFragment.newInstance(BUNDLE_KEY.TYPE_ALL_PERFORMER)
+    private val fragmentAllPerformerFollow = FavoriteFragment.newInstance(BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_HOME)
+
+
     override fun initView() {
         super.initView()
         binding.vpBanner.apply {
@@ -90,38 +97,58 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
             }.attach()
         }
-        val layoutManager = LinearLayoutManager(context)
-        binding.rvConsultant.layoutManager = layoutManager
-        binding.rvConsultant.adapter = mConsultantAdapter
+
+        binding.tlMain.setTabTextColors(Color.parseColor(resources.getString(R.color.gray_dark)), Color.parseColor(resources.getString(R.color.white)));
 
         binding.swipeRefreshLayout.setOnRefreshListener {
-            if (!binding.progressBar.isVisible) {
-                viewModel.isShowHideLoading = true
-                viewModel.clearData()
-                viewModel.getListBlockedConsultant()
+            if (binding.vpMain.currentItem == 0) {
+                if (!binding.progressBar.isVisible) {
+                    viewModel.isShowHideLoading = true
+                    viewModel.clearData()
+                    viewModel.getListBlockedConsultant()
+                }
+            } else {
+                shareViewModel.detectRefreshDataFollowerHome.value = !shareViewModel.detectRefreshDataFollowerHome.value!!
             }
             binding.swipeRefreshLayout.isRefreshing = false
         }
 
-        binding.rvConsultant.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val listDataSize = viewModel.listConsultantResult.value?.size ?: 0
-                if (listDataSize > 0) {
-                    val layoutManager = binding.rvConsultant.layoutManager as LinearLayoutManager
-                    if (!viewModel.isLoadMoreData) {
-                        if (layoutManager != null && (layoutManager.findLastCompletelyVisibleItemPosition() == listDataSize - 1) && viewModel.isCanLoadMoreData()) {
-                            viewModel.isLoadMoreData = true
-                            viewModel.loadMoreData()
-                        }
-                    }
-                }
+        setupViewPager()
+    }
+
+    override fun setOnClick() {
+        super.setOnClick()
+        binding.ivSearch.setOnClickListener {
+            if (!isDoubleClick) {
+                appNavigation.openTopToSearchScreen()
             }
-        })
+        }
+    }
+
+    private fun setupViewPager() {
+        pagerAdapter = BasePagerAdapter(childFragmentManager)
+        pagerAdapter.addFragment(fragmentAllPerformer, resources.getString(R.string.all))
+        pagerAdapter.addFragment(fragmentAllPerformerFollow, resources.getString(R.string.follow))
+        binding.vpMain.adapter = pagerAdapter
+        binding.tlMain.setupWithViewPager(binding.vpMain)
+        binding.vpMain.apply {
+            addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                }
+
+                override fun onPageSelected(position: Int) {
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+                }
+
+            })
+            currentItem = 0
+
+        }
     }
 
     override fun onDestroyView() {
-        binding.rvConsultant.clearOnScrollListeners()
         viewModel.clearData()
         super.onDestroyView()
     }
@@ -150,14 +177,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         viewModel.isLoading.observe(viewLifecycleOwner, isLoadingObserver)
 
         viewModel.listConsultantResult.observe(
-            viewLifecycleOwner,
-            Observer {
-                if (!it.isNullOrEmpty()) {
-                    shareViewModel.saveListPerformerSearch(it)
-                }
-                mConsultantAdapter.submitList(it)
+            viewLifecycleOwner
+        ) {
+            if (!it.isNullOrEmpty()) {
+                shareViewModel.saveListPerformerSearch(it)
             }
-        )
+            mConsultantAdapter.submitList(it)
+        }
 
         mainViewModels.currentFragment.observe(
             viewLifecycleOwner,

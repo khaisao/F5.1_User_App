@@ -15,6 +15,10 @@ data class FavoriteResponse(
     val imageUrl: String = "",
     @SerializedName("name")
     val name: String = "",
+    @SerializedName("age")
+    val age: Int = 0,
+    @SerializedName("bust")
+    val bust: Int = 0,
     @SerializedName("presence_status")
     val presenceStatus: Int = 0,
     @SerializedName("status")
@@ -23,4 +27,6 @@ data class FavoriteResponse(
     val thumbnailImageUrl: String = "",
     @SerializedName("call_status")
     val callStatus: Int = DEFAULT_CALL_STATUS,
+    @SerializedName("chat_status")
+    val chatStatus: Int = DEFAULT_CALL_STATUS,
 ) : Parcelable

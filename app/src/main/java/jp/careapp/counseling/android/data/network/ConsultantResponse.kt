@@ -10,6 +10,7 @@ data class ConsultantResponse(
     @SerializedName("name") val name: String? = "",
     @SerializedName("sex") val sex: Int = 3,
     @SerializedName("age") val age: Int = 0,
+    @SerializedName("bust") val bust: Int = 0,
     @SerializedName("exists_image") val existsImage: Boolean = false,
     @SerializedName("image_url") val imageUrl: String? = "",
     @SerializedName("thumbnail_image_url") val thumbnailImageUrl: String? = "",
@@ -31,6 +32,7 @@ data class ConsultantResponse(
     @SerializedName("is_favorite") val isFavorite: Boolean = false,
     @SerializedName("point_per_minute") val pointPerMinute: Int = 0,
     @SerializedName("call_status") val callStatus: Int = DEFAULT_CALL_STATUS,
+    @SerializedName("chat_status") val chatStatus: Int = DEFAULT_CALL_STATUS,
     @SerializedName("call_restriction") val callRestriction: Int? = 0, // 1=possible, null=not possible
 ) : Serializable {
     companion object {

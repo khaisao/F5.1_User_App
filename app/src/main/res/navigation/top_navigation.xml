@@ -25,11 +25,11 @@
         android:label="RankFragment"
         tools:layout="@layout/rank_fragment" />
 
-    <fragment
-        android:id="@+id/tabFavorite"
-        android:name="jp.careapp.counseling.android.ui.favourite.FavoriteFragment"
-        android:label="FavoriteFragment"
-        tools:layout="@layout/fragment_favourite" />
+<!--    <fragment-->
+<!--        android:id="@+id/tabFavorite"-->
+<!--        android:name="jp.careapp.counseling.android.ui.favourite.FavoriteFragment"-->
+<!--        android:label="FavoriteFragment"-->
+<!--        tools:layout="@layout/fragment_favourite" />-->
 
     <fragment
         android:id="@+id/tabMyPage"
@@ -37,6 +37,13 @@
         android:label="MyPageFragment"
         tools:layout="@layout/fragment_mypage" />
 
+    <fragment
+        android:id="@+id/tabFavorite"
+        tools:layout="@layout/fragment_favorite_main"
+        android:name="jp.careapp.counseling.android.ui.favourite.FavoriteMainFragment"
+        android:label="FavoriteMainFragment" />
+
     <include app:graph="@navigation/main_navigation" />
+
 
 </navigation>

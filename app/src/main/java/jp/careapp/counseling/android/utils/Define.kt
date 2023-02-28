@@ -229,6 +229,7 @@ class BUNDLE_KEY {
         const val NAME = "NAME"
         const val MAX_LENGTH_NAME = 10
         const val TYPE_RANKING = "TYPE_RANKING"
+        const val TYPE_ONLINE_LIST_SCREEN = "TYPE_ONLINE_LIST_SCREEN"
         const val GENRES_SELECTED = "GENRES_SELECTED"
         const val POSITION_USER: String = "POSITION_USER"
         const val LAB: String = "LAB"
@@ -269,6 +270,11 @@ class BUNDLE_KEY {
         const val ANSWER_ID = "answer_id"
         const val IS_ENABLE = "is_enable"
 
+        //online_user_list
+        const val TYPE_ALL_PERFORMER = 0
+        const val TYPE_ALL_PERFORMER_FOLLOW_HOME = 1
+        const val TYPE_ALL_PERFORMER_FOLLOW_FAVORITE = 2
+        const val TYPE_HISTORY = 2
         // ranking
         const val TYPE_DAILY = 0
         const val TYPE_WEEKLY = 1
@@ -561,6 +567,14 @@ object CallStatus {
     const val ONLINE = 1
     const val INCOMING_CALL = 2
     const val DEFAULT_CALL_STATUS = ONLINE
+}
+
+object ChatStatus {
+    const val OFFLINE = 0
+    const val WAITING = 1
+    const val CHATTING = 2
+    const val TWO_SHOT_CHAT = 3
+    const val DEFAULT_CHAT_STATUS = ChatStatus.OFFLINE
 }
 
 object CallRestriction {

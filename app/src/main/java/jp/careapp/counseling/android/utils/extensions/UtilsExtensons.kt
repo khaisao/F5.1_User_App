@@ -22,6 +22,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.realm.RealmModel
 import io.realm.RealmResults
+import jp.careapp.counseling.R
 import jp.careapp.counseling.android.utils.realmUtil.LiveRealmData
 
 fun <A, B, R> LiveData<A>.combine(
@@ -162,4 +163,18 @@ inline fun <reified T> Any.toListData(): List<T> {
     } else {
         emptyList()
     }
+}
+
+fun Context.getBustSize(numSize: Int): String {
+    return if (numSize == 0) {
+        ""
+    } else if (numSize == 99) {
+        this.resources.getString(R.string.secret)
+    } else if (numSize in 1..9) {
+        val sizeString = (numSize + 64).toChar().toString()
+        sizeString + this.resources.getString(R.string.cup)
+    } else {
+        ""
+    }
+
 }

@@ -59,7 +59,7 @@
                     android:paddingBottom="@dimen/padding_12"
                     android:textColor="@color/white"
                     android:textColorHint="@color/color_70658D"
-                    tools:hint="@string/title_register_name"
+                    android:hint="@string/title_register_name"
                     tools:ignore="RtlSymmetry" />
 
                 <LinearLayout
