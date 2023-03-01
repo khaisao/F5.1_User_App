@@ -301,6 +301,7 @@
     <string name="title_confirm_block">%s さんをブロックしますか？</string>
     <string name="title_report">通報の内容</string>
     <string name="report_content">通報内容</string>
+    <string name="thank_for_report">事務局へ通報しました。ご協力ありがとうございます。</string>
     <string name="thank_for_understanding">原則、通報頂いた内容にはご返信いたしておりません。あらかしめご了承下さいませ。</string>
     <string name="title_report_enter_info">規約に違反している配信が確認できた場合は、こちらより情報を入力して下さい。</string>
     <string name="report_btn">通報する</string>

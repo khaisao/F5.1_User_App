@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
-    android:layout_marginHorizontal="@dimen/margin_36dp">
+    android:layout_marginHorizontal="@dimen/margin_36dp"
+    android:background="@android:color/transparent">
 
     <com.lihang.ShadowLayout
         android:id="@+id/sl_input_email"
@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-<!--        Change to card view instead of material card view to view layout-->
+        <!--        Change to card view instead of material card view to view layout-->
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -42,6 +42,7 @@
                 <TextView
                     android:id="@+id/tv_title"
                     style="@style/text_bold_16"
+                    android:layout_marginHorizontal="@dimen/margin_16dp"
                     android:gravity="center"
                     android:textColor="@color/color_text_E3DFEF"
                     android:visibility="visible"
@@ -62,6 +63,7 @@
                     tools:text="@string/sub_title_favorite_alert" />
 
                 <LinearLayout
+                    android:id="@+id/ll_btn_action"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_16dp"
@@ -95,6 +97,30 @@
                         android:textColor="@color/background_color_white"
                         android:textSize="@dimen/text_size_16"
                         tools:text="@string/block_user" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_ok"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_32dp"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_subTitle">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_ok"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_gradient_common"
+                        android:fontFamily="@font/hiragino_sans_w6"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/padding_54dp"
+                        android:paddingVertical="@dimen/padding_15dp"
+                        android:textColor="@color/background_color_white"
+                        android:textSize="@dimen/text_size_16"
+                        tools:text="@string/ok_en" />
                 </LinearLayout>
 
 

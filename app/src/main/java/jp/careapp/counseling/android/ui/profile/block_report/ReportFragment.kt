@@ -13,6 +13,7 @@ import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.customView.ToolBarCommon
 import dagger.hilt.android.AndroidEntryPoint
+import jp.careapp.core.utils.dialog.CommonAlertDialog
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -71,7 +72,16 @@ class ReportFragment : BaseFragment<FragmentUserReportBinding, ReportViewModel>(
 
     private var handleReportResult: Observer<Boolean> = Observer {
         if (it) {
-            appNavigation.navigateUp()
+            CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+                .showDialog()
+                .setDialogTitleWithString(
+                    resources.getString(R.string.thank_for_report)
+                )
+                .setTextConfirm(R.string.ok_en)
+                .setOnOkPressed { dialog ->
+                    dialog.dismiss()
+                    appNavigation.navigateUp()
+                }
         }
     }
 

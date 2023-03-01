@@ -4,6 +4,7 @@
 
     <!--    setting-->
     <string name="ok">はい</string>
+    <string name="ok_en">OK</string>
     <string name="cancel">キャンセル</string>
     <string name="setting">設定</string>
 
