@@ -4,78 +4,105 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/margin_48dp"
-    android:layout_marginRight="@dimen/margin_48dp"
-    android:background="@drawable/bg_radius_10"
-    android:backgroundTint="@color/color_disable_button">
+    android:background="@android:color/transparent"
+    android:layout_marginHorizontal="@dimen/margin_36dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.lihang.ShadowLayout
+        android:id="@+id/sl_input_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/margin_24dp"
-        android:paddingTop="@dimen/margin_24dp"
-        android:paddingRight="@dimen/margin_24dp"
-        android:paddingBottom="@dimen/margin_24dp"
+        app:hl_cornerRadius="@dimen/margin_20dp"
+        app:hl_shadowColor="@color/color_dialog_border_shadow"
+        app:hl_shadowLimit="@dimen/margin_13dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tv_title"
-            style="@style/text_bold_16"
-            android:gravity="center"
-            android:textColor="@color/color_text_E3DFEF"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/title_favorite_alert" />
+<!--        Change to card view instead of material card view to view layout-->
 
-        <TextView
-            android:id="@+id/tv_subTitle"
-            style="@style/text_14"
-            android:layout_marginTop="@dimen/padding_10"
-            android:textColor="@color/purple_AEA2D1"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title"
-            tools:text="@string/sub_title_favorite_alert" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_confirm"
-            android:layout_width="0dp"
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="@dimen/padding_10"
-            android:layout_marginTop="@dimen/padding_16dp"
-            android:layout_marginRight="@dimen/padding_10"
-            android:layout_marginBottom="@dimen/margin_40dp"
-            android:background="@drawable/bg_gradient_common"
-            android:paddingVertical="@dimen/padding_15dp"
-            android:paddingLeft="@dimen/margin_24dp"
-            android:paddingRight="@dimen/margin_24dp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_14"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_subTitle"
-            tools:ignore="MissingConstraints"
-            tools:text="@string/confirm_favorite_alert" />
+            app:cardBackgroundColor="@color/color_background_dialog"
+            app:cardCornerRadius="@dimen/margin_20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/color_dialog_border"
+            app:strokeWidth="1dp">
 
-        <TextView
-            android:id="@+id/tv_cancel"
-            style="@style/text_14"
-            android:layout_marginTop="@dimen/padding_16dp"
-            android:padding="@dimen/padding_5dp"
-            android:background="@drawable/bg_cancel_btn"
-            android:visibility="gone"
-            android:textColor="@color/gray_lite"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_confirm"
-            tools:text="@string/cancel_block_alert" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/padding_32dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    style="@style/text_bold_16"
+                    android:gravity="center"
+                    android:textColor="@color/color_text_E3DFEF"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/title_favorite_alert" />
+
+                <TextView
+                    android:id="@+id/tv_subTitle"
+                    style="@style/text_14"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:textColor="@color/purple_AEA2D1"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                    tools:text="@string/sub_title_favorite_alert" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_32dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_subTitle">
+
+                    <TextView
+                        android:id="@+id/tv_cancel"
+                        style="@style/text_14"
+                        android:layout_width="0dp"
+                        android:layout_marginEnd="@dimen/margin_9dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_cancel_btn"
+                        android:fontFamily="@font/hiragino_sans_w6"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/padding_15dp"
+                        android:textColor="@color/gray_lite"
+                        android:textSize="@dimen/text_size_16"
+                        android:visibility="gone"
+                        tools:text="@string/cancel_block_alert" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_confirm"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_gradient_common"
+                        android:fontFamily="@font/hiragino_sans_w6"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/padding_15dp"
+                        android:textColor="@color/background_color_white"
+                        android:textSize="@dimen/text_size_16"
+                        tools:text="@string/block_user" />
+                </LinearLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </com.lihang.ShadowLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

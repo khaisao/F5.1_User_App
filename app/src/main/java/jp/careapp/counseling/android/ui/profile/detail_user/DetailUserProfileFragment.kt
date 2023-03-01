@@ -462,7 +462,7 @@ class DetailUserProfileFragment :
             binding.ivMore.setOnClickListener {
                 if (!isDoubleClick) {
                     BlockAndReportBottomFragment.showBlockAndReportBottomSheet(
-                        childFragmentManager,
+                        parentFragmentManager,
                         object : BlockAndReportBottomFragment.ClickItemView {
                             override fun clickBlock() {
                                 if (!isDoubleClick) {
@@ -470,12 +470,9 @@ class DetailUserProfileFragment :
                                         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
                                             .showDialog()
                                             .setDialogTitleWithString(
-                                                String.format(
-                                                    getString(R.string.title_confirm_block),
-                                                    data.name ?: ""
-                                                )
+                                                resources.getString(R.string.block_this_woman)
                                             )
-                                            .setTextPositiveButton(R.string.ok)
+                                            .setTextPositiveButton(R.string.block_user)
                                             .setTextNegativeButton(R.string.cancel)
                                             .setOnPositivePressed {
                                                 it.dismiss()

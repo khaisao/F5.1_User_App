@@ -25,6 +25,7 @@
     <string name="title_favorite_alert">先生をお気に入りに追加しますか？</string>
     <string name="sub_title_favorite_alert">お気に入り登録するとオンラインになった時に通知を受け取ることができます。</string>
     <string name="confirm_favorite_alert">お気に入りに追加する</string>
+    <string name="block_user">ブロックする</string>
     <string name="cancel_block_alert">キャンセル</string>
     <string name="no_internet">ケアプリにアクセスできません。\nインターネット接続を確認してください。</string>
     <string name="retry">リトライ</string>
