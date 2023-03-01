@@ -229,6 +229,9 @@
     <string name="genres_11">離婚</string>
     <string name="genres_12">片思い</string>
     <string name="genres_32">その他</string>
+    <string name="live_viewing">ライブ視聴</string>
+    <string name="delivery_request">配信リクエスト</string>
+
 
     <!--    notification-->
     <string name="email_setting">メルマガ設定</string>
@@ -673,4 +676,6 @@
     <string name="block_user">ブロックする</string>
     <string name="report_user">通報する</string>
     <string name="input_name">なまえで検索</string>
+    <string name="message">メッセージ</string>
+    <string name="peep">のぞく</string>
 </resources>

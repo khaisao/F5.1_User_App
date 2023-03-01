@@ -566,20 +566,53 @@ class DetailUserProfileFragment :
                     avatarIv.visibility = GONE
                 }
 
+//                tvMemberCount.text= user
+
                 if (user.presenceStatus == ACCEPTING) {
                     presenceStatusTv.text = getString(R.string.presence_status_live_streaming)
                     presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_waiting)
-                    clAction.visibility = VISIBLE
                 } else {
                     presenceStatusTv.text = getString(R.string.presence_status_waiting)
                     presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
                     presenceStatusTv.setTextColor(resources.getColor(R.color.purple_AEA2D1))
-                    clAction.visibility = INVISIBLE
                 }
                 userNameTv.text = user.name
-                llCallConsult.apply {
-                    isEnabled = user.callStatus == CallStatus.ONLINE
-                    isVisible = user.callRestriction == CallRestriction.POSSIBLE
+                var isWaiting = false
+                var isLiveStream = false
+                var isPrivateLiveStream = false
+                var isOnline = false
+                if (user.callStatus == 1 && user.chatStatus == 0) {
+                    isWaiting = true
+                } else if (user.callStatus == 2 && user.chatStatus == 0) {
+                    isWaiting = true
+                } else if (user.callStatus == 0 && user.chatStatus == 1) {
+                    isLiveStream = true
+                } else if (user.callStatus == 0 && user.chatStatus == 2) {
+                    isLiveStream = true
+                } else if (user.callStatus == 0 && user.chatStatus == 3) {
+                    isPrivateLiveStream = true
+                } else {
+                    isOnline = true
+                }
+
+                if (isWaiting || isLiveStream) {
+                    llCallConsult.visibility = VISIBLE
+                } else {
+                    llCallConsult.visibility = GONE
+                }
+                if (isWaiting) {
+                    ivBallonLive.visibility = VISIBLE
+                } else {
+                    ivBallonLive.visibility = GONE
+                }
+                if (isLiveStream) {
+                    llPrivateDelivery.visibility = VISIBLE
+                    ivBallonPeep.visibility = VISIBLE
+                    llPeep.visibility = VISIBLE
+                } else {
+                    llPrivateDelivery.visibility = GONE
+                    ivBallonPeep.visibility = GONE
+                    llPeep.visibility = GONE
                 }
                 changeStatusIsFavorite(user.isFavorite)
 

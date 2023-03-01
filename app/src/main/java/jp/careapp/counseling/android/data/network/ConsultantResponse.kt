@@ -47,5 +47,42 @@ data class ConsultantResponse(
                 thumbnailImageUrl = performer.thumbnailImageUrl
             )
         }
+
+
+
+        fun isWaiting(consultantResponse: ConsultantResponse): Boolean {
+            var isWaiting = false
+            if (consultantResponse.callStatus == 1 && consultantResponse.chatStatus == 0) {
+                isWaiting = true
+            } else if (consultantResponse.callStatus == 2 && consultantResponse.chatStatus == 0) {
+                isWaiting = true
+            }
+            return isWaiting
+        }
+
+        fun isLiveStream(consultantResponse: ConsultantResponse): Boolean {
+            var isLiveStream = false
+            if (consultantResponse.callStatus == 0 && consultantResponse.chatStatus == 1) {
+                isLiveStream = true
+            } else if (consultantResponse.callStatus == 0 && consultantResponse.chatStatus == 2) {
+                isLiveStream = true
+            }
+            return isLiveStream
+        }
+
+        fun isPrivateLiveStream(consultantResponse: ConsultantResponse): Boolean {
+            var isPrivateLiveStream = false
+            if (consultantResponse.callStatus == 0 && consultantResponse.chatStatus == 3) {
+                isPrivateLiveStream = true
+            }
+            return isPrivateLiveStream
+        }
+
+        fun isOnline(consultantResponse: ConsultantResponse): Boolean {
+            if(!isWaiting(consultantResponse) && !isLiveStream(consultantResponse) && !isPrivateLiveStream(consultantResponse)){
+                return true
+            }
+            return false
+        }
     }
 }

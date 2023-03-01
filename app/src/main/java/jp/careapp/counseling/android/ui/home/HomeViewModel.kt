@@ -2,6 +2,7 @@ package jp.careapp.counseling.android.ui.home
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -100,10 +101,13 @@ class HomeViewModel @ViewModelInject constructor(
         val params: MutableMap<String, Any> = HashMap()
         params[BUNDLE_KEY.PARAM_SORT] = BUNDLE_KEY.PRESENCE_STATUS
         params[BUNDLE_KEY.PARAM_ODER] = BUNDLE_KEY.DESC
+        //test
+        params[BUNDLE_KEY.PRESENCE_STATUS] = 1
         params[BUNDLE_KEY.PARAM_SORT_2] = BUNDLE_KEY.REVIEW_TOTAL_SCORE
         params[BUNDLE_KEY.PARAM_ODER_2] = BUNDLE_KEY.DESC
         params[BUNDLE_KEY.LIMIT] = LIMIT_NUMBER
         params[BUNDLE_KEY.PAGE] = page
+        Log.d("ewhgawerharh", "getAllListConsultant: $params")
         viewModelScope.launch {
             if (isShowLoading) isLoading.value = true
             try {
@@ -118,6 +122,7 @@ class HomeViewModel @ViewModelInject constructor(
                     if (isLoadMoreData) isLoadMoreData = false
                 }
             } catch (throwable: Throwable) {
+                Log.d("ewhgawerharh", "getAllListConsultant: $throwable")
                 isLoading.value = false
             }
         }

@@ -177,6 +177,7 @@
 
                         <TextView
                             style="@style/text_9"
+                            android:id="@+id/tv_member_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_2"
@@ -244,13 +245,13 @@
             android:background="@color/color_402C70"
             app:layout_constraintBottom_toTopOf="@id/clAction" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/clAction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="bottom"
             android:paddingHorizontal="8dp"
             android:paddingBottom="@dimen/margin_24"
-            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -259,12 +260,11 @@
                 android:layout_width="0dp"
                 android:layout_height="52dp"
                 android:layout_marginHorizontal="@dimen/margin_4dp"
+                android:layout_weight="1"
                 android:background="@drawable/bg_corner_26dp_978dff_alpha"
                 android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/ll_call_consult"
-                app:layout_constraintStart_toStartOf="parent">
+                android:visibility="visible">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -276,41 +276,141 @@
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="@dimen/margin_5dp"
                     android:gravity="center"
-                    android:text="@string/consult_by_chat"
+                    android:text="@string/message"
                     android:textColor="@color/white" />
             </LinearLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ll_call_consult"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_4dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/iv_ballon_live"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ballon_live"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:background="@drawable/bg_button_call"
+                    app:layout_constraintEnd_toEndOf="@id/iv_ballon_live"
+                    app:layout_constraintStart_toStartOf="@id/iv_ballon_live"
+                    app:layout_constraintTop_toBottomOf="@id/iv_ballon_live">
+
+                    <ImageView
+                        android:id="@+id/ivCall"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_video"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvCall"
+                        style="@style/text_bold_16"
+                        android:layout_marginLeft="@dimen/margin_5dp"
+                        android:gravity="center"
+                        android:lineSpacingExtra="0dp"
+                        android:text="@string/live_viewing"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@id/ivCall"
+                        app:layout_constraintStart_toEndOf="@id/ivCall"
+                        app:layout_constraintTop_toTopOf="@id/ivCall" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ll_peep"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_4dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/iv_ballon_peep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ballon_live"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:background="@drawable/bg_button_call"
+                    app:layout_constraintEnd_toEndOf="@id/iv_ballon_peep"
+                    app:layout_constraintStart_toStartOf="@id/iv_ballon_peep"
+                    app:layout_constraintTop_toBottomOf="@id/iv_ballon_peep">
+
+                    <ImageView
+                        android:id="@+id/iv_peep"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_peep"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_peep"
+                        style="@style/text_bold_16"
+                        android:layout_marginLeft="@dimen/margin_5dp"
+                        android:gravity="center"
+                        android:lineSpacingExtra="0dp"
+                        android:text="@string/live_viewing"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_peep"
+                        app:layout_constraintStart_toEndOf="@id/iv_peep"
+                        app:layout_constraintTop_toTopOf="@id/iv_peep" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_private_delivery"
                 android:layout_width="0dp"
                 android:layout_height="52dp"
                 android:layout_marginHorizontal="@dimen/margin_4dp"
-                android:background="@drawable/bg_button_call"
+                android:layout_weight="1"
+                android:background="@drawable/bg_corner_26dp_978dff_alpha"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/send_consult_ll"
-                app:layout_constraintWidth_percent="0.48">
+                android:visibility="visible">
 
                 <ImageView
-                    android:id="@+id/ivCall"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_price_call" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_call" />
 
                 <TextView
-                    android:id="@+id/tvCall"
                     style="@style/text_bold_16"
+                    android:layout_width="wrap_content"
                     android:layout_marginLeft="@dimen/margin_5dp"
                     android:gravity="center"
-                    android:lineSpacingExtra="0dp"
-                    android:text="@string/consult_by_call"
+                    android:text="@string/delivery_request"
                     android:textColor="@color/white" />
             </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
