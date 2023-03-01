@@ -1,5 +1,6 @@
 package jp.careapp.counseling.android.ui.profile.detail_user
 
+import android.app.Activity
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,6 +20,8 @@ class DetailUserProfileViewModel @ViewModelInject constructor(private val apiInt
     val statusRemoveFavorite = MutableLiveData<Boolean>()
     val isFirstChat = MutableLiveData<Boolean>()
     private val _newMessage = MutableLiveData<SocketActionSend>()
+    val blockUserResult = MutableLiveData<Boolean>()
+
     val newMessage: LiveData<SocketActionSend> get() = _newMessage
     fun loadDetailUser(code: String) {
         viewModelScope.launch {
@@ -36,6 +39,33 @@ class DetailUserProfileViewModel @ViewModelInject constructor(private val apiInt
             } catch (throwable: Throwable) {
                 userProfileResult.postValue(null)
                 isLoading.value = false
+            }
+        }
+    }
+
+    fun handleClickBlock(performerCode: String, activity: Activity) {
+        viewModelScope.launch {
+            isLoading.value = true
+            try {
+                val response = apiInterface.handleClickblock(performerCode)
+                response.let {
+                    if (it.errors.isEmpty()) {
+                        blockUserResult.value = true
+                    }
+                }
+                isLoading.value = false
+            } catch (e: Exception) {
+                isLoading.value = false
+                handleThowable(
+                    activity,
+                    e,
+                    reloadData = {
+                        handleClickBlock(
+                            performerCode,
+                            activity
+                        )
+                    }
+                )
             }
         }
     }

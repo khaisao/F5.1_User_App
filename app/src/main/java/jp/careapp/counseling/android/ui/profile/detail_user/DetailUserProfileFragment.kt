@@ -5,7 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.View.*
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,23 +15,21 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
-import jp.careapp.core.utils.DateUtil
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
+import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.BuyPointBottomFragment
 import jp.careapp.counseling.android.ui.calling.CallingViewModel
+import jp.careapp.counseling.android.ui.profile.block_report.BlockAndReportBottomFragment
 import jp.careapp.counseling.android.ui.profile.tab_review.TabReviewFragment
 import jp.careapp.counseling.android.ui.profile.tab_user_info_detail.TabDetailUserProfileFragment
 import jp.careapp.counseling.android.ui.profile.update_trouble_sheet.TroubleSheetUpdateFragment
-import jp.careapp.counseling.android.utils.BUNDLE_KEY
-import jp.careapp.counseling.android.utils.CallRestriction
-import jp.careapp.counseling.android.utils.CallStatus
-import jp.careapp.counseling.android.utils.Define
+import jp.careapp.counseling.android.utils.*
 import jp.careapp.counseling.android.utils.extensions.hasPermissions
 import jp.careapp.counseling.databinding.FragmentDetailUserProfileBinding
 import javax.inject.Inject
@@ -53,6 +51,9 @@ class DetailUserProfileFragment :
 
     private val viewModel: DetailUserProfileViewModel by viewModels()
     private val callingViewModel: CallingViewModel by activityViewModels()
+    private val shareViewModel: ShareViewModel by activityViewModels()
+    private var typeScreen = ""
+
 
     override fun getVM(): DetailUserProfileViewModel = viewModel
 
@@ -101,6 +102,12 @@ class DetailUserProfileFragment :
 
     override fun setOnClick() {
         super.setOnClick()
+        binding.ivBack.setOnClickListener {
+            if (!isDoubleClick) {
+                appNavigation.navigateUp()
+            }
+        }
+
         binding.addFavoriteTv.setOnClickListener {
             if (!isDoubleClick) {
                 consultantResponse?.let {
@@ -389,16 +396,33 @@ class DetailUserProfileFragment :
         viewModel.statusFavorite.observe(viewLifecycleOwner, handleResuleStatusFavorite)
         viewModel.statusRemoveFavorite.observe(viewLifecycleOwner, handleResuleStatusUnFavorite)
         viewModel.isFirstChat.observe(viewLifecycleOwner, handleFirstChat)
+        viewModel.blockUserResult.observe(viewLifecycleOwner
+            , handleBlockResult)
+
     }
 
     private var handleResuleDetailUser: Observer<ConsultantResponse?> = Observer {
         if (it != null) {
             showDataUserProfile(it)
+            setClickForDialogBlock(it)
             consultantResponse = it
         } else {
             consultantResponse = consultantResponseLocal
             if (consultantResponseLocal != null) {
                 showDataUserProfile(consultantResponseLocal!!)
+                setClickForDialogBlock(consultantResponseLocal!!)
+            }
+        }
+    }
+
+    private var handleBlockResult: Observer<Boolean> = Observer {
+        if (it) {
+            shareViewModel.isBlockConsultant.value = true
+            // open from chat message
+            if (typeScreen.equals(BUNDLE_KEY.CHAT_MESSAGE)) {
+                appNavigation.popopBackStackToDetination(R.id.topFragment)
+            } else {
+                appNavigation.navigateUp()
             }
         }
     }
@@ -433,10 +457,91 @@ class DetailUserProfileFragment :
         }
     }
 
+    private fun setClickForDialogBlock(consultantResponse: ConsultantResponse){
+        consultantResponse.also { user ->
+            binding.ivMore.setOnClickListener {
+                if (!isDoubleClick) {
+                    BlockAndReportBottomFragment.showBlockAndReportBottomSheet(
+                        childFragmentManager,
+                        object : BlockAndReportBottomFragment.ClickItemView {
+                            override fun clickBlock() {
+                                if (!isDoubleClick) {
+                                    Log.d("wegawegawg", "clickBlock: ${user.toString()}")
+                                    user.let { data ->
+                                        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+                                            .showDialog()
+                                            .setDialogTitleWithString(
+                                                String.format(
+                                                    getString(R.string.title_confirm_block),
+                                                    data.name ?: ""
+                                                )
+                                            )
+                                            .setTextPositiveButton(R.string.ok)
+                                            .setTextNegativeButton(R.string.cancel)
+                                            .setOnPositivePressed {
+                                                it.dismiss()
+                                                activity?.let { it1 ->
+                                                    viewModel.handleClickBlock(
+                                                        data.code ?: "",
+                                                        it1
+                                                    )
+                                                }
+                                            }.setOnNegativePressed {
+                                                it.dismiss()
+                                            }
+                                    }
+
+                                }
+                            }
+
+                            override fun clickReport() {
+                                if (!isDoubleClick) {
+                                    val bundle = Bundle()
+                                    bundle.putString(BUNDLE_KEY.USER_PROFILE, user.code)
+                                    appNavigation.openUserProfileToReportScreen(bundle)
+
+                                }
+                            }
+                        }
+                    )
+                }
+            }
+
+        }
+    }
+
     private fun showDataUserProfile(consultantResponse: ConsultantResponse) {
         consultantResponse.also { user ->
             binding.apply {
-
+                if (user.callStatus == CallStatus.ONLINE && user.chatStatus == ChatStatus.OFFLINE) {
+                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_offline)
+                    presenceStatusTv.text =
+                        resources.getString(R.string.presence_status_offline)
+                } else if (user.callStatus == CallStatus.INCOMING_CALL && user.chatStatus == ChatStatus.OFFLINE) {
+                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_offline)
+                    presenceStatusTv.text =
+                        resources.getString(R.string.presence_status_offline)
+                } else if (user.callStatus == CallStatus.OFFLINE && user.chatStatus == ChatStatus.WAITING) {
+                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
+                    presenceStatusTv.text =
+                        resources.getString(R.string.presence_status_live_streaming)
+                } else if (user.callStatus == CallStatus.OFFLINE && user.chatStatus == ChatStatus.CHATTING) {
+                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
+                    presenceStatusTv.text =
+                        resources.getString(R.string.presence_status_live_streaming)
+                } else if (user.callStatus == CallStatus.OFFLINE && user.chatStatus == ChatStatus.TWO_SHOT_CHAT) {
+                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
+                    presenceStatusTv.text =
+                        resources.getString(R.string.presence_status_private_delivery)
+                } else if (user.callStatus == CallStatus.OFFLINE && user.chatStatus == ChatStatus.OFFLINE) {
+                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_waiting)
+                    presenceStatusTv.text =
+                        resources.getString(R.string.presence_status_waiting)
+                } else {
+                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_offline)
+                    presenceStatusTv.text =
+                        resources.getString(R.string.presence_status_offline)
+                }
                 when (user.stage) {
                     SILVER -> {
                         stageIv.setImageResource(R.drawable.ic_silver_home)
