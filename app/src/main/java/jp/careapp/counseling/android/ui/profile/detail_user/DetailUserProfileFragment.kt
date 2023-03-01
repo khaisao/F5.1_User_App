@@ -466,7 +466,6 @@ class DetailUserProfileFragment :
                         object : BlockAndReportBottomFragment.ClickItemView {
                             override fun clickBlock() {
                                 if (!isDoubleClick) {
-                                    Log.d("wegawegawg", "clickBlock: ${user.toString()}")
                                     user.let { data ->
                                         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
                                             .showDialog()
