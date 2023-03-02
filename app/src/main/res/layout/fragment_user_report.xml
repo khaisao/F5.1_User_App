@@ -33,7 +33,7 @@
             android:layout_marginLeft="@dimen/margin_16"
             android:layout_marginTop="@dimen/margin_10"
             android:layout_marginRight="@dimen/margin_16"
-            android:background="@drawable/bg_strock_8dp_978dff"
+            android:background="@drawable/bg_edt_primary"
             android:gravity="top|left"
             android:hint="@string/hint_report"
             android:padding="@dimen/margin_16"
