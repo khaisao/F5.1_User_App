@@ -13,6 +13,8 @@
     <color name="color_background_dialog">#0D002C</color><!--rgb 13 0 44 -->
     <color name="color_dialog_border">#9D52FF</color><!--rgba 157 82 255 -->
     <color name="color_dialog_border_shadow">#809D52FF</color><!--rgba 157 82 255 -->
+    <color name="color_9d4eea">#9D4EEA</color><!--rgba 157 82 255 -->
+    <color name="color_eeecf0">#EEECF0</color><!--rgba 157 82 255 -->
     <color name="purple_AEA2D1">#AEA2D1</color> <!--rgb 174 162 209-->
     <color name="right_color_btn_common">#61C1FF</color> <!--rgb 97 193 255-->
     <color name="color_978DFF">#978DFF</color> <!--rgb 97 193 255-->

@@ -91,6 +91,7 @@ class HistoryViewModel @ViewModelInject constructor(
                     if (isLoadMoreData) isLoadMoreData = false
                 }
             } catch (throwable: Throwable) {
+                Log.d("arehgaerhaerh", "getHistoryMember: $throwable")
             }
         }
     }

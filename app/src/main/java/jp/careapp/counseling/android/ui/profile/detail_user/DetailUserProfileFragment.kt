@@ -562,7 +562,6 @@ class DetailUserProfileFragment :
                     )
                 }
             }
-
         }
     }
 
@@ -663,6 +662,8 @@ class DetailUserProfileFragment :
                     isOnline = true
                 }
 
+                isLiveStream = true
+
                 if (isWaiting || isLiveStream) {
                     llCallConsult.visibility = VISIBLE
                 } else {
@@ -682,6 +683,7 @@ class DetailUserProfileFragment :
                     ivBallonPeep.visibility = GONE
                     llPeep.visibility = GONE
                 }
+
                 changeStatusIsFavorite(user.isFavorite)
 
                 user.ranking?.let {
