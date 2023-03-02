@@ -6,12 +6,12 @@
     <data>
 
         <variable
-            name="favorite"
-            type="jp.careapp.counseling.android.data.network.FavoriteResponse" />
+            name="history"
+            type="jp.careapp.counseling.android.data.network.HistoryResponse" />
 
         <variable
             name="event"
-            type="jp.careapp.counseling.android.ui.favourite.EventFavoriteAction" />
+            type="jp.careapp.counseling.android.ui.favourite.EventHistoryAction" />
 
     </data>
 
@@ -25,9 +25,9 @@
         app:cardCornerRadius="@dimen/margin_10">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{()->event.onclickItem(favorite)}">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/iv_person"
@@ -130,22 +130,6 @@
                 android:textColor="@color/color_B2A9CC"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/ll_info" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_16"
-                android:background="@drawable/bg_text_release"
-                android:onClick="@{()->event.onClickRelease(favorite)}"
-                android:paddingHorizontal="@dimen/margin_16"
-                android:paddingVertical="@dimen/padding_10"
-                android:text="@string/release"
-                android:textColor="@color/color_978DFF"
-                android:textSize="@dimen/text_size_12"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_person"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/iv_person" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

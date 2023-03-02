@@ -28,6 +28,8 @@ data class HistoryResponse(
     val callStatus: Int = DEFAULT_CALL_STATUS,
     @SerializedName("chat_status")
     val chatStatus: Int = DEFAULT_CALL_STATUS,
+    @SerializedName("status")
+    val status: Int = 0,
     @SerializedName("last_login_date")
     val lastLoginDate: Date?,
     @SerializedName("member_last_login_date")

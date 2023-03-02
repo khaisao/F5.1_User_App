@@ -34,6 +34,7 @@ import jp.careapp.counseling.android.ui.profile.tab_review.TabReviewFragment
 import jp.careapp.counseling.android.ui.profile.tab_user_info_detail.TabDetailUserProfileFragment
 import jp.careapp.counseling.android.ui.profile.update_trouble_sheet.TroubleSheetUpdateFragment
 import jp.careapp.counseling.android.utils.*
+import jp.careapp.counseling.android.utils.extensions.getBustSize
 import jp.careapp.counseling.android.utils.extensions.hasPermissions
 import jp.careapp.counseling.databinding.FragmentDetailUserProfileBinding
 import javax.inject.Inject
@@ -429,7 +430,7 @@ class DetailUserProfileFragment :
     override fun bindingStateView() {
         super.bindingStateView()
         viewModel.userProfileResult.observe(viewLifecycleOwner, handleResultDetailUser)
-        viewModel.statusFavorite.observe(viewLifecycleOwner, handleResuleStatusFavorite)
+        viewModel.statusFavorite.observe(viewLifecycleOwner, handleResultStatusFavorite)
         viewModel.statusRemoveFavorite.observe(viewLifecycleOwner, handleResuleStatusUnFavorite)
         viewModel.isFirstChat.observe(viewLifecycleOwner, handleFirstChat)
         viewModel.blockUserResult.observe(viewLifecycleOwner
@@ -441,14 +442,10 @@ class DetailUserProfileFragment :
 
     private var handleResultUserGallery: Observer<List<GalleryResponse>?> = Observer {
         if (it != null) {
-//            showDataUserProfile(it)
-//            setClickForDialogBlock(it)
-//            consultantResponse = it
             val abc = it+it+it
             galleryAdapter.submitList(abc)
         } else {
             Log.d("aerharhrh", "asasga: null r")
-
 //            consultantResponse = consultantResponseLocal
 //            if (consultantResponseLocal != null) {
 //                showDataUserProfile(consultantResponseLocal!!)
@@ -483,7 +480,7 @@ class DetailUserProfileFragment :
         }
     }
 
-    private var handleResuleStatusFavorite: Observer<Boolean> = Observer {
+    private var handleResultStatusFavorite: Observer<Boolean> = Observer {
         if (it) {
             // when user is first chat and disable
             if (isShowFromUserDisable) {
@@ -505,11 +502,18 @@ class DetailUserProfileFragment :
 
     private fun changeStatusIsFavorite(isFavorite: Boolean) {
         if (isFavorite) {
-            binding.removeFavoriteTv.visibility = VISIBLE
-            binding.addFavoriteTv.visibility = GONE
+            binding.apply {
+                removeFavoriteTv.visibility = VISIBLE
+                addFavoriteTv.visibility = GONE
+                tvMemberCount.text = (tvMemberCount.text.toString().toInt() + 1).toString()
+            }
+
         } else {
-            binding.removeFavoriteTv.visibility = GONE
-            binding.addFavoriteTv.visibility = VISIBLE
+            binding.apply {
+                removeFavoriteTv.visibility = GONE
+                addFavoriteTv.visibility = VISIBLE
+                tvMemberCount.text = (tvMemberCount.text.toString().toInt() - 1).toString()
+            }
         }
     }
 
@@ -622,9 +626,25 @@ class DetailUserProfileFragment :
                     avatarIv.visibility = GONE
                 }
 
-//                tvMemberCount.text= user
+                val bustSize = requireContext().getBustSize(user.bust)
+
+                if (bustSize == "") {
+                    tvBust.visibility = GONE
+                } else {
+                    tvBust.visibility = VISIBLE
+                    tvBust.text = bustSize
+                }
+
+                tvMemberCount.text = user.favoriteMemberCount.toString()
+
+                tvMessageNotice.text = user.messageNotice
+
+//                tvMessageOfTheDay.text = user.messageOfTheDay
+
+                tvAge.text = user.age.toString() + resources.getString(R.string.age_raw)
 
                 userNameTv.text = user.name
+
                 var isWaiting = false
                 var isLiveStream = false
                 var isPrivateLiveStream = false

@@ -133,7 +133,6 @@ class UserProfileFragment :
                 }
             }
         }
-        Log.d("awgawgawg", "initData: $pageSelected")
     }
 
     override fun bindingStateView() {

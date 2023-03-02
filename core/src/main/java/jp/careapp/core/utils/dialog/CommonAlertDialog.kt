@@ -91,7 +91,6 @@ class CommonAlertDialog constructor(context: Context) : Dialog(context) {
         return this
     }
 
-
     fun setDialogTitle(res: Int): CommonAlertDialog {
         tvTitle.text = context.resources.getString(res)
         tvTitle.isVisible = true
