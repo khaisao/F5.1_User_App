@@ -24,6 +24,8 @@ class DetailUserProfileViewModel @ViewModelInject constructor(private val apiInt
     val statusFavorite = MutableLiveData<Boolean>()
     val statusRemoveFavorite = MutableLiveData<Boolean>()
     val isFirstChat = MutableLiveData<Boolean>()
+
+
     private val _newMessage = MutableLiveData<SocketActionSend>()
     val blockUserResult = MutableLiveData<Boolean>()
 

@@ -77,8 +77,8 @@ class ReportFragment : BaseFragment<FragmentUserReportBinding, ReportViewModel>(
                 .setDialogTitleWithString(
                     resources.getString(R.string.thank_for_report)
                 )
-                .setTextConfirm(R.string.ok_en)
-                .setOnOkPressed { dialog ->
+                .setTextOkButton(R.string.ok_en)
+                .setOnOkButtonPressed { dialog ->
                     dialog.dismiss()
                     appNavigation.navigateUp()
                 }

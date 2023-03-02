@@ -8,8 +8,10 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.View.*
+import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -75,6 +77,9 @@ class DetailUserProfileFragment :
     private var isFirstChat: Boolean? = null
     private var previousScreen = ""
     private var position: Int = 0
+    private var up = 0
+    private var down = 0
+    private var timeScroll = 0
 
     // item check favorite when first chat
     private var isShowFromUserDisable: Boolean = false
@@ -102,6 +107,8 @@ class DetailUserProfileFragment :
         loadData()
     }
 
+
+
     override fun initView() {
         super.initView()
         consultantResponseLocal?.let {
@@ -116,16 +123,9 @@ class DetailUserProfileFragment :
                 galleryAdapter = GalleryAdapter(requireContext(),binding.avatarIv.height)
                 binding.rvGallery.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
                 binding.rvGallery.adapter = galleryAdapter
-                Log.d("wgawgawg", "onGlobalLayout: ${binding.avatarIv.height}")
             }
-
         })
 
-    }
-    fun getScreenWidth(): Int {
-        Log.d("rgargaewrh", "getScreenWidth: ${binding.avatarIv.height}")
-
-        return binding.avatarIv.height / 2
     }
 
 
@@ -164,11 +164,30 @@ class DetailUserProfileFragment :
         }
 
         binding.ivArrowDown.setOnClickListener {
+
+            val totalItemCount: Int = binding.rvGallery.adapter?.itemCount ?: 0
+            if (totalItemCount <= 0) return@setOnClickListener
             val layoutManager = binding.rvGallery.layoutManager as LinearLayoutManager
             val currentPosition = layoutManager.findLastVisibleItemPosition()
-            Log.d("egeaweah", "setOnClick: ${galleryAdapter.itemCount}")
-            Log.d("egeaweah", "setOnClick: $currentPosition")
-            binding.rvGallery.smoothScrollToPosition(currentPosition+3)
+            val lastVisibleItemIndex: Int = currentPosition
+            if (lastVisibleItemIndex >= totalItemCount){
+                binding.ivArrowDown.visibility= GONE
+                return@setOnClickListener
+            }
+            binding.rvGallery.smoothScrollToPosition(lastVisibleItemIndex + 3)
+        }
+
+        binding.ivArrowUp.setOnClickListener {
+            if (isFirstVisibleOfRecycleView()) {
+                binding.ivArrowUp.visibility = GONE
+                binding.ivArrowDown.visibility = VISIBLE
+            } else {
+                binding.ivArrowUp.visibility = VISIBLE
+                binding.ivArrowDown.visibility = GONE
+                val layoutManager = binding.rvGallery.layoutManager as LinearLayoutManager
+                val currentPosition = layoutManager.findLastVisibleItemPosition()
+                binding.rvGallery.smoothScrollToPosition(currentPosition - 6)
+            }
         }
 
         binding.llCallConsult.setOnClickListener {
@@ -290,7 +309,7 @@ class DetailUserProfileFragment :
     private fun showDialogRequestBuyPoint() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
-            .setContent(R.string.msg_title_request_buy_point)
+            .setDialogTitle(R.string.msg_title_request_buy_point)
             .setTextPositiveButton(R.string.buy_point)
             .setTextNegativeButton(R.string.cancel_block_alert)
             .setOnPositivePressed { dialog ->
@@ -344,6 +363,20 @@ class DetailUserProfileFragment :
         }.let {
             appNavigation.openToCalling(it)
         }
+    }
+
+    private fun isLastVisibleOfRecycleView(): Boolean {
+        val layoutManager = binding.rvGallery.layoutManager as LinearLayoutManager
+        val pos = layoutManager.findLastCompletelyVisibleItemPosition()
+        val numItems: Int = binding.rvGallery.adapter?.itemCount ?: 0
+        return pos >= numItems - 1
+    }
+
+    private fun isFirstVisibleOfRecycleView(): Boolean {
+        val layoutManager = binding.rvGallery.layoutManager as LinearLayoutManager
+        val pos = layoutManager.findLastCompletelyVisibleItemPosition()
+        val numItems: Int = binding.rvGallery.adapter?.itemCount ?: 0
+        return pos <3
     }
 
     fun doBuyPoint() {
@@ -437,22 +470,28 @@ class DetailUserProfileFragment :
             , handleBlockResult)
         viewModel.userGallery.observe(viewLifecycleOwner, handleResultUserGallery)
 
-
     }
 
     private var handleResultUserGallery: Observer<List<GalleryResponse>?> = Observer {
         if (it != null) {
-            val abc = it+it+it
-            galleryAdapter.submitList(abc)
+            binding.rvGallery.visibility = VISIBLE
+            galleryAdapter.submitList(it)
         } else {
-            Log.d("aerharhrh", "asasga: null r")
-//            consultantResponse = consultantResponseLocal
-//            if (consultantResponseLocal != null) {
-//                showDataUserProfile(consultantResponseLocal!!)
-//                setClickForDialogBlock(consultantResponseLocal!!)
-//            }
+            binding.rvGallery.visibility = GONE
+            binding.avatarIv.layoutParams = ConstraintLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                0
+            )
         }
     }
+
+    private fun handleScroll( sizeOfRecycleView: Int){
+
+    }
+
+
+
+
 
     private var handleResultDetailUser: Observer<ConsultantResponse?> = Observer {
         if (it != null) {
