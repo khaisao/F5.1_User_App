@@ -37,4 +37,6 @@
     <string name="within_week">週間以内</string>
     <string name="within_month">ヶ月以内</string>
     <string name="month_or_more">ヶ月以上</string>
+
+    <string name="title_confirm_withdraw">アプリを退会すると残りポイントは失効されます。\n退会のお手続きを行ってもよろしいですか？</string>
 </resources>

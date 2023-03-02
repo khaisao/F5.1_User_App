@@ -7,11 +7,11 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/color_background_dialog"
-        android:elevation="@dimen/_1sdp"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/color_background_common"
+        android:elevation="1dp"
         tools:ignore="RtlCompat">
 
         <View
@@ -22,28 +22,30 @@
 
         <ImageView
             android:id="@+id/btn_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/padding_12"
-            android:paddingTop="@dimen/margin_8"
-            android:paddingEnd="@dimen/padding_15"
-            android:paddingBottom="@dimen/margin_8"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@null"
+            android:padding="@dimen/padding_16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_status_bar"
+            app:layout_constraintWidth_percent="0.13"
             tools:src="@drawable/ic_arrow_left" />
 
         <TextView
             android:id="@+id/tv_title"
-            style="@style/text_bold_18"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:gravity="center"
-            android:textColor="@color/white"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/barrier"
+            app:layout_constraintStart_toEndOf="@id/btn_left"
             app:layout_constraintTop_toBottomOf="@id/view_status_bar"
-            tools:text="Title" />
+            tools:fontFamily="@font/hiragino_sans_w6"
+            tools:text="@string/nick_name"
+            tools:textColor="@color/color_E5E5E5" />
 
         <TextView
             android:id="@+id/tvRight"
@@ -54,19 +56,46 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_status_bar"
-            tools:text="Lưu" />
+            tools:text="@string/save" />
 
         <ImageView
             android:id="@+id/ivRight"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/height_toolbar_common"
-            android:padding="@dimen/padding_15"
+            android:contentDescription="@null"
+            android:padding="@dimen/padding_16dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_status_bar"
+            app:layout_constraintWidth_percent="0.14"
             tools:ignore="UseAppTint"
-            tools:src="@drawable/ic_close_black_24dp" />
+            tools:src="@drawable/ic_close_black_24dp"
+            tools:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btnRight"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_rm_btn_toolbar"
+            android:fontFamily="@font/hiragino_sans_w6"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/padding_12"
+            android:textColor="@color/color_btn_primary"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/btn_left"
+            app:layout_constraintDimensionRatio="3:2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btn_left"
+            tools:text="@string/save" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="start"
+            app:constraint_referenced_ids="tvRight, ivRight, btnRight" />
 
         <View
             android:id="@+id/line_bottom"
@@ -74,7 +103,7 @@
             android:layout_height="0.5dp"
             android:alpha="0.15"
             android:background="@color/white"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

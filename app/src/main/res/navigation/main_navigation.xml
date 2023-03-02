@@ -455,7 +455,8 @@
     <fragment
         android:id="@+id/withdrawalFragment"
         android:name="jp.careapp.counseling.android.ui.withdrawal.WithdrawalFragment"
-        android:label="WithdrawalFragment">
+        android:label="WithdrawalFragment"
+        tools:layout="@layout/fragment_withdrawal">
 
         <action
             android:id="@+id/action_withdrawalFragment_to_withdrawalFinishFragment"
@@ -463,7 +464,7 @@
     </fragment>
     <fragment
         android:id="@+id/withdrawalStartFragment"
-        android:name="jp.careapp.counseling.android.ui.withdrawal.WithdrawalStartFragment"
+        android:name="jp.careapp.counseling.android.ui.withdrawal.start.WithdrawalStartFragment"
         android:label="WithdrawalStartFragment">
 
         <action
@@ -577,7 +578,7 @@
         app:popExitAnim="@anim/slide_out_left" />
     <fragment
         android:id="@+id/withdrawalFinishFragment"
-        android:name="jp.careapp.counseling.android.ui.withdrawal.WithdrawalFinishFragment"
+        android:name="jp.careapp.counseling.android.ui.withdrawal.finish.WithdrawalFinishFragment"
         android:label="WithdrawalFinishFragment">
         <action
             android:id="@+id/action_withdrawalFragment_to_welcomeActivity"
