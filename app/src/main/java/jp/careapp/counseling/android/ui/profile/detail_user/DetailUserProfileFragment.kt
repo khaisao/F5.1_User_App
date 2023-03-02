@@ -8,17 +8,21 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.View.*
+import android.view.ViewTreeObserver
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
+import jp.careapp.counseling.android.adapter.GalleryAdapter
 import jp.careapp.counseling.android.data.network.ConsultantResponse
+import jp.careapp.counseling.android.data.network.GalleryResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
@@ -82,6 +86,10 @@ class DetailUserProfileFragment :
         }
     }
 
+    private lateinit var  galleryAdapter:  GalleryAdapter
+    
+    
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val bundle = arguments
         if (bundle != null) {
@@ -98,7 +106,27 @@ class DetailUserProfileFragment :
         consultantResponseLocal?.let {
 //            initViewpager(it)
         }
+
+
+        binding.avatarIv.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                binding.avatarIv.viewTreeObserver.removeOnGlobalLayoutListener(this);
+                galleryAdapter = GalleryAdapter(requireContext(),binding.avatarIv.height)
+                binding.rvGallery.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+                binding.rvGallery.adapter = galleryAdapter
+                Log.d("wgawgawg", "onGlobalLayout: ${binding.avatarIv.height}")
+            }
+
+        })
+
     }
+    fun getScreenWidth(): Int {
+        Log.d("rgargaewrh", "getScreenWidth: ${binding.avatarIv.height}")
+
+        return binding.avatarIv.height / 2
+    }
+
 
     override fun setOnClick() {
         super.setOnClick()
@@ -132,6 +160,14 @@ class DetailUserProfileFragment :
             if (!isDoubleClick) {
                 openChatScreen()
             }
+        }
+
+        binding.ivArrowDown.setOnClickListener {
+            val layoutManager = binding.rvGallery.layoutManager as LinearLayoutManager
+            val currentPosition = layoutManager.findLastVisibleItemPosition()
+            Log.d("egeaweah", "setOnClick: ${galleryAdapter.itemCount}")
+            Log.d("egeaweah", "setOnClick: $currentPosition")
+            binding.rvGallery.smoothScrollToPosition(currentPosition+3)
         }
 
         binding.llCallConsult.setOnClickListener {
@@ -392,16 +428,36 @@ class DetailUserProfileFragment :
 
     override fun bindingStateView() {
         super.bindingStateView()
-        viewModel.userProfileResult.observe(viewLifecycleOwner, handleResuleDetailUser)
+        viewModel.userProfileResult.observe(viewLifecycleOwner, handleResultDetailUser)
         viewModel.statusFavorite.observe(viewLifecycleOwner, handleResuleStatusFavorite)
         viewModel.statusRemoveFavorite.observe(viewLifecycleOwner, handleResuleStatusUnFavorite)
         viewModel.isFirstChat.observe(viewLifecycleOwner, handleFirstChat)
         viewModel.blockUserResult.observe(viewLifecycleOwner
             , handleBlockResult)
+        viewModel.userGallery.observe(viewLifecycleOwner, handleResultUserGallery)
+
 
     }
 
-    private var handleResuleDetailUser: Observer<ConsultantResponse?> = Observer {
+    private var handleResultUserGallery: Observer<List<GalleryResponse>?> = Observer {
+        if (it != null) {
+//            showDataUserProfile(it)
+//            setClickForDialogBlock(it)
+//            consultantResponse = it
+            val abc = it+it+it
+            galleryAdapter.submitList(abc)
+        } else {
+            Log.d("aerharhrh", "asasga: null r")
+
+//            consultantResponse = consultantResponseLocal
+//            if (consultantResponseLocal != null) {
+//                showDataUserProfile(consultantResponseLocal!!)
+//                setClickForDialogBlock(consultantResponseLocal!!)
+//            }
+        }
+    }
+
+    private var handleResultDetailUser: Observer<ConsultantResponse?> = Observer {
         if (it != null) {
             showDataUserProfile(it)
             setClickForDialogBlock(it)
@@ -568,14 +624,6 @@ class DetailUserProfileFragment :
 
 //                tvMemberCount.text= user
 
-                if (user.presenceStatus == ACCEPTING) {
-                    presenceStatusTv.text = getString(R.string.presence_status_live_streaming)
-                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_waiting)
-                } else {
-                    presenceStatusTv.text = getString(R.string.presence_status_waiting)
-                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
-                    presenceStatusTv.setTextColor(resources.getColor(R.color.purple_AEA2D1))
-                }
                 userNameTv.text = user.name
                 var isWaiting = false
                 var isLiveStream = false
@@ -617,7 +665,7 @@ class DetailUserProfileFragment :
                 changeStatusIsFavorite(user.isFavorite)
 
                 user.ranking?.let {
-                    imgRanking.visibility = if (it.ranking in 1..30) VISIBLE else GONE
+                    imgRanking.visibility = if (it.ranking in 1..30) VISIBLE else INVISIBLE
                     when (it.interval) {
                         PREVIOUS -> {
                             when (it.ranking) {

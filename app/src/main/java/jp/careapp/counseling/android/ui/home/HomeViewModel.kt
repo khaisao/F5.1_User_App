@@ -101,8 +101,6 @@ class HomeViewModel @ViewModelInject constructor(
         val params: MutableMap<String, Any> = HashMap()
         params[BUNDLE_KEY.PARAM_SORT] = BUNDLE_KEY.PRESENCE_STATUS
         params[BUNDLE_KEY.PARAM_ODER] = BUNDLE_KEY.DESC
-        //test
-        params[BUNDLE_KEY.PRESENCE_STATUS] = 1
         params[BUNDLE_KEY.PARAM_SORT_2] = BUNDLE_KEY.REVIEW_TOTAL_SCORE
         params[BUNDLE_KEY.PARAM_ODER_2] = BUNDLE_KEY.DESC
         params[BUNDLE_KEY.LIMIT] = LIMIT_NUMBER

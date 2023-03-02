@@ -87,6 +87,11 @@ interface ApiInterface {
         @Path("id") code: String
     ): ApiObjectResponse<ConsultantResponse>
 
+    @GET("api/performers/{id}/gallery-images")
+    suspend fun getUserGallery(
+        @Path("id") code: String
+    ): ApiObjectResponse<List<GalleryResponse>>
+
     @PATCH("api/member")
     suspend fun updateNotification(
         @Body() updateNotificationParams: UpdateNotificationParams

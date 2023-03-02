@@ -1,6 +1,8 @@
 package jp.careapp.counseling.android.ui.profile.detail_user
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,14 +10,17 @@ import androidx.lifecycle.viewModelScope
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.base.NetworkException
 import jp.careapp.counseling.android.data.network.ConsultantResponse
+import jp.careapp.counseling.android.data.network.GalleryResponse
 import jp.careapp.counseling.android.data.network.socket.SocketActionSend
 import jp.careapp.counseling.android.network.ApiInterface
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class DetailUserProfileViewModel @ViewModelInject constructor(private val apiInterface: ApiInterface) :
     BaseViewModel() {
     val TAG = "DetailUserProfileViewModel"
     val userProfileResult = MutableLiveData<ConsultantResponse?>()
+    val userGallery = MutableLiveData<List<GalleryResponse>?>()
     val statusFavorite = MutableLiveData<Boolean>()
     val statusRemoveFavorite = MutableLiveData<Boolean>()
     val isFirstChat = MutableLiveData<Boolean>()
@@ -28,6 +33,7 @@ class DetailUserProfileViewModel @ViewModelInject constructor(private val apiInt
             isLoading.value = true
             try {
                 val response = apiInterface.getUserProfileDetail(code)
+                val galleryResponse = apiInterface.getUserGallery("256325")
                 response.let {
                     if (it.errors.isEmpty()) {
                         userProfileResult.postValue(it.dataResponse)
@@ -35,9 +41,17 @@ class DetailUserProfileViewModel @ViewModelInject constructor(private val apiInt
                         userProfileResult.postValue(null)
                     }
                 }
+                galleryResponse.let {
+                    if (it.errors.isEmpty()) {
+                        userGallery.postValue(it.dataResponse)
+                    } else {
+                        userGallery.postValue(null)
+                    }
+                }
                 isLoading.value = false
             } catch (throwable: Throwable) {
                 userProfileResult.postValue(null)
+                userGallery.postValue(null)
                 isLoading.value = false
             }
         }

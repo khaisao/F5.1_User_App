@@ -74,40 +74,51 @@ fun Context.getDurationBreakdown(time: Long): String {
     val sb = StringBuilder(64)
 
     if (days > 30) {
-        val month = days / 30
-        sb.append(month)
+        sb.append(1)
+        sb.append(this.resources.getString(R.string.month_or_more))
+        return sb.toString()
+    }
+
+    if (days in 8..30) {
+        sb.append(1)
         sb.append(this.resources.getString(R.string.within_month))
         return sb.toString()
     }
-
-    if (days > 7) {
-        val week = days / 7
-        sb.append(week)
+    if (days in 4..7) {
+        sb.append(1)
         sb.append(this.resources.getString(R.string.within_week))
         return sb.toString()
     }
-    if (days != zero) {
-        sb.append(days)
+    if (days in 2..3) {
+        sb.append(3)
         sb.append(this.resources.getString(R.string.within_days))
-
         return sb.toString()
-
     }
-    if (hours != zero) {
-        sb.append(hours)
+    if (hours in 2..24) {
+        sb.append(24)
         sb.append(this.resources.getString(R.string.within_hour))
-
         return sb.toString()
 
     }
-    if (minutes != zero) {
-        sb.append(minutes)
+    if (minutes in 31..59) {
+        sb.append(1)
+        sb.append(this.resources.getString(R.string.within_hour))
+        return sb.toString()
+    }
+
+    if(minutes <= 5){
+        sb.append(5)
         sb.append(this.resources.getString(R.string.within_minutes))
-
         return sb.toString()
-    } else {
-        return "Now"
     }
+
+    if(minutes <= 30){
+        sb.append(30)
+        sb.append(this.resources.getString(R.string.within_minutes))
+        return sb.toString()
+    }
+    return ""
+
 }
 
 

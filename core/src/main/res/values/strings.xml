@@ -36,4 +36,5 @@
     <string name="within_days">日以内</string>
     <string name="within_week">週間以内</string>
     <string name="within_month">ヶ月以内</string>
+    <string name="month_or_more">ヶ月以上</string>
 </resources>
