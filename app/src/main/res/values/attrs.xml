@@ -4,10 +4,14 @@
         <attr name="src_left" format="reference" />
         <attr name="trans_status_bar" format="boolean" />
         <attr name="src_right" format="string|reference" />
+        <attr name="src_btn_right" format="string|reference" />
         <attr name="iv_right" format="reference" />
         <attr name="rotation_src_left" format="boolean" />
         <attr name="string_title" format="string|reference" />
         <attr name="hide_line_bottom" format="boolean" />
+        <attr name="font_title" format="integer|reference" />
+        <attr name="color_title" format="integer|reference" />
+        <attr name="color_tv_right" format="integer|reference" />
     </declare-styleable>
 
     <declare-styleable name="DialogFragmentNavigator">

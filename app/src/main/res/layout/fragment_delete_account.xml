@@ -61,7 +61,7 @@
                         android:layout_height="@dimen/_159sdp"
                         android:layout_marginHorizontal="@dimen/margin_16"
                         android:layout_marginTop="@dimen/text_size_32"
-                        android:background="@drawable/bg_strock_8dp_978dff"
+                        android:background="@drawable/bg_edt_primary"
                         android:gravity="top"
                         android:hint="@string/hint_reason_delete_account"
                         android:padding="@dimen/margin_16"

@@ -2,33 +2,43 @@ package jp.careapp.counseling.android.utils.customView
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Typeface
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
-import android.view.View.OnClickListener
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.FontRes
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import jp.careapp.core.utils.DeviceUtil
 import jp.careapp.counseling.R
 
 class ToolBarCommon : Toolbar {
+    lateinit var btnRight: TextView
     lateinit var btnLeft: ImageView
     lateinit var ivRight: ImageView
-    lateinit var btnRight: TextView
+    lateinit var tvRight: TextView
     lateinit var tvTitle: TextView
     lateinit var viewStatusBar: View
     lateinit var lineBottom: View
     private var srcLeft = -1
     private var srcButtonRight = -1
+    private var srcBtnRight: String? = ""
     private var srcRight: String? = ""
     private var stringTitle: String? = ""
+
     private var isTransStatusBar = false
     private var isRotationSrcLeft = false
     private var hiddenLineBottom = false
     private var onToolBarClickListener: OnToolBarClickListener? = null
+
+    private var fontTitle = 0
+    private var colorTitle = 0
+    private var colorTvRight = 0
 
     constructor(context: Context) : super(context) {
         init()
@@ -43,7 +53,11 @@ class ToolBarCommon : Toolbar {
         srcLeft = a.getResourceId(R.styleable.ToolBarCommon_src_left, -1)
         srcButtonRight = a.getResourceId(R.styleable.ToolBarCommon_iv_right, -1)
         srcRight = a.getString(R.styleable.ToolBarCommon_src_right)
+        srcBtnRight = a.getString(R.styleable.ToolBarCommon_src_btn_right)
         stringTitle = a.getString(R.styleable.ToolBarCommon_string_title)
+        fontTitle = a.getResourceId(R.styleable.ToolBarCommon_font_title, R.font.hiragino_sans_w6)
+        colorTitle = a.getResourceId(R.styleable.ToolBarCommon_color_title, R.color.color_E5E5E5)
+        colorTvRight = a.getResourceId(R.styleable.ToolBarCommon_color_tv_right, R.color.white)
         isTransStatusBar = a.getBoolean(R.styleable.ToolBarCommon_trans_status_bar, false)
         isRotationSrcLeft = a.getBoolean(R.styleable.ToolBarCommon_rotation_src_left, false)
         hiddenLineBottom = a.getBoolean(R.styleable.ToolBarCommon_hide_line_bottom, false)
@@ -61,8 +75,9 @@ class ToolBarCommon : Toolbar {
     private fun init() {
         setContentInsetsAbsolute(0, 0)
         View.inflate(context, R.layout.tool_bar_common, this)
+        btnRight = findViewById(R.id.btnRight)
         btnLeft = findViewById(R.id.btn_left)
-        btnRight = findViewById(R.id.tvRight)
+        tvRight = findViewById(R.id.tvRight)
         ivRight = findViewById(R.id.ivRight)
         tvTitle = findViewById(R.id.tv_title)
         viewStatusBar = findViewById(R.id.view_status_bar)
@@ -79,25 +94,18 @@ class ToolBarCommon : Toolbar {
         if (hiddenLineBottom) {
             lineBottom.visibility = View.GONE
         }
-        btnLeft.setOnClickListener(
-            OnClickListener {
-                if (onToolBarClickListener != null) {
-                    onToolBarClickListener!!.onClickLeft()
-                }
-            }
-        )
-        btnRight.setOnClickListener(
-            OnClickListener {
-                if (onToolBarClickListener != null) {
-                    onToolBarClickListener!!.onClickRight()
-                }
-            }
-        )
+        btnLeft.setOnClickListener {
+            onToolBarClickListener?.onClickLeft()
+        }
+        tvRight.setOnClickListener {
+            onToolBarClickListener?.onClickRight()
+        }
+        btnRight.setOnClickListener {
+            onToolBarClickListener?.onClickRight()
+        }
 
         ivRight.setOnClickListener {
-            if (onToolBarClickListener != null) {
-                onToolBarClickListener!!.onClickRight()
-            }
+            onToolBarClickListener?.onClickRight()
         }
 
         if (isRotationSrcLeft) {
@@ -105,8 +113,12 @@ class ToolBarCommon : Toolbar {
         }
         setSrcLeft(srcLeft)
         setDrawableRight(srcButtonRight)
-        setSrcRight(srcRight)
+        setSrcForTvRight(srcRight)
         setTvTitle(stringTitle)
+        setSrcForBtnRight(srcBtnRight)
+        setFontTitle(fontTitle)
+        setColorTitle(colorTitle)
+        setColorTvRight(colorTvRight)
     }
 
     fun setRotationSrcLeft(rotation: Float) {
@@ -131,7 +143,16 @@ class ToolBarCommon : Toolbar {
         }
     }
 
-    fun setSrcRight(src: String?) {
+    fun setSrcForTvRight(src: String?) {
+        if (src != null) {
+            tvRight.visibility = View.VISIBLE
+            tvRight.text = src
+        } else {
+            tvRight.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun setSrcForBtnRight(src: String?) {
         if (src != null) {
             btnRight.visibility = View.VISIBLE
             btnRight.text = src
@@ -161,7 +182,7 @@ class ToolBarCommon : Toolbar {
     }
 
     fun setRightEnable(enable: Boolean) {
-        btnRight.isEnabled = enable
+        tvRight.isEnabled = enable
     }
 
     fun setImageRightEnable(enable: Boolean) {
@@ -178,5 +199,21 @@ class ToolBarCommon : Toolbar {
 
         open fun onClickRight() {
         }
+    }
+
+    fun enableBtnRight(isEnabled: Boolean) {
+        btnRight.isEnabled = isEnabled
+    }
+
+    private fun setFontTitle(@FontRes resource: Int) {
+        tvTitle.typeface = ResourcesCompat.getFont(context!!, resource)
+    }
+
+    private fun setColorTitle(@ColorRes color: Int) {
+        tvTitle.setTextColor(resources.getColor(color))
+    }
+
+    private fun setColorTvRight(@ColorRes color: Int) {
+        tvRight.setTextColor(resources.getColor(color))
     }
 }
