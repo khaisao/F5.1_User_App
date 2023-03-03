@@ -160,35 +160,45 @@
                         android:adjustViewBounds="true"
                         android:src="@drawable/ic_rank_monthly_1" />
 
-
                 </LinearLayout>
+
+                <ImageView
+                    android:layout_marginHorizontal="@dimen/margin_4dp"
+                    android:id="@+id/iv_bg_message_notice"
+                    app:layout_constraintTop_toBottomOf="@id/ll_ranking"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/bg_message_notice"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:id="@+id/tv_message_notice"
                     style="@style/text_bold_14"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_4dp"
-                    android:background="@drawable/bg_mesage_notice"
+                    android:layout_marginHorizontal="@dimen/margin_40dp"
                     android:ellipsize="end"
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/padding_40"
-                    android:text="Message noẻticeMessagasgasgasge asgasgnoticeMessage notice"
+                    android:text="asgawg"
                     android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ll_ranking" />
+                    app:layout_constraintBottom_toBottomOf="@id/iv_bg_message_notice"
+                    app:layout_constraintTop_toTopOf="@id/iv_bg_message_notice" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_info"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginHorizontal="@dimen/margin_14"
+                    android:layout_marginHorizontal="@dimen/margin_4dp"
                     android:background="@drawable/bg_message_of_the_day"
                     android:minHeight="361dp"
                     android:paddingHorizontal="@dimen/margin_28"
                     android:paddingVertical="@dimen/margin_28"
-                    app:layout_constraintTop_toBottomOf="@id/tv_message_notice">
+                    app:layout_constraintTop_toBottomOf="@id/iv_bg_message_notice">
 
                     <TextView
                         android:id="@+id/user_name_tv"

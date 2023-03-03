@@ -237,9 +237,9 @@ class DetailUserProfileFragment :
             }
         }
     }
-
+    //TODO: change to getPoint < 1000
     private fun checkPoint() {
-        if ((rxPreferences.getPoint() < 1000)) {
+        if (rxPreferences.getPoint() >= 1000) {
             showDialogRequestBuyPoint()
         } else {
             showDialogConfirmCall()
@@ -303,9 +303,9 @@ class DetailUserProfileFragment :
     private fun showDialogConfirmCall() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
-            .setContent(R.string.msg_confirm_call)
-            .setTextPositiveButton(R.string.confirm_call)
-            .setTextNegativeButton(R.string.send_free_mess)
+            .setContent(R.string.content_confirm_call)
+            .setTextPositiveButton(R.string.confirm_block_alert)
+            .setTextNegativeButton(R.string.cancel_block_alert)
             .setOnPositivePressed {
                 it.dismiss()
                 if (callingViewModel.isCalling()) {
@@ -659,8 +659,6 @@ class DetailUserProfileFragment :
                 } else {
                     isOnline = true
                 }
-
-                isWaiting = true
 
                 if (isLiveStream) {
                     tvLiveStreamCount.text =
