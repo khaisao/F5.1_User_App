@@ -3,6 +3,13 @@ package jp.careapp.core.utils
 import android.app.Activity
 import android.content.Context
 import android.text.Editable
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.*
 import android.view.animation.AnimationUtils
 import android.widget.EditText
@@ -11,6 +18,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.AnimRes
 import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -133,4 +141,29 @@ fun View.setMargins(start: Int, top: Int, end: Int, bottom: Int) {
 
 fun Context.convertSourceToPixel(dimenSource: Int): Int {
     return this.resources.getDimension(dimenSource).toInt()
+}
+
+fun TextView.setUnderlineAndClick(
+    resourceString: Int,
+    resourceColor: Int,
+    start: Int,
+    end: Int,
+    onClick: () -> Unit
+) {
+    val span = SpannableString(context.getString(resourceString))
+    span.setSpan(object : ClickableSpan() {
+        override fun onClick(p0: View) {
+            onClick.invoke()
+        }
+    }, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    span.setSpan(UnderlineSpan(), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    span.setSpan(
+        ForegroundColorSpan(ContextCompat.getColor(context, resourceColor)),
+        start,
+        end,
+        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+    )
+
+    this.text = span
+    this.movementMethod = LinkMovementMethod.getInstance()
 }

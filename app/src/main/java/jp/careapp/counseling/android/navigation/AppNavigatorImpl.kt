@@ -38,7 +38,7 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     }
 
     override fun openLoginEmailScreen(bundle: Bundle?) {
-        openScreen(R.id.action_inputEmailFragment_self,bundle)
+        openScreen(R.id.action_inputEmailFragment_self, bundle)
     }
 
     override fun openSplashToStartScreen(bundle: Bundle?) {
@@ -484,7 +484,12 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     override fun openUserDetailMsgToRMUserDetailReport(bundle: Bundle?) {
         openScreen(R.id.action_userDetailMsgFragment_to_RMUserDetailReportFragment, bundle)
     }
+
     override fun openUserDetailMessageToRMTop(bundle: Bundle?) {
         openScreen(R.id.action_UserDetailMessageFragment_to_RMTopFragment, bundle)
+    }
+
+    override fun openWithdrawalToSettingNotification(bundle: Bundle?) {
+        openScreen(R.id.action_withdrawalFragment_to_fragmentNotification, bundle)
     }
 }

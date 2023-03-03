@@ -618,8 +618,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                             )
                                 .showDialog()
                                 .setDialogTitle(R.string.error_maintenance)
-                                .setTextPositiveButton(R.string.confirm_block_alert)
-                                .setOnPositivePressed {
+                                .setTextOkButton(R.string.confirm_block_alert)
+                                .setOnOkButtonPressed {
                                     it.dismiss()
                                     networkEvent.publish(NetworkState.INITIALIZE)
                                 }
@@ -638,8 +638,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                     )
                                         .showDialog()
                                         .setDialogTitle(R.string.wrong_email_address_or_password)
-                                        .setTextPositiveButton(R.string.text_OK)
-                                        .setOnPositivePressed {
+                                        .setTextOkButton(R.string.text_OK)
+                                        .setOnOkButtonPressed {
                                             it.dismiss()
                                         }
                                     appNavigation.openActionToLogin()
@@ -654,8 +654,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                             )
                                 .showDialog()
                                 .setDialogTitle(jp.careapp.core.R.string.no_internet)
-                                .setTextPositiveButton(jp.careapp.core.R.string.ok)
-                                .setOnPositivePressed {
+                                .setTextOkButton(R.string.ok)
+                                .setOnOkButtonPressed {
                                     it.dismiss()
                                     if (appNavigation.currentFragmentId() == R.id.callingFragment) {
                                         appNavigation.navigateUp()
@@ -670,10 +670,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                             )
                                 .showDialog()
                                 .setDialogTitle(R.string.status_400)
-                                .setTextPositiveButton(R.string.confirm_block_alert)
-                                .setOnPositivePressed {
-                                    appNavigation.navigateUp()
+                                .setTextOkButton(R.string.confirm_block_alert)
+                                .setOnOkButtonPressed {
                                     it.dismiss()
+                                    appNavigation.navigateUp()
                                 }
                             networkEvent.publish(NetworkState.INITIALIZE)
                         }
@@ -684,8 +684,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                             )
                                 .showDialog()
                                 .setDialogTitle(R.string.time_out)
-                                .setTextPositiveButton(R.string.confirm_block_alert)
-                                .setOnPositivePressed {
+                                .setTextOkButton(R.string.confirm_block_alert)
+                                .setOnOkButtonPressed {
                                     it.dismiss()
                                 }
                             networkEvent.publish(NetworkState.INITIALIZE)
@@ -697,8 +697,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                             )
                                 .showDialog()
                                 .setDialogTitle(R.string.general_error)
-                                .setTextPositiveButton(R.string.confirm_block_alert)
-                                .setOnPositivePressed {
+                                .setTextOkButton(R.string.confirm_block_alert)
+                                .setOnOkButtonPressed {
                                     it.dismiss()
                                 }
                             networkEvent.publish(NetworkState.INITIALIZE)
@@ -714,8 +714,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                     )
                                         .showDialog()
                                         .setDialogTitleWithString(status.exception.errors.joinToString())
-                                        .setTextPositiveButton(R.string.confirm_block_alert)
-                                        .setOnPositivePressed {
+                                        .setTextOkButton(R.string.confirm_block_alert)
+                                        .setOnOkButtonPressed {
                                             it.dismiss()
                                         }
                                 }
@@ -743,8 +743,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                 CommonAlertDialog.getInstanceCommonAlertdialog(this@MainActivity)
                                     .showDialog()
                                     .setDialogTitleWithString(dataError)
-                                    .setTextPositiveButton(R.string.confirm_block_alert)
-                                    .setOnPositivePressed {
+                                    .setTextOkButton(R.string.confirm_block_alert)
+                                    .setOnOkButtonPressed {
                                         it.dismiss()
                                     }
                             }
