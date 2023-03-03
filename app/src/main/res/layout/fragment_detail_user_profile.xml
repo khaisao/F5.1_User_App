@@ -64,58 +64,104 @@
 
                 <ImageView
                     android:id="@+id/iv_arrow_up"
-                    android:rotation="180"
-                    android:visibility="invisible"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/padding_10"
+                    android:rotation="180"
                     android:src="@drawable/ic_arrow_down"
-                    app:layout_constraintTop_toTopOf="@id/rv_gallery"
+                    android:visibility="invisible"
                     app:layout_constraintEnd_toEndOf="@id/rv_gallery"
-                    app:layout_constraintStart_toStartOf="@id/rv_gallery" />
+                    app:layout_constraintStart_toStartOf="@id/rv_gallery"
+                    app:layout_constraintTop_toTopOf="@id/rv_gallery" />
 
-                <ImageView
-                    android:id="@+id/img_ranking"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dimen_33"
-                    android:layout_marginStart="@dimen/margin_12"
-                    android:layout_marginTop="@dimen/margin_8"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_rank_daily_2"
-                    app:layout_constraintStart_toEndOf="@id/stage_iv"
-                    app:layout_constraintTop_toBottomOf="@id/avatar_iv" />
-
-                <TextView
-                    android:id="@+id/presence_status_tv"
-                    style="@style/text_bold_10"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/ll_ranking"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_12"
-                    android:background="@drawable/bg_performer_status_live_streaming"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/margin_6dp"
-                    android:paddingTop="@dimen/margin_3"
-                    android:paddingEnd="@dimen/margin_6dp"
-                    android:paddingBottom="@dimen/margin_3"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="@id/img_ranking"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/img_ranking"
-                    tools:text="@string/presence_status_live_streaming" />
+                    android:gravity="center_vertical"
+                    app:layout_constraintTop_toBottomOf="@id/gl_avatar_bottom">
 
-                <ImageView
-                    android:id="@+id/stage_iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/margin_30"
-                    android:layout_alignStart="@+id/avatar_iv"
-                    android:layout_alignEnd="@+id/avatar_iv"
-                    android:layout_alignBottom="@+id/avatar_iv"
-                    android:layout_marginStart="8dp"
-                    android:minWidth="70dp"
-                    android:scaleType="fitCenter"
-                    app:layout_constraintBottom_toBottomOf="@id/presence_status_tv"
-                    app:layout_constraintStart_toEndOf="@id/presence_status_tv"
-                    app:layout_constraintTop_toTopOf="@id/presence_status_tv" />
+                    <ImageView
+                        android:id="@+id/iv_state_beginner"
+                        android:layout_width="@dimen/margin_15"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="@dimen/margin_9"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_state_beginner"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@id/presence_status_tv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/presence_status_tv" />
+
+                    <TextView
+                        android:id="@+id/presence_status_tv"
+                        style="@style/text_bold_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="@dimen/margin_7"
+                        android:layout_marginStart="@dimen/margin_4dp"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/margin_6dp"
+                        android:paddingEnd="@dimen/margin_6dp"
+                        android:textColor="@color/white"
+                        tools:text="@string/presence_status_live_streaming" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_status_viewer_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="@dimen/margin_7"
+                        android:layout_marginStart="@dimen/margin_4dp"
+                        android:background="@drawable/bg_performer_live_stream_count"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/margin_6dp"
+                        android:paddingEnd="@dimen/margin_6dp"
+                        android:visibility="visible">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/ic_user" />
+
+                        <TextView
+                            style="@style/text_bold_10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_3"
+                            android:text="@string/watch"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_live_stream_count"
+                            style="@style/text_bold_10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_4dp"
+                            android:text="220"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:id="@+id/iv_state"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/margin_30"
+                        android:layout_marginStart="@dimen/margin_4dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_state_bronze" />
+
+                    <ImageView
+                        android:id="@+id/img_ranking"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_36"
+                        android:layout_marginStart="@dimen/margin_4dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_rank_monthly_1" />
+
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_message_notice"
@@ -131,17 +177,17 @@
                     android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/presence_status_tv" />
+                    app:layout_constraintTop_toBottomOf="@id/ll_ranking" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_info"
                     android:layout_width="match_parent"
-                    android:minHeight="361dp"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="@dimen/margin_14"
-                    android:paddingVertical="@dimen/margin_28"
                     android:background="@drawable/bg_message_of_the_day"
+                    android:minHeight="361dp"
                     android:paddingHorizontal="@dimen/margin_28"
+                    android:paddingVertical="@dimen/margin_28"
                     app:layout_constraintTop_toBottomOf="@id/tv_message_notice">
 
                     <TextView
@@ -152,8 +198,7 @@
                         android:shadowRadius="18"
                         android:textColor="@color/white"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_bust"
@@ -278,35 +323,67 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="bottom"
-            android:paddingHorizontal="8dp"
             android:paddingBottom="@dimen/margin_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-
-            <LinearLayout
-                android:id="@+id/send_consult_ll"
+            <com.lihang.ShadowLayout
+                android:id="@+id/sl_message"
                 android:layout_width="0dp"
-                android:layout_height="52dp"
-                android:layout_marginHorizontal="@dimen/margin_4dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_13"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:visibility="visible">
+                app:hl_cornerRadius="@dimen/margin_22"
+                app:hl_shadowColor="@color/color_dialog_border_shadow"
+                app:hl_shadowLimit="@dimen/margin_6">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/btn_message_detail" />
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/color_2D0B5B"
+                    app:cardCornerRadius="@dimen/margin_22"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="1dp">
 
-            </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/send_consult_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginHorizontal="@dimen/margin_4dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="@dimen/margin_6"
+                            android:src="@drawable/ic_call" />
+
+                        <TextView
+                            style="@style/text_bold_16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:shadowColor="@color/color_9A33FF"
+                            android:shadowRadius="18"
+                            android:text="@string/tab_chat"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </com.lihang.ShadowLayout>
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ll_call_consult"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_4dp"
+                android:layout_marginBottom="@dimen/margin_6"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -325,6 +402,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="52dp"
+                    android:layout_marginHorizontal="@dimen/margin_6"
                     android:background="@drawable/bg_gradient_common"
                     app:layout_constraintEnd_toEndOf="@id/iv_ballon_live"
                     app:layout_constraintStart_toStartOf="@id/iv_ballon_live"
@@ -373,10 +451,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_4dp"
+                android:layout_marginBottom="@dimen/margin_6"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <ImageView
                     android:id="@+id/iv_ballon_peep"
@@ -391,6 +470,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
+                    android:layout_marginHorizontal="@dimen/margin_6"
                     android:background="@drawable/bg_gradient_orangered"
                     app:layout_constraintEnd_toEndOf="@id/iv_ballon_peep"
                     app:layout_constraintStart_toStartOf="@id/iv_ballon_peep"
@@ -434,21 +514,57 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_private_delivery"
+            <com.lihang.ShadowLayout
+                android:id="@+id/sl_private_delivery"
                 android:layout_width="0dp"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_13"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:visibility="visible"
+                app:hl_cornerRadius="@dimen/margin_22"
+                app:hl_shadowColor="@color/color_8096631F"
+                app:hl_shadowLimit="@dimen/margin_6">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/btn_request_delivery" />
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/color_3E2222"
+                    app:cardCornerRadius="@dimen/margin_22"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="1dp">
 
-            </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/ll_private_delivery"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginHorizontal="@dimen/margin_4dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="@dimen/margin_6"
+                            android:src="@drawable/ic_call" />
+
+                        <TextView
+                            style="@style/text_bold_16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:shadowColor="@color/color_8096631F"
+                            android:shadowRadius="18"
+                            android:text="@string/delivery_request"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </com.lihang.ShadowLayout>
 
         </LinearLayout>
 

@@ -39,12 +39,14 @@
     <color name="color_FC00FF">#FC00FF</color><!--rgb 252 0 255-->
     <color name="color_2D0B5B">#2D0B5B</color>
     <color name="color_3D2123">#3D2123</color>
+    <color name="color_3E2222">#3E2222</color>
+    <color name="color_8096631F">#8096631F</color>
 
     <color name="color_FFFF00">#FFFF00 </color><!--rgb 255 255 0-->
     <color name="color_background_modal">#A6000000</color><!--rgba 0 0 0 0.65-->
     <color name="color_background_dialog">#0D002C</color><!--rgb 13 0 44 -->
     <color name="color_dialog_border">#9D52FF</color><!--rgba 157 82 255 -->
-    <color name="color_dialog_border_shadow">#809D52FF</color><!--rgba 157 82 255 -->
+    <color name="color_dialog_border_shadow">#809D52FF</color><!--rgba 157 82 255 50-->
     <color name="color_B47AFF">#B47AFF</color>
 
     <!--    Top screen colors-->

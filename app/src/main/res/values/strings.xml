@@ -231,6 +231,7 @@
     <string name="genres_32">その他</string>
     <string name="live_viewing">ライブ視聴</string>
     <string name="delivery_request">配信リクエスト</string>
+    <string name="watch">視聴中</string>
 
 
     <!--    notification-->

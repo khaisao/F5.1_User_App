@@ -592,24 +592,27 @@ class DetailUserProfileFragment :
                     presenceStatusTv.text =
                         resources.getString(R.string.presence_status_offline)
                 }
+
+                if (user.stage != 1) {
+                    ivState.visibility = GONE
+                    ivStateBeginner.visibility = VISIBLE
+                } else {
+                    ivState.visibility = VISIBLE
+                    ivStateBeginner.visibility = GONE
+                }
                 when (user.stage) {
+                    BRONZE -> {
+                        ivState.setImageResource(R.drawable.ic_state_bronze)
+                    }
+
                     SILVER -> {
-                        stageIv.setImageResource(R.drawable.ic_silver_home)
+                        ivState.setImageResource(R.drawable.ic_state_silver)
                     }
                     GOLD -> {
-                        stageIv.setImageResource(R.drawable.ic_gold_home)
-                    }
-                    PLATINUM -> {
-                        stageIv.setImageResource(R.drawable.ic_platinum_home)
-                    }
-                    BRONZE -> {
-                        stageIv.setImageResource(R.drawable.ic_bronze_home)
-                    }
-                    DIAMOND -> {
-                        stageIv.setImageResource(R.drawable.ic_diamond_home)
+                        ivState.setImageResource(R.drawable.ic_state_gold)
                     }
                     else -> {
-                        stageIv.setImageResource(R.drawable.ic_basic_home)
+                        ivState.setImageResource(R.drawable.ic_state_bronze)
                     }
                 }
 
@@ -657,27 +660,37 @@ class DetailUserProfileFragment :
                     isOnline = true
                 }
 
-                isLiveStream = true
+                isWaiting = true
+
+                if (isLiveStream) {
+                    tvLiveStreamCount.text =
+                        (user.loginMemberCount + user.peepingMemberCount).toString()
+                    llStatusViewerCount.visibility = VISIBLE
+                } else {
+                    llStatusViewerCount.visibility = GONE
+                }
+
 
                 if (isWaiting || isLiveStream) {
                     llCallConsult.visibility = VISIBLE
                 } else {
                     llCallConsult.visibility = GONE
                 }
-                if (isWaiting) {
-                    ivBallonLive.visibility = VISIBLE
-                } else {
-                    ivBallonLive.visibility = GONE
+                if(isLiveStream){
+                    llPeep.visibility=VISIBLE
                 }
-                if (isLiveStream) {
-                    llPrivateDelivery.visibility = VISIBLE
-                    ivBallonPeep.visibility = VISIBLE
-                    llPeep.visibility = VISIBLE
-                } else {
-                    llPrivateDelivery.visibility = GONE
-                    ivBallonPeep.visibility = GONE
-                    llPeep.visibility = GONE
+                else{
+                    llPeep.visibility=GONE
                 }
+                if(isPrivateLiveStream){
+                    llPrivateDelivery.visibility= VISIBLE
+                }
+                else{
+                    llPrivateDelivery.visibility= GONE
+                }
+
+
+
 
                 changeStatusIsFavorite(user.isFavorite)
 
@@ -793,11 +806,10 @@ class DetailUserProfileFragment :
     }
 
     companion object {
-        const val BASIC = 1
-        const val SILVER = 2
-        const val GOLD = 3
-        const val PLATINUM = 4
-        const val BRONZE = 5
+        const val BEGINNER = 1
+        const val BRONZE = 2
+        const val SILVER = 3
+        const val GOLD = 4
         const val DIAMOND = 6
         const val ACCEPTING = 1
         const val LEAVING = 0
