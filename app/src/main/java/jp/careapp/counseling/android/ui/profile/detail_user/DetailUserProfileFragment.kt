@@ -5,13 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.view.View.*
-import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -77,9 +74,7 @@ class DetailUserProfileFragment :
     private var isFirstChat: Boolean? = null
     private var previousScreen = ""
     private var position: Int = 0
-    private var up = 0
-    private var down = 0
-    private var timeScroll = 0
+    private var numberTimeCanScrollDown = 0
 
     // item check favorite when first chat
     private var isShowFromUserDisable: Boolean = false
@@ -164,30 +159,31 @@ class DetailUserProfileFragment :
         }
 
         binding.ivArrowDown.setOnClickListener {
-
-            val totalItemCount: Int = binding.rvGallery.adapter?.itemCount ?: 0
-            if (totalItemCount <= 0) return@setOnClickListener
+            binding.ivArrowUp.visibility = VISIBLE
+            numberTimeCanScrollDown -= 1
+            if (numberTimeCanScrollDown == 0) {
+                binding.ivArrowDown.visibility = GONE
+            } else {
+                binding.ivArrowDown.visibility = VISIBLE
+            }
             val layoutManager = binding.rvGallery.layoutManager as LinearLayoutManager
             val currentPosition = layoutManager.findLastVisibleItemPosition()
             val lastVisibleItemIndex: Int = currentPosition
-            if (lastVisibleItemIndex >= totalItemCount){
-                binding.ivArrowDown.visibility= GONE
-                return@setOnClickListener
-            }
             binding.rvGallery.smoothScrollToPosition(lastVisibleItemIndex + 3)
         }
 
         binding.ivArrowUp.setOnClickListener {
-            if (isFirstVisibleOfRecycleView()) {
+            binding.ivArrowDown.visibility = VISIBLE
+            numberTimeCanScrollDown += 1
+            val layoutManager = binding.rvGallery.layoutManager as LinearLayoutManager
+            val currentPosition = layoutManager.findLastVisibleItemPosition()
+            if (currentPosition <= 6) {
                 binding.ivArrowUp.visibility = GONE
-                binding.ivArrowDown.visibility = VISIBLE
             } else {
                 binding.ivArrowUp.visibility = VISIBLE
-                binding.ivArrowDown.visibility = GONE
-                val layoutManager = binding.rvGallery.layoutManager as LinearLayoutManager
-                val currentPosition = layoutManager.findLastVisibleItemPosition()
-                binding.rvGallery.smoothScrollToPosition(currentPosition - 6)
+
             }
+            binding.rvGallery.smoothScrollToPosition(currentPosition - 6)
         }
 
         binding.llCallConsult.setOnClickListener {
@@ -201,31 +197,6 @@ class DetailUserProfileFragment :
                 }
             }
         }
-
-        // user offline
-//        binding.sendNotiLl.setOnClickListener {
-//            if (!isDoubleClick) {
-//                if (isFirstChat == null) {
-//                    consultantResponseLocal?.code?.let { it1 ->
-//                        viewModel.loadMailInfo(
-//                            it1
-//                        )
-//                    }
-//                } else {
-//                    isFirstChat?.let {
-//                        if (it) {
-//                            showDialogFavorite()
-//                        } else {
-//                            if ((rxPreferences.getPoint() == 0)) {
-//                                doBuyPoint()
-//                            } else {
-//                                handleOpenChatScreen()
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
 
     private fun openChatScreen(isShowFreeMess: Boolean = false) {
@@ -365,20 +336,6 @@ class DetailUserProfileFragment :
         }
     }
 
-    private fun isLastVisibleOfRecycleView(): Boolean {
-        val layoutManager = binding.rvGallery.layoutManager as LinearLayoutManager
-        val pos = layoutManager.findLastCompletelyVisibleItemPosition()
-        val numItems: Int = binding.rvGallery.adapter?.itemCount ?: 0
-        return pos >= numItems - 1
-    }
-
-    private fun isFirstVisibleOfRecycleView(): Boolean {
-        val layoutManager = binding.rvGallery.layoutManager as LinearLayoutManager
-        val pos = layoutManager.findLastCompletelyVisibleItemPosition()
-        val numItems: Int = binding.rvGallery.adapter?.itemCount ?: 0
-        return pos <3
-    }
-
     fun doBuyPoint() {
         val bundle = Bundle()
         bundle.putInt(BUNDLE_KEY.TYPE_BUY_POINT, Define.BUY_POINT_FIRST)
@@ -474,24 +431,23 @@ class DetailUserProfileFragment :
 
     private var handleResultUserGallery: Observer<List<GalleryResponse>?> = Observer {
         if (it != null) {
+            if (it.size <= 3) {
+                numberTimeCanScrollDown = 0
+            } else if (it.size % 3 == 0) {
+                numberTimeCanScrollDown = it.size / 3 - 1
+            } else if (it.size % 3 != 0) {
+                numberTimeCanScrollDown = it.size / 3
+            }
+            if(numberTimeCanScrollDown >=1){
+                binding.ivArrowDown.visibility=VISIBLE
+            }
             binding.rvGallery.visibility = VISIBLE
             galleryAdapter.submitList(it)
         } else {
+            binding.ivArrowDown.visibility=GONE
             binding.rvGallery.visibility = GONE
-            binding.avatarIv.layoutParams = ConstraintLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                0
-            )
         }
     }
-
-    private fun handleScroll( sizeOfRecycleView: Int){
-
-    }
-
-
-
-
 
     private var handleResultDetailUser: Observer<ConsultantResponse?> = Observer {
         if (it != null) {
