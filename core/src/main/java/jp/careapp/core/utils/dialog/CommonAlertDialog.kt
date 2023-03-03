@@ -80,13 +80,18 @@ class CommonAlertDialog constructor(context: Context) : Dialog(context) {
     }
 
     fun setTextNegativeButton(@StringRes textId: Int): CommonAlertDialog {
-        btnCancel.text = context.resources.getString(textId)
-        btnCancel.visibility = View.VISIBLE
+        btnCancel.apply {
+            visibility = View.VISIBLE
+            text = context.resources.getString(textId)
+        }
         return this
     }
 
     fun setTextPositiveButton(@StringRes textId: Int): CommonAlertDialog {
-        btnConfirm.text = context.resources.getString(textId)
+        btnConfirm.apply {
+            visibility = View.VISIBLE
+            text = context.resources.getString(textId)
+        }
         return this
     }
 

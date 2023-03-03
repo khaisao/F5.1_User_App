@@ -322,8 +322,7 @@
     <string name="block_list">ブロックリスト</string>
     <!--    withdrawal-->
     <string name="please_use_Celia">ケアプリをご利用いただき\n 誠にありがとうございました</string>
-    <string name="finally_tks">退会手続きが完了するとお客様のアカウントデータは削除され、ログインできなくなります。
-メッセージ通知をOFFにしてアカウントを残しておく場合はこちらから設定してください。</string>
+    <string name="finally_tks">退会手続きが完了するとお客様のアカウントデータは削除され、ログインできなくなります。\nメッセージ通知をOFFにしてアカウントを残しておく場合は<u><font color="#b47aff">こちら</font></u>から設定してください。</string>
     <string name="reason_for_withdrawal">退会理由を入力</string>
     <string name="withdraw">退会する</string>
     <string name="unsubscribed">退会手続き</string>

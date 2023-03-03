@@ -245,4 +245,6 @@ interface AppNavigation : BaseNavigator {
     fun openUserDetailMsgToRMUserDetailReport(bundle: Bundle? = null)
 
     fun openUserDetailMessageToRMTop(bundle: Bundle? = null)
+
+    fun openWithdrawalToSettingNotification(bundle: Bundle? = null)
 }

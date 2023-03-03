@@ -2,15 +2,16 @@ package jp.careapp.counseling.android.ui.withdrawal
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.core.utils.onTextChange
+import jp.careapp.core.utils.setUnderlineAndClick
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.pref.RxPreferences
-import jp.careapp.counseling.databinding.FragmentWithdrawalBinding
 import jp.careapp.counseling.android.navigation.AppNavigation
-import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.counseling.android.utils.customView.ToolBarCommon
+import jp.careapp.counseling.databinding.FragmentWithdrawalBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -31,6 +32,13 @@ class WithdrawalFragment : BaseFragment<FragmentWithdrawalBinding, WithdrawalVie
         super.initView()
 
         setUpToolBar()
+
+        binding.tvTitleWithdrawal.setUnderlineAndClick(
+            R.string.finally_tks,
+            R.color.color_B47AFF,
+            71,
+            74
+        ) { appNavigation.openWithdrawalToSettingNotification() }
 
         binding.edtReason.onTextChange {
             binding.btnConfirm.isEnabled = getInputReason().isNotBlank()

@@ -325,7 +325,8 @@
     <fragment
         android:id="@+id/fragmentNotification"
         android:name="jp.careapp.counseling.android.ui.notification.NotificationFragment"
-        android:label="FragmentNotification">
+        android:label="FragmentNotification"
+        tools:layout="@layout/fragment_notification">
         <argument
             android:name="member"
             app:argType="jp.careapp.counseling.android.data.network.MemberResponse" />
@@ -460,7 +461,18 @@
 
         <action
             android:id="@+id/action_withdrawalFragment_to_withdrawalFinishFragment"
-            app:destination="@id/withdrawalFinishFragment" />
+            app:destination="@id/withdrawalFinishFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_withdrawalFragment_to_fragmentNotification"
+            app:destination="@id/fragmentNotification"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/withdrawalStartFragment"
