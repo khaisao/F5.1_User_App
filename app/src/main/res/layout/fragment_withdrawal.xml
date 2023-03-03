@@ -29,14 +29,15 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tvTitleWithdrawal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/hiragino_sans_w3"
                 android:lineSpacingExtra="4dp"
-                android:text="@string/finally_tks"
                 android:textColor="#f0f0f0"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:text="@string/finally_tks" />
 
             <EditText
                 android:id="@+id/edtReason"
