@@ -570,6 +570,9 @@ class DetailUserProfileFragment :
     private fun showDataUserProfile(consultantResponse: ConsultantResponse) {
         consultantResponse.also { user ->
             binding.apply {
+
+                rvGallery.isNestedScrollingEnabled = false;
+
                 if (user.callStatus == CallStatus.ONLINE && user.chatStatus == ChatStatus.OFFLINE) {
                     presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_offline)
                     presenceStatusTv.text =
@@ -625,7 +628,7 @@ class DetailUserProfileFragment :
 
                 if (user.profilePattern == 1) {
                     avatarIv.visibility = VISIBLE
-                    avatarIv.loadImage(user.imageUrl, R.drawable.ic_avatar_default, false)
+                    avatarIv.loadImage(user.imageUrl, R.drawable.default_avt_performer, false)
                 } else {
                     avatarIv.visibility = GONE
                 }
@@ -643,55 +646,45 @@ class DetailUserProfileFragment :
 
                 tvMessageNotice.text = user.messageNotice
 
-//                tvMessageOfTheDay.text = user.messageOfTheDay
+                tvMessageOfTheDay.text = user.messageOfTheDay
 
                 tvAge.text = user.age.toString() + resources.getString(R.string.age_raw)
 
                 userNameTv.text = user.name
 
-                var isWaiting = false
-                var isLiveStream = false
-                var isPrivateLiveStream = false
-                var isOnline = false
-                if (user.callStatus == 1 && user.chatStatus == 0) {
-                    isWaiting = true
-                } else if (user.callStatus == 2 && user.chatStatus == 0) {
-                    isWaiting = true
-                } else if (user.callStatus == 0 && user.chatStatus == 1) {
-                    isLiveStream = true
-                } else if (user.callStatus == 0 && user.chatStatus == 2) {
-                    isLiveStream = true
-                } else if (user.callStatus == 0 && user.chatStatus == 3) {
-                    isPrivateLiveStream = true
-                } else {
-                    isOnline = true
-                }
-
-                isLiveStream = true
-
-                if (isLiveStream) {
+                if (ConsultantResponse.isLiveStream(user)) {
+                    ivMessage.setImageResource(R.drawable.ic_message_small_detail)
                     tvLiveStreamCount.text =
                         (user.loginMemberCount + user.peepingMemberCount).toString()
                     llStatusViewerCount.visibility = VISIBLE
                 } else {
+                    ivMessage.setImageResource(R.drawable.ic_message_large_detail)
+
                     llStatusViewerCount.visibility = GONE
                 }
-
-                if (isWaiting || isLiveStream) {
+                if (ConsultantResponse.isWaiting(user) || ConsultantResponse.isLiveStream(user)) {
                     llCallConsult.visibility = VISIBLE
                 } else {
                     llCallConsult.visibility = GONE
                 }
-                if (isLiveStream) {
+                if (ConsultantResponse.isLiveStream(user)) {
                     llPeep.visibility = VISIBLE
+                    ivBallonPeep.visibility = VISIBLE
                 } else {
                     llPeep.visibility = GONE
+                    ivBallonPeep.visibility = GONE
                 }
-                if (isPrivateLiveStream) {
+                if (ConsultantResponse.isPrivateLiveStream(user)) {
                     ivPrivateDelivery.visibility = VISIBLE
                 } else {
                     ivPrivateDelivery.visibility = GONE
                 }
+                if (ConsultantResponse.isWaiting(user)) {
+                    binding.ivBallonLive.visibility = VISIBLE
+                } else {
+                    binding.ivBallonLive.visibility = GONE
+                }
+
 
                 changeStatusIsFavorite(user.isFavorite)
 

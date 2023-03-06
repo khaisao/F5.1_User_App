@@ -177,11 +177,6 @@ class ConsultantAdapter(
                     if (consultant.messageOfTheDay.isNullOrEmpty()) View.INVISIBLE else View.VISIBLE
                 tvTweet.text = consultant.messageOfTheDay?.replace("\n", "")
             }
-            if (absoluteAdapterPosition % 2 == 0) {
-                binding.tvTweet.visibility = View.VISIBLE
-                binding.tvTweet.text =
-                    "一緒に触っちゃうの特にキュンとしちゃう♡"
-            }
             if (consultant.callStatus == CallStatus.ONLINE && consultant.chatStatus == ChatStatus.OFFLINE) {
                 binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
                 binding.tvStatus.text =
