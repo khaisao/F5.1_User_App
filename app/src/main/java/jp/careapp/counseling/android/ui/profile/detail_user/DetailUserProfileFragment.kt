@@ -153,7 +153,7 @@ class DetailUserProfileFragment :
             }
         }
         // user online
-        binding.ivMesage.setOnClickListener {
+        binding.ivMessage.setOnClickListener {
             if (!isDoubleClick) {
                 openChatScreen()
             }
@@ -232,7 +232,7 @@ class DetailUserProfileFragment :
                     )
                     bundle.putBoolean(BUNDLE_KEY.IS_SHOW_FREE_MESS, isShowFreeMess)
                     bundle.putInt(BUNDLE_KEY.CALL_RESTRICTION, consultantResponse?.callRestriction ?: 0)
-                    appNavigation.openDetailUserToTroubleSheetUpdate(bundle)
+                    appNavigation.openDetailUserToChatMessage(bundle)
                 } else {
                     if ((rxPreferences.getPoint() == 0)) {
                         doBuyPoint()
