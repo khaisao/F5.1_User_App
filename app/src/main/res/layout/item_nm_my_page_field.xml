@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="jp.careapp.counseling.android.ui.mypage.NMMenuItem" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="menu"
+            type="NMMenuItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rootLayout"
+        typeField="@{menu.typeField}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:background="@drawable/bg_none_field">
+
+        <TextView
+            android:id="@+id/tvField"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/hiragino_sans_w3"
+            android:paddingVertical="16dp"
+            android:paddingStart="16dp"
+            android:text="@{menu.label}"
+            android:textColor="#f0f0f0"
+            android:textSize="@dimen/text_size_14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivNext"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlSymmetry"
+            tools:text="ニックネーム変更" />
+
+        <View
+            typeField="@{menu.typeField}"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/tvField" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_next"
+            app:layout_constraintBottom_toBottomOf="@+id/tvField"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvField" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -26,7 +26,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>() {
 
-    private lateinit var myPageAdapter: MyPageAdapter
+    private lateinit var myPageAdapter: MyPageAdapter1
     override val layoutId = R.layout.fragment_mypage
     private val viewModels: MyPageViewModel by activityViewModels()
     private val mainViewModels: MainViewModel by activityViewModels()
@@ -53,7 +53,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>() {
 
     override fun initView() {
         super.initView()
-        myPageAdapter = MyPageAdapter(
+        myPageAdapter = MyPageAdapter1(
             viewLifecycleOwner,
             viewModels
         )

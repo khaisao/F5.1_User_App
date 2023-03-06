@@ -2,6 +2,7 @@ package jp.careapp.counseling.android.ui.mypage
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.model.network.NotificationResponse
 import jp.careapp.counseling.android.data.model.MyPageItem
@@ -16,8 +17,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
-class MyPageViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MyPageViewModel @Inject constructor(
     private val apiService: ApiInterface,
 ) : BaseViewModel(), EventAction {
 
