@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.dialog.CommonAlertDialog
@@ -377,33 +378,6 @@ class DetailUserProfileFragment :
         }
     }
 
-    private fun showDialogFavorite() {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-            .showDialog()
-            .setDialogTitle(R.string.title_favorite_alert)
-            .setContent(R.string.sub_title_favorite_alert)
-            .setTextNegativeButton(R.string.cancel_favorite_alert)
-            .setTextPositiveButton(R.string.confirm_favorite_alert)
-            .setOnNegativePressed {
-                it.dismiss()
-            }
-            .setOnPositivePressed {
-                if (!isDoubleClick) {
-                    if (binding.removeFavoriteTv.isVisible) {
-                        it.dismiss()
-                        showDialogAlreadyFavorite()
-                    } else {
-                        consultantResponseLocal?.code?.let { it1 ->
-                            isShowFromUserDisable = true
-                            viewModel.addUserToFavorite(
-                                it1
-                            )
-                            it.dismiss()
-                        }
-                    }
-                }
-            }
-    }
 
     private fun showDialogAlreadyFavorite() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
@@ -571,7 +545,10 @@ class DetailUserProfileFragment :
         consultantResponse.also { user ->
             binding.apply {
 
-                rvGallery.isNestedScrollingEnabled = false;
+                rvGallery.isNestedScrollingEnabled = false
+
+                Glide.with(this@DetailUserProfileFragment).asGif().load(R.drawable.ic_ballon_call).into(ivBallonLiveGl50)
+                Glide.with(this@DetailUserProfileFragment).asGif().load(R.drawable.ic_ballon_peep).into(ivBallonPeep)
 
                 if (user.callStatus == CallStatus.ONLINE && user.chatStatus == ChatStatus.OFFLINE) {
                     presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_offline)
@@ -659,7 +636,6 @@ class DetailUserProfileFragment :
                     llStatusViewerCount.visibility = VISIBLE
                 } else {
                     ivMessage.setImageResource(R.drawable.ic_message_large_detail)
-
                     llStatusViewerCount.visibility = GONE
                 }
                 if (ConsultantResponse.isWaiting(user) || ConsultantResponse.isLiveStream(user)) {
@@ -668,21 +644,22 @@ class DetailUserProfileFragment :
                     llCallConsult.visibility = GONE
                 }
                 if (ConsultantResponse.isLiveStream(user)) {
+                    ivBallonPeep.visibility= VISIBLE
                     llPeep.visibility = VISIBLE
-                    ivBallonPeep.visibility = VISIBLE
                 } else {
+                    ivBallonPeep.visibility= GONE
                     llPeep.visibility = GONE
-                    ivBallonPeep.visibility = GONE
                 }
                 if (ConsultantResponse.isPrivateLiveStream(user)) {
                     ivPrivateDelivery.visibility = VISIBLE
                 } else {
                     ivPrivateDelivery.visibility = GONE
                 }
-                if (ConsultantResponse.isWaiting(user)) {
-                    binding.ivBallonLive.visibility = VISIBLE
-                } else {
-                    binding.ivBallonLive.visibility = GONE
+                if(ConsultantResponse.isWaiting(user) ){
+                    ivBallonLiveGl50.visibility= VISIBLE
+                }
+                else{
+                    ivBallonLiveGl50.visibility= GONE
                 }
 
 

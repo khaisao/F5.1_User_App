@@ -319,6 +319,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
@@ -326,6 +327,55 @@
             android:layout_marginBottom="@dimen/margin_12"
             android:background="@color/color_402C70"
             app:layout_constraintBottom_toTopOf="@id/clAction" />
+
+
+        <View
+            android:id="@+id/line_bottom_ballon"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/margin_5dp"
+            app:layout_constraintTop_toTopOf="@id/clAction" />
+
+
+        <ImageView
+            android:id="@+id/iv_ballon_live_gl_50"
+            app:layout_constraintStart_toStartOf="@id/gl_vertical_50"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/line_bottom_ballon"
+            android:src="@drawable/ic_ballon_call"
+            android:layout_marginBottom="-20dp"
+            android:visibility="gone"
+            android:adjustViewBounds="true"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/iv_ballon_peep"
+            app:layout_constraintStart_toStartOf="@id/gl_vertical_66"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/line_bottom_ballon"
+            android:src="@drawable/ic_ballon_peep"
+            android:layout_marginBottom="-20dp"
+            android:visibility="gone"
+            android:adjustViewBounds="true"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_vertical_50"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"
+            android:layout_height="wrap_content"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_vertical_66"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.66"
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:id="@+id/clAction"
@@ -347,24 +397,13 @@
             <LinearLayout
                 android:id="@+id/ll_call_consult"
                 android:layout_width="0dp"
-                android:layout_marginEnd="@dimen/margin_6"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_6"
                 android:layout_marginBottom="7dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/iv_ballon_live"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ballon_live"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -372,10 +411,7 @@
                     android:adjustViewBounds="true"
                     android:background="@drawable/bg_gradient"
                     android:gravity="center"
-                    android:src="@drawable/ic_watch_live_stream_detail"
-                    app:layout_constraintEnd_toEndOf="@id/iv_ballon_live"
-                    app:layout_constraintStart_toStartOf="@id/iv_ballon_live"
-                    app:layout_constraintTop_toBottomOf="@id/iv_ballon_live">
+                    android:src="@drawable/ic_watch_live_stream_detail">
 
                     <ImageView
                         android:layout_width="18dp"
@@ -385,10 +421,10 @@
 
                     <TextView
                         style="@style/text_bold_16"
-                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/live_viewing" />
+                        android:text="@string/live_viewing"
+                        android:textColor="@color/white" />
 
                 </LinearLayout>
 
@@ -404,27 +440,12 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <ImageView
-                    android:id="@+id/iv_ballon_peep"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ballon_live"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="47dp"
                     android:adjustViewBounds="true"
                     android:background="@drawable/bg_gradient_orangered"
-                    android:gravity="center"
-                    app:layout_constraintEnd_toEndOf="@id/iv_ballon_peep"
-                    app:layout_constraintStart_toStartOf="@id/iv_ballon_peep"
-                    app:layout_constraintTop_toBottomOf="@id/iv_ballon_peep">
+                    android:gravity="center">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -433,11 +454,11 @@
                         android:src="@drawable/ic_peep" />
 
                     <TextView
-                        android:textColor="@color/white"
                         style="@style/text_bold_16"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/peep" />
+                        android:text="@string/peep"
+                        android:textColor="@color/white" />
 
 
                 </LinearLayout>

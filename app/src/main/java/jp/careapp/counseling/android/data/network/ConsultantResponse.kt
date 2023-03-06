@@ -61,7 +61,7 @@ data class ConsultantResponse(
             } else if (consultantResponse.callStatus == 2 && consultantResponse.chatStatus == 0) {
                 isWaiting = true
             }
-            return true
+            return isWaiting
         }
 
         fun isLiveStream(consultantResponse: ConsultantResponse): Boolean {
