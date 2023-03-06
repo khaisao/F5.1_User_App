@@ -581,6 +581,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="accept_permission">許可する</string>
     <string name="denied_permission">許可しない</string>
     <string name="call_note">※お悩みシート、相談履歴、ポイント購入をタップしても\n音声通話は切断されません。</string>
+    <string name="call_content">しばらくお待ちください。\n相手の状況により応答できない場合があります。</string>
     <string name="mic_on">マイクをオン</string>
     <string name="mic_off">マイクをオフ</string>
     <string name="speaker_on">スピーカーを\nオン</string>

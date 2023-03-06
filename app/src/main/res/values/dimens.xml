@@ -189,5 +189,7 @@
     <dimen name="chat_list_monthly_rank_height">24dp</dimen>
     <dimen name="ic_message_status_size">18dp</dimen>
     <dimen name="ic_message_status_padding">3.5dp</dimen>
+    <dimen name="dimen_103dp">103dp</dimen>
+    <dimen name="dimen_80dp">80dp</dimen>
 
 </resources>
