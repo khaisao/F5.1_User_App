@@ -8,7 +8,7 @@ import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.UpdateNotificationParams
 import jp.careapp.counseling.android.data.network.MemberResponse
-import jp.careapp.counseling.android.ui.mypage.MyPageViewModel
+import jp.careapp.counseling.android.ui.my_page.MyPageViewModel
 import jp.careapp.counseling.databinding.FragmentNotificationBinding
 
 @AndroidEntryPoint
@@ -69,14 +69,14 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding, Notificat
             viewModels.openDirect.observe(
                 viewLifecycleOwner
             ) {
-                if (it) myPageViewModels.forceRefresh()
+//                if (it) myPageViewModels.forceRefresh()
             }
 
-            myPageViewModels.uiMember.observe(
-                viewLifecycleOwner
-            ) {
-                viewModels.setSaveStateSwitchFromMemberResponse(it)
-            }
+//            myPageViewModels.uiMember.observe(
+//                viewLifecycleOwner
+//            ) {
+//                viewModels.setSaveStateSwitchFromMemberResponse(it)
+//            }
         }
     }
 

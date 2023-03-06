@@ -249,4 +249,8 @@ interface AppNavigation : BaseNavigator {
     fun openWithdrawalToSettingNotification(bundle: Bundle? = null)
 
     fun openRMTopToRMBuyPoint(bundle: Bundle? = null)
+
+    fun openMyPageToTermsOfService(bundle: Bundle? = null)
+
+    fun openMyPageToPrivacyPolicy(bundle: Bundle? = null)
 }

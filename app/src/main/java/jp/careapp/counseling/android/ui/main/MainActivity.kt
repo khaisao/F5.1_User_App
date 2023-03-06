@@ -53,7 +53,7 @@ import jp.careapp.counseling.android.ui.calling.CallingViewModel
 import jp.careapp.counseling.android.ui.calling.MinimizeCallState
 import jp.careapp.counseling.android.ui.labo.detail.LabDetailFragment
 import jp.careapp.counseling.android.ui.message.ChatMessageFragment
-import jp.careapp.counseling.android.ui.mypage.MyPageFragment
+import jp.careapp.counseling.android.ui.my_page.MyPageFragment
 import jp.careapp.counseling.android.ui.new_question.NewQuestionFragment
 import jp.careapp.counseling.android.ui.news.NewsFragment
 import jp.careapp.counseling.android.ui.notification.NotificationFragment

@@ -11,7 +11,7 @@ import jp.careapp.counseling.android.data.model.ContactRequest
 import jp.careapp.counseling.databinding.FragmentContactConfirmBinding
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.contact_edit.ContactEdit
-import jp.careapp.counseling.android.ui.mypage.MyPageFragment
+import jp.careapp.counseling.android.ui.my_page.MyPageFragment
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.counseling.android.data.model.ContactRequestWithoutMail
 import jp.careapp.counseling.android.data.pref.RxPreferences

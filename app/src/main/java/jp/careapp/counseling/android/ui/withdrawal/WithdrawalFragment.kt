@@ -25,9 +25,6 @@ class WithdrawalFragment : BaseFragment<FragmentWithdrawalBinding, WithdrawalVie
     private val mViewModel: WithdrawalViewModel by viewModels()
     override fun getVM(): WithdrawalViewModel = mViewModel
 
-    @Inject
-    lateinit var appPreferences: RxPreferences
-
     override fun initView() {
         super.initView()
 

@@ -7,7 +7,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListPopupWindow
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -20,8 +19,8 @@ import jp.careapp.counseling.android.data.model.ContactMemberRequest
 import jp.careapp.counseling.databinding.FragmentContactEditBinding
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.main.MainViewModel
-import jp.careapp.counseling.android.ui.mypage.MyPageFragment
-import jp.careapp.counseling.android.ui.mypage.MyPageViewModel
+import jp.careapp.counseling.android.ui.my_page.MyPageFragment
+import jp.careapp.counseling.android.ui.my_page.MyPageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.utils.StringUtils.isValidEmail
 import jp.careapp.counseling.android.data.pref.RxPreferences
@@ -58,7 +57,7 @@ class ContactEditFragment : BaseFragment<FragmentContactEditBinding, EditContact
 
     override fun bindingStateView() {
         super.bindingStateView()
-        mypageViewModel.forceRefresh()
+//        mypageViewModel.forceRefresh()
         categories = arrayListOf(
             getString(R.string.payment),
             getString(R.string.about_account),
@@ -88,18 +87,18 @@ class ContactEditFragment : BaseFragment<FragmentContactEditBinding, EditContact
                 actionFromLogin(contactEdit)
             }
             binding.executeAfter {
-                mypageViewModel.uiMember.observe(
-                    viewLifecycleOwner,
-                    {
-                        tvMail.isVisible = it.signupStatus != SignedUpStatus.LOGIN_WITHOUT_EMAIL
-                        edtMailEdit.isVisible = it.signupStatus == SignedUpStatus.LOGIN_WITHOUT_EMAIL
-                        edtMailEdit.setText(if (it.signupStatus == SignedUpStatus.LOGIN_WITHOUT_EMAIL) "" else it.mail)
-                        tvCodeValue.text = it.code
-                        contactEdit.mail = it.mail
-                        contactEdit.code = it.code
-                        rxPreferences.setSignedUpStatus(it.signupStatus ?: SignedUpStatus.UNKNOWN)
-                    }
-                )
+//                mypageViewModel.uiMember.observe(
+//                    viewLifecycleOwner,
+//                    {
+//                        tvMail.isVisible = it.signupStatus != SignedUpStatus.LOGIN_WITHOUT_EMAIL
+//                        edtMailEdit.isVisible = it.signupStatus == SignedUpStatus.LOGIN_WITHOUT_EMAIL
+//                        edtMailEdit.setText(if (it.signupStatus == SignedUpStatus.LOGIN_WITHOUT_EMAIL) "" else it.mail)
+//                        tvCodeValue.text = it.code
+//                        contactEdit.mail = it.mail
+//                        contactEdit.code = it.code
+//                        rxPreferences.setSignedUpStatus(it.signupStatus ?: SignedUpStatus.UNKNOWN)
+//                    }
+//                )
                 edtMailEdit.onTextChange {
                     if (type_contact == MyPageFragment::class.java.simpleName) {
                         enableConfirmButton(isValidInputWithEmailCategoryAndInquiry)
@@ -145,19 +144,19 @@ class ContactEditFragment : BaseFragment<FragmentContactEditBinding, EditContact
                 actionFromLogin(contactEdit)
             }
             binding.executeAfter {
-                mypageViewModel.uiMember.observe(
-                    viewLifecycleOwner,
-                    Observer {
-                        tvMail.isVisible = it.signupStatus != SignedUpStatus.LOGIN_WITHOUT_EMAIL
-                        edtMailEdit.isVisible = it.signupStatus == SignedUpStatus.LOGIN_WITHOUT_EMAIL
-                        edtMailEdit.setText(if (it.signupStatus == SignedUpStatus.LOGIN_WITHOUT_EMAIL) "" else it.mail)
-                        tvMail.text = it.mail
-                        tvCodeValue.text = it.code
-                        contactEdit.mail = it.mail
-                        contactEdit.code = it.code
-                        rxPreferences.setSignedUpStatus(it.signupStatus ?: SignedUpStatus.UNKNOWN)
-                    }
-                )
+//                mypageViewModel.uiMember.observe(
+//                    viewLifecycleOwner,
+//                    Observer {
+//                        tvMail.isVisible = it.signupStatus != SignedUpStatus.LOGIN_WITHOUT_EMAIL
+//                        edtMailEdit.isVisible = it.signupStatus == SignedUpStatus.LOGIN_WITHOUT_EMAIL
+//                        edtMailEdit.setText(if (it.signupStatus == SignedUpStatus.LOGIN_WITHOUT_EMAIL) "" else it.mail)
+//                        tvMail.text = it.mail
+//                        tvCodeValue.text = it.code
+//                        contactEdit.mail = it.mail
+//                        contactEdit.code = it.code
+//                        rxPreferences.setSignedUpStatus(it.signupStatus ?: SignedUpStatus.UNKNOWN)
+//                    }
+//                )
                 edtContent.onTextChange {
                     if (type_contact == MyPageFragment::class.java.simpleName) {
                         if (edtContent.text.trim()

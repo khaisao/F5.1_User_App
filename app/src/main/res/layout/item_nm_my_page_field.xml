@@ -5,46 +5,58 @@
 
     <data>
 
-        <import type="jp.careapp.counseling.android.ui.mypage.NMMenuItem" />
+        <import type="jp.careapp.counseling.android.ui.my_page.NMMenuItem.NMMenuItemField" />
 
         <import type="android.view.View" />
 
         <variable
             name="menu"
-            type="NMMenuItem" />
+            type="NMMenuItemField" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/rootLayout"
         typeField="@{menu.typeField}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:background="@drawable/bg_none_field">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivMenuItemField"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginVertical="12dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_cell_block" />
+
         <TextView
             android:id="@+id/tvField"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="12dp"
             android:fontFamily="@font/hiragino_sans_w3"
-            android:paddingVertical="16dp"
-            android:paddingStart="16dp"
+            android:gravity="center_vertical"
             android:text="@{menu.label}"
             android:textColor="#f0f0f0"
-            android:textSize="@dimen/text_size_14"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/ivMenuItemField"
             app:layout_constraintEnd_toStartOf="@+id/ivNext"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="RtlSymmetry"
-            tools:text="ニックネーム変更" />
+            app:layout_constraintStart_toEndOf="@id/ivMenuItemField"
+            app:layout_constraintTop_toTopOf="@id/ivMenuItemField"
+            tools:text="@string/buy_point" />
 
         <View
             typeField="@{menu.typeField}"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginStart="16dp"
-            android:background="@color/white"
-            app:layout_constraintTop_toBottomOf="@+id/tvField" />
+            android:background="#453B5D"
+            app:layout_constraintBottom_toBottomOf="parent  "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivNext"
@@ -52,8 +64,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_next"
-            app:layout_constraintBottom_toBottomOf="@+id/tvField"
+            app:layout_constraintBottom_toBottomOf="@+id/ivMenuItemField"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvField" />
+            app:layout_constraintTop_toTopOf="@+id/ivMenuItemField" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

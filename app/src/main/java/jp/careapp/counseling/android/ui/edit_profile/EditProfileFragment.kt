@@ -1,8 +1,6 @@
 package jp.careapp.counseling.android.ui.edit_profile
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
@@ -10,28 +8,19 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
-import jp.careapp.core.utils.DateUtil
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.core.utils.executeAfter
 import jp.careapp.counseling.R
-import jp.careapp.counseling.android.data.model.ParamsUpdateMember
-import jp.careapp.counseling.android.data.model.TypeMember
 import jp.careapp.counseling.android.data.network.MemberResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.email.InputAndEditMailViewModel.Companion.SCREEN_EDIT_EMAIL
 import jp.careapp.counseling.android.ui.main.OnBackPressedListener
-import jp.careapp.counseling.android.ui.mypage.MyPageViewModel
+import jp.careapp.counseling.android.ui.my_page.MyPageViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
-import jp.careapp.counseling.android.utils.SignedUpStatus
-import jp.careapp.counseling.android.utils.customView.GenderSelectView
 import jp.careapp.counseling.android.utils.event.EventObserver
 import jp.careapp.counseling.databinding.FragmentEditProfileBinding
-import java.text.NumberFormat
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.temporal.ChronoUnit
 import java.util.*
 import javax.inject.Inject
 
@@ -86,207 +75,207 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
             }
             appBar.tvTitle.text = getString(R.string.title_edit_profile)
             appBar.viewStatusBar.visibility = View.GONE
-            myPageViewModels.uiMember.observe(
-                viewLifecycleOwner,
-                Observer { rs ->
-                    mCalendar = DateUtil.convertStringToCalendar(rs.birth, DateUtil.DATE_FORMAT_3)
-                    viewModels.setCurrentName(
-                        rs.name,
-                        ParamsUpdateMember(
-                            rs.name,
-                            rs.sex,
-                            rs.birth
-                        )
-                    )
-                    tvName.apply {
-                        tvStart.text = getString(R.string.nick_name)
-                        tvEnd.text = rs.name
-                        item.setOnClickListener {
-                            if (!isDoubleClick)
-                                viewModels.destinationEdit(
-                                    EditProfile(
-                                        rs.name,
-                                        TypeMember.EDIT,
-                                        DestinationEdit.NAME
-                                    )
-                                )
-                        }
-                    }
-                    tvGender.apply {
-                        tvStart.text = getString(R.string.gender)
-                        tvEnd.text = checkGender(rs.sex)
-                        item.setOnClickListener {
-                            binding.genderSelectView.visibility = View.VISIBLE
-                            binding.genderSelectView.setDefaultSelected(checkGenderInt(binding.tvGender.tvEnd.text.toString()))
-                            binding.genderSelectView.setOnChooseGender(
-                                object :
-                                    GenderSelectView.ChooseGender {
-                                    override fun choose(pos: Int, title: String?) {
-                                        binding.genderSelectView.visibility = View.GONE
-                                        if (pos != checkGenderInt(binding.tvGender.tvEnd.text.toString())) {
-                                            viewModels.setParamProfile(
-                                                ParamsUpdateMember(
-                                                    rs.name,
-                                                    pos,
-                                                    rs.birth
-                                                )
-                                            )
-                                            binding.tvGender.tvEnd.text = checkGender(pos)
-                                            viewModels.updateProfileSuccess.observe(
-                                                viewLifecycleOwner,
-                                                Observer {
-                                                    dialog
-                                                        .showDialog()
-                                                        .setDialogTitle(R.string.updated_my_profile)
-                                                        .setTextPositiveButton(R.string.text_OK)
-                                                        .setOnPositivePressed {
-                                                            it.dismiss()
-                                                        }
-                                                }
-                                            )
-                                        }
-                                    }
-                                }
-                            )
-                        }
-                    }
-
-                    tvAge.apply {
-                        tvStart.text = getString(R.string.age)
-                        myPageViewModels.uiMember.observe(
-                            viewLifecycleOwner,
-                            Observer {
-                                tvEnd.text = "${it.age}歳"
-                                if (it.signupStatus == SignedUpStatus.LOGIN_WITHOUT_EMAIL) {
-                                    binding.apply {
-                                        tvMail.tvEnd.text = getString(R.string.unregistered)
-                                        tvCaution.visibility = View.VISIBLE
-                                    }
-                                } else {
-                                    binding.apply {
-                                        tvMail.tvEnd.text = email
-                                        tvCaution.visibility = View.GONE
-                                    }
-                                }
-                                rxPreferences.setSignedUpStatus(
-                                    it.signupStatus ?: SignedUpStatus.UNKNOWN
-                                )
-                            }
-                        )
-                        divider.visibility = View.GONE
-                        item.setOnClickListener {
-                            var check = false
-                            val date =
-                                DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                                    if (mCalendar.get(Calendar.YEAR) == year &&
-                                        mCalendar.get(Calendar.MONTH) == monthOfYear &&
-                                        mCalendar.get(Calendar.DAY_OF_MONTH) == dayOfMonth
-                                    )
-                                        check = false
-                                    else {
-                                        check = true
-                                        mCalendar.set(Calendar.YEAR, year)
-                                        mCalendar.set(Calendar.MONTH, monthOfYear)
-                                        mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                                        viewModels.setParamProfile(
-                                            ParamsUpdateMember(
-                                                rs.name,
-                                                rs.sex,
-                                                DateUtil.getDateTimeDisplayByFormat(
-                                                    DateUtil.DATE_FORMAT_3,
-                                                    mCalendar
-                                                )
-                                            )
-                                        )
-                                    }
-                                }
-                            DatePickerDialog(
-                                requireContext(),
-                                AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,
-                                date,
-                                mCalendar.get(Calendar.YEAR),
-                                mCalendar.get(Calendar.MONTH),
-                                mCalendar.get(Calendar.DAY_OF_MONTH)
-                            ).apply {
-                                datePicker.maxDate = System.currentTimeMillis() - 568111536000L
-                                setOnDismissListener {
-                                    if (check)
-                                        viewModels.updateProfileSuccess.observe(
-                                            viewLifecycleOwner,
-                                            Observer {
-                                                dialog
-                                                    .showDialog()
-                                                    .setDialogTitle(R.string.updated_my_profile)
-                                                    .setTextPositiveButton(R.string.text_OK)
-                                                    .setOnPositivePressed {
-                                                        it.dismiss()
-                                                        viewModels.updateProfileLoading.observe(
-                                                            viewLifecycleOwner,
-                                                            Observer {
-                                                                showHideLoading(it)
-                                                            }
-                                                        )
-                                                        val dateTime = mCalendar.toInstant().atZone(
-                                                            ZoneId.systemDefault()
-                                                        ).toLocalDate()
-                                                        binding.tvAge.tvEnd.text = "${
-                                                            dateTime.until(
-                                                                LocalDate.now(),
-                                                                ChronoUnit.YEARS
-                                                            )
-                                                        }歳"
-                                                        check = false
-                                                    }
-                                            }
-                                        )
-                                }
-                                show()
-                            }
-                        }
-                    }
-                    tvCode.apply {
-                        tvStart.text = getString(R.string.member_code)
-                        tvEnd.text = rs.code
-                        ivEnd.visibility = View.GONE
-                    }
-                    tvPoint.apply {
-                        val point = NumberFormat.getInstance(Locale.JAPAN).format(rs.point)
-                        tvStart.text = getString(R.string.retention_point)
-                        tvEnd.text = "${point}pts"
-                        ivEnd.visibility = View.GONE
-                    }
-                    tvMail.apply {
-                        tvStart.text = getString(R.string.email_address)
-                        tvEnd.text =
-                            if (rs.signupStatus == SignedUpStatus.LOGIN_WITHOUT_EMAIL) getString(R.string.unregistered)
-                            else rs.mail
-                        email = rs.mail
-                        divider.visibility = View.GONE
-                        item.setOnClickListener {
-                            if (!isDoubleClick) {
-                                val bundle = Bundle().apply {
-                                    putInt(BUNDLE_KEY.CODE_SCREEN, SCREEN_EDIT_EMAIL)
-                                    putString(BUNDLE_KEY.EMAIL, rs.mail)
-                                }
-                                appNavigation.openEditProfileToEditEmailScreen(bundle)
-                            }
-                        }
-                    }
-
-                    if (rs.signupStatus == SignedUpStatus.LOGIN_WITHOUT_EMAIL) {
-                        binding.apply {
-                            tvMail.tvEnd.text = getString(R.string.unregistered)
-                            tvCaution.visibility = View.VISIBLE
-                        }
-                    } else {
-                        binding.apply {
-                            tvMail.tvEnd.text = email
-                            tvCaution.visibility = View.GONE
-                        }
-                    }
-                    rxPreferences.setSignedUpStatus(rs.signupStatus ?: SignedUpStatus.UNKNOWN)
-                }
-            )
+//            myPageViewModels.uiMember.observe(
+//                viewLifecycleOwner,
+//                Observer { rs ->
+//                    mCalendar = DateUtil.convertStringToCalendar(rs.birth, DateUtil.DATE_FORMAT_3)
+//                    viewModels.setCurrentName(
+//                        rs.name,
+//                        ParamsUpdateMember(
+//                            rs.name,
+//                            rs.sex,
+//                            rs.birth
+//                        )
+//                    )
+//                    tvName.apply {
+//                        tvStart.text = getString(R.string.nick_name)
+//                        tvEnd.text = rs.name
+//                        item.setOnClickListener {
+//                            if (!isDoubleClick)
+//                                viewModels.destinationEdit(
+//                                    EditProfile(
+//                                        rs.name,
+//                                        TypeMember.EDIT,
+//                                        DestinationEdit.NAME
+//                                    )
+//                                )
+//                        }
+//                    }
+//                    tvGender.apply {
+//                        tvStart.text = getString(R.string.gender)
+//                        tvEnd.text = checkGender(rs.sex)
+//                        item.setOnClickListener {
+//                            binding.genderSelectView.visibility = View.VISIBLE
+//                            binding.genderSelectView.setDefaultSelected(checkGenderInt(binding.tvGender.tvEnd.text.toString()))
+//                            binding.genderSelectView.setOnChooseGender(
+//                                object :
+//                                    GenderSelectView.ChooseGender {
+//                                    override fun choose(pos: Int, title: String?) {
+//                                        binding.genderSelectView.visibility = View.GONE
+//                                        if (pos != checkGenderInt(binding.tvGender.tvEnd.text.toString())) {
+//                                            viewModels.setParamProfile(
+//                                                ParamsUpdateMember(
+//                                                    rs.name,
+//                                                    pos,
+//                                                    rs.birth
+//                                                )
+//                                            )
+//                                            binding.tvGender.tvEnd.text = checkGender(pos)
+//                                            viewModels.updateProfileSuccess.observe(
+//                                                viewLifecycleOwner,
+//                                                Observer {
+//                                                    dialog
+//                                                        .showDialog()
+//                                                        .setDialogTitle(R.string.updated_my_profile)
+//                                                        .setTextPositiveButton(R.string.text_OK)
+//                                                        .setOnPositivePressed {
+//                                                            it.dismiss()
+//                                                        }
+//                                                }
+//                                            )
+//                                        }
+//                                    }
+//                                }
+//                            )
+//                        }
+//                    }
+//
+//                    tvAge.apply {
+//                        tvStart.text = getString(R.string.age)
+//                        myPageViewModels.uiMember.observe(
+//                            viewLifecycleOwner,
+//                            Observer {
+//                                tvEnd.text = "${it.age}歳"
+//                                if (it.signupStatus == SignedUpStatus.LOGIN_WITHOUT_EMAIL) {
+//                                    binding.apply {
+//                                        tvMail.tvEnd.text = getString(R.string.unregistered)
+//                                        tvCaution.visibility = View.VISIBLE
+//                                    }
+//                                } else {
+//                                    binding.apply {
+//                                        tvMail.tvEnd.text = email
+//                                        tvCaution.visibility = View.GONE
+//                                    }
+//                                }
+//                                rxPreferences.setSignedUpStatus(
+//                                    it.signupStatus ?: SignedUpStatus.UNKNOWN
+//                                )
+//                            }
+//                        )
+//                        divider.visibility = View.GONE
+//                        item.setOnClickListener {
+//                            var check = false
+//                            val date =
+//                                DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+//                                    if (mCalendar.get(Calendar.YEAR) == year &&
+//                                        mCalendar.get(Calendar.MONTH) == monthOfYear &&
+//                                        mCalendar.get(Calendar.DAY_OF_MONTH) == dayOfMonth
+//                                    )
+//                                        check = false
+//                                    else {
+//                                        check = true
+//                                        mCalendar.set(Calendar.YEAR, year)
+//                                        mCalendar.set(Calendar.MONTH, monthOfYear)
+//                                        mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+//                                        viewModels.setParamProfile(
+//                                            ParamsUpdateMember(
+//                                                rs.name,
+//                                                rs.sex,
+//                                                DateUtil.getDateTimeDisplayByFormat(
+//                                                    DateUtil.DATE_FORMAT_3,
+//                                                    mCalendar
+//                                                )
+//                                            )
+//                                        )
+//                                    }
+//                                }
+//                            DatePickerDialog(
+//                                requireContext(),
+//                                AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,
+//                                date,
+//                                mCalendar.get(Calendar.YEAR),
+//                                mCalendar.get(Calendar.MONTH),
+//                                mCalendar.get(Calendar.DAY_OF_MONTH)
+//                            ).apply {
+//                                datePicker.maxDate = System.currentTimeMillis() - 568111536000L
+//                                setOnDismissListener {
+//                                    if (check)
+//                                        viewModels.updateProfileSuccess.observe(
+//                                            viewLifecycleOwner,
+//                                            Observer {
+//                                                dialog
+//                                                    .showDialog()
+//                                                    .setDialogTitle(R.string.updated_my_profile)
+//                                                    .setTextPositiveButton(R.string.text_OK)
+//                                                    .setOnPositivePressed {
+//                                                        it.dismiss()
+//                                                        viewModels.updateProfileLoading.observe(
+//                                                            viewLifecycleOwner,
+//                                                            Observer {
+//                                                                showHideLoading(it)
+//                                                            }
+//                                                        )
+//                                                        val dateTime = mCalendar.toInstant().atZone(
+//                                                            ZoneId.systemDefault()
+//                                                        ).toLocalDate()
+//                                                        binding.tvAge.tvEnd.text = "${
+//                                                            dateTime.until(
+//                                                                LocalDate.now(),
+//                                                                ChronoUnit.YEARS
+//                                                            )
+//                                                        }歳"
+//                                                        check = false
+//                                                    }
+//                                            }
+//                                        )
+//                                }
+//                                show()
+//                            }
+//                        }
+//                    }
+//                    tvCode.apply {
+//                        tvStart.text = getString(R.string.member_code)
+//                        tvEnd.text = rs.code
+//                        ivEnd.visibility = View.GONE
+//                    }
+//                    tvPoint.apply {
+//                        val point = NumberFormat.getInstance(Locale.JAPAN).format(rs.point)
+//                        tvStart.text = getString(R.string.retention_point)
+//                        tvEnd.text = "${point}pts"
+//                        ivEnd.visibility = View.GONE
+//                    }
+//                    tvMail.apply {
+//                        tvStart.text = getString(R.string.email_address)
+//                        tvEnd.text =
+//                            if (rs.signupStatus == SignedUpStatus.LOGIN_WITHOUT_EMAIL) getString(R.string.unregistered)
+//                            else rs.mail
+//                        email = rs.mail
+//                        divider.visibility = View.GONE
+//                        item.setOnClickListener {
+//                            if (!isDoubleClick) {
+//                                val bundle = Bundle().apply {
+//                                    putInt(BUNDLE_KEY.CODE_SCREEN, SCREEN_EDIT_EMAIL)
+//                                    putString(BUNDLE_KEY.EMAIL, rs.mail)
+//                                }
+//                                appNavigation.openEditProfileToEditEmailScreen(bundle)
+//                            }
+//                        }
+//                    }
+//
+//                    if (rs.signupStatus == SignedUpStatus.LOGIN_WITHOUT_EMAIL) {
+//                        binding.apply {
+//                            tvMail.tvEnd.text = getString(R.string.unregistered)
+//                            tvCaution.visibility = View.VISIBLE
+//                        }
+//                    } else {
+//                        binding.apply {
+//                            tvMail.tvEnd.text = email
+//                            tvCaution.visibility = View.GONE
+//                        }
+//                    }
+//                    rxPreferences.setSignedUpStatus(rs.signupStatus ?: SignedUpStatus.UNKNOWN)
+//                }
+//            )
         }
 
         viewModels.updateSuccess.observe(
@@ -300,12 +289,12 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
             Observer {
             }
         )
-        myPageViewModels.memberLoading.observe(
-            viewLifecycleOwner,
-            Observer {
-                showHideLoading(it)
-            }
-        )
+//        myPageViewModels.memberLoading.observe(
+//            viewLifecycleOwner,
+//            Observer {
+//                showHideLoading(it)
+//            }
+//        )
         viewModels.navigateToEditProfileFragmentAction.observe(
             viewLifecycleOwner,
             EventObserver {
@@ -346,7 +335,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
 
     override fun onResume() {
         super.onResume()
-        myPageViewModels.forceRefresh()
+//        myPageViewModels.forceRefresh()
     }
 
     override fun onBackPressed() {

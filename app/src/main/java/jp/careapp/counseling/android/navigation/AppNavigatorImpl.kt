@@ -496,4 +496,12 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     override fun openRMTopToRMBuyPoint(bundle: Bundle?) {
         openScreen(R.id.action_RMTopFragment_to_RMBuyPointFragment, bundle)
     }
+
+    override fun openMyPageToTermsOfService(bundle: Bundle?) {
+        openScreen(R.id.action_topFragment_to_termsOfServiceFragment, bundle)
+    }
+
+    override fun openMyPageToPrivacyPolicy(bundle: Bundle?) {
+        openScreen(R.id.action_topFragment_to_privacyPolicyFragment, bundle)
+    }
 }
