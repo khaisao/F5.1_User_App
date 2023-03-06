@@ -75,6 +75,7 @@ class DetailUserProfileFragment :
     private var previousScreen = ""
     private var position: Int = 0
     private var numberTimeCanScrollDown = 0
+    private var numberMaxTimeCanScrollDown = 0
 
     // item check favorite when first chat
     private var isShowFromUserDisable: Boolean = false
@@ -152,7 +153,7 @@ class DetailUserProfileFragment :
             }
         }
         // user online
-        binding.sendConsultLl.setOnClickListener {
+        binding.ivMesage.setOnClickListener {
             if (!isDoubleClick) {
                 openChatScreen()
             }
@@ -177,11 +178,10 @@ class DetailUserProfileFragment :
             numberTimeCanScrollDown += 1
             val layoutManager = binding.rvGallery.layoutManager as LinearLayoutManager
             val currentPosition = layoutManager.findLastVisibleItemPosition()
-            if (currentPosition <= 6) {
+            if (numberMaxTimeCanScrollDown == numberTimeCanScrollDown) {
                 binding.ivArrowUp.visibility = GONE
             } else {
                 binding.ivArrowUp.visibility = VISIBLE
-
             }
             binding.rvGallery.smoothScrollToPosition(currentPosition - 6)
         }
@@ -195,6 +195,12 @@ class DetailUserProfileFragment :
                 } else {
                     showDialogRequestMicrophonePermission()
                 }
+            }
+        }
+
+        binding.llPeep.setOnClickListener {
+            if (!isDoubleClick) {
+                checkPoint()
             }
         }
     }
@@ -239,7 +245,7 @@ class DetailUserProfileFragment :
     }
     //TODO: change to getPoint < 1000
     private fun checkPoint() {
-        if (rxPreferences.getPoint() >= 1000) {
+        if (rxPreferences.getPoint() < 1000) {
             showDialogRequestBuyPoint()
         } else {
             showDialogConfirmCall()
@@ -441,6 +447,7 @@ class DetailUserProfileFragment :
             if(numberTimeCanScrollDown >=1){
                 binding.ivArrowDown.visibility=VISIBLE
             }
+            numberMaxTimeCanScrollDown = numberTimeCanScrollDown
             binding.rvGallery.visibility = VISIBLE
             galleryAdapter.submitList(it)
         } else {
@@ -660,6 +667,8 @@ class DetailUserProfileFragment :
                     isOnline = true
                 }
 
+                isLiveStream = true
+
                 if (isLiveStream) {
                     tvLiveStreamCount.text =
                         (user.loginMemberCount + user.peepingMemberCount).toString()
@@ -668,27 +677,21 @@ class DetailUserProfileFragment :
                     llStatusViewerCount.visibility = GONE
                 }
 
-
                 if (isWaiting || isLiveStream) {
                     llCallConsult.visibility = VISIBLE
                 } else {
                     llCallConsult.visibility = GONE
                 }
-                if(isLiveStream){
-                    llPeep.visibility=VISIBLE
+                if (isLiveStream) {
+                    llPeep.visibility = VISIBLE
+                } else {
+                    llPeep.visibility = GONE
                 }
-                else{
-                    llPeep.visibility=GONE
+                if (isPrivateLiveStream) {
+                    ivPrivateDelivery.visibility = VISIBLE
+                } else {
+                    ivPrivateDelivery.visibility = GONE
                 }
-                if(isPrivateLiveStream){
-                    llPrivateDelivery.visibility= VISIBLE
-                }
-                else{
-                    llPrivateDelivery.visibility= GONE
-                }
-
-
-
 
                 changeStatusIsFavorite(user.isFavorite)
 

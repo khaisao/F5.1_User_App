@@ -163,15 +163,15 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_marginHorizontal="@dimen/margin_4dp"
                     android:id="@+id/iv_bg_message_notice"
-                    app:layout_constraintTop_toBottomOf="@id/ll_ranking"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_4dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/bg_message_notice"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
+                    app:layout_constraintTop_toBottomOf="@id/ll_ranking" />
 
                 <TextView
                     android:id="@+id/tv_message_notice"
@@ -184,9 +184,9 @@
                     android:paddingHorizontal="@dimen/padding_40"
                     android:text="asgawg"
                     android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_bg_message_notice"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_bg_message_notice"
                     app:layout_constraintTop_toTopOf="@id/iv_bg_message_notice" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -333,60 +333,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="bottom"
-            android:paddingBottom="@dimen/margin_24"
+            android:paddingBottom="@dimen/margin_41"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <com.lihang.ShadowLayout
-                android:id="@+id/sl_message"
+            <ImageView
+                android:id="@+id/iv_mesage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_13"
                 android:layout_weight="1"
-                app:hl_cornerRadius="@dimen/margin_22"
-                app:hl_shadowColor="@color/color_dialog_border_shadow"
-                app:hl_shadowLimit="@dimen/margin_6">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/color_2D0B5B"
-                    app:cardCornerRadius="@dimen/margin_22"
-                    app:strokeColor="@color/white"
-                    app:strokeWidth="1dp">
-
-                    <LinearLayout
-                        android:id="@+id/send_consult_ll"
-                        android:layout_width="match_parent"
-                        android:layout_height="52dp"
-                        android:layout_marginHorizontal="@dimen/margin_4dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="visible">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginEnd="@dimen/margin_6"
-                            android:src="@drawable/ic_call" />
-
-                        <TextView
-                            style="@style/text_bold_16"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:shadowColor="@color/color_9A33FF"
-                            android:shadowRadius="18"
-                            android:text="@string/tab_chat"
-                            android:textColor="@color/white" />
-
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-            </com.lihang.ShadowLayout>
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_message_detail" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -524,57 +481,15 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.lihang.ShadowLayout
-                android:id="@+id/sl_private_delivery"
+            <ImageView
+                android:id="@+id/iv_private_delivery"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_13"
                 android:layout_weight="1"
-                android:visibility="visible"
-                app:hl_cornerRadius="@dimen/margin_22"
-                app:hl_shadowColor="@color/color_8096631F"
-                app:hl_shadowLimit="@dimen/margin_6">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/color_3E2222"
-                    app:cardCornerRadius="@dimen/margin_22"
-                    app:strokeColor="@color/white"
-                    app:strokeWidth="1dp">
-
-                    <LinearLayout
-                        android:id="@+id/ll_private_delivery"
-                        android:layout_width="match_parent"
-                        android:layout_height="52dp"
-                        android:layout_marginHorizontal="@dimen/margin_4dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="visible">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginEnd="@dimen/margin_6"
-                            android:src="@drawable/ic_call" />
-
-                        <TextView
-                            style="@style/text_bold_16"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:shadowColor="@color/color_8096631F"
-                            android:shadowRadius="18"
-                            android:text="@string/delivery_request"
-                            android:textColor="@color/white" />
-
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-            </com.lihang.ShadowLayout>
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_request_detail"
+                android:visibility="visible" />
 
         </LinearLayout>
 
