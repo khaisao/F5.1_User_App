@@ -1,12 +1,10 @@
 package jp.careapp.counseling.android.data.network
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import jp.careapp.counseling.android.utils.CallStatus.DEFAULT_CALL_STATUS
-import kotlinx.android.parcel.Parcelize
-import java.util.Date
+import java.io.Serializable
+import java.util.*
 
-@Parcelize
 data class HistoryResponse(
     @SerializedName("code")
     val code: String = "",
@@ -34,4 +32,4 @@ data class HistoryResponse(
     val lastLoginDate: Date?,
     @SerializedName("member_last_login_date")
     val memberLastLoginDate: Date?,
-) : Parcelable
+) : Serializable

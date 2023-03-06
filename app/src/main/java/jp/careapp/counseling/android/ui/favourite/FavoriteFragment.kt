@@ -95,11 +95,10 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
             }
         }
         viewModels.favoriteLoading.observe(
-            viewLifecycleOwner,
-            Observer {
-                showHideLoading(it)
-            }
-        )
+            viewLifecycleOwner
+        ) {
+            showHideLoading(it)
+        }
 
         historyViewModel.isLoading.observe(viewLifecycleOwner) {
             showHideLoading(it)
@@ -145,10 +144,9 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
         viewModels.uiDataResult.observe(
             viewLifecycleOwner,
             Observer {
-                it ?: return@Observer
-                favorites.clear()
-                favorites.addAll(it)
-                adapterFavorite.submitList(it.toMutableList())
+                if (typeFavoriteScreen == BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_FAVORITE) {
+                    adapterFavorite.submitList(it.toMutableList())
+                }
                 adapterFavoriteHome.submitList(it.toMutableList())
             }
         )
@@ -156,13 +154,14 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
         historyViewModel.listHistoryConsultantResult.observe(
             viewLifecycleOwner
         ) {
-            if (it.isEmpty()) {
-                showNoData(true)
-            } else {
-                showNoData(false)
-                adapterHistory.submitList(it.toMutableList())
+            if (typeFavoriteScreen == BUNDLE_KEY.TYPE_HISTORY) {
+                if (it.isEmpty()) {
+                    showNoData(true)
+                } else {
+                    showNoData(false)
+                    adapterHistory.submitList(it.toMutableList())
+                }
             }
-
         }
 
         viewModels.showDialogAction.observe(

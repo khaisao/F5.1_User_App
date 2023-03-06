@@ -77,7 +77,7 @@ class HistoryViewModel @ViewModelInject constructor(
 
     private fun getHistoryMember(page: Int = 1, isShowLoading: Boolean = true) {
         val params: MutableMap<String, Any> = HashMap()
-        params[BUNDLE_KEY.LIMIT] = LIMIT_NUMBER
+        params[BUNDLE_KEY.LIMIT] = 10
         params[BUNDLE_KEY.PAGE] = page
         viewModelScope.launch {
             try {
