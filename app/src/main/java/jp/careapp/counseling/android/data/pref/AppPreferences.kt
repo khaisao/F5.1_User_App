@@ -61,6 +61,11 @@ class AppPreferences @Inject constructor(
         const val PREF_KEY_NICK_NAME = "PREF_KEY_NICK_NAME"
         const val PREF_KEY_CONTENT = "PREF_KEY_CONTENT"
         const val PREF_KEY_PUSH_MAIL = "PREF_KEY_PUSH_MAIL"
+
+        const val PREF_KEY_MEMBER_NICK_NAME = "PREF_KEY_MEMBER_NICK_NAME"
+        const val PREF_KEY_MEMBER_MAIL = "PREF_KEY_MEMBER_MAIL"
+        const val PREF_KEY_MEMBER_AGE = "PREF_KEY_MEMBER_AGE"
+        const val PREF_KEY_MEMBER_BIRTH = "PREF_KEY_MEMBER_BIRTH"
     }
 
     private val mPrefs: SharedPreferences = context.getSharedPreferences(
@@ -104,7 +109,7 @@ class AppPreferences @Inject constructor(
 
     override fun getEmail() = get(PREF_PARAM_EMAIL_USER)
 
-    override fun saveUserInfor(
+    override fun saveUserInfo(
         token: String,
         tokenExpire: String,
         passWord: String,
@@ -411,4 +416,21 @@ class AppPreferences @Inject constructor(
     override fun getAppMode(): Int {
         return mPrefs.getInt(PREF_KEY_IS_REVIEW_MODE, NORMAL_MODE)
     }
+
+    override fun saveMemberInfoEditProfile(name: String, mail: String, age: Int, birth: String) {
+        mPrefs.edit().apply {
+            putString(PREF_KEY_MEMBER_NICK_NAME, name)
+            putString(PREF_KEY_MEMBER_MAIL, mail)
+            putInt(PREF_KEY_MEMBER_AGE, age)
+            putString(PREF_KEY_MEMBER_BIRTH, birth)
+        }.apply()
+    }
+
+    override fun getMemberNickName(): String? = mPrefs.getString(PREF_KEY_MEMBER_NICK_NAME, "")
+
+    override fun getMemberMail(): String? = mPrefs.getString(PREF_KEY_MEMBER_MAIL, "")
+
+    override fun getMemberAge(): Int = mPrefs.getInt(PREF_KEY_MEMBER_AGE, 0)
+
+    override fun getMemberBirth(): String? = mPrefs.getString(PREF_KEY_MEMBER_BIRTH, "")
 }

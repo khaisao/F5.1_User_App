@@ -697,4 +697,11 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
 
     <string name="you_dont_want_to_receive_an_email_for_a_long_time">1週間経ってもご連絡が届かない場合\n・迷惑フォルダに届いている\n・ご登録メールアドレスが間違っている\n・ドメイン指定受信を設定している@peaklive.jpの受信を許可してください</string>
     <string name="back_to_home">ホームに戻る</string>
+    <string name="use_points_guide">料金説明</string>
+    <string name="consumption_points">消費ポイント</string>
+    <string name="use_points_note">※ライブ視聴開始時点で1分目とカウントされ、ポイントが消費されます。</string>
+    <string name="buy_points_here">ポイント購入はコチラ</string>
+    <string name="edit_nick_name">ニックネーム編集</string>
+    <string name="profile">プロフィール</string>
+    <string name="mail_address">メールアドレス</string>
 </resources>

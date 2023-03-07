@@ -4,10 +4,13 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.* // ktlint-disable no-wildcard-imports
 import jp.careapp.core.base.BaseViewModel
+import jp.careapp.core.utils.SingleLiveEvent
+import jp.careapp.counseling.android.data.model.MenuItem
 import jp.careapp.counseling.android.data.model.ParamsUpdateMember
 import jp.careapp.counseling.android.data.model.TypeMember
 import jp.careapp.counseling.android.data.network.ApiObjectResponse
 import jp.careapp.counseling.android.network.ApiInterface
+import jp.careapp.counseling.android.ui.my_page.NMMenuItem
 import jp.careapp.counseling.android.utils.event.Event
 import jp.careapp.counseling.android.utils.result.Result
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +20,8 @@ import kotlinx.coroutines.withContext
 class EditProfileViewModel @ViewModelInject constructor(
     private val apiService: ApiInterface,
     @Assisted
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
+    private val mRepository: EditProfileRepository
 ) : BaseViewModel() {
 
     fun setCurrentName(name: String, params: ParamsUpdateMember) {
@@ -113,6 +117,20 @@ class EditProfileViewModel @ViewModelInject constructor(
         }
     }
     val error: LiveData<Event<String>> = _error
+
+    private val _memberName = MutableLiveData<String>()
+    val memberName: LiveData<String>
+        get() = _memberName
+
+    private val _memberAge = MutableLiveData<String>()
+    val memberAge: LiveData<String>
+        get() = _memberAge
+
+    private val _memberMail = MutableLiveData<String>()
+    val memberMail: LiveData<String>
+        get() = _memberMail
+
+    val mActionState = SingleLiveEvent<EditProfileActionState>()
 }
 
 enum class DestinationEdit {
@@ -127,3 +145,7 @@ data class EditProfile(
     val action: TypeMember,
     val destination: DestinationEdit
 )
+
+sealed class EditProfileActionState {
+
+}

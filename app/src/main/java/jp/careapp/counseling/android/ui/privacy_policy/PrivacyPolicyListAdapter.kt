@@ -1,4 +1,4 @@
-package jp.careapp.counseling.android.ui.my_page.privacy_policy
+package jp.careapp.counseling.android.ui.privacy_policy
 
 import android.view.LayoutInflater
 import android.view.View

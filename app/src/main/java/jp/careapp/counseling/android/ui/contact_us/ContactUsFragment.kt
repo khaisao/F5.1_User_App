@@ -1,4 +1,4 @@
-package jp.careapp.counseling.android.ui.my_page.contact_us
+package jp.careapp.counseling.android.ui.contact_us
 
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint

@@ -11,31 +11,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>() {
 
-//    private lateinit var myPageAdapter: MyPageAdapter1
-//    override val layoutId = R.layout.fragment_mypage
-//    private val viewModels: MyPageViewModel by activityViewModels()
-//    private val mainViewModels: MainViewModel by activityViewModels()
-//    private val editProfileViewModel: EditProfileViewModel by activityViewModels()
-//    val listItem: MutableList<MyPageItem> = mutableListOf()
-//    override fun getVM(): MyPageViewModel = viewModels
-//    var init: Boolean = true
-//    private var troubleSheetBadgePosition = -1
-//
-//    @Inject
-//    lateinit var appNavigation: AppNavigation
-//
-//    @Inject
-//    lateinit var rxPreferences: RxPreferences
-
-//    private val haveTroubleSheet: Boolean
-//        get() = viewModels.uiMember.value?.isHaveTroubleSheet ?: true
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        addItem()
-//        init = true
-//    }
-
     @Inject
     lateinit var appNavigation: AppNavigation
 
@@ -236,6 +211,8 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>() {
 
         mViewModel.mActionState.observe(viewLifecycleOwner) {
             when (it) {
+                is MyPageActionState.NavigateToEditProfile -> appNavigation.openMyPageToEditProfile()
+                is MyPageActionState.NavigateToUsePointsGuide -> appNavigation.openMyPageToUsePointsGuide()
                 is MyPageActionState.NavigateToTermOfService -> appNavigation.openMyPageToTermsOfService()
                 is MyPageActionState.NavigateToPrivacyPolicy -> appNavigation.openMyPageToPrivacyPolicy()
             }

@@ -105,6 +105,20 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_topFragment_to_usePointsGuideFragment"
+            app:destination="@id/usePointsGuideFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_topFragment_to_fragmentEditProfile"
+            app:destination="@id/fragmentEditProfile"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
 
     <action
@@ -368,18 +382,8 @@
     <fragment
         android:id="@+id/fragmentEditProfile"
         android:name="jp.careapp.counseling.android.ui.edit_profile.EditProfileFragment"
-        android:label="FragmentEditProfile">
-        <action
-            android:id="@+id/action_fragmentEditProfile_to_registerNameFragment2"
-            app:destination="@id/registerNameFragment2" />
-    </fragment>
-    <action
-        android:id="@+id/action_tabMyPage_to_fragmentEditProfile"
-        app:destination="@id/fragmentEditProfile" />
-    <fragment
-        android:id="@+id/registerNameFragment2"
-        android:name="jp.careapp.counseling.android.ui.registerName.RegisterNameFragment"
-        android:label="RegisterNameFragment" />
+        android:label="FragmentEditProfile"
+        tools:layout="@layout/fragment_edit_profile" />
 
     <fragment
         android:id="@+id/Emailfragment"
@@ -806,13 +810,18 @@
     </fragment>
     <fragment
         android:id="@+id/termsOfServiceFragment"
-        android:name="jp.careapp.counseling.android.ui.my_page.terms_of_service.TermsOfServiceFragment"
+        android:name="jp.careapp.counseling.android.ui.terms_of_service.TermsOfServiceFragment"
         android:label="TermsOfServiceFragment"
         tools:layout="@layout/fragment_terms_of_service" />
     <fragment
         android:id="@+id/privacyPolicyFragment"
-        android:name="jp.careapp.counseling.android.ui.my_page.privacy_policy.PrivacyPolicyFragment"
+        android:name="jp.careapp.counseling.android.ui.privacy_policy.PrivacyPolicyFragment"
         android:label="PrivacyPolicyFragment"
         tools:layout="@layout/fragment_privacy_policy" />
+    <fragment
+        android:id="@+id/usePointsGuideFragment"
+        android:name="jp.careapp.counseling.android.ui.use_points_guide.UsePointsGuideFragment"
+        android:label="UsePointsGuideFragment"
+        tools:layout="@layout/fragment_use_points_guide" />
 
 </navigation>

@@ -15,7 +15,7 @@ sealed class NMMenuItem {
 
 object NMMenuItemKey {
     const val BUY_POINTS = 1
-    const val PROFILE = 2
+    const val EDIT_PROFILE = 2
     const val BLOCK_LIST = 3
     const val SETTING_PUSH = 4
     const val USE_POINTS_GUIDE = 5

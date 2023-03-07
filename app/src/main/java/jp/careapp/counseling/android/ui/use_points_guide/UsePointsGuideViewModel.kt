@@ -1,8 +1,10 @@
-package jp.careapp.counseling.android.ui.my_page.contact_us
+package jp.careapp.counseling.android.ui.use_points_guide
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ContactUsViewModel @Inject constructor() : BaseViewModel()
+class UsePointsGuideViewModel @Inject constructor() : BaseViewModel() {
+
+}

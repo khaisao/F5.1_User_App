@@ -1,4 +1,4 @@
-package jp.careapp.counseling.android.ui.my_page.contact_us.confirm
+package jp.careapp.counseling.android.ui.contact_us.confirm
 
 import jp.careapp.counseling.android.network.ApiInterface
 import javax.inject.Inject

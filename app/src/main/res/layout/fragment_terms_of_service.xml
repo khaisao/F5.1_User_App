@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:background="#0d002c"
         android:orientation="vertical"
-        tools:context=".android.ui.my_page.terms_of_service.TermsOfServiceFragment">
+        tools:context=".android.ui.terms_of_service.TermsOfServiceFragment">
 
         <jp.careapp.counseling.android.utils.customView.ToolBarCommon
             android:id="@+id/toolBar"
@@ -29,6 +29,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="32dp"
             android:orientation="vertical"
+            android:overScrollMode="never"
             android:paddingHorizontal="16dp"
             app:itemAnimator="@{null}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

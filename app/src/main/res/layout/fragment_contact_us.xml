@@ -5,7 +5,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".android.ui.my_page.contact_us.ContactUsFragment">
+        tools:context=".android.ui.contact_us.ContactUsFragment">
 
         <!-- TODO: Update blank fragment layout -->
         <TextView

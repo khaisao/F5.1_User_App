@@ -253,4 +253,6 @@ interface AppNavigation : BaseNavigator {
     fun openMyPageToTermsOfService(bundle: Bundle? = null)
 
     fun openMyPageToPrivacyPolicy(bundle: Bundle? = null)
+
+    fun openMyPageToUsePointsGuide(bundle: Bundle? = null)
 }

@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:background="#0d002c"
         android:orientation="vertical"
-        tools:context=".android.ui.my_page.contact_us.finish.ContactUsFinishFragment">
+        tools:context=".android.ui.contact_us.finish.ContactUsFinishFragment">
 
         <jp.careapp.counseling.android.utils.customView.ToolBarCommon
             android:id="@+id/toolBar"

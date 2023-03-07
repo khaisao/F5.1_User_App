@@ -1,4 +1,4 @@
-package jp.careapp.counseling.android.ui.my_page.privacy_policy
+package jp.careapp.counseling.android.ui.privacy_policy
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

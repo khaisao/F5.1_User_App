@@ -5,7 +5,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".android.ui.my_page.contact_us.confirm.ContactUsConfirmFragment">
+        tools:context=".android.ui.contact_us.confirm.ContactUsConfirmFragment">
 
         <!-- TODO: Update blank fragment layout -->
         <TextView

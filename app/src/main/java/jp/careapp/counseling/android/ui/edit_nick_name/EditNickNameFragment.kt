@@ -1,41 +1,29 @@
-package jp.careapp.counseling.android.ui.my_page.terms_of_service
+package jp.careapp.counseling.android.ui.edit_nick_name
 
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.navigation.AppNavigation
-import jp.careapp.counseling.android.ui.my_page.privacy_policy.PrivacyPolicyListAdapter
 import jp.careapp.counseling.android.utils.customView.ToolBarCommon
-import jp.careapp.counseling.databinding.FragmentTermsOfServiceBinding
+import jp.careapp.counseling.databinding.FragmentEditNickNameBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TermsOfServiceFragment :
-    BaseFragment<FragmentTermsOfServiceBinding, TermsOfServiceViewModel>() {
+class EditNickNameFragment : BaseFragment<FragmentEditNickNameBinding, EditNickNameViewModel>() {
 
     @Inject
     lateinit var appNavigation: AppNavigation
 
-    override val layoutId: Int = R.layout.fragment_terms_of_service
+    override val layoutId: Int = R.layout.fragment_edit_nick_name
 
-    private val mViewModel: TermsOfServiceViewModel by viewModels()
+    private val mViewModel: EditNickNameViewModel by viewModels()
     override fun getVM() = mViewModel
-
-    private val mAdapter by lazy { PrivacyPolicyListAdapter() }
 
     override fun initView() {
         super.initView()
 
         setUpToolBar()
-
-        binding.rcvTermsOfService.apply {
-            itemAnimator = null
-            adapter = mAdapter
-        }
-        mViewModel.dataLiveData.observe(viewLifecycleOwner) {
-            mAdapter.submitList(it)
-        }
     }
 
     private fun setUpToolBar() {

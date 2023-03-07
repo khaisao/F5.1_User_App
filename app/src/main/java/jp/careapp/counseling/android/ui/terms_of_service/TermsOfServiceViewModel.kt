@@ -1,10 +1,10 @@
-package jp.careapp.counseling.android.ui.my_page.terms_of_service
+package jp.careapp.counseling.android.ui.terms_of_service
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
-import jp.careapp.counseling.android.ui.my_page.privacy_policy.PrivacyPolicyModelRecyclerView
+import jp.careapp.counseling.android.ui.privacy_policy.PrivacyPolicyModelRecyclerView
 import javax.inject.Inject
 
 @HiltViewModel

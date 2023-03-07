@@ -125,7 +125,7 @@ class TroubleSheetViewModel @ViewModelInject constructor(
                     if (it.errors.isEmpty()) {
                         val userResponse = it.dataResponse
                         userResponse.let {
-                            rxPreferences.saveUserInfor(
+                            rxPreferences.saveUserInfo(
                                 userResponse.token,
                                 userResponse.tokenExpire,
                                 userResponse.passWord,
@@ -156,7 +156,7 @@ class TroubleSheetViewModel @ViewModelInject constructor(
                     if (it.errors.isEmpty()) {
                         val userResponse = it.dataResponse
                         userResponse.let {
-                            rxPreferences.saveUserInfor(
+                            rxPreferences.saveUserInfo(
                                 userResponse.token,
                                 userResponse.tokenExpire,
                                 userResponse.passWord,

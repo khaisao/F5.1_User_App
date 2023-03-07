@@ -28,7 +28,7 @@ class StartViewModel @ViewModelInject constructor(
                         val userResponse = it.dataResponse
                         val memberCode = userResponse.memberCode
                         userResponse.let {
-                            rxPreferences.saveUserInfor(
+                            rxPreferences.saveUserInfo(
                                 userResponse.token,
                                 userResponse.tokenExpire,
                                 password,

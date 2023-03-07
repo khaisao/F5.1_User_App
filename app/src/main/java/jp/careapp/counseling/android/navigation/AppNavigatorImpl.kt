@@ -138,7 +138,7 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     }
 
     override fun openMyPageToEditProfile(bundle: Bundle?) {
-        openScreen(R.id.action_tabMyPage_to_fragmentEditProfile, bundle)
+        openScreen(R.id.action_topFragment_to_fragmentEditProfile, bundle)
     }
 
     override fun openContactConfirmToContactDone(bundle: Bundle?) {
@@ -503,5 +503,9 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openMyPageToPrivacyPolicy(bundle: Bundle?) {
         openScreen(R.id.action_topFragment_to_privacyPolicyFragment, bundle)
+    }
+
+    override fun openMyPageToUsePointsGuide(bundle: Bundle?) {
+        openScreen(R.id.action_topFragment_to_usePointsGuideFragment, bundle)
     }
 }

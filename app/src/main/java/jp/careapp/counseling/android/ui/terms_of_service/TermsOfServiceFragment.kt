@@ -1,23 +1,25 @@
-package jp.careapp.counseling.android.ui.my_page.privacy_policy
+package jp.careapp.counseling.android.ui.terms_of_service
 
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.navigation.AppNavigation
+import jp.careapp.counseling.android.ui.privacy_policy.PrivacyPolicyListAdapter
 import jp.careapp.counseling.android.utils.customView.ToolBarCommon
-import jp.careapp.counseling.databinding.FragmentPrivacyPolicyBinding
+import jp.careapp.counseling.databinding.FragmentTermsOfServiceBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PrivacyPolicyFragment : BaseFragment<FragmentPrivacyPolicyBinding, PrivacyPolicyViewModel>() {
+class TermsOfServiceFragment :
+    BaseFragment<FragmentTermsOfServiceBinding, TermsOfServiceViewModel>() {
 
     @Inject
     lateinit var appNavigation: AppNavigation
 
-    override val layoutId: Int = R.layout.fragment_privacy_policy
+    override val layoutId: Int = R.layout.fragment_terms_of_service
 
-    private val mViewModel: PrivacyPolicyViewModel by viewModels()
+    private val mViewModel: TermsOfServiceViewModel by viewModels()
     override fun getVM() = mViewModel
 
     private val mAdapter by lazy { PrivacyPolicyListAdapter() }
@@ -27,9 +29,9 @@ class PrivacyPolicyFragment : BaseFragment<FragmentPrivacyPolicyBinding, Privacy
 
         setUpToolBar()
 
-        binding.rcvPrivacyPolicy.apply {
-            itemAnimator = null
+        binding.rcvTermsOfService.apply {
             adapter = mAdapter
+            setHasFixedSize(true)
         }
         mViewModel.dataLiveData.observe(viewLifecycleOwner) {
             mAdapter.submitList(it)
