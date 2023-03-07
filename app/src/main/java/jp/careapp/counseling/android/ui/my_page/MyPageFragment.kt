@@ -29,52 +29,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>() {
             adapter = mAdapter
             setHasFixedSize(true)
         }
-
-//        viewModels.forceRefresh()
-//        viewModels.uiMember.observe(
-//            viewLifecycleOwner,
-//            Observer {
-//                it ?: return@Observer
-//                binding.apply {
-//                    member = it
-//                    executePendingBindings()
-//                }
-//                if (it.disPlay == MODE_USER.MODE_ALL && it.firstBuyCredit) {
-//                    binding.pointFree.visibility = View.VISIBLE
-//                } else {
-//                    binding.pointFree.visibility = View.GONE
-//                }
-//                binding.accountTransfer.isVisible = it.signupStatus == SignedUpStatus.LOGIN_WITHOUT_EMAIL
-//                rxPreferences.setSignedUpStatus(it.signupStatus ?: SignedUpStatus.UNKNOWN)
-//            }
-//        )
-//
-//        viewModels.needUpdateTroubleSheetBadge.observe(viewLifecycleOwner, {
-//            if (it) {
-//                updateTroubleSheetMenu()
-//            }
-//        })
-//
-//        viewModels.memberLoading.observe(
-//            viewLifecycleOwner,
-//            Observer {
-////                showHideLoading(it)
-//            }
-//        )
-//        viewModels.uiNotification.observe(
-//            viewLifecycleOwner,
-//            Observer { noti ->
-//                if (init) {
-//                    if (noti.count != -1) {
-//                        listItem.find { it.destination == Destination.NEWS }?.bage = noti.count
-//                        myPageAdapter.submitList(listItem)
-//                    }
-//                } else {
-//                    listItem.find { it.destination == Destination.NEWS }?.bage = 0
-//                    myPageAdapter.submitList(listItem)
-//                }
-//            }
-//        )
     }
 
 //    @SuppressLint("UseCompatLoadingForDrawables")
@@ -180,24 +134,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>() {
 //                    return@Observer
 //            }
 //        )
-//    }
-
-//
-//    private fun updateTroubleSheetMenu() {
-//        if (troubleSheetBadgePosition != -1) {
-//            context?.getDrawableCompat(R.drawable.ic_icomypagesheet)?.let {
-//                listItem[troubleSheetBadgePosition] = MyPageItem(
-//                    false,
-//                    0,
-//                    it,
-//                    getString(R.string.sheet),
-//                    Destination.SHEET,
-//                    isShowWarning = !haveTroubleSheet
-//                )
-//            }
-//            binding.rvAction.itemAnimator = null
-//            myPageAdapter.notifyItemChanged(troubleSheetBadgePosition)
-//        }
 //    }
 
     override fun bindingStateView() {
