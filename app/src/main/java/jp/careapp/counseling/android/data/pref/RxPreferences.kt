@@ -149,7 +149,7 @@ interface RxPreferences {
 
     fun getAppMode(): Int
 
-    fun saveMemberInfoEditProfile(name: String, mail: String, age: Int, birth: String)
+    fun saveMemberInfoEditProfile(name: String, mail: String, age: Int, birth: String, sex: Int)
 
     fun getMemberNickName(): String?
 
@@ -158,4 +158,10 @@ interface RxPreferences {
     fun getMemberAge(): Int
 
     fun getMemberBirth(): String?
+
+    fun getMemberSex(): Int
+
+    fun saveMemberName(name: String)
+
+    fun saveMemberMail(mail: String)
 }

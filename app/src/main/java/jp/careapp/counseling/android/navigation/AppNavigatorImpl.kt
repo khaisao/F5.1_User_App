@@ -508,4 +508,12 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     override fun openMyPageToUsePointsGuide(bundle: Bundle?) {
         openScreen(R.id.action_topFragment_to_usePointsGuideFragment, bundle)
     }
+
+    override fun openEditProfileToEditNickName(bundle: Bundle?) {
+        openScreen(R.id.action_fragmentEditProfile_to_editNickNameFragment, bundle)
+    }
+
+    override fun openMyPageToBlocked(bundle: Bundle?) {
+        openScreen(R.id.action_topFragment_to_blockedFragment, bundle)
+    }
 }

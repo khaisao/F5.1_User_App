@@ -255,4 +255,8 @@ interface AppNavigation : BaseNavigator {
     fun openMyPageToPrivacyPolicy(bundle: Bundle? = null)
 
     fun openMyPageToUsePointsGuide(bundle: Bundle? = null)
+
+    fun openEditProfileToEditNickName(bundle: Bundle? = null)
+
+    fun openMyPageToBlocked(bundle: Bundle? = null)
 }

@@ -66,6 +66,7 @@ class AppPreferences @Inject constructor(
         const val PREF_KEY_MEMBER_MAIL = "PREF_KEY_MEMBER_MAIL"
         const val PREF_KEY_MEMBER_AGE = "PREF_KEY_MEMBER_AGE"
         const val PREF_KEY_MEMBER_BIRTH = "PREF_KEY_MEMBER_BIRTH"
+        const val PREF_KEY_MEMBER_SEX = "PREF_KEY_MEMBER_SEX"
     }
 
     private val mPrefs: SharedPreferences = context.getSharedPreferences(
@@ -417,12 +418,19 @@ class AppPreferences @Inject constructor(
         return mPrefs.getInt(PREF_KEY_IS_REVIEW_MODE, NORMAL_MODE)
     }
 
-    override fun saveMemberInfoEditProfile(name: String, mail: String, age: Int, birth: String) {
+    override fun saveMemberInfoEditProfile(
+        name: String,
+        mail: String,
+        age: Int,
+        birth: String,
+        sex: Int
+    ) {
         mPrefs.edit().apply {
             putString(PREF_KEY_MEMBER_NICK_NAME, name)
             putString(PREF_KEY_MEMBER_MAIL, mail)
             putInt(PREF_KEY_MEMBER_AGE, age)
             putString(PREF_KEY_MEMBER_BIRTH, birth)
+            putInt(PREF_KEY_MEMBER_SEX, sex)
         }.apply()
     }
 
@@ -433,4 +441,14 @@ class AppPreferences @Inject constructor(
     override fun getMemberAge(): Int = mPrefs.getInt(PREF_KEY_MEMBER_AGE, 0)
 
     override fun getMemberBirth(): String? = mPrefs.getString(PREF_KEY_MEMBER_BIRTH, "")
+
+    override fun getMemberSex(): Int = mPrefs.getInt(PREF_KEY_MEMBER_SEX, 0)
+
+    override fun saveMemberName(name: String) {
+        mPrefs.edit().putString(PREF_KEY_MEMBER_NICK_NAME, name).apply()
+    }
+
+    override fun saveMemberMail(mail: String) {
+        mPrefs.edit().putString(PREF_KEY_MEMBER_MAIL, mail).apply()
+    }
 }

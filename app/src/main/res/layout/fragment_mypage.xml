@@ -37,7 +37,7 @@
             android:layout_marginTop="6dp"
             android:fontFamily="@font/hiragino_sans_w3"
             android:gravity="center"
-            android:text="@{Integer.toString(viewModel.memberAge)}"
+            android:text="@{viewModel.memberAge}"
             android:textColor="#f0f0f0"
             android:textSize="12sp"
             tools:text="２２歳" />

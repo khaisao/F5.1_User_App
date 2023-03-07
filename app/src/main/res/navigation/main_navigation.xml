@@ -119,6 +119,13 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_topFragment_to_blockedFragment"
+            app:destination="@id/blockedFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
 
     <action
@@ -383,7 +390,15 @@
         android:id="@+id/fragmentEditProfile"
         android:name="jp.careapp.counseling.android.ui.edit_profile.EditProfileFragment"
         android:label="FragmentEditProfile"
-        tools:layout="@layout/fragment_edit_profile" />
+        tools:layout="@layout/fragment_edit_profile">
+        <action
+            android:id="@+id/action_fragmentEditProfile_to_editNickNameFragment"
+            app:destination="@id/editNickNameFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
 
     <fragment
         android:id="@+id/Emailfragment"
@@ -470,7 +485,8 @@
     <fragment
         android:id="@+id/blockedFragment"
         android:name="jp.careapp.counseling.android.ui.blocked.BlockedFragment"
-        android:label="BlockedFragment" />
+        android:label="BlockedFragment"
+        tools:layout="@layout/fragment_blocked" />
     <fragment
         android:id="@+id/withdrawalFragment"
         android:name="jp.careapp.counseling.android.ui.withdrawal.WithdrawalFragment"
@@ -823,5 +839,10 @@
         android:name="jp.careapp.counseling.android.ui.use_points_guide.UsePointsGuideFragment"
         android:label="UsePointsGuideFragment"
         tools:layout="@layout/fragment_use_points_guide" />
+    <fragment
+        android:id="@+id/editNickNameFragment"
+        android:name="jp.careapp.counseling.android.ui.edit_nick_name.EditNickNameFragment"
+        android:label="EditNickNameFragment"
+        tools:layout="@layout/fragment_edit_nick_name" />
 
 </navigation>

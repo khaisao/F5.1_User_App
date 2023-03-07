@@ -9,13 +9,14 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edt"
-            style="@style/text_bold_14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/color_978DFF"
+            android:background="@drawable/bg_custom_edt_counter"
+            android:fontFamily="@font/hiragino_sans_w3"
+            android:gravity="center_vertical"
             android:maxLength="10"
-            android:paddingVertical="14dp"
-            android:textColor="@color/white"
+            android:padding="16dp"
+            android:textColor="#f0f0f0"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,18 +25,20 @@
 
         <TextView
             android:id="@+id/tvCounter"
-            style="@style/text_11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="false"
             android:focusable="false"
+            android:gravity="center"
+            android:fontFamily="@font/hiragino_sans_w3"
+            android:layout_marginEnd="16dp"
             android:text="@string/count_default"
-            android:textColor="@color/color_70658D"
+            android:textColor="#70658d"
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="@id/edt"
             app:layout_constraintEnd_toEndOf="@id/edt"
             app:layout_constraintTop_toTopOf="@id/edt"
-            tools:text="0/10" />
+            tools:text="0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

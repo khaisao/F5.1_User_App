@@ -131,6 +131,12 @@ class EditProfileViewModel @ViewModelInject constructor(
         get() = _memberMail
 
     val mActionState = SingleLiveEvent<EditProfileActionState>()
+
+    fun getData() {
+        _memberName.value = mRepository.getMemberNickName()
+        _memberMail.value = mRepository.getMemberMail()
+        _memberAge.value = "${mRepository.getMemberAge()}歳"
+    }
 }
 
 enum class DestinationEdit {
@@ -147,5 +153,5 @@ data class EditProfile(
 )
 
 sealed class EditProfileActionState {
-
+    object UpdateMemberInfoSuccess : EditProfileActionState()
 }

@@ -1,11 +1,15 @@
 package jp.careapp.counseling.android.ui.edit_profile
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
+import jp.careapp.core.utils.DateUtil
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.MemberResponse
@@ -30,34 +34,29 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
     override fun getVM() = mViewModel
 
 
-    @Inject
-    lateinit var rxPreferences: RxPreferences
-    private var bundle: MemberResponse? = null
-    private var codeScreen = 0
-    private var email = ""
-
-    var mCalendar = Calendar.getInstance()
+//    @Inject
+//    lateinit var rxPreferences: RxPreferences
+//    private var bundle: MemberResponse? = null
+//    private var codeScreen = 0
 
     override fun initView() {
         super.initView()
-        bundle = arguments?.getParcelable("member")
-        arguments?.let {
-            if (it.containsKey(BUNDLE_KEY.CODE_SCREEN)) {
-                codeScreen = it.getInt(BUNDLE_KEY.CODE_SCREEN)
-            }
-        }
+//        bundle = arguments?.getParcelable("member")
+//        arguments?.let {
+//            if (it.containsKey(BUNDLE_KEY.CODE_SCREEN)) {
+//                codeScreen = it.getInt(BUNDLE_KEY.CODE_SCREEN)
+//            }
+//        }
 
         binding.viewModel = mViewModel
 
+        mViewModel.getData()
+
         setUpToolBar()
 
-//        binding.llMemberName.setOnClickListener { if (!isDoubleClick) }
+        binding.llMemberName.setOnClickListener { if (!isDoubleClick) appNavigation.openEditProfileToEditNickName() }
 
-        binding.llMemberBirth.setOnClickListener {
-            if (!isDoubleClick) {
-
-            }
-        }
+        binding.llMemberBirth.setOnClickListener { if (!isDoubleClick) showDatePickerDialog() }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
@@ -66,7 +65,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
 
         mViewModel.mActionState.observe(viewLifecycleOwner) {
             when (it) {
-//                is EditProfileActionState.UpdateMemberInfoSuccess -> showDialogUpdateMemberInfoSuccess()
+                is EditProfileActionState.UpdateMemberInfoSuccess -> showDialogUpdateMemberInfoSuccess()
             }
         }
 
@@ -199,23 +198,6 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
 //                showHideLoading(it)
 //            }
 //        )
-        mViewModel.navigateToEditProfileFragmentAction.observe(
-            viewLifecycleOwner,
-            EventObserver {
-                val data = Bundle().apply {
-                    putString("data", it.data)
-                    putString("action", it.action.toString())
-                }
-                when (it.destination) {
-//                    DestinationEdit.NAME -> {
-//                        findNavController().navigate(
-//                            R.id.action_fragmentEditProfile_to_registerNameFragment2,
-//                            data
-//                        )
-//                    }
-                }
-            }
-        )
     }
 
 //    override fun onResume() {
@@ -269,5 +251,44 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
 //                }歳"
 //                check = false
 //            }
+    }
+
+    private fun showDatePickerDialog() {
+        val mCalendar = Calendar.getInstance()
+        val date = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+            if (mCalendar.get(Calendar.YEAR) != year
+                || mCalendar.get(Calendar.MONTH) != monthOfYear
+                || mCalendar.get(Calendar.DAY_OF_MONTH) != dayOfMonth
+            ) {
+                mCalendar.set(Calendar.YEAR, year)
+                mCalendar.set(Calendar.MONTH, monthOfYear)
+                mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+//                    mViewModel.setParamProfile(
+//                        ParamsUpdateMember(
+//                            rs.name,
+//                            rs.sex,
+//                            DateUtil.getDateTimeDisplayByFormat(
+//                                DateUtil.DATE_FORMAT_3,
+//                                mCalendar
+//                            )
+//                        )
+//                    )
+                Log.e(
+                    "haidang",
+                    "${DateUtil.getDateTimeDisplayByFormat(DateUtil.DATE_FORMAT_3, mCalendar)}"
+                )
+            }
+        }
+        DatePickerDialog(
+            requireContext(),
+            AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,
+            date,
+            mCalendar.get(Calendar.YEAR),
+            mCalendar.get(Calendar.MONTH),
+            mCalendar.get(Calendar.DAY_OF_MONTH)
+        ).apply {
+            datePicker.maxDate = System.currentTimeMillis() - 568111536000L
+            show()
+        }
     }
 }

@@ -30,8 +30,8 @@ class MyPageViewModel @Inject constructor(
     val memberName: LiveData<String>
         get() = _memberName
 
-    private val _memberAge = MutableLiveData<Int>()
-    val memberAge: LiveData<Int>
+    private val _memberAge = MutableLiveData<String>()
+    val memberAge: LiveData<String>
         get() = _memberAge
 
     private val _memberPoint = MutableLiveData<Int>()
@@ -110,11 +110,15 @@ class MyPageViewModel @Inject constructor(
                     if (response.errors.isEmpty()) {
                         response.dataResponse.let {
                             mRepository.saveMemberInfoEditProfile(
-                                it.name, it.mail, it.age, it.birth
+                                it.name,
+                                it.mail,
+                                it.age,
+                                it.birth,
+                                it.sex
                             )
                             withContext(Dispatchers.Main) {
                                 _memberName.value = mRepository.getMemberNickName()
-                                _memberAge.value = mRepository.getMemberAge()
+                                _memberAge.value = "${mRepository.getMemberAge()}歳"
                                 _memberPoint.value = it.point
                             }
                         }
@@ -136,7 +140,7 @@ class MyPageViewModel @Inject constructor(
         when (menuItem.key) {
             BUY_POINTS -> {}
             EDIT_PROFILE -> mActionState.value = MyPageActionState.NavigateToEditProfile
-            BLOCK_LIST -> {}
+            BLOCK_LIST -> mActionState.value = MyPageActionState.NavigateToBlocked
             SETTING_PUSH -> {}
             USE_POINTS_GUIDE -> mActionState.value = MyPageActionState.NavigateToUsePointsGuide
             TERMS_OF_SERVICE -> mActionState.value = MyPageActionState.NavigateToTermOfService
@@ -150,6 +154,8 @@ class MyPageViewModel @Inject constructor(
 sealed class MyPageActionState {
 
     object NavigateToEditProfile : MyPageActionState()
+
+    object NavigateToBlocked : MyPageActionState()
     object NavigateToUsePointsGuide : MyPageActionState()
     object NavigateToTermOfService : MyPageActionState()
     object NavigateToPrivacyPolicy : MyPageActionState()

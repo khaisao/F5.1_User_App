@@ -16,15 +16,15 @@ class EditEmailfragment : BaseFragment<FragmentEditEmailBinding, EditEmailViewMo
         super.bindingStateView()
         email = arguments?.getString("email") ?: ""
 
-        binding.etInputEmail.setText(email)
-        binding.apply {
-            appBar.also {
-                it.btnLeft.setOnClickListener {
-                    findNavController().navigateUp()
-                }
-                it.btnLeft.setImageDrawable(resources.getDrawable(R.drawable.ic_back_left))
-                it.tvTitle.text = getString(R.string.sub_title_edt_reregister)
-            }
-        }
+//        binding.etInputEmail.setText(email)
+//        binding.apply {
+//            appBar.also {
+//                it.btnLeft.setOnClickListener {
+//                    findNavController().navigateUp()
+//                }
+//                it.btnLeft.setImageDrawable(resources.getDrawable(R.drawable.ic_back_left))
+//                it.tvTitle.text = getString(R.string.sub_title_edt_reregister)
+//            }
+//        }
     }
 }

@@ -1,59 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="loading"
             type="Boolean" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:orientation="vertical"
-        android:background="@color/color_background_common"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#0d002c"
+        android:orientation="vertical">
 
-        <include
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/app_bar"
-            layout="@layout/tool_bar_common"
+        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+            android:id="@+id/toolBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:color_title="@color/color_F0F0F0"
+            app:src_left="@drawable/ic_arrow_left"
+            app:string_title="@string/blocked_list" />
+
         <androidx.recyclerview.widget.RecyclerView
-            app:layout_constraintTop_toBottomOf="@+id/app_bar"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/rv_blocked"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_0sdp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:visibility="gone" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvNoData"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_30"
             android:layout_marginTop="@dimen/height_80"
-            android:layout_marginEnd="@dimen/margin_30"
-            android:gravity="center_horizontal"
-            android:visibility="gone"
-            android:textSize="@dimen/text_size_16"
+            android:fontFamily="@font/hiragino_sans_w3"
+            android:gravity="center"
             android:text="@string/no_block_data"
-            android:textColor="@color/color_6D5D9A"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/app_bar"
-            app:layout_goneMarginEnd="@dimen/margin_24" />
-
-        <ProgressBar
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:goneIf="@{!loading}"
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:textColor="#70658d"
+            android:textSize="14sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </LinearLayout>
 </layout>

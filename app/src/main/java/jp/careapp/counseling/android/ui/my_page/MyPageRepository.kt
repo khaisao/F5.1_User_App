@@ -11,8 +11,13 @@ class MyPageRepository @Inject constructor(
 
     suspend fun getMemberInfo() = apiInterface.getMember()
 
-    fun saveMemberInfoEditProfile(nickName: String, mail: String, age: Int, birth: String) =
-        rxPreferences.saveMemberInfoEditProfile(nickName, mail, age, birth)
+    fun saveMemberInfoEditProfile(
+        nickName: String,
+        mail: String,
+        age: Int,
+        birth: String,
+        sex: Int
+    ) = rxPreferences.saveMemberInfoEditProfile(nickName, mail, age, birth, sex)
 
     fun getMemberNickName() = rxPreferences.getMemberNickName()
 

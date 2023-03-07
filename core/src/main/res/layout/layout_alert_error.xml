@@ -112,7 +112,7 @@
                 tools:text="@string/ok"
                 tools:visibility="gone" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnOk"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
