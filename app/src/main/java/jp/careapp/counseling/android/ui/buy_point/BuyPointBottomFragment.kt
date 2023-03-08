@@ -139,7 +139,7 @@ class BuyPointBottomFragment : BottomSheetDialogFragment() {
         }
         when (typeScreen) {
             Define.BUY_POINT_FIRST -> {
-                binding.titlePointTv.text = getString(R.string.let_buy_point)
+                binding.titlePointTv.text = getString(R.string.point_purchase)
             }
             else -> {
                 binding.titlePointTv.text = getString(R.string.insufficient_points)
@@ -281,8 +281,7 @@ class BuyPointBottomFragment : BottomSheetDialogFragment() {
         val df = DecimalFormat()
         df.decimalFormatSymbols = symbols
         df.groupingSize = 3
-        binding.countPointTv.text =
-            String.format(getString(R.string.format_point), df.format(point))
+
     }
 
     private var handleBuyPoint: HandleBuyPoint? = null

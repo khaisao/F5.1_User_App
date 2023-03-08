@@ -1,6 +1,7 @@
 package jp.careapp.counseling.android.ui.favourite
 
 import android.os.Bundle
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.* // ktlint-disable no-wildcard-imports
 import jp.careapp.core.base.BaseViewModel
@@ -15,7 +16,10 @@ import jp.careapp.counseling.android.utils.extensions.combine
 import jp.careapp.counseling.android.utils.result.Result
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import jp.careapp.counseling.android.data.network.HistoryResponse
+import jp.careapp.counseling.android.ui.home.LIMIT_NUMBER
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class FavoriteViewModel @ViewModelInject constructor(
@@ -100,6 +104,7 @@ class FavoriteViewModel @ViewModelInject constructor(
             Result.Error(e)
         }
     }
+
 
     private val _blockedResult: LiveData<Result<ApiObjectResponse<List<FavoriteResponse>>>> =
         _refreshFavorite.switchMap {

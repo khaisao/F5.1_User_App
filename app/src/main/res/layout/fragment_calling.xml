@@ -4,277 +4,133 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/color_background_modal">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivBackground"
+        <com.lihang.ShadowLayout
+            android:id="@+id/sl_input_email"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:scaleX="1.15"
-            android:scaleY="1.15" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/black_65" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivMinimum"
-            style="@style/size_auto"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="32dp"
-            android:padding="8dp"
-            android:src="@drawable/ic_minimum"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.09" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivAvatar"
-            style="@style/size_auto"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/ic_avatar_default"
-            app:layout_constraintBottom_toTopOf="@+id/tvName"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintWidth_percent="0.394" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvName"
-            style="@style/text_bold"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/tvDuration"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivAvatar"
-            app:layout_constraintVertical_chainStyle="packed"
-            tools:text="なまえ" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDuration"
-            style="@style/text_normal"
-            android:layout_marginTop="12dp"
-            android:textColor="@color/white"
-            android:textSize="13sp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@+id/ivSheet"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvName"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivMotion"
-            style="@style/size_auto"
-            android:src="@drawable/ic_motion_calling"
-            app:layout_constraintBottom_toBottomOf="@+id/tvDuration"
-            app:layout_constraintDimensionRatio="54:6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvDuration"
-            app:layout_constraintWidth_percent="0.144" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivSheet"
-            style="@style/size_auto"
-            android:layout_marginStart="37dp"
-            android:layout_marginTop="32dp"
-            android:src="@drawable/ic_call_sheet"
-            app:layout_constraintBottom_toTopOf="@+id/tvSheet"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toStartOf="@+id/ivMessage"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDuration"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintWidth_percent="0.221" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvSheet"
-            style="@style/text_normal"
-            android:layout_marginTop="10dp"
-            android:text="@string/sheet"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_12"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/tvNote"
-            app:layout_constraintEnd_toEndOf="@+id/ivSheet"
-            app:layout_constraintStart_toStartOf="@+id/ivSheet"
-            app:layout_constraintTop_toBottomOf="@+id/ivSheet"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/groupSheet"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="ivSheet, tvSheet" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivMessage"
-            style="@style/size_auto"
-            android:src="@drawable/ic_call_message"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toStartOf="@+id/ivBuyPoint"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toEndOf="@+id/ivSheet"
-            app:layout_constraintTop_toTopOf="@+id/ivSheet"
-            app:layout_constraintWidth_percent="0.221" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvMessage"
-            style="@style/text_normal"
-            android:layout_marginTop="10dp"
-            android:text="@string/tab_chat"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_12"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="@+id/ivMessage"
-            app:layout_constraintStart_toStartOf="@+id/ivMessage"
-            app:layout_constraintTop_toBottomOf="@+id/ivMessage" />
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/groupMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:constraint_referenced_ids="ivMessage, tvMessage" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivBuyPoint"
-            style="@style/size_auto"
-            android:layout_marginEnd="37dp"
-            android:src="@drawable/ic_call_buy_points"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toEndOf="@+id/ivMessage"
-            app:layout_constraintTop_toTopOf="@+id/ivSheet"
-            app:layout_constraintWidth_percent="0.221" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvBuyPoint"
-            style="@style/text_normal"
-            android:layout_marginTop="10dp"
-            android:text="@string/buy_point"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_12"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="@+id/ivBuyPoint"
-            app:layout_constraintStart_toStartOf="@+id/ivBuyPoint"
-            app:layout_constraintTop_toBottomOf="@+id/ivBuyPoint" />
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/groupBuyPoint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:constraint_referenced_ids="ivBuyPoint, tvBuyPoint" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvNote"
-            style="@style/text_normal"
-            android:layout_width="wrap_content"
-            android:layout_marginHorizontal="32dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bg_radius_6_white_20"
-            android:padding="10dp"
-            android:text="@string/call_note"
-            android:textColor="@color/white_60"
-            android:textSize="@dimen/text_size_11"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/ivMic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvSheet"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivMic"
-            style="@style/size_auto"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="34dp"
-            android:padding="6dp"
-            android:src="@drawable/ic_mic_on"
-            app:layout_constraintBottom_toTopOf="@+id/tvMic"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toStartOf="@+id/ivSpeaker"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNote"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintWidth_percent="0.106" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvMic"
-            style="@style/text_normal"
-            android:includeFontPadding="true"
-            android:text="@string/mic_off"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_9"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/ivEndCall"
-            app:layout_constraintEnd_toEndOf="@+id/ivMic"
-            app:layout_constraintStart_toStartOf="@+id/ivMic"
-            app:layout_constraintTop_toBottomOf="@+id/ivMic"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/groupMic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            app:constraint_referenced_ids="ivMic, tvMic" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivSpeaker"
-            style="@style/size_auto"
-            android:layout_marginEnd="42dp"
-            android:padding="6dp"
-            android:src="@drawable/ic_speaker_off"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toEndOf="@+id/ivMic"
-            app:layout_constraintTop_toTopOf="@+id/ivMic"
-            app:layout_constraintWidth_percent="0.106" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvSpeaker"
-            style="@style/text_normal"
-            android:gravity="center"
-            android:includeFontPadding="true"
-            android:text="@string/speaker_on"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_9"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="@+id/ivSpeaker"
-            app:layout_constraintStart_toStartOf="@+id/ivSpeaker"
-            app:layout_constraintTop_toBottomOf="@+id/ivSpeaker" />
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/groupSpeaker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            app:constraint_referenced_ids="ivSpeaker, tvSpeaker" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivEndCall"
-            style="@style/size_auto"
-            android:layout_marginTop="39dp"
-            android:src="@drawable/ic_call_end"
+            android:layout_marginHorizontal="@dimen/margin_32"
+            app:hl_cornerRadius="@dimen/margin_20"
+            app:hl_shadowColor="@color/color_dialog_border_shadow"
+            app:hl_shadowLimit="@dimen/margin_13"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMic"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintWidth_percent="0.16" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/color_background_dialog"
+                app:cardCornerRadius="@dimen/margin_20"
+                app:strokeColor="@color/color_dialog_border"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:paddingBottom="@dimen/margin_32"
+                    android:layout_height="match_parent">
+
+                    <com.lihang.ShadowLayout
+                        android:id="@+id/sl_avatar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_32"
+                        app:hl_cornerRadius="@dimen/margin_15"
+                        app:hl_shadowColor="#80FF3FEE"
+                        app:hl_shadowLimit="@dimen/margin_13"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cv_avatar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="@dimen/margin_15"
+                            app:strokeColor="@color/color_FF3FEE"
+                            app:strokeWidth="1dp">
+
+                            <ImageView
+                                android:id="@+id/ivAvatar"
+                                android:layout_width="@dimen/dimen_80dp"
+                                android:layout_height="@dimen/dimen_103dp"
+                                android:src="@drawable/default_avt_performer"
+
+                                />
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </com.lihang.ShadowLayout>
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvName"
+                        style="@style/text_bold_16"
+                        android:layout_marginTop="@dimen/margin_24"
+                        android:textColor="@color/color_text_F0F0F0"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/sl_avatar"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:text="なまえさんに発信しています" />
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:src="@drawable/ic_call_loading"
+                        android:id="@+id/ivMotion"
+                        android:adjustViewBounds="true"
+                        android:layout_width="71dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_24"
+                        app:layout_constraintDimensionRatio="54:6"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+
+                    <TextView
+                        android:id="@+id/tvNote"
+                        style="@style/text_12"
+                        android:layout_width="wrap_content"
+                        android:layout_marginHorizontal="32dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="@string/call_content"
+                        android:textColor="@color/color_B2A9CC"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ivMotion"
+
+                        />
+
+
+                    <TextView
+                        android:gravity="center"
+                        android:id="@+id/ivEndCall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="@dimen/margin_15"
+                        android:layout_marginTop="@dimen/margin_32"
+                        android:paddingHorizontal="@dimen/margin_30"
+                        android:background="@drawable/bg_cancel_calling"
+                        android:src="@drawable/ic_call_end"
+                        android:text="@string/cancel_block_alert"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvNote"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintWidth_percent="0.16" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </com.lihang.ShadowLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

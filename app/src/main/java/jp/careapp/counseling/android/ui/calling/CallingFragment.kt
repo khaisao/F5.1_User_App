@@ -5,17 +5,20 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.loadImage
 import jp.careapp.core.utils.loadImageAndBlur
 import jp.careapp.counseling.R
+import jp.careapp.counseling.android.data.event.EventBusAction
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.extensions.setAllOnClickListener
 import jp.careapp.counseling.android.utils.extensions.toDurationTime
 import jp.careapp.counseling.databinding.FragmentCallingBinding
+import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -42,58 +45,7 @@ class CallingFragment : BaseFragment<FragmentCallingBinding, CallingViewModel>()
                 clear()
             }
 
-            ivMotion.loadImage(R.drawable.ic_motion_calling)
-
-            ivMinimum.setOnClickListener {
-                if (!isDoubleClick) {
-                    viewModel.showMinimizeCall(true)
-                    appNavigation.navigateUp()
-                }
-            }
-            groupSheet.setAllOnClickListener {
-                if (!isDoubleClick) {
-                    viewModel.showMinimizeCall(true)
-                    appNavigation.openCallingToUpdateTroubleSheet()
-                }
-            }
-            groupMessage.setAllOnClickListener {
-                if (!isDoubleClick) {
-                    viewModel.showMinimizeCall(true)
-                    appNavigation.containScreenInBackStack(R.id.chatMessageFragment) { isContain, _ ->
-                        if (isContain) {
-                            appNavigation.popopBackStackToDetination(R.id.chatMessageFragment)
-                        } else {
-                            openChatMessage()
-                        }
-                    }
-                }
-            }
-            groupBuyPoint.setAllOnClickListener {
-                if (!isDoubleClick) {
-                    viewModel.showMinimizeCall(true)
-
-                    if (viewModel.isFullMode()) {
-                        appNavigation.navigateUp()
-                        val bundle = Bundle().apply {
-                            putString(Define.TITLE_WEB_VIEW, getString(R.string.buy_point))
-                            putString(Define.URL_WEB_VIEW, Define.URL_BUY_POINT)
-                        }
-                        appNavigation.openScreenToWebview(bundle)
-                    } else {
-                        appNavigation.openCallingToBuyPoint()
-                    }
-                }
-            }
-            groupMic.setAllOnClickListener {
-                if (!isDoubleClick) {
-                    viewModel.changeMic()
-                }
-            }
-            groupSpeaker.setAllOnClickListener {
-                if (!isDoubleClick) {
-                    viewModel.changeSpeaker()
-                }
-            }
+            Glide.with(this@CallingFragment).asGif().load(R.drawable.ic_call_loading).into(binding.ivMotion)
             ivEndCall.setOnClickListener {
                 if (!isDoubleClick) {
                     viewModel.onEndCall()
@@ -128,28 +80,15 @@ class CallingFragment : BaseFragment<FragmentCallingBinding, CallingViewModel>()
                 binding.apply {
                     tvName.text = it.name
                     if (it.imageUrl.isNotEmpty()) {
-                        ivAvatar.loadImage(it.imageUrl, true)
-                        ivBackground.loadImageAndBlur(it.imageUrl)
+                        ivAvatar.loadImage(it.imageUrl, false)
                     } else {
-                        ivAvatar.loadImage(R.drawable.ic_avatar_default, true)
-                        ivBackground.loadImageAndBlur(R.drawable.ic_avatar_default)
+                        ivAvatar.loadImage(R.drawable.ic_avatar_default, false)
                     }
                 }
             }
         }
         viewModel.callState.observe(viewLifecycleOwner) {
             it?.let { updateUI(it) }
-        }
-        viewModel.isMuteMic.observe(viewLifecycleOwner) {
-            it?.let { changeMic(it) }
-        }
-        viewModel.isMuteSpeaker.observe(viewLifecycleOwner) {
-            it?.let { changeSpeaker(it) }
-        }
-        viewModel.callDuration.observe(viewLifecycleOwner) {
-            it?.let {
-                binding.tvDuration.text = it.toDurationTime()
-            }
         }
     }
 
@@ -158,42 +97,12 @@ class CallingFragment : BaseFragment<FragmentCallingBinding, CallingViewModel>()
             CallState.CONNECTING -> {
                 binding.apply {
                     ivMotion.isVisible = true
-                    tvDuration.isInvisible = true
-                    groupMic.isInvisible = true
-                    groupSpeaker.isInvisible = true
                 }
             }
             CallState.TALKING -> {
                 binding.apply {
                     ivMotion.isVisible = false
-                    tvDuration.isInvisible = false
-                    groupMic.isInvisible = false
-                    groupSpeaker.isInvisible = false
                 }
-            }
-        }
-    }
-
-    private fun changeMic(isMute: Boolean) {
-        binding.apply {
-            if (isMute) {
-                ivMic.loadImage(R.drawable.ic_mic_off)
-                tvMic.text = getString(R.string.mic_on)
-            } else {
-                ivMic.loadImage(R.drawable.ic_mic_on)
-                tvMic.text = getString(R.string.mic_off)
-            }
-        }
-    }
-
-    private fun changeSpeaker(isMute: Boolean) {
-        binding.apply {
-            if (isMute) {
-                ivSpeaker.loadImage(R.drawable.ic_speaker_off)
-                tvSpeaker.text = getString(R.string.speaker_on)
-            } else {
-                ivSpeaker.loadImage(R.drawable.ic_speaker_on)
-                tvSpeaker.text = getString(R.string.speaker_off)
             }
         }
     }

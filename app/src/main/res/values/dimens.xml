@@ -15,6 +15,7 @@
     <dimen name="margin_33">33dp</dimen>
     <dimen name="margin_55">55dp</dimen>
     <dimen name="margin_46">46dp</dimen>
+    <dimen name="margin_41">41dp</dimen>
     <dimen name="margin_48">48dp</dimen>
     <dimen name="margin_23">23dp</dimen>
     <dimen name="margin_24">24dp</dimen>
@@ -121,6 +122,8 @@
     <dimen name="dimen_168">168dp</dimen>
     <dimen name="dimen_54">54dp</dimen>
     <dimen name="dimen_29">29dp</dimen>
+    <dimen name="dimen_33">33dp</dimen>
+    <dimen name="dimen_36">36dp</dimen>
     <dimen name="dimen_110">110dp</dimen>
     <dimen name="dimen_24">24dp</dimen>
 
@@ -186,5 +189,7 @@
     <dimen name="chat_list_monthly_rank_height">24dp</dimen>
     <dimen name="ic_message_status_size">18dp</dimen>
     <dimen name="ic_message_status_padding">3.5dp</dimen>
+    <dimen name="dimen_103dp">103dp</dimen>
+    <dimen name="dimen_80dp">80dp</dimen>
 
 </resources>

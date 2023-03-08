@@ -2,6 +2,7 @@ package jp.careapp.counseling.android.ui.home
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope

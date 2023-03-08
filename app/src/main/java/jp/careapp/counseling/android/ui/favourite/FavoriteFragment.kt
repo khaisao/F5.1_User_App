@@ -2,6 +2,7 @@ package jp.careapp.counseling.android.ui.favourite
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -27,11 +28,18 @@ import javax.inject.Inject
 class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewModel>() {
 
     private val viewModels: FavoriteViewModel by viewModels()
+
+    private val historyViewModel: HistoryViewModel by activityViewModels()
+
+    private val shareViewModel: ShareViewModel by activityViewModels()
+
     override val layoutId: Int = R.layout.fragment_favourite
 
     override fun getVM(): FavoriteViewModel = viewModels
 
     private lateinit var adapterFavorite: FavoriteAdapter
+
+    private lateinit var adapterHistory: HistoryAdapter
 
     private lateinit var adapterFavoriteHome: FavoriteHomeAdapter
 
@@ -39,7 +47,7 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
 
     private var favorites: MutableList<FavoriteResponse> = mutableListOf()
 
-    private val shareViewModel: ShareViewModel by activityViewModels()
+
     @Inject
     lateinit var appNavigation: AppNavigation
 
@@ -56,17 +64,22 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
         super.bindingStateView()
         viewModels.forceRefresh()
         adapterFavorite = FavoriteAdapter(lifecycleOwner = viewLifecycleOwner, events = viewModels)
+        adapterHistory = HistoryAdapter(lifecycleOwner = viewLifecycleOwner, events = historyViewModel)
         adapterFavoriteHome = FavoriteHomeAdapter(lifecycleOwner = viewLifecycleOwner, events = viewModels)
         binding.apply {
-            if (typeFavoriteScreen != BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_HOME) {
+            if (typeFavoriteScreen == BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_FAVORITE) {
                 rvFavorite.layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 rvFavorite.adapter = adapterFavorite
+            } else if (typeFavoriteScreen == BUNDLE_KEY.TYPE_HISTORY) {
+                rvFavorite.layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                rvFavorite.adapter = adapterHistory
             } else {
-
                 rvFavorite.layoutManager = GridLayoutManager(requireContext(), 2)
                 rvFavorite.adapter = adapterFavoriteHome
             }
+
             appBar.apply {
                 btnLeft.setImageDrawable(resources.getDrawable(R.drawable.ic_arrow_left))
                 btnLeft.setOnClickListener {
@@ -82,11 +95,20 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
             }
         }
         viewModels.favoriteLoading.observe(
-            viewLifecycleOwner,
-            Observer {
-                showHideLoading(it)
+            viewLifecycleOwner
+        ) {
+            showHideLoading(it)
+        }
+
+        historyViewModel.isLoading.observe(viewLifecycleOwner) {
+            showHideLoading(it)
+            if (it) {
+                binding.rvFavorite.visibility = View.INVISIBLE
+
+            } else {
+                binding.rvFavorite.visibility = View.VISIBLE
             }
-        )
+        }
 
         shareViewModel.detectRefreshDataFollowerHome.observe(
             viewLifecycleOwner
@@ -97,7 +119,9 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
         shareViewModel.detectRefreshDataHistory.observe(
             viewLifecycleOwner
         ) {
-            viewModels.forceRefresh()
+            historyViewModel.clearData()
+            historyViewModel.getListBlockedConsultant()
+
         }
 
         shareViewModel.detectRefreshDataFavorite.observe(
@@ -120,13 +144,26 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
         viewModels.uiDataResult.observe(
             viewLifecycleOwner,
             Observer {
-                it ?: return@Observer
-                favorites.clear()
-                favorites.addAll(it)
-                adapterFavorite.submitList(it.toMutableList())
+                if (typeFavoriteScreen == BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_FAVORITE) {
+                    adapterFavorite.submitList(it.toMutableList())
+                }
                 adapterFavoriteHome.submitList(it.toMutableList())
             }
         )
+
+        historyViewModel.listHistoryConsultantResult.observe(
+            viewLifecycleOwner
+        ) {
+            if (typeFavoriteScreen == BUNDLE_KEY.TYPE_HISTORY) {
+                if (it.isEmpty()) {
+                    showNoData(true)
+                } else {
+                    showNoData(false)
+                    adapterHistory.submitList(it.toMutableList())
+                }
+            }
+        }
+
         viewModels.showDialogAction.observe(
             viewLifecycleOwner,
             EventObserver { data ->
@@ -167,16 +204,6 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
             binding.llNoResult.visibility = View.GONE
             binding.rvFavorite.visibility = View.VISIBLE
         }
-    }
-
-    private fun onClickDetailConsultant(
-        position: Int,
-        listData: List<ConsultantResponse>
-    ) {
-        val bundle = Bundle()
-        bundle.putInt(BUNDLE_KEY.POSITION_SELECT, position)
-        shareViewModel.setListPerformer(listData)
-        appNavigation.openTopToUserProfileScreen(bundle)
     }
 
 

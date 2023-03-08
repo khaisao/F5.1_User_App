@@ -7,8 +7,14 @@
     <color name="color_FF2875">#FF2875</color>
 
     <color name="color_background_common">#1D1045</color> <!--rgb 29 16 69-->
+    <color name="color_0D002C">#0D002C</color> <!--rgb 13 0 44 -->
     <color name="color_disable_button">#332167</color> <!--rgb 51 33 103-->
     <color name="color_text_E3DFEF">#E3DFEF</color> <!--rgb 51 33 103-->
+    <color name="color_background_dialog">#0D002C</color><!--rgb 13 0 44 -->
+    <color name="color_dialog_border">#9D52FF</color><!--rgba 157 82 255 -->
+    <color name="color_dialog_border_shadow">#809D52FF</color><!--rgba 157 82 255 -->
+    <color name="color_9d4eea">#9D4EEA</color><!--rgba 157 82 255 -->
+    <color name="color_eeecf0">#EEECF0</color><!--rgba 157 82 255 -->
     <color name="purple_AEA2D1">#AEA2D1</color> <!--rgb 174 162 209-->
     <color name="right_color_btn_common">#61C1FF</color> <!--rgb 97 193 255-->
     <color name="color_978DFF">#978DFF</color> <!--rgb 97 193 255-->
@@ -23,6 +29,7 @@
     <color name="strong_pink">#ff1f7d</color> <!--rgba 0 0 0, 0.65-->
     <color name="vivid_purple">#820dff</color> <!--rgba 130 13 255-->
     <color name="electric_blue">#2851ff</color> <!--rgba 40 81 255-->
+    <color name="color_2C2147">#2C2147</color> <!--rgb 44 33 71-->
     <color name="gray_lite">#b2a9cc</color> <!--rgba 0 0 0, 0.65-->
     <color name="background_lite">#2c2147</color> <!--rgba 0 0 0, 0.65-->
     <color name="background_dark">#0d002c</color> <!--rgba 0 0 0, 0.65-->

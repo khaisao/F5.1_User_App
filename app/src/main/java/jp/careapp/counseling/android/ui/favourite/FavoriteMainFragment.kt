@@ -32,6 +32,7 @@ class FavoriteMainFragment :  BaseFragment<FragmentFavoriteMainBinding, Favorite
     override val layoutId: Int=R.layout.fragment_favorite_main
 
     private val viewModels: FavoriteViewModel by viewModels()
+    private val historyViewModel: HistoryViewModel by activityViewModels()
 
     override fun getVM()=viewModels
 
@@ -48,15 +49,11 @@ class FavoriteMainFragment :  BaseFragment<FragmentFavoriteMainBinding, Favorite
 
     override fun setOnClick() {
         super.setOnClick()
-
         binding.swipeRefreshLayout.setOnRefreshListener {
             if (binding.vpMain.currentItem == 0) {
                 if (!binding.progressBar.isVisible) {
                     shareViewModel.detectRefreshDataHistory.value =
-                        !shareViewModel.detectRefreshDataFavorite.value!!
-//                    viewModel.isShowHideLoading = true
-//                    viewModel.clearData()
-//                    viewModel.getListBlockedConsultant()
+                        !shareViewModel.detectRefreshDataHistory.value!!
                 }
             } else {
                 shareViewModel.detectRefreshDataFavorite.value =

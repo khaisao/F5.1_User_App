@@ -12,6 +12,7 @@
         <variable
             name="event"
             type="jp.careapp.counseling.android.ui.favourite.EventFavoriteAction" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView

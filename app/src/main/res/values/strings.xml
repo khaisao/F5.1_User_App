@@ -172,6 +172,7 @@
     <string name="buy_point_suscess">ポイント購入が完了しました。</string>
     <string name="let_buy_point">まずはポイントを購入しましょう</string>
     <string name="not_found_performer">該当の女性は見つかりませんでした</string>
+    <string name="point_purchase">ポイント購入</string>
 
     <!--   Registration-->
     <string name="enter_your_profile_to_start">プロフィールを入力して\n早速はじめましょう！</string>
@@ -229,6 +230,10 @@
     <string name="genres_11">離婚</string>
     <string name="genres_12">片思い</string>
     <string name="genres_32">その他</string>
+    <string name="live_viewing">ライブ視聴</string>
+    <string name="delivery_request">配信リクエスト</string>
+    <string name="watch">視聴中</string>
+
 
     <!--    notification-->
     <string name="email_setting">メルマガ設定</string>
@@ -300,6 +305,10 @@
     <string name="report">通報</string>
     <string name="title_confirm_block">%s さんをブロックしますか？</string>
     <string name="title_report">通報の内容</string>
+    <string name="report_content">通報内容</string>
+    <string name="thank_for_report">事務局へ通報しました。ご協力ありがとうございます。</string>
+    <string name="thank_for_understanding">原則、通報頂いた内容にはご返信いたしておりません。あらかしめご了承下さいませ。</string>
+    <string name="title_report_enter_info">規約に違反している配信が確認できた場合は、こちらより情報を入力して下さい。</string>
     <string name="report_btn">通報する</string>
     <string name="hint_report">具体的な理由を入力してください</string>
     <string name="trouble_edit_title">お悩みシート編集</string>
@@ -476,6 +485,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
 
     <string name="view_history">視聴履歴</string>
     <string name="remove_favorite_ques">さんのお気に入りを解除しますか？</string>
+    <string name="block_this_woman">この女性をブロックしますか？</string>
 
 
 
@@ -572,12 +582,14 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="accept_permission">許可する</string>
     <string name="denied_permission">許可しない</string>
     <string name="call_note">※お悩みシート、相談履歴、ポイント購入をタップしても\n音声通話は切断されません。</string>
+    <string name="call_content">しばらくお待ちください。\n相手の状況により応答できない場合があります。</string>
     <string name="mic_on">マイクをオン</string>
     <string name="mic_off">マイクをオフ</string>
     <string name="speaker_on">スピーカーを\nオン</string>
     <string name="speaker_off">スピーカーを\nオフ</string>
     <string name="msg_need_mic_permission">設定＞Careappでマイクへのアクセスを許可してください</string>
     <string name="msg_confirm_call">電話相談希望(無料メッセージ)を先\n生にお伝え頂き、受諾後に発信をお\n願い致します。</string>
+    <string name="content_confirm_call">なまえさんに発信します\nよろしいですか？</string>
     <string name="confirm_call">発信する</string>
     <string name="send_free_mess">無料メッセージ送信</string>
     <string name="title_warning_point">※お知らせ※</string>
@@ -671,5 +683,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="block_user">ブロックする</string>
     <string name="report_user">通報する</string>
     <string name="input_name">なまえで検索</string>
+    <string name="message">メッセージ</string>
+    <string name="peep">のぞく</string>
     <string name="go_home">ホームへ戻る</string>
 </resources>

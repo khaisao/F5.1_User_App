@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -84,10 +85,12 @@ class RegistrationFragment :
                         BUNDLE_KEY.PARAM_REGISTRATION,
                         viewModel.getRegisterRequest()
                     )
+                    viewModel.register(viewModel.getRegisterRequest())
                 }
-            }.let {
-                appNavigation.openRegistrationToSelectCategoryScreen(it)
             }
+//                .let {
+//                appNavigation.openRegistrationToSelectCategoryScreen(it)
+//            }
         }
     }
 
@@ -116,7 +119,7 @@ class RegistrationFragment :
             VerifyCodeViewModel.SCREEN_CODE_SELECT_CATEGORY -> {
                 val bundle = Bundle()
                 bundle.putBoolean(BUNDLE_KEY.PARAM_LOGIN_WITH_EMAIL, true)
-                appNavigation.openRegistrationToSelectCategoryScreen(bundle)
+                appNavigation.openRegistrationToTopScreen(bundle)
                 shareViewModel.setHaveToken(true)
             }
         }

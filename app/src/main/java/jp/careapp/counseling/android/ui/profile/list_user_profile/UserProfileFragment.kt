@@ -1,6 +1,7 @@
 package jp.careapp.counseling.android.ui.profile.list_user_profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE

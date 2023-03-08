@@ -15,83 +15,63 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_corner_top_12dp_1d1045"
+            android:background="@drawable/bg_corner_top_20dp_background_common"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:clickable="true"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="35dp"
-                android:layout_height="5dp"
-                android:layout_marginTop="@dimen/margin_6dp"
-                android:background="@drawable/bg_corner_3dp_523f8a"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
                 android:id="@+id/block_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5dp"
-                android:gravity="center_vertical"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/margin_20"
                 android:paddingTop="@dimen/margin_19"
                 android:paddingRight="@dimen/margin_20"
                 android:paddingBottom="@dimen/margin_19">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_block" />
-
                 <TextView
                     style="@style/text_16"
                     android:layout_marginLeft="@dimen/margin_20"
                     android:text="@string/block"
-                    android:textColor="@color/color_text_E3DFEF" />
+                    android:textColor="@color/color_F0F0F0" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/report_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:gravity="center_horizontal"
                 android:paddingLeft="@dimen/margin_20"
                 android:paddingTop="@dimen/margin_19"
                 android:paddingRight="@dimen/margin_20"
                 android:paddingBottom="@dimen/margin_19">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_report" />
-
                 <TextView
                     style="@style/text_16"
                     android:layout_marginStart="@dimen/margin_20"
                     android:text="@string/report"
-                    android:textColor="@color/color_text_E3DFEF" />
+                    android:textColor="@color/color_F0F0F0" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/cancel_button_tv"
                 style="@style/text_bold_16"
                 android:layout_width="match_parent"
-                android:layout_marginLeft="@dimen/margin_8"
+                android:layout_marginHorizontal="@dimen/margin_24"
                 android:layout_marginTop="@dimen/margin_8"
-                android:layout_marginRight="@dimen/margin_8"
                 android:layout_marginBottom="@dimen/margin_24"
-                android:background="@drawable/bg_corner_24dp_332167"
+                android:background="@drawable/bg_corner_24dp_443371"
                 android:gravity="center"
                 android:paddingTop="@dimen/margin_16"
                 android:paddingBottom="@dimen/margin_16"
                 android:text="@string/cancel"
-                android:textColor="@color/color_AEA2D1" />
+                android:textColor="@color/color_B2A9CC" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

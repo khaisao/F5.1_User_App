@@ -274,7 +274,7 @@ class BUNDLE_KEY {
         const val TYPE_ALL_PERFORMER = 0
         const val TYPE_ALL_PERFORMER_FOLLOW_HOME = 1
         const val TYPE_ALL_PERFORMER_FOLLOW_FAVORITE = 2
-        const val TYPE_HISTORY = 2
+        const val TYPE_HISTORY = 3
         // ranking
         const val TYPE_DAILY = 0
         const val TYPE_WEEKLY = 1

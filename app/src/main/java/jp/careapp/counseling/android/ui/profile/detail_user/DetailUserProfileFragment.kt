@@ -2,41 +2,39 @@ package jp.careapp.counseling.android.ui.profile.detail_user
 
 import android.Manifest.permission.RECORD_AUDIO
 import android.content.Intent
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.text.SpannableString
-import android.text.TextUtils
-import android.text.style.RelativeSizeSpan
-import android.text.style.StyleSpan
 import android.view.View
 import android.view.View.*
+import android.view.ViewTreeObserver
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
-import jp.careapp.core.utils.DateUtil
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
+import jp.careapp.counseling.android.adapter.GalleryAdapter
 import jp.careapp.counseling.android.data.network.ConsultantResponse
+import jp.careapp.counseling.android.data.network.GalleryResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
+import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
-import jp.careapp.counseling.android.model.user_profile.UserProfileTab
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.BuyPointBottomFragment
 import jp.careapp.counseling.android.ui.calling.CallingViewModel
+import jp.careapp.counseling.android.ui.profile.block_report.BlockAndReportBottomFragment
 import jp.careapp.counseling.android.ui.profile.tab_review.TabReviewFragment
 import jp.careapp.counseling.android.ui.profile.tab_user_info_detail.TabDetailUserProfileFragment
 import jp.careapp.counseling.android.ui.profile.update_trouble_sheet.TroubleSheetUpdateFragment
-import jp.careapp.counseling.android.utils.BUNDLE_KEY
-import jp.careapp.counseling.android.utils.CallRestriction
-import jp.careapp.counseling.android.utils.CallStatus
-import jp.careapp.counseling.android.utils.Define
+import jp.careapp.counseling.android.utils.*
+import jp.careapp.counseling.android.utils.extensions.getBustSize
 import jp.careapp.counseling.android.utils.extensions.hasPermissions
 import jp.careapp.counseling.databinding.FragmentDetailUserProfileBinding
 import javax.inject.Inject
@@ -58,6 +56,9 @@ class DetailUserProfileFragment :
 
     private val viewModel: DetailUserProfileViewModel by viewModels()
     private val callingViewModel: CallingViewModel by activityViewModels()
+    private val shareViewModel: ShareViewModel by activityViewModels()
+    private var typeScreen = ""
+
 
     override fun getVM(): DetailUserProfileViewModel = viewModel
 
@@ -74,6 +75,8 @@ class DetailUserProfileFragment :
     private var isFirstChat: Boolean? = null
     private var previousScreen = ""
     private var position: Int = 0
+    private var numberTimeCanScrollDown = 0
+    private var numberMaxTimeCanScrollDown = 0
 
     // item check favorite when first chat
     private var isShowFromUserDisable: Boolean = false
@@ -86,6 +89,10 @@ class DetailUserProfileFragment :
         }
     }
 
+    private lateinit var  galleryAdapter:  GalleryAdapter
+    
+    
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val bundle = arguments
         if (bundle != null) {
@@ -97,15 +104,36 @@ class DetailUserProfileFragment :
         loadData()
     }
 
+
+
     override fun initView() {
         super.initView()
         consultantResponseLocal?.let {
-            initViewpager(it)
+//            initViewpager(it)
         }
+
+
+        binding.avatarIv.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                binding.avatarIv.viewTreeObserver.removeOnGlobalLayoutListener(this);
+                galleryAdapter = GalleryAdapter(requireContext(),binding.avatarIv.height)
+                binding.rvGallery.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+                binding.rvGallery.adapter = galleryAdapter
+            }
+        })
+
     }
+
 
     override fun setOnClick() {
         super.setOnClick()
+        binding.ivBack.setOnClickListener {
+            if (!isDoubleClick) {
+                appNavigation.navigateUp()
+            }
+        }
+
         binding.addFavoriteTv.setOnClickListener {
             if (!isDoubleClick) {
                 consultantResponse?.let {
@@ -126,10 +154,37 @@ class DetailUserProfileFragment :
             }
         }
         // user online
-        binding.sendConsultLl.setOnClickListener {
+        binding.ivMessage.setOnClickListener {
             if (!isDoubleClick) {
                 openChatScreen()
             }
+        }
+
+        binding.ivArrowDown.setOnClickListener {
+            binding.ivArrowUp.visibility = VISIBLE
+            numberTimeCanScrollDown -= 1
+            if (numberTimeCanScrollDown == 0) {
+                binding.ivArrowDown.visibility = GONE
+            } else {
+                binding.ivArrowDown.visibility = VISIBLE
+            }
+            val layoutManager = binding.rvGallery.layoutManager as LinearLayoutManager
+            val currentPosition = layoutManager.findLastVisibleItemPosition()
+            val lastVisibleItemIndex: Int = currentPosition
+            binding.rvGallery.smoothScrollToPosition(lastVisibleItemIndex + 3)
+        }
+
+        binding.ivArrowUp.setOnClickListener {
+            binding.ivArrowDown.visibility = VISIBLE
+            numberTimeCanScrollDown += 1
+            val layoutManager = binding.rvGallery.layoutManager as LinearLayoutManager
+            val currentPosition = layoutManager.findLastVisibleItemPosition()
+            if (numberMaxTimeCanScrollDown == numberTimeCanScrollDown) {
+                binding.ivArrowUp.visibility = GONE
+            } else {
+                binding.ivArrowUp.visibility = VISIBLE
+            }
+            binding.rvGallery.smoothScrollToPosition(currentPosition - 6)
         }
 
         binding.llCallConsult.setOnClickListener {
@@ -144,28 +199,9 @@ class DetailUserProfileFragment :
             }
         }
 
-        // user offline
-        binding.sendNotiLl.setOnClickListener {
+        binding.llPeep.setOnClickListener {
             if (!isDoubleClick) {
-                if (isFirstChat == null) {
-                    consultantResponseLocal?.code?.let { it1 ->
-                        viewModel.loadMailInfo(
-                            it1
-                        )
-                    }
-                } else {
-                    isFirstChat?.let {
-                        if (it) {
-                            showDialogFavorite()
-                        } else {
-                            if ((rxPreferences.getPoint() == 0)) {
-                                doBuyPoint()
-                            } else {
-                                handleOpenChatScreen()
-                            }
-                        }
-                    }
-                }
+                checkPoint()
             }
         }
     }
@@ -197,7 +233,7 @@ class DetailUserProfileFragment :
                     )
                     bundle.putBoolean(BUNDLE_KEY.IS_SHOW_FREE_MESS, isShowFreeMess)
                     bundle.putInt(BUNDLE_KEY.CALL_RESTRICTION, consultantResponse?.callRestriction ?: 0)
-                    appNavigation.openDetailUserToTroubleSheetUpdate(bundle)
+                    appNavigation.openDetailUserToChatMessage(bundle)
                 } else {
                     if ((rxPreferences.getPoint() == 0)) {
                         doBuyPoint()
@@ -208,9 +244,9 @@ class DetailUserProfileFragment :
             }
         }
     }
-
+    //TODO: change to getPoint < 1000
     private fun checkPoint() {
-        if ((rxPreferences.getPoint() < 1000)) {
+        if (rxPreferences.getPoint() < 1000) {
             showDialogRequestBuyPoint()
         } else {
             showDialogConfirmCall()
@@ -251,7 +287,7 @@ class DetailUserProfileFragment :
     private fun showDialogRequestBuyPoint() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
-            .setContent(R.string.msg_title_request_buy_point)
+            .setDialogTitle(R.string.msg_title_request_buy_point)
             .setTextPositiveButton(R.string.buy_point)
             .setTextNegativeButton(R.string.cancel_block_alert)
             .setOnPositivePressed { dialog ->
@@ -274,9 +310,9 @@ class DetailUserProfileFragment :
     private fun showDialogConfirmCall() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
-            .setContent(R.string.msg_confirm_call)
-            .setTextPositiveButton(R.string.confirm_call)
-            .setTextNegativeButton(R.string.send_free_mess)
+            .setContent(R.string.content_confirm_call)
+            .setTextPositiveButton(R.string.confirm_block_alert)
+            .setTextNegativeButton(R.string.cancel_block_alert)
             .setOnPositivePressed {
                 it.dismiss()
                 if (callingViewModel.isCalling()) {
@@ -342,33 +378,6 @@ class DetailUserProfileFragment :
         }
     }
 
-    private fun showDialogFavorite() {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-            .showDialog()
-            .setDialogTitle(R.string.title_favorite_alert)
-            .setContent(R.string.sub_title_favorite_alert)
-            .setTextNegativeButton(R.string.cancel_favorite_alert)
-            .setTextPositiveButton(R.string.confirm_favorite_alert)
-            .setOnNegativePressed {
-                it.dismiss()
-            }
-            .setOnPositivePressed {
-                if (!isDoubleClick) {
-                    if (binding.removeFavoriteTv.isVisible) {
-                        it.dismiss()
-                        showDialogAlreadyFavorite()
-                    } else {
-                        consultantResponseLocal?.code?.let { it1 ->
-                            isShowFromUserDisable = true
-                            viewModel.addUserToFavorite(
-                                it1
-                            )
-                            it.dismiss()
-                        }
-                    }
-                }
-            }
-    }
 
     private fun showDialogAlreadyFavorite() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
@@ -390,25 +399,64 @@ class DetailUserProfileFragment :
 
     override fun bindingStateView() {
         super.bindingStateView()
-        viewModel.userProfileResult.observe(viewLifecycleOwner, handleResuleDetailUser)
-        viewModel.statusFavorite.observe(viewLifecycleOwner, handleResuleStatusFavorite)
+        viewModel.userProfileResult.observe(viewLifecycleOwner, handleResultDetailUser)
+        viewModel.statusFavorite.observe(viewLifecycleOwner, handleResultStatusFavorite)
         viewModel.statusRemoveFavorite.observe(viewLifecycleOwner, handleResuleStatusUnFavorite)
         viewModel.isFirstChat.observe(viewLifecycleOwner, handleFirstChat)
+        viewModel.blockUserResult.observe(viewLifecycleOwner
+            , handleBlockResult)
+        viewModel.userGallery.observe(viewLifecycleOwner, handleResultUserGallery)
+
     }
 
-    private var handleResuleDetailUser: Observer<ConsultantResponse?> = Observer {
+    private var handleResultUserGallery: Observer<List<GalleryResponse>?> = Observer {
+        if (it != null) {
+            if (it.size <= 3) {
+                numberTimeCanScrollDown = 0
+            } else if (it.size % 3 == 0) {
+                numberTimeCanScrollDown = it.size / 3 - 1
+            } else if (it.size % 3 != 0) {
+                numberTimeCanScrollDown = it.size / 3
+            }
+            if(numberTimeCanScrollDown >=1){
+                binding.ivArrowDown.visibility=VISIBLE
+            }
+            numberMaxTimeCanScrollDown = numberTimeCanScrollDown
+            binding.rvGallery.visibility = VISIBLE
+            galleryAdapter.submitList(it)
+        } else {
+            binding.ivArrowDown.visibility=GONE
+            binding.rvGallery.visibility = GONE
+        }
+    }
+
+    private var handleResultDetailUser: Observer<ConsultantResponse?> = Observer {
         if (it != null) {
             showDataUserProfile(it)
+            setClickForDialogBlock(it)
             consultantResponse = it
         } else {
             consultantResponse = consultantResponseLocal
             if (consultantResponseLocal != null) {
                 showDataUserProfile(consultantResponseLocal!!)
+                setClickForDialogBlock(consultantResponseLocal!!)
             }
         }
     }
 
-    private var handleResuleStatusFavorite: Observer<Boolean> = Observer {
+    private var handleBlockResult: Observer<Boolean> = Observer {
+        if (it) {
+            shareViewModel.isBlockConsultant.value = true
+            // open from chat message
+            if (typeScreen.equals(BUNDLE_KEY.CHAT_MESSAGE)) {
+                appNavigation.popopBackStackToDetination(R.id.topFragment)
+            } else {
+                appNavigation.navigateUp()
+            }
+        }
+    }
+
+    private var handleResultStatusFavorite: Observer<Boolean> = Observer {
         if (it) {
             // when user is first chat and disable
             if (isShowFromUserDisable) {
@@ -430,115 +478,183 @@ class DetailUserProfileFragment :
 
     private fun changeStatusIsFavorite(isFavorite: Boolean) {
         if (isFavorite) {
-            binding.removeFavoriteTv.visibility = VISIBLE
-            binding.addFavoriteTv.visibility = GONE
+            binding.apply {
+                removeFavoriteTv.visibility = VISIBLE
+                addFavoriteTv.visibility = GONE
+                tvMemberCount.text = (tvMemberCount.text.toString().toInt() + 1).toString()
+            }
+
         } else {
-            binding.removeFavoriteTv.visibility = GONE
-            binding.addFavoriteTv.visibility = VISIBLE
+            binding.apply {
+                removeFavoriteTv.visibility = GONE
+                addFavoriteTv.visibility = VISIBLE
+                tvMemberCount.text = (tvMemberCount.text.toString().toInt() - 1).toString()
+            }
+        }
+    }
+
+    private fun setClickForDialogBlock(consultantResponse: ConsultantResponse){
+        consultantResponse.also { user ->
+            binding.ivMore.setOnClickListener {
+                if (!isDoubleClick) {
+                    BlockAndReportBottomFragment.showBlockAndReportBottomSheet(
+                        parentFragmentManager,
+                        object : BlockAndReportBottomFragment.ClickItemView {
+                            override fun clickBlock() {
+                                if (!isDoubleClick) {
+                                    user.let { data ->
+                                        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+                                            .showDialog()
+                                            .setDialogTitleWithString(
+                                                resources.getString(R.string.block_this_woman)
+                                            )
+                                            .setTextPositiveButton(R.string.block_user)
+                                            .setTextNegativeButton(R.string.cancel)
+                                            .setOnPositivePressed {
+                                                it.dismiss()
+                                                activity?.let { it1 ->
+                                                    viewModel.handleClickBlock(
+                                                        data.code ?: "",
+                                                        it1
+                                                    )
+                                                }
+                                            }.setOnNegativePressed {
+                                                it.dismiss()
+                                            }
+                                    }
+
+                                }
+                            }
+
+                            override fun clickReport() {
+                                if (!isDoubleClick) {
+                                    val bundle = Bundle()
+                                    bundle.putString(BUNDLE_KEY.USER_PROFILE, user.code)
+                                    appNavigation.openUserProfileToReportScreen(bundle)
+
+                                }
+                            }
+                        }
+                    )
+                }
+            }
         }
     }
 
     private fun showDataUserProfile(consultantResponse: ConsultantResponse) {
         consultantResponse.also { user ->
             binding.apply {
-                if (consultantResponse.messageOfTheDay.isNullOrEmpty()) {
-                    layoutTweetTv.visibility = INVISIBLE
+
+                rvGallery.isNestedScrollingEnabled = false
+
+                Glide.with(this@DetailUserProfileFragment).asGif().load(R.drawable.ic_ballon_call).into(ivBallonLiveGl50)
+                Glide.with(this@DetailUserProfileFragment).asGif().load(R.drawable.ic_ballon_peep).into(ivBallonPeep)
+
+                if (ConsultantResponse.isWaiting(user)) {
+                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_waiting)
+                    presenceStatusTv.text =
+                        resources.getString(R.string.presence_status_waiting)
+                } else if (ConsultantResponse.isLiveStream(user)) {
+                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
+                    presenceStatusTv.text =
+                        resources.getString(R.string.presence_status_live_streaming)
+                } else if (ConsultantResponse.isPrivateLiveStream(user)) {
+                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
+                    presenceStatusTv.text =
+                        resources.getString(R.string.presence_status_private_delivery)
                 } else {
-                    layoutTweetTv.visibility = VISIBLE
+                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_offline)
+                    presenceStatusTv.text =
+                        resources.getString(R.string.presence_status_offline)
                 }
 
+                if (user.stage != 1) {
+                    ivState.visibility = GONE
+                    ivStateBeginner.visibility = VISIBLE
+                } else {
+                    ivState.visibility = VISIBLE
+                    ivStateBeginner.visibility = GONE
+                }
                 when (user.stage) {
+                    BRONZE -> {
+                        ivState.setImageResource(R.drawable.ic_state_bronze)
+                    }
+
                     SILVER -> {
-                        bannerUserIv.setImageResource(R.drawable.bg_stage_silver)
-                        stageIv.setImageResource(R.drawable.ic_silver_home)
+                        ivState.setImageResource(R.drawable.ic_state_silver)
                     }
                     GOLD -> {
-                        bannerUserIv.setImageResource(R.drawable.bg_state_gold)
-                        stageIv.setImageResource(R.drawable.ic_gold_home)
-                    }
-                    PLATINUM -> {
-                        bannerUserIv.setImageResource(R.drawable.bg_stage_platinum)
-                        stageIv.setImageResource(R.drawable.ic_platinum_home)
-                    }
-                    BRONZE -> {
-                        bannerUserIv.setImageResource(R.drawable.bg_stage_basic)
-                        stageIv.setImageResource(R.drawable.ic_bronze_home)
-                    }
-                    DIAMOND -> {
-                        bannerUserIv.setImageResource(R.drawable.bg_stage_basic)
-                        stageIv.setImageResource(R.drawable.ic_diamond_home)
+                        ivState.setImageResource(R.drawable.ic_state_gold)
                     }
                     else -> {
-                        bannerUserIv.setImageResource(R.drawable.bg_stage_basic)
-                        stageIv.setImageResource(R.drawable.ic_basic_home)
+                        ivState.setImageResource(R.drawable.ic_state_bronze)
                     }
                 }
 
                 if (user.profilePattern == 1) {
                     avatarIv.visibility = VISIBLE
-                    avatarIv.loadImage(user.imageUrl, R.drawable.ic_avatar_default, true)
-                    layoutTweetTvPattern1.root.visibility = VISIBLE
-                    layoutTweetTvPattern2.root.visibility = GONE
-                    layoutTweetTvPattern1.tweetTvPattern1.text = consultantResponse.messageOfTheDay
+                    avatarIv.loadImage(user.imageUrl, R.drawable.default_avt_performer, false)
                 } else {
                     avatarIv.visibility = GONE
-                    layoutTweetTvPattern1.root.visibility = GONE
-                    layoutTweetTvPattern2.root.visibility = VISIBLE
-                    layoutTweetTvPattern2.tweetTvPattern2.text = consultantResponse.messageOfTheDay
-                    bannerUserIv.loadImage(
-                        user.profileImages?.imagePatternTwo?.imageUrl,
-                        R.drawable.bg_stage_basic,
-                        false
-                    )
                 }
 
-                if (user.presenceStatus == ACCEPTING) {
-                    presenceStatusTv.text = getString(R.string.presence_status_live_streaming)
-                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_waiting)
-                    presenceStatusTv.setTextColor(resources.getColor(R.color.color_1D1045))
-                    clAction.visibility = VISIBLE
-                    ballNextOnlineTv.visibility = INVISIBLE
-                    sendNotiLl.visibility = INVISIBLE
+                val bustSize = requireContext().getBustSize(user.bust)
+
+                if (bustSize == "") {
+                    tvBust.visibility = GONE
                 } else {
-                    presenceStatusTv.text = getString(R.string.presence_status_waiting)
-                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
-                    presenceStatusTv.setTextColor(resources.getColor(R.color.purple_AEA2D1))
-                    if (TextUtils.isEmpty(user.loginPlansDatetime)) {
-                        ballNextOnlineTv.visibility = GONE
-                    } else {
-                        ballNextOnlineTv.visibility = VISIBLE
-                    }
-                    ballNextOnlineTv.text = DateUtil.convertStringToDateString(
-                        user.loginPlansDatetime,
-                        DateUtil.DATE_FORMAT_1,
-                        DateUtil.DATE_FORMAT_4
-                    )
-                    clAction.visibility = INVISIBLE
-                    sendNotiLl.visibility = VISIBLE
+                    tvBust.visibility = VISIBLE
+                    tvBust.text = bustSize
                 }
+
+                tvMemberCount.text = user.favoriteMemberCount.toString()
+
+                tvMessageNotice.text = user.messageNotice
+
+                tvMessageOfTheDay.text = user.messageOfTheDay
+
+                tvAge.text = user.age.toString() + resources.getString(R.string.age_raw)
+
                 userNameTv.text = user.name
-                ratingUserRb.rating = user.reviewAverage.toFloat()
-                ratingUserTv.text = user.reviewAverage.toFloat().toString()
-                priceChatTv.text = String.format(
-                    getString(R.string.price_point),
-                    user.pointPerChar
-                )
-                ivPriceCall.isVisible = user.callRestriction == CallRestriction.POSSIBLE
-                tvPriceCall.apply {
-                    text = String.format(
-                        getString(R.string.price_point),
-                        user.pointPerMinute
-                    )
-                    isVisible = user.callRestriction == CallRestriction.POSSIBLE
+
+                if (ConsultantResponse.isLiveStream(user)) {
+                    ivMessage.setImageResource(R.drawable.ic_message_small_detail)
+                    tvLiveStreamCount.text =
+                        (user.loginMemberCount + user.peepingMemberCount).toString()
+                    llStatusViewerCount.visibility = VISIBLE
+                } else {
+                    ivMessage.setImageResource(R.drawable.ic_message_large_detail)
+                    llStatusViewerCount.visibility = GONE
                 }
-                llCallConsult.apply {
-                    isEnabled = user.callStatus == CallStatus.ONLINE
-                    isVisible = user.callRestriction == CallRestriction.POSSIBLE
+                if (ConsultantResponse.isWaiting(user) || ConsultantResponse.isLiveStream(user)) {
+                    llCallConsult.visibility = VISIBLE
+                } else {
+                    llCallConsult.visibility = GONE
                 }
+                if (ConsultantResponse.isLiveStream(user)) {
+                    ivBallonPeep.visibility= VISIBLE
+                    llPeep.visibility = VISIBLE
+                } else {
+                    ivBallonPeep.visibility= GONE
+                    llPeep.visibility = GONE
+                }
+                if (ConsultantResponse.isPrivateLiveStream(user)) {
+                    ivPrivateDelivery.visibility = VISIBLE
+                } else {
+                    ivPrivateDelivery.visibility = GONE
+                }
+                if(ConsultantResponse.isWaiting(user) ){
+                    ivBallonLiveGl50.visibility= VISIBLE
+                }
+                else{
+                    ivBallonLiveGl50.visibility= GONE
+                }
+
+
                 changeStatusIsFavorite(user.isFavorite)
 
                 user.ranking?.let {
-                    imgRanking.visibility = if (it.ranking in 1..30) VISIBLE else GONE
+                    imgRanking.visibility = if (it.ranking in 1..30) VISIBLE else INVISIBLE
                     when (it.interval) {
                         PREVIOUS -> {
                             when (it.ranking) {
@@ -648,57 +764,11 @@ class DetailUserProfileFragment :
         }
     }
 
-    private fun initViewpager(consultantResponse: ConsultantResponse) {
-        tabDetailUserProfileFragment =
-            TabDetailUserProfileFragment.getInstance(consultantResponse)
-        tabReviewFragment = TabReviewFragment.getInstance(consultantResponse)
-        var tabs = listOf(
-            UserProfileTab(
-                getString(R.string.user_profile_detail),
-                tabDetailUserProfileFragment!!
-            ),
-            UserProfileTab(
-                String.format(getString(R.string.user_profile_review), 0),
-                tabReviewFragment!!
-            )
-        )
-        tabReviewFragment?.setContentUpdateTitle(
-            object : TabReviewFragment.UpdateTitle {
-                override fun onUpdate(title: String) {
-                    updateTitleTablayout(title)
-                }
-            }
-        )
-        userInforTabAdapter = UserInforTabAdapter(childFragmentManager, tabs)
-        binding.inforUserVp.adapter = userInforTabAdapter
-        binding.tabInforUserTl.setupWithViewPager(binding.inforUserVp)
-        binding.tabInforUserTl.tabRippleColor = null
-        updateTitleTablayout(String.format(getString(R.string.user_profile_review), 0))
-    }
-
-    fun updateTitleTablayout(title: String) {
-        if (binding.tabInforUserTl.tabCount >= 2) {
-            val tabItem = binding.tabInforUserTl.getTabAt(1)
-            if (tabItem != null) {
-                var spanString = SpannableString(title)
-                spanString.setSpan(
-                    StyleSpan(Typeface.BOLD),
-                    0,
-                    4,
-                    0
-                )
-                spanString.setSpan(RelativeSizeSpan(0.85f), 4, spanString.length, 0)
-                tabItem.text = spanString
-            }
-        }
-    }
-
     companion object {
-        const val BASIC = 1
-        const val SILVER = 2
-        const val GOLD = 3
-        const val PLATINUM = 4
-        const val BRONZE = 5
+        const val BEGINNER = 1
+        const val BRONZE = 2
+        const val SILVER = 3
+        const val GOLD = 4
         const val DIAMOND = 6
         const val ACCEPTING = 1
         const val LEAVING = 0

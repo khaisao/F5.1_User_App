@@ -55,9 +55,6 @@ interface ApiInterface {
     @GET("api/member/favorites")
     suspend fun getMemberFavorite(): JsonObject
 
-    @GET("api/member/watch-latest-histories")
-    suspend fun getMemberHistory(): JsonObject
-
     @GET("api/member/blocks")
     suspend fun getMemberBlocked(): JsonObject
 
@@ -86,6 +83,11 @@ interface ApiInterface {
     suspend fun getUserProfileDetail(
         @Path("id") code: String
     ): ApiObjectResponse<ConsultantResponse>
+
+    @GET("api/performers/{id}/gallery-images")
+    suspend fun getUserGallery(
+        @Path("id") code: String
+    ): ApiObjectResponse<List<GalleryResponse>>
 
     @PATCH("api/member")
     suspend fun updateNotification(
@@ -133,6 +135,9 @@ interface ApiInterface {
 
     @GET("api/performers")
     suspend fun getListConsultant(@QueryMap params: MutableMap<String, Any>): ApiObjectResponse<ArrayList<ConsultantResponse>>
+
+    @GET("api/member/watch-latest-histories")
+    suspend fun getPerformerHaveSeen(@QueryMap params: MutableMap<String, Any>): ApiObjectResponse<ArrayList<HistoryResponse>>
 
     @GET("api/performers")
     suspend fun getListConsultantSearch(

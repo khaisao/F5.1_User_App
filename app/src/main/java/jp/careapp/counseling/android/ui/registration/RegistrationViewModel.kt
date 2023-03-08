@@ -7,6 +7,7 @@ import android.content.Context
 import android.provider.Settings
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.DateUtil
 import jp.careapp.counseling.R
@@ -17,6 +18,7 @@ import jp.careapp.counseling.android.data.network.RegistrationResponse
 import jp.careapp.counseling.android.data.pref.AppPreferences.Companion.PARAM_BEARER
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.network.ApiInterface
+import kotlinx.coroutines.launch
 import java.util.*
 
 class RegistrationViewModel @ViewModelInject constructor(
@@ -104,6 +106,33 @@ class RegistrationViewModel @ViewModelInject constructor(
                 DateUtil.getDateTimeDisplayByFormat(DateUtil.DATE_FORMAT_2, mCalendar)
             dateOfBirth.value = myFormat
         }
+
+    fun register(registrationRequest: InforRegistrationRequest) {
+        viewModelScope.launch {
+            isLoading.value = true
+            try {
+                apiInterface.register(registrationRequest).let {
+                    if (it.errors.isEmpty()) {
+                        val userResponse = it.dataResponse
+                        userResponse.let {
+                            rxPreferences.saveUserInfor(
+                                userResponse.token,
+                                userResponse.tokenExpire,
+                                userResponse.passWord,
+                                userResponse.memberCode
+                            )
+                            memberCode = userResponse.memberCode
+                        }
+                        rxPreferences.setFirstRegister(true)
+                    }
+                }
+            } catch (throwable: Throwable) {
+
+            } finally {
+                isLoading.value = false
+            }
+        }
+    }
 
     fun getRegisterRequest(): InforRegistrationRequest {
         return InforRegistrationRequest(
