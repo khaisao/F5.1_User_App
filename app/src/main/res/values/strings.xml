@@ -707,4 +707,5 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="edit_mail">メールアドレス編集</string>
     <string name="blocked_list">ブロック一覧</string>
     <string name="receive_mail_permission">メール受信許可</string>
+    <string name="back">戻る</string>
 </resources>

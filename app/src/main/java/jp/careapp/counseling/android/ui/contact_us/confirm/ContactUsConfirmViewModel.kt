@@ -6,4 +6,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ContactUsConfirmViewModel @Inject constructor(private val mRepository: ContactUsConfirmRepository) :
-    BaseViewModel()
+    BaseViewModel() {
+
+}

@@ -133,6 +133,13 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_topFragment_to_contactUsFragment"
+            app:destination="@id/contactUsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
 
     <action
@@ -851,5 +858,28 @@
         android:name="jp.careapp.counseling.android.ui.edit_nick_name.EditNickNameFragment"
         android:label="EditNickNameFragment"
         tools:layout="@layout/fragment_edit_nick_name" />
+    <fragment
+        android:id="@+id/contactUsFragment"
+        android:name="jp.careapp.counseling.android.ui.contact_us.ContactUsFragment"
+        android:label="ContactUsFragment"
+        tools:layout="@layout/fragment_contact_us">
+        <action
+            android:id="@+id/action_contactUsFragment_to_contactUsConfirmFragment"
+            app:destination="@id/contactUsConfirmFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/contactUsConfirmFragment"
+        android:name="jp.careapp.counseling.android.ui.contact_us.confirm.ContactUsConfirmFragment"
+        android:label="ContactUsConfirmFragment"
+        tools:layout="@layout/fragment_contact_us_confirm">
+        <action
+            android:id="@+id/action_contactUsConfirmFragment_to_contactUsFinishFragment"
+            app:destination="@id/contactUsFinishFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/contactUsFinishFragment"
+        android:name="jp.careapp.counseling.android.ui.contact_us.finish.ContactUsFinishFragment"
+        android:label="ContactUsFinishFragment"
+        tools:layout="@layout/fragment_contact_us_finish" />
 
 </navigation>

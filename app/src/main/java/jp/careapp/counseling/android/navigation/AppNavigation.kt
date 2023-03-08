@@ -261,4 +261,6 @@ interface AppNavigation : BaseNavigator {
     fun openMyPageToBlocked(bundle: Bundle? = null)
 
     fun openMyPageToNotification(bundle: Bundle? = null)
+
+    fun openMyPageToContactUs(bundle: Bundle? = null)
 }

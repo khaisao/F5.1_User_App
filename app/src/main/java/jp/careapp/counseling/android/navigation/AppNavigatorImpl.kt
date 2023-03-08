@@ -520,4 +520,8 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     override fun openMyPageToNotification(bundle: Bundle?) {
         openScreen(R.id.action_topFragment_to_fragmentNotification, bundle)
     }
+
+    override fun openMyPageToContactUs(bundle: Bundle?) {
+        openScreen(R.id.action_topFragment_to_contactUsFragment, bundle)
+    }
 }
