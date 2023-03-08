@@ -67,6 +67,7 @@ class AppPreferences @Inject constructor(
         const val PREF_KEY_MEMBER_AGE = "PREF_KEY_MEMBER_AGE"
         const val PREF_KEY_MEMBER_BIRTH = "PREF_KEY_MEMBER_BIRTH"
         const val PREF_KEY_MEMBER_SEX = "PREF_KEY_MEMBER_SEX"
+        const val PREF_KEY_MEMBER_STATUS_NOTIFICATION = "PREF_KEY_MEMBER_STATUS_NOTIFICATION"
     }
 
     private val mPrefs: SharedPreferences = context.getSharedPreferences(
@@ -423,7 +424,8 @@ class AppPreferences @Inject constructor(
         mail: String,
         age: Int,
         birth: String,
-        sex: Int
+        sex: Int,
+        statusNotification: Int
     ) {
         mPrefs.edit().apply {
             putString(PREF_KEY_MEMBER_NICK_NAME, name)
@@ -431,6 +433,7 @@ class AppPreferences @Inject constructor(
             putInt(PREF_KEY_MEMBER_AGE, age)
             putString(PREF_KEY_MEMBER_BIRTH, birth)
             putInt(PREF_KEY_MEMBER_SEX, sex)
+            putInt(PREF_KEY_MEMBER_STATUS_NOTIFICATION, statusNotification)
         }.apply()
     }
 
@@ -451,4 +454,11 @@ class AppPreferences @Inject constructor(
     override fun saveMemberMail(mail: String) {
         mPrefs.edit().putString(PREF_KEY_MEMBER_MAIL, mail).apply()
     }
+
+    override fun saveSettingNotificationNM(statusNotification: Int) {
+        mPrefs.edit().putInt(PREF_KEY_MEMBER_STATUS_NOTIFICATION, statusNotification).apply()
+    }
+
+    override fun getSettingNotificationNM(): Int =
+        mPrefs.getInt(PREF_KEY_MEMBER_STATUS_NOTIFICATION, 1)
 }

@@ -117,4 +117,7 @@
     <color name="color_2A1F45">#2A1F45</color> <!--    rgb 42 31 69-->
     <color name="color_F0F0F0">#F0F0F0</color>
 
+    <color name="color_070707">#070707</color>
+    <color name="color_eff3fc">#eff3fc</color>
+
 </resources>

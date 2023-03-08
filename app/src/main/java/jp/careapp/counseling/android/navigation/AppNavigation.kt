@@ -259,4 +259,6 @@ interface AppNavigation : BaseNavigator {
     fun openEditProfileToEditNickName(bundle: Bundle? = null)
 
     fun openMyPageToBlocked(bundle: Bundle? = null)
+
+    fun openMyPageToNotification(bundle: Bundle? = null)
 }

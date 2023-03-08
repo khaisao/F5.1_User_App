@@ -516,4 +516,8 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     override fun openMyPageToBlocked(bundle: Bundle?) {
         openScreen(R.id.action_topFragment_to_blockedFragment, bundle)
     }
+
+    override fun openMyPageToNotification(bundle: Bundle?) {
+        openScreen(R.id.action_topFragment_to_fragmentNotification, bundle)
+    }
 }

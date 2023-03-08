@@ -16,8 +16,9 @@ class MyPageRepository @Inject constructor(
         mail: String,
         age: Int,
         birth: String,
-        sex: Int
-    ) = rxPreferences.saveMemberInfoEditProfile(nickName, mail, age, birth, sex)
+        sex: Int,
+        statusNotification: Int
+    ) = rxPreferences.saveMemberInfoEditProfile(nickName, mail, age, birth, sex, statusNotification)
 
     fun getMemberNickName() = rxPreferences.getMemberNickName()
 

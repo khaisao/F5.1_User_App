@@ -114,7 +114,8 @@ class MyPageViewModel @Inject constructor(
                                 it.mail,
                                 it.age,
                                 it.birth,
-                                it.sex
+                                it.sex,
+                                it.pushMail
                             )
                             withContext(Dispatchers.Main) {
                                 _memberName.value = mRepository.getMemberNickName()
@@ -141,7 +142,7 @@ class MyPageViewModel @Inject constructor(
             BUY_POINTS -> {}
             EDIT_PROFILE -> mActionState.value = MyPageActionState.NavigateToEditProfile
             BLOCK_LIST -> mActionState.value = MyPageActionState.NavigateToBlocked
-            SETTING_PUSH -> {}
+            SETTING_PUSH -> mActionState.value = MyPageActionState.NavigateToSettingNotification
             USE_POINTS_GUIDE -> mActionState.value = MyPageActionState.NavigateToUsePointsGuide
             TERMS_OF_SERVICE -> mActionState.value = MyPageActionState.NavigateToTermOfService
             PRIVACY_POLICY -> mActionState.value = MyPageActionState.NavigateToPrivacyPolicy
@@ -154,8 +155,8 @@ class MyPageViewModel @Inject constructor(
 sealed class MyPageActionState {
 
     object NavigateToEditProfile : MyPageActionState()
-
     object NavigateToBlocked : MyPageActionState()
+    object NavigateToSettingNotification : MyPageActionState()
     object NavigateToUsePointsGuide : MyPageActionState()
     object NavigateToTermOfService : MyPageActionState()
     object NavigateToPrivacyPolicy : MyPageActionState()

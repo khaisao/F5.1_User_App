@@ -1,90 +1,52 @@
 package jp.careapp.counseling.android.ui.notification
 
-import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
-import jp.careapp.counseling.android.data.model.UpdateNotificationParams
-import jp.careapp.counseling.android.data.network.MemberResponse
-import jp.careapp.counseling.android.ui.my_page.MyPageViewModel
+import jp.careapp.counseling.android.navigation.AppNavigation
+import jp.careapp.counseling.android.utils.customView.ToolBarCommon
 import jp.careapp.counseling.databinding.FragmentNotificationBinding
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class NotificationFragment : BaseFragment<FragmentNotificationBinding, NotificationViewModel>() {
 
-    private val viewModels: NotificationViewModel by viewModels()
-    private val myPageViewModels: MyPageViewModel by viewModels()
-    override val layoutId = R.layout.fragment_notification
-    override fun getVM(): NotificationViewModel = viewModels
+    @Inject
+    lateinit var appNavigation: AppNavigation
 
-    private var mMember: MemberResponse? = null
+    override val layoutId: Int = R.layout.fragment_notification
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val bundle = arguments
-        if (bundle != null) {
-            mMember = bundle.getParcelable("member")
-        }
+    private val mViewModel: NotificationViewModel by viewModels()
+    override fun getVM() = mViewModel
+
+    override fun initView() {
+        super.initView()
+
+        setUpToolBar()
+        setUpSwitch()
     }
 
     override fun bindingStateView() {
         super.bindingStateView()
 
-        viewModels.error.observe(
-            viewLifecycleOwner,
-            Observer {
-            }
-        )
-        viewModels.updateNotificationLoading.observe(
-            viewLifecycleOwner,
-            Observer {
-                showHideLoading(it)
-            }
-        )
-        binding.apply {
-            viewModels.saveStateSwitch.observe(
-                viewLifecycleOwner,
-                Observer { member ->
-                    pushNotification.apply {
-                        btnNotifi.isChecked = member.pushMail == 1
-                        var check = btnNotifi.isChecked
-                        btnNotifi.setOnClickListener {
-                            if (btnNotifi.isChecked != check) {
-                                val newState = getCheck(btnNotifi.isChecked)
-                                viewModels.setParamsUpdate(
-                                    UpdateNotificationParams(
-                                        pushMail = newState,
-                                    )
-                                )
-                                member.pushMail = newState
-                                check = !check
-                            }
-                        }
-                    }
-                }
-            )
-
-            viewModels.openDirect.observe(
-                viewLifecycleOwner
-            ) {
-//                if (it) myPageViewModels.forceRefresh()
-            }
-
-//            myPageViewModels.uiMember.observe(
-//                viewLifecycleOwner
-//            ) {
-//                viewModels.setSaveStateSwitchFromMemberResponse(it)
-//            }
+        mViewModel.statusSwitch.observe(viewLifecycleOwner) {
+            binding.scNotification.isChecked = it == PUSH_RECEIVE
         }
     }
 
-    private fun getCheck(check: Boolean): Int {
-        return if (check) 1 else 0
+    private fun setUpToolBar() {
+        binding.toolBar.setOnToolBarClickListener(object : ToolBarCommon.OnToolBarClickListener() {
+            override fun onClickLeft() {
+                super.onClickLeft()
+                if (!isDoubleClick) appNavigation.navigateUp()
+            }
+        })
+    }
+
+    private fun setUpSwitch() {
+        binding.scNotification.setOnCheckedChangeListener { compoundButton, isChecked ->
+            if (compoundButton.isPressed) mViewModel.updateSettingNotification(isChecked)
+        }
     }
 }
-
-data class SaveStateSwitch(
-    var pushMail: Int = 0,
-)
