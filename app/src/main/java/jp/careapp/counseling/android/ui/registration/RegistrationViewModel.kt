@@ -123,8 +123,6 @@ class RegistrationViewModel @ViewModelInject constructor(
                             )
                             memberCode = userResponse.memberCode
                         }
-//                        logEventRegistration(registrationRequest.birth)
-//                        openScreen(true)
                         rxPreferences.setFirstRegister(true)
                     }
                 }

@@ -46,56 +46,6 @@ class CallingFragment : BaseFragment<FragmentCallingBinding, CallingViewModel>()
             }
 
             Glide.with(this@CallingFragment).asGif().load(R.drawable.ic_call_loading).into(binding.ivMotion)
-//            ivMinimum.setOnClickListener {
-//                if (!isDoubleClick) {
-//                    viewModel.showMinimizeCall(true)
-//                    appNavigation.navigateUp()
-//                }
-//            }
-//            groupSheet.setAllOnClickListener {
-//                if (!isDoubleClick) {
-//                    viewModel.showMinimizeCall(true)
-//                    appNavigation.openCallingToUpdateTroubleSheet()
-//                }
-//            }
-//            groupMessage.setAllOnClickListener {
-//                if (!isDoubleClick) {
-//                    viewModel.showMinimizeCall(true)
-//                    appNavigation.containScreenInBackStack(R.id.chatMessageFragment) { isContain, _ ->
-//                        if (isContain) {
-//                            appNavigation.popopBackStackToDetination(R.id.chatMessageFragment)
-//                        } else {
-//                            openChatMessage()
-//                        }
-//                    }
-//                }
-//            }
-//            groupBuyPoint.setAllOnClickListener {
-//                if (!isDoubleClick) {
-//                    viewModel.showMinimizeCall(true)
-//
-//                    if (viewModel.isFullMode()) {
-//                        appNavigation.navigateUp()
-//                        val bundle = Bundle().apply {
-//                            putString(Define.TITLE_WEB_VIEW, getString(R.string.buy_point))
-//                            putString(Define.URL_WEB_VIEW, Define.URL_BUY_POINT)
-//                        }
-//                        appNavigation.openScreenToWebview(bundle)
-//                    } else {
-//                        appNavigation.openCallingToBuyPoint()
-//                    }
-//                }
-//            }
-//            groupMic.setAllOnClickListener {
-//                if (!isDoubleClick) {
-//                    viewModel.changeMic()
-//                }
-//            }
-//            groupSpeaker.setAllOnClickListener {
-//                if (!isDoubleClick) {
-//                    viewModel.changeSpeaker()
-//                }
-//            }
             ivEndCall.setOnClickListener {
                 if (!isDoubleClick) {
                     viewModel.onEndCall()
@@ -131,10 +81,8 @@ class CallingFragment : BaseFragment<FragmentCallingBinding, CallingViewModel>()
                     tvName.text = it.name
                     if (it.imageUrl.isNotEmpty()) {
                         ivAvatar.loadImage(it.imageUrl, false)
-//                        ivBackground.loadImageAndBlur(it.imageUrl)
                     } else {
                         ivAvatar.loadImage(R.drawable.ic_avatar_default, false)
-//                        ivBackground.loadImageAndBlur(R.drawable.ic_avatar_default)
                     }
                 }
             }
@@ -142,18 +90,6 @@ class CallingFragment : BaseFragment<FragmentCallingBinding, CallingViewModel>()
         viewModel.callState.observe(viewLifecycleOwner) {
             it?.let { updateUI(it) }
         }
-        viewModel.isMuteMic.observe(viewLifecycleOwner) {
-            it?.let { changeMic(it) }
-        }
-        viewModel.isMuteSpeaker.observe(viewLifecycleOwner) {
-            it?.let { changeSpeaker(it) }
-        }
-        viewModel.callDuration.observe(viewLifecycleOwner) {
-            it?.let {
-//                binding.tvDuration.text = it.toDurationTime()
-            }
-        }
-
     }
 
     private fun updateUI(state: CallState) {
@@ -161,43 +97,13 @@ class CallingFragment : BaseFragment<FragmentCallingBinding, CallingViewModel>()
             CallState.CONNECTING -> {
                 binding.apply {
                     ivMotion.isVisible = true
-//                    tvDuration.isInvisible = true
-//                    groupMic.isInvisible = true
-//                    groupSpeaker.isInvisible = true
                 }
             }
             CallState.TALKING -> {
                 binding.apply {
                     ivMotion.isVisible = false
-//                    tvDuration.isInvisible = false
-//                    groupMic.isInvisible = false
-//                    groupSpeaker.isInvisible = false
                 }
             }
-        }
-    }
-
-    private fun changeMic(isMute: Boolean) {
-        binding.apply {
-//            if (isMute) {
-//                ivMic.loadImage(R.drawable.ic_mic_off)
-//                tvMic.text = getString(R.string.mic_on)
-//            } else {
-//                ivMic.loadImage(R.drawable.ic_mic_on)
-//                tvMic.text = getString(R.string.mic_off)
-//            }
-        }
-    }
-
-    private fun changeSpeaker(isMute: Boolean) {
-        binding.apply {
-//            if (isMute) {
-//                ivSpeaker.loadImage(R.drawable.ic_speaker_off)
-//                tvSpeaker.text = getString(R.string.speaker_on)
-//            } else {
-//                ivSpeaker.loadImage(R.drawable.ic_speaker_on)
-//                tvSpeaker.text = getString(R.string.speaker_off)
-//            }
         }
     }
 }

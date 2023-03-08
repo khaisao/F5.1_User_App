@@ -550,30 +550,18 @@ class DetailUserProfileFragment :
                 Glide.with(this@DetailUserProfileFragment).asGif().load(R.drawable.ic_ballon_call).into(ivBallonLiveGl50)
                 Glide.with(this@DetailUserProfileFragment).asGif().load(R.drawable.ic_ballon_peep).into(ivBallonPeep)
 
-                if (user.callStatus == CallStatus.ONLINE && user.chatStatus == ChatStatus.OFFLINE) {
-                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_offline)
-                    presenceStatusTv.text =
-                        resources.getString(R.string.presence_status_offline)
-                } else if (user.callStatus == CallStatus.INCOMING_CALL && user.chatStatus == ChatStatus.OFFLINE) {
-                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_offline)
-                    presenceStatusTv.text =
-                        resources.getString(R.string.presence_status_offline)
-                } else if (user.callStatus == CallStatus.OFFLINE && user.chatStatus == ChatStatus.WAITING) {
-                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
-                    presenceStatusTv.text =
-                        resources.getString(R.string.presence_status_live_streaming)
-                } else if (user.callStatus == CallStatus.OFFLINE && user.chatStatus == ChatStatus.CHATTING) {
-                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
-                    presenceStatusTv.text =
-                        resources.getString(R.string.presence_status_live_streaming)
-                } else if (user.callStatus == CallStatus.OFFLINE && user.chatStatus == ChatStatus.TWO_SHOT_CHAT) {
-                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
-                    presenceStatusTv.text =
-                        resources.getString(R.string.presence_status_private_delivery)
-                } else if (user.callStatus == CallStatus.OFFLINE && user.chatStatus == ChatStatus.OFFLINE) {
+                if (ConsultantResponse.isWaiting(user)) {
                     presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_waiting)
                     presenceStatusTv.text =
                         resources.getString(R.string.presence_status_waiting)
+                } else if (ConsultantResponse.isLiveStream(user)) {
+                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
+                    presenceStatusTv.text =
+                        resources.getString(R.string.presence_status_live_streaming)
+                } else if (ConsultantResponse.isPrivateLiveStream(user)) {
+                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
+                    presenceStatusTv.text =
+                        resources.getString(R.string.presence_status_private_delivery)
                 } else {
                     presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_offline)
                     presenceStatusTv.text =
