@@ -3,13 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="loading"
-            type="Boolean" />
-    </data>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,14 +17,19 @@
             app:src_left="@drawable/ic_arrow_left"
             app:string_title="@string/blocked_list" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#2A1F45" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_blocked"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
             android:orientation="vertical"
+            app:itemAnimator="@{null}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:visibility="gone" />
+            tools:listitem="@layout/item_blocked" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvNoData"
@@ -43,7 +41,6 @@
             android:text="@string/no_block_data"
             android:textColor="#70658d"
             android:textSize="14sp"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:visibility="gone" />
     </LinearLayout>
 </layout>

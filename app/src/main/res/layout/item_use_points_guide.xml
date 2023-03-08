@@ -77,5 +77,15 @@
             app:layout_constraintStart_toEndOf="@id/ivItemIcon"
             app:layout_constraintTop_toTopOf="@id/ivItemIcon"
             tools:text="@string/buy_point" />
+
+        <View
+            typeField="@{item.typeField}"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:background="#453B5D"
+            app:layout_constraintBottom_toBottomOf="parent  "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
