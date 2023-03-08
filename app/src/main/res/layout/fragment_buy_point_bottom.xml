@@ -17,49 +17,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_corner_top_12dp_1d1045"
+            android:background="@drawable/bg_buy_point"
             android:gravity="center_horizontal"
             android:clickable="true"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="35dp"
-                android:layout_height="5dp"
-                android:layout_marginTop="@dimen/margin_6dp"
-                android:background="@drawable/bg_corner_3dp_523f8a"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
+                android:layout_marginBottom="@dimen/margin_24"
                 android:id="@+id/title_point_tv"
                 style="@style/text_bold_16"
                 android:layout_marginTop="@dimen/margin_32"
-                android:text="@string/insufficient_points"
+                android:text="@string/point_purchase"
                 android:textColor="@color/color_E3DFEF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-            <TextView
-                android:id="@+id/count_point_tv"
-                style="@style/text_12"
-                android:layout_marginTop="@dimen/margin_12"
-                android:text="@string/format_point"
-                android:textColor="@color/color_B3A2D1" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/margin_26"
-                android:alpha="0.15"
-                android:background="@color/white" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cost_point_rv"
                 android:layout_width="match_parent"
+                android:layout_marginHorizontal="@dimen/margin_24"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -69,9 +47,8 @@
                 android:id="@+id/cancel_button_tv"
                 style="@style/text_bold_16"
                 android:layout_width="match_parent"
-                android:layout_marginLeft="@dimen/margin_8"
-                android:layout_marginTop="@dimen/margin_24"
-                android:layout_marginRight="@dimen/margin_8"
+                android:layout_marginHorizontal="@dimen/margin_24"
+                android:layout_marginTop="@dimen/margin_8"
                 android:layout_marginBottom="@dimen/margin_24"
                 android:background="@drawable/bg_corner_24dp_332167"
                 android:gravity="center"

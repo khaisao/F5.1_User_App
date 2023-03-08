@@ -246,7 +246,7 @@ class DetailUserProfileFragment :
     }
     //TODO: change to getPoint < 1000
     private fun checkPoint() {
-        if (rxPreferences.getPoint() >= 1000) {
+        if (rxPreferences.getPoint() < 1000) {
             showDialogRequestBuyPoint()
         } else {
             showDialogConfirmCall()
