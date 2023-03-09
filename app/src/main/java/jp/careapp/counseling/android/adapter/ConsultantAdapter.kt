@@ -177,30 +177,26 @@ class ConsultantAdapter(
                     if (consultant.messageOfTheDay.isNullOrEmpty()) View.INVISIBLE else View.VISIBLE
                 tvTweet.text = consultant.messageOfTheDay?.replace("\n", "")
             }
-            if (consultant.callStatus == CallStatus.ONLINE && consultant.chatStatus == ChatStatus.OFFLINE) {
-                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
-                binding.tvStatus.text =
-                    binding.root.context.resources.getString(R.string.presence_status_offline)
-            } else if (consultant.callStatus == CallStatus.INCOMING_CALL && consultant.chatStatus == ChatStatus.OFFLINE) {
-                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
-                binding.tvStatus.text =
-                    binding.root.context.resources.getString(R.string.presence_status_offline)
-            } else if (consultant.callStatus == CallStatus.OFFLINE && consultant.chatStatus == ChatStatus.WAITING) {
-                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
-                binding.tvStatus.text =
-                    binding.root.context.resources.getString(R.string.presence_status_live_streaming)
-            } else if (consultant.callStatus == CallStatus.OFFLINE && consultant.chatStatus == ChatStatus.CHATTING) {
-                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
-                binding.tvStatus.text =
-                    binding.root.context.resources.getString(R.string.presence_status_live_streaming)
-            } else if (consultant.callStatus == CallStatus.OFFLINE && consultant.chatStatus == ChatStatus.TWO_SHOT_CHAT) {
-                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
-                binding.tvStatus.text =
-                    binding.root.context.resources.getString(R.string.presence_status_private_delivery)
-            } else if (consultant.callStatus == CallStatus.OFFLINE && consultant.chatStatus == ChatStatus.OFFLINE) {
+            if (ConsultantResponse.isWaiting(consultant.callStatus, consultant.chatStatus)) {
                 binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_waiting)
                 binding.tvStatus.text =
                     binding.root.context.resources.getString(R.string.presence_status_waiting)
+            } else if (ConsultantResponse.isLiveStream(
+                    consultant.callStatus,
+                    consultant.chatStatus
+                )
+            ) {
+                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
+                binding.tvStatus.text =
+                    binding.root.context.resources.getString(R.string.presence_status_live_streaming)
+            } else if (ConsultantResponse.isPrivateLiveStream(
+                    consultant.callStatus,
+                    consultant.chatStatus
+                )
+            ) {
+                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
+                binding.tvStatus.text =
+                    binding.root.context.resources.getString(R.string.presence_status_private_delivery)
             } else {
                 binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
                 binding.tvStatus.text =

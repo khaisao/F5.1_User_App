@@ -52,38 +52,36 @@ data class ConsultantResponse(
             )
         }
 
-
-
-        fun isWaiting(consultantResponse: ConsultantResponse): Boolean {
+        fun isWaiting(callStatus:Int, chatStatus:Int): Boolean {
             var isWaiting = false
-            if (consultantResponse.callStatus == 1 && consultantResponse.chatStatus == 0) {
+            if (callStatus == 1 && chatStatus == 0) {
                 isWaiting = true
-            } else if (consultantResponse.callStatus == 2 && consultantResponse.chatStatus == 0) {
+            } else if (callStatus == 2 && chatStatus == 0) {
                 isWaiting = true
             }
-            return true
+            return isWaiting
         }
 
-        fun isLiveStream(consultantResponse: ConsultantResponse): Boolean {
+        fun isLiveStream(callStatus:Int, chatStatus:Int): Boolean {
             var isLiveStream = false
-            if (consultantResponse.callStatus == 0 && consultantResponse.chatStatus == 1) {
+            if (callStatus == 0 && chatStatus == 1) {
                 isLiveStream = true
-            } else if (consultantResponse.callStatus == 0 && consultantResponse.chatStatus == 2) {
+            } else if (callStatus == 0 && chatStatus == 2) {
                 isLiveStream = true
             }
             return isLiveStream
         }
 
-        fun isPrivateLiveStream(consultantResponse: ConsultantResponse): Boolean {
+        fun isPrivateLiveStream(callStatus:Int, chatStatus:Int): Boolean {
             var isPrivateLiveStream = false
-            if (consultantResponse.callStatus == 0 && consultantResponse.chatStatus == 3) {
+            if (callStatus == 0 && chatStatus == 3) {
                 isPrivateLiveStream = true
             }
             return isPrivateLiveStream
         }
 
-        fun isOnline(consultantResponse: ConsultantResponse): Boolean {
-            if(!isWaiting(consultantResponse) && !isLiveStream(consultantResponse) && !isPrivateLiveStream(consultantResponse)){
+        fun isOnline(callStatus:Int, chatStatus:Int): Boolean {
+            if(!isWaiting(callStatus, chatStatus) && !isLiveStream(callStatus,chatStatus) && !isPrivateLiveStream(callStatus, chatStatus)){
                 return true
             }
             return false

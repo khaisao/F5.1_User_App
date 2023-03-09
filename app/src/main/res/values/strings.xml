@@ -387,7 +387,8 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="error_maintenance">エラーが発生しました。</string>
 
     <!--message-->
-    <string name="input_content_message">相談内容を入力</string>
+    <string name="input_content_message">こんばんは、はじめまして</string>
+    <string name="yesterday_time_send">昨日</string>
     <string name="read">既読</string>
     <string name="subject_review">\@@COUNSELOR_REVIEW@@</string>
     <string name="donot_block">レビューが反映前のため 編集できません。</string>
@@ -403,6 +404,8 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="unlock_title">全文を読む</string>
     <string name="unlock_message">（%d文字・%dpts）</string>
     <string name="unlock_dialog_title">%dpts消費します</string>
+    <string name="message_free_1">【無料】ライブ配信お願いします</string>
+    <string name="message_free_2">【無料】ありがとうございました</string>
 
     <string name="regex_link">://</string>
 
