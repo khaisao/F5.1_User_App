@@ -38,7 +38,7 @@ class RMOnlineListFragment : BaseFragment<FragmentRmOnlineListBinding, RMOnlineL
                     appNavigation.openRMTopToRMUserDetail(bundle)
                 }
             }
-        ) {}.apply {
+        ).apply {
             if (getLoadMorelistener() == null) {
                 setLoadMorelistener(
                     object : BaseAdapterLoadMore.LoadMorelistener {
@@ -59,6 +59,7 @@ class RMOnlineListFragment : BaseFragment<FragmentRmOnlineListBinding, RMOnlineL
             itemAnimator = null
             setHasFixedSize(true)
             adapter = _adapter
+            addItemDecoration(SpacingItemDecorator(resources.getDimensionPixelSize(R.dimen.margin_8)))
         }
 
         binding.srOnline.apply {

@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_0B002C"
+        android:background="@color/duck_egg_blue"
         android:paddingHorizontal="@dimen/margin_32"
         tools:context=".android.ui.review_mode.enterName.RMEnterNameFragment">
 
@@ -15,22 +15,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.059" />
+            app:layout_constraintGuide_end="838dp" />
 
         <TextView
             android:id="@+id/textView"
             style="@style/text_bold_16"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_48sdp"
             android:layout_marginHorizontal="@dimen/margin_32"
             android:text="@string/please_enter_nick_name"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/color_070707"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
-        <jp.careapp.counseling.android.ui.custom.EditTextCounter
+        <jp.careapp.counseling.android.ui.custom.EditTextCounterRM
             android:id="@+id/edtNickName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -45,57 +46,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_24"
-            android:background="@drawable/bg_rm_btn_primary"
+            android:background="@drawable/bg_rm_btn_setting_nickname"
             android:enabled="false"
             android:gravity="center"
             android:minHeight="@dimen/height_44"
             android:paddingVertical="@dimen/margin_14"
             android:text="@string/text_OK"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtNickName"
             tools:enabled="false" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintGuide_percent="0.2"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintGuide_percent="0.8"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvTermsOfService"
-            style="@style/text_12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_16"
-            android:text="@string/terms_of_service"
-            android:textColor="@color/color_B2A9CC"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline4" />
-
-        <TextView
-            android:id="@+id/tvPrivacyPolicy"
-            style="@style/text_12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/privacy_policy"
-            android:textColor="@color/color_B2A9CC"
-            app:layout_constraintBottom_toBottomOf="@+id/tvTermsOfService"
-            app:layout_constraintEnd_toStartOf="@+id/guideline5" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -4,18 +4,22 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.* // ktlint-disable no-wildcard-imports
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import jp.careapp.core.base.BaseViewModel
-import jp.careapp.core.utils.* // ktlint-disable no-wildcard-imports
-import jp.careapp.counseling.android.data.network.*
+import jp.careapp.core.utils.*
+import jp.careapp.counseling.android.data.network.ApiObjectResponse
+import jp.careapp.counseling.android.data.network.LoginResponse
+import jp.careapp.counseling.android.data.network.MemberResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.network.ApiInterface
 import jp.careapp.counseling.android.utils.dummyCategoryData
 import jp.careapp.counseling.android.utils.dummyFreeTemplateData
-import kotlinx.coroutines.*
-import java.lang.Runnable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.launch
 
 const val DURATION_SPLASH = 1000L
 
@@ -28,7 +32,11 @@ class SplashViewModel @ViewModelInject constructor(
         const val SCREEN_CODE_TOP = 0
         const val SCREEN_CODE_START = 1
         const val SCREEN_CODE_BAD_USER = 2
-        const val SCREEN_CODE_REREGISTER = 3
+        const val SCREEN_CODE_REGISTER = 3
+        const val SCREEN_CODE_TOP_RM = 4
+        const val SCREEN_CODE_START_RM = 5
+        const val SCREEN_CODE_BAD_USER_RM = 6
+        const val SCREEN_CODE_REGISTER_RM = 7
         const val NORMAL_MODE = 1
         const val REVIEW_MODE = 98
     }
@@ -39,16 +47,20 @@ class SplashViewModel @ViewModelInject constructor(
 
     private val handler = Handler(Looper.getMainLooper())
 
-    val memberResult = MutableLiveData<ApiObjectResponse<MemberResponse>>()
+    private val memberResult = MutableLiveData<ApiObjectResponse<MemberResponse>>()
 
-    val loginResult = MutableLiveData<ApiObjectResponse<LoginResponse>>()
+    private val loginResult = MutableLiveData<ApiObjectResponse<LoginResponse>>()
+
+    private val appMode = MutableLiveData<Int>()
 
     private val runnable = Runnable {
         actionSPlash.value = SplashActionState.Finish
     }
 
     private fun openStartScreen() {
-        screenCode.value = SCREEN_CODE_START
+        // TODO Handle check review mode
+        appMode.value = NORMAL_MODE
+        screenCode.value = SCREEN_CODE_START_RM
     }
 
     init {
@@ -58,11 +70,12 @@ class SplashViewModel @ViewModelInject constructor(
     }
 
     fun handleActionSplash() {
-        if (rxPreferences != null && !TextUtils.isEmpty(rxPreferences.getToken())) {
+        openStartScreen()
+        if (!TextUtils.isEmpty(rxPreferences.getToken())) {
             if (getCurrentDateTime() != null &&
-                rxPreferences!!.getTokenExpire()!!.toJPDate(DateUtil.DATE_FORMAT_1) != null &&
+                rxPreferences.getTokenExpire()!!.toJPDate(DateUtil.DATE_FORMAT_1) != null &&
                 getCurrentDateTime()!!.after(
-                    rxPreferences!!.getTokenExpire()!!.toJPDate(DateUtil.DATE_FORMAT_1)
+                    rxPreferences.getTokenExpire()!!.toJPDate(DateUtil.DATE_FORMAT_1)
                 )
             ) {
                 login()
@@ -104,6 +117,14 @@ class SplashViewModel @ViewModelInject constructor(
         }
     }
 
+    private fun checkAppMode() {
+        // TODO Call API check mode to switch ReviewMode/NormalMode
+    }
+
+    private fun switchMode() {
+        // TODO Handle clear all data of old mode
+    }
+
     private fun login() {
         viewModelScope.launch {
             isLoading.value = true
@@ -116,7 +137,7 @@ class SplashViewModel @ViewModelInject constructor(
                     if (it.errors.isEmpty()) {
                         val userResponse = it.dataResponse
                         val memberCode =
-                            if (userResponse.memberCode != null) userResponse.memberCode else ""
+                            userResponse.memberCode
                         userResponse.let {
                             rxPreferences.saveUserInfor(
                                 userResponse.token,
@@ -145,27 +166,27 @@ class SplashViewModel @ViewModelInject constructor(
                 memberResult.value = apiInterface.getMember()
                 memberResult.value?.let {
                     if (it.errors.isEmpty()) {
-                        it.dataResponse.let {
-                            val status = it!!.status
-                            when (status) {
+                        it.dataResponse.let { response ->
+                            when (response.status) {
                                 Constants.MemberStatus.NOMARL.index -> {
-                                    screenCode.value = SCREEN_CODE_TOP
+                                    screenCode.value =
+                                        if (appMode.value == NORMAL_MODE) SCREEN_CODE_TOP else SCREEN_CODE_TOP_RM
                                 }
                                 Constants.MemberStatus.UNREGISTED.index -> {
-                                    screenCode.value = SCREEN_CODE_START
+                                    screenCode.value =
+                                        if (appMode.value == NORMAL_MODE) SCREEN_CODE_START else SCREEN_CODE_START_RM
                                 }
                                 Constants.MemberStatus.BAD.index -> {
-                                    screenCode.value = SCREEN_CODE_BAD_USER
+                                    screenCode.value =
+                                        if (appMode.value == NORMAL_MODE) SCREEN_CODE_BAD_USER else SCREEN_CODE_BAD_USER_RM
                                 }
                                 Constants.MemberStatus.WITHDRAWAL.index -> {
-                                    screenCode.value = SCREEN_CODE_REREGISTER
+                                    screenCode.value =
+                                        if (appMode.value == NORMAL_MODE) SCREEN_CODE_REGISTER else SCREEN_CODE_REGISTER_RM
                                 }
                             }
-                            if (it.newsLastViewDateTime != null) {
-                                rxPreferences.saveNewLastViewDateTime(it.newsLastViewDateTime)
-                            }
-                            if (it.mail != null)
-                                rxPreferences.saveEmail(it.mail)
+                            rxPreferences.saveNewLastViewDateTime(response.newsLastViewDateTime)
+                            rxPreferences.saveEmail(response.mail)
                         }
                     }
                 }

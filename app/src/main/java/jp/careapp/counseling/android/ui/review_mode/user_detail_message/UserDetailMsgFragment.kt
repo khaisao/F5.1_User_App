@@ -15,6 +15,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseActivity
@@ -43,7 +47,7 @@ import jp.careapp.counseling.android.utils.ActionState
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.databinding.FragmentRmUserDetailMessageBinding
-import jp.careapp.counseling.databinding.LlUserDetailBottomSheetBinding
+import jp.careapp.counseling.databinding.LlRvUserDetailBottomSheetBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -167,6 +171,30 @@ class UserDetailMsgFragment :
                 }
             }
         )
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            Glide.with(binding.toolBar.userAvatar).load(
+                resources.getIdentifier(
+                    "ic_no_image",
+                    "drawable", requireContext().packageName
+                )
+            )
+                .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen._10sdp)))
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(binding.toolBar.userAvatar)
+        } else {
+            Glide.with(binding.toolBar.userAvatar).load(
+                resources.getIdentifier(
+                    "ic_no_image",
+                    "drawable", requireContext().packageName
+                )
+            ).transforms(
+                CenterCrop(),
+                RoundedCorners(resources.getDimensionPixelSize(R.dimen._10sdp))
+            )
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(binding.toolBar.userAvatar)
+        }
     }
 
     private fun setViewPerformer(performerDetail: RMConsultantResponse?) {
@@ -228,9 +256,11 @@ class UserDetailMsgFragment :
     private fun handleButtonSend(msgLength: Int) {
         isEnableSend = if (msgLength == 0) {
             binding.ivSend.setImageResource(R.drawable.ic_send_user_detail_msg_disable)
+            binding.toolBar.btnCamera.setImageResource(R.drawable.ic_video)
             false
         } else {
             binding.ivSend.setImageResource(R.drawable.ic_send_user_detail_msg_enable)
+            binding.toolBar.btnCamera.setImageResource(R.drawable.ic_video_active)
             true
         }
     }
@@ -238,7 +268,7 @@ class UserDetailMsgFragment :
     private fun showBlockBottomSheet() {
         val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
         val bottomSheetBinding =
-            LlUserDetailBottomSheetBinding.inflate(LayoutInflater.from(requireContext()))
+            LlRvUserDetailBottomSheetBinding.inflate(LayoutInflater.from(requireContext()))
 
         bottomSheetBinding.llItemBlockUser.setOnClickListener {
             showDialogBlock()
@@ -302,6 +332,7 @@ class UserDetailMsgFragment :
         }
 
         if (it.dataMsg.isNotEmpty()) {
+            binding.tvNoData.visibility = View.GONE
             isLoadMore = it.isLoadMore
             val lastItemCount = mAdapter.itemCount
 
@@ -338,6 +369,8 @@ class UserDetailMsgFragment :
                     binding.rcvMessage.scrollToPosition(mAdapter.itemCount - 1)
                 }
             }
+        } else {
+            binding.tvNoData.visibility = View.VISIBLE
         }
     }
 

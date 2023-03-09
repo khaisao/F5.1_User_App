@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/margin_48dp"
+    android:layout_marginRight="@dimen/margin_48dp"
+    android:background="@drawable/bg_rm_radius_12">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin_24dp"
+        android:paddingTop="@dimen/margin_24dp"
+        android:paddingRight="@dimen/margin_24dp"
+        android:paddingBottom="@dimen/margin_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/text_bold_16"
+            android:gravity="center"
+            android:textColor="@color/color_070707"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/title_favorite_alert" />
+
+        <TextView
+            android:id="@+id/tv_subTitle"
+            style="@style/text_14"
+            android:layout_marginTop="@dimen/padding_10"
+            android:textColor="@color/color_070707"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            tools:text="@string/sub_title_favorite_alert" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_confirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/padding_10"
+            android:layout_marginTop="@dimen/padding_16dp"
+            android:layout_marginRight="@dimen/padding_10"
+            android:layout_marginBottom="@dimen/margin_40dp"
+            android:background="@drawable/bg_rm_common"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/margin_24dp"
+            android:paddingVertical="@dimen/padding_15dp"
+            android:textColor="@color/background_color_white"
+            android:textSize="@dimen/text_size_14"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_subTitle"
+            tools:ignore="MissingConstraints"
+            tools:text="@string/text_OK" />
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            style="@style/text_14"
+            android:layout_marginTop="@dimen/margin_24dp"
+            android:padding="@dimen/padding_5dp"
+            android:textColor="@color/color_868990"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_confirm"
+            tools:text="@string/cancel_block_alert" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

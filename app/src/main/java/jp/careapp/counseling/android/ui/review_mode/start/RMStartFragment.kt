@@ -23,5 +23,8 @@ class RMStartFragment : BaseFragment<FragmentRmStartBinding, RMStartViewModel>()
         super.setOnClick()
 
         binding.btnStartNow.setOnClickListener { appNavigation.openRMStartToRMEnterName() }
+        // TODO (Handle term of service and privacy policy)
+        binding.tvTermsOfService.setOnClickListener {}
+        binding.tvPrivacyPolicy.setOnClickListener {}
     }
 }

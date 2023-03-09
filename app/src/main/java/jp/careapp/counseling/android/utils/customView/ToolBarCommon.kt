@@ -19,6 +19,7 @@ import jp.careapp.counseling.R
 
 class ToolBarCommon : Toolbar {
     lateinit var btnRight: TextView
+    lateinit var rootLayout: View
     lateinit var btnLeft: ImageView
     lateinit var ivRight: ImageView
     lateinit var tvRight: TextView
@@ -76,6 +77,7 @@ class ToolBarCommon : Toolbar {
         setContentInsetsAbsolute(0, 0)
         View.inflate(context, R.layout.tool_bar_common, this)
         btnRight = findViewById(R.id.btnRight)
+        rootLayout = findViewById(R.id.toolbar)
         btnLeft = findViewById(R.id.btn_left)
         tvRight = findViewById(R.id.tvRight)
         ivRight = findViewById(R.id.ivRight)
@@ -169,6 +171,10 @@ class ToolBarCommon : Toolbar {
         btnRight.setTextColor(resources.getColor(color, activity.theme))
     }
 
+    fun setBackgroundBtnRight(backgroundRes: Int) {
+        btnRight.setBackgroundResource(backgroundRes)
+    }
+
     fun setTvTitle(title: String?) {
         if (!TextUtils.isEmpty(title)) {
             tvTitle.text = title
@@ -187,6 +193,10 @@ class ToolBarCommon : Toolbar {
 
     fun setImageRightEnable(enable: Boolean) {
         ivRight.isEnabled = enable
+    }
+
+    fun setRootLayoutBackgroundColor(color: Int) {
+        rootLayout.setBackgroundColor(color)
     }
 
     fun setOnToolBarClickListener(onToolBarClickListener: OnToolBarClickListener?) {

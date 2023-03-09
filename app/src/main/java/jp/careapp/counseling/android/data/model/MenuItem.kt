@@ -6,6 +6,7 @@ enum class MenuItem(val label: String, val typeField: TypeField, val isTitle: Bo
     SETTING("各種設定", NONE, true),
     CHANGE_NICKNAME("ニックネーム変更", TOP),
     PROFILE_MSG("プロフィールメッセージ", CENTER),
+    SETUP("設定", CENTER),
     PUSH_NOTIFICATION("プッシュ通知", CENTER),
     MICROPHONE_CAMERA_SETTINGS("マイク・カメラ設定", BOTTOM),
     ACCOUNT("アカウント", NONE, true),

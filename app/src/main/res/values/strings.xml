@@ -627,15 +627,17 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="rv_push_notification">プッシュ通知</string>
     <string name="rv_toolbar_block_list">ブロックリスト</string>
     <string name="online">オンライン</string>
+    <string name="offline">オフライン</string>
     <string name="lifted">解除</string>
 
     <!-- Review mode start screen -->
-    <string name="start_now">今すぐはじめる</string>
+    <string name="start_now">はじめる</string>
     <string name="log_in_here">アカウントをお持ちの方はこちら</string>
 
     <!-- Review mode enter name screen -->
     <string name="please_enter_nick_name">ニックネームを入力してください</string>
-    <string name="count_default">0/10</string>
+    <string name="hint_enter_nick_name">ニックネームを入力</string>
+    <string name="count_default">10</string>
     <string name="terms_of_service">利用規約</string>
 
     <!-- Review mode setting profile message screen -->
@@ -662,12 +664,17 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
 ・ドメイン指定受信を設定している
 　@peaklive.jpの受信を許可してください
     </string>
-    <string name="input_content_user_detail_message">こんにちは</string>
+    <string name="input_content_user_detail_message">メッセージを入力</string>
     <string name="call_video">ビデオ通話</string>
     <string name="no_online_data">まだお気に入りはありません</string>
     <string name="no_favorite_data">まだお気に入りはありません。</string>
     <string name="no_block_data">お気に入りの方はいません。</string>
     <string name="term">利用規約</string>
+    <string name="current_point">保有ポイント</string>
+    <string name="buy_point_1000">1,000</string>
+    <string name="buy_point_3000">3,000</string>
+    <string name="buy_point_5000">5,000</string>
+    <string name="no_message">メッセージはまだありません</string>
 
     <!-- Setting withdraw screen -->
     <string name="msg_title_withdrawal">退会しますか？</string>

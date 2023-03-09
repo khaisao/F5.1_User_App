@@ -52,6 +52,18 @@ class RMMyMenuFragment : BaseFragment<FragmentRmMyMenuBinding, RMMyMenuViewModel
             adapter = _adapter
             _adapter.submitList(MenuItem.values().toList())
         }
+
+        binding.point = rxPreferences.getPoint()
+        binding.executePendingBindings()
+    }
+
+    override fun setOnClick() {
+        super.setOnClick()
+        binding.tvPoint.setOnClickListener {
+            if (!isDoubleClick) {
+                appNavigation.openRMTopToRMBuyPoint()
+            }
+        }
     }
 
     private fun onClickItemMenu(menuItem: MenuItem) {

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="jp.careapp.counseling.android.model.buy_point.ItemPoint" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llBuyPoint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@drawable/bg_rm_radius_12">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_17sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:drawablePadding="@dimen/_4sdp"
+            android:gravity="center"
+            android:text="@{data.pointCount}"
+            android:textColor="@color/color_070707"
+            android:textSize="@dimen/text_size_16"
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_rv_point"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/buy_point_1000" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btnBuyPoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:background="@drawable/bg_rm_radius_16_ffd300"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/_22sdp"
+            android:paddingVertical="@dimen/_7sdp"
+            android:text="@{data.money}"
+            android:textColor="@color/color_070707"
+            android:textSize="@dimen/text_size_16"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="¥1,100" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

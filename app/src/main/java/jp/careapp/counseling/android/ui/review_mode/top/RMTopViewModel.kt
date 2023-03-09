@@ -42,6 +42,7 @@ class RMTopViewModel @Inject constructor(
                             rxPreferences.setNickName(it.name)
                             rxPreferences.setContent(it.troubleSheetResponse.content)
                             rxPreferences.setPushMail(it.pushMail)
+                            rxPreferences.saveMemberInfo(it)
                         }
                     }
                 }

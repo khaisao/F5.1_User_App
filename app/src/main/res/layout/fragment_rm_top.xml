@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_0B002C">
+        android:background="@color/duck_egg_blue">
 
         <TextView
             android:id="@+id/tv_title"
@@ -16,7 +16,7 @@
             android:paddingHorizontal="16dp"
             android:includeFontPadding="false"
             android:paddingVertical="13dp"
-            android:textColor="@color/color_E3DFEF"
+            android:textColor="@color/color_070707"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="オンライン一覧" />
 
@@ -33,7 +33,7 @@
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_0B002C"
+            android:background="@drawable/bg_rm_bottom_bar"
             android:paddingBottom="30dp"
             android:theme="@style/BottomNavigationReviewModeTheme"
             app:itemRippleColor="@color/transparent"

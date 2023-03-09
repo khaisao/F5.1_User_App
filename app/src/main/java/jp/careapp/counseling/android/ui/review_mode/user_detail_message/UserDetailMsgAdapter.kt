@@ -114,7 +114,6 @@ class RMUserDetailMsgAdapter constructor(
                         DATE_FORMAT_5
                     )
                     contentMessageTv.text = data.body
-                    avatarIv.loadImage(R.drawable.ic_no_image, true)
                 }
             }
         }

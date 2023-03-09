@@ -3,18 +3,77 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+
+        <variable
+            name="point"
+            type="Integer" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_my_menu"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingHorizontal="@dimen/_16sdp"
-            android:paddingBottom="@dimen/_16sdp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_field" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rlPoint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="@drawable/bg_rm_point_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvNickName"
+                    style="@style/text_bold_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_24sdp"
+                    android:text="@string/nick_name"
+                    android:textColor="@color/white"
+                    tools:text="@string/nick_name" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPoint"
+                    style="@style/text_bold_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvNickName"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_24sdp"
+                    android:layout_marginBottom="@dimen/_24sdp"
+                    android:background="@drawable/bg_rm_btn_point"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:paddingVertical="@dimen/_8sdp"
+                    android:paddingStart="@dimen/_38sdp"
+                    android:paddingEnd="@dimen/_37sdp"
+                    android:text="@{point.toString()}"
+                    android:textColor="@color/color_070707"
+                    app:drawableStartCompat="@drawable/ic_rv_point"
+                    tools:text="10,000" />
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_my_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:clipToPadding="false"
+                android:paddingHorizontal="@dimen/_16sdp"
+                android:paddingBottom="@dimen/_16sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rlPoint"
+                tools:listitem="@layout/item_field" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

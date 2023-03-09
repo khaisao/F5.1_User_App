@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/time_tv"
-        style="@style/text_10"
+        style="@style/text_bold_10"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/margin_4dp"
         android:layout_marginBottom="@dimen/margin_16"
-        android:alpha="0.55"
         android:gravity="center"
-        android:text="11/15(日)"
-        android:textColor="@color/white" />
+        android:textColor="@color/color_868990"
+        tools:text="11/15(日)" />
 </layout>

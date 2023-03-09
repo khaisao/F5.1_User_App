@@ -5,6 +5,7 @@
     <color name="background_color_white">#FFFFFF</color>
     <color name="background_color_gray">#EFEFF4</color>
     <color name="color_FF2875">#FF2875</color>
+    <color name="color_070707">#070707</color>
 
     <color name="color_background_common">#1D1045</color> <!--rgb 29 16 69-->
     <color name="color_0D002C">#0D002C</color> <!--rgb 13 0 44 -->
@@ -33,4 +34,5 @@
     <color name="gray_lite">#b2a9cc</color> <!--rgba 0 0 0, 0.65-->
     <color name="background_lite">#2c2147</color> <!--rgba 0 0 0, 0.65-->
     <color name="background_dark">#0d002c</color> <!--rgba 0 0 0, 0.65-->
+    <color name="color_868990">#868990</color> <!--rgba 0 0 0, 0.65-->
 </resources>
