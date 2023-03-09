@@ -263,4 +263,8 @@ interface AppNavigation : BaseNavigator {
     fun openMyPageToNotification(bundle: Bundle? = null)
 
     fun openMyPageToContactUs(bundle: Bundle? = null)
+
+    fun openContactUsToContactUsConfirm(bundle: Bundle? = null)
+
+    fun openContactUsConfirmToContactUsFinish(bundle: Bundle? = null)
 }

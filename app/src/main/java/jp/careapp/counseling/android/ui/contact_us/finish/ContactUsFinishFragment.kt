@@ -27,6 +27,16 @@ class ContactUsFinishFragment :
         setUpToolBar()
     }
 
+    override fun setOnClick() {
+        super.setOnClick()
+
+        binding.btnBackHome.setOnClickListener {
+            if (!isDoubleClick) {
+                appNavigation.navController?.popBackStack(R.id.topFragment, false)
+            }
+        }
+    }
+
     private fun setUpToolBar() {
         binding.toolBar.setOnToolBarClickListener(object : ToolBarCommon.OnToolBarClickListener() {
             override fun onClickLeft() {

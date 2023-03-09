@@ -708,4 +708,9 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="blocked_list">ブロック一覧</string>
     <string name="receive_mail_permission">メール受信許可</string>
     <string name="back">戻る</string>
+    <string name="case_payment">決済について</string>
+    <string name="case_performer">パフォーマーについて</string>
+    <string name="case_account">アカウントについて</string>
+    <string name="case_feature">機能について</string>
+    <string name="case_other">その他</string>
 </resources>

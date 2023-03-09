@@ -524,4 +524,12 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     override fun openMyPageToContactUs(bundle: Bundle?) {
         openScreen(R.id.action_topFragment_to_contactUsFragment, bundle)
     }
+
+    override fun openContactUsToContactUsConfirm(bundle: Bundle?) {
+        openScreen(R.id.action_contactUsFragment_to_contactUsConfirmFragment, bundle)
+    }
+
+    override fun openContactUsConfirmToContactUsFinish(bundle: Bundle?) {
+        openScreen(R.id.action_contactUsConfirmFragment_to_contactUsFinishFragment, bundle)
+    }
 }

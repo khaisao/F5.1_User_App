@@ -110,7 +110,7 @@ interface ApiInterface {
     suspend fun getEmailSentByMember(@Query("performer_code") code: String): ApiObjectResponse<List<MailInfoOfUser>>
 
     @POST("api/member/contact")
-    suspend fun addContactMember(@Body() contactMemberRequest: ContactMemberRequest): ApiObjectResponse<Any>
+    suspend fun sendContactUs(@Body contactMemberRequest: ContactMemberRequest): ApiObjectResponse<Any>
 
     @POST("api/contact")
     suspend fun addContact(@Body() contactRequest: ContactRequest): ApiObjectResponse<Any>

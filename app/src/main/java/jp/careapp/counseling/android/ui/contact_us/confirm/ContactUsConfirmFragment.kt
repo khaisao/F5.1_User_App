@@ -25,10 +25,26 @@ class ContactUsConfirmFragment :
         super.initView()
 
         setUpToolBar()
+    }
 
-//        binding.btnSend.setOnClickListener { if (!isDoubleClick) }
-//
-//        binding.btnBack.setOnClickListener { if (!isDoubleClick) }
+    override fun bindingStateView() {
+        super.bindingStateView()
+
+        binding.viewModel = mViewModel
+
+        mViewModel.mActionState.observe(viewLifecycleOwner) {
+            when (it) {
+                is ContactUsConfirmActionState.SendContactUsSuccess -> appNavigation.openContactUsConfirmToContactUsFinish()
+            }
+        }
+    }
+
+    override fun setOnClick() {
+        super.setOnClick()
+
+        binding.btnSend.setOnClickListener { if (!isDoubleClick) mViewModel.sendContactUs() }
+
+        binding.btnBack.setOnClickListener { if (!isDoubleClick) appNavigation.navigateUp() }
     }
 
     private fun setUpToolBar() {

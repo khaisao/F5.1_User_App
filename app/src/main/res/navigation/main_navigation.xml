@@ -865,7 +865,11 @@
         tools:layout="@layout/fragment_contact_us">
         <action
             android:id="@+id/action_contactUsFragment_to_contactUsConfirmFragment"
-            app:destination="@id/contactUsConfirmFragment" />
+            app:destination="@id/contactUsConfirmFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/contactUsConfirmFragment"
@@ -874,7 +878,13 @@
         tools:layout="@layout/fragment_contact_us_confirm">
         <action
             android:id="@+id/action_contactUsConfirmFragment_to_contactUsFinishFragment"
-            app:destination="@id/contactUsFinishFragment" />
+            app:destination="@id/contactUsFinishFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/contactUsConfirmFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/contactUsFinishFragment"

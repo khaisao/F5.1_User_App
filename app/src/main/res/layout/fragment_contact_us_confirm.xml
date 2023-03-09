@@ -53,6 +53,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/hiragino_sans_w3"
                 android:gravity="center_vertical"
+                android:text="@{viewModel.category}"
                 android:textColor="#f0f0f0"
                 android:textSize="14sp"
                 tools:text="決済について" />
@@ -74,6 +75,7 @@
                 android:fontFamily="@font/hiragino_sans_w3"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="4dp"
+                android:text="@{viewModel.content}"
                 android:textColor="#f0f0f0"
                 android:textSize="14sp"
                 tools:text="テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト" />
@@ -95,6 +97,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/hiragino_sans_w3"
                 android:gravity="center_vertical"
+                android:text="@{viewModel.replyString}"
                 android:textColor="#f0f0f0"
                 tools:text="必要" />
 

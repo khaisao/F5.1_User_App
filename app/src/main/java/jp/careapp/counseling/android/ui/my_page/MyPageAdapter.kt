@@ -31,7 +31,7 @@ class MyPageAdapter(private val onClickItemMenu: (Int) -> Unit) :
                         R.layout.item_nm_my_page_field,
                         parent,
                         false
-                    )
+                    ), onClickItemMenu
                 )
             }
 
@@ -72,7 +72,10 @@ class MyPageAdapter(private val onClickItemMenu: (Int) -> Unit) :
         super.submitList(result)
     }
 
-    inner class MyPageFiledViewHolder(private val binding: ItemNmMyPageFieldBinding) :
+    class MyPageFiledViewHolder(
+        private val binding: ItemNmMyPageFieldBinding,
+        onClickItemMenu: (Int) -> Unit
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {

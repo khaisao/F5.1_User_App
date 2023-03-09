@@ -42,12 +42,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/bg_contact_us_spinner"
-                android:backgroundTint="@null"
-                android:dropDownSelector="@drawable/ic_rm_drop_down_spinner"
-                android:minHeight="48dp"
-                android:textColor="@color/color_E5E5E5"
-                android:textSize="14sp"
+                android:background="@drawable/bg_nm_spinner"
+                android:minHeight="44dp"
+                android:paddingHorizontal="16dp"
+                android:theme="@style/SpinnerTheme"
                 tools:listitem="@layout/list_popup_window_item" />
 
             <TextView
@@ -60,11 +58,11 @@
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/edtContactContent"
+                android:id="@+id/edtContent"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/bg_contact_us_spinner"
+                android:background="@drawable/bg_nm_edit_text"
                 android:ems="10"
                 android:fontFamily="@font/hiragino_sans_w3"
                 android:gravity="top|start"
@@ -113,18 +111,18 @@
                     android:text="@string/unnecessary" />
             </RadioGroup>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/btnSend"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnConfirmContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_24"
+                android:layout_marginTop="32dp"
                 android:background="@drawable/bg_nm_btn_primary"
                 android:enabled="false"
                 android:fontFamily="@font/hiragino_sans_w6"
-                android:gravity="center_horizontal"
-                android:minHeight="@dimen/height_44"
-                android:paddingVertical="@dimen/padding_14"
-                android:text="@string/send_report"
+                android:gravity="center"
+                android:minHeight="44dp"
+                android:paddingVertical="16dp"
+                android:text="@string/check_the_contents"
                 android:textColor="@color/color_btn_primary"
                 android:textSize="14sp"
                 tools:enabled="true" />
