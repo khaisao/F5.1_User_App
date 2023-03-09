@@ -3,108 +3,126 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="follow"
+            type="Boolean" />
+
+        <variable
+            name="status"
+            type="Integer" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_00CD5C"
+        android:background="@color/dodger_blue"
         tools:context=".android.ui.review_mode.userDetail.RMUserDetailFragment">
 
         <jp.careapp.counseling.android.utils.customView.ToolBarCommon
             android:id="@+id/toolBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:iv_right="@drawable/ic_more"
+            app:hide_line_bottom="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:src_left="@drawable/ic_arrow_left" />
+            app:iv_right="@drawable/ic_rm_navi_move_live"
+            app:src_left="@drawable/ic_rm_arrow_left" />
 
-        <ImageView
-            android:id="@+id/ivProfile"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:contentDescription="@null"
-            android:padding="@dimen/_9sdp"
-            android:src="@drawable/ic_no_image"
-            app:layout_constraintDimensionRatio="1:1"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contentBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_120sdp"
+            android:background="@drawable/bg_corner_top_30dp_white"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolBar"
-            app:layout_constraintWidth_percent="0.37" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/ivFavorite"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="@dimen/margin_9"
-            android:contentDescription="@null"
-            app:layout_constraintBottom_toBottomOf="@+id/ivProfile"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="@+id/ivProfile"
-            app:layout_constraintWidth_percent="0.12"
-            tools:src="@drawable/ic_add_favorite_inactive" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNickName"
+                style="@style/text_bold_18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_99sdp"
+                android:textColor="@color/color_070707"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/nick_name" />
 
-        <include
-            android:id="@+id/llItemOnline"
-            layout="@layout/rm_item_online"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_8"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivProfile" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvStatus"
+                style="@style/text_12"
+                rmPerformerStatus="@{status}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawablePadding="@dimen/_4sdp"
+                app:layout_constraintEnd_toEndOf="@+id/tvNickName"
+                app:layout_constraintStart_toStartOf="@+id/tvNickName"
+                app:layout_constraintTop_toBottomOf="@id/tvNickName" />
 
-        <include
-            android:id="@+id/llItemOffline"
-            layout="@layout/rm_item_offline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_8"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivProfile"
-            tools:visibility="visible" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.431" />
 
-        <TextView
-            android:id="@+id/tvNickName"
-            style="@style/text_bold_18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_8"
-            android:color="@color/color_E3DFEF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/barrier"
-            tools:text="@string/nick_name" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.064" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.936" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/btnMessageChat"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/margin_24dp"
-            app:cardBackgroundColor="@color/color_978DFF"
-            app:cardCornerRadius="24dp"
-            app:layout_constraintDimensionRatio="158:44"
-            app:layout_constraintEnd_toStartOf="@id/guideline6"
-            app:layout_constraintStart_toEndOf="@id/guideline7"
-            app:layout_constraintTop_toBottomOf="@id/tvNickName"
-            app:layout_constraintWidth_percent="0.4">
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.798" />
+
+            <ImageView
+                android:id="@+id/ivFavorite"
+                isFavorite="@{follow}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/margin_9"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="@id/btnMessageChat"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@id/guideline11"
+                app:layout_constraintStart_toEndOf="@id/guideline12"
+                app:layout_constraintTop_toTopOf="@id/btnMessageChat"
+                app:layout_constraintWidth_percent="0.12"
+                tools:src="@drawable/ic_add_favorite_inactive" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/btnMessageChat"
+                rmPerformerStatus="@{status}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/margin_24dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingVertical="@dimen/padding_12">
+                android:paddingVertical="@dimen/padding_12"
+                app:layout_constraintDimensionRatio="133:44"
+                app:layout_constraintEnd_toStartOf="@id/guideline6"
+                app:layout_constraintStart_toEndOf="@id/guideline7"
+                app:layout_constraintTop_toBottomOf="@id/tvStatus"
+                app:layout_constraintWidth_percent="0.349">
 
                 <ImageView
                     android:id="@+id/imageView"
@@ -120,30 +138,22 @@
                     android:layout_marginStart="@dimen/margin_8"
                     android:text="@string/consult"
                     android:textColor="@color/white" />
-
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/btnCallVideo"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/margin_24dp"
-            app:cardBackgroundColor="@color/color_978DFF"
-            app:cardCornerRadius="24dp"
-            app:layout_constraintDimensionRatio="158:44"
-            app:layout_constraintEnd_toStartOf="@id/guideline11"
-            app:layout_constraintStart_toEndOf="@id/guideline6"
-            app:layout_constraintTop_toBottomOf="@id/tvNickName"
-            app:layout_constraintWidth_percent="0.4">
-
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/btnCallVideo"
+                rmPerformerStatus="@{status}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/margin_24dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingVertical="@dimen/padding_12">
+                android:paddingVertical="@dimen/padding_12"
+                app:layout_constraintDimensionRatio="133:44"
+                app:layout_constraintEnd_toStartOf="@id/guideline12"
+                app:layout_constraintStart_toEndOf="@id/guideline6"
+                app:layout_constraintTop_toBottomOf="@id/tvStatus"
+                app:layout_constraintWidth_percent="0.349">
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -159,30 +169,19 @@
                     android:layout_marginStart="@dimen/margin_8"
                     android:text="@string/call_video"
                     android:textColor="@color/white" />
-
             </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.cardview.widget.CardView>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.064" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.936" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="llItemOffline, llItemOnline" />
+        <ImageView
+            android:id="@+id/ivProfile"
+            android:layout_width="@dimen/_151sdp"
+            android:layout_height="@dimen/_151sdp"
+            android:layout_marginTop="@dimen/_44sdp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_no_image"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

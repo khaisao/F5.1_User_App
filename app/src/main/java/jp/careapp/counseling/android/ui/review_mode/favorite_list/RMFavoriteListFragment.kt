@@ -9,7 +9,7 @@ import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.model.network.RMFavoriteResponse
 import jp.careapp.counseling.android.navigation.AppNavigation
-import jp.careapp.counseling.android.ui.review_mode.online_list.RMPerformerAdapter
+import jp.careapp.counseling.android.ui.review_mode.online_list.RMFavoritePerformerAdapter
 import jp.careapp.counseling.android.ui.review_mode.top.RMTopViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.databinding.FragmentRmFavoriteListBinding
@@ -29,7 +29,7 @@ class RMFavoriteListFragment :
     override val layoutId = R.layout.fragment_rm_favorite_list
 
     private val _adapter by lazy {
-        RMPerformerAdapter(requireContext(),
+        RMFavoritePerformerAdapter(requireContext(),
             onClickListener = {
                 if (!isDoubleClick) {
                     val bundle = Bundle().apply {

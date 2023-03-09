@@ -492,4 +492,8 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     override fun openWithdrawalToSettingNotification(bundle: Bundle?) {
         openScreen(R.id.action_withdrawalFragment_to_fragmentNotification, bundle)
     }
+
+    override fun openRMTopToRMBuyPoint(bundle: Bundle?) {
+        openScreen(R.id.action_RMTopFragment_to_RMBuyPointFragment, bundle)
+    }
 }

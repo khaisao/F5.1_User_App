@@ -8,8 +8,8 @@ import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.model.network.RMBlockListResponse
 import jp.careapp.counseling.android.navigation.AppNavigation
+import jp.careapp.counseling.android.ui.review_mode.online_list.RMFavoritePerformerAdapter
 import jp.careapp.counseling.databinding.FragmentBlockListBinding
-import jp.careapp.counseling.android.ui.review_mode.online_list.RMPerformerAdapter
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -24,7 +24,7 @@ class RMBlockListFragment : BaseFragment<FragmentBlockListBinding, RMBlockListVi
     override fun getVM() = viewModel
 
     private val _adapter by lazy {
-        RMPerformerAdapter(requireContext(),
+        RMFavoritePerformerAdapter(requireContext(),
             onClickListener = {},
             onClickDelete = {
                 (it as? RMBlockListResponse)?.code?.let { code ->

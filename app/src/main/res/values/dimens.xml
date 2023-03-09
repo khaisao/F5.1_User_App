@@ -192,4 +192,6 @@
     <dimen name="dimen_103dp">103dp</dimen>
     <dimen name="dimen_80dp">80dp</dimen>
 
+    <!-- Review mode -->
+    <dimen name="start_now_btn_height">56dp</dimen>
 </resources>

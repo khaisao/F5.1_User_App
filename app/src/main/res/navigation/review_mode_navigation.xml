@@ -62,6 +62,13 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_RMTopFragment_to_RMBuyPointFragment"
+            app:destination="@id/rmBuyPointFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
 
     <fragment
@@ -156,4 +163,10 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
     </fragment>
+
+    <fragment
+        android:id="@+id/rmBuyPointFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.buyPoint.RMBuyPointFragment"
+        android:label="RMBuyPointFragment"
+        tools:layout="@layout/fragment_rm_buy_point" />
 </navigation>

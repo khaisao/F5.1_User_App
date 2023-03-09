@@ -101,8 +101,12 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
                             appNavigation.openSplashToTopScreen()
                             shareViewModel.setHaveToken(true)
                         }
-                        SplashViewModel.SCREEN_CODE_REREGISTER -> appNavigation.openSplashToReRegisterScreen()
+                        SplashViewModel.SCREEN_CODE_REGISTER -> appNavigation.openSplashToReRegisterScreen()
                         SplashViewModel.SCREEN_CODE_BAD_USER -> appNavigation.openSplashToBadUserScreen()
+                        SplashViewModel.SCREEN_CODE_START_RM -> appNavigation.openSplashToRMStart()
+                        SplashViewModel.SCREEN_CODE_REGISTER_RM -> appNavigation.openSplashToRMStart()
+                        SplashViewModel.SCREEN_CODE_BAD_USER_RM -> appNavigation.openSplashToRMStart()
+                        SplashViewModel.SCREEN_CODE_TOP_RM -> appNavigation.openSplashToRMTop()
                     }
             })
         }

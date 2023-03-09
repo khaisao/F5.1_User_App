@@ -27,7 +27,7 @@
             android:paddingVertical="15dp"
             android:paddingStart="16dp"
             android:text="@{menu.label}"
-            android:textColor="@color/color_E3DFEF"
+            android:textColor="@color/color_070707"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ivNext"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,8 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_marginStart="16dp"
-            android:alpha="0.15"
-            android:background="@color/white"
+            android:alpha="0.12"
+            android:background="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/tvField" />
 
         <androidx.appcompat.widget.AppCompatImageView

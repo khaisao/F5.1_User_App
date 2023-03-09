@@ -16,5 +16,5 @@
         android:paddingTop="16dp"
         android:paddingBottom="10dp"
         android:text="@{menu.label}"
-        android:textColor="@color/color_70658D" />
+        android:textColor="@color/color_868990" />
 </layout>

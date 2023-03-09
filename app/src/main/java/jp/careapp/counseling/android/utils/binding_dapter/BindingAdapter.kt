@@ -44,6 +44,11 @@ fun ImageView.srcGlideUrl(url: String?, placeholder: Drawable?) {
     srcGlideUri(url?.toUri(), resources.getDrawable(R.drawable.ic_thumbnailnoimage))
 }
 
+@BindingAdapter(value = ["app:srcUrl", "app:srcPlaceholder"], requireAll = false)
+fun ImageView.roundedImage(url: String?, placeholder: Drawable?) {
+    srcGlideUri(url?.toUri(), resources.getDrawable(R.drawable.ic_thumbnailnoimage))
+}
+
 @BindingAdapter("typeField")
 fun View.setBackgroundField(typeField: TypeField?) {
     typeField ?: return

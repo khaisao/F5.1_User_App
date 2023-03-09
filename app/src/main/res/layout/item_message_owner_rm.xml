@@ -11,14 +11,13 @@
 
         <TextView
             android:id="@+id/status_message_tv"
+            style="@style/text_9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_4dp"
             android:layout_marginBottom="@dimen/margin_4dp"
-            android:fontFamily="@font/hiragino_sans_w3"
             android:text="@string/read"
-            android:textColor="@color/color_70658D"
-            android:textSize="9sp"
+            android:textColor="@color/color_868990"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/time_send_tv"
             app:layout_constraintEnd_toStartOf="@+id/content_message_tv"
@@ -27,13 +26,12 @@
 
         <TextView
             android:id="@+id/time_send_tv"
+            style="@style/text_9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_4dp"
             android:layout_marginBottom="@dimen/margin_4dp"
-            android:fontFamily="@font/hiragino_sans_w3"
-            android:textColor="@color/color_70658D"
-            android:textSize="9sp"
+            android:textColor="@color/color_868990"
             app:layout_constraintBottom_toBottomOf="@+id/content_message_tv"
             app:layout_constraintEnd_toStartOf="@+id/content_message_tv"
             tools:ignore="SmallSp"

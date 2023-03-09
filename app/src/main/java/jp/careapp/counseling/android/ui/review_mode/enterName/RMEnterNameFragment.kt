@@ -31,6 +31,10 @@ class RMEnterNameFragment : BaseFragment<FragmentRmEnterNameBinding, RMEnterName
         binding.edtNickName.setTextChangeListener { count ->
             binding.btnSubmit.isEnabled = count != 0
         }
+    }
+
+    override fun bindingStateView() {
+        super.bindingStateView()
 
         mViewModel.mActionState.observe(viewLifecycleOwner) {
             when (it) {
@@ -59,9 +63,5 @@ class RMEnterNameFragment : BaseFragment<FragmentRmEnterNameBinding, RMEnterName
                     }
             }
         }
-
-        binding.tvTermsOfService.setOnClickListener {}
-
-        binding.tvPrivacyPolicy.setOnClickListener {}
     }
 }

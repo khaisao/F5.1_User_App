@@ -1,16 +1,20 @@
 package jp.careapp.counseling.android.ui.review_mode.userDetail
 
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.WindowManager
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
-import jp.careapp.core.utils.dialog.CommonAlertDialog
-import jp.careapp.core.utils.loadImage
+import jp.careapp.core.utils.dialog.RMCommonAlertDialog
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.model.network.RMUserDetailResponse
 import jp.careapp.counseling.android.navigation.AppNavigation
@@ -19,7 +23,7 @@ import jp.careapp.counseling.android.utils.ActionState
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.customView.ToolBarCommon
 import jp.careapp.counseling.databinding.FragmentRmUserDetailBinding
-import jp.careapp.counseling.databinding.LlUserDetailBottomSheetBinding
+import jp.careapp.counseling.databinding.LlRvUserDetailBottomSheetBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -46,24 +50,39 @@ class RMUserDetailFragment : BaseFragment<FragmentRmUserDetailBinding, RMUserDet
 
         mViewModel.user.observe(viewLifecycleOwner) {
             user = it
-
-            binding.tvNickName.text = it.name
-
-            if (it.presenceStatus == 0) {
-                binding.llItemOffline.root.visibility = View.VISIBLE
-                binding.llItemOnline.root.visibility = View.INVISIBLE
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                Glide.with(binding.ivProfile).load(
+                    resources.getIdentifier(
+                        "ic_no_image",
+                        "drawable", requireContext().packageName
+                    )
+                )
+                    .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen._20sdp)))
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(binding.ivProfile)
             } else {
-                binding.llItemOnline.root.visibility = View.VISIBLE
-                binding.llItemOffline.root.visibility = View.INVISIBLE
+                Glide.with(binding.ivProfile).load(
+                    resources.getIdentifier(
+                        "ic_no_image",
+                        "drawable", requireContext().packageName
+                    )
+                ).transforms(
+                    CenterCrop(),
+                    RoundedCorners(resources.getDimensionPixelSize(R.dimen._20sdp))
+                )
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(binding.ivProfile)
             }
+            binding.tvNickName.text = it.name
+            binding.tvNickName.bringToFront()
+            binding.status = it.presenceStatus
+            binding.follow = user.isFavorite
+            binding.executePendingBindings()
         }
 
         mViewModel.isFavorite.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.ivFavorite.loadImage(R.drawable.ic_add_favorite_active)
-            } else {
-                binding.ivFavorite.loadImage(R.drawable.ic_add_favorite_inactive)
-            }
+            binding.follow = it
+            binding.executePendingBindings()
         }
     }
 
@@ -85,6 +104,7 @@ class RMUserDetailFragment : BaseFragment<FragmentRmUserDetailBinding, RMUserDet
     }
 
     private fun setUpToolBar() {
+        binding.toolBar.setRootLayoutBackgroundColor(Color.TRANSPARENT)
         binding.toolBar.setOnToolBarClickListener(object : ToolBarCommon.OnToolBarClickListener() {
             override fun onClickLeft() {
                 super.onClickLeft()
@@ -100,7 +120,7 @@ class RMUserDetailFragment : BaseFragment<FragmentRmUserDetailBinding, RMUserDet
 
     private fun showDialogBlock() {
         context?.let { context ->
-            CommonAlertDialog.getInstanceCommonAlertdialog(context).showDialog()
+            RMCommonAlertDialog.getInstanceCommonAlertdialog(context).showDialog()
                 .setDialogTitle("${user.name} さんををブロックしますか？")
                 .setTextPositiveButton(R.string.confirm_block_alert)
                 .setTextNegativeButton(R.string.cancel)
@@ -116,7 +136,7 @@ class RMUserDetailFragment : BaseFragment<FragmentRmUserDetailBinding, RMUserDet
     private fun showBlockBottomSheet() {
         val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
         val bottomSheetBinding =
-            LlUserDetailBottomSheetBinding.inflate(LayoutInflater.from(requireContext()))
+            LlRvUserDetailBottomSheetBinding.inflate(LayoutInflater.from(requireContext()))
 
         bottomSheetBinding.llItemBlockUser.setOnClickListener {
             showDialogBlock()

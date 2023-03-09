@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt"
+            style="@style/text_14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rm_nickname_edt"
+            android:maxLength="10"
+            android:hint="@string/hint_enter_nick_name"
+            android:paddingVertical="15dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="0dp"
+            android:textColor="@color/color_070707"
+            android:textColorHint="@color/color_c0c3c9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="ハイ・ダン" />
+
+        <TextView
+            android:id="@+id/tvCounter"
+            style="@style/text_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:clickable="false"
+            android:focusable="false"
+            android:text="@string/count_default"
+            android:textColor="@color/color_868990"
+            app:layout_constraintBottom_toBottomOf="@id/edt"
+            app:layout_constraintEnd_toEndOf="@id/edt"
+            app:layout_constraintTop_toTopOf="@id/edt"
+            tools:text="10" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

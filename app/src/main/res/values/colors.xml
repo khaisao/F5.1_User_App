@@ -42,6 +42,15 @@
     <color name="color_3D2123">#3D2123</color>
     <color name="color_3E2222">#3E2222</color>
     <color name="color_8096631F">#8096631F</color>
+    <color name="dodger_blue">#4985fe</color>
+    <color name="very_light_blue">#e1eaff</color>
+    <color name="duck_egg_blue">#eff3fc</color>
+    <color name="green_blue">#00ba78</color>
+    <color name="color_c0c3c9">#c0c3c9</color>
+    <color name="color_868990">#868990</color>
+    <color name="color_pale_gray">#e3e7f0</color>
+    <color name="color_cloudy_blue">#cbd0db</color>
+    <color name="color_sunflower">#ffd300</color>
 
     <color name="color_FFFF00">#FFFF00 </color><!--rgb 255 255 0-->
     <color name="color_background_modal">#A6000000</color><!--rgba 0 0 0 0.65-->
@@ -106,6 +115,5 @@
     <color name="color_B2A9CC">#B2A9CC</color> <!--    rgb 178 169 204-->
     <color name="color_2A1F45">#2A1F45</color> <!--    rgb 42 31 69-->
     <color name="color_F0F0F0">#F0F0F0</color>
-
 
 </resources>

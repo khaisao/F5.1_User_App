@@ -451,6 +451,56 @@ enum class BUY_POINT(
     )
 }
 
+enum class BUY_POINT_RM(
+    val id: String,
+    val isFirstBuy: Boolean,
+    val pointCountFirst: String,
+    val pointCountFromSecond: String,
+    val costFirst: String,
+    val money: String,
+    val pointToNumber: Int = 0,
+    val pointSecondToNumber: Int = 0,
+    val moneyToNumber: Int = 0,
+    val promote: Int = 0
+) {
+    FIST_BUY_COIN_1(
+        IN_APP_PURCHASE_KEY_1,
+        false,
+        "1,000",
+        "0",
+        "1000",
+        " ¥1,100 ",
+        pointToNumber = 1000,
+        pointSecondToNumber = 0,
+        moneyToNumber = 1100,
+        promote = 0
+    ),
+    FIST_BUY_COIN_2(
+        IN_APP_PURCHASE_KEY_2,
+        false,
+        "3,000",
+        "0",
+        "3,000p",
+        " ¥3,300 ",
+        pointToNumber = 3000,
+        pointSecondToNumber = 0,
+        moneyToNumber = 3300,
+        promote = 0
+    ),
+    FIST_BUY_COIN_3(
+        IN_APP_PURCHASE_KEY_3,
+        true,
+        "5,000",
+        "0",
+        "5,000",
+        " ¥5,500 ",
+        pointToNumber = 5000,
+        pointSecondToNumber = 0,
+        moneyToNumber = 5500,
+        promote = 0
+    )
+}
+
 class LoadMoreState {
     companion object {
         const val SHOW_LOAD_MORE = 0

@@ -6,11 +6,11 @@ import jp.careapp.counseling.android.data.network.BaseResponse
 class RMLoginResponse : BaseResponse() {
 
     @SerializedName("token")
-    var token: String? = ""
+    var token: String = ""
 
     @SerializedName("member_code")
-    var memberCode: String? = ""
+    var memberCode: String = ""
 
     @SerializedName("token_expire")
-    var tokenExpire: String? = ""
+    var tokenExpire: String = ""
 }

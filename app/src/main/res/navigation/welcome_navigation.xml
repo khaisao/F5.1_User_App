@@ -73,6 +73,7 @@
         android:label="BadUserFragment" />
 
     <include app:graph="@navigation/maintenance_navigation" />
+    <include app:graph="@navigation/review_mode_navigation" />
     <action
         android:id="@+id/action_splashFragment_to_maintenance_navigation"
         app:destination="@id/maintenance_navigation" />

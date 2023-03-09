@@ -6,7 +6,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_background_common"
+        android:background="@color/transparent"
         android:elevation="1dp"
         tools:ignore="RtlCompat">
 
@@ -20,56 +20,67 @@
 
         <ImageView
             android:id="@+id/btn_left"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/_6sdp"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_4sdp"
             android:contentDescription="@null"
-            android:padding="@dimen/padding_16dp"
-            android:src="@drawable/ic_arrow_left"
+            android:src="@drawable/ic_rm_arrow_left"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_status_bar"
-            app:layout_constraintWidth_percent="0.13" />
+            app:layout_constraintTop_toBottomOf="@id/view_status_bar" />
+
+        <ImageView
+            android:id="@+id/userAvatar"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_no_image"
+            app:layout_constraintBottom_toBottomOf="@id/btn_left"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toEndOf="@+id/btn_left"
+            app:layout_constraintTop_toTopOf="@id/btn_left" />
 
         <TextView
             android:id="@+id/title_back_tv"
             style="@style/text_bold_16"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:gravity="center_vertical"
+            android:layout_marginStart="@dimen/_6sdp"
             android:lines="1"
-            android:textColor="@color/color_E3DFEF"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_left"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_070707"
+            app:layout_constraintBottom_toBottomOf="@+id/userAvatar"
             app:layout_constraintEnd_toStartOf="@+id/btnCamera"
-            app:layout_constraintStart_toEndOf="@+id/btn_left"
-            app:layout_constraintTop_toTopOf="@+id/btn_left"
-            tools:text="ハイ・ダン" />
+            app:layout_constraintStart_toEndOf="@+id/userAvatar"
+            app:layout_constraintTop_toTopOf="@+id/userAvatar"
+            tools:text="名前 なまえ" />
 
         <ImageView
             android:id="@+id/btnCamera"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:contentDescription="@null"
-            android:padding="@dimen/padding_16dp"
+            android:layout_marginEnd="@dimen/_32sdp"
             android:src="@drawable/ic_video"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_left"
             app:layout_constraintEnd_toStartOf="@+id/btnMore"
-            app:layout_constraintWidth_percent="0.13" />
+            app:layout_constraintTop_toTopOf="@+id/btn_left" />
 
         <ImageView
             android:id="@+id/btnMore"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:contentDescription="@null"
-            android:padding="@dimen/padding_16dp"
-            android:src="@drawable/ic_more"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:src="@drawable/ic_rm_more"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_left"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_status_bar"
-            app:layout_constraintWidth_percent="0.13" />
+            app:layout_constraintTop_toTopOf="@+id/btn_left" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/groupRightButton"
