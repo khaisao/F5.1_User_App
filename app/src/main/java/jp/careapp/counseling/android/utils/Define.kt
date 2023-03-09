@@ -624,7 +624,7 @@ object ChatStatus {
     const val WAITING = 1
     const val CHATTING = 2
     const val TWO_SHOT_CHAT = 3
-    const val DEFAULT_CHAT_STATUS = ChatStatus.OFFLINE
+    const val DEFAULT_CHAT_STATUS = OFFLINE
 }
 
 object CallRestriction {
