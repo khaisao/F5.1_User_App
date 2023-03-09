@@ -43,7 +43,7 @@ class TemplateAdapter(
         private val onClickListener: (template: FreeTemplateResponse) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bindData(temp: FreeTemplateResponse) {
-           binding.templateTv.text = temp.body.replace(binding.root.context.getString(R.string.text_free), "").trim()
+           binding.tvTemplate.text = temp.body
             binding.root.setOnClickListener {
                 onClickListener.invoke(temp)
             }

@@ -1,45 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_template"
+            style="@style/text_14"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="@dimen/margin_8"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_5dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_16"
-            android:paddingTop="@dimen/margin_22"
-            android:paddingBottom="@dimen/margin_22">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_message_send_enable" />
-
-            <TextView
-                style="@style/text_14"
-                android:layout_marginLeft="@dimen/margin_16"
-                android:text="@string/text_free"
-                android:textColor="@color/color_text_E3DFEF" />
-
-            <TextView
-                android:id="@+id/template_tv"
-                style="@style/text_14"
-                android:textColor="@color/color_text_E3DFEF" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_diver_line"
-            android:alpha="0.15"
-            android:background="@color/white" />
+            android:background="@drawable/bg_message_free"
+            android:paddingHorizontal="@dimen/margin_8"
+            android:paddingVertical="@dimen/margin_13"
+            android:text="@string/message_free_1"
+            android:textColor="@color/color_text_F0F0F0" />
     </LinearLayout>
 
 </layout>

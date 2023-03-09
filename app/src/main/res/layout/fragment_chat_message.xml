@@ -9,266 +9,249 @@
         android:background="@color/color_background_common"
         android:orientation="vertical">
 
-        <jp.careapp.counseling.android.utils.customView.DisableScrollNestedScrollView
-            android:id="@+id/scrollView"
+
+        <include
+            android:id="@+id/layoutPointFree"
+            layout="@layout/dialog_recommend_use_point_free"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/bottom_bar"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/iv_avt_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@id/rv_message_template"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tool_bar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/message_rv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:descendantFocusability="beforeDescendants"
+            android:paddingLeft="@dimen/margin_16"
+            android:paddingRight="@dimen/margin_16"
+            android:paddingBottom="@dimen/margin_16"
+            app:layout_constraintBottom_toTopOf="@+id/rv_message_template"
+            app:layout_constraintTop_toTopOf="@id/iv_avt_background"
+            app:reverseLayout="true"
+            app:stackFromEnd="true"
+            tools:listitem="@layout/item_message_performer" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_message_template"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/margin_16"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/bottom_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:listitem="@layout/item_template">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+        <RelativeLayout
+            android:id="@+id/bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:background="@color/color_background_common"
-            android:fillViewport="true"
-            android:fitsSystemWindows="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent">
 
-            <RelativeLayout
+            <View
+                android:id="@+id/line_bottom"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:focusableInTouchMode="true">
+                android:layout_height="0.5dp"
+                android:alpha="0.15"
+                android:background="@color/white" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/message_rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_above="@+id/bottom_bar"
-                    android:layout_alignParentTop="true"
-                    android:background="@color/color_background_common"
-                    android:clipToPadding="false"
-                    android:descendantFocusability="beforeDescendants"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/content_send_mess_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/padding_12">
+
+                <EditText
+                    android:id="@+id/content_message_edt"
+                    style="@style/text_14"
+                    android:layout_width="0dp"
+                    android:layout_marginStart="@dimen/margin_12"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:background="@drawable/bg_edt_message"
+                    android:hint="@string/input_content_message"
+                    android:inputType="textMultiLine"
+                    android:maxHeight="180dp"
                     android:paddingLeft="@dimen/margin_16"
-                    android:paddingTop="@dimen/margin_12"
+                    android:paddingTop="@dimen/margin_11"
                     android:paddingRight="@dimen/margin_16"
-                    android:paddingBottom="@dimen/margin_16"
-                    app:layout_constraintBottom_toTopOf="@+id/bottom_bar"
-                    app:reverseLayout="true"
-                    app:stackFromEnd="true"
-                    tools:listitem="@layout/item_message_performer" />
+                    android:paddingBottom="@dimen/margin_11"
+                    android:scrollbars="vertical"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/purple_AEA2D1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/send_message_iv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <View
-                    android:id="@+id/viewPointFree"
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_above="@id/layoutPointFree"
-                    android:layout_marginHorizontal="@dimen/margin_16"
-                    android:visibility="invisible" />
-
-                <include
-                    android:id="@+id/layoutPointFree"
-                    layout="@layout/dialog_recommend_use_point_free"
+                <ImageView
+                    android:id="@+id/send_message_iv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_above="@id/bottom_bar"
-                    android:visibility="invisible" />
+                    android:layout_alignBottom="@+id/content_message_edt"
+                    android:layout_alignParentEnd="true"
+                    android:paddingLeft="@dimen/margin_14"
+                    android:paddingTop="@dimen/margin_16"
+                    android:paddingRight="@dimen/padding_16dp"
+                    android:paddingBottom="@dimen/margin_8"
+                    android:src="@drawable/ic_message_inactive"
+                    app:layout_constraintBottom_toBottomOf="@id/content_message_edt"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-                <RelativeLayout
-                    android:id="@+id/bottom_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/color_background_common"
-                    app:layout_constraintBottom_toBottomOf="parent">
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View
-                        android:id="@+id/line_bottom"
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:alpha="0.15"
-                        android:background="@color/white" />
+            <ImageView
+                android:id="@+id/user_quit_iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:paddingLeft="@dimen/margin_34"
+                android:paddingTop="@dimen/margin_8"
+                android:paddingRight="@dimen/margin_34"
+                android:paddingBottom="@dimen/margin_34"
+                android:src="@drawable/ic_user_quit"
+                android:visibility="gone" />
 
-                    <RelativeLayout
-                        android:id="@+id/content_send_mess_rl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/user_bad_iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:paddingLeft="@dimen/margin_34"
+                android:paddingTop="@dimen/margin_8"
+                android:paddingRight="@dimen/margin_34"
+                android:paddingBottom="@dimen/margin_34"
+                android:src="@drawable/ic_user_bad"
+                android:visibility="gone" />
 
-                        <LinearLayout
-                            android:id="@+id/template_btn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/content_message_edt"
-                            android:layout_alignParentStart="true"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:paddingLeft="@dimen/margin_17">
+        </RelativeLayout>
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_message_template" />
-
-                            <TextView
-                                style="@style/text_bold_8"
-                                android:layout_marginTop="@dimen/view_size_3"
-                                android:text="@string/template"
-                                android:textColor="@color/color_978DFF" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/review_btn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/content_message_edt"
-                            android:layout_toRightOf="@id/template_btn"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:paddingLeft="@dimen/margin_17"
-                            android:visibility="gone">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_write_review" />
-
-                            <TextView
-                                style="@style/text_bold_8"
-                                android:layout_marginTop="@dimen/view_size_3"
-                                android:text="@string/review"
-                                android:textColor="@color/color_978DFF" />
-                        </LinearLayout>
-
-                        <EditText
-                            android:id="@+id/content_message_edt"
-                            style="@style/text_14"
-                            android:layout_width="0dp"
-                            android:layout_marginLeft="@dimen/margin_16"
-                            android:layout_marginTop="@dimen/margin_8"
-                            android:layout_toLeftOf="@+id/send_message_iv"
-                            android:layout_toRightOf="@id/review_btn"
-                            android:background="@drawable/bg_corner_18dp_332167"
-                            android:hint="@string/input_content_message"
-                            android:inputType="textMultiLine"
-                            android:maxHeight="180dp"
-                            android:paddingLeft="@dimen/margin_16"
-                            android:paddingTop="@dimen/margin_11"
-                            android:paddingRight="@dimen/margin_16"
-                            android:paddingBottom="@dimen/margin_11"
-                            android:scrollbars="vertical"
-                            android:text=""
-                            android:textColor="@color/white"
-                            android:textColorHint="@color/purple_AEA2D1" />
-
-                        <ImageView
-                            android:id="@+id/send_message_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/content_message_edt"
-                            android:layout_alignParentEnd="true"
-                            android:paddingLeft="@dimen/margin_14"
-                            android:paddingTop="@dimen/margin_16"
-                            android:paddingRight="@dimen/padding_16dp"
-                            android:paddingBottom="@dimen/margin_8"
-                            android:src="@drawable/ic_message_send_disable" />
-
-                        <TextView
-                            android:id="@+id/count_point_tv"
-                            style="@style/text_10"
-                            android:layout_below="@+id/content_message_edt"
-                            android:layout_alignEnd="@+id/content_message_edt"
-                            android:layout_marginTop="@dimen/margin_4dp"
-                            android:layout_marginBottom="@dimen/margin_8"
-                            android:text="@string/format_point_of_message"
-                            android:textColor="@color/purple_AEA2D1" />
-
-                    </RelativeLayout>
-
-                    <ImageView
-                        android:id="@+id/user_quit_iv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:paddingLeft="@dimen/margin_34"
-                        android:paddingTop="@dimen/margin_8"
-                        android:paddingRight="@dimen/margin_34"
-                        android:paddingBottom="@dimen/margin_34"
-                        android:src="@drawable/ic_user_quit"
-                        android:visibility="gone" />
-
-                    <ImageView
-                        android:id="@+id/user_bad_iv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:paddingLeft="@dimen/margin_34"
-                        android:paddingTop="@dimen/margin_8"
-                        android:paddingRight="@dimen/margin_34"
-                        android:paddingBottom="@dimen/margin_34"
-                        android:src="@drawable/ic_user_bad"
-                        android:visibility="gone" />
-
-                </RelativeLayout>
-
-            </RelativeLayout>
-        </jp.careapp.counseling.android.utils.customView.DisableScrollNestedScrollView>
-
-        <jp.careapp.counseling.android.utils.customView.ToolbarPoint
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_background_common"
-            app:is_show_call="true"
-            app:is_show_point="true"
+            android:paddingVertical="@dimen/padding_6dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:src_left_p="@drawable/ic_back_left"
-            app:src_right_p="@drawable/ic_right_trouble_sheet" />
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:alpha="0.15"
-            android:background="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tool_bar" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutBaloonMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_8"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <View
-                android:id="@+id/viewOne"
-                android:layout_width="@dimen/margin_20"
-                android:layout_height="1dp"
-                android:layout_marginTop="27.5dp"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvPointBaloon"
-                android:layout_width="wrap_content"
-                android:layout_height="28dp"
-                android:layout_marginRight="56dp"
-                android:background="@drawable/bg_corner_14dp_332167"
-                android:drawablePadding="4dp"
-                android:gravity="center"
-                android:paddingStart="4dp"
-                android:paddingTop="4dp"
-                android:paddingEnd="14dp"
-                android:paddingBottom="4dp"
-                android:textColor="@color/color_978DFF"
-                android:textSize="@dimen/text_size_12"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                app:drawableStartCompat="@drawable/ic_minipoint"
-                app:layout_constraintBottom_toBottomOf="@id/viewOne"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/viewOne"
-                tools:text="10,000pt" />
-
-            <include
-                android:id="@+id/layout_item_baloon_message"
-                layout="@layout/item_baloon_message"
+            <ImageView
+                android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="@id/tvPointBaloon"
-                app:layout_constraintHorizontal_bias="0.82"
-                app:layout_constraintStart_toStartOf="@id/tvPointBaloon"
-                app:layout_constraintTop_toBottomOf="@id/tvPointBaloon" />
+                android:padding="@dimen/margin_6"
+                android:src="@drawable/ic_back_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_5dp"
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/padding_10"
+                app:layout_constraintBottom_toBottomOf="@id/iv_back"
+                app:layout_constraintStart_toEndOf="@id/iv_back"
+                app:layout_constraintTop_toTopOf="@id/iv_back">
+
+                <TextView
+                    android:id="@+id/tv_status"
+                    style="@style/text_bold_9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_4dp"
+                    android:paddingHorizontal="@dimen/view_size_8"
+                    android:paddingVertical="@dimen/_3sdp"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    style="@style/text_bold_14"
+                    android:paddingBottom="@dimen/margin_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_text_F0F0F0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/ll_watch_live_stream"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_8"
+                    android:background="@drawable/bg_gradient"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:paddingHorizontal="@dimen/padding_10"
+                    android:paddingVertical="@dimen/padding_6dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_4dp"
+                        android:src="@drawable/ic_video_call_message" />
+
+                    <TextView
+                        style="@style/text_bold_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/live_viewing"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_peep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_gradient_orangered"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:paddingHorizontal="@dimen/padding_10"
+                    android:paddingVertical="@dimen/padding_6dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_4dp"
+                        android:src="@drawable/ic_peep" />
+
+                    <TextView
+                        style="@style/text_bold_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/peep"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
