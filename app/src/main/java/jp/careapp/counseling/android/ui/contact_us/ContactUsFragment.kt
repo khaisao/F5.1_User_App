@@ -99,10 +99,7 @@ class ContactUsFragment : BaseFragment<FragmentContactUsBinding, ContactUsViewMo
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        mViewModel.setCategory(
-            parent?.getItemAtPosition(position) as String,
-            binding.spinner.selectedItemPosition
-        )
+        mViewModel.setCategory(parent?.getItemAtPosition(position) as String)
     }
 
     private fun setUpEditText() {

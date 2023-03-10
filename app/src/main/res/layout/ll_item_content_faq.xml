@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="jp.careapp.counseling.android.ui.faq.FAQModelRecyclerView.ItemContent" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="item"
+            type="ItemContent" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        typeField="@{item.typeField}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        tools:background="@drawable/bg_none_field">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/hiragino_sans_w6"
+            android:textColor="#f0f0f0"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="退会したい" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivAction"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvTitle"
+            app:srcCompat="@drawable/ic_expand_faq" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/hiragino_sans_w3"
+            android:lineSpacingExtra="4dp"
+            android:textColor="#f0f0f0"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            tools:text="サービスから退会するにはこちらの退会フォームから申請をお願いいたします。" />
+
+        <View
+            typeField="@{item.typeField}"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#453B5D"
+            app:layout_constraintBottom_toBottomOf="parent  "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

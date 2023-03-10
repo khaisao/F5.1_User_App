@@ -528,4 +528,8 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     override fun openEditMailToVerifyCode(bundle: Bundle?) {
         openScreen(R.id.action_editMailFragment_to_verifyCodeFragment, bundle)
     }
+
+    override fun openMyPageToFAQ(bundle: Bundle?) {
+        openScreen(R.id.action_topFragment_to_FAQFragment, bundle)
+    }
 }

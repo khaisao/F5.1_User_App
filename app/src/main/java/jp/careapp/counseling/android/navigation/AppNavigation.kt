@@ -265,4 +265,6 @@ interface AppNavigation : BaseNavigator {
     fun openEditProfileToEditMail(bundle: Bundle? = null)
 
     fun openEditMailToVerifyCode(bundle: Bundle? = null)
+
+    fun openMyPageToFAQ(bundle: Bundle? = null)
 }

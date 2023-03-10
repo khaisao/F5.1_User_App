@@ -16,10 +16,6 @@ const val REPLY_REQUIRED = 1
 class ContactUsViewModel @Inject constructor(private val application: Application) :
     BaseViewModel() {
 
-    private val _spinnerSelect = MutableLiveData(0)
-    val spinnerSelect: LiveData<Int>
-        get() = _spinnerSelect
-
     private val _statusBtnConfirm = MutableLiveData(false)
     val statusBtnConfirm: LiveData<Boolean>
         get() = _statusBtnConfirm
@@ -30,9 +26,8 @@ class ContactUsViewModel @Inject constructor(private val application: Applicatio
 
     val mActionState = SingleLiveEvent<ContactUsActionState>()
 
-    fun setCategory(category: String, spinnerSelect: Int) {
+    fun setCategory(category: String) {
         mCategory = category
-        _spinnerSelect.value = spinnerSelect
         checkStatusBtnConfirm()
     }
 

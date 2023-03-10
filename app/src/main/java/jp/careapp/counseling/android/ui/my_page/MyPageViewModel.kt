@@ -146,7 +146,7 @@ class MyPageViewModel @Inject constructor(
             USE_POINTS_GUIDE -> mActionState.value = MyPageActionState.NavigateToUsePointsGuide
             TERMS_OF_SERVICE -> mActionState.value = MyPageActionState.NavigateToTermOfService
             PRIVACY_POLICY -> mActionState.value = MyPageActionState.NavigateToPrivacyPolicy
-            FAQ -> {}
+            FAQ -> mActionState.value = MyPageActionState.NavigateToFAQ
             CONTACT_US -> mActionState.value = MyPageActionState.NavigateToContactUs
         }
     }
@@ -160,5 +160,6 @@ sealed class MyPageActionState {
     object NavigateToUsePointsGuide : MyPageActionState()
     object NavigateToTermOfService : MyPageActionState()
     object NavigateToPrivacyPolicy : MyPageActionState()
+    object NavigateToFAQ : MyPageActionState()
     object NavigateToContactUs : MyPageActionState()
 }

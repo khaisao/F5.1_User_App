@@ -140,6 +140,13 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_topFragment_to_FAQFragment"
+            app:destination="@id/FAQFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
 
     <action
@@ -877,5 +884,10 @@
         android:name="jp.careapp.counseling.android.ui.verifyCode.VerifyCodeFragment"
         android:label="VerifyCodeFragment"
         tools:layout="@layout/fragment_verify_code" />
+    <fragment
+        android:id="@+id/FAQFragment"
+        android:name="jp.careapp.counseling.android.ui.faq.FAQFragment"
+        android:label="FAQFragment"
+        tools:layout="@layout/fragment_faq" />
 
 </navigation>

@@ -153,6 +153,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>() {
                 is MyPageActionState.NavigateToUsePointsGuide -> appNavigation.openMyPageToUsePointsGuide()
                 is MyPageActionState.NavigateToTermOfService -> appNavigation.openMyPageToTermsOfService()
                 is MyPageActionState.NavigateToPrivacyPolicy -> appNavigation.openMyPageToPrivacyPolicy()
+                is MyPageActionState.NavigateToFAQ -> appNavigation.openMyPageToFAQ()
                 is MyPageActionState.NavigateToContactUs -> appNavigation.openMyPageToContactUs()
             }
         }
