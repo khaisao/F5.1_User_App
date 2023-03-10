@@ -337,37 +337,6 @@
     <action
         android:id="@+id/action_tabMyPage_to_laboFragment"
         app:destination="@id/laboFragment" />
-
-    <fragment
-        android:id="@+id/contactEditFragment"
-        android:name="jp.careapp.counseling.android.ui.contact_edit.ContactEditFragment"
-        android:label="ContactEditFragment">
-        <action
-            android:id="@+id/action_contactEditFragment_to_contactConfirmFragment"
-            app:destination="@id/contactConfirmFragment" />
-        <argument
-            android:name="type_contact"
-            app:argType="string" />
-    </fragment>
-    <action
-        android:id="@+id/action_tabMyPage_to_contactEditFragment"
-        app:destination="@id/contactEditFragment" />
-    <fragment
-        android:id="@+id/contactConfirmFragment"
-        android:name="jp.careapp.counseling.android.ui.contact_confirm.ContactConfirmFragment"
-        android:label="ContactConfirmFragment">
-        <argument
-            android:name="contact"
-            app:argType="jp.careapp.counseling.android.ui.contact_edit.ContactEdit" />
-        <argument
-            android:name="type_contact"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_contactConfirmFragment_to_contactDoneFragment"
-            app:destination="@id/contactDoneFragment"
-            app:popUpTo="@+id/contactConfirmFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
     <action
         android:id="@+id/action_tabMyPage_to_fragmentNotification"
         app:destination="@id/fragmentNotification" />
@@ -380,10 +349,6 @@
             android:name="member"
             app:argType="jp.careapp.counseling.android.data.network.MemberResponse" />
     </fragment>
-    <fragment
-        android:id="@+id/contactDoneFragment"
-        android:name="jp.careapp.counseling.android.ui.contact_done.ContactDoneFragment"
-        android:label="ContactDoneFragment" />
     <fragment
         android:id="@+id/newsFragment"
         android:name="jp.careapp.counseling.android.ui.news.NewsFragment"
@@ -412,12 +377,28 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_fragmentEditProfile_to_editMailFragment"
+            app:destination="@id/editMailFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
 
     <fragment
-        android:id="@+id/Emailfragment"
-        android:name="jp.careapp.counseling.android.ui.edit_email.EditEmailfragment"
-        android:label="EditEmailfragment" />
+        android:id="@+id/editMailFragment"
+        android:name="jp.careapp.counseling.android.ui.edit_mail.EditMailFragment"
+        android:label="EditEmailfragment"
+        tools:layout="@layout/fragment_edit_mail">
+        <action
+            android:id="@+id/action_editMailFragment_to_verifyCodeFragment"
+            app:destination="@id/verifyCodeFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
     <fragment
         android:id="@+id/chooseTypeFragment"
         android:name="jp.careapp.counseling.android.ui.profile.trouble_sheet.ChooseTypeTroubleFragment"
@@ -891,5 +872,10 @@
         android:name="jp.careapp.counseling.android.ui.contact_us.finish.ContactUsFinishFragment"
         android:label="ContactUsFinishFragment"
         tools:layout="@layout/fragment_contact_us_finish" />
+    <fragment
+        android:id="@+id/verifyCodeFragment"
+        android:name="jp.careapp.counseling.android.ui.verifyCode.VerifyCodeFragment"
+        android:label="VerifyCodeFragment"
+        tools:layout="@layout/fragment_verify_code" />
 
 </navigation>

@@ -158,19 +158,11 @@ interface RxPreferences {
         statusNotification: Int
     )
 
-    fun getMemberNickName(): String?
-
-    fun getMemberMail(): String?
-
     fun getMemberAge(): Int
 
     fun getMemberBirth(): String?
 
     fun getMemberSex(): Int
-
-    fun saveMemberName(name: String)
-
-    fun saveMemberMail(mail: String)
 
     fun saveSettingNotificationNM(statusNotification: Int)
 

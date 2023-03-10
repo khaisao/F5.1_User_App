@@ -62,17 +62,11 @@ interface AppNavigation : BaseNavigator {
 
     fun openMyPageToLabScreen(bundle: Bundle? = null)
 
-    fun openMyPageToContact(bundle: Bundle? = null)
-
-    fun openEditContactToConfirmContact(bundle: Bundle? = null)
-
     fun openMyPageToSettingNotification(bundle: Bundle? = null)
 
     fun openMyPageToNews(bundle: Bundle? = null)
 
     fun openMyPageToEditProfile(bundle: Bundle? = null)
-
-    fun openContactConfirmToContactDone(bundle: Bundle? = null)
 
     fun openHomeToBannerFirstTimeUseScreen(bundle: Bundle? = null)
 
@@ -267,4 +261,8 @@ interface AppNavigation : BaseNavigator {
     fun openContactUsToContactUsConfirm(bundle: Bundle? = null)
 
     fun openContactUsConfirmToContactUsFinish(bundle: Bundle? = null)
+
+    fun openEditProfileToEditMail(bundle: Bundle? = null)
+
+    fun openEditMailToVerifyCode(bundle: Bundle? = null)
 }

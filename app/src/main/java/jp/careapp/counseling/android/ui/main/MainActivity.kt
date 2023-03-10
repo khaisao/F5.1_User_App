@@ -581,7 +581,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 val bundle = Bundle().apply {
                     putString(Define.TYPE_CONTACT, MyPageFragment::class.java.simpleName)
                 }
-                appNavigation.openMyPageToContact(bundle)
+//                appNavigation.openMyPageToContact(bundle)
             }
         }
     }

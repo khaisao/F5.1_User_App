@@ -121,14 +121,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_tabMyPage_to_laboFragment, bundle)
     }
 
-    override fun openMyPageToContact(bundle: Bundle?) {
-        openScreen(R.id.action_tabMyPage_to_contactEditFragment, bundle)
-    }
-
-    override fun openEditContactToConfirmContact(bundle: Bundle?) {
-        openScreen(R.id.action_contactEditFragment_to_contactConfirmFragment, bundle)
-    }
-
     override fun openMyPageToSettingNotification(bundle: Bundle?) {
         openScreen(R.id.action_tabMyPage_to_fragmentNotification, bundle)
     }
@@ -139,10 +131,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openMyPageToEditProfile(bundle: Bundle?) {
         openScreen(R.id.action_topFragment_to_fragmentEditProfile, bundle)
-    }
-
-    override fun openContactConfirmToContactDone(bundle: Bundle?) {
-        openScreen(R.id.action_contactConfirmFragment_to_contactDoneFragment, bundle)
     }
 
     override fun openDetailUserToTroubleSheet(bundle: Bundle?) {
@@ -531,5 +519,13 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openContactUsConfirmToContactUsFinish(bundle: Bundle?) {
         openScreen(R.id.action_contactUsConfirmFragment_to_contactUsFinishFragment, bundle)
+    }
+
+    override fun openEditProfileToEditMail(bundle: Bundle?) {
+        openScreen(R.id.action_fragmentEditProfile_to_editMailFragment, bundle)
+    }
+
+    override fun openEditMailToVerifyCode(bundle: Bundle?) {
+        openScreen(R.id.action_editMailFragment_to_verifyCodeFragment, bundle)
     }
 }

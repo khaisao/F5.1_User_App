@@ -33,20 +33,8 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
     private val mViewModel: EditProfileViewModel by activityViewModels()
     override fun getVM() = mViewModel
 
-
-//    @Inject
-//    lateinit var rxPreferences: RxPreferences
-//    private var bundle: MemberResponse? = null
-//    private var codeScreen = 0
-
     override fun initView() {
         super.initView()
-//        bundle = arguments?.getParcelable("member")
-//        arguments?.let {
-//            if (it.containsKey(BUNDLE_KEY.CODE_SCREEN)) {
-//                codeScreen = it.getInt(BUNDLE_KEY.CODE_SCREEN)
-//            }
-//        }
 
         binding.viewModel = mViewModel
 
@@ -57,6 +45,8 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
         binding.llMemberName.setOnClickListener { if (!isDoubleClick) appNavigation.openEditProfileToEditNickName() }
 
         binding.llMemberBirth.setOnClickListener { if (!isDoubleClick) showDatePickerDialog() }
+
+        binding.llMemberMail.setOnClickListener { if (!isDoubleClick) appNavigation.openEditProfileToEditMail() }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
@@ -199,18 +189,6 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
 //            }
 //        )
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//        myPageViewModels.forceRefresh()
-//    }
-//
-//    override fun onBackPressed() {
-//        if (codeScreen == SCREEN_EDIT_EMAIL) {
-//            shareViewModel.setTabSelected(ShareViewModel.TAB_MY_PAGE_SELECTED)
-//            appNavigation.openOtherScreenToTopScreen()
-//        }
-//    }
 
     private fun setUpToolBar() {
         binding.toolBar.setOnToolBarClickListener(object : ToolBarCommon.OnToolBarClickListener() {

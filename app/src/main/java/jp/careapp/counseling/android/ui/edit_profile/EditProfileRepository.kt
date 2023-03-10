@@ -6,9 +6,9 @@ import javax.inject.Inject
 
 class EditProfileRepository @Inject constructor(private val rxPreferences: RxPreferences) {
 
-    fun getMemberNickName() = rxPreferences.getMemberNickName()
+    fun getMemberNickName() = rxPreferences.getNickName()
 
-    fun getMemberMail() = rxPreferences.getMemberMail()
+    fun getMemberMail() = rxPreferences.getEmail()
 
     fun getMemberAge() = rxPreferences.getMemberAge()
 }

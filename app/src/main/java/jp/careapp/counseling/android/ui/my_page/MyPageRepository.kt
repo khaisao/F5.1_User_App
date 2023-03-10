@@ -20,7 +20,7 @@ class MyPageRepository @Inject constructor(
         statusNotification: Int
     ) = rxPreferences.saveMemberInfoEditProfile(nickName, mail, age, birth, sex, statusNotification)
 
-    fun getMemberNickName() = rxPreferences.getMemberNickName()
+    fun getMemberNickName() = rxPreferences.getNickName()
 
     fun getMemberAge() = rxPreferences.getMemberAge()
 }

@@ -30,7 +30,6 @@ class AppPreferences @Inject constructor(
         const val PREF_PARAM_EMAIL_USER = "PREF_PARAM_EMAIL_USER"
         const val PREF_PARAM_TOKEN_EXPIRE = "PREF_PARAM_TOKEN_EXPIRE"
         const val PREF_PARAM_PASSWORD = "PREF_PARAM_PASSWORD"
-        const val PREF_PARAM_USER_INFO = "PREF_PARAM_USER_INFO"
         const val PREF_KEY_IS_FIRST_TIME_USE = "PREF_KEY_IS_FIRST_TIME_USE"
         const val PREF_KEY_IS_FIRST_TIME_USE_LAB = "PREF_KEY_IS_FIRST_TIME_USE_LAB"
         const val PREF_NEW_LAST_VIEW_DATE_TIME = "PREF_NEW_LAST_VIEW_DATE_TIME"
@@ -62,8 +61,6 @@ class AppPreferences @Inject constructor(
         const val PREF_KEY_CONTENT = "PREF_KEY_CONTENT"
         const val PREF_KEY_PUSH_MAIL = "PREF_KEY_PUSH_MAIL"
 
-        const val PREF_KEY_MEMBER_NICK_NAME = "PREF_KEY_MEMBER_NICK_NAME"
-        const val PREF_KEY_MEMBER_MAIL = "PREF_KEY_MEMBER_MAIL"
         const val PREF_KEY_MEMBER_AGE = "PREF_KEY_MEMBER_AGE"
         const val PREF_KEY_MEMBER_BIRTH = "PREF_KEY_MEMBER_BIRTH"
         const val PREF_KEY_MEMBER_SEX = "PREF_KEY_MEMBER_SEX"
@@ -103,7 +100,6 @@ class AppPreferences @Inject constructor(
         put(PREF_PARAM_ACCESS_TOKEN, PARAM_BEARER + userToken)
 
     override fun logout() {
-        remove(PREF_PARAM_USER_INFO)
         remove(PREF_KEY_UNREAD_MESSAGE)
     }
 
@@ -428,8 +424,8 @@ class AppPreferences @Inject constructor(
         statusNotification: Int
     ) {
         mPrefs.edit().apply {
-            putString(PREF_KEY_MEMBER_NICK_NAME, name)
-            putString(PREF_KEY_MEMBER_MAIL, mail)
+            putString(PREF_KEY_NICK_NAME, name)
+            putString(PREF_PARAM_EMAIL_USER, mail)
             putInt(PREF_KEY_MEMBER_AGE, age)
             putString(PREF_KEY_MEMBER_BIRTH, birth)
             putInt(PREF_KEY_MEMBER_SEX, sex)
@@ -437,23 +433,11 @@ class AppPreferences @Inject constructor(
         }.apply()
     }
 
-    override fun getMemberNickName(): String? = mPrefs.getString(PREF_KEY_MEMBER_NICK_NAME, "")
-
-    override fun getMemberMail(): String? = mPrefs.getString(PREF_KEY_MEMBER_MAIL, "")
-
     override fun getMemberAge(): Int = mPrefs.getInt(PREF_KEY_MEMBER_AGE, 0)
 
     override fun getMemberBirth(): String? = mPrefs.getString(PREF_KEY_MEMBER_BIRTH, "")
 
     override fun getMemberSex(): Int = mPrefs.getInt(PREF_KEY_MEMBER_SEX, 0)
-
-    override fun saveMemberName(name: String) {
-        mPrefs.edit().putString(PREF_KEY_MEMBER_NICK_NAME, name).apply()
-    }
-
-    override fun saveMemberMail(mail: String) {
-        mPrefs.edit().putString(PREF_KEY_MEMBER_MAIL, mail).apply()
-    }
 
     override fun saveSettingNotificationNM(statusNotification: Int) {
         mPrefs.edit().putInt(PREF_KEY_MEMBER_STATUS_NOTIFICATION, statusNotification).apply()

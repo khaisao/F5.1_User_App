@@ -10,7 +10,7 @@ class EditNickNameRepository @Inject constructor(
     private val rxPreferences: RxPreferences
 ) {
 
-    fun getMemberNickName() = rxPreferences.getMemberNickName()
+    fun getMemberNickName() = rxPreferences.getNickName()
 
     suspend fun editMemberName(memberName: String) = apiInterface.updateProfile(
         ParamsUpdateMember(
@@ -20,5 +20,5 @@ class EditNickNameRepository @Inject constructor(
         )
     )
 
-    fun saveMemberName(memberName: String) = rxPreferences.saveMemberName(memberName)
+    fun saveMemberName(memberName: String) = rxPreferences.setNickName(memberName)
 }
