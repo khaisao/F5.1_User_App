@@ -3,7 +3,7 @@ package jp.careapp.counseling.android.ui.faq
 import jp.careapp.counseling.android.data.model.TypeField
 
 sealed class FAQModelRecyclerView {
-    data class ItemHeader(val header: String)
+    data class ItemHeader(val header: String) : FAQModelRecyclerView()
     data class ItemContent(
         val title: String,
         val content: String,
@@ -12,5 +12,5 @@ sealed class FAQModelRecyclerView {
         val startSpan: Int = 0,
         val endSpan: Int = 0,
         val onClick: () -> Unit
-    )
+    ) : FAQModelRecyclerView()
 }

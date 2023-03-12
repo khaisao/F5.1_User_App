@@ -20,14 +20,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
         tools:background="@drawable/bg_none_field">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:fontFamily="@font/hiragino_sans_w6"
+            android:paddingVertical="16dp"
+            android:text="@{item.title}"
             android:textColor="#f0f0f0"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,36 +38,46 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivAction"
-            android:layout_width="14dp"
-            android:layout_height="14dp"
+            setSrcCollapse="@{item.isCollapse}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvTitle"
-            app:srcCompat="@drawable/ic_expand_faq" />
+            app:layout_constraintWidth_percent="0.08"
+            tools:srcCompat="@drawable/ic_expand_faq" />
 
         <TextView
             android:id="@+id/textView15"
+            goneCollapse="@{item.isCollapse}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/hiragino_sans_w3"
             android:lineSpacingExtra="4dp"
+            android:text="@{item.content}"
             android:textColor="#f0f0f0"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitle"
-            tools:text="サービスから退会するにはこちらの退会フォームから申請をお願いいたします。" />
+            tools:text="サービスから退会するにはこちらの退会フォームから申請をお願いいたします。"
+            tools:visibility="visible" />
 
         <View
+            isCollapse="@{item.isCollapse}"
             typeField="@{item.typeField}"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="#453B5D"
-            app:layout_constraintBottom_toBottomOf="parent  "
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="@id/tvTitle" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
