@@ -1,5 +1,6 @@
 package jp.careapp.counseling.android.ui.favourite
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +14,6 @@ import jp.careapp.core.utils.getDurationBreakdown
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.network.FavoriteResponse
-import jp.careapp.counseling.android.utils.CallStatus
-import jp.careapp.counseling.android.utils.ChatStatus
 import jp.careapp.counseling.android.utils.extensions.getBustSize
 import jp.careapp.counseling.databinding.ItemFavouriteBinding
 import java.text.SimpleDateFormat
@@ -23,6 +22,7 @@ import java.util.*
 class FavoriteAdapter(
     private val lifecycleOwner: LifecycleOwner,
     private val events: EventFavoriteAction,
+    private val context: Context
 ) : ListAdapter<FavoriteResponse, FavoriteViewHolder>(
     FavoriteDiffCallBack
 ) {
@@ -30,7 +30,8 @@ class FavoriteAdapter(
         return FavoriteViewHolder.from(
             parent,
             lifecycleOwner = lifecycleOwner,
-            eventsAction = events
+            eventsAction = events,
+            context = context
         )
     }
 
@@ -48,7 +49,8 @@ class FavoriteAdapter(
 class FavoriteViewHolder(
     private val binding: ItemFavouriteBinding,
     private val lifecycleOwner: LifecycleOwner,
-    private val events: EventFavoriteAction
+    private val events: EventFavoriteAction,
+    private val context: Context
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: FavoriteResponse) {
         binding.apply {
@@ -58,27 +60,27 @@ class FavoriteViewHolder(
             executePendingBindings()
         }
         binding.tvName.text=item.name
-        Glide.with(binding.root.context).load(item.thumbnailImageUrl)
+        Glide.with(context).load(item.thumbnailImageUrl)
             .apply(
                 RequestOptions()
                     .placeholder(R.drawable.default_avt_performer)
             )
             .into(binding.ivPerson)
 
-        //testData
+        //TODO (remove test data)
         val dateString = "2023-01-20 08:57:10"
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.US)
         val date = sdf.parse(dateString)
         val startDate = date?.time
         if (startDate != null) {
             binding.tvTime.text =
-                binding.root.context.getDurationBreakdown(System.currentTimeMillis() - startDate)
+                context.getDurationBreakdown(System.currentTimeMillis() - startDate)
         }
 
         if (ConsultantResponse.isWaiting(item.callStatus, item.chatStatus)) {
             binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_waiting)
             binding.tvStatus.text =
-                binding.root.context.resources.getString(R.string.presence_status_waiting)
+                context.resources.getString(R.string.presence_status_waiting)
         } else if (ConsultantResponse.isLiveStream(
                 item.callStatus,
                 item.chatStatus
@@ -86,7 +88,7 @@ class FavoriteViewHolder(
         ) {
             binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
             binding.tvStatus.text =
-                binding.root.context.resources.getString(R.string.presence_status_live_streaming)
+                context.resources.getString(R.string.presence_status_live_streaming)
         } else if (ConsultantResponse.isPrivateLiveStream(
                 item.callStatus,
                 item.chatStatus
@@ -94,14 +96,14 @@ class FavoriteViewHolder(
         ) {
             binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
             binding.tvStatus.text =
-                binding.root.context.resources.getString(R.string.presence_status_private_delivery)
+                context.resources.getString(R.string.presence_status_private_delivery)
         } else {
             binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
             binding.tvStatus.text =
-                binding.root.context.resources.getString(R.string.presence_status_offline)
+                context.resources.getString(R.string.presence_status_offline)
         }
 
-        val bustSize = binding.root.context.getBustSize(item.bust)
+        val bustSize = context.getBustSize(item.bust)
         if (bustSize == "") {
             binding.tvSize.visibility = View.GONE
         } else {
@@ -109,7 +111,7 @@ class FavoriteViewHolder(
             binding.tvSize.text = bustSize
         }
 
-        binding.tvAge.text = item.age.toString() + binding.root.context.resources.getString(R.string.age_raw)
+        binding.tvAge.text = item.age.toString() + context.resources.getString(R.string.age_raw)
 
     }
 
@@ -117,7 +119,8 @@ class FavoriteViewHolder(
         fun from(
             parent: ViewGroup,
             lifecycleOwner: LifecycleOwner,
-            eventsAction: EventFavoriteAction
+            eventsAction: EventFavoriteAction,
+            context: Context
         ): FavoriteViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding: ItemFavouriteBinding =
@@ -125,7 +128,8 @@ class FavoriteViewHolder(
             return FavoriteViewHolder(
                 binding,
                 lifecycleOwner,
-                eventsAction
+                eventsAction,
+                context
             )
         }
     }

@@ -146,7 +146,6 @@
                     android:ellipsize="end"
                     android:lines="2"
                     android:maxLines="2"
-                    android:text="Lorem lorem lorem lorem"
                     android:textColor="@color/color_B2A9CC" />
 
 

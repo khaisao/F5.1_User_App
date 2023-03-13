@@ -115,7 +115,6 @@
                     android:layout_marginEnd="@dimen/margin_10"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Lorem lorem lorem lorem lorem lorem lorem lorem lorem"
                     android:textColor="@color/color_B2A9CC" />
 
             </LinearLayout>

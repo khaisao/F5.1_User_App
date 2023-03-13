@@ -13,8 +13,6 @@ import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.GenResItem
 import jp.careapp.counseling.android.data.network.ConsultantResponse
-import jp.careapp.counseling.android.utils.CallStatus
-import jp.careapp.counseling.android.utils.ChatStatus
 import jp.careapp.counseling.android.utils.extensions.getBustSize
 import jp.careapp.counseling.databinding.ItemConsultantBinding
 
@@ -180,7 +178,7 @@ class ConsultantAdapter(
             if (ConsultantResponse.isWaiting(consultant.callStatus, consultant.chatStatus)) {
                 binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_waiting)
                 binding.tvStatus.text =
-                    binding.root.context.resources.getString(R.string.presence_status_waiting)
+                    context.resources.getString(R.string.presence_status_waiting)
             } else if (ConsultantResponse.isLiveStream(
                     consultant.callStatus,
                     consultant.chatStatus
@@ -188,7 +186,7 @@ class ConsultantAdapter(
             ) {
                 binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
                 binding.tvStatus.text =
-                    binding.root.context.resources.getString(R.string.presence_status_live_streaming)
+                    context.resources.getString(R.string.presence_status_live_streaming)
             } else if (ConsultantResponse.isPrivateLiveStream(
                     consultant.callStatus,
                     consultant.chatStatus
@@ -196,13 +194,13 @@ class ConsultantAdapter(
             ) {
                 binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
                 binding.tvStatus.text =
-                    binding.root.context.resources.getString(R.string.presence_status_private_delivery)
+                    context.resources.getString(R.string.presence_status_private_delivery)
             } else {
                 binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
                 binding.tvStatus.text =
-                    binding.root.context.resources.getString(R.string.presence_status_offline)
+                    context.resources.getString(R.string.presence_status_offline)
             }
-            val bustSize = binding.root.context.getBustSize(consultant.bust)
+            val bustSize = context.getBustSize(consultant.bust)
             if (bustSize == "") {
                 binding.tvSize.visibility = View.GONE
             } else {

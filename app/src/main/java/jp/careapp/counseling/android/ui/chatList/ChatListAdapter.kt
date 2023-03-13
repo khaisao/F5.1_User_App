@@ -56,7 +56,7 @@ class ChatListAdapter constructor(
                     data.performer.let {
                         if (!data.fromOwnerMail && it != null) {
                             binding.ivPerson.loadImage(it.imageUrl, R.drawable.ic_avatar_default, false)
-                            val bustSize = binding.root.context.getBustSize(it.bust)
+                            val bustSize = context.getBustSize(it.bust)
                             if (bustSize == "") {
                                 binding.tvSize.visibility = GONE
                             } else {
@@ -178,19 +178,19 @@ class ChatListAdapter constructor(
                             if (ConsultantResponse.isWaiting(it.callStatus,it.chatStatus)) {
                                 binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_waiting)
                                 binding.tvStatus.text =
-                                    binding.root.context.resources.getString(R.string.presence_status_waiting)
+                                    context.resources.getString(R.string.presence_status_waiting)
                             } else if (ConsultantResponse.isWaiting(it.callStatus,it.chatStatus)) {
                                 binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
                                 binding.tvStatus.text =
-                                    binding.root.context.resources.getString(R.string.presence_status_live_streaming)
+                                    context.resources.getString(R.string.presence_status_live_streaming)
                             } else if (ConsultantResponse.isWaiting(it.callStatus,it.chatStatus)) {
                                 binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
                                 binding.tvStatus.text =
-                                    binding.root.context.resources.getString(R.string.presence_status_private_delivery)
+                                    context.resources.getString(R.string.presence_status_private_delivery)
                             } else {
                                 binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
                                 binding.tvStatus.text =
-                                    binding.root.context.resources.getString(R.string.presence_status_offline)
+                                    context.resources.getString(R.string.presence_status_offline)
                             }
                             if (it.stage != 1) {
                                 ivState.visibility = GONE

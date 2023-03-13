@@ -63,8 +63,8 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
     override fun bindingStateView() {
         super.bindingStateView()
         viewModels.forceRefresh()
-        adapterFavorite = FavoriteAdapter(lifecycleOwner = viewLifecycleOwner, events = viewModels)
-        adapterHistory = HistoryAdapter(lifecycleOwner = viewLifecycleOwner, events = historyViewModel)
+        adapterFavorite = FavoriteAdapter(lifecycleOwner = viewLifecycleOwner, events = viewModels, context = requireContext())
+        adapterHistory = HistoryAdapter(lifecycleOwner = viewLifecycleOwner, events = historyViewModel, context = requireContext())
         adapterFavoriteHome = FavoriteHomeAdapter(lifecycleOwner = viewLifecycleOwner, events = viewModels)
         binding.apply {
             if (typeFavoriteScreen == BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_FAVORITE) {

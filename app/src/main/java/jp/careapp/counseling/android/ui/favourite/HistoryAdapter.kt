@@ -1,5 +1,6 @@
 package jp.careapp.counseling.android.ui.favourite
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,7 @@ import java.util.*
 class HistoryAdapter(
     private val lifecycleOwner: LifecycleOwner,
     private val events: EventHistoryAction,
+    val context: Context
 ) : ListAdapter<HistoryResponse, HistoryViewHolder>(
     HistoryDiffCallBack
 ) {
@@ -30,7 +32,8 @@ class HistoryAdapter(
         return HistoryViewHolder.from(
             parent,
             lifecycleOwner = lifecycleOwner,
-            eventsAction = events
+            eventsAction = events,
+            context = context
         )
     }
 
@@ -48,7 +51,8 @@ class HistoryAdapter(
 class HistoryViewHolder(
     private val binding: ItemHistoryBinding,
     private val lifecycleOwner: LifecycleOwner,
-    private var events: EventHistoryAction
+    private var events: EventHistoryAction,
+    private val context: Context
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: HistoryResponse) {
         binding.apply {
@@ -58,21 +62,21 @@ class HistoryViewHolder(
             executePendingBindings()
         }
         binding.tvName.text=item.name
-        Glide.with(binding.root.context).load(item.thumbnailImageUrl)
+        Glide.with(context).load(item.thumbnailImageUrl)
             .apply(
                 RequestOptions()
                     .placeholder(R.drawable.default_avt_performer)
             )
             .into(binding.ivPerson)
 
-        //testData
+        //TODO (remove test data)
         val dateString = "2023-01-20 08:57:10"
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.US)
         val date = sdf.parse(dateString)
         val startDate = date?.time
         if (startDate != null) {
             binding.tvTime.text =
-                binding.root.context.getDurationBreakdown(System.currentTimeMillis() - startDate)
+                context.getDurationBreakdown(System.currentTimeMillis() - startDate)
         }
 
         binding.clMain.setOnClickListener {
@@ -82,34 +86,34 @@ class HistoryViewHolder(
         if (item.callStatus == CallStatus.ONLINE && item.chatStatus == ChatStatus.OFFLINE) {
             binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
             binding.tvStatus.text =
-                binding.root.context.resources.getString(R.string.presence_status_offline)
+                context.resources.getString(R.string.presence_status_offline)
         } else if (item.callStatus == CallStatus.INCOMING_CALL && item.chatStatus == ChatStatus.OFFLINE) {
             binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
             binding.tvStatus.text =
-                binding.root.context.resources.getString(R.string.presence_status_offline)
+                context.resources.getString(R.string.presence_status_offline)
         } else if (item.callStatus == CallStatus.OFFLINE && item.chatStatus == ChatStatus.WAITING) {
             binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
             binding.tvStatus.text =
-                binding.root.context.resources.getString(R.string.presence_status_live_streaming)
+                context.resources.getString(R.string.presence_status_live_streaming)
         } else if (item.callStatus == CallStatus.OFFLINE && item.chatStatus == ChatStatus.CHATTING) {
             binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
             binding.tvStatus.text =
-                binding.root.context.resources.getString(R.string.presence_status_live_streaming)
+                context.resources.getString(R.string.presence_status_live_streaming)
         } else if (item.callStatus == CallStatus.OFFLINE && item.chatStatus == ChatStatus.TWO_SHOT_CHAT) {
             binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
             binding.tvStatus.text =
-                binding.root.context.resources.getString(R.string.presence_status_private_delivery)
+                context.resources.getString(R.string.presence_status_private_delivery)
         } else if (item.callStatus == CallStatus.OFFLINE && item.chatStatus == ChatStatus.OFFLINE) {
             binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_waiting)
             binding.tvStatus.text =
-                binding.root.context.resources.getString(R.string.presence_status_waiting)
+                context.resources.getString(R.string.presence_status_waiting)
         } else {
             binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
             binding.tvStatus.text =
-                binding.root.context.resources.getString(R.string.presence_status_offline)
+                context.resources.getString(R.string.presence_status_offline)
         }
 
-        val bustSize = binding.root.context.getBustSize(item.bust)
+        val bustSize = context.getBustSize(item.bust)
         if (bustSize == "") {
             binding.tvSize.visibility = View.GONE
         } else {
@@ -117,7 +121,7 @@ class HistoryViewHolder(
             binding.tvSize.text = bustSize
         }
 
-        binding.tvAge.text = item.age.toString() + binding.root.context.resources.getString(R.string.age_raw)
+        binding.tvAge.text = item.age.toString() + context.resources.getString(R.string.age_raw)
 
     }
 
@@ -125,7 +129,8 @@ class HistoryViewHolder(
         fun from(
             parent: ViewGroup,
             lifecycleOwner: LifecycleOwner,
-            eventsAction: EventHistoryAction
+            eventsAction: EventHistoryAction,
+            context: Context
         ): HistoryViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding: ItemHistoryBinding =
@@ -133,7 +138,8 @@ class HistoryViewHolder(
             return HistoryViewHolder(
                 binding,
                 lifecycleOwner,
-                eventsAction
+                eventsAction,
+                context
             )
         }
     }

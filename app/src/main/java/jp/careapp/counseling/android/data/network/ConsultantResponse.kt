@@ -52,32 +52,29 @@ data class ConsultantResponse(
             )
         }
 
-        fun isWaiting(callStatus:Int, chatStatus:Int): Boolean {
-            var isWaiting = false
+        fun isWaiting(callStatus: Int, chatStatus: Int): Boolean {
             if (callStatus == 1 && chatStatus == 0) {
-                isWaiting = true
+                return true
             } else if (callStatus == 2 && chatStatus == 0) {
-                isWaiting = true
+                return true
             }
-            return isWaiting
+            return false
         }
 
-        fun isLiveStream(callStatus:Int, chatStatus:Int): Boolean {
-            var isLiveStream = false
+        fun isLiveStream(callStatus: Int, chatStatus: Int): Boolean {
             if (callStatus == 0 && chatStatus == 1) {
-                isLiveStream = true
+                return true
             } else if (callStatus == 0 && chatStatus == 2) {
-                isLiveStream = true
+                return true
             }
-            return isLiveStream
+            return false
         }
 
-        fun isPrivateLiveStream(callStatus:Int, chatStatus:Int): Boolean {
-            var isPrivateLiveStream = false
+        fun isPrivateLiveStream(callStatus: Int, chatStatus: Int): Boolean {
             if (callStatus == 0 && chatStatus == 3) {
-                isPrivateLiveStream = true
+                return true
             }
-            return isPrivateLiveStream
+            return false
         }
 
         fun isOnline(callStatus:Int, chatStatus:Int): Boolean {

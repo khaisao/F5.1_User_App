@@ -141,7 +141,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                     .setDialogTitle(R.string.template_title_dialog)
                     .setContent(message.body)
                     .setTextPositiveButton(R.string.ok)
-                    .setTextNegativeButton(R.string.no_block_alert)
+                    .setTextNegativeButton(R.string.cancel_block_alert)
                     .setOnPositivePressed {
                         it.dismiss()
                         val code = this@ChatMessageFragment.performerCode
