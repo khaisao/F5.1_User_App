@@ -52,38 +52,33 @@ data class ConsultantResponse(
             )
         }
 
-
-
-        fun isWaiting(consultantResponse: ConsultantResponse): Boolean {
-            var isWaiting = false
-            if (consultantResponse.callStatus == 1 && consultantResponse.chatStatus == 0) {
-                isWaiting = true
-            } else if (consultantResponse.callStatus == 2 && consultantResponse.chatStatus == 0) {
-                isWaiting = true
+        fun isWaiting(callStatus: Int, chatStatus: Int): Boolean {
+            if (callStatus == 1 && chatStatus == 0) {
+                return true
+            } else if (callStatus == 2 && chatStatus == 0) {
+                return true
             }
-            return true
+            return false
         }
 
-        fun isLiveStream(consultantResponse: ConsultantResponse): Boolean {
-            var isLiveStream = false
-            if (consultantResponse.callStatus == 0 && consultantResponse.chatStatus == 1) {
-                isLiveStream = true
-            } else if (consultantResponse.callStatus == 0 && consultantResponse.chatStatus == 2) {
-                isLiveStream = true
+        fun isLiveStream(callStatus: Int, chatStatus: Int): Boolean {
+            if (callStatus == 0 && chatStatus == 1) {
+                return true
+            } else if (callStatus == 0 && chatStatus == 2) {
+                return true
             }
-            return isLiveStream
+            return false
         }
 
-        fun isPrivateLiveStream(consultantResponse: ConsultantResponse): Boolean {
-            var isPrivateLiveStream = false
-            if (consultantResponse.callStatus == 0 && consultantResponse.chatStatus == 3) {
-                isPrivateLiveStream = true
+        fun isPrivateLiveStream(callStatus: Int, chatStatus: Int): Boolean {
+            if (callStatus == 0 && chatStatus == 3) {
+                return true
             }
-            return isPrivateLiveStream
+            return false
         }
 
-        fun isOnline(consultantResponse: ConsultantResponse): Boolean {
-            if(!isWaiting(consultantResponse) && !isLiveStream(consultantResponse) && !isPrivateLiveStream(consultantResponse)){
+        fun isOnline(callStatus:Int, chatStatus:Int): Boolean {
+            if(!isWaiting(callStatus, chatStatus) && !isLiveStream(callStatus,chatStatus) && !isPrivateLiveStream(callStatus, chatStatus)){
                 return true
             }
             return false

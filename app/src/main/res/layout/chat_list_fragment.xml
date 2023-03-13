@@ -24,21 +24,35 @@
                 android:id="@+id/history_chat_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_history_chat" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <LinearLayout
                 android:id="@+id/tvNoData"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_30"
-                android:layout_marginTop="@dimen/height_80"
-                android:layout_marginEnd="@dimen/margin_30"
-                android:gravity="center_horizontal"
-                android:text="@string/no_history_data"
-                android:textColor="@color/color_6D5D9A"
-                android:textSize="@dimen/text_size_16"
-                android:visibility="gone" />
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_no_message" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:gravity="center_horizontal"
+                    style="@style/text_14"
+                    android:text="@string/no_history_data"
+                    android:textColor="@color/gray_dark"
+                 />
+            </LinearLayout>
+
+
         </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

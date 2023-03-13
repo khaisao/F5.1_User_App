@@ -13,8 +13,9 @@
             android:id="@+id/status_message_tv"
             style="@style/text_10"
             android:layout_marginRight="@dimen/margin_4dp"
+            android:layout_marginBottom="@dimen/margin_3"
             android:text="@string/read"
-            android:textColor="@color/color_6D5D9A"
+            android:textColor="@color/color_B2A9CC"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/time_send_tv"
             app:layout_constraintEnd_toStartOf="@+id/content_message_tv" />
@@ -23,9 +24,8 @@
             android:id="@+id/time_send_tv"
             style="@style/text_10"
             android:layout_marginRight="@dimen/margin_4dp"
-            android:layout_marginBottom="@dimen/margin_4dp"
             android:text="12:23"
-            android:textColor="@color/color_6D5D9A"
+            android:textColor="@color/color_B2A9CC"
             app:layout_constraintBottom_toBottomOf="@+id/content_message_tv"
             app:layout_constraintEnd_toStartOf="@+id/content_message_tv" />
 
@@ -34,18 +34,17 @@
             android:id="@+id/content_message_tv"
             style="@style/text_14"
             android:layout_width="0dp"
+            android:gravity="center_vertical"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_corner_owner_message"
+            android:background="@drawable/bg_item_message_send"
             android:paddingLeft="@dimen/margin_12"
-            android:paddingTop="@dimen/margin_11"
             android:paddingRight="@dimen/margin_12"
-            android:paddingBottom="@dimen/margin_11"
             android:textColor="@color/white"
             android:textIsSelectable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_max="wrap"
             app:layout_constraintWidth_percent="0.6"
-            tools:text="abc" />
+            tools:text="aawgawgawggggggggbc" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

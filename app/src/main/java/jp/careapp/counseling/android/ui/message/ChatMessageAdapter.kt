@@ -124,6 +124,7 @@ class ChatMessageAdapter constructor(
                             DATE_FORMAT_5
                         )
                     )
+                    statusMessageTv.visibility = if (data.open) View.VISIBLE else View.GONE
                     contentMessageTv.setText(data.body)
                 }
                 containerItemOwnerCl.setOnClickListener {

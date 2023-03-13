@@ -180,6 +180,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_40dp"
                     android:ellipsize="end"
+                    android:shadowColor="@color/color_FC00FF"
+                    android:shadowRadius="18"
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/padding_40"
                     android:textColor="@color/white"

@@ -550,15 +550,19 @@ class DetailUserProfileFragment :
                 Glide.with(this@DetailUserProfileFragment).asGif().load(R.drawable.ic_ballon_call).into(ivBallonLiveGl50)
                 Glide.with(this@DetailUserProfileFragment).asGif().load(R.drawable.ic_ballon_peep).into(ivBallonPeep)
 
-                if (ConsultantResponse.isWaiting(user)) {
+                if (ConsultantResponse.isWaiting(user.callStatus, user.chatStatus)) {
                     presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_waiting)
                     presenceStatusTv.text =
                         resources.getString(R.string.presence_status_waiting)
-                } else if (ConsultantResponse.isLiveStream(user)) {
+                } else if (ConsultantResponse.isLiveStream(user.callStatus, user.chatStatus)) {
                     presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
                     presenceStatusTv.text =
                         resources.getString(R.string.presence_status_live_streaming)
-                } else if (ConsultantResponse.isPrivateLiveStream(user)) {
+                } else if (ConsultantResponse.isPrivateLiveStream(
+                        user.callStatus,
+                        user.chatStatus
+                    )
+                ) {
                     presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
                     presenceStatusTv.text =
                         resources.getString(R.string.presence_status_private_delivery)
@@ -617,7 +621,7 @@ class DetailUserProfileFragment :
 
                 userNameTv.text = user.name
 
-                if (ConsultantResponse.isLiveStream(user)) {
+                if (ConsultantResponse.isLiveStream(user.callStatus, user.chatStatus)) {
                     ivMessage.setImageResource(R.drawable.ic_message_small_detail)
                     tvLiveStreamCount.text =
                         (user.loginMemberCount + user.peepingMemberCount).toString()
@@ -626,28 +630,31 @@ class DetailUserProfileFragment :
                     ivMessage.setImageResource(R.drawable.ic_message_large_detail)
                     llStatusViewerCount.visibility = GONE
                 }
-                if (ConsultantResponse.isWaiting(user) || ConsultantResponse.isLiveStream(user)) {
+                if (ConsultantResponse.isWaiting(
+                        user.callStatus,
+                        user.chatStatus
+                    ) || ConsultantResponse.isLiveStream(user.callStatus, user.chatStatus)
+                ) {
                     llCallConsult.visibility = VISIBLE
                 } else {
                     llCallConsult.visibility = GONE
                 }
-                if (ConsultantResponse.isLiveStream(user)) {
-                    ivBallonPeep.visibility= VISIBLE
+                if (ConsultantResponse.isLiveStream(user.callStatus, user.chatStatus)) {
+                    ivBallonPeep.visibility = VISIBLE
                     llPeep.visibility = VISIBLE
                 } else {
-                    ivBallonPeep.visibility= GONE
+                    ivBallonPeep.visibility = GONE
                     llPeep.visibility = GONE
                 }
-                if (ConsultantResponse.isPrivateLiveStream(user)) {
+                if (ConsultantResponse.isPrivateLiveStream(user.callStatus, user.chatStatus)) {
                     ivPrivateDelivery.visibility = VISIBLE
                 } else {
                     ivPrivateDelivery.visibility = GONE
                 }
-                if(ConsultantResponse.isWaiting(user) ){
-                    ivBallonLiveGl50.visibility= VISIBLE
-                }
-                else{
-                    ivBallonLiveGl50.visibility= GONE
+                if (ConsultantResponse.isWaiting(user.callStatus, user.chatStatus)) {
+                    ivBallonLiveGl50.visibility = VISIBLE
+                } else {
+                    ivBallonLiveGl50.visibility = GONE
                 }
 
 

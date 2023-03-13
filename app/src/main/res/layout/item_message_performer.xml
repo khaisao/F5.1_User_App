@@ -24,7 +24,7 @@
             android:layout_marginRight="@dimen/margin_4dp"
             android:layout_marginBottom="@dimen/margin_4dp"
             android:text="12:23"
-            android:textColor="@color/color_6D5D9A"
+            android:textColor="@color/color_B2A9CC"
             app:layout_constraintBottom_toBottomOf="@+id/rl_content_message"
             app:layout_constraintStart_toEndOf="@+id/rl_content_message" />
 
@@ -33,10 +33,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_8"
-            android:background="@drawable/bg_corner_performer_message"
             android:paddingLeft="@dimen/margin_12"
             android:paddingTop="@dimen/margin_11"
             android:paddingRight="@dimen/margin_12"
+            android:gravity="center_vertical"
             android:paddingBottom="@dimen/margin_11"
             app:layout_constraintStart_toEndOf="@+id/avatar_iv"
             app:layout_constraintTop_toTopOf="parent"
@@ -46,9 +46,13 @@
             <TextView
                 android:id="@+id/content_message_tv"
                 style="@style/text_14"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_item_message_receive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/color_text_E3DFEF"
+                android:shadowColor="@color/color_FC00FF"
+                android:shadowRadius="18"
+                android:textColor="@color/white"
                 android:textIsSelectable="true"
                 tools:text="abc" />
 

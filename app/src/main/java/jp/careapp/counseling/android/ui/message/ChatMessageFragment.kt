@@ -6,10 +6,8 @@ import android.content.Intent
 import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.provider.Settings
 import android.text.TextUtils
-import android.view.Gravity
 import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
@@ -17,7 +15,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.WindowManager
 import android.widget.PopupWindow
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -35,6 +32,7 @@ import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.DeviceUtil
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.core.utils.dialog.OnPositiveDialogListener
+import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.message.*
 import jp.careapp.counseling.android.data.network.ConsultantResponse
@@ -51,15 +49,13 @@ import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.D
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.ENABLE_LOAD_MORE
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.HIDDEN_LOAD_MORE
 import jp.careapp.counseling.android.ui.message.dialog.OpenPaidMessDialog
+import jp.careapp.counseling.android.ui.message.template.TemplateAdapter
 import jp.careapp.counseling.android.ui.message.template.TemplateBottomFragment
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.CHAT_MESSAGE
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.THRESHOLD_SHOW_REVIEW_APP
 import jp.careapp.counseling.android.utils.CallRestriction
-import jp.careapp.counseling.android.utils.CallStatus
 import jp.careapp.counseling.android.utils.Define
-import jp.careapp.counseling.android.utils.customView.ToolbarPoint
-import jp.careapp.counseling.android.utils.extensions.hasPermissions
 import jp.careapp.counseling.android.utils.extensions.toPayLength
 import jp.careapp.counseling.android.utils.extensions.toPayPoint
 import jp.careapp.counseling.databinding.FragmentChatMessageBinding
@@ -136,6 +132,29 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         }))
     }
 
+    private val templateAdapter: TemplateAdapter by lazy {
+        TemplateAdapter(
+            requireContext(),
+            onClickListener = { message ->
+                CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+                    .showDialog()
+                    .setDialogTitle(R.string.template_title_dialog)
+                    .setContent(message.body)
+                    .setTextPositiveButton(R.string.ok)
+                    .setTextNegativeButton(R.string.cancel_block_alert)
+                    .setOnPositivePressed {
+                        it.dismiss()
+                        val code = this@ChatMessageFragment.performerCode
+                        isSendFreeMessage = true
+                        sendFreeTemplate(code, message.id)
+                    }.setOnNegativePressed {
+                        it.dismiss()
+                    }
+                    .tvSubTitle.visibility = VISIBLE
+            }
+        )
+    }
+
     private val formatCharactor: DecimalFormat by lazy {
         val symbols = DecimalFormatSymbols(Locale(","))
         val df = DecimalFormat()
@@ -155,13 +174,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     val keyboardLayoutListener = OnGlobalLayoutListener {
         val r = Rect()
         binding.rootLayout.getWindowVisibleDisplayFrame(r)
-        val screenHeight = binding.rootLayout.rootView.height
-        val keypadHeight = screenHeight - r.bottom
-        if (keypadHeight > screenHeight * 0.15) {
-            binding.countPointTv.visibility = VISIBLE
-        } else {
-            binding.countPointTv.visibility = INVISIBLE
-        }
     }
 
     private var templateMessageBottom: TemplateBottomFragment? = null
@@ -199,15 +211,8 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         if (activity is BaseActivity<*, *>) {
             (activity as BaseActivity<*, *>).setHandleDispathTouch(false)
         }
-        activity?.let {
-            DeviceUtil.setupUI(
-                view,
-                listOf(binding.sendMessageIv, binding.messageRv, binding.scrollView),
-                it
-            )
-        }
-        activity?.window
-            ?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         loadData()
     }
 
@@ -221,27 +226,9 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         // point review when back from ReviewConsultantFragment
         reviewManager = activity?.let { ReviewManagerFactory.create(it) }
         handleBackFromReview()
-        binding.toolBar.tvTitleBack.text = performerName
-
-        // set padding content chat:NestedScrollView is fitsSystemWindows to show keyboard,caculator padding top =  height toolbar - statubar
-        activity?.let {
-            val paddingContentChat =
-                DeviceUtil.getActionbarSize(it) - DeviceUtil.getStatusBarHeight(it)
-            val layoutParam: ConstraintLayout.LayoutParams =
-                binding.scrollView.layoutParams as ConstraintLayout.LayoutParams
-            layoutParam.topMargin = paddingContentChat
-            binding.scrollView.layoutParams = layoutParam
-        }
-        binding.toolBar.setPoint(
-            String.format(
-                getString(R.string.point),
-                formatPoint.format(rxPreferences.getPoint())
-            )
-        )
         // init recycleview
         val layoutManager = LinearLayoutManager(context)
         layoutManager.stackFromEnd = false
-        binding.reviewBtn.visibility = GONE
         binding.messageRv.layoutManager = layoutManager
         binding.messageRv.itemAnimator = null
         binding.messageRv.adapter = mAdapter
@@ -276,10 +263,17 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
         arguments?.apply {
             if (containsKey(BUNDLE_KEY.IS_SHOW_FREE_MESS) && getBoolean(BUNDLE_KEY.IS_SHOW_FREE_MESS)) {
-                showTemplateMessageBottom()
                 remove(BUNDLE_KEY.IS_SHOW_FREE_MESS)
             }
         }
+        val callRestriction = arguments?.getInt(BUNDLE_KEY.CALL_RESTRICTION)
+        val listTemplate = if (callRestriction == CallRestriction.POSSIBLE) {
+            listFreeTemplate
+        } else {
+            listFreeTemplate?.filterNot { it.body == getString(R.string.free_message_consult_call) }
+        }
+        binding.rvMessageTemplate.adapter = templateAdapter
+        templateAdapter.submitList(listTemplate)
     }
 
     private fun handleShowDialogPointFree() {
@@ -354,8 +348,43 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                 binding.contentSendMessRl.visibility = VISIBLE
             }
         }
-        binding.toolBar.setVisibleButtonCall(performerDetail?.callRestriction == CallRestriction.POSSIBLE)
-        binding.toolBar.setEnableButtonCall(performerDetail?.callStatus == CallStatus.ONLINE)
+
+        if (performerDetail != null) {
+            binding.apply {
+                if (ConsultantResponse.isWaiting(performerDetail.callStatus,performerDetail.chatStatus)) {
+                    tvStatus.setBackgroundResource(R.drawable.bg_performer_status_waiting)
+                    tvStatus.text =
+                        resources.getString(R.string.presence_status_waiting)
+                } else if (ConsultantResponse.isLiveStream(performerDetail.callStatus,performerDetail.chatStatus)) {
+                    tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
+                    tvStatus.text =
+                        resources.getString(R.string.presence_status_live_streaming)
+                } else if (ConsultantResponse.isPrivateLiveStream(performerDetail.callStatus,performerDetail.chatStatus)) {
+                    tvStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
+                    tvStatus.text =
+                        resources.getString(R.string.presence_status_private_delivery)
+                } else {
+                    tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
+                    tvStatus.text =
+                        resources.getString(R.string.presence_status_offline)
+                }
+                if (ConsultantResponse.isWaiting(performerDetail.callStatus,performerDetail.chatStatus) || ConsultantResponse.isLiveStream(
+                        performerDetail.callStatus,performerDetail.chatStatus
+                    )
+                ) {
+                    llWatchLiveStream.visibility = VISIBLE
+                } else {
+                    llWatchLiveStream.visibility = GONE
+                }
+                if (ConsultantResponse.isLiveStream(performerDetail.callStatus,performerDetail.chatStatus)) {
+                    llPeep.visibility = VISIBLE
+                } else {
+                    llPeep.visibility = GONE
+                }
+                tvName.text = performerDetail.name
+                ivAvtBackground.loadImage(performerDetail.thumbnailImageUrl)
+            }
+        }
     }
 
     override fun setOnClick() {
@@ -380,76 +409,11 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                 it.toString().trim().replace("\n", "").length
             formatCharactorToPoint(countCharactor, pointPerchar)
             if (TextUtils.isEmpty(it?.toString()?.trim() ?: "")) {
-                binding.sendMessageIv.setImageResource(R.drawable.ic_message_send_disable)
+                binding.sendMessageIv.setImageResource(R.drawable.ic_message_inactive)
                 sendMessageEnable = false
             } else {
-                binding.sendMessageIv.setImageResource(R.drawable.ic_message_send_enable)
+                binding.sendMessageIv.setImageResource(R.drawable.ic_message_send_active)
                 sendMessageEnable = true
-            }
-        }
-
-        binding.contentMessageEdt.setOnFocusChangeListener { _, _ ->
-            handleReviewButtonVisibility()
-        }
-
-        binding.toolBar.apply {
-            setToolBarPointListener(
-                object : ToolbarPoint.ToolBarPointListener() {
-                    override fun clickLeftBtn() {
-                        super.clickLeftBtn()
-                        appNavigation.navigateUp()
-                    }
-
-                    override fun clickPointBtn() {
-                        if (!isDoubleClick) {
-                            handleBuyPoint.buyPoint(childFragmentManager)
-                        }
-                    }
-
-                    override fun clickRightBtn() {
-                        super.clickRightBtn()
-                        if (!isDoubleClick) {
-                            appNavigation.containScreenInBackStack(
-                                R.id.troubleSheetUpdateFragment,
-                                handleResult = (
-                                        { isContainInBackstack, bundle ->
-                                            if (isContainInBackstack) {
-                                                appNavigation.popopBackStackToDetination(R.id.troubleSheetUpdateFragment)
-                                            } else {
-                                                appNavigation.openChatMessageToEditTroubleSheet()
-                                            }
-                                        }
-                                        )
-                            )
-                        }
-                    }
-
-                    override fun clickTitleBack() {
-                        super.clickTitleBack()
-                        if (!isMessageFromServer)
-                            performerDetail?.let {
-                                var bundle = Bundle()
-                                bundle.putString(BUNDLE_KEY.SCREEN_TYPE, CHAT_MESSAGE)
-                                bundle.putInt(BUNDLE_KEY.POSITION_SELECT, 0)
-                                bundle.putSerializable(
-                                    BUNDLE_KEY.LIST_USER_PROFILE, ArrayList(listOf(it))
-                                )
-                                appNavigation.openChatMessageToUserProfile(bundle)
-                            }
-                    }
-                }
-            )
-
-            setOnClickButtonCall {
-                if (!isDoubleClick) {
-                    if (hasPermissions(arrayOf(Manifest.permission.RECORD_AUDIO))) {
-                        checkPoint()
-                    } else if (shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO)) {
-                        showDialogNeedMicrophonePermission()
-                    } else {
-                        showDialogRequestMicrophonePermission()
-                    }
-                }
             }
         }
 
@@ -459,21 +423,10 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                 binding.contentMessageEdt.clearFocus()
             }
         }
-
-        binding.templateBtn.setOnClickListener {
-            if (!isDoubleClick) {
-                showTemplateMessageBottom()
-            }
-        }
-
-        binding.reviewBtn.setOnClickListener {
-            activity?.let { createNewReview() }
-        }
-
     }
 
     private fun checkPoint() {
-        if ((rxPreferences.getPoint() < 1000)) {
+        if ((rxPreferences.getPoint() > 1000)) {
             showDialogRequestBuyPoint()
         } else {
             showDialogConfirmCall()
@@ -548,7 +501,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                     openCalling()
                 }
             }.setOnNegativePressed {
-                showTemplateMessageBottom()
                 it.dismiss()
             }
     }
@@ -571,40 +523,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         }
     }
 
-    private fun showTemplateMessageBottom() {
-        val callRestriction = arguments?.getInt(BUNDLE_KEY.CALL_RESTRICTION)
-        val listTemplate = if (callRestriction == CallRestriction.POSSIBLE) {
-            listFreeTemplate
-        } else {
-            listFreeTemplate?.filterNot { it.body == getString(R.string.free_message_consult_call) }
-        }
-        val bundle = Bundle().also {
-            it.putSerializable(BUNDLE_KEY.LIST_TEMPLATE, ArrayList(listTemplate ?: emptyList()))
-        }
-        templateMessageBottom = TemplateBottomFragment.showTemplateBottomSheet(
-            childFragmentManager, bundle,
-            object : TemplateBottomFragment.ClickItemView {
-                override fun clickItem(template: FreeTemplateResponse) {
-                    CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-                        .showDialog()
-                        .setDialogTitle(R.string.template_title_dialog)
-                        .setContent(template.body)
-                        .setTextPositiveButton(R.string.ok)
-                        .setTextNegativeButton(R.string.no_block_alert)
-                        .setOnPositivePressed {
-                            it.dismiss()
-                            val code = this@ChatMessageFragment.performerCode
-                            isSendFreeMessage = true
-                            sendFreeTemplate(code, template.id)
-                            templateMessageBottom?.dismiss()
-                        }.setOnNegativePressed {
-                            it.dismiss()
-                        }
-                        .tvSubTitle.visibility = View.VISIBLE
-                }
 
-            })
-    }
 
     private fun sendFreeTemplate(code: String, templateId: Int) {
         activity?.let {
@@ -627,16 +546,9 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
     private fun formatCharactorToPoint(countCharactor: Int, pointPerchar: Int) {
         if (countCharactor == 0) {
-            binding.countPointTv.text = String.format(
-                getString(R.string.format_point_of_message),
-                formatCharactor.format(0)
-            )
+            //TODO (Handler logic count charactor equal 0)
         } else {
             countPointMessage = (pointPerchar) * (((countCharactor - 1) / 10) + 1)
-            binding.countPointTv.text = String.format(
-                getString(R.string.format_point_of_message),
-                formatCharactor.format(countCharactor)
-            )
         }
     }
 
@@ -647,10 +559,10 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
     override fun bindingStateView() {
         super.bindingStateView()
-        viewModel.messageResult.observe(viewLifecycleOwner, messageResultReponse)
+        viewModel.messageResult.observe(viewLifecycleOwner, messageResultResponse)
         viewModel.sendMessageResult.observe(viewLifecycleOwner, sendMessageResponse)
         viewModel.subtractPoint.observe(viewLifecycleOwner, subtractPointResponse)
-        viewModel.userProfileResult.observe(viewLifecycleOwner, userResultReponse)
+        viewModel.userProfileResult.observe(viewLifecycleOwner, userResultResponse)
         viewModel.hiddenLoadMoreHandle.observe(viewLifecycleOwner, hiddenLoadMoreResult)
         viewModel.responseSocket.observe(viewLifecycleOwner, responseSocketResult)
         viewModel.memberInFoResult.observe(viewLifecycleOwner, handleMemberInfoResult)
@@ -668,7 +580,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         })
     }
 
-    private var messageResultReponse: Observer<DataMessage> = Observer {
+    private var messageResultResponse: Observer<DataMessage> = Observer {
         if (!it.isLoadMore && it.dataMsg.isNullOrEmpty()) {
             mAdapter.submitList(
                 listOf(MessageResponse(body = getString(R.string.message_default_performer)))
@@ -690,8 +602,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
             val firstPerformer =
                 it.dataMsg.filter { data -> data.typeMessage == 2 }[0] as MessageResponse
             isMessageFromServer = firstPerformer.fromOwnerMail
-            if (firstPerformer.performer != null)
-                binding.toolBar.tvTitleBack.text = firstPerformer.performer.name
             if (!isMessageFromServer)
                 binding.bottomBar.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
 
@@ -744,12 +654,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                 binding.contentMessageEdt.setText("")
             }
             rxPreferences.setPoint(it.point)
-            binding.toolBar.setPoint(
-                String.format(
-                    getString(R.string.point),
-                    formatPoint.format(it.point)
-                )
-            )
             activity?.let { it1 ->
                 viewModel.loadMessageAfterSend(
                     it1,
@@ -770,18 +674,12 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     private var openPayMessageResponse: Observer<SendMessageResponse> = Observer { data ->
         data?.let {
             rxPreferences.setPoint(it.point)
-            binding.toolBar.setPoint(
-                String.format(
-                    getString(R.string.point),
-                    formatPoint.format(it.point)
-                )
-            )
             viewModel.openPayMessageResult.value = null
             mAdapter.openPayMessage(payMailCode)
         }
     }
 
-    private var userResultReponse: Observer<ConsultantResponse> = Observer {
+    private var userResultResponse: Observer<ConsultantResponse> = Observer {
         setViewPerformer(it)
     }
 
@@ -809,16 +707,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         it?.let { data ->
             shareViewModel.getCreditPrices(data.firstBuyCredit)
             rxPreferences.saveMemberInfo(data)
-            binding.toolBar.setPoint(
-                String.format(
-                    getString(R.string.point),
-                    formatPoint.format(data.point)
-                )
-            )
-
-            if (data.disPlay == 2 && data.sdkUser == 0 && data.buyTime.toInt() == 0) {
-                binding.layoutBaloonMessage.visibility = VISIBLE
-            }
         }
     }
 
@@ -840,7 +728,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                 rxPreferences.saveFirstReview(true, rxPreferences.getMemberCode(), performerCode)
             }
         }
-        handleReviewButtonVisibility()
     }
 
     private var showReviewResult: Observer<Boolean> = Observer {
@@ -871,13 +758,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         activity?.let { viewModel.loadMessage(it, this.performerCode, false) }
     }
 
-    private fun handleReviewButtonVisibility() {
-        if (isReviewEnable && !binding.contentMessageEdt.isFocused) {
-            binding.reviewBtn.visibility = VISIBLE
-        } else {
-            binding.reviewBtn.visibility = GONE
-        }
-    }
 
     private fun createNewReview() {
         val bundle = Bundle().apply {
@@ -896,18 +776,9 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         popupWindow.isOutsideTouchable = true
-        requireActivity().runOnUiThread {
-            if (!requireActivity().isFinishing) {
-                Handler().postDelayed({
-                    popupWindow.showAsDropDown(
-                        binding.viewPointFree,
-                        0,
-                        0,
-                        Gravity.CENTER_HORIZONTAL
-                    )
-                }, 100)
-
-            }
-        }
+    }
+    private lateinit var clickItemView: TemplateBottomFragment.ClickItemView
+    fun setClickItemView(clickItemView: TemplateBottomFragment.ClickItemView) {
+        this.clickItemView = clickItemView
     }
 }
