@@ -115,7 +115,7 @@ class RegistrationViewModel @ViewModelInject constructor(
                     if (it.errors.isEmpty()) {
                         val userResponse = it.dataResponse
                         userResponse.let {
-                            rxPreferences.saveUserInfor(
+                            rxPreferences.saveUserInfo(
                                 userResponse.token,
                                 userResponse.tokenExpire,
                                 userResponse.passWord,
