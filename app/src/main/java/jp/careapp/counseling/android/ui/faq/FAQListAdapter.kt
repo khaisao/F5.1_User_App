@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import jp.careapp.core.utils.setUnderlineAndClick
 import jp.careapp.counseling.R
 import jp.careapp.counseling.databinding.LlItemContentFaqBinding
 import jp.careapp.counseling.databinding.LlItemHeaderFaqBinding
@@ -13,7 +14,8 @@ import jp.careapp.counseling.databinding.LlItemHeaderFaqBinding
 private const val itemHeader = 1
 private const val itemContent = 2
 
-class FAQListAdapter : ListAdapter<FAQModelRecyclerView, RecyclerView.ViewHolder>(FAQlDiffUtil()) {
+class FAQListAdapter(private val onClickItemContent: (Int) -> Unit) :
+    ListAdapter<FAQModelRecyclerView, RecyclerView.ViewHolder>(FAQlDiffUtil()) {
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is FAQModelRecyclerView.ItemHeader -> itemHeader
@@ -26,7 +28,6 @@ class FAQListAdapter : ListAdapter<FAQModelRecyclerView, RecyclerView.ViewHolder
             when (it) {
                 is FAQModelRecyclerView.ItemHeader -> result.add(it.copy())
                 is FAQModelRecyclerView.ItemContent -> result.add(it.copy())
-                else -> result.add(it)
             }
         }
         super.submitList(result)
@@ -52,7 +53,7 @@ class FAQListAdapter : ListAdapter<FAQModelRecyclerView, RecyclerView.ViewHolder
                         R.layout.ll_item_content_faq,
                         parent,
                         false
-                    )
+                    ), onClickItemContent
                 )
             }
             else -> throw Throwable("")
@@ -81,10 +82,24 @@ class FAQListAdapter : ListAdapter<FAQModelRecyclerView, RecyclerView.ViewHolder
         }
     }
 
-    class FAQContentViewHolder(private val binding: LlItemContentFaqBinding) :
+    class FAQContentViewHolder(
+        private val binding: LlItemContentFaqBinding,
+        onClickItemContent: (Int) -> Unit
+    ) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener { onClickItemContent.invoke(absoluteAdapterPosition) }
+        }
+
         fun bind(item: FAQModelRecyclerView.ItemContent) {
             binding.item = item
+            binding.tvContent.setUnderlineAndClick(
+                item.content,
+                R.color.color_B47AFF,
+                item.startSpan,
+                item.endSpan,
+                item.onClick
+            )
             binding.executePendingBindings()
         }
     }

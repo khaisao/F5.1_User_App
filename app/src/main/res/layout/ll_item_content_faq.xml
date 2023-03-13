@@ -16,7 +16,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        typeField="@{item.typeField}"
+        bg_field="@{item.typeField}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -38,7 +38,7 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivAction"
-            setSrcCollapse="@{item.isCollapse}"
+            src_collapse="@{item.isCollapse}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginEnd="8dp"
@@ -51,16 +51,15 @@
             tools:srcCompat="@drawable/ic_expand_faq" />
 
         <TextView
-            android:id="@+id/textView15"
-            goneCollapse="@{item.isCollapse}"
+            android:id="@+id/tvContent"
+            gone_collapse="@{item.isCollapse}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="24dp"
             android:fontFamily="@font/hiragino_sans_w3"
             android:lineSpacingExtra="4dp"
-            android:text="@{item.content}"
             android:textColor="#f0f0f0"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -71,8 +70,7 @@
             tools:visibility="visible" />
 
         <View
-            isCollapse="@{item.isCollapse}"
-            typeField="@{item.typeField}"
+            show_divider="@{item.typeField}"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="#453B5D"

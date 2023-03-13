@@ -532,4 +532,8 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     override fun openMyPageToFAQ(bundle: Bundle?) {
         openScreen(R.id.action_topFragment_to_FAQFragment, bundle)
     }
+
+    override fun openFAQToWithdrawal(bundle: Bundle?) {
+        openScreen(R.id.action_FAQFragment_to_withdrawalFragment, bundle)
+    }
 }

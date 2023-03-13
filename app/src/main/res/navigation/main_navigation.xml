@@ -888,6 +888,14 @@
         android:id="@+id/FAQFragment"
         android:name="jp.careapp.counseling.android.ui.faq.FAQFragment"
         android:label="FAQFragment"
-        tools:layout="@layout/fragment_faq" />
+        tools:layout="@layout/fragment_faq">
+        <action
+            android:id="@+id/action_FAQFragment_to_withdrawalFragment"
+            app:destination="@id/withdrawalFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
 
 </navigation>

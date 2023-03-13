@@ -20,10 +20,29 @@ class FAQFragment : BaseFragment<FragmentFaqBinding, FAQViewModel>() {
     private val mViewModel: FAQViewModel by viewModels()
     override fun getVM() = mViewModel
 
+    private var mAdapter: FAQListAdapter? = null
+
     override fun initView() {
         super.initView()
 
         setUpToolBar()
+
+        mAdapter = FAQListAdapter {
+            mViewModel.handleOnClickItemContent(it)
+        }
+        binding.rcvFAQ.adapter = mAdapter
+    }
+
+    override fun bindingStateView() {
+        super.bindingStateView()
+
+        mViewModel.faqList.observe(viewLifecycleOwner) { mAdapter?.submitList(it) }
+
+        mViewModel.mActionState.observe(viewLifecycleOwner) {
+            when (it) {
+                is FAQActionState.NavigateToWithdrawal -> appNavigation.openFAQToWithdrawal()
+            }
+        }
     }
 
     private fun setUpToolBar() {
@@ -33,5 +52,11 @@ class FAQFragment : BaseFragment<FragmentFaqBinding, FAQViewModel>() {
                 if (!isDoubleClick) appNavigation.navigateUp()
             }
         })
+    }
+
+    override fun onDestroyView() {
+        binding.rcvFAQ.adapter = null
+        mAdapter = null
+        super.onDestroyView()
     }
 }
