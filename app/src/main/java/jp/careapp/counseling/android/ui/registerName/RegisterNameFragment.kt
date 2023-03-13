@@ -101,16 +101,6 @@ class RegisterNameFragment : BaseFragment<FragmentRegisterNameBinding, RegisterN
         )
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        editProfileViewModel.error.observe(
-            viewLifecycleOwner,
-            Observer {
-                // TODO
-            }
-        )
-    }
-
     private fun changeStatusButton() {
         if (getEditTextName().isEmpty()) {
             binding.tvCount.text =
@@ -165,9 +155,6 @@ class RegisterNameFragment : BaseFragment<FragmentRegisterNameBinding, RegisterN
             if (getEditTextName().trim().isNotEmpty()) {
                 if (action == TypeMember.EDIT.toString()) {
                     data?.let { it1 ->
-                        editProfileViewModel.setParams(
-                            name = binding.edtNameAccount.text.toString()
-                        )
                         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
                             .showDialog()
                             .setDialogTitle(R.string.updated_profile)

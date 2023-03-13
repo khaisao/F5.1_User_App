@@ -24,117 +24,14 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>() {
     override fun initView() {
         super.initView()
 
+        mViewModel.showData()
+
         mAdapter = MyPageAdapter { mViewModel.onClickItemMenu(it) }
         binding.rcvMyPageMenu.apply {
             adapter = mAdapter
             setHasFixedSize(true)
         }
     }
-
-//    @SuppressLint("UseCompatLoadingForDrawables")
-//    override fun bindingStateView() {
-//        super.bindingStateView()
-//        binding.apply {
-//            viewModel = viewModels
-//            executePendingBindings()
-//        }
-//        binding.pointFree.setOnClickListener {
-//            if (!isDoubleClick) {
-//                val bundle = Bundle().apply {
-//                    putString(Define.TITLE_WEB_VIEW, getString(R.string.stripe_buy_point))
-//                    putString(Define.URL_WEB_VIEW, Define.URL_STRIPE_BUY_POINT)
-//                }
-//                appNavigation.openScreenToWebview(bundle)
-//            }
-//        }
-//        editProfileViewModel.updateSuccess.observe(
-//            viewLifecycleOwner,
-//            Observer {
-//                it ?: return@Observer
-//                binding.tvName.text = it
-//            }
-//        )
-//        viewModels.navigateToEditProfileFragmentAction.observe(
-//            viewLifecycleOwner,
-//            EventObserver {
-//                val bundle = Bundle().apply {
-//                    putParcelable("member", it)
-//                }
-//                appNavigation.openMyPageToEditProfile(bundle)
-//            }
-//        )
-//        val layoutManager = GridLayoutManager(requireContext(), 3)
-//        layoutManager.isAutoMeasureEnabled = true
-//        binding.rvAction.apply {
-//            setHasFixedSize(false)
-//            isNestedScrollingEnabled = false
-//            this.layoutManager = layoutManager
-//            adapter = myPageAdapter
-//        }
-//        viewModels.destination.observe(
-//            viewLifecycleOwner,
-//            EventObserver {
-//                when (it) {
-//                    Destination.SHEET -> {
-//                        appNavigation.openMyPageToUpdateTroubleSheet(null)
-//                    }
-//                    Destination.LAB -> {
-//                        appNavigation.openMyPageToLabScreen()
-//                    }
-//                    Destination.BUY_POINT -> {
-//                        if (viewModels.uiMember.value?.disPlay == MODE_USER.MODE_ALL) {
-//                            val bundle = Bundle().apply {
-//                                putString(Define.TITLE_WEB_VIEW, getString(R.string.buy_point))
-//                                putString(Define.URL_WEB_VIEW, Define.URL_BUY_POINT)
-//                            }
-//                            appNavigation.openScreenToWebview(bundle)
-//                        } else
-//                            appNavigation.openTopToBuyPointScreen()
-//                    }
-//                    Destination.NEWS -> {
-//                        init = false
-//                        appNavigation.openMyPageToNews()
-//                    }
-//                    Destination.ALERT -> {
-//                        val bundle = Bundle().apply {
-//                            putParcelable("member", viewModels.uiMember.value)
-//                        }
-//                        appNavigation.openMyPageToSettingNotification(bundle)
-//                    }
-//                    Destination.HELP -> {
-//                        val bundle = Bundle().apply {
-//                            putString(Define.TITLE_WEB_VIEW, getString(R.string.help))
-//                            putString(Define.URL_WEB_VIEW, Define.URL_HELP)
-//                        }
-//                        appNavigation.openScreenToWebview(bundle)
-//                    }
-//                    Destination.SETTING -> {
-//                        appNavigation.openMypageToSetting()
-//                    }
-//                    Destination.CONTACT -> {
-//                        val bundle = Bundle().apply {
-//                            putString("type_contact", this@MyPageFragment::class.java.simpleName)
-//                        }
-//                        appNavigation.openMyPageToContact(bundle)
-//                    }
-//                }
-//            }
-//        )
-//        viewModels.memberMessage.observe(
-//            viewLifecycleOwner,
-//            EventObserver {
-//            }
-//        )
-//        mainViewModels.currentFragment.observe(
-//            viewLifecycleOwner,
-//            Observer {
-//                if (isVisible)
-//                    viewModels.forceRefresh()
-//                else
-//                    return@Observer
-//            }
-//        )
-//    }
 
     override fun bindingStateView() {
         super.bindingStateView()

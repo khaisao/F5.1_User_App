@@ -115,13 +115,9 @@ class MyPageViewModel @Inject constructor(
                                 it.age,
                                 it.birth,
                                 it.sex,
+                                it.point,
                                 it.pushMail
                             )
-                            withContext(Dispatchers.Main) {
-                                _memberName.value = mRepository.getMemberNickName()
-                                _memberAge.value = "${mRepository.getMemberAge()}歳"
-                                _memberPoint.value = it.point
-                            }
                         }
                     }
                 } catch (e: Exception) {
@@ -133,6 +129,12 @@ class MyPageViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun showData() {
+        _memberName.value = mRepository.getMemberNickName()
+        _memberAge.value = "${mRepository.getMemberAge()}歳"
+        _memberPoint.value = mRepository.getMemberPoint()
     }
 
     fun onClickItemMenu(position: Int) {

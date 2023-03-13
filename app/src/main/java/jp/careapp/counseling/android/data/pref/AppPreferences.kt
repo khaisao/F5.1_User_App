@@ -65,6 +65,7 @@ class AppPreferences @Inject constructor(
         const val PREF_KEY_MEMBER_BIRTH = "PREF_KEY_MEMBER_BIRTH"
         const val PREF_KEY_MEMBER_SEX = "PREF_KEY_MEMBER_SEX"
         const val PREF_KEY_MEMBER_STATUS_NOTIFICATION = "PREF_KEY_MEMBER_STATUS_NOTIFICATION"
+        const val PREF_KEY_MEMBER_POINT = "PREF_KEY_MEMBER_POINT"
     }
 
     private val mPrefs: SharedPreferences = context.getSharedPreferences(
@@ -421,6 +422,7 @@ class AppPreferences @Inject constructor(
         age: Int,
         birth: String,
         sex: Int,
+        point: Int,
         statusNotification: Int
     ) {
         mPrefs.edit().apply {
@@ -429,6 +431,7 @@ class AppPreferences @Inject constructor(
             putInt(PREF_KEY_MEMBER_AGE, age)
             putString(PREF_KEY_MEMBER_BIRTH, birth)
             putInt(PREF_KEY_MEMBER_SEX, sex)
+            putInt(PREF_KEY_MEMBER_POINT, point)
             putInt(PREF_KEY_MEMBER_STATUS_NOTIFICATION, statusNotification)
         }.apply()
     }
@@ -439,10 +442,16 @@ class AppPreferences @Inject constructor(
 
     override fun getMemberSex(): Int = mPrefs.getInt(PREF_KEY_MEMBER_SEX, 0)
 
+    override fun getMemberPoint(): Int = mPrefs.getInt(PREF_KEY_MEMBER_POINT, 0)
+
     override fun saveSettingNotificationNM(statusNotification: Int) {
         mPrefs.edit().putInt(PREF_KEY_MEMBER_STATUS_NOTIFICATION, statusNotification).apply()
     }
 
     override fun getSettingNotificationNM(): Int =
         mPrefs.getInt(PREF_KEY_MEMBER_STATUS_NOTIFICATION, 1)
+
+    override fun saveMemberAge(age: Int) {
+        mPrefs.edit().putInt(PREF_KEY_MEMBER_AGE, age).apply()
+    }
 }
