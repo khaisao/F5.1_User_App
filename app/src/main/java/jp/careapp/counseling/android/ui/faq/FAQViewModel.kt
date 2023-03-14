@@ -5,10 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.SingleLiveEvent
+import jp.careapp.counseling.android.data.model.NMTypeField
 import javax.inject.Inject
 
 @HiltViewModel
-class FAQViewModel @Inject constructor(private val mRepository: FAQRepository) : BaseViewModel() {
+class FAQViewModel @Inject constructor() : BaseViewModel() {
 
     private val _faqList = MutableLiveData<ArrayList<FAQModelRecyclerView>>()
     val faqList: LiveData<ArrayList<FAQModelRecyclerView>>

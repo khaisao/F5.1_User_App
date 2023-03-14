@@ -16,13 +16,14 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        typeField="@{item.typeField}"
+        bg_field="@{item.typeField}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:background="@drawable/bg_none_field">
+        tools:background="@drawable/bg_nm_none_field">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivItemIcon"
+            load_image="@{item.resourceImage}"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginVertical="10dp"
@@ -79,7 +80,7 @@
             tools:text="@string/buy_point" />
 
         <View
-            typeField="@{item.typeField}"
+            show_divider="@{item.typeField}"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginStart="16dp"

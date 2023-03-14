@@ -5,7 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.SingleLiveEvent
 import jp.careapp.counseling.R
-import jp.careapp.counseling.android.data.model.TypeField
+import jp.careapp.counseling.android.data.model.NMTypeField
 import jp.careapp.counseling.android.ui.my_page.NMMenuItemKey.BLOCK_LIST
 import jp.careapp.counseling.android.ui.my_page.NMMenuItemKey.BUY_POINTS
 import jp.careapp.counseling.android.ui.my_page.NMMenuItemKey.CONTACT_US
@@ -54,48 +54,48 @@ class MyPageViewModel @Inject constructor(
     private fun getDataMyPageMenu() {
         data.add(
             NMMenuItem.NMMenuItemField(
-                BUY_POINTS, R.drawable.ic_cell_buy_points, "ポイント購入", TypeField.TOP
+                BUY_POINTS, R.drawable.ic_cell_buy_points, "ポイント購入", NMTypeField.TOP
             )
         )
         data.add(
             NMMenuItem.NMMenuItemField(
-                EDIT_PROFILE, R.drawable.ic_cell_profile, "プロフィール", TypeField.CENTER
+                EDIT_PROFILE, R.drawable.ic_cell_profile, "プロフィール", NMTypeField.CENTER
             )
         )
         data.add(
             NMMenuItem.NMMenuItemField(
-                BLOCK_LIST, R.drawable.ic_cell_block, "ブロック一覧", TypeField.CENTER
+                BLOCK_LIST, R.drawable.ic_cell_block, "ブロック一覧", NMTypeField.CENTER
             )
         )
         data.add(
             NMMenuItem.NMMenuItemField(
-                SETTING_PUSH, R.drawable.ic_cell_notifications, "通知設定", TypeField.BOTTOM
+                SETTING_PUSH, R.drawable.ic_cell_notifications, "通知設定", NMTypeField.BOTTOM
             )
         )
         data.add(NMMenuItem.NMMenuItemSpace)
         data.add(
             NMMenuItem.NMMenuItemField(
-                USE_POINTS_GUIDE, R.drawable.ic_cell_document, "料金説明", TypeField.TOP
+                USE_POINTS_GUIDE, R.drawable.ic_cell_document, "料金説明", NMTypeField.TOP
             )
         )
         data.add(
             NMMenuItem.NMMenuItemField(
-                TERMS_OF_SERVICE, R.drawable.ic_cell_document, "利用規約", TypeField.CENTER
+                TERMS_OF_SERVICE, R.drawable.ic_cell_document, "利用規約", NMTypeField.CENTER
             )
         )
         data.add(
             NMMenuItem.NMMenuItemField(
-                PRIVACY_POLICY, R.drawable.ic_cell_document, "プライバシーポリシー", TypeField.CENTER
+                PRIVACY_POLICY, R.drawable.ic_cell_document, "プライバシーポリシー", NMTypeField.CENTER
             )
         )
         data.add(
             NMMenuItem.NMMenuItemField(
-                FAQ, R.drawable.ic_cell_questions, "よくある質問", TypeField.CENTER
+                FAQ, R.drawable.ic_cell_questions, "よくある質問", NMTypeField.CENTER
             )
         )
         data.add(
             NMMenuItem.NMMenuItemField(
-                CONTACT_US, R.drawable.ic_cell_mail, "お問い合わせ", TypeField.BOTTOM
+                CONTACT_US, R.drawable.ic_cell_mail, "お問い合わせ", NMTypeField.BOTTOM
             )
         )
         _dataLiveData.value = data

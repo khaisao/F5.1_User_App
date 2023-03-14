@@ -1,5 +1,7 @@
 package jp.careapp.counseling.android.ui.faq
 
+import jp.careapp.counseling.android.data.model.NMTypeField
+
 sealed class FAQModelRecyclerView {
     data class ItemHeader(val header: String) : FAQModelRecyclerView()
     data class ItemContent(

@@ -1,13 +1,13 @@
 package jp.careapp.counseling.android.ui.my_page
 
-import jp.careapp.counseling.android.data.model.TypeField
+import jp.careapp.counseling.android.data.model.NMTypeField
 
 sealed class NMMenuItem {
     data class NMMenuItemField(
         val key: Int,
         val resourceImage: Int,
         val label: String,
-        val typeField: TypeField
+        val typeField: NMTypeField
     ) : NMMenuItem()
 
     object NMMenuItemSpace : NMMenuItem()

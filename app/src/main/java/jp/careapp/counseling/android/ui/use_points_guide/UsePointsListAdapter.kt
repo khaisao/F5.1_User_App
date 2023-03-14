@@ -6,7 +6,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
 import jp.careapp.counseling.databinding.ItemUsePointsGuideBinding
 
@@ -19,7 +18,6 @@ class UsePointsListAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: UsePointsModelRecyclerView) {
             binding.item = item
-            binding.ivItemIcon.loadImage(item.resourceImage)
             binding.executePendingBindings()
         }
     }

@@ -42,7 +42,7 @@
                 android:id="@+id/llMemberName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_top_field">
+                android:background="@drawable/bg_nm_top_field">
 
                 <TextView
                     android:id="@+id/textView8"
@@ -98,7 +98,7 @@
                 android:id="@+id/llMemberBirth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_bottom_field">
+                android:background="@drawable/bg_nm_bottom_field">
 
                 <TextView
                     android:id="@+id/textView9"
@@ -131,8 +131,8 @@
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/hiragino_sans_w6"
                     android:gravity="center_vertical|end"
-                    android:textColor="#f0f0f0"
                     android:text="@{viewModel.memberAge}"
+                    android:textColor="#f0f0f0"
                     app:layout_constraintBottom_toBottomOf="@+id/textView9"
                     app:layout_constraintEnd_toStartOf="@id/imageView4"
                     app:layout_constraintStart_toEndOf="@+id/textView9"

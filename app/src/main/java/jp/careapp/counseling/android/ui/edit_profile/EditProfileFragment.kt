@@ -33,6 +33,10 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
         mViewModel.getData()
 
         setUpToolBar()
+    }
+
+    override fun setOnClick() {
+        super.setOnClick()
 
         binding.llMemberName.setOnClickListener { if (!isDoubleClick) appNavigation.openEditProfileToEditNickName() }
 
