@@ -279,6 +279,7 @@ class BUNDLE_KEY {
         const val TYPE_DAILY = 0
         const val TYPE_WEEKLY = 1
         const val TYPE_MONTHLY = 2
+        const val TYPE_RECOMMEND = 3
         const val EMAIL = "EMAIL"
         const val CODE_SCREEN = "CODE_SCREEN"
         const val OWNER_CODE = "ownerCode"

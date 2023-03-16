@@ -9,7 +9,6 @@ import android.view.View
 import android.view.View.*
 import android.view.ViewTreeObserver
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -33,7 +32,8 @@ import jp.careapp.counseling.android.ui.profile.block_report.BlockAndReportBotto
 import jp.careapp.counseling.android.ui.profile.tab_review.TabReviewFragment
 import jp.careapp.counseling.android.ui.profile.tab_user_info_detail.TabDetailUserProfileFragment
 import jp.careapp.counseling.android.ui.profile.update_trouble_sheet.TroubleSheetUpdateFragment
-import jp.careapp.counseling.android.utils.*
+import jp.careapp.counseling.android.utils.BUNDLE_KEY
+import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.extensions.getBustSize
 import jp.careapp.counseling.android.utils.extensions.hasPermissions
 import jp.careapp.counseling.databinding.FragmentDetailUserProfileBinding
@@ -117,8 +117,9 @@ class DetailUserProfileFragment :
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 binding.avatarIv.viewTreeObserver.removeOnGlobalLayoutListener(this);
-                galleryAdapter = GalleryAdapter(requireContext(),binding.avatarIv.height)
-                binding.rvGallery.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+                galleryAdapter = GalleryAdapter(requireContext(), binding.avatarIv.height)
+                binding.rvGallery.layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 binding.rvGallery.adapter = galleryAdapter
             }
         })
@@ -217,7 +218,7 @@ class DetailUserProfileFragment :
             isFirstChat?.let {
                 if (it) {
                     // transition to trouble sheet screen
-                    var bundle = Bundle()
+                    val bundle = Bundle()
                     bundle.putString(
                         BUNDLE_KEY.PERFORMER_CODE,
                         consultantResponse?.code ?: ""
@@ -244,7 +245,7 @@ class DetailUserProfileFragment :
             }
         }
     }
-    //TODO: change to getPoint < 1000
+
     private fun checkPoint() {
         if (rxPreferences.getPoint() < 1000) {
             showDialogRequestBuyPoint()
@@ -550,27 +551,26 @@ class DetailUserProfileFragment :
                 Glide.with(this@DetailUserProfileFragment).asGif().load(R.drawable.ic_ballon_call).into(ivBallonLiveGl50)
                 Glide.with(this@DetailUserProfileFragment).asGif().load(R.drawable.ic_ballon_peep).into(ivBallonPeep)
 
-                if (ConsultantResponse.isWaiting(user.callStatus, user.chatStatus)) {
-                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_waiting)
-                    presenceStatusTv.text =
-                        resources.getString(R.string.presence_status_waiting)
-                } else if (ConsultantResponse.isLiveStream(user.callStatus, user.chatStatus)) {
-                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
-                    presenceStatusTv.text =
-                        resources.getString(R.string.presence_status_live_streaming)
-                } else if (ConsultantResponse.isPrivateLiveStream(
-                        user.callStatus,
-                        user.chatStatus
-                    )
-                ) {
-                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
-                    presenceStatusTv.text =
-                        resources.getString(R.string.presence_status_private_delivery)
-                } else {
-                    presenceStatusTv.setBackgroundResource(R.drawable.bg_performer_status_offline)
-                    presenceStatusTv.text =
-                        resources.getString(R.string.presence_status_offline)
+                val isWaiting = ConsultantResponse.isWaiting(user.callStatus, user.chatStatus)
+                val isLiveStream = ConsultantResponse.isLiveStream(user.callStatus, user.chatStatus)
+                val isPrivateLiveStream = ConsultantResponse.isPrivateLiveStream(user.callStatus, user.chatStatus)
+
+                val presenceStatusBgResId = when {
+                    isWaiting -> R.drawable.bg_performer_status_waiting
+                    isLiveStream -> R.drawable.bg_performer_status_live_streaming
+                    isPrivateLiveStream -> R.drawable.bg_performer_status_private_delivery
+                    else -> R.drawable.bg_performer_status_offline
                 }
+
+                val presenceStatusText = when {
+                    isWaiting -> resources.getString(R.string.presence_status_waiting)
+                    isLiveStream -> resources.getString(R.string.presence_status_live_streaming)
+                    isPrivateLiveStream -> resources.getString(R.string.presence_status_private_delivery)
+                    else -> resources.getString(R.string.presence_status_offline)
+                }
+
+                presenceStatusTv.setBackgroundResource(presenceStatusBgResId)
+                presenceStatusTv.text = presenceStatusText
 
                 if (user.stage != 1) {
                     ivState.visibility = GONE
@@ -579,21 +579,23 @@ class DetailUserProfileFragment :
                     ivState.visibility = VISIBLE
                     ivStateBeginner.visibility = GONE
                 }
-                when (user.stage) {
-                    BRONZE -> {
-                        ivState.setImageResource(R.drawable.ic_state_bronze)
+                ivState.setImageResource(
+                    when (user.stage) {
+                        BRONZE -> {
+                            R.drawable.ic_state_bronze
+                        }
+                        SILVER -> {
+                            R.drawable.ic_state_silver
+                        }
+                        GOLD -> {
+                            R.drawable.ic_state_gold
+                        }
+                        else -> {
+                            R.drawable.ic_state_bronze
+                        }
                     }
+                )
 
-                    SILVER -> {
-                        ivState.setImageResource(R.drawable.ic_state_silver)
-                    }
-                    GOLD -> {
-                        ivState.setImageResource(R.drawable.ic_state_gold)
-                    }
-                    else -> {
-                        ivState.setImageResource(R.drawable.ic_state_bronze)
-                    }
-                }
 
                 if (user.profilePattern == 1) {
                     avatarIv.visibility = VISIBLE
@@ -621,7 +623,7 @@ class DetailUserProfileFragment :
 
                 userNameTv.text = user.name
 
-                if (ConsultantResponse.isLiveStream(user.callStatus, user.chatStatus)) {
+                if (isLiveStream) {
                     ivMessage.setImageResource(R.drawable.ic_message_small_detail)
                     tvLiveStreamCount.text =
                         (user.loginMemberCount + user.peepingMemberCount).toString()
@@ -630,146 +632,186 @@ class DetailUserProfileFragment :
                     ivMessage.setImageResource(R.drawable.ic_message_large_detail)
                     llStatusViewerCount.visibility = GONE
                 }
-                if (ConsultantResponse.isWaiting(
-                        user.callStatus,
-                        user.chatStatus
-                    ) || ConsultantResponse.isLiveStream(user.callStatus, user.chatStatus)
-                ) {
-                    llCallConsult.visibility = VISIBLE
-                } else {
-                    llCallConsult.visibility = GONE
-                }
-                if (ConsultantResponse.isLiveStream(user.callStatus, user.chatStatus)) {
-                    ivBallonPeep.visibility = VISIBLE
-                    llPeep.visibility = VISIBLE
-                } else {
-                    ivBallonPeep.visibility = GONE
-                    llPeep.visibility = GONE
-                }
-                if (ConsultantResponse.isPrivateLiveStream(user.callStatus, user.chatStatus)) {
-                    ivPrivateDelivery.visibility = VISIBLE
-                } else {
-                    ivPrivateDelivery.visibility = GONE
-                }
-                if (ConsultantResponse.isWaiting(user.callStatus, user.chatStatus)) {
-                    ivBallonLiveGl50.visibility = VISIBLE
-                } else {
-                    ivBallonLiveGl50.visibility = GONE
-                }
 
+                llCallConsult.visibility = if (isWaiting || isLiveStream) VISIBLE else GONE
+                ivBallonPeep.visibility = if (isLiveStream) VISIBLE else GONE
+                llPeep.visibility = if (isLiveStream) VISIBLE else GONE
+                ivPrivateDelivery.visibility = if (isPrivateLiveStream) VISIBLE else GONE
+                ivBallonLiveGl50.visibility = if (isWaiting) VISIBLE else GONE
 
                 changeStatusIsFavorite(user.isFavorite)
+                if ((user.ranking?.ranking ?: 0) in 1..30 || user.recommendRanking != 0) {
+                    imgRanking.visibility = VISIBLE
+                } else {
+                    imgRanking.visibility = INVISIBLE
+                }
 
-                user.ranking?.let {
-                    imgRanking.visibility = if (it.ranking in 1..30) VISIBLE else INVISIBLE
-                    when (it.interval) {
-                        PREVIOUS -> {
-                            when (it.ranking) {
-                                1 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_1)
-                                2 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_2)
-                                3 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_3)
-                                4 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_4)
-                                5 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_5)
-                                6 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_6)
-                                7 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_7)
-                                8 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_8)
-                                9 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_9)
-                                10 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_10)
-                                11 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_11)
-                                12 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_12)
-                                13 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_13)
-                                14 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_14)
-                                15 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_15)
-                                16 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_16)
-                                17 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_17)
-                                18 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_18)
-                                19 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_19)
-                                20 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_20)
-                                21 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_21)
-                                22 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_22)
-                                23 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_23)
-                                24 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_24)
-                                25 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_25)
-                                26 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_26)
-                                27 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_27)
-                                28 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_28)
-                                29 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_29)
-                                30 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_daily_30)
-                            }
+                if ((user.ranking?.ranking ?: 0) < user.recommendRanking) {
+                    setUpRankingForRank(user)
+                } else if ((user.ranking?.ranking ?: 0) > user.recommendRanking && user.recommendRanking != 0) {
+                    setUpRankingForRecommendRank(user)
+                } else {
+                    setUpRankingForRank(user)
+                }
+
+            }
+        }
+    }
+
+    private fun setUpRankingForRank(user:ConsultantResponse){
+        user.ranking?.let {
+            when (it.interval) {
+                PREVIOUS -> {
+                    binding.imgRanking.setImageResource(
+                        when (it.ranking) {
+                            1 -> R.drawable.ic_rank_daily_1
+                            2 -> R.drawable.ic_rank_daily_2
+                            3 -> R.drawable.ic_rank_daily_3
+                            4 -> R.drawable.ic_rank_daily_4
+                            5 -> R.drawable.ic_rank_daily_5
+                            6 -> R.drawable.ic_rank_daily_6
+                            7 -> R.drawable.ic_rank_daily_7
+                            8 -> R.drawable.ic_rank_daily_8
+                            9 -> R.drawable.ic_rank_daily_9
+                            10 -> R.drawable.ic_rank_daily_10
+                            11 -> R.drawable.ic_rank_daily_11
+                            12 -> R.drawable.ic_rank_daily_12
+                            13 -> R.drawable.ic_rank_daily_13
+                            14 -> R.drawable.ic_rank_daily_14
+                            15 -> R.drawable.ic_rank_daily_15
+                            16 -> R.drawable.ic_rank_daily_16
+                            17 -> R.drawable.ic_rank_daily_17
+                            18 -> R.drawable.ic_rank_daily_18
+                            19 -> R.drawable.ic_rank_daily_19
+                            20 -> R.drawable.ic_rank_daily_20
+                            21 -> R.drawable.ic_rank_daily_21
+                            22 -> R.drawable.ic_rank_daily_22
+                            23 -> R.drawable.ic_rank_daily_23
+                            24 -> R.drawable.ic_rank_daily_24
+                            25 -> R.drawable.ic_rank_daily_25
+                            26 -> R.drawable.ic_rank_daily_26
+                            27 -> R.drawable.ic_rank_daily_27
+                            28 -> R.drawable.ic_rank_daily_28
+                            29 -> R.drawable.ic_rank_daily_29
+                            else -> R.drawable.ic_rank_daily_30
                         }
-                        WEEK -> {
-                            when (it.ranking) {
-                                1 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_1)
-                                2 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_2)
-                                3 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_3)
-                                4 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_4)
-                                5 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_5)
-                                6 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_6)
-                                7 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_7)
-                                8 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_8)
-                                9 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_9)
-                                10 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_10)
-                                11 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_11)
-                                12 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_12)
-                                13 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_13)
-                                14 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_14)
-                                15 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_15)
-                                16 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_16)
-                                17 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_17)
-                                18 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_18)
-                                19 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_19)
-                                20 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_20)
-                                21 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_21)
-                                22 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_22)
-                                23 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_23)
-                                24 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_24)
-                                25 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_25)
-                                26 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_26)
-                                27 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_27)
-                                28 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_28)
-                                29 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_29)
-                                30 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_weekly_30)
-                            }
+
+                    )
+                }
+                WEEK -> {
+                    binding.imgRanking.setImageResource(
+                        when (it.ranking) {
+                            1 -> R.drawable.ic_rank_weekly_1
+                            2 -> R.drawable.ic_rank_weekly_2
+                            3 -> R.drawable.ic_rank_weekly_3
+                            4 -> R.drawable.ic_rank_weekly_4
+                            5 -> R.drawable.ic_rank_weekly_5
+                            6 -> R.drawable.ic_rank_weekly_6
+                            7 -> R.drawable.ic_rank_weekly_7
+                            8 -> R.drawable.ic_rank_weekly_8
+                            9 -> R.drawable.ic_rank_weekly_9
+                            10 -> R.drawable.ic_rank_weekly_10
+                            11 -> R.drawable.ic_rank_weekly_11
+                            12 -> R.drawable.ic_rank_weekly_12
+                            13 -> R.drawable.ic_rank_weekly_13
+                            14 -> R.drawable.ic_rank_weekly_14
+                            15 -> R.drawable.ic_rank_weekly_15
+                            16 -> R.drawable.ic_rank_weekly_16
+                            17 -> R.drawable.ic_rank_weekly_17
+                            18 -> R.drawable.ic_rank_weekly_18
+                            19 -> R.drawable.ic_rank_weekly_19
+                            20 -> R.drawable.ic_rank_weekly_20
+                            21 -> R.drawable.ic_rank_weekly_21
+                            22 -> R.drawable.ic_rank_weekly_22
+                            23 -> R.drawable.ic_rank_weekly_23
+                            24 -> R.drawable.ic_rank_weekly_24
+                            25 -> R.drawable.ic_rank_weekly_25
+                            26 -> R.drawable.ic_rank_weekly_26
+                            27 -> R.drawable.ic_rank_weekly_27
+                            28 -> R.drawable.ic_rank_weekly_28
+                            29 -> R.drawable.ic_rank_weekly_29
+                            else -> R.drawable.ic_rank_weekly_30
                         }
-                        else -> {
-                            when (it.ranking) {
-                                1 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_1)
-                                2 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_2)
-                                3 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_3)
-                                4 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_4)
-                                5 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_5)
-                                6 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_6)
-                                7 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_7)
-                                8 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_8)
-                                9 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_9)
-                                10 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_10)
-                                11 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_11)
-                                12 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_12)
-                                13 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_13)
-                                14 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_14)
-                                15 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_15)
-                                16 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_16)
-                                17 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_17)
-                                18 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_18)
-                                19 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_19)
-                                20 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_20)
-                                21 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_21)
-                                22 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_22)
-                                23 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_23)
-                                24 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_24)
-                                25 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_25)
-                                26 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_26)
-                                27 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_27)
-                                28 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_28)
-                                29 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_29)
-                                30 -> imgRanking.setBackgroundResource(R.drawable.ic_rank_monthly_30)
-                            }
+
+                    )
+                }
+                MONTH -> {
+                    binding.imgRanking.setImageResource(
+                        when (it.ranking) {
+                            1 -> R.drawable.ic_rank_monthly_1
+                            2 -> R.drawable.ic_rank_monthly_2
+                            3 -> R.drawable.ic_rank_monthly_3
+                            4 -> R.drawable.ic_rank_monthly_4
+                            5 -> R.drawable.ic_rank_monthly_5
+                            6 -> R.drawable.ic_rank_monthly_6
+                            7 -> R.drawable.ic_rank_monthly_7
+                            8 -> R.drawable.ic_rank_monthly_8
+                            9 -> R.drawable.ic_rank_monthly_9
+                            10 -> R.drawable.ic_rank_monthly_10
+                            11 -> R.drawable.ic_rank_monthly_11
+                            12 -> R.drawable.ic_rank_monthly_12
+                            13 -> R.drawable.ic_rank_monthly_13
+                            14 -> R.drawable.ic_rank_monthly_14
+                            15 -> R.drawable.ic_rank_monthly_15
+                            16 -> R.drawable.ic_rank_monthly_16
+                            17 -> R.drawable.ic_rank_monthly_17
+                            18 -> R.drawable.ic_rank_monthly_18
+                            19 -> R.drawable.ic_rank_monthly_19
+                            20 -> R.drawable.ic_rank_monthly_20
+                            21 -> R.drawable.ic_rank_monthly_21
+                            22 -> R.drawable.ic_rank_monthly_22
+                            23 -> R.drawable.ic_rank_monthly_23
+                            24 -> R.drawable.ic_rank_monthly_24
+                            25 -> R.drawable.ic_rank_monthly_25
+                            26 -> R.drawable.ic_rank_monthly_26
+                            27 -> R.drawable.ic_rank_monthly_27
+                            28 -> R.drawable.ic_rank_monthly_28
+                            29 -> R.drawable.ic_rank_monthly_29
+                            else -> R.drawable.ic_rank_monthly_30
                         }
-                    }
+                    )
                 }
             }
         }
     }
+    private fun setUpRankingForRecommendRank(user:ConsultantResponse){
+        if(user.recommendRanking != 0) {
+            binding.imgRanking.setImageResource(
+                when(user.recommendRanking){
+                    1 -> R.drawable.ic_best_rank_1
+                    2 -> R.drawable.ic_best_rank_2
+                    3 -> R.drawable.ic_best_rank_3
+                    4 -> R.drawable.ic_best_rank_4
+                    5 -> R.drawable.ic_best_rank_5
+                    6 -> R.drawable.ic_best_rank_6
+                    7 -> R.drawable.ic_best_rank_7
+                    8 -> R.drawable.ic_best_rank_8
+                    9 -> R.drawable.ic_best_rank_9
+                    10 -> R.drawable.ic_best_rank_10
+                    11 -> R.drawable.ic_best_rank_11
+                    12 -> R.drawable.ic_best_rank_12
+                    13 -> R.drawable.ic_best_rank_13
+                    14 -> R.drawable.ic_best_rank_14
+                    15 -> R.drawable.ic_best_rank_15
+                    16 -> R.drawable.ic_best_rank_16
+                    17 -> R.drawable.ic_best_rank_17
+                    18 -> R.drawable.ic_best_rank_18
+                    19 -> R.drawable.ic_best_rank_19
+                    20 -> R.drawable.ic_best_rank_20
+                    21 -> R.drawable.ic_best_rank_21
+                    22 -> R.drawable.ic_best_rank_22
+                    23 -> R.drawable.ic_best_rank_23
+                    24 -> R.drawable.ic_best_rank_24
+                    25 -> R.drawable.ic_best_rank_25
+                    26 -> R.drawable.ic_best_rank_26
+                    27 -> R.drawable.ic_best_rank_27
+                    28 -> R.drawable.ic_best_rank_28
+                    29 -> R.drawable.ic_best_rank_29
+                    else -> R.drawable.ic_best_rank_30
+                }
+            )
+        }    }
+
 
     companion object {
         const val BEGINNER = 1
@@ -788,8 +830,8 @@ class DetailUserProfileFragment :
             listPerformer: ArrayList<ConsultantResponse>,
             previousScreen: String
         ): DetailUserProfileFragment {
-            var detailUserProfileFragment = DetailUserProfileFragment()
-            var bundle = Bundle()
+            val detailUserProfileFragment = DetailUserProfileFragment()
+            val bundle = Bundle()
             bundle.putString(BUNDLE_KEY.SCREEN_TYPE, previousScreen)
             val performer =
                 if (listPerformer.size > position) listPerformer.get(position) else null

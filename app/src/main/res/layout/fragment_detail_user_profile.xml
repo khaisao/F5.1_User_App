@@ -157,8 +157,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_36"
                         android:layout_marginStart="@dimen/margin_4dp"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/ic_rank_monthly_1" />
+                        android:adjustViewBounds="true" />
 
                 </LinearLayout>
 
