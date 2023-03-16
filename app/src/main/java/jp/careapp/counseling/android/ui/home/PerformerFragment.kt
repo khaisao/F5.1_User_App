@@ -74,7 +74,7 @@ class PerformerFragment : BaseFragment<FragmentPerformerBinding,HomeViewModel>()
                 if (listDataSize > 0) {
                     val layoutManager = binding.rvConsultant.layoutManager as LinearLayoutManager
                     if (!viewModel.isLoadMoreData) {
-                        if (layoutManager != null && (layoutManager.findLastCompletelyVisibleItemPosition() == listDataSize - 1) && viewModel.isCanLoadMoreData()) {
+                        if ((layoutManager.findLastCompletelyVisibleItemPosition() == listDataSize - 1) && viewModel.isCanLoadMoreData()) {
                             viewModel.isLoadMoreData = true
                             viewModel.loadMoreData()
                         }

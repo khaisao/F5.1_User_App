@@ -59,7 +59,6 @@
                         android:layout_height="@dimen/margin_26"
                         android:layout_marginStart="@dimen/margin_2"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/ic_rank_daily_1"
                         app:layout_constraintStart_toEndOf="@id/tv_status"
                         app:layout_constraintTop_toTopOf="parent" />
 

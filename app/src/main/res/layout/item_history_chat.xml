@@ -89,7 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="33dp"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/ic_rank_daily_2" />
+                       />
                 </LinearLayout>
 
                 <LinearLayout

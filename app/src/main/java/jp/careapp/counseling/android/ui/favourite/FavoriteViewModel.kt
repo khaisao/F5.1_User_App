@@ -1,9 +1,10 @@
 package jp.careapp.counseling.android.ui.favourite
 
 import android.os.Bundle
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.* // ktlint-disable no-wildcard-imports
+import androidx.lifecycle.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.counseling.android.data.network.ApiObjectResponse
 import jp.careapp.counseling.android.data.network.ConsultantResponse
@@ -14,12 +15,7 @@ import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.event.Event
 import jp.careapp.counseling.android.utils.extensions.combine
 import jp.careapp.counseling.android.utils.result.Result
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import jp.careapp.counseling.android.data.network.HistoryResponse
-import jp.careapp.counseling.android.ui.home.LIMIT_NUMBER
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class FavoriteViewModel @ViewModelInject constructor(

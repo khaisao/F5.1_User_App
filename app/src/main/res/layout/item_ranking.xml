@@ -13,7 +13,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/monthly_rank4_top"
+            android:src="@drawable/ic_ranking_monthly_4"
             app:layout_constraintBottom_toTopOf="@id/gl_bottom_rank_number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
