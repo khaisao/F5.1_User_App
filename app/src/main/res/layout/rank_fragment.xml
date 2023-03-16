@@ -1,51 +1,303 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_background_common">
-
-        <View
-            android:id="@+id/viewTop"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_diver_line"
-            android:alpha="0.15"
-            android:background="@color/white"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_ranking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_background_common"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewTop"
+            app:layout_constraintTop_toTopOf="parent"
             app:tabGravity="fill"
-            app:tabIndicatorColor="@color/color_978DFF"
-            app:tabIndicatorHeight="2dp"
-            app:tabMaxWidth="0dp"
             app:tabMode="fixed"
-            android:layout_below="@+id/viewTop"
             app:tabSelectedTextColor="@color/color_text_E3DFEF"
             app:tabTextAppearance="@style/TabLayoutTextStyle"
             app:tabTextColor="@color/color_6D5D9A" />
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_below="@+id/tab_ranking"
-            android:background="@color/color_6D5D9A"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_tab_bar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:0.14"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tab_ranking" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_top_tab_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.1" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_bottom_tab_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.88" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_yesterday_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.01" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_yesterday_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.235" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_weekly_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.257" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_weekly_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.484" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_monthly_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.505" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_monthly_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.733" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_recommend_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.755" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_recommend_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.977" />
+
+            <TextView
+                android:id="@+id/tv_tab_bar_yesterday_inactive"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_ranking_tab_yesterday_inactive"
+                android:gravity="center"
+                android:paddingBottom="@dimen/margin_4dp"
+                android:text="@string/ranking_daily"
+                android:textColor="#7476f5"
+                app:layout_constraintBottom_toTopOf="@id/gl_bottom_tab_bar"
+                app:layout_constraintEnd_toStartOf="@id/gl_yesterday_end"
+                app:layout_constraintStart_toEndOf="@id/gl_yesterday_start"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_tab_bar" />
+
+            <TextView
+                android:id="@+id/tv_tab_bar_weekly_inactive"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_ranking_tab_weekly_inactive"
+                android:gravity="center"
+                android:paddingBottom="@dimen/margin_4dp"
+                android:text="@string/weekly"
+                android:textColor="#4c9f2e"
+                app:layout_constraintBottom_toTopOf="@id/gl_bottom_tab_bar"
+                app:layout_constraintEnd_toStartOf="@id/gl_weekly_end"
+                app:layout_constraintStart_toEndOf="@id/gl_weekly_start"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_tab_bar" />
+
+            <TextView
+                android:id="@+id/tv_tab_bar_monthly_inactive"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_ranking_tab_monthly_inactive"
+                android:gravity="center"
+                android:paddingBottom="@dimen/margin_4dp"
+                android:text="@string/monthly"
+                android:textColor="#e330ef"
+                app:layout_constraintBottom_toTopOf="@id/gl_bottom_tab_bar"
+                app:layout_constraintEnd_toStartOf="@id/gl_monthly_end"
+                app:layout_constraintStart_toEndOf="@id/gl_monthly_start"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_tab_bar" />
+
+            <TextView
+                android:id="@+id/tv_tab_bar_recommend_inactive"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_ranking_tab_recommend_inactive"
+                android:gravity="center"
+                android:paddingBottom="@dimen/margin_4dp"
+                android:text="@string/recommend"
+                android:textColor="#e24356"
+                app:layout_constraintBottom_toTopOf="@id/gl_bottom_tab_bar"
+                app:layout_constraintEnd_toStartOf="@id/gl_recommend_end"
+                app:layout_constraintStart_toEndOf="@id/gl_recommend_start"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_tab_bar" />
+
+            <ImageView
+                android:id="@+id/iv_background_bottom_tab_bar"
+                app:layout_constraintTop_toBottomOf="@id/gl_bottom_tab_bar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/bg_rank_daily_behind"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"/>
+
+            <ImageView
+                android:id="@+id/iv_tab_bar_yesterday_active"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_ranking_tab_yesterday"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/iv_tab_bar_weekly_active"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_ranking_tab_weekly"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_tab_bar_monthly_active"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_ranking_tab_monthly"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_tab_bar_recommend_active"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_ranking_tab_recommend"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_tab_bar_yesterday_active"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:shadowColor="@color/color_00FCFF"
+                android:shadowRadius="18"
+                android:text="@string/ranking_daily"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@id/gl_bottom_tab_bar"
+                app:layout_constraintEnd_toStartOf="@id/gl_yesterday_end"
+                app:layout_constraintStart_toEndOf="@id/gl_yesterday_start"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_tab_bar" />
+
+            <TextView
+                android:id="@+id/tv_tab_bar_weekly_active"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:shadowColor="@color/color_59EC00"
+                android:shadowRadius="18"
+                android:text="@string/weekly"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/gl_bottom_tab_bar"
+                app:layout_constraintEnd_toStartOf="@id/gl_weekly_end"
+                app:layout_constraintStart_toEndOf="@id/gl_weekly_start"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_tab_bar" />
+
+            <TextView
+                android:id="@+id/tv_tab_bar_monthly_active"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:shadowColor="@color/color_FF28FF"
+                android:shadowRadius="18"
+                android:text="@string/monthly"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/gl_bottom_tab_bar"
+                app:layout_constraintEnd_toStartOf="@id/gl_monthly_end"
+                app:layout_constraintStart_toEndOf="@id/gl_monthly_start"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_tab_bar" />
+
+            <TextView
+                android:id="@+id/tv_tab_bar_recommend_active"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:shadowColor="@color/color_FFC017"
+                android:shadowRadius="18"
+                android:text="@string/recommend"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/gl_bottom_tab_bar"
+                app:layout_constraintEnd_toStartOf="@id/gl_recommend_end"
+                app:layout_constraintStart_toEndOf="@id/gl_recommend_start"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_tab_bar" />
+
+            <View
+                android:id="@+id/tab_bar_yesterday"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/gl_yesterday_end"
+                app:layout_constraintStart_toEndOf="@id/gl_yesterday_start"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_tab_bar" />
+
+            <View
+                android:id="@+id/tab_bar_weekly"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/gl_bottom_tab_bar"
+                app:layout_constraintEnd_toStartOf="@id/gl_weekly_end"
+                app:layout_constraintStart_toEndOf="@id/gl_weekly_start"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_tab_bar" />
+
+            <View
+                android:id="@+id/tab_bar_monthly"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/gl_bottom_tab_bar"
+                app:layout_constraintEnd_toStartOf="@id/gl_monthly_end"
+                app:layout_constraintStart_toEndOf="@id/gl_monthly_start"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_tab_bar" />
+
+            <View
+                android:id="@+id/tab_bar_recommend"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/gl_bottom_tab_bar"
+                app:layout_constraintEnd_toStartOf="@id/gl_recommend_end"
+                app:layout_constraintStart_toEndOf="@id/gl_recommend_start"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_tab_bar" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/divider"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider" />
-    </RelativeLayout>
+            app:layout_constraintTop_toBottomOf="@id/cl_tab_bar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

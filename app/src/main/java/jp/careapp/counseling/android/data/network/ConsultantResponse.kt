@@ -27,6 +27,7 @@ data class ConsultantResponse(
     @SerializedName("point_per_char") val pointPerChar: Int = 0,
     @SerializedName("login_plans_datetime") val loginPlansDatetime: String? = "",
     @SerializedName("ranking") val ranking: RankingResponse? = null,
+    @SerializedName("recommend_ranking") val recommendRanking: Int = 0,
     @SerializedName("profile_pattern") val profilePattern: Int = 0,
     @SerializedName("profile_images") val profileImages: ProfileImageResponse? = null,
     @SerializedName("presence_status") val presenceStatus: Int = 0,

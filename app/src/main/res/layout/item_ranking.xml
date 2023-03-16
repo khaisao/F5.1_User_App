@@ -6,85 +6,206 @@
         android:id="@+id/clRanking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints">
+        android:background="@drawable/bg_rank_monthly_behind">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/rankingNumber"
+        <ImageView
+            android:id="@+id/iv_rank_number"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/monthly_rank4_top"
+            app:layout_constraintBottom_toTopOf="@id/gl_bottom_rank_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_top_cl_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_978DFF"
-            android:textSize="@dimen/text_size_18"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="4位" />
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.07" />
 
-        <RelativeLayout
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_bottom_rank_number"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_20"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/rankingNumber"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.13" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/gl_top_cl_info">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivAvatar"
-                android:layout_width="56dp"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="@dimen/margin_16"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_avatar_default" />
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="@id/gl078horizontal"
+                app:layout_constraintEnd_toStartOf="@id/gl_iv_avatar_end"
+                app:layout_constraintStart_toStartOf="@id/gl_iv_avatar_start"
+                app:layout_constraintTop_toTopOf="@id/gl097horizontal"
+                tools:src="@drawable/default_avt_performer" />
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/iv_rank_frame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/margin_12"
-                android:layout_toRightOf="@+id/ivAvatar"
-                android:orientation="vertical">
+                android:adjustViewBounds="true"
+                android:src="@drawable/bg_rank_monthly"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvPresenceStatus"
-                    style="@style/text_bold_10"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/margin_6dp"
-                    android:paddingTop="@dimen/margin_3"
-                    android:paddingEnd="@dimen/margin_6dp"
-                    android:paddingBottom="@dimen/margin_3"
-                    android:textColor="@color/color_978DFF"
-                    android:textSize="@dimen/text_size_12"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:background="@drawable/ic_status_online"
-                    tools:text="名前なまえ" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_iv_avatar_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.09" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_iv_avatar_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.91" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_tv_status_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.254" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_tv_status_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.746" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_tv_status_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.755" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_tv_status_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.803" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl097horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.07" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl078horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.78" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_top_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.83" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_bottom_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.93" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPresenceStatus"
+                style="@style/text_bold_9"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_performer_status_offline"
+                android:gravity="center"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@id/gl_tv_status_bottom"
+                app:layout_constraintEnd_toStartOf="@id/gl_tv_status_end"
+                app:layout_constraintStart_toEndOf="@id/gl_tv_status_start"
+                app:layout_constraintTop_toBottomOf="@id/gl_tv_status_top"
+                tools:text="名前なまえ" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@id/gl_bottom_info"
+                app:layout_constraintEnd_toEndOf="@id/gl_iv_avatar_end"
+                app:layout_constraintStart_toStartOf="@id/gl_iv_avatar_start"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_info">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvName"
+                    style="@style/text_bold_12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_3"
-                    android:textColor="@color/color_text_E3DFEF"
-                    android:textSize="@dimen/text_size_14"
-                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginBottom="@dimen/margin_3"
                     tools:text="名前なまえ" />
-            </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_1"
-                android:layout_below="@+id/ivAvatar"
-                android:layout_marginStart="@dimen/margin_40dp"
-                android:layout_marginTop="@dimen/margin_20"
-                android:background="@color/color_271658" />
-        </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_size"
+                        style="@style/text_bold_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:text="asgasg"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_age"
+                        style="@style/text_bold_12"
+                        android:text="asgasg"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

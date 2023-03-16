@@ -228,6 +228,11 @@ interface ApiInterface {
         @QueryMap params: MutableMap<String, Any>
     ): ApiObjectResponse<ArrayList<TypeRankingResponse>>
 
+    @GET("api/performer-recommend-rankings")
+    suspend fun getListRecommendRanking(
+        @QueryMap params: MutableMap<String, Any>
+    ): ApiObjectResponse<ArrayList<TypeRankingResponse>>
+
     @GET("api/member/mails/latest")
     suspend fun getListHistoryMessage(@QueryMap data: MutableMap<String, Any>): ApiObjectResponse<List<HistoryChatResponse>>
 
