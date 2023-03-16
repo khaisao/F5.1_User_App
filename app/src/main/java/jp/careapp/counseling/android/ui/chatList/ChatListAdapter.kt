@@ -83,7 +83,7 @@ class ChatListAdapter constructor(
                                 binding.tvStatus.text =
                                     context.resources.getString(R.string.presence_status_offline)
                             }
-                            if (it.stage != 1) {
+                            if (it.stage == 1) {
                                 ivState.visibility = GONE
                                 ivStateBeginner.visibility = VISIBLE
                             } else {

@@ -1,7 +1,6 @@
 package jp.careapp.counseling.android.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer

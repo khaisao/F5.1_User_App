@@ -17,6 +17,8 @@ data class FavoriteResponse(
     val name: String = "",
     @SerializedName("age")
     val age: Int = 0,
+    @SerializedName("stage")
+    val stage: Int = 0,
     @SerializedName("bust")
     val bust: Int = 0,
     @SerializedName("ranking")

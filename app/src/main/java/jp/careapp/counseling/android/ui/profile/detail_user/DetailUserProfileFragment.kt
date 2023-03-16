@@ -572,7 +572,7 @@ class DetailUserProfileFragment :
                 presenceStatusTv.setBackgroundResource(presenceStatusBgResId)
                 presenceStatusTv.text = presenceStatusText
 
-                if (user.stage != 1) {
+                if (user.stage == 1) {
                     ivState.visibility = GONE
                     ivStateBeginner.visibility = VISIBLE
                 } else {
