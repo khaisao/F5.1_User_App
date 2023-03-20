@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:src="@drawable/icon_error_email" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_error_email"
+        style="@style/text_error_email_bold_12"
+        android:text="@string/alert_error_email"
+        android:textColor="@color/color_alert_error" />
+</LinearLayout>

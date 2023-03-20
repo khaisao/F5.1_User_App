@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="jp.careapp.counseling.android.ui.contact_us.confirm.ContactUsConfirmViewModel" />
+
+        <variable
+            name="viewModel"
+            type="ContactUsConfirmViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0d002c"
+        android:orientation="vertical"
+        tools:context=".android.ui.contact_us.confirm.ContactUsConfirmFragment">
+
+        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:src_left="@drawable/ic_arrow_left"
+            app:string_title="@string/contact_us" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#2A1F45" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:gravity="center_vertical"
+                android:text="@string/enquiry"
+                android:textColor="#f0f0f0"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/hiragino_sans_w3"
+                android:gravity="center_vertical"
+                android:text="@{viewModel.category}"
+                android:textColor="#f0f0f0"
+                android:textSize="14sp"
+                tools:text="決済について" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:gravity="center_vertical"
+                android:text="@string/contact_us_content"
+                android:textColor="#f0f0f0"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/hiragino_sans_w3"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="4dp"
+                android:text="@{viewModel.content}"
+                android:textColor="#f0f0f0"
+                android:textSize="14sp"
+                tools:text="テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:gravity="center_vertical"
+                android:text="@string/reply_option"
+                android:textColor="#f0f0f0"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/hiragino_sans_w3"
+                android:gravity="center_vertical"
+                android:text="@{viewModel.replyString}"
+                android:textColor="#f0f0f0"
+                tools:text="必要" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/bg_nm_btn_primary_enable"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:gravity="center"
+                android:minHeight="44dp"
+                android:paddingVertical="16dp"
+                android:text="@string/send"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_nm_btn_primary_disable"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:gravity="center"
+                android:minHeight="44dp"
+                android:paddingVertical="16dp"
+                android:text="@string/back"
+                android:textColor="#b2a9cc"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

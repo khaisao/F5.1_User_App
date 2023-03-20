@@ -491,8 +491,6 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="block_this_woman">この女性をブロックしますか？</string>
 
 
-
-
     <!--    labo-->
     <string name="labo_all"><b>すべて</b></string>
     <string name="labo_resolved">解決済</string>
@@ -639,8 +637,8 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
 
     <!-- Review mode enter name screen -->
     <string name="please_enter_nick_name">ニックネームを入力してください</string>
+    <string name="count_default">0</string>
     <string name="hint_enter_nick_name">ニックネームを入力</string>
-    <string name="count_default">10</string>
     <string name="terms_of_service">利用規約</string>
 
     <!-- Review mode setting profile message screen -->
@@ -671,7 +669,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="call_video">ビデオ通話</string>
     <string name="no_online_data">まだお気に入りはありません</string>
     <string name="no_favorite_data">まだお気に入りはありません。</string>
-    <string name="no_block_data">お気に入りの方はいません。</string>
+    <string name="no_block_data">まだブロックしている女性はいません</string>
     <string name="term">利用規約</string>
     <string name="current_point">保有ポイント</string>
     <string name="buy_point_1000">1,000</string>
@@ -696,4 +694,24 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="message">メッセージ</string>
     <string name="peep">のぞく</string>
     <string name="go_home">ホームへ戻る</string>
+
+    <string name="you_dont_want_to_receive_an_email_for_a_long_time">1週間経ってもご連絡が届かない場合\n・迷惑フォルダに届いている\n・ご登録メールアドレスが間違っている\n・ドメイン指定受信を設定している@peaklive.jpの受信を許可してください</string>
+    <string name="back_to_home">ホームに戻る</string>
+    <string name="use_points_guide">料金説明</string>
+    <string name="consumption_points">消費ポイント</string>
+    <string name="use_points_note">※ライブ視聴開始時点で1分目とカウントされ、ポイントが消費されます。</string>
+    <string name="buy_points_here">ポイント購入はコチラ</string>
+    <string name="edit_nick_name">ニックネーム編集</string>
+    <string name="profile">プロフィール</string>
+    <string name="mail_address">メールアドレス</string>
+    <string name="edit_mail">メールアドレス編集</string>
+    <string name="blocked_list">ブロック一覧</string>
+    <string name="receive_mail_permission">メール受信許可</string>
+    <string name="back">戻る</string>
+    <string name="case_payment">決済について</string>
+    <string name="case_performer">パフォーマーについて</string>
+    <string name="case_account">アカウントについて</string>
+    <string name="case_feature">機能について</string>
+    <string name="case_other">その他</string>
+    <string name="faq">よくある質問</string>
 </resources>

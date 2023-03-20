@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0d002c"
+        android:orientation="vertical"
+        tools:context=".android.ui.contact_us.ContactUsFragment">
+
+        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:src_left="@drawable/ic_arrow_left"
+            app:string_title="@string/contact_us" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#2A1F45" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:text="@string/enquiry"
+                android:textColor="#f0f0f0"
+                android:textSize="14sp" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_nm_spinner"
+                android:minHeight="44dp"
+                android:paddingHorizontal="16dp"
+                android:theme="@style/SpinnerTheme"
+                tools:listitem="@layout/list_popup_window_item" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:text="@string/contact_us_content"
+                android:textColor="#f0f0f0"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/edtContent"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_nm_edit_text"
+                android:ems="10"
+                android:fontFamily="@font/hiragino_sans_w3"
+                android:gravity="top|start"
+                android:hint="@string/please_enter_contact_us_content"
+                android:inputType="textMultiLine"
+                android:maxLines="9"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="16dp"
+                android:textColor="#f0f0f0"
+                android:textColorHint="#70658d"
+                android:textSize="14sp"
+                tools:lines="9" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_32"
+                android:text="@string/reply_option"
+                android:textColor="#f0f0f0"
+                android:textSize="14sp" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_4dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/radioBtnNecessary"
+                    style="@style/RMRadioButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:padding="8dp"
+                    android:text="@string/necessary"
+                    tools:checked="true" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/radioBtnUnnecessary"
+                    style="@style/RMRadioButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_24"
+                    android:padding="8dp"
+                    android:text="@string/unnecessary" />
+            </RadioGroup>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnConfirmContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/bg_nm_btn_primary"
+                android:enabled="false"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:gravity="center"
+                android:minHeight="44dp"
+                android:paddingVertical="16dp"
+                android:text="@string/check_the_contents"
+                android:textColor="@color/color_btn_primary"
+                android:textSize="14sp"
+                tools:enabled="true" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

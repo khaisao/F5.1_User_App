@@ -167,3 +167,28 @@ fun TextView.setUnderlineAndClick(
     this.text = span
     this.movementMethod = LinkMovementMethod.getInstance()
 }
+
+fun TextView.setUnderlineAndClick(
+    resourceString: String,
+    resourceColor: Int,
+    start: Int,
+    end: Int,
+    onClick: () -> Unit
+) {
+    val span = SpannableString(resourceString)
+    span.setSpan(object : ClickableSpan() {
+        override fun onClick(p0: View) {
+            onClick.invoke()
+        }
+    }, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    span.setSpan(UnderlineSpan(), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    span.setSpan(
+        ForegroundColorSpan(ContextCompat.getColor(context, resourceColor)),
+        start,
+        end,
+        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+    )
+
+    this.text = span
+    this.movementMethod = LinkMovementMethod.getInstance()
+}

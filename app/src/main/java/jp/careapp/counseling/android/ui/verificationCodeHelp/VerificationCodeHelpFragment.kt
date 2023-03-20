@@ -92,7 +92,7 @@ class VerificationCodeHelpFragment :
                 val bundle = Bundle().apply {
                     putString("type_contact", this@VerificationCodeHelpFragment::class.java.simpleName)
                 }
-                appNavigation.openMyPageToContact(bundle)
+//                appNavigation.openMyPageToContact(bundle)
             }
         }
     }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="jp.careapp.counseling.android.ui.my_page.NMMenuItem.NMMenuItemField" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="menu"
+            type="NMMenuItemField" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        bg_field="@{menu.typeField}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:background="@drawable/bg_nm_none_field">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivMenuItemField"
+            load_image="@{menu.resourceImage}"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginVertical="12dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_cell_block" />
+
+        <TextView
+            android:id="@+id/tvField"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/hiragino_sans_w3"
+            android:gravity="center_vertical"
+            android:text="@{menu.label}"
+            android:textColor="#f0f0f0"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/ivMenuItemField"
+            app:layout_constraintEnd_toStartOf="@+id/ivNext"
+            app:layout_constraintStart_toEndOf="@id/ivMenuItemField"
+            app:layout_constraintTop_toTopOf="@id/ivMenuItemField"
+            tools:text="@string/buy_point" />
+
+        <View
+            show_divider="@{menu.typeField}"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:background="#453B5D"
+            app:layout_constraintBottom_toBottomOf="parent  "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_next"
+            app:layout_constraintBottom_toBottomOf="@+id/ivMenuItemField"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ivMenuItemField" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

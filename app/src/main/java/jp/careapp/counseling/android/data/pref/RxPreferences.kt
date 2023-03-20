@@ -25,7 +25,7 @@ interface RxPreferences {
 
     fun getEmail(): String?
 
-    fun saveUserInfor(token: String, tokenExpire: String, passWord: String, memberCode: String)
+    fun saveUserInfo(token: String, tokenExpire: String, passWord: String, memberCode: String)
 
     fun getTokenExpire(): String?
 
@@ -148,4 +148,28 @@ interface RxPreferences {
     fun setAppMode(appMode: Int)
 
     fun getAppMode(): Int
+
+    fun saveMemberInfoEditProfile(
+        name: String,
+        mail: String,
+        age: Int,
+        birth: String,
+        sex: Int,
+        point: Int,
+        statusNotification: Int
+    )
+
+    fun getMemberAge(): Int
+
+    fun getMemberBirth(): String?
+
+    fun getMemberSex(): Int
+
+    fun getMemberPoint(): Int
+
+    fun saveSettingNotificationNM(statusNotification: Int)
+
+    fun getSettingNotificationNM(): Int
+
+    fun saveMemberAge(age: Int)
 }

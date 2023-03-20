@@ -12,6 +12,7 @@
         <attr name="font_title" format="integer|reference" />
         <attr name="color_title" format="integer|reference" />
         <attr name="color_tv_right" format="integer|reference" />
+        <attr name="bg_toolbar" format="integer|reference" />
     </declare-styleable>
 
     <declare-styleable name="DialogFragmentNavigator">

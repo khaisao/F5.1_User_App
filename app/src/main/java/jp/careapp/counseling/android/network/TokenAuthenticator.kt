@@ -86,7 +86,7 @@ class TokenAuthenticator @Inject constructor(
                 return false
             }
             if (refreshTokenResult != null) {
-                rxPreferences.saveUserInfor(
+                rxPreferences.saveUserInfo(
                     refreshTokenResult.dataResponse.token,
                     refreshTokenResult.dataResponse.tokenExpire,
                     rxPreferences.getPassword() ?: "",

@@ -396,8 +396,8 @@ class VerifyCodeFragment :
                     CommonAlertDialog.getInstanceCommonAlertdialog(it1)
                         .showDialog()
                         .setDialogTitleWithString(it1.getString(R.string.content_error_over_five_times))
-                        .setTextPositiveButton(R.string.text_OK)
-                        .setOnPositivePressed {
+                        .setTextOkButton(R.string.text_OK)
+                        .setOnOkButtonPressed {
                             it.dismiss()
                             shareViewModel.setFocusEditText(isFocusEditTextEmail)
                             appNavigation.navigateUp()
@@ -411,18 +411,15 @@ class VerifyCodeFragment :
 
     private var isUpdateEmailObserver: Observer<Boolean> = Observer {
         if (it) {
-            val bundle = Bundle().apply {
-                putInt(BUNDLE_KEY.CODE_SCREEN, codeScreen)
-            }
             activity?.let { it1 ->
                 CommonAlertDialog.getInstanceCommonAlertdialog(it1)
                     .showDialog()
                     .setDialogTitleWithString(it1.getString(R.string.updated_profile))
-                    .setTextPositiveButton(R.string.text_OK)
-                    .setOnPositivePressed {
+                    .setTextOkButton(R.string.text_OK)
+                    .setOnOkButtonPressed {
                         it.dismiss()
                         appNavigation.navigateUp()
-                        findNavController().popBackStack(R.id.inputEmailFragment, true)
+//                        findNavController().popBackStack(R.id.inputEmailFragment, true)
                     }
             }
         }

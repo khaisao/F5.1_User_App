@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/tabMyPage"
-        android:name="jp.careapp.counseling.android.ui.mypage.MyPageFragment"
+        android:name="jp.careapp.counseling.android.ui.my_page.MyPageFragment"
         android:label="MyPageFragment"
         tools:layout="@layout/fragment_mypage" />
 

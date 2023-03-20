@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0d002c"
+        android:orientation="vertical"
+        tools:context=".android.ui.use_points_guide.UsePointsGuideFragment">
+
+        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:color_title="@color/color_F0F0F0"
+            app:src_left="@drawable/ic_arrow_left"
+            app:string_title="@string/use_points_guide" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#2A1F45" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:gravity="center_vertical"
+                android:text="@string/consumption_points"
+                android:textColor="#f0f0f0"
+                android:textSize="16sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvUsePointsGuideList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                android:overScrollMode="never"
+                app:itemAnimator="@{null}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_use_points_guide" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/hiragino_sans_w3"
+                android:gravity="center_vertical"
+                android:text="@string/use_points_note"
+                android:textColor="#b2a9cc"
+                android:textSize="10sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/bg_nm_btn_primary"
+                android:enabled="true"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:gravity="center"
+                android:minHeight="44dp"
+                android:paddingVertical="16dp"
+                android:text="@string/buy_points_here"
+                android:textColor="@drawable/color_text_btn_primary"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

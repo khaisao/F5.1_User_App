@@ -36,7 +36,7 @@ class BadUserFragment : BaseFragment<FragmentBadUserBinding, BadUserViewModel>()
                 val bundle = Bundle().apply {
                     putString("type_contact", this@BadUserFragment::class.java.simpleName)
                 }
-                appNavigation.openMyPageToContact(bundle)
+//                appNavigation.openMyPageToContact(bundle)
             }
 
             override fun updateDrawState(ds: TextPaint) {

@@ -1,116 +1,112 @@
 package jp.careapp.counseling.android.ui.blocked
 
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.* // ktlint-disable no-wildcard-imports
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.counseling.android.data.network.ApiObjectResponse
 import jp.careapp.counseling.android.data.network.FavoriteResponse
-import jp.careapp.counseling.android.network.ApiInterface
-import jp.careapp.counseling.android.ui.favourite.EventFavoriteAction
-import jp.careapp.counseling.android.utils.event.Event
-import jp.careapp.counseling.android.utils.result.Result
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jp.careapp.core.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class BlockedViewModel @ViewModelInject constructor(
-    private val apiService: ApiInterface
-) : BaseViewModel(), EventFavoriteAction {
+@HiltViewModel
+class BlockedViewModel @Inject constructor(
+    private val mRepository: BlockedRepository
+) : BaseViewModel() {
 
-    private val _refreshBlocked = MutableLiveData<Unit>()
-    fun forceRefresh() {
-        _refreshBlocked.value = Unit
-    }
-    private val _codeDelete = MutableLiveData<String>()
-    fun setCodeBlocked(code: String) {
-        _codeDelete.value = code
-    }
-    var isShowNoData = MutableLiveData(false)
+    private val memberList = arrayListOf<FavoriteResponse>()
 
-    private val _deleteBlocked: LiveData<Result<ApiObjectResponse<Any>>> =
-        _codeDelete.switchMap { code ->
-            liveData {
-                emit(Result.Loading)
-                emit(deleteBlocked(code))
-            }
-        }
-    val deleteBlockedLoading: LiveData<Boolean> = _deleteBlocked.map {
-        it == Result.Loading
-    }
-    private suspend fun deleteBlocked(code: String): Result<ApiObjectResponse<Any>> {
-        return try {
-            withContext(Dispatchers.IO) {
-                apiService.deleteBlocked(code = code).let {
-                    Result.Success(it)
-                }
-            }
-        } catch (e: Exception) {
-            Result.Error(e)
-        }
-    }
-    private val _blockedResult: LiveData<Result<ApiObjectResponse<List<FavoriteResponse>>>> = _refreshBlocked.switchMap {
-        liveData {
-            emit(Result.Loading)
-            emit(getFavoriteBlocked())
-        }
+    private val _blockedList = MutableLiveData<List<FavoriteResponse>>()
+    val blockedList: LiveData<List<FavoriteResponse>>
+        get() = _blockedList
+
+    private val _isShowNoData = MutableLiveData<Boolean>()
+    val isShowNoData: LiveData<Boolean>
+        get() = _isShowNoData
+
+    val mActionState = SingleLiveEvent<BlockedActionState>()
+
+    init {
+        getMemberBlocked()
     }
 
-    val blockedLoading: LiveData<Boolean> = _blockedResult.map {
-        it == Result.Loading
-    }
-
-    val uiBlocked: LiveData<List<FavoriteResponse>> = _blockedResult.map {
-        (it as? Result.Success)?.data?.dataResponse ?: listOf()
-    }
-
-    private suspend fun getFavoriteBlocked(): Result<ApiObjectResponse<List<FavoriteResponse>>> {
-        return try {
-            withContext(Dispatchers.IO) {
-                apiService.getMemberBlocked().let {
+    private fun getMemberBlocked() {
+        isLoading.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            supervisorScope {
+                try {
+                    val response = mRepository.getMemberBlocked()
                     val typeResponse =
                         object : TypeToken<ApiObjectResponse<List<FavoriteResponse>>>() {}.type
-                    var response: ApiObjectResponse<List<FavoriteResponse>>? = null
-                    try {
-                        isShowNoData.postValue(false)
-                        response =
-                            Gson().fromJson(it.toString(), typeResponse) as ApiObjectResponse<List<FavoriteResponse>>?
-                        Result.Success(response)
-                    } catch (e: java.lang.Exception) {
-                        isShowNoData.postValue(true)
-                        val typeResponse =
-                            object : TypeToken<ApiObjectResponse<FavoriteResponse>>() {}.type
-                        val data = Gson().fromJson(it, typeResponse) as ApiObjectResponse<FavoriteResponse>
-                        var response: ApiObjectResponse<List<FavoriteResponse>>? = ApiObjectResponse<List<FavoriteResponse>>(
-                            data.errors,
-                            listOf(),
-                            data.pagination
-                        )
-                        Result.Success(response)
+                    val data = Gson().fromJson(
+                        response.toString(), typeResponse
+                    ) as ApiObjectResponse<List<FavoriteResponse>>
+                    if (data.errors.isEmpty()) {
+                        memberList.addAll(data.dataResponse)
+                        withContext(Dispatchers.Main) {
+                            _isShowNoData.value = false
+                            _blockedList.value = memberList
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    withContext(Dispatchers.Main) {
+                        _isShowNoData.value = true
+                    }
+                } finally {
+                    withContext(Dispatchers.Main) {
+                        isLoading.value = false
                     }
                 }
             }
-        } catch (e: Exception) {
-            Result.Error(e)
         }
     }
-    private val _error = MediatorLiveData<Event<String>>().apply {
-        addSource(_deleteBlocked) { rs ->
-            if (rs is Result.Error)
-                value = Event(content = rs.throwable.message ?: "")
+
+    fun deleteBlocked(code: String) {
+        isLoading.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            supervisorScope {
+                try {
+                    val response = mRepository.deleteBlocked(code)
+                    if (response.errors.isEmpty()) {
+                        memberList.removeIf { it.code == code }
+                        if (memberList.isEmpty()) {
+                            withContext(Dispatchers.Main) {
+                                _isShowNoData.value = true
+                            }
+                        } else {
+                            withContext(Dispatchers.Main) {
+                                _isShowNoData.value = false
+                                _blockedList.value = memberList
+                            }
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                } finally {
+                    withContext(Dispatchers.Main) {
+                        isLoading.value = false
+                    }
+                }
+            }
         }
-        addSource(_blockedResult) { rs ->
-            if (rs is Result.Error)
-                value = Event(content = rs.throwable.message ?: "")
-        }
     }
-    val error: LiveData<Event<String>> = _error
-    override fun onclickItem(item: FavoriteResponse) {
-        // TODO
+
+    fun onClickShowDialogConfirmDeleteBlock(position: Int) {
+        val member = memberList[position]
+        mActionState.value =
+            BlockedActionState.ShowDialogConfirmDeleteBlock(member.name, member.code)
     }
-    private val _showDialogAction = MutableLiveData<Event<FavoriteResponse>>()
-    val showDialogAction: LiveData<Event<FavoriteResponse>> = _showDialogAction
-    override fun onClickRelease(item: FavoriteResponse) {
-        _showDialogAction.value = Event(item)
-    }
+}
+
+sealed class BlockedActionState {
+    class ShowDialogConfirmDeleteBlock(val memberName: String, val memberCode: String) :
+        BlockedActionState()
 }

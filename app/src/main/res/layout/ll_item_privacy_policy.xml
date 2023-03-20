@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="32dp">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/hiragino_sans_w6"
+            android:paddingBottom="16dp"
+            android:textColor="#f0f0f0"
+            android:textSize="16sp"
+            tools:text="1. プライバシーポリシー" />
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/hiragino_sans_w3"
+            android:lineSpacingExtra="4dp"
+            android:textColor="#f0f0f0"
+            android:textSize="14sp"
+            tools:text="スパーク（以下「本アプリ」といいます）では、登録会員（以下「配信者」といいます。）の皆様に安心してご利用いただくため、プライバシー及び個人情報（以下、個人情報）に関して細心の注意を払い厳重に管理いたします。当サイトのプライバシーポリシーについては以下の通りです。" />
+
+    </LinearLayout>
+</layout>

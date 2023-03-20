@@ -268,4 +268,12 @@
         <item name="fontFamily">@font/hiragino_sans_w6</item>
         <item name="android:includeFontPadding">false</item>
     </style>
+
+    <style name="SpinnerTheme">
+        <item name="android:textColor">#f0f0f0</item>
+        <item name="android:fontFamily">@font/hiragino_sans_w3</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:spinnerMode">dropdown</item>
+        <item name="overlapAnchor">false</item>
+    </style>
 </resources>

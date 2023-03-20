@@ -121,14 +121,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_tabMyPage_to_laboFragment, bundle)
     }
 
-    override fun openMyPageToContact(bundle: Bundle?) {
-        openScreen(R.id.action_tabMyPage_to_contactEditFragment, bundle)
-    }
-
-    override fun openEditContactToConfirmContact(bundle: Bundle?) {
-        openScreen(R.id.action_contactEditFragment_to_contactConfirmFragment, bundle)
-    }
-
     override fun openMyPageToSettingNotification(bundle: Bundle?) {
         openScreen(R.id.action_tabMyPage_to_fragmentNotification, bundle)
     }
@@ -138,11 +130,7 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     }
 
     override fun openMyPageToEditProfile(bundle: Bundle?) {
-        openScreen(R.id.action_tabMyPage_to_fragmentEditProfile, bundle)
-    }
-
-    override fun openContactConfirmToContactDone(bundle: Bundle?) {
-        openScreen(R.id.action_contactConfirmFragment_to_contactDoneFragment, bundle)
+        openScreen(R.id.action_topFragment_to_fragmentEditProfile, bundle)
     }
 
     override fun openDetailUserToTroubleSheet(bundle: Bundle?) {
@@ -495,5 +483,57 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openRMTopToRMBuyPoint(bundle: Bundle?) {
         openScreen(R.id.action_RMTopFragment_to_RMBuyPointFragment, bundle)
+    }
+
+    override fun openMyPageToTermsOfService(bundle: Bundle?) {
+        openScreen(R.id.action_topFragment_to_termsOfServiceFragment, bundle)
+    }
+
+    override fun openMyPageToPrivacyPolicy(bundle: Bundle?) {
+        openScreen(R.id.action_topFragment_to_privacyPolicyFragment, bundle)
+    }
+
+    override fun openMyPageToUsePointsGuide(bundle: Bundle?) {
+        openScreen(R.id.action_topFragment_to_usePointsGuideFragment, bundle)
+    }
+
+    override fun openEditProfileToEditNickName(bundle: Bundle?) {
+        openScreen(R.id.action_fragmentEditProfile_to_editNickNameFragment, bundle)
+    }
+
+    override fun openMyPageToBlocked(bundle: Bundle?) {
+        openScreen(R.id.action_topFragment_to_blockedFragment, bundle)
+    }
+
+    override fun openMyPageToNotification(bundle: Bundle?) {
+        openScreen(R.id.action_topFragment_to_fragmentNotification, bundle)
+    }
+
+    override fun openMyPageToContactUs(bundle: Bundle?) {
+        openScreen(R.id.action_topFragment_to_contactUsFragment, bundle)
+    }
+
+    override fun openContactUsToContactUsConfirm(bundle: Bundle?) {
+        openScreen(R.id.action_contactUsFragment_to_contactUsConfirmFragment, bundle)
+    }
+
+    override fun openContactUsConfirmToContactUsFinish(bundle: Bundle?) {
+        openScreen(R.id.action_contactUsConfirmFragment_to_contactUsFinishFragment, bundle)
+    }
+
+    override fun openEditProfileToEditMail(bundle: Bundle?) {
+        openScreen(R.id.action_fragmentEditProfile_to_editMailFragment, bundle)
+    }
+
+    override fun openEditMailToVerifyCode(bundle: Bundle?) {
+        openScreen(R.id.action_editMailFragment_to_verifyCodeFragment, bundle)
+    }
+
+    override fun openMyPageToFAQ(bundle: Bundle?) {
+        openScreen(R.id.action_topFragment_to_FAQFragment, bundle)
+    }
+
+    override fun openFAQToWithdrawal(bundle: Bundle?) {
+        openScreen(R.id.action_FAQFragment_to_withdrawalFragment, bundle)
     }
 }

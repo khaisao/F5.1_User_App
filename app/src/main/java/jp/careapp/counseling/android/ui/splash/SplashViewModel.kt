@@ -139,7 +139,7 @@ class SplashViewModel @ViewModelInject constructor(
                         val memberCode =
                             userResponse.memberCode
                         userResponse.let {
-                            rxPreferences.saveUserInfor(
+                            rxPreferences.saveUserInfo(
                                 userResponse.token,
                                 userResponse.tokenExpire,
                                 rxPreferences.getPassword().toString(),

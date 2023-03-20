@@ -6,11 +6,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.utils.customView.ToolBarCommon
-import jp.careapp.counseling.databinding.FragmentNotificationBinding
+import jp.careapp.counseling.databinding.FragmentRmSettingPushBinding
 
 @AndroidEntryPoint
-class RMSettingPushFragment : BaseFragment<FragmentNotificationBinding, RMSettingPushViewModel>() {
-    override val layoutId = R.layout.fragment_notification
+class RMSettingPushFragment : BaseFragment<FragmentRmSettingPushBinding, RMSettingPushViewModel>() {
+    override val layoutId = R.layout.fragment_rm_setting_push
 
     private val viewModel: RMSettingPushViewModel by viewModels()
     override fun getVM() = viewModel
@@ -23,24 +23,18 @@ class RMSettingPushFragment : BaseFragment<FragmentNotificationBinding, RMSettin
     }
 
     private fun setUpSwitch() {
-        binding.pushNotification.btnNotifi.setOnCheckedChangeListener { compoundButton, isChecked ->
+        binding.scNotification.setOnCheckedChangeListener { compoundButton, isChecked ->
             if (compoundButton.isPressed) viewModel.updateSettingPush(isChecked)
         }
     }
 
     private fun setUpToolBar() {
-        binding.apply {
-            pushNotification.tvStart.text = getString(R.string.rv_push_notification)
-            toolBar.apply {
-                setTvTitle(getString(R.string.rv_push_notification_settings))
-                setOnToolBarClickListener(object : ToolBarCommon.OnToolBarClickListener() {
-                    override fun onClickLeft() {
-                        super.onClickLeft()
-                        if (!isDoubleClick) findNavController().navigateUp()
-                    }
-                })
+        binding.toolBar.setOnToolBarClickListener(object : ToolBarCommon.OnToolBarClickListener() {
+            override fun onClickLeft() {
+                super.onClickLeft()
+                if (!isDoubleClick) findNavController().navigateUp()
             }
-        }
+        })
     }
 
     override fun bindingStateView() {
@@ -48,7 +42,7 @@ class RMSettingPushFragment : BaseFragment<FragmentNotificationBinding, RMSettin
 
         viewModel.pushMail.observe(viewLifecycleOwner) {
             it?.let {
-                binding.pushNotification.btnNotifi.isChecked = it == PUSH_RECEIVE
+                binding.scNotification.isChecked = it == PUSH_RECEIVE
             }
         }
     }

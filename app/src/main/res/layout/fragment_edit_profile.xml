@@ -1,124 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <import type="jp.careapp.counseling.android.ui.edit_profile.EditProfileViewModel" />
+
         <variable
             name="viewModel"
-            type="jp.careapp.counseling.android.ui.edit_profile.EditProfileViewModel" />
+            type="EditProfileViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_background_common">
+        android:background="#0d002c"
+        android:orientation="vertical">
 
-        <androidx.core.widget.NestedScrollView
+        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+            android:id="@+id/toolBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            app:color_title="@color/color_F0F0F0"
+            app:src_left="@drawable/ic_arrow_left"
+            app:string_title="@string/title_edit_profile" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#2A1F45" />
 
-                <include
-                    android:id="@+id/app_bar"
-                    layout="@layout/tool_bar_common"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/color_130933"
-                    android:paddingHorizontal="@dimen/margin_16"
-                    android:paddingTop="@dimen/_17sdp"
-                    android:paddingBottom="@dimen/_9sdp"
-                    android:text="@string/profile_information"
-                    android:textColor="@color/purple_AEA2D1"
-                    android:textSize="@dimen/text_size_12"
-                    android:textStyle="bold" />
-
-                <include
-                    android:id="@+id/tv_name"
-                    layout="@layout/item_carelear_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <include
-                    android:id="@+id/tv_gender"
-                    layout="@layout/item_carelear_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <include
-                    android:id="@+id/tv_age"
-                    layout="@layout/item_carelear_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/color_white_opacity_15" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/color_130933"
-                    android:paddingHorizontal="@dimen/margin_16"
-                    android:paddingTop="@dimen/_17sdp"
-                    android:paddingBottom="@dimen/_9sdp"
-                    android:text="@string/account_information"
-                    android:textColor="@color/purple_AEA2D1"
-                    android:textSize="@dimen/text_size_12"
-                    android:textStyle="bold" />
-
-                <include
-                    android:id="@+id/tv_code"
-                    layout="@layout/item_carelear_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <include
-                    android:id="@+id/tv_point"
-                    layout="@layout/item_carelear_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <include
-                    android:id="@+id/tv_mail"
-                    layout="@layout/item_carelear_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/color_white_opacity_15" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_caution"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/edit_profile_unregister_mail_caution"
-                    android:textColor="@color/color_alert_error"
-                    android:textSize="@dimen/text_size_14"
-                    android:textStyle="bold"
-                    android:visibility="gone"
-                    android:layout_marginStart="@dimen/margin_16"
-                    android:layout_marginTop="@dimen/margin_16"
-                    android:layout_marginEnd="@dimen/margin_16" />
-
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
-
-        <jp.careapp.counseling.android.utils.customView.GenderSelectView
-            android:id="@+id/genderSelectView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/llMemberName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_nm_top_field">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/hiragino_sans_w3"
+                    android:paddingVertical="16dp"
+                    android:text="@string/nick_name"
+                    android:textColor="#f0f0f0"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_next"
+                    app:layout_constraintBottom_toBottomOf="@id/textView8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/textView8" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/hiragino_sans_w6"
+                    android:gravity="center_vertical|end"
+                    android:text="@{viewModel.memberName}"
+                    android:textColor="#f0f0f0"
+                    app:layout_constraintBottom_toBottomOf="@id/textView8"
+                    app:layout_constraintEnd_toStartOf="@id/imageView3"
+                    app:layout_constraintStart_toEndOf="@+id/textView8"
+                    app:layout_constraintTop_toTopOf="@id/textView8"
+                    tools:text="レー・ブー・ハイ・ダン" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="16dp"
+                    android:background="#453B5D"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/llMemberBirth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_nm_bottom_field">
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/hiragino_sans_w3"
+                    android:paddingVertical="16dp"
+                    android:text="@string/age"
+                    android:textColor="#f0f0f0"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_next"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView9"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView9" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/hiragino_sans_w6"
+                    android:gravity="center_vertical|end"
+                    android:text="@{viewModel.memberAge}"
+                    android:textColor="#f0f0f0"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView9"
+                    app:layout_constraintEnd_toStartOf="@id/imageView4"
+                    app:layout_constraintStart_toEndOf="@+id/textView9"
+                    app:layout_constraintTop_toTopOf="@+id/textView9"
+                    tools:text="３４歳" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/llMemberMail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_only_field">
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/hiragino_sans_w3"
+                    android:paddingVertical="16dp"
+                    android:text="@string/mail_address"
+                    android:textColor="#f0f0f0"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_next"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView10" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/hiragino_sans_w6"
+                    android:gravity="center_vertical|end"
+                    android:text="@{viewModel.memberMail}"
+                    android:textColor="#f0f0f0"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView10"
+                    app:layout_constraintEnd_toStartOf="@id/imageView5"
+                    app:layout_constraintStart_toEndOf="@+id/textView10"
+                    app:layout_constraintTop_toTopOf="@+id/textView10"
+                    tools:text="danglvh2@rikkeisoft.com" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 </layout>

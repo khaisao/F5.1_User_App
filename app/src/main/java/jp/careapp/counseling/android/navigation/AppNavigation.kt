@@ -62,17 +62,11 @@ interface AppNavigation : BaseNavigator {
 
     fun openMyPageToLabScreen(bundle: Bundle? = null)
 
-    fun openMyPageToContact(bundle: Bundle? = null)
-
-    fun openEditContactToConfirmContact(bundle: Bundle? = null)
-
     fun openMyPageToSettingNotification(bundle: Bundle? = null)
 
     fun openMyPageToNews(bundle: Bundle? = null)
 
     fun openMyPageToEditProfile(bundle: Bundle? = null)
-
-    fun openContactConfirmToContactDone(bundle: Bundle? = null)
 
     fun openHomeToBannerFirstTimeUseScreen(bundle: Bundle? = null)
 
@@ -249,4 +243,30 @@ interface AppNavigation : BaseNavigator {
     fun openWithdrawalToSettingNotification(bundle: Bundle? = null)
 
     fun openRMTopToRMBuyPoint(bundle: Bundle? = null)
+
+    fun openMyPageToTermsOfService(bundle: Bundle? = null)
+
+    fun openMyPageToPrivacyPolicy(bundle: Bundle? = null)
+
+    fun openMyPageToUsePointsGuide(bundle: Bundle? = null)
+
+    fun openEditProfileToEditNickName(bundle: Bundle? = null)
+
+    fun openMyPageToBlocked(bundle: Bundle? = null)
+
+    fun openMyPageToNotification(bundle: Bundle? = null)
+
+    fun openMyPageToContactUs(bundle: Bundle? = null)
+
+    fun openContactUsToContactUsConfirm(bundle: Bundle? = null)
+
+    fun openContactUsConfirmToContactUsFinish(bundle: Bundle? = null)
+
+    fun openEditProfileToEditMail(bundle: Bundle? = null)
+
+    fun openEditMailToVerifyCode(bundle: Bundle? = null)
+
+    fun openMyPageToFAQ(bundle: Bundle? = null)
+
+    fun openFAQToWithdrawal(bundle: Bundle? = null)
 }

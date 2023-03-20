@@ -61,7 +61,7 @@ class VerifyCodeViewModel @ViewModelInject constructor(
                                 if (userResponse.password != null) userResponse.password else ""
                             val memberCode =
                                 if (userResponse.memberCode != null) userResponse.memberCode else ""
-                            rxPreferences.saveUserInfor(token, tokenExpire, passWord, memberCode)
+                            rxPreferences.saveUserInfo(token, tokenExpire, passWord, memberCode)
                             openScreen(userResponse.status)
                         }
                         saveEmail(email)

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0d002c"
+        android:orientation="vertical"
+        tools:context=".android.ui.faq.FAQFragment">
+
+        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:src_left="@drawable/ic_arrow_left"
+            app:string_title="@string/faq" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#2A1F45" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvFAQ"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="32dp"
+            android:orientation="vertical"
+            app:itemAnimator="@{null}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/ll_item_content_faq" />
+
+    </LinearLayout>
+</layout>

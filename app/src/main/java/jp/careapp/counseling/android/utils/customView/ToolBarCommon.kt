@@ -18,6 +18,7 @@ import jp.careapp.core.utils.DeviceUtil
 import jp.careapp.counseling.R
 
 class ToolBarCommon : Toolbar {
+    lateinit var toolbar: ConstraintLayout
     lateinit var btnRight: TextView
     lateinit var rootLayout: View
     lateinit var btnLeft: ImageView
@@ -40,6 +41,7 @@ class ToolBarCommon : Toolbar {
     private var fontTitle = 0
     private var colorTitle = 0
     private var colorTvRight = 0
+    private var bgToolBar = 0
 
     constructor(context: Context) : super(context) {
         init()
@@ -59,6 +61,8 @@ class ToolBarCommon : Toolbar {
         fontTitle = a.getResourceId(R.styleable.ToolBarCommon_font_title, R.font.hiragino_sans_w6)
         colorTitle = a.getResourceId(R.styleable.ToolBarCommon_color_title, R.color.color_E5E5E5)
         colorTvRight = a.getResourceId(R.styleable.ToolBarCommon_color_tv_right, R.color.white)
+        bgToolBar =
+            a.getResourceId(R.styleable.ToolBarCommon_bg_toolbar, R.color.color_background_common)
         isTransStatusBar = a.getBoolean(R.styleable.ToolBarCommon_trans_status_bar, false)
         isRotationSrcLeft = a.getBoolean(R.styleable.ToolBarCommon_rotation_src_left, false)
         hiddenLineBottom = a.getBoolean(R.styleable.ToolBarCommon_hide_line_bottom, false)
@@ -82,6 +86,7 @@ class ToolBarCommon : Toolbar {
         tvRight = findViewById(R.id.tvRight)
         ivRight = findViewById(R.id.ivRight)
         tvTitle = findViewById(R.id.tv_title)
+        toolbar = findViewById(R.id.toolbar)
         viewStatusBar = findViewById(R.id.view_status_bar)
         viewStatusBar = findViewById(R.id.view_status_bar)
         lineBottom = findViewById(R.id.line_bottom)
@@ -121,6 +126,7 @@ class ToolBarCommon : Toolbar {
         setFontTitle(fontTitle)
         setColorTitle(colorTitle)
         setColorTvRight(colorTvRight)
+        setBackgroundToolBar(bgToolBar)
     }
 
     fun setRotationSrcLeft(rotation: Float) {
@@ -225,5 +231,9 @@ class ToolBarCommon : Toolbar {
 
     private fun setColorTvRight(@ColorRes color: Int) {
         tvRight.setTextColor(resources.getColor(color))
+    }
+
+    private fun setBackgroundToolBar(@ColorRes color: Int) {
+        toolbar.setBackgroundColor(resources.getColor(color))
     }
 }

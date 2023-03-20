@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/rlInputEmail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0d002c"
+        android:orientation="vertical">
+
+        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:color_title="@color/color_F0F0F0"
+            app:src_left="@drawable/ic_arrow_left"
+            app:string_title="@string/edit_mail" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#2A1F45" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edtMail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_custom_edt_counter"
+                android:fontFamily="@font/hiragino_sans_w3"
+                android:padding="16dp"
+                android:textColor="#f0f0f0"
+                android:textSize="14sp"
+                tools:text="danglvh2@rikkeisoft.com" />
+
+            <include
+                android:id="@+id/llItemWrongMailFormat"
+                layout="@layout/ll_item_wrong_mail_format"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_nm_btn_primary"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:gravity="center"
+                android:minHeight="44dp"
+                android:paddingVertical="16dp"
+                android:text="@string/save"
+                android:textColor="@drawable/color_text_btn_primary"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
