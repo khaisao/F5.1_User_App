@@ -88,6 +88,12 @@ class FavoriteHomeViewModel(
             binding.tvSize.text = bustSize
         }
         binding.tvAge.text = String.format(binding.root.context.getString(R.string.age_pattern),consultant.age)
+        if (consultant.stage == 1) {
+            binding.ivStateBeginner.visibility = View.VISIBLE
+        } else {
+            binding.ivStateBeginner.visibility = View.GONE
+        }
+        binding.ivRanking.setImageResource(ConsultantResponse.getImageViewForRank(consultant.ranking,consultant.recommendRanking))
 
     }
 

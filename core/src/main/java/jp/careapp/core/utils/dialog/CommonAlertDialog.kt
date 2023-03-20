@@ -21,7 +21,7 @@ class CommonAlertDialog constructor(context: Context) : Dialog(context) {
 
     lateinit var btnConfirm: AppCompatButton
     lateinit var btnCancel: AppCompatButton
-    lateinit var btnOk: AppCompatButton
+    lateinit var btnOk: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

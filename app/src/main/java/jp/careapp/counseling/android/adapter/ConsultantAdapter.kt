@@ -47,114 +47,16 @@ class ConsultantAdapter(
 
         fun bind(consultant: ConsultantResponse) {
             binding.tvName.text = consultant.name
-            if (consultant.ranking != null && consultant.ranking.ranking > 0 && consultant.ranking.ranking < 31) {
-                binding.ivRanking.visibility = View.VISIBLE
-                when (consultant.ranking.interval) {
-                    0 -> {
-                        when (consultant.ranking.ranking) {
-                            1 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_1)
-                            2 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_2)
-                            3 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_3)
-                            4 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_4)
-                            5 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_5)
-                            6 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_6)
-                            7 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_7)
-                            8 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_8)
-                            9 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_9)
-                            10 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_10)
-                            11 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_11)
-                            12 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_12)
-                            13 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_13)
-                            14 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_14)
-                            15 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_15)
-                            16 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_16)
-                            17 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_17)
-                            18 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_18)
-                            19 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_19)
-                            20 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_20)
-                            21 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_21)
-                            22 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_22)
-                            23 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_23)
-                            24 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_24)
-                            25 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_25)
-                            26 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_26)
-                            27 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_27)
-                            28 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_28)
-                            29 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_29)
-                            30 -> binding.ivRanking.loadImage(R.drawable.ic_rank_daily_30)
-                        }
-                    }
-                    1 -> {
-                        when (consultant.ranking.ranking) {
-                            1 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_1)
-                            2 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_2)
-                            3 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_3)
-                            4 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_4)
-                            5 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_5)
-                            6 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_6)
-                            7 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_7)
-                            8 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_8)
-                            9 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_9)
-                            10 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_10)
-                            11 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_11)
-                            12 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_12)
-                            13 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_13)
-                            14 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_14)
-                            15 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_15)
-                            16 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_16)
-                            17 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_17)
-                            18 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_18)
-                            19 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_19)
-                            20 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_20)
-                            21 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_21)
-                            22 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_22)
-                            23 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_23)
-                            24 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_24)
-                            25 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_25)
-                            26 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_26)
-                            27 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_27)
-                            28 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_28)
-                            29 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_29)
-                            30 -> binding.ivRanking.loadImage(R.drawable.ic_rank_weekly_30)
-                        }
-                    }
-                    else -> {
-                        when (consultant.ranking.ranking) {
-                            1 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_1)
-                            2 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_2)
-                            3 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_3)
-                            4 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_4)
-                            5 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_5)
-                            6 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_6)
-                            7 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_7)
-                            8 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_8)
-                            9 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_9)
-                            10 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_10)
-                            11 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_11)
-                            12 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_12)
-                            13 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_13)
-                            14 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_14)
-                            15 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_15)
-                            16 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_16)
-                            17 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_17)
-                            18 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_18)
-                            19 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_19)
-                            20 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_20)
-                            21 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_21)
-                            22 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_22)
-                            23 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_23)
-                            24 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_24)
-                            25 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_25)
-                            26 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_26)
-                            27 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_27)
-                            28 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_28)
-                            29 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_29)
-                            30 -> binding.ivRanking.loadImage(R.drawable.ic_rank_monthly_30)
-                        }
-                    }
-                }
+            binding.ivRanking.loadImage(
+                ConsultantResponse.getImageViewForRank(
+                    consultant.ranking,
+                    consultant.recommendRanking
+                )
+            )
+            if (consultant.stage == 1) {
+                binding.ivStateBeginner.visibility = View.VISIBLE
             } else {
-                binding.ivRanking.visibility = View.INVISIBLE
+                binding.ivStateBeginner.visibility = View.GONE
             }
 
             Glide.with(context).load(consultant.imageUrl)

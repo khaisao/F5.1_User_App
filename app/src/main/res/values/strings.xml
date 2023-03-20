@@ -378,6 +378,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="yesterday">前日</string>
     <string name="weekly">週間</string>
     <string name="monthly">月間</string>
+    <string name="recommend">オススメ</string>
     <string name="ranking_number">%d位</string>
     <string name="no_ranking_result">現在この期間のランキングはありません。</string>
     <!--    maintenance-->

@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import jp.careapp.core.utils.getDurationBreakdown
 import jp.careapp.counseling.R
+import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.network.HistoryResponse
 import jp.careapp.counseling.android.utils.CallStatus
 import jp.careapp.counseling.android.utils.ChatStatus
@@ -83,34 +84,26 @@ class HistoryViewHolder(
             events.onclickItem(item)
         }
 
-        if (item.callStatus == CallStatus.ONLINE && item.chatStatus == ChatStatus.OFFLINE) {
-            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
-            binding.tvStatus.text =
-                context.resources.getString(R.string.presence_status_offline)
-        } else if (item.callStatus == CallStatus.INCOMING_CALL && item.chatStatus == ChatStatus.OFFLINE) {
-            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
-            binding.tvStatus.text =
-                context.resources.getString(R.string.presence_status_offline)
-        } else if (item.callStatus == CallStatus.OFFLINE && item.chatStatus == ChatStatus.WAITING) {
-            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
-            binding.tvStatus.text =
-                context.resources.getString(R.string.presence_status_live_streaming)
-        } else if (item.callStatus == CallStatus.OFFLINE && item.chatStatus == ChatStatus.CHATTING) {
-            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
-            binding.tvStatus.text =
-                context.resources.getString(R.string.presence_status_live_streaming)
-        } else if (item.callStatus == CallStatus.OFFLINE && item.chatStatus == ChatStatus.TWO_SHOT_CHAT) {
-            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
-            binding.tvStatus.text =
-                context.resources.getString(R.string.presence_status_private_delivery)
-        } else if (item.callStatus == CallStatus.OFFLINE && item.chatStatus == ChatStatus.OFFLINE) {
+        if (ConsultantResponse.isWaiting(item.callStatus, item.chatStatus)) {
             binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_waiting)
             binding.tvStatus.text =
-                context.resources.getString(R.string.presence_status_waiting)
+                binding.root.context.resources.getString(R.string.presence_status_waiting)
+        } else if (ConsultantResponse.isLiveStream(item.callStatus, item.chatStatus)) {
+            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
+            binding.tvStatus.text =
+                binding.root.context.resources.getString(R.string.presence_status_live_streaming)
+        } else if (ConsultantResponse.isPrivateLiveStream(
+                item.callStatus,
+                item.chatStatus
+            )
+        ) {
+            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
+            binding.tvStatus.text =
+                binding.root.context.resources.getString(R.string.presence_status_private_delivery)
         } else {
             binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
             binding.tvStatus.text =
-                context.resources.getString(R.string.presence_status_offline)
+                binding.root.context.resources.getString(R.string.presence_status_offline)
         }
 
         val bustSize = context.getBustSize(item.bust)

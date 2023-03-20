@@ -66,6 +66,48 @@ class ListTypeRankingViewModel @ViewModelInject constructor(
         }
     }
 
+    fun getListRecommendRanking( activity: Activity, isShowLoading: Boolean) {
+        val params: MutableMap<String, Any> = HashMap()
+        params[BUNDLE_KEY.LIMIT] = NUMBER_RANKING_PEOPLE
+        isReadyShowResult.value = false
+        viewModelScope.launch {
+            if (isShowLoading) {
+                isRankShowLoading.postValue(true)
+            }
+            try {
+                val rankingResponse = apiInterface.getListRecommendRanking(params)
+                rankingResponse.let {
+                    val listRankingTop: ArrayList<TypeRankingResponse> = arrayListOf()
+                    val listRankingTemp: ArrayList<TypeRankingResponse> = arrayListOf()
+                    if (!it.dataResponse.isNullOrEmpty()) {
+                        if (it.dataResponse.size > 3) {
+                            for (i in 0 until 3) {
+                                listRankingTop.add(it.dataResponse[i])
+                            }
+                            for (i in 3 until it.dataResponse.size) {
+                                listRankingTemp.add(it.dataResponse[i])
+                            }
+                            rankingTopResult.value = listRankingTop
+                            listRankingResult.value = listRankingTemp
+                        } else {
+                            rankingTopResult.value = it.dataResponse!!
+                        }
+                        setListConsultant(it.dataResponse)
+                    } else {
+                        rankingTopResult.value = arrayListOf()
+                    }
+                }
+                isReadyShowResult.value = true
+            } catch (throwable: Throwable) {
+                isReadyShowResult.value = true
+            } finally {
+                if (isShowLoading) {
+                    isRankShowLoading.postValue(false)
+                }
+            }
+        }
+    }
+
     private fun setListConsultant(listTypeRanking: List<TypeRankingResponse>) {
         listConsultant = arrayListOf()
         for (typeRanking in listTypeRanking) {
@@ -77,14 +119,4 @@ class ListTypeRankingViewModel @ViewModelInject constructor(
         return listConsultant
     }
 
-    private fun checkIsToday(time: Calendar): Boolean {
-        val now = Calendar.getInstance()
-        if (now[Calendar.DATE] == time[Calendar.DATE]
-            && now[Calendar.MONTH] == time[Calendar.MONTH]
-            && now[Calendar.YEAR] == time[Calendar.YEAR]
-        ) {
-            return true
-        }
-        return false
-    }
 }

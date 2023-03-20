@@ -1,7 +1,6 @@
 package jp.careapp.counseling.android.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -74,7 +73,7 @@ class PerformerFragment : BaseFragment<FragmentPerformerBinding,HomeViewModel>()
                 if (listDataSize > 0) {
                     val layoutManager = binding.rvConsultant.layoutManager as LinearLayoutManager
                     if (!viewModel.isLoadMoreData) {
-                        if (layoutManager != null && (layoutManager.findLastCompletelyVisibleItemPosition() == listDataSize - 1) && viewModel.isCanLoadMoreData()) {
+                        if ((layoutManager.findLastCompletelyVisibleItemPosition() == listDataSize - 1) && viewModel.isCanLoadMoreData()) {
                             viewModel.isLoadMoreData = true
                             viewModel.loadMoreData()
                         }

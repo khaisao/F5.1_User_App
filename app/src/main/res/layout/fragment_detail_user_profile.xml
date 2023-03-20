@@ -105,7 +105,7 @@
                         android:paddingStart="@dimen/margin_6dp"
                         android:paddingEnd="@dimen/margin_6dp"
                         android:textColor="@color/white"
-                        tools:text="@string/presence_status_live_streaming" />
+                         />
 
                     <LinearLayout
                         android:id="@+id/ll_status_viewer_count"
@@ -117,7 +117,7 @@
                         android:gravity="center_vertical"
                         android:paddingStart="@dimen/margin_6dp"
                         android:paddingEnd="@dimen/margin_6dp"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -149,16 +149,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/margin_30"
                         android:layout_marginStart="@dimen/margin_4dp"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/ic_state_bronze" />
+                        android:adjustViewBounds="true" />
 
                     <ImageView
                         android:id="@+id/img_ranking"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_36"
                         android:layout_marginStart="@dimen/margin_4dp"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/ic_rank_monthly_1" />
+                        android:adjustViewBounds="true" />
 
                 </LinearLayout>
 
