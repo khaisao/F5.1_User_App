@@ -60,8 +60,6 @@ import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.extensions.toPayLength
 import jp.careapp.counseling.android.utils.extensions.toPayPoint
 import jp.careapp.counseling.databinding.FragmentChatMessageBinding
-import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
 import java.util.*
 import javax.inject.Inject
 
@@ -154,22 +152,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                     .tvSubTitle.visibility = VISIBLE
             }
         )
-    }
-
-    private val formatCharactor: DecimalFormat by lazy {
-        val symbols = DecimalFormatSymbols(Locale(","))
-        val df = DecimalFormat()
-        df.decimalFormatSymbols = symbols
-        df.groupingSize = 3
-        df
-    }
-
-    private val formatPoint: DecimalFormat by lazy {
-        val symbols = DecimalFormatSymbols(Locale(","))
-        val df = DecimalFormat()
-        df.decimalFormatSymbols = symbols
-        df.groupingSize = 3
-        df
     }
 
     val keyboardLayoutListener = OnGlobalLayoutListener {
