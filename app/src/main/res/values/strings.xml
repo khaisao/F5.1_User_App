@@ -389,6 +389,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
 
     <!--message-->
     <string name="input_content_message">こんばんは、はじめまして</string>
+    <string name="enter_the_story">ナイショ話を入力</string>
     <string name="yesterday_time_send">昨日</string>
     <string name="read">既読</string>
     <string name="subject_review">\@@COUNSELOR_REVIEW@@</string>
@@ -407,6 +408,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="unlock_dialog_title">%dpts消費します</string>
     <string name="message_free_1">【無料】ライブ配信お願いします</string>
     <string name="message_free_2">【無料】ありがとうございました</string>
+    <string name="secret_story">ナイショ話</string>
 
     <string name="regex_link">://</string>
 

@@ -20,8 +20,7 @@ import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.message.BaseMessageResponse
 import jp.careapp.counseling.android.data.model.message.MessageResponse
 import jp.careapp.counseling.android.data.model.message.TimeMessageResponse
-import jp.careapp.counseling.android.utils.extensions.toPayLength
-import jp.careapp.counseling.android.utils.extensions.toPayPoint
+import jp.careapp.counseling.android.ui.live_stream.MessageDiffUtil
 import jp.careapp.counseling.databinding.ItemMessageCallBinding
 import jp.careapp.counseling.databinding.ItemMessageOwnerBinding
 import jp.careapp.counseling.databinding.ItemMessagePerformerBinding
@@ -161,24 +160,9 @@ class ChatMessageAdapter constructor(
                         )
                         contentMessageTv.text = blurString
                         contentMessageTv.setTextIsSelectable(false)
-                        llUnlockFeeMessage.visibility = View.VISIBLE
-                        tvUnlockMessage.text = context.getString(
-                            R.string.unlock_message,
-                            data.body.toPayLength(),
-                            data.body.toPayPoint(pointPerChar)
-                        )
-                        llUnlockFeeMessage.setOnClickListener {
-                            messageResponse?.let { it ->
-                                onClickListener.invoke(
-                                    it,
-                                    CLICK_PAY_MESSAGE
-                                )
-                            }
-                        }
                     } else {
                         contentMessageTv.text = data.body
                         contentMessageTv.setTextIsSelectable(true)
-                        llUnlockFeeMessage.visibility = View.GONE
                     }
                     if (data.performer != null)
                         avatarIv.loadImage(
