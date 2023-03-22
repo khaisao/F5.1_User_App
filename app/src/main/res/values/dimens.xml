@@ -47,6 +47,7 @@
     <dimen name="margin_100">100dp</dimen>
     <dimen name="margin_30">30dp</dimen>
     <dimen name="margin_42">42dp</dimen>
+    <dimen name="margin_64">64dp</dimen>
 
     <!--height layout-->
     <dimen name="height_diver_line">0.5dp</dimen>

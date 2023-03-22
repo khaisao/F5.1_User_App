@@ -84,10 +84,8 @@ class ChatListAdapter constructor(
                                     context.resources.getString(R.string.presence_status_offline)
                             }
                             if (it.stage == 1) {
-                                ivState.visibility = GONE
                                 ivStateBeginner.visibility = VISIBLE
                             } else {
-                                ivState.visibility = VISIBLE
                                 ivStateBeginner.visibility = GONE
                             }
                         } else {
