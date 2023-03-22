@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_live_stream_bottom_sheet_dialog"
+        tools:context=".android.ui.live_stream.bottom_sheet_live_stream.connect_private.ConnectPrivateBottomSheet">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textView13"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/hiragino_sans_w6"
+            android:gravity="center"
+            android:text="@string/private_mode_connecting"
+            android:textColor="#f0f0f0"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageView7"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintDimensionRatio="71:22"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView13"
+            app:layout_constraintWidth_percent="0.2"
+            tools:src="@drawable/ic_call_loading" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="34dp"
+            android:background="@drawable/bg_nm_btn_primary_disable"
+            android:fontFamily="@font/hiragino_sans_w6"
+            android:gravity="center"
+            android:minHeight="44dp"
+            android:paddingVertical="16dp"
+            android:text="@string/cancel"
+            android:textColor="#b2a9cc"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageView7" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

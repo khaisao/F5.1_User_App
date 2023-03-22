@@ -716,4 +716,15 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="case_other">その他</string>
     <string name="faq">よくある質問</string>
     <string name="log_out">ログアウトしました</string>
+    <string name="close">閉じる</string>
+    <string name="private_mode_denied">プライベートモード申請が拒否されました</string>
+    <string name="premium_private_mode_register_confirm">プレミアムプライベートモードを申し込みますか？</string>
+    <string name="premium_private_mode_register">プレミアムプライベートモードではカメラとマイクが利用可能です。1分毎の消費ポイントが変わりますので、ご注意ください。</string>
+    <string name="private_mode_register_confirm">プライベートモードを申し込みますか？</string>
+    <string name="private_mode_register">プライベートモードでは女の子と2人きりとなります。1分毎の消費ポイントが変わりますので、ご注意ください。</string>
+    <string name="change_to_party_mode">パーティーモードへ移行しますか？</string>
+    <string name="performer_out_confirm">パフォーマーよりプライベートモードの解除申請がありました</string>
+    <string name="private_mode_connecting">プライベートモード申請中</string>
+    <string name="use_microphone">マイクを使用</string>
+    <string name="use_camera">カメラを使用</string>
 </resources>

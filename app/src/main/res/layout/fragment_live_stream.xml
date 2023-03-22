@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".android.ui.live_stream.LiveStreamFragment">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.958" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnComment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_btn_live_stream"
+            android:minHeight="40dp"
+            android:padding="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline9"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.106"
+            app:srcCompat="@drawable/ic_live_stream_comment" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnWhisper"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_btn_live_stream"
+            android:minHeight="40dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_live_stream_whisper"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline9"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toEndOf="@id/btnComment"
+            app:layout_constraintWidth_percent="0.106" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnPrivate"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_btn_live_stream"
+            android:minHeight="40dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_live_stream_private"
+            app:layout_constraintBottom_toTopOf="@+id/guideline9"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.106" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnParty"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_btn_live_stream"
+            android:minHeight="40dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_live_stream_party"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/guideline9"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.106"
+            tools:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnVideoMic"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_btn_live_stream"
+            android:minHeight="40dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_live_stream_video_mic"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/btnParty"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.106"
+            tools:visibility="gone" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="top"
+            app:constraint_referenced_ids="btnPrivate, btnVideoMic" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnPoint"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_btn_live_stream"
+            android:minHeight="40dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_live_stream_point"
+            app:layout_constraintBottom_toTopOf="@id/barrier"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.106" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
