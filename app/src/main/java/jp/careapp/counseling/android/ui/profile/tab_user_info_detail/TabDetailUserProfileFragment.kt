@@ -56,8 +56,8 @@ class TabDetailUserProfileFragment :
     }
 
     private fun setData(consultantResponse: ConsultantResponse) {
-        var listStringGenres = mutableListOf<String>()
-        consultantResponse?.let {
+        val listStringGenres = mutableListOf<String>()
+        consultantResponse.let {
             it.genres.forEach {
                 if (listGenRest.containsKey(it)) {
                     listStringGenres.add(listGenRest.get(it) ?: "")
@@ -73,8 +73,8 @@ class TabDetailUserProfileFragment :
         fun getInstance(
             consultantResponse: ConsultantResponse
         ): TabDetailUserProfileFragment {
-            var tabDetailUserProfileFragment = TabDetailUserProfileFragment()
-            var bundle = Bundle()
+            val tabDetailUserProfileFragment = TabDetailUserProfileFragment()
+            val bundle = Bundle()
             bundle.putSerializable(BUNDLE_KEY.USER_PROFILE, consultantResponse)
             tabDetailUserProfileFragment.arguments = bundle
             return tabDetailUserProfileFragment

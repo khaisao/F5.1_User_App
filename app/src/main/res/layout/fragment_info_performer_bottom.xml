@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_50090E1B">
+
+        <LinearLayout
+            android:id="@+id/ll_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_corner_top_20dp_background_common"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/tv_user_name"
+                style="@style/text_bold_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_44"
+                android:paddingBottom="@dimen/margin_3"
+                android:shadowColor="@color/color_9A33FF"
+                android:shadowRadius="18"
+                android:text="Namegg"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8">
+
+                <TextView
+                    android:id="@+id/tv_size"
+                    style="@style/text_bold_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="@dimen/padding_6dp"
+                    android:paddingBottom="@dimen/margin_3"
+                    android:shadowColor="@color/color_9A33FF"
+                    android:shadowRadius="18"
+                    android:text="asgasg"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tv_age"
+                    style="@style/text_bold_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/margin_3"
+                    android:shadowColor="@color/color_9A33FF"
+                    android:shadowRadius="18"
+                    android:text="asgasg"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_3">
+
+                <ImageView
+                    android:id="@+id/iv_bg_message_notice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_marginHorizontal="@dimen/margin_4dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/bg_message_notice"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_message_notice"
+                    style="@style/text_bold_14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_38"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/margin_3"
+                    android:shadowColor="@color/color_FC00FF"
+                    android:shadowRadius="18"
+                    android:text="asggggggggggggggggggggggggggggggggggggggggasg"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_bg_message_notice"
+                    app:layout_constraintEnd_toEndOf="@id/iv_bg_message_notice"
+                    app:layout_constraintStart_toStartOf="@id/iv_bg_message_notice"
+                    app:layout_constraintTop_toTopOf="@id/iv_bg_message_notice" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.lihang.ShadowLayout
+                android:id="@+id/sl_input_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_24"
+                app:hl_cornerRadius="@dimen/margin_64"
+                app:hl_shadowBackColor="@color/color_background_common"
+                app:hl_shadowColor="@color/color_dialog_border_shadow"
+                app:hl_shadowLimit="@dimen/margin_13">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/circle_card_view"
+                    android:layout_width="@dimen/margin_48dp"
+                    android:layout_height="@dimen/margin_48dp"
+                    app:cardBackgroundColor="@color/color_background_common"
+                    app:cardCornerRadius="@dimen/margin_24">
+
+                    <ImageView
+                        android:id="@+id/add_favorite_tv"
+                        android:layout_width="@dimen/dimen_36"
+                        android:layout_height="@dimen/dimen_36"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_add_follow_inactive" />
+
+                    <ImageView
+                        android:id="@+id/remove_favorite_tv"
+                        android:layout_width="@dimen/dimen_36"
+                        android:layout_height="@dimen/dimen_36"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_remove_follow"
+                        android:visibility="invisible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </com.google.android.material.card.MaterialCardView>
+            </com.lihang.ShadowLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="@dimen/margin_64"
+            android:layout_height="@dimen/margin_64"
+            android:src="@drawable/ic_avatar_default"
+            app:layout_constraintBottom_toTopOf="@id/ll_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ll_info" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

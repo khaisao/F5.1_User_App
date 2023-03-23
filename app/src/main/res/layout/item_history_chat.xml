@@ -77,14 +77,6 @@
                         android:textColor="@color/white" />
 
                     <ImageView
-                        android:id="@+id/iv_state"
-                        android:layout_width="wrap_content"
-                        android:layout_height="33dp"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/ic_rank_daily_2"
-                        android:visibility="gone" />
-
-                    <ImageView
                         android:id="@+id/iv_ranking"
                         android:layout_width="wrap_content"
                         android:layout_height="33dp"
