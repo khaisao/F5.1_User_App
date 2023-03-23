@@ -114,7 +114,10 @@ class ExitLiveStreamViewModel @Inject constructor(private val apiInterface: ApiI
                 listBlockedConsultantResult.value!!.dataResponse.any {
                     it.code == consultant.code
                 }
+            }.sortedByDescending {
+                it.loginMemberCount + it.peepingMemberCount
             }
+
             listConsultantTemp.clear()
             listConsultantTemp.addAll(dataResult)
         }

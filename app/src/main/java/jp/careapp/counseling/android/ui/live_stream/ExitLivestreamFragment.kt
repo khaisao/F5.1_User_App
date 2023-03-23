@@ -108,7 +108,7 @@ class ExitLivestreamFragment :
 
         consultantResponseLocal?.let { changeStatusIsFavorite(it.isFavorite) }
 
-        binding.tvName.text = consultantResponseLocal?.name ?: "aaa"
+        binding.tvName.text = consultantResponseLocal?.name ?: ""
 
         binding.ivAvatar.loadImage(consultantResponseLocal?.thumbnailImageUrl)
 
