@@ -18,8 +18,8 @@ import jp.careapp.counseling.databinding.ItemConsultantBinding
 
 class ConsultantAdapter(
     val context: Context,
-    val listGenRes: ArrayList<GenResItem>,
-    private val listener: (Int, List<ConsultantResponse>) -> Unit
+    private val listener: (Int, List<ConsultantResponse>) -> Unit,
+    private val isExitLiveStreamScreen: Boolean = false
 ) :
     ListAdapter<ConsultantResponse, ConsultantAdapter.ConsultantHolder>(DiffCallback()) {
 
@@ -77,31 +77,32 @@ class ConsultantAdapter(
                     if (consultant.messageOfTheDay.isNullOrEmpty()) View.INVISIBLE else View.VISIBLE
                 tvTweet.text = consultant.messageOfTheDay?.replace("\n", "")
             }
-            if (ConsultantResponse.isWaiting(consultant.callStatus, consultant.chatStatus)) {
-                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_waiting)
+            val isWaiting =
+                ConsultantResponse.isWaiting(consultant.callStatus, consultant.chatStatus)
+            val isLiveStream =
+                ConsultantResponse.isLiveStream(consultant.callStatus, consultant.chatStatus)
+            val isPrivateLiveStream =
+                ConsultantResponse.isPrivateLiveStream(consultant.callStatus, consultant.chatStatus)
+            if (isWaiting) {
+                binding.clStatus.setBackgroundResource(R.drawable.bg_performer_status_waiting)
                 binding.tvStatus.text =
                     context.resources.getString(R.string.presence_status_waiting)
-            } else if (ConsultantResponse.isLiveStream(
-                    consultant.callStatus,
-                    consultant.chatStatus
-                )
-            ) {
-                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
+            } else if (isLiveStream) {
+                binding.clStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
                 binding.tvStatus.text =
                     context.resources.getString(R.string.presence_status_live_streaming)
-            } else if (ConsultantResponse.isPrivateLiveStream(
-                    consultant.callStatus,
-                    consultant.chatStatus
-                )
-            ) {
-                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
+            } else if (isPrivateLiveStream) {
+                binding.clStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
                 binding.tvStatus.text =
                     context.resources.getString(R.string.presence_status_private_delivery)
             } else {
-                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
+                binding.clStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
                 binding.tvStatus.text =
                     context.resources.getString(R.string.presence_status_offline)
             }
+            binding.ivRanking.visibility = if (isExitLiveStreamScreen) View.INVISIBLE else View.VISIBLE
+            binding.tvLiveStreamCount.visibility = if (isLiveStream) View.VISIBLE else View.GONE
+            binding.tvLiveStreamCount.text = (consultant.loginMemberCount + consultant.peepingMemberCount).toString()
             val bustSize = context.getBustSize(consultant.bust)
             if (bustSize == "") {
                 binding.tvSize.visibility = View.GONE

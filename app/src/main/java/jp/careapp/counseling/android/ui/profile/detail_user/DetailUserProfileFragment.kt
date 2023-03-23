@@ -361,7 +361,7 @@ class DetailUserProfileFragment :
     }
 
     private fun handleOpenChatScreen(isShowFreeMess: Boolean = false) {
-        var bundle = Bundle()
+        val bundle = Bundle()
         bundle.putString(
             BUNDLE_KEY.PERFORMER_CODE,
             consultantResponse?.code ?: ""

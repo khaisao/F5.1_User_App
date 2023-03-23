@@ -258,9 +258,11 @@ class BUNDLE_KEY {
         const val PARAM_STAGE: String = "stage"
         const val PARAM_REVIEW_AVERAGE: String = "review_average"
         const val PRESENCE_STATUS = "presence_status"
+        const val LAST_LOGIN_DATE = "last_login_date"
         const val REVIEW_TOTAL_NUMBER = "review_total_number"
         const val REVIEW_TOTAL_SCORE = "review_total_score"
         const val DESC = "desc"
+        const val CHAT_STATUS = "chat_status"
         const val LIMIT = "limit"
         const val LIMIT_20 = 20
         const val LIMIT_30 = 30

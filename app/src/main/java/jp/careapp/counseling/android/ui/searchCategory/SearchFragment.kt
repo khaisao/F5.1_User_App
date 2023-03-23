@@ -3,7 +3,6 @@ package jp.careapp.counseling.android.ui.searchCategory
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.core.view.isVisible
@@ -14,23 +13,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.DeviceUtil
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.adapter.ConsultantAdapter
-import jp.careapp.counseling.android.data.network.CategoryResponse
 import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.model.user_profile.PerformerSearch
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
-import jp.careapp.counseling.android.utils.Define.SearchCondition
-import jp.careapp.counseling.android.utils.GenresUtil
-import jp.careapp.counseling.android.utils.customView.ToolbarSearch
-import jp.careapp.counseling.android.utils.extensions.updateTextStyleChecked
 import jp.careapp.counseling.databinding.FragmentSearchBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -220,7 +213,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
         mConsultantAdapter = context?.let {
             ConsultantAdapter(
                 it,
-                GenresUtil.getListGenres(),
                 listener = { position, listData ->
                     if (!isDoubleClick) {
                         onClickDetailConsultant(position, listData)
@@ -237,7 +229,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
         position: Int,
         listData: List<ConsultantResponse>
     ) {
-        var bundle = Bundle()
+        val bundle = Bundle()
         bundle.putInt(BUNDLE_KEY.POSITION_SELECT, position)
         shareViewModel.setListPerformer(listData)
         appNavigation.openSearchResultToProfileScreen(bundle)

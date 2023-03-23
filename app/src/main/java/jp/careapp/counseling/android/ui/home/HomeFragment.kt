@@ -30,7 +30,6 @@ import jp.careapp.counseling.android.ui.main.MainViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.Define.Companion.PREFIX_CARE_APP
-import jp.careapp.counseling.android.utils.GenresUtil
 import jp.careapp.counseling.databinding.FragmentHomeBinding
 import timber.log.Timber
 import javax.inject.Inject
@@ -61,7 +60,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     private val mConsultantAdapter: ConsultantAdapter by lazy {
         ConsultantAdapter(
             requireContext(),
-            GenresUtil.getListGenres(),
             listener = { position, listData ->
                 if (!isDoubleClick) {
                     onClickDetailConsultant(position, listData)

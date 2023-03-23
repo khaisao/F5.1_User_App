@@ -897,5 +897,28 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
     </fragment>
+    <fragment
+        android:id="@+id/exitLivestreamFragment"
+        tools:layout="@layout/fragment_exit_livestream"
+        android:name="jp.careapp.counseling.android.ui.live_stream.ExitLivestreamFragment"
+        android:label="ExitLivestreamFragment" >
+        <action
+            android:id="@+id/action_exitLivestreamFragment_to_chatMessageFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:destination="@id/chatMessageFragment" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_liveStreamFragment_to_exitLiveStreamFragment"
+        app:destination="@id/exitLivestreamFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left"
+        app:popUpToInclusive="true" />
+
 
 </navigation>

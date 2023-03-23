@@ -2,7 +2,6 @@ package jp.careapp.counseling.android.ui.favourite
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -64,7 +63,32 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
         super.bindingStateView()
         viewModels.forceRefresh()
         adapterFavorite = FavoriteAdapter(lifecycleOwner = viewLifecycleOwner, events = viewModels, context = requireContext())
-        adapterHistory = HistoryAdapter(lifecycleOwner = viewLifecycleOwner, events = historyViewModel, context = requireContext())
+        adapterHistory = HistoryAdapter(
+            context = requireContext(),
+            onItemClick = { item ->
+
+                val bundle = Bundle()
+                bundle.putInt(BUNDLE_KEY.POSITION_SELECT, 0)
+
+                val listConsultant = ArrayList(
+                    listOf(
+                        ConsultantResponse(
+                            code = item.code,
+                            existsImage = item.existsImage,
+                            imageUrl = item.imageUrl,
+                            name = item.name,
+                            stage = item.status,
+                            thumbnailImageUrl = item.thumbnailImageUrl
+                        )
+                    )
+                )
+
+                bundle.putSerializable(
+                    BUNDLE_KEY.LIST_USER_PROFILE,
+                    listConsultant
+                )
+                appNavigation.openRankingToUserProfileScreen(bundle)
+            })
         adapterFavoriteHome = FavoriteHomeAdapter(lifecycleOwner = viewLifecycleOwner, events = viewModels)
         binding.apply {
             if (typeFavoriteScreen == BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_FAVORITE) {

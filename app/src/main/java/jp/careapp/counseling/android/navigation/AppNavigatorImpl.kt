@@ -536,4 +536,12 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     override fun openFAQToWithdrawal(bundle: Bundle?) {
         openScreen(R.id.action_FAQFragment_to_withdrawalFragment, bundle)
     }
+
+    override fun openLiveStreamToExitLiveStream(bundle: Bundle?) {
+        openScreen(R.id.action_liveStreamFragment_to_exitLiveStreamFragment, bundle)
+    }
+
+    override fun openExitLiveStreamToMessage(bundle: Bundle?) {
+        openScreen(R.id.action_exitLivestreamFragment_to_chatMessageFragment, bundle)
+    }
 }
