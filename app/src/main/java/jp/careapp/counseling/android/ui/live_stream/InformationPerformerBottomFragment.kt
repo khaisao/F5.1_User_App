@@ -159,17 +159,9 @@ class InformationPerformerBottomFragment : BottomSheetDialogFragment() {
     }
 
     private fun changeStatusIsFavorite(isFavorite: Boolean) {
-        if (isFavorite) {
-            binding.apply {
-                removeFavoriteTv.visibility = View.VISIBLE
-                addFavoriteTv.visibility = View.GONE
-            }
-
-        } else {
-            binding.apply {
-                removeFavoriteTv.visibility = View.GONE
-                addFavoriteTv.visibility = View.VISIBLE
-            }
+        binding.apply {
+            removeFavoriteTv.visibility = if (isFavorite) View.VISIBLE else View.GONE
+            addFavoriteTv.visibility = if (isFavorite) View.GONE else View.VISIBLE
         }
     }
 
@@ -183,7 +175,7 @@ class InformationPerformerBottomFragment : BottomSheetDialogFragment() {
                     )
                 }
             }
-            clickItemView.clickAddFollow()
+            clickItemView.onAddFollowClick()
         }
 
         binding.removeFavoriteTv.setOnClickListener {
@@ -194,7 +186,7 @@ class InformationPerformerBottomFragment : BottomSheetDialogFragment() {
                     )
                 }
             }
-            clickItemView.clickRemoveFollow()
+            clickItemView.onRemoveFollowClick()
         }
     }
 
@@ -209,7 +201,7 @@ class InformationPerformerBottomFragment : BottomSheetDialogFragment() {
     }
 
     interface ClickItemView {
-        fun clickAddFollow()
-        fun clickRemoveFollow()
+        fun onAddFollowClick()
+        fun onRemoveFollowClick()
     }
 }
