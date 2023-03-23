@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background_common"
+        tools:context=".android.ui.live_stream.AfterExitLivestreamFragment">
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="@dimen/margin_30"
+            android:layout_height="@dimen/margin_30"
+            android:layout_marginTop="@dimen/margin_2"
+            android:layout_marginEnd="@dimen/margin_5dp"
+            android:paddingHorizontal="@dimen/margin_8"
+            android:paddingTop="@dimen/margin_8"
+            android:src="@drawable/ic_video_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/text_bold_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/log_out"
+            android:textColor="@color/color_F0F0F0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_close" />
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="@dimen/margin_80"
+            android:layout_height="@dimen/margin_103"
+            app:cardBackgroundColor="@color/transparent"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintTop_toTopOf="@id/sl_avatar"
+            app:layout_constraintBottom_toBottomOf="@id/sl_avatar"
+            app:layout_constraintStart_toStartOf="@id/sl_avatar"
+            app:layout_constraintEnd_toEndOf="@id/sl_avatar"
+            app:strokeColor="@color/color_FF3FEE"
+            app:strokeWidth="1dp">
+        </com.google.android.material.card.MaterialCardView>
+        <com.lihang.ShadowLayout
+            android:id="@+id/sl_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            android:layout_marginTop="@dimen/margin_11"
+            app:hl_shadowBackColor="@color/color_background_common"
+            app:hl_shadowColor="@color/color_FF3FEE"
+            app:hl_shadowLimit="@dimen/margin_13"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="70dp"
+                android:layout_height="93dp"
+                android:layout_margin="@dimen/margin_4dp"
+                app:cardCornerRadius="10dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_avatar_default_chat" />
+
+            </com.google.android.material.card.MaterialCardView>
+        </com.lihang.ShadowLayout>
+
+        <TextView
+            style="@style/text_bold_16"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/margin_16"
+            app:layout_constraintTop_toBottomOf="@id/sl_avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
