@@ -57,17 +57,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         }
     }
 
-    private val mConsultantAdapter: ConsultantAdapter by lazy {
-        ConsultantAdapter(
-            requireContext(),
-            listener = { position, listData ->
-                if (!isDoubleClick) {
-                    onClickDetailConsultant(position, listData)
-                }
-            }
-        )
-    }
-
     private val handler = Handler(Looper.getMainLooper())
     private val swipeBannerRunnable: Runnable by lazy {
         object : Runnable {
@@ -151,15 +140,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         super.onDestroyView()
     }
 
-    private fun onClickDetailConsultant(
-        position: Int,
-        listData: List<ConsultantResponse>
-    ) {
-        val bundle = Bundle()
-        bundle.putInt(BUNDLE_KEY.POSITION_SELECT, position)
-        shareViewModel.setListPerformer(listData)
-        appNavigation.openTopToUserProfileScreen(bundle)
-    }
 
     override fun bindingStateView() {
         super.bindingStateView()
@@ -173,15 +153,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             }
         }
         viewModel.isLoading.observe(viewLifecycleOwner, isLoadingObserver)
-
-        viewModel.listConsultantResult.observe(
-            viewLifecycleOwner
-        ) {
-            if (!it.isNullOrEmpty()) {
-                shareViewModel.saveListPerformerSearch(it)
-            }
-            mConsultantAdapter.submitList(it)
-        }
 
         mainViewModels.currentFragment.observe(
             viewLifecycleOwner,

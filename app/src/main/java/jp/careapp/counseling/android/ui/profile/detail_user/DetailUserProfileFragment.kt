@@ -22,6 +22,7 @@ import jp.careapp.counseling.R
 import jp.careapp.counseling.android.adapter.GalleryAdapter
 import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.network.GalleryResponse
+import jp.careapp.counseling.android.data.network.ThumbnailImageResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
@@ -411,7 +412,7 @@ class DetailUserProfileFragment :
     }
 
     private var handleResultUserGallery: Observer<List<GalleryResponse>?> = Observer {
-        if (it != null) {
+        if (it != null && it.isNotEmpty()) {
             if (it.size <= 3) {
                 numberTimeCanScrollDown = 0
             } else if (it.size % 3 == 0) {
@@ -423,11 +424,26 @@ class DetailUserProfileFragment :
                 binding.ivArrowDown.visibility=VISIBLE
             }
             numberMaxTimeCanScrollDown = numberTimeCanScrollDown
-            binding.rvGallery.visibility = VISIBLE
             galleryAdapter.submitList(it)
         } else {
-            binding.ivArrowDown.visibility=GONE
-            binding.rvGallery.visibility = GONE
+            val itemNoImage =
+                "android.resource://" + requireContext().packageName + "/" + R.drawable.default_avt_performer;
+            val listNoGallery = listOf(
+                GalleryResponse(
+                    thumbnailImage = ThumbnailImageResponse(url = itemNoImage),
+                    comment = ""
+                ),
+                GalleryResponse(
+                    thumbnailImage = ThumbnailImageResponse(url = itemNoImage),
+                    comment = ""
+                ),
+                GalleryResponse(
+                    thumbnailImage = ThumbnailImageResponse(url = itemNoImage),
+                    comment = ""
+                )
+            )
+            galleryAdapter.submitList(listNoGallery)
+            binding.ivArrowDown.visibility = GONE
         }
     }
 
@@ -554,6 +570,7 @@ class DetailUserProfileFragment :
                 val isWaiting = ConsultantResponse.isWaiting(user.callStatus, user.chatStatus)
                 val isLiveStream = ConsultantResponse.isLiveStream(user.callStatus, user.chatStatus)
                 val isPrivateLiveStream = ConsultantResponse.isPrivateLiveStream(user.callStatus, user.chatStatus)
+                val isOffline = ConsultantResponse.isOffline(user.callStatus, user.chatStatus)
 
                 val presenceStatusBgResId = when {
                     isWaiting -> R.drawable.bg_performer_status_waiting
@@ -572,13 +589,6 @@ class DetailUserProfileFragment :
                 presenceStatusTv.setBackgroundResource(presenceStatusBgResId)
                 presenceStatusTv.text = presenceStatusText
 
-                if (user.stage == 1) {
-                    ivState.visibility = GONE
-                    ivStateBeginner.visibility = VISIBLE
-                } else {
-                    ivState.visibility = VISIBLE
-                    ivStateBeginner.visibility = GONE
-                }
                 ivState.setImageResource(
                     when (user.stage) {
                         BRONZE -> {
@@ -591,7 +601,7 @@ class DetailUserProfileFragment :
                             R.drawable.ic_state_gold
                         }
                         else -> {
-                            R.drawable.ic_state_bronze
+                            R.drawable.ic_state_platinum
                         }
                     }
                 )
@@ -615,9 +625,9 @@ class DetailUserProfileFragment :
 
                 tvMemberCount.text = user.favoriteMemberCount.toString()
 
-                tvMessageNotice.text = user.messageNotice
+                tvMessageNotice.text = user.messageOfTheDay
 
-                tvMessageOfTheDay.text = user.messageOfTheDay
+                tvMessageOfTheDay.text = user.message
 
                 tvAge.text = user.age.toString() + resources.getString(R.string.age_raw)
 
@@ -636,7 +646,7 @@ class DetailUserProfileFragment :
                 llCallConsult.visibility = if (isWaiting || isLiveStream) VISIBLE else GONE
                 ivBallonPeep.visibility = if (isLiveStream) VISIBLE else GONE
                 llPeep.visibility = if (isLiveStream) VISIBLE else GONE
-                ivPrivateDelivery.visibility = if (isPrivateLiveStream) VISIBLE else GONE
+                ivPrivateDelivery.visibility = if (isPrivateLiveStream || isOffline) VISIBLE else GONE
                 ivBallonLiveGl50.visibility = if (isWaiting) VISIBLE else GONE
 
                 changeStatusIsFavorite(user.isFavorite)
@@ -647,10 +657,10 @@ class DetailUserProfileFragment :
     }
 
     companion object {
-        const val BEGINNER = 1
-        const val BRONZE = 2
-        const val SILVER = 3
-        const val GOLD = 4
+        const val BRONZE = 1
+        const val SILVER = 2
+        const val GOLD = 3
+        const val PLATINUM = 4
         const val DIAMOND = 6
         const val ACCEPTING = 1
         const val LEAVING = 0

@@ -53,11 +53,6 @@ class ConsultantAdapter(
                     consultant.recommendRanking
                 )
             )
-            if (consultant.stage == 1) {
-                binding.ivStateBeginner.visibility = View.VISIBLE
-            } else {
-                binding.ivStateBeginner.visibility = View.GONE
-            }
 
             Glide.with(context).load(consultant.imageUrl)
                 .apply(

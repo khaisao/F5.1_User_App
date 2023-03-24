@@ -99,10 +99,12 @@ class HomeViewModel @ViewModelInject constructor(
 
     private fun getAllListConsultant(page: Int = 1, isShowLoading: Boolean = true) {
         val params: MutableMap<String, Any> = HashMap()
-        params[BUNDLE_KEY.PARAM_SORT] = BUNDLE_KEY.PRESENCE_STATUS
+        params[BUNDLE_KEY.PARAM_SORT] = BUNDLE_KEY.LAST_AUTHENTICATION_DATE
         params[BUNDLE_KEY.PARAM_ODER] = BUNDLE_KEY.DESC
-        params[BUNDLE_KEY.PARAM_SORT_2] = BUNDLE_KEY.REVIEW_TOTAL_SCORE
+        params[BUNDLE_KEY.PARAM_SORT_2] = BUNDLE_KEY.LAST_LOGIN_DATE
         params[BUNDLE_KEY.PARAM_ODER_2] = BUNDLE_KEY.DESC
+        params[BUNDLE_KEY.PARAM_SORT_3] = BUNDLE_KEY.POINT
+        params[BUNDLE_KEY.PARAM_ODER_3] = BUNDLE_KEY.DESC
         params[BUNDLE_KEY.LIMIT] = LIMIT_NUMBER
         params[BUNDLE_KEY.PAGE] = page
         viewModelScope.launch {

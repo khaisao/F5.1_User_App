@@ -29,6 +29,10 @@ data class FavoriteResponse(
     val presenceStatus: Int = 0,
     @SerializedName("status")
     val status: Int = 0,
+    @SerializedName("login_member_count")
+    val loginMemberCount: Int = 0,
+    @SerializedName("peeping_member_count")
+    val peepingMemberCount: Int = 0,
     @SerializedName("thumbnail_image_url")
     val thumbnailImageUrl: String = "",
     @SerializedName("call_status")
