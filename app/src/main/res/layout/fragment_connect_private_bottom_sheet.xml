@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_live_stream_bottom_sheet_dialog"
-        tools:context=".android.ui.live_stream.bottom_sheet_live_stream.connect_private.ConnectPrivateBottomSheet">
+        tools:context=".android.ui.live_stream.live_stream_bottom_sheet.connect_private.ConnectPrivateBottomSheet">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textView13"

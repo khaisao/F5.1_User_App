@@ -12,6 +12,7 @@ import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.*
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -207,4 +208,16 @@ fun Context.convertStringToSpannableString(
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )
     return span
+}
+
+fun View.getHeight(function: (Int) -> Unit) {
+    if (height == 0)
+        viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                viewTreeObserver.removeOnGlobalLayoutListener(this)
+                function.invoke(height)
+            }
+        })
+    else function(height)
 }

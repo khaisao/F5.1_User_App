@@ -1,4 +1,4 @@
-package jp.careapp.counseling.android.ui.live_stream.bottom_sheet_live_stream.confirm
+package jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.confirm
 
 import android.app.Application
 import android.text.SpannableString

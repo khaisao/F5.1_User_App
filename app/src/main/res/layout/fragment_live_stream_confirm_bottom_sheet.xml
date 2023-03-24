@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="jp.careapp.counseling.android.ui.live_stream.bottom_sheet_live_stream.confirm.LiveStreamConfirmViewModel" />
+        <import type="jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.confirm.LiveStreamConfirmViewModel" />
 
         <variable
             name="viewModel"
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_live_stream_bottom_sheet_dialog"
         android:paddingHorizontal="24dp"
-        tools:context=".android.ui.live_stream.bottom_sheet_live_stream.confirm.LiveStreamConfirmBottomSheet">
+        tools:context=".android.ui.live_stream.live_stream_bottom_sheet.confirm.LiveStreamConfirmBottomSheet">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTitle"

@@ -5,117 +5,343 @@
 
     <data>
 
+        <import type="jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel" />
+
+        <variable
+            name="viewModel"
+            type="LiveStreamViewModel" />
+
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         tools:context=".android.ui.live_stream.LiveStreamFragment">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.958" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/performerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_no_image" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btnComment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/bg_btn_live_stream"
-            android:minHeight="40dp"
-            android:padding="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline9"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.106"
-            app:srcCompat="@drawable/ic_live_stream_comment" />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:fitsSystemWindows="true">
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btnWhisper"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/bg_btn_live_stream"
-            android:minHeight="40dp"
-            android:padding="8dp"
-            android:src="@drawable/ic_live_stream_whisper"
-            app:layout_constraintBottom_toBottomOf="@+id/guideline9"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toEndOf="@id/btnComment"
-            app:layout_constraintWidth_percent="0.106" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btnPrivate"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_btn_live_stream"
-            android:minHeight="40dp"
-            android:padding="8dp"
-            android:src="@drawable/ic_live_stream_private"
-            app:layout_constraintBottom_toTopOf="@+id/guideline9"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.106" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.015" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btnParty"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_btn_live_stream"
-            android:minHeight="40dp"
-            android:padding="8dp"
-            android:src="@drawable/ic_live_stream_party"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/guideline9"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.106"
-            tools:visibility="gone" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivPerformer"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/guideline8"
+                    app:layout_constraintWidth_percent="0.11"
+                    tools:src="@tools:sample/avatars" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btnVideoMic"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_btn_live_stream"
-            android:minHeight="40dp"
-            android:padding="8dp"
-            android:src="@drawable/ic_live_stream_video_mic"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/btnParty"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.106"
-            tools:visibility="gone" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:orientation="vertical"
+                    android:weightSum="2"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivPerformer"
+                    app:layout_constraintStart_toEndOf="@+id/ivPerformer"
+                    app:layout_constraintTop_toTopOf="@+id/ivPerformer">
 
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="top"
-            app:constraint_referenced_ids="btnPrivate, btnVideoMic" />
+                    <FrameLayout
+                        android:id="@+id/llLiveStreamStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btnPoint"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_btn_live_stream"
-            android:minHeight="40dp"
-            android:padding="8dp"
-            android:src="@drawable/ic_live_stream_point"
-            app:layout_constraintBottom_toTopOf="@id/barrier"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.106" />
+                        <include
+                            android:id="@+id/llItemPremiumPrivate"
+                            layout="@layout/item_live_stream_premium_private"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:visibility="gone"
+                            tools:visibility="visible" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                        <include
+                            android:id="@+id/llItemPrivate"
+                            layout="@layout/item_live_stream_private"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:visibility="gone" />
+
+                        <include
+                            android:id="@+id/llItemPeeping"
+                            layout="@layout/item_live_stream_peeping"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:visibility="gone" />
+
+                        <include
+                            android:id="@+id/llItemParty"
+                            layout="@layout/item_live_stream_party"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:visibility="gone" />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tvPerformerName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/hiragino_sans_w6"
+                        android:gravity="center"
+                        android:text="@{viewModel.performerName}"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        tools:text="レー・ブー・ハイ・ダン" />
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btnClose"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_close_black_24dp"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/ivPerformer"
+                    app:layout_constraintWidth_percent="0.05" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.958" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btnComment"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_btn_live_stream"
+                    android:minHeight="40dp"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline9"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintWidth_percent="0.106"
+                    app:srcCompat="@drawable/ic_live_stream_comment" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btnWhisper"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_btn_live_stream"
+                    android:minHeight="40dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_live_stream_whisper"
+                    app:layout_constraintBottom_toBottomOf="@+id/guideline9"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toEndOf="@id/btnComment"
+                    app:layout_constraintWidth_percent="0.106" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btnPrivate"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_btn_live_stream"
+                    android:minHeight="40dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_live_stream_private"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline9"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintWidth_percent="0.106" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btnParty"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_btn_live_stream"
+                    android:minHeight="40dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_live_stream_party"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline9"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintWidth_percent="0.106"
+                    tools:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btnVideoMic"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_btn_live_stream"
+                    android:minHeight="40dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_live_stream_video_mic"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/btnParty"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintWidth_percent="0.106"
+                    tools:visibility="gone" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="top"
+                    app:constraint_referenced_ids="btnPrivate, btnVideoMic" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btnPoint"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_btn_live_stream"
+                    android:minHeight="40dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_live_stream_point"
+                    app:layout_constraintBottom_toTopOf="@id/barrier"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintWidth_percent="0.106" />
+
+                <View
+                    android:id="@+id/memberViewCamera"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintDimensionRatio="88:156"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivPerformer"
+                    app:layout_constraintWidth_percent="0.235"
+                    tools:background="@android:color/holo_green_light" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btnCameraFlip"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_live_stream_camera_flip"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="@id/memberViewCamera"
+                    app:layout_constraintTop_toTopOf="@id/memberViewCamera"
+                    app:layout_constraintWidth_percent="0.06" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/memberCameraViewGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="memberViewCamera, btnCameraFlip"
+                    tools:visibility="visible" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/llComment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnSendComment"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/bg_btn_live_stream"
+                        android:drawableStart="@drawable/bg_live_stream_btn_send_comment"
+                        android:enabled="false"
+                        android:minHeight="36dp"
+                        android:padding="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintWidth_percent="0.096"
+                        tools:enabled="false" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/edtComment"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/bg_live_stream_edt_comment"
+                        android:ems="10"
+                        android:fontFamily="@font/hiragino_sans_w3"
+                        android:gravity="center_vertical"
+                        android:hint="@string/input_comment"
+                        android:inputType="textMultiLine"
+                        android:paddingHorizontal="8dp"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="#73FFFFFF"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/btnSendComment"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:text="テキストテキスト" />
+
+                    <androidx.constraintlayout.widget.Group
+                        android:id="@+id/memberCommentViewGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:constraint_referenced_ids="edtComment, btnSendComment"
+                        tools:visibility="visible" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/groupAllBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="btnComment, btnWhisper, btnPrivate,  btnParty, btnVideoMic, btnPoint" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/groupButtonPartyMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="btnComment, btnWhisper, btnPrivate, btnPoint"
+                    tools:visibility="visible" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </FrameLayout>
 </layout>

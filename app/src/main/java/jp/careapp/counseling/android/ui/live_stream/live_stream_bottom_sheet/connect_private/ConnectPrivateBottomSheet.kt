@@ -1,4 +1,4 @@
-package jp.careapp.counseling.android.ui.live_stream.bottom_sheet_live_stream.connect_private
+package jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.connect_private
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -727,4 +727,9 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="private_mode_connecting">プライベートモード申請中</string>
     <string name="use_microphone">マイクを使用</string>
     <string name="use_camera">カメラを使用</string>
+    <string name="item_live_stream_premium_private"><font color="#ffff00">プレミアム</font><font color="#ffffff">プライベート</font></string>
+    <string name="item_live_stream_private">プライベート</string>
+    <string name="item_live_stream_peeping">のぞき中</string>
+    <string name="item_live_stream_normal">ライブ配信中</string>
+    <string name="input_comment">コメントを入力</string>
 </resources>

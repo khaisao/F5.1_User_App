@@ -8,7 +8,7 @@
         android:background="@drawable/bg_live_stream_bottom_sheet_dialog"
         android:orientation="vertical"
         android:paddingHorizontal="24dp"
-        tools:context=".android.ui.live_stream.bottom_sheet_live_stream.notice.LiveStreamNoticeBottomSheet">
+        tools:context=".android.ui.live_stream.live_stream_bottom_sheet.notice.LiveStreamNoticeBottomSheet">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"

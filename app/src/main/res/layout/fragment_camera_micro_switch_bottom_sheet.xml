@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_live_stream_bottom_sheet_dialog"
         android:orientation="vertical"
-        tools:context=".android.ui.live_stream.bottom_sheet_live_stream.camera_micrro_switch.CameraMicroSwitchBottomSheet">
+        tools:context=".android.ui.live_stream.live_stream_bottom_sheet.camera_micrro_switch.CameraMicroSwitchBottomSheet">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
