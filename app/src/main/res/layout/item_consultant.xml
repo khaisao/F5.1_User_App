@@ -37,25 +37,13 @@
                     android:paddingHorizontal="@dimen/margin_4dp"
                     android:paddingBottom="@dimen/padding_6dp">
 
-                    <ImageView
-                        android:id="@+id/iv_state_beginner"
-                        android:layout_width="@dimen/margin_15"
-                        android:layout_height="0dp"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/ic_state_beginner"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="@id/cl_status"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/cl_status" />
-
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cl_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_performer_status_live_streaming"
                         app:layout_constraintBottom_toBottomOf="@id/iv_ranking"
-                        android:layout_marginStart="@dimen/margin_2"
-                        app:layout_constraintStart_toEndOf="@id/iv_state_beginner"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@id/iv_ranking">
 
                         <TextView

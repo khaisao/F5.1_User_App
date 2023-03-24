@@ -244,7 +244,7 @@ class ExitLivestreamFragment :
                         return true
                     }
                 })
-
+                adapter.submitList(it)
             } else {
                 binding.rvConsultant.visibility = View.GONE
                 binding.llNoResult.visibility = View.VISIBLE
@@ -254,7 +254,6 @@ class ExitLivestreamFragment :
                     }
                 })
             }
-            adapter.submitList(it)
         }
 
         detailViewModel.statusFavorite.observe(viewLifecycleOwner, handleResultStatusFavorite)
