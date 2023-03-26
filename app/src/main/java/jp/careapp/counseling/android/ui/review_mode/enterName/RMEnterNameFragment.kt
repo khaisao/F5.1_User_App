@@ -27,7 +27,6 @@ class RMEnterNameFragment : BaseFragment<FragmentRmEnterNameBinding, RMEnterName
     override fun initView() {
         super.initView()
 
-        binding.edtNickName.setHint(getString(R.string.nick_name))
         binding.edtNickName.setTextChangeListener { count ->
             binding.btnSubmit.isEnabled = count != 0
         }
@@ -57,8 +56,8 @@ class RMEnterNameFragment : BaseFragment<FragmentRmEnterNameBinding, RMEnterName
                 CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
                     .showDialog()
                     .setDialogTitle(R.string.your_name_not_enter)
-                    .setTextPositiveButton(R.string.ok)
-                    .setOnPositivePressed {
+                    .setTextOkButton(R.string.ok)
+                    .setOnOkButtonPressed {
                         it.dismiss()
                     }
             }
