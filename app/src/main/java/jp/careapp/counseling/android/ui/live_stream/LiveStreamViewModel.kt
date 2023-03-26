@@ -45,7 +45,7 @@ class LiveStreamViewModel @Inject constructor(
     }
 
     fun sendComment(comment: String) {
-        isLoading.value = true
+//        isLoading.value = true
 //        viewModelScope.launch(Dispatchers.IO) {
 //            supervisorScope {
 //                try {

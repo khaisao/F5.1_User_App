@@ -1,7 +1,6 @@
 package jp.careapp.counseling.android.ui.live_stream
 
 import android.graphics.Rect
-import android.util.Log
 import android.view.ViewTreeObserver
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -9,6 +8,7 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseActivity
 import jp.careapp.core.base.BaseFragment
+import jp.careapp.core.utils.DeviceUtil.Companion.hideKeyBoardWhenClickOutSide
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.core.utils.getHeight
 import jp.careapp.counseling.android.utils.showSoftKeyboard
@@ -56,15 +56,22 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         }
     }
 
+    private var isKeyboardShowing = false
     private val keyboardLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
         val r = Rect()
         binding.root.getWindowVisibleDisplayFrame(r)
         val screenHeight = binding.root.rootView.height
         val keypadHeight = screenHeight - r.bottom
-        if (keypadHeight == 0) {
-            Log.e("haidang", "ahihi")
-            mViewModel.reloadMode()
-            binding.llComment.isVisible = false
+        if (keypadHeight > screenHeight * 0.15) {
+            if (!isKeyboardShowing) {
+                isKeyboardShowing = true
+            }
+        } else {
+            if (isKeyboardShowing) {
+                isKeyboardShowing = false
+                mViewModel.reloadMode()
+                binding.llComment.isVisible = false
+            }
         }
     }
 
@@ -101,6 +108,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             binding.btnSendComment.getHeight { binding.edtComment.minimumHeight = it }
             binding.edtComment.requestFocus()
             requireContext().showSoftKeyboard(binding.edtComment)
+            hideKeyBoardWhenClickOutSide(binding.root, binding.btnSendComment, requireActivity())
         }
 
         binding.btnWhisper.setOnClickListener {}
