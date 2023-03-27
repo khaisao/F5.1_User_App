@@ -6,9 +6,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.SingleLiveEvent
+import jp.careapp.counseling.android.data.network.LiveStreamCommentResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,7 +27,15 @@ class LiveStreamViewModel @Inject constructor(
     val currentModeLiveData: LiveData<Int>
         get() = _currentModeLiveData
 
+    private val _commentList = MutableLiveData<ArrayList<LiveStreamCommentResponse>>()
+    val commentList: LiveData<ArrayList<LiveStreamCommentResponse>>
+        get() = _commentList
+
     val mActionState = SingleLiveEvent<LiveStreamActionState>()
+
+    init {
+        loadComment()
+    }
 
     fun changeMode(mode: Int) {
         currentMode = mode
@@ -44,6 +54,46 @@ class LiveStreamViewModel @Inject constructor(
         _currentModeLiveData.value = currentMode
     }
 
+    private fun loadComment() {
+        isLoading.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            supervisorScope {
+                try {
+                    val abc = arrayListOf<LiveStreamCommentResponse>()
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment", 1))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Performer Comment", 2))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Whisper Comment", 3))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 2", 1))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 3", 1))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 4", 2))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 5", 3))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 6", 1))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 7", 3))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 8", 2))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
+                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
+                    withContext(Dispatchers.Main) {
+                        _commentList.value = abc
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                } finally {
+                    withContext(Dispatchers.Main) {
+                        isLoading.value = false
+                    }
+                }
+            }
+        }
+    }
+
     fun sendComment(comment: String) {
 //        isLoading.value = true
 //        viewModelScope.launch(Dispatchers.IO) {
@@ -53,7 +103,9 @@ class LiveStreamViewModel @Inject constructor(
 //                } catch (e: Exception) {
 //                    e.printStackTrace()
 //                } finally {
-//                    isLoading.value = false
+//                    withContext(Dispatchers.Main) {
+//                        isLoading.value = false
+//                    }
 //                }
 //            }
 //        }

@@ -41,6 +41,8 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     private val mViewModel: LiveStreamViewModel by viewModels()
     override fun getVM() = mViewModel
 
+    private var mAdapter: LiveStreamAdapter? = null
+
     private val cameraAndAudioPermissionLauncher =
         registerPermission { onCameraAndAudioPermissionResult(it) }
 
@@ -97,6 +99,9 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         super.initView()
 
         binding.viewModel = mViewModel
+
+        mAdapter = LiveStreamAdapter()
+        binding.rcvCommentList.adapter = mAdapter
     }
 
     override fun setOnClick() {
@@ -113,6 +118,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         }
 
         hideKeyBoardWhenClickOutSide(binding.root, binding.btnSendComment, requireActivity())
+//        hideKeyBoardWhenClickOutSide(binding.root, binding.rcvCommentList, requireActivity())
 
         binding.btnWhisper.setOnClickListener {}
 
@@ -151,18 +157,22 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             binding.groupAllBtn.isVisible = false
             when (it) {
                 LiveStreamMode.PARTY -> {
+                    binding.llItemParty.root.isVisible = true
                     binding.groupButtonPartyMode.isVisible = true
                 }
 
                 LiveStreamMode.PRIVATE -> {
+                    binding.llItemPrivate.root.isVisible = true
                     binding.groupButtonPrivateMode.isVisible = true
                 }
 
                 LiveStreamMode.PREMIUM_PRIVATE -> {
+                    binding.llItemPremiumPrivate.root.isVisible = true
                     binding.groupButtonPrivateMode.isVisible = true
                 }
 
                 LiveStreamMode.PEEP -> {
+                    binding.llItemPeeping.root.isVisible = true
                     binding.groupButtonPeepingMode.isVisible = true
                 }
             }
@@ -185,6 +195,10 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                     bottomSheet.show(childFragmentManager, "")
                 }
             }
+        }
+
+        mViewModel.commentList.observe(viewLifecycleOwner) {
+            mAdapter?.submitList(it)
         }
     }
 
@@ -233,4 +247,8 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     }
 
     private fun getInputComment() = binding.edtComment.text?.trim().toString()
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
 }

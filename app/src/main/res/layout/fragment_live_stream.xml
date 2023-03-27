@@ -268,60 +268,84 @@
                     app:constraint_referenced_ids="memberViewCamera, btnCameraFlip"
                     tools:visibility="visible" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSendComment"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/bg_btn_live_stream"
+                    android:drawableStart="@drawable/bg_live_stream_btn_send_comment"
+                    android:enabled="false"
+                    android:minHeight="36dp"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintWidth_percent="0.096"
+                    tools:enabled="false" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtComment"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/bg_live_stream_edt_comment"
+                    android:ems="10"
+                    android:fontFamily="@font/hiragino_sans_w3"
+                    android:gravity="center_vertical"
+                    android:hint="@string/input_comment"
+                    android:inputType="textMultiLine"
+                    android:paddingHorizontal="8dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="#73FFFFFF"
+                    android:textSize="13sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintEnd_toStartOf="@+id/btnSendComment"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="テキストテキスト" />
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnSendComment"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_btn_live_stream"
-                        android:drawableStart="@drawable/bg_live_stream_btn_send_comment"
-                        android:enabled="false"
-                        android:minHeight="36dp"
-                        android:padding="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="1:1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintWidth_percent="0.096"
-                        tools:enabled="false" />
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/memberCommentViewGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="edtComment, btnSendComment"
+                    tools:visibility="visible" />
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/edtComment"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_live_stream_edt_comment"
-                        android:ems="10"
-                        android:fontFamily="@font/hiragino_sans_w3"
-                        android:gravity="center_vertical"
-                        android:hint="@string/input_comment"
-                        android:inputType="textMultiLine"
-                        android:paddingHorizontal="8dp"
-                        android:textColor="@android:color/white"
-                        android:textColorHint="#73FFFFFF"
-                        android:textSize="13sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/btnSendComment"
-                        app:layout_constraintStart_toStartOf="parent"
-                        tools:text="テキストテキスト" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.83" />
 
-                    <androidx.constraintlayout.widget.Group
-                        android:id="@+id/memberCommentViewGroup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        app:constraint_referenced_ids="edtComment, btnSendComment"
-                        tools:visibility="visible" />
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="top"
+                    app:constraint_referenced_ids="btnComment, edtComment" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvCommentList"
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="6dp"
+                    android:fadingEdge="vertical|horizontal"
+                    android:orientation="vertical"
+                    android:requiresFadingEdge="vertical|horizontal"
+                    app:itemAnimator="@{null}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toTopOf="@id/barrier2"
+                    app:layout_constraintEnd_toStartOf="@id/guideline10"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:reverseLayout="true"
+                    app:stackFromEnd="false"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_live_stream_normal_comment" />
 
                 <androidx.constraintlayout.widget.Group
                     android:id="@+id/groupAllBtn"
