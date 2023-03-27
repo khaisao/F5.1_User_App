@@ -5,17 +5,17 @@
         android:id="@+id/tabOnlineList"
         android:contentDescription="@string/rv_tab_online_list"
         android:icon="@drawable/ic_tab_online_list"
-        android:title="@string/rv_tab_online_list" />
+        android:title="@null" />
 
     <item
         android:id="@+id/tabFavoriteList"
         android:contentDescription="@string/rv_tab_favorite_list"
         android:icon="@drawable/ic_tab_favorite_list"
-        android:title="@string/rv_tab_favorite_list" />
+        android:title="@null" />
 
     <item
         android:id="@+id/tabMyMenu"
         android:contentDescription="@string/rv_tab_my_menu"
         android:icon="@drawable/ic_tab_my_menu"
-        android:title="@string/rv_tab_my_menu" />
+        android:title="@null" />
 </menu>

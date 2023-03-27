@@ -1,55 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#eff3fc"
+        android:background="@color/duck_egg_blue"
         android:orientation="vertical">
 
         <jp.careapp.counseling.android.utils.customView.ToolBarCommon
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:bg_toolbar="@color/color_eff3fc"
-            app:src_left="@drawable/ic_arrow_left"
-            app:string_title="@string/rv_push_notification_settings"
+            app:src_left="@drawable/ic_rm_arrow_left"
+            app:title="@string/rv_push_notification_settings"
             app:titleTextColor="@color/color_070707" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
+            android:id="@+id/push_notification"
+            layout="@layout/item_rm_notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_item_rm_notification"
-            android:minHeight="44dp"
-            android:paddingHorizontal="@dimen/margin_16">
-
-            <TextView
-                android:id="@+id/tv_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/hiragino_sans_w3"
-                android:gravity="center_vertical"
-                android:text="@string/rv_push_notification"
-                android:textColor="#070707"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/scNotification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:thumb="@drawable/thumb_selector"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_start"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_start"
-                app:track="@drawable/rm_track_selector"
-                tools:checked="true" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginTop="16dp" />
     </LinearLayout>
 </layout>

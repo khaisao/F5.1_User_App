@@ -264,18 +264,8 @@
     </style>
 
     <style name="BottomNavigationReviewModeTheme" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/color_F0F0F0</item>
-        <item name="android:textColorSecondary">@color/color_F0F0F0</item>
-        <item name="itemTextAppearanceActive">@style/BottomNavigationReviewMode.TextAppearance
-        </item>
-        <item name="itemTextAppearanceInactive">@style/BottomNavigationReviewMode.TextAppearance
-        </item>
-    </style>
-
-    <style name="BottomNavigationReviewMode.TextAppearance" parent="TextAppearance.MaterialComponents.Caption">
-        <item name="android:textSize">@dimen/text_size_9</item>
-        <item name="fontFamily">@font/hiragino_sans_w6</item>
-        <item name="android:includeFontPadding">false</item>
+        <item name="colorPrimary">@color/dodger_blue</item>
+        <item name="android:textColorSecondary">@color/color_868990</item>
     </style>
 
     <style name="SpinnerTheme">

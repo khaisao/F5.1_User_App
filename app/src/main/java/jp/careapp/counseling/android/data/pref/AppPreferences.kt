@@ -12,7 +12,7 @@ import jp.careapp.counseling.android.data.model.CreditItem
 import jp.careapp.counseling.android.data.model.HistorySelection
 import jp.careapp.counseling.android.data.network.*
 import jp.careapp.counseling.android.ui.review_mode.setting_push.RMSettingPushFragment.Companion.PUSH_RECEIVE
-import jp.careapp.counseling.android.ui.splash.SplashViewModel.Companion.NORMAL_MODE
+import jp.careapp.counseling.android.utils.Define.Companion.NORMAL_MODE
 import jp.careapp.counseling.android.utils.MODE_USER
 import jp.careapp.counseling.android.utils.SignedUpStatus
 import javax.inject.Inject
@@ -453,5 +453,14 @@ class AppPreferences @Inject constructor(
 
     override fun saveMemberAge(age: Int) {
         mPrefs.edit().putInt(PREF_KEY_MEMBER_AGE, age).apply()
+    }
+
+    override fun switchMode() {
+        remove(PREF_PARAM_MEMBER_CODE)
+        remove(PREF_PARAM_EMAIL_USER)
+        remove(PREF_PARAM_PASSWORD)
+        remove(PREF_PARAM_ACCESS_TOKEN)
+        remove(PREF_PARAM_TOKEN_EXPIRE)
+        logout()
     }
 }

@@ -101,6 +101,10 @@ class Define {
         const val TERM_PATH = "support/terms"
         const val RE_APPROACH_SUPPORT_PATH = "support/blogs/80"
         const val NEW_APPROACH_SUPPORT_PATH = "support/blogs/79"
+
+        // App mode
+        const val NORMAL_MODE = 2
+        const val REVIEW_MODE = 97
     }
 
     class SearchCondition {

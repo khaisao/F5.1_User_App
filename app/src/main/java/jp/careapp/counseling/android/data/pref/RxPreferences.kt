@@ -172,4 +172,6 @@ interface RxPreferences {
     fun getSettingNotificationNM(): Int
 
     fun saveMemberAge(age: Int)
+
+    fun switchMode()
 }

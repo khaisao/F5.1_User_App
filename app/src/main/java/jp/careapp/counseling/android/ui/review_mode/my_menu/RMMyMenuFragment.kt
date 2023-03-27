@@ -11,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
-import jp.careapp.core.utils.dialog.CommonAlertDialog
+import jp.careapp.core.utils.dialog.RMCommonAlertDialog
 import jp.careapp.counseling.BuildConfig
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.MenuItem
@@ -130,7 +130,7 @@ class RMMyMenuFragment : BaseFragment<FragmentRmMyMenuBinding, RMMyMenuViewModel
 
     private fun showDialogWithdrawal() {
         context?.let { context ->
-            CommonAlertDialog.getInstanceCommonAlertdialog(context).showDialog()
+            RMCommonAlertDialog.getInstanceCommonAlertdialog(context).showDialog()
                 .setDialogTitle(R.string.msg_title_withdrawal)
                 .setTextPositiveButton(R.string.accept_withdrawal)
                 .setTextNegativeButton(R.string.cancel)

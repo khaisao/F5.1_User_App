@@ -96,6 +96,20 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+
+        <action
+            android:id="@+id/action_RmStartFragment_to_TermsFragment"
+            app:destination="@id/webViewFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popExitAnim="@anim/slide_down" />
+
+        <action
+            android:id="@+id/action_RmStartFragment_to_PrivacyFragment"
+            app:destination="@id/webViewFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
 
     <fragment
@@ -112,6 +126,12 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
             app:popUpTo="@id/RMStartFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="jp.careapp.counseling.android.ui.webView.WebViewFragment"
+        android:label="WebViewFragment"
+        tools:layout="@layout/fragment_web_view" />
 </navigation>

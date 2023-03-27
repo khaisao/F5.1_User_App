@@ -1,5 +1,6 @@
 package jp.careapp.counseling.android.ui.review_mode.setting_push
 
+import android.graphics.Color
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,12 +24,13 @@ class RMSettingPushFragment : BaseFragment<FragmentRmSettingPushBinding, RMSetti
     }
 
     private fun setUpSwitch() {
-        binding.scNotification.setOnCheckedChangeListener { compoundButton, isChecked ->
+        binding.pushNotification.btnNotifi.setOnCheckedChangeListener { compoundButton, isChecked ->
             if (compoundButton.isPressed) viewModel.updateSettingPush(isChecked)
         }
     }
 
     private fun setUpToolBar() {
+        binding.toolBar.setRootLayoutBackgroundColor(Color.TRANSPARENT)
         binding.toolBar.setOnToolBarClickListener(object : ToolBarCommon.OnToolBarClickListener() {
             override fun onClickLeft() {
                 super.onClickLeft()
@@ -42,7 +44,7 @@ class RMSettingPushFragment : BaseFragment<FragmentRmSettingPushBinding, RMSetti
 
         viewModel.pushMail.observe(viewLifecycleOwner) {
             it?.let {
-                binding.scNotification.isChecked = it == PUSH_RECEIVE
+                binding.pushNotification.btnNotifi.isChecked = it == PUSH_RECEIVE
             }
         }
     }

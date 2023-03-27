@@ -1,5 +1,6 @@
 package jp.careapp.counseling.android.ui.review_mode.block_list
 
+import android.graphics.Color
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -8,7 +9,6 @@ import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.model.network.RMBlockListResponse
 import jp.careapp.counseling.android.navigation.AppNavigation
-import jp.careapp.counseling.android.ui.review_mode.online_list.RMFavoritePerformerAdapter
 import jp.careapp.counseling.databinding.FragmentBlockListBinding
 import javax.inject.Inject
 
@@ -24,7 +24,7 @@ class RMBlockListFragment : BaseFragment<FragmentBlockListBinding, RMBlockListVi
     override fun getVM() = viewModel
 
     private val _adapter by lazy {
-        RMFavoritePerformerAdapter(requireContext(),
+        RMBlockListAdapter(requireContext(),
             onClickListener = {},
             onClickDelete = {
                 (it as? RMBlockListResponse)?.code?.let { code ->
@@ -43,6 +43,7 @@ class RMBlockListFragment : BaseFragment<FragmentBlockListBinding, RMBlockListVi
                     if (!isDoubleClick)
                         findNavController().navigateUp()
                 }
+                setRootLayoutBackgroundColor(Color.TRANSPARENT)
             }
 
             rvBlock.apply {

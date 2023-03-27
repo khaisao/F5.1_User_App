@@ -1,5 +1,6 @@
 package jp.careapp.counseling.android.ui.review_mode.settingNickName
 
+import android.graphics.Color
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
@@ -30,13 +31,21 @@ class RMSettingNickNameFragment :
 
         binding.edtNickName.setHint(resources.getString(R.string.nick_name))
         binding.edtNickName.setTextChangeListener { count ->
-            binding.toolBar.setRightEnable(
+            val btnRightEnable =
                 count != 0 && getInputNickName() != (mViewModel.nickname.value ?: "")
+            binding.toolBar.setRightEnable(btnRightEnable)
+            binding.toolBar.setColorBtnRight(
+                if (btnRightEnable) R.color.white else R.color.color_c0c3c9,
+                requireActivity()
+            )
+            binding.toolBar.setBackgroundBtnRight(
+                if (btnRightEnable) R.drawable.bg_rm_btn_toolbar_enable else R.drawable.bg_rm_btn_toolbar_disable
             )
         }
     }
 
     private fun setUpToolBar() {
+        binding.toolBar.setRootLayoutBackgroundColor(Color.TRANSPARENT)
         binding.toolBar.setOnToolBarClickListener(object : ToolBarCommon.OnToolBarClickListener() {
             override fun onClickLeft() {
                 super.onClickLeft()

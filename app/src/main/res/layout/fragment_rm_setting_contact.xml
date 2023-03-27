@@ -6,7 +6,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_00CD5C"
+        android:background="@color/duck_egg_blue"
         android:orientation="vertical"
         tools:context=".android.ui.review_mode.settingContact.RMSettingContactFragment">
 
@@ -14,7 +14,7 @@
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:src_left="@drawable/ic_arrow_left"
+            app:src_left="@drawable/ic_rm_arrow_left"
             app:string_title="@string/contact_us" />
 
         <LinearLayout
@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/enquiry"
-                android:textColor="@color/color_E3DFEF" />
+                android:textColor="@color/color_070707" />
 
             <Spinner
                 android:id="@+id/spinner"
@@ -37,16 +37,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@null"
+                android:background="@drawable/bg_rm_edt_message"
                 android:dropDownSelector="@drawable/ic_rm_drop_down_spinner"
                 android:minHeight="48dp"
-                android:textColor="@color/color_E3DFEF"
+                android:textColor="@color/color_070707"
                 android:textSize="14sp"
                 tools:listitem="@layout/list_popup_window_item" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#9d52ff" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -55,28 +51,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_32"
                 android:text="@string/contact_us_content"
-                android:textColor="@color/color_E3DFEF" />
+                android:textColor="@color/color_070707" />
 
             <EditText
                 android:id="@+id/edtContactContent"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="@dimen/margin_8"
-                android:background="@null"
+                android:background="@drawable/bg_rm_edt_message"
+                android:paddingHorizontal="@dimen/margin_16"
+                android:paddingVertical="@dimen/margin_10"
                 android:ems="10"
                 android:gravity="top|start"
                 android:hint="@string/please_enter_contact_us_content"
                 android:inputType="textMultiLine"
                 android:maxLines="9"
-                android:textColor="@color/color_E3DFEF"
-                android:textColorHint="#70658d"
+                android:textColor="@color/color_070707"
+                android:textColorHint="@color/color_c0c3c9"
                 tools:lines="9" />
-
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/margin_8"
-                android:background="@color/color_978DFF" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -84,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_32"
                 android:text="@string/reply_option"
-                android:textColor="@color/color_E3DFEF"
+                android:textColor="@color/color_070707"
                 android:textSize="14sp" />
 
             <RadioGroup
@@ -102,6 +94,7 @@
                     android:checked="true"
                     android:padding="8dp"
                     android:text="@string/necessary"
+                    android:textColor="@color/color_070707"
                     tools:checked="true" />
 
                 <androidx.appcompat.widget.AppCompatRadioButton
@@ -111,6 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_24"
                     android:padding="8dp"
+                    android:textColor="@color/color_070707"
                     android:text="@string/unnecessary" />
             </RadioGroup>
 
@@ -120,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_24"
-                android:background="@drawable/bg_nm_btn_primary"
+                android:background="@drawable/bg_rm_btn_setting_nickname"
                 android:enabled="false"
                 android:gravity="center_horizontal"
                 android:minHeight="@dimen/height_44"
