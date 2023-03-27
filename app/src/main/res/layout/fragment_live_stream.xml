@@ -269,7 +269,6 @@
                     tools:visibility="visible" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/llComment"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -337,6 +336,22 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone"
                     app:constraint_referenced_ids="btnComment, btnWhisper, btnPrivate, btnPoint"
+                    tools:visibility="visible" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/groupButtonPrivateMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="btnComment, btnParty, btnVideoMic, btnPoint"
+                    tools:visibility="visible" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/groupButtonPeepingMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="btnWhisper, btnParty, btnPoint"
                     tools:visibility="visible" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

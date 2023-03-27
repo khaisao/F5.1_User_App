@@ -68,9 +68,9 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             }
         } else {
             if (isKeyboardShowing) {
-                isKeyboardShowing = false
+                binding.memberCommentViewGroup.isVisible = false
                 mViewModel.reloadMode()
-                binding.llComment.isVisible = false
+                isKeyboardShowing = false
             }
         }
     }
@@ -78,7 +78,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     override fun onResume() {
         super.onResume()
 
-//        binding.root.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)
         if (activity is BaseActivity<*, *>) {
             (activity as BaseActivity<*, *>).setHandleDispathTouch(false)
         }
@@ -87,7 +87,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     override fun onStop() {
         super.onStop()
 
-//        binding.root.viewTreeObserver.removeOnGlobalLayoutListener(keyboardLayoutListener)
+        binding.root.viewTreeObserver.removeOnGlobalLayoutListener(keyboardLayoutListener)
         if (activity is BaseActivity<*, *>) {
             (activity as BaseActivity<*, *>).setHandleDispathTouch(true)
         }
@@ -103,13 +103,16 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         super.setOnClick()
 
         binding.btnComment.setOnClickListener {
-            binding.groupAllBtn.isVisible = false
-            binding.memberCommentViewGroup.isVisible = true
-            binding.btnSendComment.getHeight { binding.edtComment.minimumHeight = it }
-            binding.edtComment.requestFocus()
-            requireContext().showSoftKeyboard(binding.edtComment)
-            hideKeyBoardWhenClickOutSide(binding.root, binding.btnSendComment, requireActivity())
+            if (!isDoubleClick) {
+                binding.groupAllBtn.isVisible = false
+                binding.memberCommentViewGroup.isVisible = true
+                binding.btnSendComment.getHeight { binding.edtComment.minimumHeight = it }
+                binding.edtComment.requestFocus()
+                requireContext().showSoftKeyboard(binding.edtComment)
+            }
         }
+
+        hideKeyBoardWhenClickOutSide(binding.root, binding.btnSendComment, requireActivity())
 
         binding.btnWhisper.setOnClickListener {}
 
@@ -145,21 +148,22 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         super.bindingStateView()
 
         mViewModel.currentModeLiveData.observe(viewLifecycleOwner) {
+            binding.groupAllBtn.isVisible = false
             when (it) {
                 LiveStreamMode.PARTY -> {
                     binding.groupButtonPartyMode.isVisible = true
                 }
 
                 LiveStreamMode.PRIVATE -> {
-
+                    binding.groupButtonPrivateMode.isVisible = true
                 }
 
                 LiveStreamMode.PREMIUM_PRIVATE -> {
-
+                    binding.groupButtonPrivateMode.isVisible = true
                 }
 
                 LiveStreamMode.PEEP -> {
-
+                    binding.groupButtonPeepingMode.isVisible = true
                 }
             }
         }
