@@ -83,7 +83,7 @@ data class ConsultantResponse(
             return false
         }
 
-        fun isOnline(callStatus:Int, chatStatus:Int): Boolean {
+        fun isOffline(callStatus:Int, chatStatus:Int): Boolean {
             if(!isWaiting(callStatus, chatStatus) && !isLiveStream(callStatus,chatStatus) && !isPrivateLiveStream(callStatus, chatStatus)){
                 return true
             }

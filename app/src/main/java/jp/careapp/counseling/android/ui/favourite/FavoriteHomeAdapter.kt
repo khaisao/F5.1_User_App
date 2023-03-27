@@ -59,18 +59,21 @@ class FavoriteHomeViewModel(
         binding.rlConsultant.setOnClickListener {
             events.onclickItem(consultant)
         }
-        if (ConsultantResponse.isWaiting(consultant.callStatus, consultant.chatStatus)) {
+        val isWaiting =
+            ConsultantResponse.isWaiting(consultant.callStatus, consultant.chatStatus)
+        val isLiveStream =
+            ConsultantResponse.isLiveStream(consultant.callStatus, consultant.chatStatus)
+        val isPrivateLiveStream =
+            ConsultantResponse.isPrivateLiveStream(consultant.callStatus, consultant.chatStatus)
+        if (isWaiting) {
             binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_waiting)
             binding.tvStatus.text =
                 binding.root.context.resources.getString(R.string.presence_status_waiting)
-        } else if (ConsultantResponse.isLiveStream(consultant.callStatus, consultant.chatStatus)) {
+        } else if (isLiveStream) {
             binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
             binding.tvStatus.text =
                 binding.root.context.resources.getString(R.string.presence_status_live_streaming)
-        } else if (ConsultantResponse.isPrivateLiveStream(
-                consultant.callStatus,
-                consultant.chatStatus
-            )
+        } else if (isPrivateLiveStream
         ) {
             binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
             binding.tvStatus.text =
@@ -80,6 +83,8 @@ class FavoriteHomeViewModel(
             binding.tvStatus.text =
                 binding.root.context.resources.getString(R.string.presence_status_offline)
         }
+        binding.tvLiveStreamCount.visibility = if (isLiveStream) View.VISIBLE else View.GONE
+        binding.tvLiveStreamCount.text = (consultant.loginMemberCount + consultant.peepingMemberCount).toString()
         val bustSize = binding.root.context.getBustSize(consultant.bust)
         if (bustSize == "") {
             binding.tvSize.visibility = View.GONE
@@ -88,11 +93,6 @@ class FavoriteHomeViewModel(
             binding.tvSize.text = bustSize
         }
         binding.tvAge.text = String.format(binding.root.context.getString(R.string.age_pattern),consultant.age)
-        if (consultant.stage == 1) {
-            binding.ivStateBeginner.visibility = View.VISIBLE
-        } else {
-            binding.ivStateBeginner.visibility = View.GONE
-        }
         binding.ivRanking.setImageResource(ConsultantResponse.getImageViewForRank(consultant.ranking,consultant.recommendRanking))
 
     }

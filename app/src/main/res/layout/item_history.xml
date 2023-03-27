@@ -9,10 +9,6 @@
             name="history"
             type="jp.careapp.counseling.android.data.network.HistoryResponse" />
 
-        <variable
-            name="event"
-            type="jp.careapp.counseling.android.ui.favourite.EventHistoryAction" />
-
     </data>
 
     <com.google.android.material.card.MaterialCardView

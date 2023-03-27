@@ -269,4 +269,8 @@ interface AppNavigation : BaseNavigator {
     fun openMyPageToFAQ(bundle: Bundle? = null)
 
     fun openFAQToWithdrawal(bundle: Bundle? = null)
+
+    fun openLiveStreamToExitLiveStream(bundle: Bundle? = null)
+
+    fun openExitLiveStreamToMessage(bundle: Bundle? = null)
 }

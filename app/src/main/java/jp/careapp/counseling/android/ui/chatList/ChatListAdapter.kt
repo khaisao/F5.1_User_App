@@ -83,11 +83,6 @@ class ChatListAdapter constructor(
                                 binding.tvStatus.text =
                                     context.resources.getString(R.string.presence_status_offline)
                             }
-                            if (it.stage == 1) {
-                                ivStateBeginner.visibility = VISIBLE
-                            } else {
-                                ivStateBeginner.visibility = GONE
-                            }
                         } else {
                             Glide.with(binding.ivPerson).load(
                                 context.resources.getIdentifier(

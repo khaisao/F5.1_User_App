@@ -20,8 +20,7 @@ const val LIMIT_NUMBER = 50
 
 class HistoryViewModel @ViewModelInject constructor(
     private val apiInterface: ApiInterface,
-    private val appNavigation: AppNavigation
-) : BaseViewModel(), EventHistoryAction  {
+) : BaseViewModel() {
 
     var listHistoryConsultantResult = MutableLiveData<ArrayList<HistoryResponse>>(arrayListOf())
     private val listBlockedConsultantResult =
@@ -146,31 +145,4 @@ class HistoryViewModel @ViewModelInject constructor(
         isLoadMoreData = false
     }
 
-    override fun onclickItem(item: HistoryResponse) {
-        val bundle = Bundle()
-        bundle.putInt(BUNDLE_KEY.POSITION_SELECT, 0)
-
-        val listConsultant = ArrayList(
-            listOf(
-                ConsultantResponse(
-                    code = item.code,
-                    existsImage = item.existsImage,
-                    imageUrl = item.imageUrl,
-                    name = item.name,
-                    stage = item.status,
-                    thumbnailImageUrl = item.thumbnailImageUrl
-                )
-            )
-        )
-
-        bundle.putSerializable(
-            BUNDLE_KEY.LIST_USER_PROFILE,
-            listConsultant
-        )
-        appNavigation.openRankingToUserProfileScreen(bundle)
-    }
-
-    override fun onClickRelease(item: HistoryResponse) {
-       val a = 2
-    }
 }

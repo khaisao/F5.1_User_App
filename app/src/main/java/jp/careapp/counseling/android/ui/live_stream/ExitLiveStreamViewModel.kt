@@ -1,39 +1,28 @@
-package jp.careapp.counseling.android.ui.home
+package jp.careapp.counseling.android.ui.live_stream
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
-import io.realm.Realm
-import io.realm.RealmResults
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
-import jp.careapp.counseling.android.data.database.ConsultantDatabase
 import jp.careapp.counseling.android.data.network.ApiObjectResponse
-import jp.careapp.counseling.android.data.network.BannerResponse
 import jp.careapp.counseling.android.data.network.BlockedConsultantResponse
 import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.network.ApiInterface
+import jp.careapp.counseling.android.ui.home.LIMIT_NUMBER
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
+import javax.inject.Inject
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 
-const val LIMIT_NUMBER = 50
-
-class HomeViewModel @ViewModelInject constructor(
-    private val apiInterface: ApiInterface
-) : BaseViewModel() {
-
+@HiltViewModel
+class ExitLiveStreamViewModel @Inject constructor(private val apiInterface: ApiInterface) :
+    BaseViewModel() {
     var listConsultantResult = MutableLiveData<ArrayList<ConsultantResponse>>(arrayListOf())
     private val listBlockedConsultantResult =
         MutableLiveData<ApiObjectResponse<ArrayList<BlockedConsultantResponse>>>()
-    private val _listBanner = MutableLiveData<List<BannerResponse>>()
-    val lisBanner: MutableLiveData<List<BannerResponse>> = _listBanner
 
     private lateinit var listConsultantTemp: ArrayList<ConsultantResponse>
     private var totalConsultant = 0
@@ -45,24 +34,9 @@ class HomeViewModel @ViewModelInject constructor(
     var isLoadMoreData: Boolean = false
 
     init {
-        getListBanner()
         isFirstTimeLoadData = true
         isShowHideLoading = true
         getListBlockedConsultant()
-    }
-
-    fun getListBanner() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                apiInterface.getListBanner().apply {
-                    if (errors.isEmpty()) {
-                        _listBanner.postValue(dataResponse)
-                    }
-                }
-            } catch (e: Exception) {
-                Timber.e(e)
-            }
-        }
     }
 
     fun getListBlockedConsultant() {
@@ -99,12 +73,9 @@ class HomeViewModel @ViewModelInject constructor(
 
     private fun getAllListConsultant(page: Int = 1, isShowLoading: Boolean = true) {
         val params: MutableMap<String, Any> = HashMap()
-        params[BUNDLE_KEY.PARAM_SORT] = BUNDLE_KEY.LAST_AUTHENTICATION_DATE
+        params[BUNDLE_KEY.CHAT_STATUS] = 2
+        params[BUNDLE_KEY.PARAM_SORT] = BUNDLE_KEY.LAST_LOGIN_DATE
         params[BUNDLE_KEY.PARAM_ODER] = BUNDLE_KEY.DESC
-        params[BUNDLE_KEY.PARAM_SORT_2] = BUNDLE_KEY.LAST_LOGIN_DATE
-        params[BUNDLE_KEY.PARAM_ODER_2] = BUNDLE_KEY.DESC
-        params[BUNDLE_KEY.PARAM_SORT_3] = BUNDLE_KEY.POINT
-        params[BUNDLE_KEY.PARAM_ODER_3] = BUNDLE_KEY.DESC
         params[BUNDLE_KEY.LIMIT] = LIMIT_NUMBER
         params[BUNDLE_KEY.PAGE] = page
         viewModelScope.launch {
@@ -143,7 +114,10 @@ class HomeViewModel @ViewModelInject constructor(
                 listBlockedConsultantResult.value!!.dataResponse.any {
                     it.code == consultant.code
                 }
+            }.sortedByDescending {
+                it.loginMemberCount + it.peepingMemberCount
             }
+
             listConsultantTemp.clear()
             listConsultantTemp.addAll(dataResult)
         }
@@ -177,4 +151,5 @@ class HomeViewModel @ViewModelInject constructor(
         currentPage = 1
         isLoadMoreData = false
     }
+
 }

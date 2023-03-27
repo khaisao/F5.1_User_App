@@ -113,11 +113,15 @@ class InformationPerformerBottomFragment : BottomSheetDialogFragment() {
             consultantResponseLocal =
                 bundle.getSerializable(BUNDLE_KEY.USER_PROFILE_BOTTOM_SHEET) as? ConsultantResponse
             binding.apply {
-                ivAvatar.loadImage(consultantResponseLocal?.imageUrl, true)
+                ivAvatar.loadImage(
+                    consultantResponseLocal?.imageUrl,
+                    R.drawable.ic_avatar_default,
+                    true
+                )
                 tvUserName.text = consultantResponseLocal?.name ?: ""
                 tvAge.text =
                     consultantResponseLocal?.age.toString() + resources.getString(R.string.age_raw)
-                tvMessageNotice.text = consultantResponseLocal?.messageNotice ?: ""
+                tvMessageNotice.text = consultantResponseLocal?.messageOfTheDay ?: ""
                 consultantResponseLocal?.let { changeStatusIsFavorite(it.isFavorite) }
                 val bustSize =
                     consultantResponseLocal?.let { requireContext().getBustSize(it.bust) }

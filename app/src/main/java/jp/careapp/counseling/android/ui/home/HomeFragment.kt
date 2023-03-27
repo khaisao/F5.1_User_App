@@ -30,7 +30,6 @@ import jp.careapp.counseling.android.ui.main.MainViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.Define.Companion.PREFIX_CARE_APP
-import jp.careapp.counseling.android.utils.GenresUtil
 import jp.careapp.counseling.databinding.FragmentHomeBinding
 import timber.log.Timber
 import javax.inject.Inject
@@ -56,18 +55,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         BannerAdapter { banner ->
             onClickBanner(banner)
         }
-    }
-
-    private val mConsultantAdapter: ConsultantAdapter by lazy {
-        ConsultantAdapter(
-            requireContext(),
-            GenresUtil.getListGenres(),
-            listener = { position, listData ->
-                if (!isDoubleClick) {
-                    onClickDetailConsultant(position, listData)
-                }
-            }
-        )
     }
 
     private val handler = Handler(Looper.getMainLooper())
@@ -153,15 +140,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         super.onDestroyView()
     }
 
-    private fun onClickDetailConsultant(
-        position: Int,
-        listData: List<ConsultantResponse>
-    ) {
-        val bundle = Bundle()
-        bundle.putInt(BUNDLE_KEY.POSITION_SELECT, position)
-        shareViewModel.setListPerformer(listData)
-        appNavigation.openTopToUserProfileScreen(bundle)
-    }
 
     override fun bindingStateView() {
         super.bindingStateView()
@@ -175,15 +153,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             }
         }
         viewModel.isLoading.observe(viewLifecycleOwner, isLoadingObserver)
-
-        viewModel.listConsultantResult.observe(
-            viewLifecycleOwner
-        ) {
-            if (!it.isNullOrEmpty()) {
-                shareViewModel.saveListPerformerSearch(it)
-            }
-            mConsultantAdapter.submitList(it)
-        }
 
         mainViewModels.currentFragment.observe(
             viewLifecycleOwner,

@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
@@ -14,6 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.utils.DeviceUtil
+import jp.careapp.core.utils.screenHeight
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.message.MessageResponse
 import jp.careapp.counseling.android.navigation.AppNavigation
@@ -51,12 +53,6 @@ class SecretMessageBottomFragment : BottomSheetDialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        val dialog = dialog
-
-        if (dialog != null) {
-            val bottomSheet = dialog.findViewById<View>(R.id.design_bottom_sheet)
-            bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
-        }
         val view = view
         requireView().post {
             val parent = view?.parent as View
@@ -111,12 +107,45 @@ class SecretMessageBottomFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.messageRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+        // Set the height of cl_main to 50% of the screen height
+        val constraintLayout = binding.clMain
+        constraintLayout.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                // Remove the listener to avoid multiple calls
+                constraintLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                // Set the height of cl_main to 50% of the screen height
+                val desiredHeight = (requireContext().screenHeight * 0.5).toInt()
+                val layoutParams = constraintLayout.layoutParams
+                layoutParams.height = desiredHeight
+                constraintLayout.layoutParams = layoutParams
+            }
+        })
+        val layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        layoutManager.stackFromEnd = true
+        binding.messageRv.layoutManager = layoutManager
         adapter = SecretMessageAdapter(requireContext())
         binding.messageRv.adapter = adapter
+
+        // TODO Remove sample data
         adapter.submitList(
-            listOf(MessageResponse(body = "a"),MessageResponse(body = getString(R.string.message_default_performer)),MessageResponse(body = getString(R.string.message_default_performer), sendMail = true),MessageResponse(body = "a", sendMail = true))
+            listOf(
+                MessageResponse(body = "a"),
+                MessageResponse(body = getString(R.string.message_default_performer)),
+                MessageResponse(
+                    body = getString(R.string.message_default_performer),
+                    sendMail = true
+                ),
+                MessageResponse(body = "a", sendMail = true),
+                MessageResponse(body = "a", sendMail = true),
+                MessageResponse(body = "a", sendMail = true),
+                MessageResponse(body = "a", sendMail = true),
+                MessageResponse(body = "a", sendMail = true),
+                MessageResponse(body = "a", sendMail = true),
+                MessageResponse(body = "a", sendMail = true)
+            )
         )
+        binding.messageRv.scrollToPosition(adapter.itemCount - 1)
         binding.contentMessageEdt.addTextChangedListener {
             sendMessageEnable = if (TextUtils.isEmpty(it?.toString()?.trim() ?: "")) {
                 binding.sendMessageIv.setImageResource(R.drawable.ic_message_inactive)

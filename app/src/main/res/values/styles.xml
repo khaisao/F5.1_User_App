@@ -80,9 +80,14 @@
         <item name="android:textSize">@dimen/text_size_18</item>
     </style>
 
+    <style name="text_bold_20" parent="text_bold">
+        <item name="android:textSize">@dimen/text_size_20</item>
+    </style>
+
     <style name="text_18" parent="text_normal">
         <item name="android:textSize">@dimen/text_size_18</item>
     </style>
+
 
     <style name="text_16" parent="text_normal">
         <item name="android:textSize">@dimen/text_size_16</item>

@@ -169,10 +169,10 @@ fun Context.getBustSize(numSize: Int): String {
     return if (numSize == 0) {
         ""
     } else if (numSize == 99) {
-        this.resources.getString(R.string.secret)
+        "(" + this.resources.getString(R.string.secret) + ")"
     } else if (numSize in 1..9) {
         val sizeString = (numSize + 64).toChar().toString()
-        sizeString + this.resources.getString(R.string.cup)
+        "(" + sizeString + this.resources.getString(R.string.cup) + ")"
     } else {
         ""
     }

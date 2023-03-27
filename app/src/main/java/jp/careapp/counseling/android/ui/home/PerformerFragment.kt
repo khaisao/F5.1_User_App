@@ -18,7 +18,6 @@ import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.favourite.FavoriteViewModel
 import jp.careapp.counseling.android.ui.main.MainViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
-import jp.careapp.counseling.android.utils.GenresUtil
 import jp.careapp.counseling.databinding.FragmentPerformerBinding
 import javax.inject.Inject
 
@@ -30,12 +29,12 @@ class PerformerFragment : BaseFragment<FragmentPerformerBinding,HomeViewModel>()
 
     @Inject
     lateinit var rxPreferences: RxPreferences
+
     override val layoutId: Int = R.layout.fragment_performer
 
     private val viewModel: HomeViewModel by activityViewModels()
 
     private val favoriteViewModel: FavoriteViewModel by activityViewModels()
-
 
     override fun getVM(): HomeViewModel = viewModel
 
@@ -48,7 +47,6 @@ class PerformerFragment : BaseFragment<FragmentPerformerBinding,HomeViewModel>()
     private val mConsultantAdapter: ConsultantAdapter by lazy {
         ConsultantAdapter(
             requireContext(),
-            GenresUtil.getListGenres(),
             listener = { position, listData ->
                 if (!isDoubleClick) {
                     onClickDetailConsultant(position, listData)

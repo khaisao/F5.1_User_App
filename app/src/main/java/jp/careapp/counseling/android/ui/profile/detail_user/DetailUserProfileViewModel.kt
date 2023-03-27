@@ -35,7 +35,7 @@ class DetailUserProfileViewModel @ViewModelInject constructor(private val apiInt
             isLoading.value = true
             try {
                 val response = apiInterface.getUserProfileDetail(code)
-                val galleryResponse = apiInterface.getUserGallery("256325")
+                val galleryResponse = apiInterface.getUserGallery(code)
                 response.let {
                     if (it.errors.isEmpty()) {
                         userProfileResult.postValue(it.dataResponse)
@@ -140,7 +140,7 @@ class DetailUserProfileViewModel @ViewModelInject constructor(private val apiInt
                 val response = apiInterface.getEmailSentByMember(code)
                 response.let {
                     if (it.errors.isEmpty()) {
-                        isFirstChat.value = response.dataResponse.isNullOrEmpty()
+                        isFirstChat.value = response.dataResponse.isEmpty()
                     }
                 }
                 isLoading.value = false
