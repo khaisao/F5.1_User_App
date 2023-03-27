@@ -211,7 +211,7 @@ class RegisterNameFragment : BaseFragment<FragmentRegisterNameBinding, RegisterN
                 view?.let { it1 ->
                     DeviceUtil.hideKeyBoardWhenClickOutSide(
                         it1,
-                        binding.btnRegister,
+                        arrayListOf(binding.btnRegister),
                         it
                     )
                 }

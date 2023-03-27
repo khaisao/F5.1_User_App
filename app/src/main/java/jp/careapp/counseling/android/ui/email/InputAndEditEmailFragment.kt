@@ -339,7 +339,7 @@ class InputAndEditEmailFragment :
                 view?.let { it1 ->
                     DeviceUtil.hideKeyBoardWhenClickOutSide(
                         it1,
-                        binding.btnEmail,
+                        arrayListOf(binding.btnEmail),
                         it
                     )
                 }

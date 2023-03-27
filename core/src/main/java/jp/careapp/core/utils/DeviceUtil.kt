@@ -128,8 +128,8 @@ class DeviceUtil {
             }
         }
 
-        fun hideKeyBoardWhenClickOutSide(view: View, viewCancel: View, activity: Activity) {
-            if (view !is AppCompatEditText && view != viewCancel) {
+        fun hideKeyBoardWhenClickOutSide(view: View, viewCancel: ArrayList<View>, activity: Activity) {
+            if (view !is AppCompatEditText && !viewCancel.contains(view)) {
                 view.setOnTouchListener { view1: View?, motionEvent: MotionEvent? ->
                     hideSoftKeyboard(activity)
                     false

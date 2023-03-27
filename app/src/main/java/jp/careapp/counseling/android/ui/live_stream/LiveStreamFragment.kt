@@ -117,7 +117,11 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             }
         }
 
-        hideKeyBoardWhenClickOutSide(binding.root, binding.btnSendComment, requireActivity())
+        hideKeyBoardWhenClickOutSide(
+            binding.root,
+            arrayListOf(binding.btnSendComment, binding.rcvCommentList),
+            requireActivity()
+        )
 //        hideKeyBoardWhenClickOutSide(binding.root, binding.rcvCommentList, requireActivity())
 
         binding.btnWhisper.setOnClickListener {}

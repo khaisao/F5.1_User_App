@@ -85,7 +85,7 @@ class VerifyCodeFragment :
                 view?.let { it1 ->
                     DeviceUtil.hideKeyBoardWhenClickOutSide(
                         it1,
-                        binding.tvNotReceive,
+                        arrayListOf(binding.tvNotReceive),
                         it
                     )
                 }
