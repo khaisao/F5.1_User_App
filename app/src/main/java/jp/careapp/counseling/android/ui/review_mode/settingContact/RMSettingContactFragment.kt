@@ -1,5 +1,6 @@
 package jp.careapp.counseling.android.ui.review_mode.settingContact
 
+import android.graphics.Color
 import android.view.View
 import android.widget.AdapterView
 import androidx.core.widget.addTextChangedListener
@@ -67,6 +68,7 @@ class RMSettingContactFragment :
     override fun onNothingSelected(p0: AdapterView<*>?) {}
 
     private fun setUpToolBar() {
+        binding.toolBar.setRootLayoutBackgroundColor(Color.TRANSPARENT)
         binding.toolBar.setOnToolBarClickListener(object : ToolBarCommon.OnToolBarClickListener() {
             override fun onClickLeft() {
                 super.onClickLeft()

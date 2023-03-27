@@ -80,9 +80,13 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
         viewModel.actionSPlash.observe(viewLifecycleOwner) {
             when (it) {
                 SplashActionState.Finish -> {
-                    viewModel.handleActionSplash()
+                    viewModel.getAppMode()
                 }
             }
+        }
+
+        viewModel.appMode.observe(viewLifecycleOwner) {
+            viewModel.checkModeChange()
         }
     }
 
@@ -103,10 +107,11 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
                         }
                         SplashViewModel.SCREEN_CODE_REGISTER -> appNavigation.openSplashToReRegisterScreen()
                         SplashViewModel.SCREEN_CODE_BAD_USER -> appNavigation.openSplashToBadUserScreen()
-                        SplashViewModel.SCREEN_CODE_START_RM -> appNavigation.openSplashToRMStart()
-                        SplashViewModel.SCREEN_CODE_REGISTER_RM -> appNavigation.openSplashToRMStart()
-                        SplashViewModel.SCREEN_CODE_BAD_USER_RM -> appNavigation.openSplashToRMStart()
-                        SplashViewModel.SCREEN_CODE_TOP_RM -> appNavigation.openSplashToRMTop()
+                        // TODO Uncomment for product
+//                        SplashViewModel.SCREEN_CODE_START_RM -> appNavigation.openSplashToRMStart()
+//                        SplashViewModel.SCREEN_CODE_REGISTER_RM -> appNavigation.openSplashToRMStart()
+//                        SplashViewModel.SCREEN_CODE_BAD_USER_RM -> appNavigation.openSplashToRMStart()
+//                        SplashViewModel.SCREEN_CODE_TOP_RM -> appNavigation.openSplashToRMTop()
                     }
             })
         }

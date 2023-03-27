@@ -1,5 +1,6 @@
 package jp.careapp.counseling.android.ui.review_mode.settingContact.finish
 
+import android.graphics.Color
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
@@ -28,6 +29,7 @@ class RMSettingContactFinishFragment :
     }
 
     private fun setUpToolBar() {
+        binding.toolBar.setRootLayoutBackgroundColor(Color.TRANSPARENT)
         binding.toolBar.setOnToolBarClickListener(object : ToolBarCommon.OnToolBarClickListener() {
             override fun onClickLeft() {
                 super.onClickLeft()

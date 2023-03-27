@@ -1,4 +1,4 @@
-package jp.careapp.counseling.android.ui.review_mode.online_list
+package jp.careapp.counseling.android.ui.review_mode.block_list
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -17,13 +17,13 @@ import jp.careapp.counseling.android.model.network.BasePerformerResponse
 import jp.careapp.counseling.android.model.network.RMBlockListResponse
 import jp.careapp.counseling.android.model.network.RMFavoriteResponse
 import jp.careapp.counseling.android.model.network.RMPerformerResponse
-import jp.careapp.counseling.databinding.ItemRmFavoriteListBinding
+import jp.careapp.counseling.databinding.ItemRmBlockListBinding
 
-class RMFavoritePerformerAdapter(
+class RMBlockListAdapter(
     context: Context,
     val onClickListener: (BasePerformerResponse) -> Unit,
     val onClickDelete: (BasePerformerResponse) -> Unit
-) : BaseAdapterLoadMore<BasePerformerResponse>(RMFavoritePerformerDiffUtil()) {
+) : BaseAdapterLoadMore<BasePerformerResponse>(RMBlockListDiffUtil()) {
     private val layoutInflater by lazy {
         LayoutInflater.from(context)
     }
@@ -34,14 +34,14 @@ class RMFavoritePerformerAdapter(
         parent: ViewGroup,
         viewType: Int
     ): RecyclerView.ViewHolder {
-        return ItemViewHolder(ItemRmFavoriteListBinding.inflate(layoutInflater, parent, false))
+        return ItemViewHolder(ItemRmBlockListBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun onBinViewHolderNomal(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as? ItemViewHolder)?.bind(getItem(position))
     }
 
-    inner class ItemViewHolder(val binding: ItemRmFavoriteListBinding) :
+    inner class ItemViewHolder(val binding: ItemRmBlockListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(performerResponse: BasePerformerResponse) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -79,7 +79,7 @@ class RMFavoritePerformerAdapter(
     }
 }
 
-class RMFavoritePerformerDiffUtil : DiffUtil.ItemCallback<BasePerformerResponse>() {
+class RMBlockListDiffUtil : DiffUtil.ItemCallback<BasePerformerResponse>() {
     override fun areItemsTheSame(
         oldItem: BasePerformerResponse,
         newItem: BasePerformerResponse

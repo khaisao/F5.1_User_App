@@ -15,6 +15,8 @@ import jp.careapp.counseling.android.data.network.LoginResponse
 import jp.careapp.counseling.android.data.network.MemberResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.network.ApiInterface
+import jp.careapp.counseling.android.utils.Define
+import jp.careapp.counseling.android.utils.Define.Companion.NORMAL_MODE
 import jp.careapp.counseling.android.utils.dummyCategoryData
 import jp.careapp.counseling.android.utils.dummyFreeTemplateData
 import kotlinx.coroutines.Dispatchers
@@ -37,11 +39,11 @@ class SplashViewModel @ViewModelInject constructor(
         const val SCREEN_CODE_START_RM = 5
         const val SCREEN_CODE_BAD_USER_RM = 6
         const val SCREEN_CODE_REGISTER_RM = 7
-        const val NORMAL_MODE = 1
-        const val REVIEW_MODE = 98
     }
 
     val actionSPlash = SingleLiveEvent<SplashActionState>()
+
+    val appMode = MutableLiveData<Int>()
 
     val screenCode = MutableLiveData<Int>()
 
@@ -51,16 +53,14 @@ class SplashViewModel @ViewModelInject constructor(
 
     private val loginResult = MutableLiveData<ApiObjectResponse<LoginResponse>>()
 
-    private val appMode = MutableLiveData<Int>()
-
     private val runnable = Runnable {
         actionSPlash.value = SplashActionState.Finish
     }
 
     private fun openStartScreen() {
-        // TODO Handle check review mode
-        appMode.value = NORMAL_MODE
-        screenCode.value = SCREEN_CODE_START_RM
+        screenCode.value =
+            if (appMode.value == NORMAL_MODE) SCREEN_CODE_START
+            else SCREEN_CODE_START_RM
     }
 
     init {
@@ -69,8 +69,7 @@ class SplashViewModel @ViewModelInject constructor(
         handler.postDelayed(runnable, DURATION_SPLASH)
     }
 
-    fun handleActionSplash() {
-        openStartScreen()
+    private fun handleActionSplash() {
         if (!TextUtils.isEmpty(rxPreferences.getToken())) {
             if (getCurrentDateTime() != null &&
                 rxPreferences.getTokenExpire()!!.toJPDate(DateUtil.DATE_FORMAT_1) != null &&
@@ -117,12 +116,33 @@ class SplashViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun checkAppMode() {
-        // TODO Call API check mode to switch ReviewMode/NormalMode
+    fun getAppMode() {
+        viewModelScope.launch {
+            isLoading.value = true
+            try {
+                val appModeResponse = apiInterface.getAppMode()
+                appModeResponse.let {
+                    if (it.errors.isEmpty()) {
+                        it.dataResponse.let { response ->
+                            appMode.value = response.appMode
+                        }
+                    }
+                }
+                isLoading.value = false
+            } catch (e: Exception) {
+                isLoading.value = false
+            }
+            appMode.value = NORMAL_MODE // TODO Remove for product
+        }
     }
 
-    private fun switchMode() {
-        // TODO Handle clear all data of old mode
+    fun checkModeChange() {
+        val oldMode = rxPreferences.getAppMode()
+        if (oldMode != appMode.value) {
+            rxPreferences.switchMode()
+            appMode.value?.let { rxPreferences.setAppMode(it) }
+        }
+        handleActionSplash()
     }
 
     private fun login() {

@@ -351,4 +351,7 @@ interface ApiInterface {
 
     @GET("api/blogs/{id}")
     suspend fun getBlogs(@Path("id") id: String): ApiObjectResponse<BlogResponse>
+
+    @GET("api/app-mode")
+    suspend fun getAppMode(): ApiObjectResponse<AppModeResponse>
 }

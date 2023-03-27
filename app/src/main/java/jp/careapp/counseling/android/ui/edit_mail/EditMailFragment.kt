@@ -44,7 +44,7 @@ class EditMailFragment : BaseFragment<FragmentEditMailBinding, EditMailViewModel
 
         mViewModel.isValidMail.observe(viewLifecycleOwner) {
             binding.btnSave.isEnabled = !it
-            binding.llItemWrongMailFormat.root.isVisible = it
+            binding.llItemWrongMailFormat.isVisible = it
         }
 
         mViewModel.mActionState.observe(viewLifecycleOwner) {

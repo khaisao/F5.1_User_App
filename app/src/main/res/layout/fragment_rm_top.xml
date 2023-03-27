@@ -34,9 +34,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_rm_bottom_bar"
-            android:paddingBottom="30dp"
+            android:paddingTop="@dimen/margin_6"
+            android:paddingBottom="@dimen/margin_30"
             android:theme="@style/BottomNavigationReviewModeTheme"
-            app:itemRippleColor="@color/transparent"
+            app:itemBackground="@drawable/bg_tab_item_background_rm"
+            app:itemIconSize="@dimen/margin_20"
+            app:itemIconTint="@color/color_tab_icon_tint"
+            app:itemRippleColor="@color/black_65"
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/rm_bottom_nav" />
     </androidx.constraintlayout.widget.ConstraintLayout>

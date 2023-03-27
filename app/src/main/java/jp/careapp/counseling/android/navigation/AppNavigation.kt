@@ -270,6 +270,10 @@ interface AppNavigation : BaseNavigator {
 
     fun openFAQToWithdrawal(bundle: Bundle? = null)
 
+    fun openRMStartToTermOfService(bundle: Bundle? = null)
+
+    fun openRMStartToPrivacyPolicy(bundle: Bundle? = null)
+
     fun openLiveStreamToExitLiveStream(bundle: Bundle? = null)
 
     fun openExitLiveStreamToMessage(bundle: Bundle? = null)
