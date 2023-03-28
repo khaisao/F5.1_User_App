@@ -12,6 +12,7 @@ import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.*
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -191,4 +192,32 @@ fun TextView.setUnderlineAndClick(
 
     this.text = span
     this.movementMethod = LinkMovementMethod.getInstance()
+}
+
+fun Context.convertStringToSpannableString(
+    resourceString: Int,
+    resourceColor: Int,
+    start: Int,
+    end: Int
+): SpannableString {
+    val span = SpannableString(this.getString(resourceString))
+    span.setSpan(
+        ForegroundColorSpan(ContextCompat.getColor(this, resourceColor)),
+        start,
+        end,
+        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+    )
+    return span
+}
+
+fun View.getHeight(function: (Int) -> Unit) {
+    if (height == 0)
+        viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                viewTreeObserver.removeOnGlobalLayoutListener(this)
+                function.invoke(height)
+            }
+        })
+    else function(height)
 }

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.confirm.LiveStreamConfirmViewModel" />
+
+        <variable
+            name="viewModel"
+            type="LiveStreamConfirmViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_live_stream_bottom_sheet_dialog"
+        android:paddingHorizontal="24dp"
+        tools:context=".android.ui.live_stream.live_stream_bottom_sheet.confirm.LiveStreamConfirmBottomSheet">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/hiragino_sans_w6"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:text="@{viewModel.title}"
+            android:textColor="#f0f0f0"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="プレミアムプライベートモードを申し込みますか？" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvContent"
+            content_visibility="@{viewModel.content}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/hiragino_sans_w3"
+            android:lineSpacingExtra="4dp"
+            android:text="@{viewModel.content}"
+            android:textColor="#b2a9cc"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            tools:text="@string/premium_private_mode_register"
+            tools:visibility="visible" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="34dp"
+            android:background="@drawable/bg_nm_btn_primary_disable"
+            android:fontFamily="@font/hiragino_sans_w6"
+            android:gravity="center"
+            android:minHeight="44dp"
+            android:paddingVertical="16dp"
+            android:text="@string/cancel"
+            android:textColor="#b2a9cc"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/guideline8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvContent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnOk"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/bg_nm_btn_primary_enable"
+            android:fontFamily="@font/hiragino_sans_w6"
+            android:gravity="center"
+            android:minHeight="44dp"
+            android:paddingVertical="16dp"
+            android:text="@string/ok"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@id/btnCancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideline8" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
