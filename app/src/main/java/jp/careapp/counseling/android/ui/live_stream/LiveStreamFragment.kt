@@ -161,22 +161,22 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             binding.groupAllBtn.isVisible = false
             when (it) {
                 LiveStreamMode.PARTY -> {
-                    binding.llItemParty.root.isVisible = true
+                    binding.llItemParty.isVisible = true
                     binding.groupButtonPartyMode.isVisible = true
                 }
 
                 LiveStreamMode.PRIVATE -> {
-                    binding.llItemPrivate.root.isVisible = true
+                    binding.llItemPrivate.isVisible = true
                     binding.groupButtonPrivateMode.isVisible = true
                 }
 
                 LiveStreamMode.PREMIUM_PRIVATE -> {
-                    binding.llItemPremiumPrivate.root.isVisible = true
+                    binding.llItemPremiumPrivate.isVisible = true
                     binding.groupButtonPrivateMode.isVisible = true
                 }
 
                 LiveStreamMode.PEEP -> {
-                    binding.llItemPeeping.root.isVisible = true
+                    binding.llItemPeeping.isVisible = true
                     binding.groupButtonPeepingMode.isVisible = true
                 }
             }
