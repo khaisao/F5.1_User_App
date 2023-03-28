@@ -35,22 +35,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.015" />
-
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivPerformer"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_microphone"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/guideline8"
-                    app:layout_constraintWidth_percent="0.11"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.106"
                     tools:src="@tools:sample/avatars" />
 
                 <LinearLayout
@@ -112,10 +106,9 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/hiragino_sans_w6"
                         android:gravity="center"
-                        android:text="@{viewModel.performerName}"
+                        android:text="レー・ブー・ハイ・ダン"
                         android:textColor="@color/white"
-                        android:textSize="12sp"
-                        tools:text="レー・ブー・ハイ・ダン" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -137,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.958" />
+                    app:layout_constraintGuide_percent="0.982" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/btnComment"
