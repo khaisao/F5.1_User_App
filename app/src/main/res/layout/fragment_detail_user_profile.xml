@@ -180,7 +180,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_info"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_4dp"
                     android:minHeight="361dp"
                     android:background="@drawable/bg_message_of_the_day"
@@ -269,7 +269,7 @@
                     <TextView
                         android:id="@+id/tv_message_of_the_day"
                         style="@style/text_14"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_16"
                         android:paddingBottom="@dimen/padding_16dp"
@@ -291,29 +291,26 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cl_info" />
 
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_6"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:padding="@dimen/padding_4"
+                    android:src="@drawable/ic_back_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         </ScrollView>
-
-
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_6"
-            android:layout_marginTop="@dimen/margin_8"
-            android:padding="@dimen/padding_4"
-            android:src="@drawable/ic_back_white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
 
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/margin_12"
+            android:layout_marginBottom="@dimen/margin_10"
             android:background="@color/color_402C70"
             app:layout_constraintBottom_toTopOf="@id/clAction" />
 
