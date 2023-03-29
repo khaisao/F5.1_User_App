@@ -109,7 +109,7 @@ class ApiModule {
                             .header("Accept", "application/json")
                             .addHeader(
                                 "Authorization",
-                                rxPreferences.getToken()!!
+                                "Bearer ${rxPreferences.getToken().toString()}"
                             )
                             .build()
                     } else {

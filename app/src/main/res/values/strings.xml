@@ -732,4 +732,5 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="item_live_stream_peeping">のぞき中</string>
     <string name="item_live_stream_normal">ライブ配信中</string>
     <string name="input_comment">コメントを入力</string>
+    <string name="current_points">所持ポイント</string>
 </resources>

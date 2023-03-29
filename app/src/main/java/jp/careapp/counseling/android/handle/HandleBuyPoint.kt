@@ -29,7 +29,7 @@ class HandleBuyPoint @Inject constructor(
             }
             val lastBuyLog = rxPreferences.getLastBuyLog()
             if (!isClickSendMessage || rxPreferences.getFirstBuyCredit() || lastBuyLog == null) {
-                webViewBundle.putString(Define.URL_WEB_VIEW, Define.URL_BUY_POINT)
+                webViewBundle.putString(Define.URL_WEB_VIEW, "${Define.URL_BUY_POINT}${rxPreferences.getToken()}")
             } else {
                 val creditPrices = rxPreferences.getCreditPrices()
                 val credit =

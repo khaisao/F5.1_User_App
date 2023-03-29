@@ -14,7 +14,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:src_left="@drawable/ic_back_left"
+            app:src_left="@drawable/ic_arrow_left"
             app:src_right="@string/port_new_question"
             app:string_title="@string/title_new_question" />
 

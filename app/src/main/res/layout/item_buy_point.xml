@@ -1,69 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <import type="jp.careapp.counseling.android.model.buy_point.ItemPoint" />
+
         <variable
             name="data"
-            type="jp.careapp.counseling.android.model.buy_point.ItemPoint" />
+            type="ItemPoint" />
+
     </data>
 
-    <androidx.cardview.widget.CardView
-        app:cardCornerRadius="@dimen/margin_22"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_marginBottom="@dimen/margin_8"
-        android:layout_height="wrap_content">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_item_buy_point">
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_performer_status_waiting"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/hiragino_sans_w6"
             android:gravity="center"
-            android:paddingVertical="@dimen/padding_14">
-
-            <TextView
-                app:layout_constraintTop_toTopOf="@id/tv_diviner"
-                app:layout_constraintBottom_toBottomOf="@id/tv_diviner"
-                app:layout_constraintEnd_toStartOf="@id/tv_diviner"
-                android:id="@+id/action_buy_point_tv"
-                style="@style/text_bold_14"
-                android:paddingVertical="@dimen/margin_3"
-                android:layout_width="wrap_content"
-                android:layout_marginEnd="@dimen/margin_3"
-                android:gravity="center"
-                android:text="@{data.money}"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/tv_diviner"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                style="@style/text_bold_14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/margin_3"
-                android:text="/"
-                android:layout_marginEnd="@dimen/margin_3"
-                android:textColor="@color/color_E3DFEF" />
-
-            <TextView
-                app:layout_constraintTop_toTopOf="@id/tv_diviner"
-                app:layout_constraintBottom_toBottomOf="@id/tv_diviner"
-                app:layout_constraintStart_toEndOf="@id/tv_diviner"
-                android:id="@+id/point_tv"
-                android:layout_marginStart="@dimen/margin_3"
-                style="@style/text_bold_14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/margin_3"
-                android:text="@{data.pointCount}"
-                android:textColor="@color/white" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
+            android:paddingVertical="16dp"
+            android:text="@{data.money + `/` + data.pointCount}"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:text="¥000 / 000pts" />
+    </FrameLayout>
 
 </layout>

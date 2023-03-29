@@ -1,15 +1,17 @@
 package jp.careapp.counseling.android.ui.webView
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.counseling.android.data.network.BlogResponse
 import jp.careapp.counseling.android.network.ApiInterface
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
-class WebViewViewModel @ViewModelInject constructor(
+@HiltViewModel
+class WebViewViewModel @Inject constructor(
     private val apiInterface: ApiInterface
 ) : BaseViewModel() {
 

@@ -14,7 +14,7 @@
             app:hide_line_bottom="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:src_left="@drawable/ic_back_left"
+            app:src_left="@drawable/ic_arrow_left"
             app:string_title="@string/title_buy_point" />
 
         <LinearLayout

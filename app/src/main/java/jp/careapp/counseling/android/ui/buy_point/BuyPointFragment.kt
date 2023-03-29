@@ -62,16 +62,11 @@ class BuyPointFragment : BaseFragment<FragmentBuyPointBinding, BuyPointViewModel
     }
 
     private fun initAdapter(firstBuy: Boolean) {
-        costPointAdapter = CostPointAdapter(
-            viewLifecycleOwner,
-            object : EventBuyPointAction {
-                override fun onclickItem(item: ItemPoint) {
-                    if (!isDoubleClick) {
-                        activity?.let { viewModel.startBilling(item, it) }
-                    }
-                }
+        costPointAdapter = CostPointAdapter { item ->
+            if (!isDoubleClick) {
+                activity?.let { viewModel.startBilling(item, it) }
             }
-        )
+        }
         val item1 = ItemPoint(
             BUY_POINT.FIST_BUY_COIN_5.id,
             firstBuy,

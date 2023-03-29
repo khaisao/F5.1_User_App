@@ -24,8 +24,6 @@ class AppPreferences @Inject constructor(
 ) : RxPreferences {
 
     companion object {
-        const val PARAM_BEARER = "Bearer "
-
         const val PREF_PARAM_ACCESS_TOKEN = "PREF_PARAM_ACCESS_TOKEN"
         const val PREF_PARAM_EMAIL_USER = "PREF_PARAM_EMAIL_USER"
         const val PREF_PARAM_TOKEN_EXPIRE = "PREF_PARAM_TOKEN_EXPIRE"
@@ -98,7 +96,7 @@ class AppPreferences @Inject constructor(
     override fun getToken() = get(PREF_PARAM_ACCESS_TOKEN)
 
     override fun setUserToken(userToken: String) =
-        put(PREF_PARAM_ACCESS_TOKEN, PARAM_BEARER + userToken)
+        put(PREF_PARAM_ACCESS_TOKEN, userToken)
 
     override fun logout() {
         remove(PREF_KEY_UNREAD_MESSAGE)
@@ -114,7 +112,7 @@ class AppPreferences @Inject constructor(
         passWord: String,
         memberCode: String
     ) {
-        mPrefs.edit().putString(PREF_PARAM_ACCESS_TOKEN, PARAM_BEARER + token).apply()
+        mPrefs.edit().putString(PREF_PARAM_ACCESS_TOKEN, token).apply()
         mPrefs.edit().putString(PREF_PARAM_TOKEN_EXPIRE, tokenExpire).apply()
         if (passWord.isNotEmpty()) {
             mPrefs.edit().putString(PREF_PARAM_PASSWORD, passWord).apply()

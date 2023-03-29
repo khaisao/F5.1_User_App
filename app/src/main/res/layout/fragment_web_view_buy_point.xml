@@ -30,7 +30,7 @@
                 app:iv_right="@drawable/ic_cancel"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:src_left="@drawable/ic_back_left"
+                app:src_left="@drawable/ic_arrow_left"
                 tools:string_title="@string/title_difficult_with_login" />
             <LinearLayout
                 android:gravity="center"

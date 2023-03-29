@@ -52,7 +52,7 @@ class NewsFragment : BaseFragment<FragmentNewsBinding, NewsViewModel>() {
         binding.apply {
             viewPagger.adapter = fragmentStateAdapterNews
             appBar.apply {
-                btnLeft.setImageDrawable(resources.getDrawable(R.drawable.ic_back_left))
+                btnLeft.setImageDrawable(resources.getDrawable(R.drawable.ic_arrow_left))
                 btnLeft.setOnClickListener {
                     if (!isDoubleClick)
                         if (isFromNotification) {

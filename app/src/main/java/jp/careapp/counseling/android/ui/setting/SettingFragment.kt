@@ -65,7 +65,7 @@ class SettingFragment : BaseFragment<FragmentOtherSettingBinding, SettingViewMod
                     if (!isDoubleClick)
                         findNavController().navigateUp()
                 }
-                btnLeft.setImageDrawable(resources.getDrawable(R.drawable.ic_back_left))
+                btnLeft.setImageDrawable(resources.getDrawable(R.drawable.ic_arrow_left))
                 tvTitle.text = getString(R.string.setting)
                 viewStatusBar.visibility = View.GONE
             }
