@@ -18,15 +18,19 @@
             android:layout_above="@id/bottom_bar"
             android:visibility="invisible" />
 
-        <ImageView
-            android:id="@+id/iv_avt_background"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="@id/rv_message_template"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tool_bar" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/iv_avt_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tool_bar" />
+        </ScrollView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/message_rv"
@@ -38,7 +42,7 @@
             android:paddingRight="@dimen/margin_16"
             android:paddingBottom="@dimen/margin_16"
             app:layout_constraintBottom_toTopOf="@+id/rv_message_template"
-            app:layout_constraintTop_toTopOf="@id/iv_avt_background"
+            app:layout_constraintTop_toBottomOf="@id/tool_bar"
             app:reverseLayout="true"
             app:stackFromEnd="true"
             tools:listitem="@layout/item_message_performer" />
@@ -62,16 +66,10 @@
             android:id="@+id/bottom_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
             android:layout_alignParentBottom="true"
             android:background="@color/color_background_common"
             app:layout_constraintBottom_toBottomOf="parent">
-
-            <View
-                android:id="@+id/line_bottom"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:alpha="0.15"
-                android:background="@color/white" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/content_send_mess_rl"

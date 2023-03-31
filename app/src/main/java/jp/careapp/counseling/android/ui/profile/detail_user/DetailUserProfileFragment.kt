@@ -312,7 +312,7 @@ class DetailUserProfileFragment :
     private fun showDialogConfirmCall() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
-            .setContent(R.string.content_confirm_call)
+            .setDialogTitle(R.string.content_confirm_call)
             .setTextPositiveButton(R.string.confirm_block_alert)
             .setTextNegativeButton(R.string.cancel_block_alert)
             .setOnPositivePressed {
