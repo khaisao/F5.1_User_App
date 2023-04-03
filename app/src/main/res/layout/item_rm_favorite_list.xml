@@ -15,19 +15,22 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_rm_favorite_item"
-        android:paddingVertical="8dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="16dp">
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_rm_favorite_item">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginVertical="8dp"
+            android:layout_marginStart="8dp"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_no_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.16" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/statusImage"
@@ -38,55 +41,78 @@
             app:layout_constraintBottom_toBottomOf="@+id/image"
             app:layout_constraintEnd_toEndOf="@+id/image" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewNickName"
-            style="@style/text_bold_14"
-            namePerformerResponse="@{performerResponse}"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="18dp"
-            android:includeFontPadding="false"
-            android:textColor="@color/color_070707"
-            app:layout_constraintEnd_toStartOf="@+id/btn_delete"
-            app:layout_constraintStart_toEndOf="@+id/image"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="ニックネーム" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_6dp"
-            app:layout_constraintStart_toStartOf="@+id/textViewNickName"
-            app:layout_constraintTop_toBottomOf="@+id/textViewNickName">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_video"
-                cameraPerformerResponse="@{performerResponse}"
-                android:layout_width="14dp"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/iv_video" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_message"
-                msgPerformerResponse="@{performerResponse}"
-                android:layout_width="14dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_message" />
-        </LinearLayout>
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_delete"
             performerResponse="@{performerResponse}"
-            android:layout_width="@dimen/_18sdp"
-            android:layout_height="@dimen/_18sdp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/ic_btn_remove"
             app:layout_constraintBottom_toBottomOf="@+id/image"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/image" />
+            app:layout_constraintTop_toTopOf="@+id/image"
+            app:layout_constraintWidth_percent="0.0525" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="vertical"
+            android:weightSum="2"
+            app:layout_constraintBottom_toBottomOf="@id/image"
+            app:layout_constraintEnd_toStartOf="@id/btn_delete"
+            app:layout_constraintStart_toEndOf="@id/image"
+            app:layout_constraintTop_toTopOf="@id/image">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewNickName"
+                namePerformerResponse="@{performerResponse}"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:gravity="center_vertical"
+                android:textColor="#070707"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/btn_delete"
+                app:layout_constraintStart_toEndOf="@+id/image"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="ニックネーム" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_video"
+                    cameraPerformerResponse="@{performerResponse}"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/iv_video"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.075" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_message"
+                    msgPerformerResponse="@{performerResponse}"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="2dp"
+                    android:src="@drawable/ic_message"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toEndOf="@id/iv_video"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.075" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

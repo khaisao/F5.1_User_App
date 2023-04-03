@@ -7,7 +7,6 @@ import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.observe
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.UpdateAvailability
 import dagger.hilt.android.AndroidEntryPoint
@@ -77,6 +76,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
 
     override fun bindingAction() {
         super.bindingAction()
+
         viewModel.actionSPlash.observe(viewLifecycleOwner) {
             when (it) {
                 SplashActionState.Finish -> {
@@ -92,9 +92,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
 
     override fun bindingStateView() {
         super.bindingStateView()
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            showHideLoading(it)
-        }
 
         viewModel.screenCode.observe(viewLifecycleOwner) { screenCode ->
             viewModel.isUpdate.observe(viewLifecycleOwner, Observer {
@@ -107,11 +104,10 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
                         }
                         SplashViewModel.SCREEN_CODE_REGISTER -> appNavigation.openSplashToReRegisterScreen()
                         SplashViewModel.SCREEN_CODE_BAD_USER -> appNavigation.openSplashToBadUserScreen()
-                        // TODO Uncomment for product
-//                        SplashViewModel.SCREEN_CODE_START_RM -> appNavigation.openSplashToRMStart()
-//                        SplashViewModel.SCREEN_CODE_REGISTER_RM -> appNavigation.openSplashToRMStart()
-//                        SplashViewModel.SCREEN_CODE_BAD_USER_RM -> appNavigation.openSplashToRMStart()
-//                        SplashViewModel.SCREEN_CODE_TOP_RM -> appNavigation.openSplashToRMTop()
+                        SplashViewModel.SCREEN_CODE_START_RM -> appNavigation.openSplashToRMStart()
+                        SplashViewModel.SCREEN_CODE_REGISTER_RM -> appNavigation.openSplashToRMStart()
+                        SplashViewModel.SCREEN_CODE_BAD_USER_RM -> appNavigation.openSplashToRMStart()
+                        SplashViewModel.SCREEN_CODE_TOP_RM -> appNavigation.openSplashToRMTop()
                     }
             })
         }
