@@ -59,7 +59,7 @@ class Define {
         const val URL_STRIPE_BUY_POINT =
             "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/stripe/buy-point-list.html"
         const val URL_BUY_POINT =
-            "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/payments-method.html"
+            "${BuildConfig.WEB_DOMAIN}/payment/methods?webview=false&&token="
         const val URL_CREDIT_PURCHASE_CONFIRM =
             "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/stripe/purchase-oneclick-confirm.html"
         const val URL_CONFIRM_POINT =

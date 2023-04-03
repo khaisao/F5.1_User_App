@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_16"
             android:rotation="270"
-            android:src="@drawable/ic_back_left"
+            android:src="@drawable/ic_arrow_left"
             app:layout_constraintBottom_toBottomOf="@+id/tv_date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_title" />

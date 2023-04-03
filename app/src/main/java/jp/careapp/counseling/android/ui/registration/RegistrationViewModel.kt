@@ -15,7 +15,6 @@ import jp.careapp.counseling.android.data.model.InfoRegistrationWithoutEmailRequ
 import jp.careapp.counseling.android.data.model.InforRegistrationRequest
 import jp.careapp.counseling.android.data.network.ApiObjectResponse
 import jp.careapp.counseling.android.data.network.RegistrationResponse
-import jp.careapp.counseling.android.data.pref.AppPreferences.Companion.PARAM_BEARER
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.network.ApiInterface
 import kotlinx.coroutines.launch
@@ -136,7 +135,7 @@ class RegistrationViewModel @ViewModelInject constructor(
 
     fun getRegisterRequest(): InforRegistrationRequest {
         return InforRegistrationRequest(
-            token = rxPreferences.getToken().toString().replace(PARAM_BEARER, "").trim(),
+            token = rxPreferences.getToken().toString().trim(),
             name = name,
             sex = 1,
             receiveNewsLetterEmail = receiveMail,

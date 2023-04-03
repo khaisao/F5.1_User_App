@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             app:is_show_point="true"
             app:layout_constraintTop_toTopOf="parent"
-            app:src_left_p="@drawable/ic_back_left"
+            app:src_left_p="@drawable/ic_arrow_left"
             app:string_title_p="@string/lab_detail" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

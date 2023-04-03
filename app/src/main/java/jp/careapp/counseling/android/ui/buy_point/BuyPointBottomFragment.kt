@@ -139,28 +139,25 @@ class BuyPointBottomFragment : BottomSheetDialogFragment() {
         }
         when (typeScreen) {
             Define.BUY_POINT_FIRST -> {
-                binding.titlePointTv.text = getString(R.string.point_purchase)
+                binding.tvTitle.text = getString(R.string.point_purchase)
             }
             else -> {
-                binding.titlePointTv.text = getString(R.string.insufficient_points)
+                binding.tvTitle.text = getString(R.string.insufficient_points)
+                binding.tvContent.text =
+                    "${getString(R.string.current_points)}：${formatPoint(rxPreferences.getPoint())}pts"
             }
         }
         formatPoint(rxPreferences.getPoint())
     }
 
     private fun initAdapter(firstBuy: Boolean) {
-        costPointAdapter = CostPointAdapter(
-            viewLifecycleOwner,
-            object : EventBuyPointAction {
-                override fun onclickItem(item: ItemPoint) {
-                    activity?.let {
-                        if (it is BaseActivity<*, *> && !it.isDoubleClick) {
-                            buyPoint(item, it)
-                        }
-                    }
+        costPointAdapter = CostPointAdapter { item ->
+            activity?.let {
+                if (it is BaseActivity<*, *> && !it.isDoubleClick) {
+                    buyPoint(item, it)
                 }
             }
-        )
+        }
         val item1 = ItemPoint(
             BUY_POINT.FIST_BUY_COIN_5.id,
             firstBuy,
@@ -228,12 +225,8 @@ class BuyPointBottomFragment : BottomSheetDialogFragment() {
         get() = rxPreferences.isFullMode()
 
     private fun setOnClickView() {
-        binding.cancelButtonTv.setOnClickListener {
-            dismiss()
-        }
-        binding.container.setOnClickListener {
-            dismiss()
-        }
+        binding.btnCancel.setOnClickListener { dismiss() }
+        binding.container.setOnClickListener { dismiss() }
     }
 
     fun bindingStateView() {

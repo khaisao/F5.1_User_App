@@ -14,7 +14,7 @@
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:src_left="@drawable/ic_back_left" />
+            app:src_left="@drawable/ic_arrow_left" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"

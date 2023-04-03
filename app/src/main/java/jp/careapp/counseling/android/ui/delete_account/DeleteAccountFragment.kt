@@ -27,7 +27,7 @@ class DeleteAccountFragment : BaseFragment<FragmentDeleteAccountBinding, DeleteA
         super.initView()
         binding.apply {
             appBar.apply {
-                btnLeft.setImageDrawable(context?.let { getDrawable(it, R.drawable.ic_back_left) })
+                btnLeft.setImageDrawable(context?.let { getDrawable(it, R.drawable.ic_arrow_left) })
                 btnLeft.setOnClickListener {
                     if (!isDoubleClick) {
                         appNavigation.navigateUp()

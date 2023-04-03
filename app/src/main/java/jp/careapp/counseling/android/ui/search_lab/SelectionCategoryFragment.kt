@@ -101,7 +101,7 @@ class SelectionCategoryFragment :
         super.initView()
         selectionAdapter = SelectionAdapter()
         binding.toolbar.apply {
-            btnLeft.setImageDrawable(resources.getDrawable(R.drawable.ic_back_left))
+            btnLeft.setImageDrawable(resources.getDrawable(R.drawable.ic_arrow_left))
             btnLeft.setOnClickListener {
                 appNavigation.navigateUp()
             }

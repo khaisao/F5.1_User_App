@@ -3,59 +3,89 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
         android:id="@+id/container"
-        android:clickable="true"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_50090E1B">
+        android:clickable="true">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:background="@drawable/bg_buy_point"
-            android:gravity="center_horizontal"
             android:clickable="true"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:paddingHorizontal="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="wrap"
+            app:layout_constraintHeight_percent="0.8"
+            app:layout_constraintStart_toStartOf="parent">
 
-            <TextView
-                android:layout_marginBottom="@dimen/margin_24"
-                android:id="@+id/title_point_tv"
-                style="@style/text_bold_16"
-                android:layout_marginTop="@dimen/margin_32"
-                android:text="@string/point_purchase"
-                android:textColor="@color/color_E3DFEF"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="34dp"
+                android:background="@drawable/bg_nm_btn_primary_disable"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:gravity="center"
+                android:minHeight="44dp"
+                android:paddingVertical="16dp"
+                android:text="@string/cancel"
+                android:textColor="#b2a9cc"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cost_point_rv"
-                android:layout_width="match_parent"
-                android:layout_marginHorizontal="@dimen/margin_24"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
+                android:orientation="vertical"
+                android:paddingTop="8dp"
+                app:itemAnimator="@{null}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@id/btnCancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:itemCount="5"
                 tools:listitem="@layout/item_buy_point" />
 
             <TextView
-                android:id="@+id/cancel_button_tv"
-                style="@style/text_bold_16"
-                android:layout_width="match_parent"
-                android:layout_marginHorizontal="@dimen/margin_24"
-                android:layout_marginTop="@dimen/margin_8"
-                android:layout_marginBottom="@dimen/margin_24"
-                android:background="@drawable/bg_corner_24dp_332167"
+                android:id="@+id/tvContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/hiragino_sans_w3"
+                android:lineSpacingExtra="4dp"
+                android:textColor="#b2a9cc"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/cost_point_rv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="所持ポイント：1,000pts"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/hiragino_sans_w6"
                 android:gravity="center"
-                android:paddingTop="@dimen/margin_16"
-                android:paddingBottom="@dimen/margin_16"
-                android:text="@string/cancel"
-                android:textColor="@color/color_AEA2D1" />
-        </LinearLayout>
+                android:paddingTop="24dp"
+                android:textColor="#f0f0f0"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@id/tvContent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="@string/point_purchase" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

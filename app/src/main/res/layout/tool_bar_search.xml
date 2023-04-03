@@ -26,7 +26,7 @@
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_status_bar"
-            tools:src="@drawable/ic_back_left" />
+            tools:src="@drawable/ic_arrow_left" />
 
         <RelativeLayout
             android:layout_width="0dp"
