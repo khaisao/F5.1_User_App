@@ -72,6 +72,8 @@ class Define {
         const val URL_LIST_POINT_CREDIT = "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/stripe/buy-point-list.html"
         const val URL_LIST_POINT_PAY_PAY = "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/paypay/buy-point-list.html"
         const val URL_LIST_POINT_AMAZON_PAY = "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/amazon/buy-point-list.html"
+        // TODO (Change  owner_code)
+        //        const val OWNER_CODE = 6257353
         const val OWNER_CODE = 870
         const val APP_CODE = "CareappAndroid"
         const val PREFIX_CARE_APP = "careapp://"

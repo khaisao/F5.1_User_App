@@ -87,11 +87,11 @@ android {
         }
 
         release {
-            buildConfigField "String", "BASE_URL", "\"https://mem-api.careapp.jp/\""
-            buildConfigField "String", "WS_URL", "\"wss://sc.careapp.jp/socket/member\""
-            buildConfigField "String", "WS_ORIGIN", "\"https://web.careapp.jp\""
-            buildConfigField "String", "WS_OWNER", "\"careapp\""
-            buildConfigField "String", "WEB_DOMAIN", "\"https://web.careapp.jp\""
+            buildConfigField "String", "BASE_URL", "\"https://mem.sparklive.jp/\""
+            buildConfigField "String", "WS_URL", "\"wss://sc.sparklive.jp/socket/member\""
+            buildConfigField "String", "WS_ORIGIN", "\"https://web.sparklive.jp\""
+            buildConfigField "String", "WS_OWNER", "\"sparklive\""
+            buildConfigField "String", "WEB_DOMAIN", "\"https://web.sparklive.jp\""
             buildConfigField "String", "WEB_PURCHASE_DOMAIN", "\"https://pay.careapp.jp\""
             buildConfigField "String", "ADJUST_APP_TOKEN", "\"u9iestwac3r4\""
             buildConfigField "String", "REGISTRATION_EVENT_TOKEN", "\"9h0pzd\""

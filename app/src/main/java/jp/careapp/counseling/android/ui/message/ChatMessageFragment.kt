@@ -193,8 +193,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         if (activity is BaseActivity<*, *>) {
             (activity as BaseActivity<*, *>).setHandleDispathTouch(false)
         }
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
         loadData()
     }
 
