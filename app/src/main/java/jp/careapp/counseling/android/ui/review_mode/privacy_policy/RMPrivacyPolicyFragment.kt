@@ -1,4 +1,4 @@
-package jp.careapp.counseling.android.ui.privacy_policy
+package jp.careapp.counseling.android.ui.review_mode.privacy_policy
 
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -6,28 +6,29 @@ import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.utils.customView.ToolBarCommon
-import jp.careapp.counseling.databinding.FragmentPrivacyPolicyBinding
+import jp.careapp.counseling.databinding.FragmentRmPrivacyPolicyBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PrivacyPolicyFragment : BaseFragment<FragmentPrivacyPolicyBinding, PrivacyPolicyViewModel>() {
+class RMPrivacyPolicyFragment :
+    BaseFragment<FragmentRmPrivacyPolicyBinding, RMPrivacyPolicyViewModel>() {
 
     @Inject
     lateinit var appNavigation: AppNavigation
 
-    override val layoutId: Int = R.layout.fragment_privacy_policy
+    override val layoutId: Int = R.layout.fragment_rm_privacy_policy
 
-    private val mViewModel: PrivacyPolicyViewModel by viewModels()
+    private val mViewModel: RMPrivacyPolicyViewModel by viewModels()
     override fun getVM() = mViewModel
 
-    private var mAdapter: PrivacyPolicyListAdapter? = null
+    private var mAdapter: RMPrivacyPolicyListAdapter? = null
 
     override fun initView() {
         super.initView()
 
         setUpToolBar()
 
-        mAdapter = PrivacyPolicyListAdapter()
+        mAdapter = RMPrivacyPolicyListAdapter()
         binding.rcvPrivacyPolicy.apply {
             adapter = mAdapter
             setHasFixedSize(true)
