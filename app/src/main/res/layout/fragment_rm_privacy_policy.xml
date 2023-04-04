@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_eff3fc"
+        android:orientation="vertical"
+        tools:context=".android.ui.review_mode.privacy_policy.RMPrivacyPolicyFragment">
+
+        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bg_toolbar="@android:color/transparent"
+            app:color_title="@color/color_070707"
+            app:hide_line_bottom="true"
+            app:src_left="@drawable/ic_rm_arrow_left"
+            app:string_title="@string/privacy_policy" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvPrivacyPolicy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:paddingHorizontal="16dp"
+            app:itemAnimator="@{null}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/ll_item_rm_privacy_policy" />
+
+    </LinearLayout>
+</layout>
