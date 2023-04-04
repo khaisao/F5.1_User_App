@@ -15,7 +15,6 @@ import jp.careapp.counseling.android.data.network.LoginResponse
 import jp.careapp.counseling.android.data.network.MemberResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.network.ApiInterface
-import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.Define.Companion.NORMAL_MODE
 import jp.careapp.counseling.android.utils.dummyCategoryData
 import jp.careapp.counseling.android.utils.dummyFreeTemplateData
@@ -27,7 +26,8 @@ const val DURATION_SPLASH = 1000L
 
 class SplashViewModel @ViewModelInject constructor(
     private val apiInterface: ApiInterface,
-    private val rxPreferences: RxPreferences
+    private val rxPreferences: RxPreferences,
+    private val mRepository: SplashRepository
 ) : BaseViewModel() {
 
     companion object {
@@ -69,14 +69,21 @@ class SplashViewModel @ViewModelInject constructor(
         handler.postDelayed(runnable, DURATION_SPLASH)
     }
 
+    private fun tokenIsInvalid(): Boolean {
+        if (getCurrentDateTime() != null
+            && mRepository.getUserTokenExpire()!!.toDate(DateUtil.DATE_FORMAT_1) != null
+            && getCurrentDateTime()!!.after(
+                mRepository.getUserTokenExpire()!!.toDate(DateUtil.DATE_FORMAT_1)
+            )
+        ) {
+            return true
+        }
+        return false
+    }
+
     private fun handleActionSplash() {
         if (!TextUtils.isEmpty(rxPreferences.getToken())) {
-            if (getCurrentDateTime() != null &&
-                rxPreferences.getTokenExpire()!!.toJPDate(DateUtil.DATE_FORMAT_1) != null &&
-                getCurrentDateTime()!!.after(
-                    rxPreferences.getTokenExpire()!!.toJPDate(DateUtil.DATE_FORMAT_1)
-                )
-            ) {
+            if (tokenIsInvalid()) {
                 login()
             } else {
                 getMemberResult()
@@ -132,7 +139,6 @@ class SplashViewModel @ViewModelInject constructor(
             } catch (e: Exception) {
                 isLoading.value = false
             }
-            appMode.value = NORMAL_MODE // TODO Remove for product
         }
     }
 
@@ -183,32 +189,33 @@ class SplashViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             isLoading.value = true
             try {
-                memberResult.value = apiInterface.getMember()
-                memberResult.value?.let {
-                    if (it.errors.isEmpty()) {
-                        it.dataResponse.let { response ->
-                            when (response.status) {
-                                Constants.MemberStatus.NOMARL.index -> {
-                                    screenCode.value =
-                                        if (appMode.value == NORMAL_MODE) SCREEN_CODE_TOP else SCREEN_CODE_TOP_RM
-                                }
-                                Constants.MemberStatus.UNREGISTED.index -> {
-                                    screenCode.value =
-                                        if (appMode.value == NORMAL_MODE) SCREEN_CODE_START else SCREEN_CODE_START_RM
-                                }
-                                Constants.MemberStatus.BAD.index -> {
-                                    screenCode.value =
-                                        if (appMode.value == NORMAL_MODE) SCREEN_CODE_BAD_USER else SCREEN_CODE_BAD_USER_RM
-                                }
-                                Constants.MemberStatus.WITHDRAWAL.index -> {
-                                    screenCode.value =
-                                        if (appMode.value == NORMAL_MODE) SCREEN_CODE_REGISTER else SCREEN_CODE_REGISTER_RM
-                                }
-                            }
-                            rxPreferences.saveNewLastViewDateTime(response.newsLastViewDateTime)
-                            rxPreferences.saveEmail(response.mail)
+                val response = apiInterface.getMember()
+                memberResult.value = response
+                if (response.errors.isEmpty()) {
+                    when (response.dataResponse.status) {
+                        Constants.MemberStatus.NOMARL.index -> {
+                            screenCode.value =
+                                if (appMode.value == NORMAL_MODE) SCREEN_CODE_TOP else SCREEN_CODE_TOP_RM
+                        }
+                        Constants.MemberStatus.UNREGISTED.index -> {
+                            screenCode.value =
+                                if (appMode.value == NORMAL_MODE) SCREEN_CODE_START else SCREEN_CODE_START_RM
+                        }
+                        Constants.MemberStatus.BAD.index -> {
+                            screenCode.value =
+                                if (appMode.value == NORMAL_MODE) SCREEN_CODE_BAD_USER else SCREEN_CODE_BAD_USER_RM
+                        }
+                        Constants.MemberStatus.WITHDRAWAL.index -> {
+                            screenCode.value =
+                                if (appMode.value == NORMAL_MODE) SCREEN_CODE_REGISTER else SCREEN_CODE_REGISTER_RM
                         }
                     }
+                    response.dataResponse.newsLastViewDateTime?.let { it ->
+                        rxPreferences.saveNewLastViewDateTime(
+                            it
+                        )
+                    }
+                    rxPreferences.saveEmail(response.dataResponse.mail)
                 }
                 isLoading.value = false
             } catch (e: Exception) {

@@ -2,7 +2,7 @@ package jp.careapp.counseling.android.data.network
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MemberResponse(
@@ -20,13 +20,12 @@ data class MemberResponse(
     @SerializedName("push_mail") var pushMail: Int = 1,
     @SerializedName("push_online") var pushOnline: Int = 1,
     @SerializedName("push_counseling") val pushCounseling: Int = 1,
-    @SerializedName("news_last_view_datetime") val newsLastViewDateTime: String = "",
+    @SerializedName("news_last_view_datetime") val newsLastViewDateTime: String? = "",
     @SerializedName("credit_free_point_status") val creditFreePointStatus: String = "",
     @SerializedName("display_mode") val disPlay: Int = 1,
     @SerializedName("status") val status: Int = 0,
     @SerializedName("point") val point: Int = 0,
     @SerializedName("first_buy_credit") val firstBuyCredit: Boolean = true,
-    @SerializedName("counselee_name") val counseleeName: String = "",
     @SerializedName("signup_status") val signupStatus: Int? = null,
     @SerializedName("sdk_user") val sdkUser: Int? = null,
     @SerializedName("last_buylog") val lastBuyLog: LastBuyLog? = null,
