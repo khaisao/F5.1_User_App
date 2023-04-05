@@ -87,8 +87,8 @@ class RMSettingProfileMessageFragment :
         context?.let { context ->
             RMCommonAlertDialog.getInstanceCommonAlertdialog(context).showDialog()
                 .setDialogTitle(R.string.msg_title_setting_profile_message)
-                .setTextOkButton(R.string.text_OK)
-                .setOnOkButtonPressed {
+                .setTextPositiveButton(R.string.text_OK)
+                .setOnPositivePressed {
                     it.dismiss()
                     appNavigation.navigateUp()
                 }
