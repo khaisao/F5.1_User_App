@@ -824,6 +824,13 @@
             app:popExitAnim="@anim/slide_out_left"
             app:popUpTo="@id/callingFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_callingFragment_to_liveStreamFragment"
+            app:destination="@id/liveStreamFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
 
     </fragment>
     <fragment
@@ -919,6 +926,11 @@
         app:popEnterAnim="@anim/slide_in_right"
         app:popExitAnim="@anim/slide_out_left"
         app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/liveStreamFragment"
+        android:name="jp.careapp.counseling.android.ui.live_stream.LiveStreamFragment"
+        android:label="LiveStreamFragment"
+        tools:layout="@layout/fragment_live_stream"/>
 
 
 </navigation>

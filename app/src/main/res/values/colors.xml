@@ -19,6 +19,8 @@
 <!--    <color name="color_background_common">#1D1045</color> &lt;!&ndash;rgb 29 16 69&ndash;&gt;-->
     <color name="color_background_common">#0D002C</color> <!--rgb 13 0 44 -->
     <color name="color_2C2147">#2C2147</color> <!--rgb 44 33 71-->
+    <color name="color_E7EEFF">#E7EEFF</color> <!--rgb 231 238 255-->
+    <color name="color_4985FE">#4985FE</color> <!--rgb 73 133 254-->
     <color name="color_978DFF">#978DFF</color> <!--rgb 151 141 255-->
     <color name="color_56467D">#56467D</color> <!--rgb 86 70 125-->
     <color name="color_402C70">#402C70</color> <!--rgb 66 44 112-->
@@ -50,8 +52,10 @@
     <color name="very_light_blue">#e1eaff</color>
     <color name="duck_egg_blue">#eff3fc</color>
     <color name="green_blue">#00ba78</color>
+    <color name="color_4883fc">#4883fc</color>
     <color name="color_c0c3c9">#c0c3c9</color>
-    <color name="color_868990">#868990</color>
+    <color name="color_868990">#868990</color><!--rgb 134 137 144-->
+    <color name="color_A6000000">#A6000000</color><!--rgb 0 0 0 0.65-->
     <color name="color_pale_gray">#e3e7f0</color>
     <color name="color_cloudy_blue">#cbd0db</color>
     <color name="color_sunflower">#ffd300</color>
@@ -80,6 +84,7 @@
     <color name="color_332167">#332167</color>
     <color name="color_CC332167">#CC332167</color>
     <color name="color_FF2875">#FF2875</color>
+    <color name="color_fefefe">#fefefe</color>
     <color name="color_E3DFEF">#E3DFEF</color>
     <color name="color_1D1045">#1D1045</color><!--rgb 29 16 69-->
     <color name="color_FFD600">#FFD600</color>
@@ -104,6 +109,7 @@
     <color name="color_0B002C">#0B002C</color>
     <color name="color_7F73FF">#7F73FF</color><!-- rgb 127 115 255 -->
     <color name="color_483381">#483381</color>
+    <color name="color_4884fd">#4884fd</color>
     <color name="color_50090E1B">#50090E1B</color> <!-- rgb 72 52 129 -->
     <color name="color_483481">#483481</color> <!-- rgb 72 52 129 -->
     <color name="color_271658">#271658</color> <!-- rgb 39 22 88 -->
@@ -124,7 +130,7 @@
     <color name="color_2A1F45">#2A1F45</color> <!--    rgb 42 31 69-->
     <color name="color_F0F0F0">#F0F0F0</color>
 
-    <color name="color_070707">#070707</color>
+    <color name="color_070707">#070707</color><!--    rgb 7 7 7-->
     <color name="color_eff3fc">#eff3fc</color>
     <color name="color_ff288b">#ff288b</color>
     <color name="color_ff8de8">#ff8de8</color>

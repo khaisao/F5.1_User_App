@@ -144,6 +144,8 @@ interface AppNavigation : BaseNavigator {
 
     fun openToCalling(data: Bundle? = null)
 
+    fun openCallingToLivestream(data: Bundle? = null)
+
     fun openTroubleSheetToChatMessage(data: Bundle? = null)
 
     fun openTroubleSheetUpdateToChatMessage(data: Bundle? = null)
@@ -224,6 +226,10 @@ interface AppNavigation : BaseNavigator {
 
     fun openRMTopToRMUserDetail(bundle: Bundle? = null)
 
+    fun openRMUserDetailToRMCalling(bundle: Bundle? = null)
+
+    fun openRMCallingToRMLivestream(bundle: Bundle? = null)
+
     fun openSplashToRMTop(bundle: Bundle? = null)
 
     fun openRMUserDetailToRMUserDetailReport(bundle: Bundle? = null)
@@ -277,4 +283,5 @@ interface AppNavigation : BaseNavigator {
     fun openLiveStreamToExitLiveStream(bundle: Bundle? = null)
 
     fun openExitLiveStreamToMessage(bundle: Bundle? = null)
+
 }

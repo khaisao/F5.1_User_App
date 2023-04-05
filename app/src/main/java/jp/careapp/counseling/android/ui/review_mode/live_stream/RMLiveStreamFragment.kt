@@ -1,45 +1,49 @@
-package jp.careapp.counseling.android.ui.live_stream
+package jp.careapp.counseling.android.ui.review_mode.live_stream
 
+import android.Manifest
 import android.graphics.Rect
+import android.os.Bundle
+import android.view.View
 import android.view.ViewTreeObserver
+import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseActivity
 import jp.careapp.core.base.BaseFragment
-import jp.careapp.core.utils.DeviceUtil
+import jp.careapp.core.utils.DeviceUtil.Companion.getScreenHeightWithNavigationBar
 import jp.careapp.core.utils.DeviceUtil.Companion.hideKeyBoardWhenClickOutSide
-import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.core.utils.getHeight
-import jp.careapp.counseling.android.utils.showSoftKeyboard
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.navigation.AppNavigation
+import jp.careapp.counseling.android.ui.live_stream.*
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.CHANGE_TO_PARTY_MODE
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.PERFORMER_OUT_CONFIRM
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.PREMIUM_PRIVATE_MODE_REGISTER
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.PRIVATE_MODE_REGISTER
-import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.camera_micrro_switch.CameraMicroSwitchBottomSheet
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.confirm.LiveStreamConfirmBottomSheet
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.confirm.LiveStreamConfirmBottomSheetDialogListener
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.connect_private.ConnectPrivateBottomSheet
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.connect_private.LiveStreamConnectPrivateListener
-import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.notice.LiveStreamNoticeBottomSheet
+import jp.careapp.counseling.android.ui.review_mode.live_stream.live_stream_bottom_sheet.camera_micrro_switch.RMCameraMicroSwitchBottomSheet
 import jp.careapp.counseling.android.utils.PermissionUtils
+import jp.careapp.counseling.android.utils.PermissionUtils.launchMultiplePermission
 import jp.careapp.counseling.android.utils.PermissionUtils.registerPermission
-import jp.careapp.counseling.databinding.FragmentLiveStreamBinding
+import jp.careapp.counseling.android.utils.showSoftKeyboard
+import jp.careapp.counseling.databinding.FragmentRmLiveStreamBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamViewModel>(),
+class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStreamViewModel>(),
     LiveStreamConfirmBottomSheetDialogListener, LiveStreamConnectPrivateListener {
 
     @Inject
     lateinit var appNavigation: AppNavigation
 
-    override val layoutId: Int = R.layout.fragment_live_stream
+    override val layoutId: Int = R.layout.fragment_rm_live_stream
 
-    private val mViewModel: LiveStreamViewModel by viewModels()
+    private val mViewModel: RMLiveStreamViewModel by viewModels()
     override fun getVM() = mViewModel
 
     private var mAdapter: LiveStreamAdapter? = null
@@ -78,6 +82,11 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
+
     override fun onResume() {
         super.onResume()
 
@@ -99,13 +108,15 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     override fun initView() {
         super.initView()
 
+        requireActivity().window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
         binding.viewModel = mViewModel
 
-        binding.performerView.layoutParams.height =
-            DeviceUtil.getScreenHeightWithNavigationBar(requireActivity())
+        binding.performerView.layoutParams.height = getScreenHeightWithNavigationBar(requireActivity())
 
         mAdapter = LiveStreamAdapter()
         binding.rcvCommentList.adapter = mAdapter
+
     }
 
     override fun setOnClick() {
@@ -113,7 +124,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
         binding.btnComment.setOnClickListener {
             if (!isDoubleClick) {
-                binding.groupAllBtn.isVisible = false
+                binding.groupAllBtn.visibility = View.INVISIBLE
                 binding.memberCommentViewGroup.isVisible = true
                 binding.btnSendComment.getHeight { binding.edtComment.minimumHeight = it }
                 binding.edtComment.requestFocus()
@@ -128,19 +139,17 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         )
 //        hideKeyBoardWhenClickOutSide(binding.root, binding.rcvCommentList, requireActivity())
 
-        binding.btnWhisper.setOnClickListener {}
 
         binding.btnPrivate.setOnClickListener {
-            if (!isDoubleClick) {
-                showLiveStreamConfirmBottomSheet(PRIVATE_MODE_REGISTER, this)
-            }
+            if (!isDoubleClick) mViewModel.changeMode(LiveStreamMode.PRIVATE)
         }
 
-        binding.btnParty.setOnClickListener { if (!isDoubleClick) showDialogChangeToPartyMode() }
+        binding.btnParty.setOnClickListener {
+            if (!isDoubleClick) mViewModel.changeMode(LiveStreamMode.PARTY)
+        }
 
         binding.btnVideoMic.setOnClickListener { if (!isDoubleClick) mViewModel.handleMicAndCamera() }
 
-        binding.btnPoint.setOnClickListener { }
 
         binding.edtComment.addTextChangedListener {
             binding.btnSendComment.isEnabled = getInputComment().isNotBlank()
@@ -153,7 +162,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             }
         }
 
-        binding.btnClose.setOnClickListener { if (!isDoubleClick) appNavigation.navigateUp() }
+        binding.btnEndCall.setOnClickListener { if (!isDoubleClick) appNavigation.navigateUp() }
 
         binding.btnCameraFlip.setOnClickListener { }
     }
@@ -165,24 +174,13 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             binding.groupAllBtn.isVisible = false
             when (it) {
                 LiveStreamMode.PARTY -> {
-                    binding.llItemParty.isVisible = true
                     binding.groupButtonPartyMode.isVisible = true
                 }
 
                 LiveStreamMode.PRIVATE -> {
-                    binding.llItemPrivate.isVisible = true
                     binding.groupButtonPrivateMode.isVisible = true
                 }
 
-                LiveStreamMode.PREMIUM_PRIVATE -> {
-                    binding.llItemPremiumPrivate.isVisible = true
-                    binding.groupButtonPrivateMode.isVisible = true
-                }
-
-                LiveStreamMode.PEEP -> {
-                    binding.llItemPeeping.isVisible = true
-                    binding.groupButtonPeepingMode.isVisible = true
-                }
             }
         }
 
@@ -193,13 +191,13 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 }
 
                 is LiveStreamActionState.OpenBottomSheetSettingCameraAndMic -> {
-//                    cameraAndAudioPermissionLauncher.launchMultiplePermission(
-//                        arrayOf(
-//                            Manifest.permission.CAMERA,
-//                            Manifest.permission.RECORD_AUDIO
-//                        )
-//                    )
-                    val bottomSheet = CameraMicroSwitchBottomSheet()
+                    cameraAndAudioPermissionLauncher.launchMultiplePermission(
+                        arrayOf(
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.RECORD_AUDIO
+                        )
+                    )
+                    val bottomSheet = RMCameraMicroSwitchBottomSheet()
                     bottomSheet.show(childFragmentManager, "")
                 }
             }
@@ -210,27 +208,12 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         }
     }
 
-    private fun showPrivateModeDenied() {
-        val bottomSheet = LiveStreamNoticeBottomSheet()
-        bottomSheet.show(childFragmentManager, "")
-    }
-
     private fun showLiveStreamConfirmBottomSheet(
         mode: String,
         listener: LiveStreamConfirmBottomSheetDialogListener
     ) {
         val bottomSheet = LiveStreamConfirmBottomSheet.newInstance(mode, listener)
         bottomSheet.show(childFragmentManager, "")
-    }
-
-    private fun showDialogChangeToPartyMode() {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-            .showDialog()
-            .setDialogTitleWithString("プライベートモードが解除されました")
-            .setTextOkButton(R.string.close)
-            .setOnOkButtonPressed {
-                mViewModel.changeMode(LiveStreamMode.PARTY)
-            }
     }
 
     override fun onClickButtonOKConfirmBottomSheet(mode: String) {
