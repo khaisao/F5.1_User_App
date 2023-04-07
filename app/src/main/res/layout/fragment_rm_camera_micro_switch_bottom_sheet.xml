@@ -6,7 +6,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_live_stream_bottom_sheet_dialog"
+        android:background="@drawable/bg_rm_live_stream_bottom_sheet_dialog"
         android:orientation="vertical"
         tools:context=".android.ui.review_mode.live_stream.live_stream_bottom_sheet.camera_micrro_switch.CameraMicroSwitchBottomSheet">
 
@@ -25,23 +25,24 @@
                 android:fontFamily="@font/hiragino_sans_w3"
                 android:gravity="center"
                 android:text="@string/use_microphone"
-                android:textColor="#f0f0f0"
+                android:textColor="@color/color_070707"
                 android:textSize="14sp"
-                app:drawableStartCompat="@drawable/ic_microphone"
+                app:drawableStartCompat="@drawable/ic_microphone_black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.SwitchCompat
+            <com.kyleduo.switchbutton.SwitchButton
                 android:id="@+id/scMicrophone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:thumb="@drawable/thumb_selector"
+
+                app:kswBackDrawable="@drawable/rm_track_selector"
+                app:kswThumbDrawable="@drawable/rm_thumb_selector"
                 app:layout_constraintBottom_toBottomOf="@+id/tvMicrophone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvMicrophone"
-                app:track="@drawable/track_selector"
-                tools:checked="true" />
+                tools:checked="false" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -59,23 +60,23 @@
                 android:fontFamily="@font/hiragino_sans_w3"
                 android:gravity="center"
                 android:text="@string/use_camera"
-                android:textColor="#f0f0f0"
+                android:textColor="@color/color_070707"
                 android:textSize="14sp"
-                app:drawableStartCompat="@drawable/ic_camera"
+                app:drawableStartCompat="@drawable/ic_camera_black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.SwitchCompat
+            <com.kyleduo.switchbutton.SwitchButton
                 android:id="@+id/scCamera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:thumb="@drawable/thumb_selector"
+                app:kswBackDrawable="@drawable/rm_track_selector"
+                app:kswThumbDrawable="@drawable/rm_thumb_selector"
                 app:layout_constraintBottom_toBottomOf="@+id/tvCamera"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvCamera"
-                app:track="@drawable/track_selector"
-                tools:checked="true" />
+                tools:checked="false" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

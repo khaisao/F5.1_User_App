@@ -84,7 +84,8 @@ ext {
 
             glideTransform       : "4.3.0",
             socketIoClient       : "1.0.0",
-            ShadowLayout         : "2.0.1"
+            ShadowLayout         : "2.0.1",
+            switchbutton         : "2.1.0"
     ]
     libraries = [
             fragment             : "androidx.fragment:fragment-ktx:${versions.fragment}",
@@ -194,5 +195,6 @@ ext {
             socketIoClient       : "io.socket:socket.io-client:${versions.socketIoClient}",
             marucastClient       : 'libs/marucast-client.aar',
             mediasoupClient      : 'libs/mediasoup-client.aar',
+            switchbutton         : "com.kyleduo.switchbutton:library:${versions.switchbutton}"
     ]
 }

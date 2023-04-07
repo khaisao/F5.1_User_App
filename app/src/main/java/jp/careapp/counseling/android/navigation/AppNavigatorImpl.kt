@@ -285,6 +285,10 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_global_to_calling, data)
     }
 
+    override fun openCallingToLivestream(data: Bundle?) {
+        openScreen(R.id.action_callingFragment_to_liveStreamFragment, data)
+    }
+
     override fun openTroubleSheetToChatMessage(data: Bundle?) {
         openScreen(R.id.action_TroubleSheet_to_ChatMessage, data)
     }
@@ -439,6 +443,14 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openRMTopToRMUserDetail(bundle: Bundle?) {
         openScreen(R.id.action_rmTopFragment_to_rmUserDetailFragment, bundle)
+    }
+
+    override fun openRMUserDetailToRMCalling(bundle: Bundle?) {
+        openScreen(R.id.action_RMUserDetailFragment_to_RMCallingFragment, bundle)
+    }
+
+    override fun openRMCallingToRMLivestream(bundle: Bundle?) {
+        openScreen(R.id.action_RMCallingFragment_to_RMLiveStreamFragment, bundle)
     }
 
     override fun openSplashToRMTop(bundle: Bundle?) {

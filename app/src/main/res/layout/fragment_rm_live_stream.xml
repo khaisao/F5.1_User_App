@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="jp.careapp.counseling.android.ui.review_mode.live_stream.RMLiveStreamViewModel" />
+
+        <variable
+            name="viewModel"
+            type="jp.careapp.counseling.android.ui.review_mode.live_stream.RMLiveStreamViewModel" />
+
+    </data>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".android.ui.review_mode.live_stream.LiveStreamFragment">
+
+        <ImageView
+            android:id="@+id/performerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_no_image" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:fitsSystemWindows="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.982" />
+
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btnComment"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="@dimen/_35sdp"
+                    android:background="@drawable/bg_btn_live_stream"
+                    android:minHeight="40dp"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline9"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toStartOf="@id/btnParty"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintWidth_percent="0.106"
+                    app:srcCompat="@drawable/ic_live_stream_comment" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btnParty"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_btn_live_stream"
+                    android:minHeight="40dp"
+                    android:src="@drawable/ic_live_stream_party"
+                    android:visibility="visible"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toStartOf="@id/btnPrivate"
+                    app:layout_constraintStart_toEndOf="@id/btnComment"
+                    app:layout_constraintTop_toTopOf="@id/btnComment"
+                    app:layout_constraintWidth_percent="0.106" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btnPrivate"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_btn_live_stream"
+                    android:minHeight="40dp"
+                    android:src="@drawable/ic_live_stream_private"
+                    android:visibility="gone"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toStartOf="@id/btnVideoMic"
+                    app:layout_constraintStart_toEndOf="@id/btnParty"
+                    app:layout_constraintTop_toTopOf="@id/btnComment"
+                    app:layout_constraintWidth_percent="0.106" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btnVideoMic"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_btn_live_stream"
+                    android:minHeight="40dp"
+                    android:src="@drawable/ic_live_stream_video_mic"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toStartOf="@id/btnEndCall"
+                    app:layout_constraintStart_toEndOf="@id/btnPrivate"
+                    app:layout_constraintTop_toTopOf="@id/btnComment"
+                    app:layout_constraintWidth_percent="0.106"
+                    tools:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btnEndCall"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginEnd="@dimen/_35sdp"
+                    android:background="@drawable/bg_btn_rm_call_end"
+                    android:minHeight="40dp"
+                    android:src="@drawable/ic_rm_call_end"
+                    android:visibility="gone"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/btnVideoMic"
+                    app:layout_constraintTop_toTopOf="@id/btnComment"
+                    app:layout_constraintWidth_percent="0.106"
+                    tools:visibility="visible" />
+
+                <View
+                    android:id="@+id/memberViewCamera"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintDimensionRatio="88:156"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.235"
+                    tools:background="@android:color/holo_green_light" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btnCameraFlip"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_live_stream_camera_flip"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="@id/memberViewCamera"
+                    app:layout_constraintTop_toTopOf="@id/memberViewCamera"
+                    app:layout_constraintWidth_percent="0.06" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/memberCameraViewGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="memberViewCamera, btnCameraFlip"
+                    tools:visibility="visible" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/groupAllBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:constraint_referenced_ids="btnComment, btnParty, btnPrivate,   btnVideoMic, btnEndCall" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/groupButtonPrivateMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="btnComment, btnParty, btnVideoMic,btnEndCall"
+                    tools:visibility="visible" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/groupButtonPartyMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="btnComment, btnPrivate,btnEndCall"
+                    tools:visibility="visible" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSendComment"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/bg_btn_live_stream"
+                    android:drawableStart="@drawable/bg_live_stream_btn_send_comment"
+                    android:enabled="false"
+                    android:minHeight="36dp"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintWidth_percent="0.096"
+                    tools:enabled="false" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtComment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/bg_live_stream_edt_comment"
+                    android:ems="10"
+                    android:fontFamily="@font/hiragino_sans_w3"
+                    android:gravity="center_vertical"
+                    android:hint="@string/input_comment"
+                    android:inputType="textMultiLine"
+                    android:paddingHorizontal="8dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="#73FFFFFF"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnSendComment"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="テキストテキスト" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/memberCommentViewGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="edtComment, btnSendComment"
+                    tools:visibility="visible" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.83" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="top"
+                    app:constraint_referenced_ids="btnComment" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvCommentList"
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="6dp"
+                    android:fadingEdge="vertical|horizontal"
+                    android:orientation="vertical"
+                    android:requiresFadingEdge="vertical|horizontal"
+                    android:visibility="visible"
+                    app:itemAnimator="@{null}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toTopOf="@id/barrier2"
+                    app:layout_constraintEnd_toStartOf="@id/guideline10"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:reverseLayout="true"
+                    app:stackFromEnd="false"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_live_stream_normal_comment" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </FrameLayout>
+</layout>

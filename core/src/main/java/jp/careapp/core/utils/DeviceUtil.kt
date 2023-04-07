@@ -314,6 +314,20 @@ class DeviceUtil {
             return displayMetrics.heightPixels
         }
 
+        fun getNavigationBarHeight(activity: Activity): Int {
+            val metrics = DisplayMetrics()
+            activity.windowManager.defaultDisplay.getMetrics(metrics)
+            val usableHeight = metrics.heightPixels
+            activity.windowManager.defaultDisplay.getRealMetrics(metrics)
+            val realHeight = metrics.heightPixels
+            return if (realHeight > usableHeight) realHeight - usableHeight else 0
+            return 0
+        }
+
+        fun getScreenHeightWithNavigationBar(activity: Activity): Int {
+            return getScreenHeight(activity) + getNavigationBarHeight(activity)
+        }
+
         fun getDeviceName(): String {
             return Build.MANUFACTURER + " " + Build.MODEL
         }
