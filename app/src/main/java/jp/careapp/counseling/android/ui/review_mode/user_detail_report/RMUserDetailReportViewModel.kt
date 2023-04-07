@@ -1,4 +1,4 @@
-package jp.careapp.counseling.android.ui.review_mode.userDetailReport
+package jp.careapp.counseling.android.ui.review_mode.user_detail_report
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject

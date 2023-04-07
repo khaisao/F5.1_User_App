@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.core.view.ViewCompat
 
 fun Activity.setupUI(view: View) {
     // Set up touch listener for non-text box views to hide keyboard.
@@ -56,5 +57,13 @@ fun Context.showSoftKeyboard(view: View) {
     if (view.requestFocus()) {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+    }
+}
+
+fun View.replaceSystemWindowInsets() {
+    ViewCompat.setOnApplyWindowInsetsListener(this) { view, insets ->
+        insets.replaceSystemWindowInsets(0, 0, 0, insets.systemWindowInsetBottom).apply {
+            ViewCompat.onApplyWindowInsets(view, this)
+        }
     }
 }

@@ -84,7 +84,6 @@ class MyPageAdapter(private val onClickItemMenu: (Int) -> Unit) :
 
         fun bind(item: NMMenuItem.NMMenuItemField) {
             binding.menu = item
-            binding.ivMenuItemField.loadImage(item.resourceImage)
             binding.executePendingBindings()
         }
     }

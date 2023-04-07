@@ -14,76 +14,85 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.166" />
+            app:layout_constraintGuide_percent="0.32" />
 
-        <ImageView
-            android:id="@+id/ivLogo"
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/app_logo"
-            app:layout_constraintDimensionRatio="1:1"
+            android:src="@drawable/ic_splash_logo"
+            app:layout_constraintDimensionRatio="140:78"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline2"
-            app:layout_constraintWidth_percent="0.616"
-            tools:ignore="ContentDescription"
-            tools:src="@drawable/app_logo" />
+            app:layout_constraintTop_toBottomOf="@id/guideline2"
+            app:layout_constraintWidth_percent="0.373" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.54" />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnStartNow"
-            style="@style/text_bold_16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_48"
-            android:layout_marginTop="@dimen/_64sdp"
-            android:background="@drawable/bg_rm_btn_primary"
+            android:background="@drawable/bg_rm_btn_start"
+            android:fontFamily="@font/hiragino_sans_w6"
             android:gravity="center"
             android:minHeight="@dimen/start_now_btn_height"
             android:text="@string/start_now"
             android:textColor="@color/dodger_blue"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivLogo"
-            tools:enabled="true" />
+            app:layout_constraintTop_toBottomOf="@id/guideline13" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline4"
+            android:id="@+id/guideline14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintGuide_percent="0.2"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.948" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline5"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintGuide_percent="0.8"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/guideline14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/tvTermsOfService"
-            style="@style/text_12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_16"
-            android:text="@string/terms_of_service"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline4" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTermsOfService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/hiragino_sans_w3"
+                android:gravity="center|end"
+                android:padding="8dp"
+                android:text="@string/terms_of_service"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@id/guideline14"
+                app:layout_constraintStart_toStartOf="@+id/guideline4" />
 
-        <TextView
-            android:id="@+id/tvPrivacyPolicy"
-            style="@style/text_12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/privacy_policy"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/tvTermsOfService"
-            app:layout_constraintEnd_toStartOf="@+id/guideline5" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPrivacyPolicy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/hiragino_sans_w3"
+                android:gravity="center|start"
+                android:padding="8dp"
+                android:text="@string/privacy_policy"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvTermsOfService"
+                app:layout_constraintEnd_toStartOf="@+id/guideline5" />
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

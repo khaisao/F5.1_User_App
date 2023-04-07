@@ -56,15 +56,15 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
         <action
-            android:id="@+id/action_rmTopFragment_to_RMSettingContactFragment"
-            app:destination="@id/RMSettingContactFragment"
+            android:id="@+id/action_RMTopFragment_to_RMBuyPointFragment"
+            app:destination="@id/rmBuyPointFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
         <action
-            android:id="@+id/action_RMTopFragment_to_RMBuyPointFragment"
-            app:destination="@id/rmBuyPointFragment"
+            android:id="@+id/action_rmTopFragment_to_RMSettingContactFragment"
+            app:destination="@id/RMSettingContactFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
@@ -93,7 +93,7 @@
 
     <fragment
         android:id="@+id/RMUserDetailFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.userDetail.RMUserDetailFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.user_detail.RMUserDetailFragment"
         android:label="RMUserDetailFragment"
         tools:layout="@layout/fragment_rm_user_detail">
         <action
@@ -114,13 +114,13 @@
 
     <fragment
         android:id="@+id/RMSettingProfileMessageFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.settingProfileMessage.RMSettingProfileMessageFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.setting_profile_message.RMSettingProfileMessageFragment"
         android:label="RMSettingProfileMessageFragment"
         tools:layout="@layout/fragment_rm_setting_profile_message" />
 
     <fragment
         android:id="@+id/RMUserDetailReportFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.userDetailReport.RMUserDetailReportFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.user_detail_report.RMUserDetailReportFragment"
         android:label="RMUserDetailReportFragment"
         tools:layout="@layout/fragment_rm_user_detail_report" />
     <fragment
@@ -131,7 +131,7 @@
 
     <fragment
         android:id="@+id/RMSettingContactFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.settingContact.finish.RMSettingContactFinishFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.settingContact.RMSettingContactFragment"
         android:label="RMSettingContactFragment"
         tools:layout="@layout/fragment_rm_setting_contact">
         <action
@@ -166,7 +166,7 @@
 
     <fragment
         android:id="@+id/rmBuyPointFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.buyPoint.RMBuyPointFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.buy_point.RMBuyPointFragment"
         android:label="RMBuyPointFragment"
         tools:layout="@layout/fragment_rm_buy_point" />
 </navigation>

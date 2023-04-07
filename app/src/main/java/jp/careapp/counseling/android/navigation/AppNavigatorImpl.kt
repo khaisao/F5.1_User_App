@@ -537,12 +537,12 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_FAQFragment_to_withdrawalFragment, bundle)
     }
 
-    override fun openRMStartToTermOfService(bundle: Bundle?) {
-//        openScreen(R.id.action_RmStartFragment_to_TermsFragment, bundle)
+    override fun openRMTermOfService(bundle: Bundle?) {
+        openScreen(R.id.action_global_RMTermsOfServiceFragment, bundle)
     }
 
-    override fun openRMStartToPrivacyPolicy(bundle: Bundle?) {
-        openScreen(R.id.action_RMStartFragment_to_RMPrivacyPolicyFragment, bundle)
+    override fun openRMPrivacyPolicy(bundle: Bundle?) {
+        openScreen(R.id.action_global_RMPrivacyPolicyFragment, bundle)
     }
 
     override fun openLiveStreamToExitLiveStream(bundle: Bundle?) {

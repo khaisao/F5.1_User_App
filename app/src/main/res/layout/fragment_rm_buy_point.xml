@@ -3,57 +3,53 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/duck_egg_blue"
-        tools:context=".android.ui.review_mode.userDetail.RMUserDetailFragment">
+        android:orientation="vertical"
+        tools:context=".android.ui.review_mode.user_detail.RMUserDetailFragment">
 
         <jp.careapp.counseling.android.utils.customView.ToolBarCommon
             android:id="@+id/toolBar"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:bg_toolbar="@android:color/transparent"
+            app:color_title="@color/color_070707"
             app:hide_line_bottom="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:src_left="@drawable/ic_rm_arrow_left" />
+            app:src_left="@drawable/ic_rm_arrow_left"
+            app:string_title="ポイント購入" />
 
         <LinearLayout
             android:id="@+id/llCurrentPoint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/bg_rm_radius_12"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingVertical="@dimen/_15sdp"
+            android:paddingVertical="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolBar">
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/text_bold_14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/hiragino_sans_w6"
                 android:gravity="center_vertical"
                 android:text="@string/current_point"
-                android:textColor="@color/color_070707" />
+                android:textColor="@color/color_070707"
+                android:textSize="14sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvCurrentPoint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_4sdp"
-                android:drawablePadding="@dimen/_4sdp"
+                android:layout_marginStart="4dp"
+                android:drawablePadding="4dp"
                 android:gravity="center_vertical"
-                android:text="@string/current_point"
                 android:textColor="@color/color_070707"
                 android:textSize="@dimen/text_size_18"
                 android:textStyle="bold"
@@ -61,23 +57,15 @@
                 tools:text="10,000" />
         </LinearLayout>
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cost_point_rv"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintTop_toBottomOf="@+id/llCurrentPoint">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/cost_point_rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:isScrollContainer="false"
-                android:overScrollMode="never"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_rm_buy_point" />
-        </androidx.core.widget.NestedScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:overScrollMode="never"
+            android:paddingHorizontal="16dp"
+            app:itemAnimator="@{null}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_rm_buy_point" />
+    </LinearLayout>
 </layout>

@@ -1,7 +1,9 @@
 package jp.careapp.counseling.android.ui.review_mode.settingContact.finish
 
-import androidx.hilt.lifecycle.ViewModelInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
+import javax.inject.Inject
 
-class RMSettingContactFinishViewModel @ViewModelInject constructor() : BaseViewModel() {
+@HiltViewModel
+class RMSettingContactFinishViewModel @Inject constructor() : BaseViewModel() {
 }

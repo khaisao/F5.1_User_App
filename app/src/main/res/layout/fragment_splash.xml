@@ -5,17 +5,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_1D1045">
+        android:background="@color/dodger_blue">
 
-        <ImageView
-            android:layout_width="209dp"
-            android:layout_height="111dp"
-            android:adjustViewBounds="true"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:src="@drawable/ic_splash_logo"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="140:78"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.373" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -8,7 +8,7 @@ import jp.careapp.core.base.BaseViewModel
 import jp.careapp.counseling.android.model.network.RMBlockListResponse
 import jp.careapp.counseling.android.model.network.RMFavoriteResponse
 import jp.careapp.counseling.android.network.RMApiInterface
-import jp.careapp.counseling.android.ui.review_mode.userDetail.RMUserDetailRepository
+import jp.careapp.counseling.android.ui.review_mode.user_detail.RMUserDetailRepository
 import jp.careapp.counseling.android.utils.extensions.toListData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

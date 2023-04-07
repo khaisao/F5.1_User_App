@@ -29,7 +29,6 @@ class RMSettingContactFinishFragment :
     }
 
     private fun setUpToolBar() {
-        binding.toolBar.setRootLayoutBackgroundColor(Color.TRANSPARENT)
         binding.toolBar.setOnToolBarClickListener(object : ToolBarCommon.OnToolBarClickListener() {
             override fun onClickLeft() {
                 super.onClickLeft()

@@ -8,29 +8,42 @@
         android:layout_height="match_parent"
         android:background="@color/duck_egg_blue"
         android:orientation="vertical"
-        tools:context=".android.ui.review_mode.userDetailReport.RMUserDetailReportFragment">
+        tools:context=".android.ui.review_mode.user_detail_report.RMUserDetailReportFragment">
 
         <jp.careapp.counseling.android.utils.customView.ToolBarCommon
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:src_right="@string/send_report"
+            app:bg_toolbar="@android:color/transparent"
+            app:color_title="@color/color_070707"
             app:hide_line_bottom="true"
+            app:src_btn_right="@string/send_report"
             app:src_left="@drawable/ic_rm_arrow_left"
             app:string_title="@string/report" />
 
-        <EditText
-            android:id="@+id/edtReasonReport"
-            style="@style/text_14"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_16"
-            android:background="@drawable/bg_rm_nickname_edt"
-            android:padding="@dimen/margin_16"
-            android:ems="10"
-            android:gravity="top|start"
-            android:hint="@string/please_enter_reason"
-            android:textColor="@color/color_070707"
-            android:textColorHint="@color/color_c0c3c9" />
+            android:fillViewport="true"
+            android:fitsSystemWindows="true">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtReasonReport"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/margin_16"
+                android:background="@drawable/bg_rm_nickname_edt"
+                android:ems="10"
+                android:fontFamily="@font/hiragino_sans_w3"
+                android:gravity="top|start"
+                android:hint="@string/please_enter_reason"
+                android:lineSpacingExtra="4dp"
+                android:padding="@dimen/margin_16"
+                android:textColor="@color/color_070707"
+                android:textColorHint="@color/color_c0c3c9"
+                android:textCursorDrawable="@null"
+                android:textSize="14sp" />
+
+        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 </layout>

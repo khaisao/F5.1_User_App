@@ -1,4 +1,4 @@
-package jp.careapp.counseling.android.ui.review_mode.buyPoint
+package jp.careapp.counseling.android.ui.review_mode.buy_point
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -6,9 +6,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/duck_egg_blue"
+        android:background="@color/color_eff3fc"
         android:orientation="vertical"
-        tools:context=".android.ui.review_mode.settingNickName.RMSettingNickNameFragment">
+        tools:context=".android.ui.review_mode.terms_of_service.RMTermsOfServiceFragment">
 
         <jp.careapp.counseling.android.utils.customView.ToolBarCommon
             android:id="@+id/toolBar"
@@ -18,14 +18,19 @@
             app:color_title="@color/color_070707"
             app:hide_line_bottom="true"
             app:src_left="@drawable/ic_rm_arrow_left"
-            app:string_title="@string/rv_push_notification_settings" />
+            app:string_title="@string/term_of_service" />
 
-        <include
-            android:id="@+id/push_notification"
-            layout="@layout/item_rm_notification"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvTermsOfService"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:paddingHorizontal="16dp"
+            app:itemAnimator="@{null}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/ll_item_rm_privacy_policy" />
+
     </LinearLayout>
 </layout>

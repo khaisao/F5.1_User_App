@@ -25,7 +25,7 @@ import jp.careapp.core.base.BaseActivity
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.DeviceUtil
 import jp.careapp.core.utils.convertSourceToPixel
-import jp.careapp.core.utils.dialog.CommonAlertDialog
+import jp.careapp.core.utils.dialog.RMCommonAlertDialog
 import jp.careapp.core.utils.onTextChange
 import jp.careapp.core.utils.setMargins
 import jp.careapp.counseling.R
@@ -288,7 +288,7 @@ class UserDetailMsgFragment :
 
     private fun showDialogBlock() {
         context?.let { context ->
-            CommonAlertDialog.getInstanceCommonAlertdialog(context).showDialog()
+            RMCommonAlertDialog.getInstanceCommonAlertdialog(context).showDialog()
                 .setDialogTitle(String.format(getString(R.string.dialog_msg_block), performerName))
                 .setTextPositiveButton(R.string.confirm_block_alert)
                 .setTextNegativeButton(R.string.cancel)
