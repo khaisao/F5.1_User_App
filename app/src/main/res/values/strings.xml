@@ -111,6 +111,7 @@
     <string name="sheet">お悩みシート</string>
     <string name="favorite">お気に入り</string>
     <string name="buy_point">ポイント購入</string>
+    <string name="live_stream_buy_point">購入する</string>
     <string name="news">お知らせ</string>
     <string name="alert">通知設定</string>
     <string name="help">ヘルプ</string>
@@ -173,6 +174,9 @@
     <string name="let_buy_point">まずはポイントを購入しましょう</string>
     <string name="not_found_performer">該当の女性は見つかりませんでした</string>
     <string name="point_purchase">ポイント購入</string>
+    <string name="point_purchase_reason">このままだと\nテキストテキストテキストテキスト</string>
+    <string name="pointLoadingText">しばらくお待ちください</string>
+    <string name="pointButtonText">￥%1$d/%2$dpts</string>
 
     <!--   Registration-->
     <string name="enter_your_profile_to_start">プロフィールを入力して\n早速はじめましょう！</string>
@@ -234,7 +238,7 @@
     <string name="delivery_request">配信リクエスト</string>
     <string name="watch">視聴中</string>
     <string name="girl_live_steam">ライブ配信中の女の子</string>
-
+    <string name="call_connection_message">%sさんに発信しています</string>
 
     <!--    notification-->
     <string name="email_setting">メルマガ設定</string>
@@ -583,6 +587,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="not_set">未設定</string>
     <string name="msg_title_request_mic">マイクへのアクセスを\n許可しますか？</string>
     <string name="msg_title_request_buy_point">所持ポイント1000pts以上保有して\nいないと、通話機能をご利用いただ\nけません。</string>
+    <string name="live_stream_title_request_buy_point">ライブ視聴するためには1,000pts以上の所持ポイントが必要です。</string>
     <string name="msg_explain_request_mic">電話相談をするためにはマイクへの\nアクセス権限が必要です。</string>
     <string name="accept_permission">許可する</string>
     <string name="denied_permission">許可しない</string>
@@ -594,7 +599,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="speaker_off">スピーカーを\nオフ</string>
     <string name="msg_need_mic_permission">設定＞Careappでマイクへのアクセスを許可してください</string>
     <string name="msg_confirm_call">電話相談希望(無料メッセージ)を先\n生にお伝え頂き、受諾後に発信をお\n願い致します。</string>
-    <string name="content_confirm_call">なまえさんに発信します\nよろしいですか？</string>
+    <string name="content_confirm_call">%sさんに発信します\nよろしいですか？</string>
     <string name="confirm_call">発信する</string>
     <string name="send_free_mess">無料メッセージ送信</string>
     <string name="title_warning_point">※お知らせ※</string>
@@ -733,4 +738,6 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="input_comment">コメントを入力</string>
     <string name="current_points">所持ポイント</string>
     <string name="setting_push_success">保存されたプッシュ設定</string>
+    <string name="dialog_destroy_private_mode">プライベートモードが解除されました</string>
+    <string name="cancel_title">プライベートモード申請が拒否されました</string>
 </resources>

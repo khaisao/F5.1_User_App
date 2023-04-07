@@ -11,6 +11,7 @@ object LiveStreamCommentType {
     const val NORMAL = 1
     const val PERFORMER = 2
     const val WHISPER = 3
+    const val PERFORMER_WHISPER = 4
 }
 
 object LiveStreamAction {

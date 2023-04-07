@@ -38,7 +38,8 @@ class RMCallingViewModel @ViewModelInject constructor(
     private val application: Application,
     private val apiInterface: ApiInterface,
     private val rxPreferences: RxPreferences,
-    private val callSoundManager: CallSoundManager
+    private val callSoundManager: CallSoundManager,
+    private val socketClient: CallingWebSocketClient
 ) : BaseViewModel() {
 
     private val _isConfigAudioCall: MutableLiveData<Boolean?> = MutableLiveData(null)
@@ -58,7 +59,6 @@ class RMCallingViewModel @ViewModelInject constructor(
     private val _actionState = SingleLiveData<ActionState>()
     val actionState: SingleLiveData<ActionState> = _actionState
 
-    private lateinit var socketClient: CallingWebSocketClient
     private lateinit var mediaServer: MediaServerManager
     private val gson by lazy { Gson() }
     private var performer = PerformerInfo()
@@ -105,9 +105,6 @@ class RMCallingViewModel @ViewModelInject constructor(
                         append("&performerCode=$performerCode")
                         append("&ownerCode=${Define.OWNER_CODE}")
                     }
-                    socketClient = CallingWebSocketClient {
-                        handleSocketMessage(it)
-                    }
                     socketClient.connect(urlStartCall)
                     lastPoint = rxPreferences.getPoint()
                 }
@@ -118,12 +115,13 @@ class RMCallingViewModel @ViewModelInject constructor(
     }
 
     private fun endCall() {
-        if (::mediaServer.isInitialized) mediaServer.logoutRoom()
-        if (::socketClient.isInitialized) socketClient.closeWebSocket()
-        _actionState.postValue(ActionState.EndCall)
-        callSoundManager.stopRingBack()
-        stopTimer()
-        resetData()
+//        if (::mediaServer.isInitialized) mediaServer.logoutRoom()
+//        if (::socketClient.isInitialized) socketClient.closeWebSocket()
+//        _actionState.postValue(ActionState.EndCall)
+//        callSoundManager.stopRingBack()
+//        stopTimer()
+//        resetData()
+        // TODO
     }
 
     fun onEndCall() {

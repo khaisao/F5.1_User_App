@@ -3,21 +3,24 @@ package jp.careapp.counseling.android.ui.verifyCode
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.gson.GsonBuilder
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.base.NetworkException
-import jp.careapp.counseling.android.AppApplication
 import jp.careapp.counseling.R
+import jp.careapp.counseling.android.AppApplication
 import jp.careapp.counseling.android.data.network.ApiObjectResponse
 import jp.careapp.counseling.android.data.network.InforUserResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
+import jp.careapp.counseling.android.keystore.KeyService
 import jp.careapp.counseling.android.network.ApiInterface
-import com.google.gson.GsonBuilder
+import jp.careapp.counseling.android.utils.Define
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
 class VerifyCodeViewModel @ViewModelInject constructor(
     private val apiInterface: ApiInterface,
-    private val rxPreferences: RxPreferences
+    private val rxPreferences: RxPreferences,
+    private val keyService: KeyService
 ) : BaseViewModel() {
 
     companion object {
@@ -53,14 +56,11 @@ class VerifyCodeViewModel @ViewModelInject constructor(
                     if (it.errors.isEmpty()) {
                         val userResponse = it.dataResponse
                         userResponse.let {
-                            val token =
-                                if (userResponse.token != null) userResponse.token else ""
-                            val tokenExpire =
-                                if (userResponse.tokenExpire != null) userResponse.tokenExpire else ""
+                            val token = userResponse.token
+                            val tokenExpire = userResponse.tokenExpire
                             val passWord =
-                                if (userResponse.password != null) userResponse.password else ""
-                            val memberCode =
-                                if (userResponse.memberCode != null) userResponse.memberCode else ""
+                                keyService.encrypt(Define.KEY_ALIAS, userResponse.password) ?: ""
+                            val memberCode = userResponse.memberCode
                             rxPreferences.saveUserInfo(token, tokenExpire, passWord, memberCode)
                             openScreen(userResponse.status)
                         }

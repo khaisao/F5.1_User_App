@@ -73,8 +73,8 @@ class Define {
         const val URL_LIST_POINT_PAY_PAY = "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/paypay/buy-point-list.html"
         const val URL_LIST_POINT_AMAZON_PAY = "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/amazon/buy-point-list.html"
         // TODO (Change  owner_code)
-        //        const val OWNER_CODE = 6257353
-        const val OWNER_CODE = 870
+        //  const val OWNER_CODE = 6257353
+        const val OWNER_CODE = 249085
         const val APP_CODE = "CareappAndroid"
         const val PREFIX_CARE_APP = "careapp://"
         const val CALL_BACK_BUY_POINT_GOOGLE_ = "careapp://buypoint"
@@ -107,6 +107,9 @@ class Define {
         // App mode
         const val NORMAL_MODE = 2
         const val REVIEW_MODE = 97
+
+        // Live stream
+        const val KEY_ALIAS = "member_key"
     }
 
     class SearchCondition {
@@ -340,6 +343,13 @@ class BUNDLE_KEY {
         const val IS_SHOW_TOOLBAR = "IS_SHOW_TOOLBAR"
         const val LIST_TEMPLATE = "LIST_TEMPLATE"
         const val BACK_TO_CHAT_BOX = "BACK_TO_CHAT_BOX"
+
+        // Buy Point
+        const val POINT_URL = "POINT_URL"
+
+        // Live Stream
+        const val FLAX_LOGIN_AUTH_RESPONSE = "FLAX_LOGIN_AUTH_RESPONSE"
+        const val VIEW_STATUS = "VIEW_STATUS"
     }
 }
 
@@ -661,16 +671,53 @@ object SocketInfo {
     const val AUTH_USER_VALUE = "member"
     const val AUTH_TOKEN = "token"
 
+    // Key
+    const val KEY_ACTION = "action"
+    const val KEY_RESULT = "result"
+    const val KEY_ERROR = "error"
+    const val KEY_CHAT = "chat"
+    const val KEY_HANDLE = "handle"
+    const val KEY_USER_CODE = "userCode"
+    const val KEY_USER_TYPE = "userType"
+    const val KEY_WHISPER = "whisper"
+    const val KEY_TWO_SHOT = "twoshot"
+    const val KEY_TWO_SHOT_CANCEL = "2shotCancel"
+    const val KEY_TWO_SHOT_CANCEL_2 = "twoshotCancel"
+    const val KEY_SESSION_CODE = "sessionCode"
+    const val KEY_MEMBER_CODE = "memberCode"
+    const val KEY_PERFORMER_CODE = "performerCode"
+    const val KEY_MEDIA_SERVER_OWNER_CODE = "mediaServerOwnerCode"
+    const val KEY_MEDIA_SERVER = "mediaServer"
+    const val KEY_PERFORMER_THUMB_IMAGE = "performerThumbnailImage"
+    const val KEY_IS_NEED_CALL = "isNeedCall"
+    const val KEY_SHOT_STATUS = "shotStatus"
+    const val KEY_MESSAGE_TYPE = "messageType"
+    const val KEY_MSG = "msg"
+    const val KEY_COLOR = "color"
+
     // Action
     const val ACTION_READ = "read"
     const val ACTION_SEND = "send"
+    const val ACTION_CHANGE_STATUS = "changeStatus"
+    const val ACTION_WRITE = "Write"
+    const val ACTION_MESSAGE = "message"
+    const val ACTION_WHISPER = "Whisper"
     const val ACTION_CALL = "CALL"
     const val ACTION_LOGIN_REQUEST = "LoginRequest"
     const val ACTION_PERFORMER_LOGIN = "PerformerLogin"
     const val ACTION_LOGIN = "Login"
     const val ACTION_PERFORMER_RESPONSE = "PerformerResponse"
     const val ACTION_CANCEL_CALL = "CancelCall"
+    const val ACTION_TWO_SHOT_REQUEST = "2shotRequest"
+    const val ACTION_ASK_TWO_SHOT = "AskTwoShot"
+    const val ACTION_CANCEL_TWO_SHOT = "CancelTwoShot"
+    const val ACTION_DESTROY_TWO_SHOT = "2shotDestroy"
     const val ACTION_CHAT_LOG = "ChatLog"
+    const val ACTION_RELOAD = "Reload"
+    const val ACTION_CHANGE_CHAT_STATUS = "ChangeChatStatus"
+    const val RESULT_NG = "NG"
+    const val RESULT_OK = "OK"
+
 }
 
 object MenuItemType {

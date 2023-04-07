@@ -51,8 +51,6 @@ class MediaServerManager constructor(
                 flaxLoginAuthResponse.mediaServerOwnerCode,
                 flaxLoginAuthResponse.performerCode,
                 flaxLoginAuthResponse.memberCode,
-                "",
-                flaxLoginAuthResponse.mediaServer,
                 false,
                 customUserData,
                 object : LoginEvent {

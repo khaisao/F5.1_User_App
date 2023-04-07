@@ -72,6 +72,10 @@
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
 
+    <style name="text_bold_13" parent="text_bold">
+        <item name="android:textSize">@dimen/text_size_13</item>
+    </style>
+
     <style name="text_bold_15" parent="text_bold">
         <item name="android:textSize">@dimen/text_size_15</item>
     </style>

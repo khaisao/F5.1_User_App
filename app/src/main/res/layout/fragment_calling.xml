@@ -61,9 +61,7 @@
 
                                 />
                         </com.google.android.material.card.MaterialCardView>
-
                     </com.lihang.ShadowLayout>
-
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvName"

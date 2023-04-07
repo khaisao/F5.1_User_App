@@ -346,6 +346,11 @@ interface ApiInterface {
         @Url url: String
     ): FssMemberAuthResponse
 
+    @GET
+    suspend fun fssPurchasePoint(
+        @Url url: String
+    ): FssPurchasePointResponse
+
     @GET("api/app-banners")
     suspend fun getListBanner(): ApiObjectResponse<List<BannerResponse>>
 

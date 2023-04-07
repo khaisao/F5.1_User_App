@@ -5,18 +5,20 @@ import android.text.TextUtils
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.pref.RxPreferences
-import jp.careapp.counseling.databinding.FragmentStartBinding
-import jp.careapp.counseling.android.navigation.AppNavigation
-import jp.careapp.counseling.android.utils.Define
-import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
+import jp.careapp.counseling.android.keystore.KeyService
+import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.email.InputAndEditMailViewModel
 import jp.careapp.counseling.android.ui.splash.SplashViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
+import jp.careapp.counseling.android.utils.Define
+import jp.careapp.counseling.android.utils.Define.Companion.KEY_ALIAS
 import jp.careapp.counseling.android.utils.SignedUpStatus
+import jp.careapp.counseling.databinding.FragmentStartBinding
 import me.leolin.shortcutbadger.ShortcutBadger
 import javax.inject.Inject
 
@@ -25,10 +27,14 @@ class StartFragment : BaseFragment<FragmentStartBinding, StartViewModel>() {
 
     @Inject
     lateinit var appNavigation: AppNavigation
+
+    @Inject
+    lateinit var keyService: KeyService
     override val layoutId = R.layout.fragment_start
     private val viewModel: StartViewModel by viewModels()
     private val shareViewModel: ShareViewModel by activityViewModels()
     override fun getVM(): StartViewModel = viewModel
+
     @Inject
     lateinit var rxPreferences: RxPreferences
 
@@ -46,8 +52,17 @@ class StartFragment : BaseFragment<FragmentStartBinding, StartViewModel>() {
         var webViewBundle: Bundle
         with(binding.rlSignInWithoutEmail) {
             setOnClickListener {
-                if (!TextUtils.isEmpty(rxPreferences.getEmail()) && !TextUtils.isEmpty(rxPreferences.getPassword())) {
-                    viewModel.login(rxPreferences.getEmail()!!, rxPreferences.getPassword()!!)
+                if (!TextUtils.isEmpty(rxPreferences.getEmail()) && !TextUtils.isEmpty(
+                        keyService.decrypt(
+                            KEY_ALIAS,
+                            rxPreferences.getPassword()
+                        )
+                    )
+                ) {
+                    viewModel.login(
+                        rxPreferences.getEmail()!!,
+                        keyService.decrypt(KEY_ALIAS, rxPreferences.getPassword())!!
+                    )
                 } else {
                     rxPreferences.setSignedUpStatus(SignedUpStatus.LOGIN_WITHOUT_EMAIL)
                     appNavigation.openStartWithoutLoginToRegistrationScreen()
