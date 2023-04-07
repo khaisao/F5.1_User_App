@@ -54,46 +54,77 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <RelativeLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/bottom_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    tools:visibility="visible">
+                    app:layout_constraintBottom_toBottomOf="parent">
 
-                    <EditText
-                        android:id="@+id/edt_sent_msg"
-                        style="@style/text_14"
-                        android:layout_width="match_parent"
+                    <com.lihang.ShadowLayout
+                        android:id="@+id/sl_edt_sent_msg"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginBottom="41dp"
-                        android:layout_toStartOf="@+id/iv_send"
-                        android:background="@drawable/bg_rm_edt_message"
-                        android:hint="@string/input_content_user_detail_message"
-                        android:inputType="textMultiLine"
-                        android:maxHeight="140dp"
-                        android:paddingHorizontal="16dp"
-                        android:paddingVertical="11dp"
-                        android:scrollbars="vertical"
-                        android:textColor="@color/color_070707"
-                        android:textColorHint="@color/color_c0c3c9"
-                        tools:ignore="Autofill" />
+                        app:hl_cornerRadius="@dimen/margin_26"
+                        app:hl_shadowBackColor="#eff3fc"
+                        app:hl_shadowColor="#80D3D2D2"
+                        app:hl_shadowLimit="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="@id/sl_iv_send"
+                        app:layout_constraintEnd_toStartOf="@id/vertical_line_iv_send"
+                        app:layout_constraintStart_toStartOf="parent">
 
-                    <ImageView
-                        android:id="@+id/iv_send"
+                        <EditText
+                            android:id="@+id/edt_sent_msg"
+                            style="@style/text_14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/sl_iv_send"
+                            android:background="@drawable/bg_rm_edt_message"
+                            android:hint="@string/input_content_user_detail_message"
+                            android:inputType="textMultiLine"
+                            android:maxHeight="140dp"
+                            android:minHeight="@dimen/margin_40dp"
+                            android:paddingHorizontal="@dimen/margin_10"
+                            android:paddingVertical="11dp"
+                            android:scrollbars="vertical"
+                            android:textColor="@color/color_070707"
+                            android:textColorHint="@color/color_c0c3c9"
+                            tools:ignore="Autofill" />
+                    </com.lihang.ShadowLayout>
+
+                    <View
+                        android:id="@+id/vertical_line_iv_send"
+                        android:layout_width="1dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="@dimen/margin_2"
+                        app:layout_constraintBottom_toBottomOf="@id/sl_iv_send"
+                        app:layout_constraintStart_toStartOf="@id/sl_iv_send"
+                        app:layout_constraintTop_toTopOf="@id/sl_iv_send" />
+
+                    <com.lihang.ShadowLayout
+                        android:id="@+id/sl_iv_send"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@id/edt_sent_msg"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_send_user_detail_msg_disable" />
-                </RelativeLayout>
+                        android:layout_marginEnd="@dimen/margin_11"
+                        app:hl_cornerRadius="@dimen/margin_20"
+                        app:hl_shadowBackColor="#eff3fc"
+                        app:hl_shadowColor="#80D3D2D2"
+                        app:hl_shadowLimit="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <ImageView
+                            android:id="@+id/iv_send"
+                            android:layout_width="@dimen/margin_40dp"
+                            android:layout_height="@dimen/margin_40dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_send_user_detail_msg_disable"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+                    </com.lihang.ShadowLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </jp.careapp.counseling.android.utils.customView.DisableScrollNestedScrollView>
     </LinearLayout>
