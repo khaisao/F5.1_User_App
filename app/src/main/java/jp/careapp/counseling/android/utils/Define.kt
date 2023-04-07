@@ -690,7 +690,6 @@ object RMPresenceStatus {
 }
 
 sealed class ActionState {
-    class SaveNickNameSuccess(val isSuccess: Boolean) : ActionState()
     class SaveProfileMessageSuccess(val isSuccess: Boolean) : ActionState()
     class WithdrawalSuccess(val isSuccess: Boolean) : ActionState()
     class BlockUserSuccess(val isSuccess: Boolean) : ActionState()

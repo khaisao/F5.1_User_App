@@ -642,7 +642,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
 
     <!-- Review mode enter name screen -->
     <string name="please_enter_nick_name">ニックネームを入力してください</string>
-    <string name="count_default">0</string>
+    <string name="count_default">10</string>
     <string name="hint_enter_nick_name">ニックネームを入力</string>
     <string name="terms_of_service">利用規約</string>
 
@@ -663,14 +663,13 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <!-- Review mode setting contact finish screen -->
     <string name="thanks_for_contact_us">お問い合わせありがとうございます</string>
     <string name="setting_contact_finish_text_1">数日以内にご登録メールアドレス宛にご連絡いたしますので、今しばらくお待ちくださいませ。</string>
-    <string name="setting_contact_finish_text_2">1週間経ってもご連絡が届かない場合\n・迷惑フォルダに届いている\n・ご登録メールアドレスが間違っている\n・ドメイン指定受信を設定している
-\n@peaklive.jpの受信を許可してください
+    <string name="setting_contact_finish_text_2">1週間経ってもご連絡が届かない場合\n・迷惑フォルダに届いている\n・ご登録メールアドレスが間違っている\n・ドメイン指定受信を設定している\n info@slslsl.jpの受信を許可してください
     </string>
     <string name="input_content_user_detail_message">メッセージを入力</string>
     <string name="call_video">ビデオ通話</string>
-    <string name="no_online_data">まだお気に入りはありません</string>
-    <string name="no_favorite_data">まだお気に入りはありません。</string>
-    <string name="no_block_data">まだブロックしている女性はいません</string>
+    <string name="no_online_data">まだお気に入りはありません。</string>
+    <string name="no_favorite_data">お気に入りの方はいません。</string>
+    <string name="no_block_data">ブロック中の方はいません。</string>
     <string name="term">利用規約</string>
     <string name="current_point">保有ポイント</string>
     <string name="buy_point_1000">1,000</string>
@@ -688,7 +687,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="contact_category_delete_account">アカウントの削除</string>
     <string name="contact_category_about_account_deletion">アカウント削除について</string>
     <string name="user_detail_message_default">[このメッセージは無料です】 先生が対応の準備をしていますので、そのままお 待ちください。 もし事前にお伝えしたい事があれば先にメッセージを送ること もできます</string>
-    <string name="dialog_msg_block">%s さんををブロックしますか？</string>
+    <string name="dialog_msg_block">%sさんをブロックしますか？</string>
     <string name="block_user">ブロックする</string>
     <string name="report_user">通報する</string>
     <string name="input_name">なまえで検索</string>
@@ -733,4 +732,5 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="item_live_stream_normal">ライブ配信中</string>
     <string name="input_comment">コメントを入力</string>
     <string name="current_points">所持ポイント</string>
+    <string name="setting_push_success">保存されたプッシュ設定</string>
 </resources>

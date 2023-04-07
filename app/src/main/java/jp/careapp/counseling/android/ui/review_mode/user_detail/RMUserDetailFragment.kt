@@ -1,4 +1,4 @@
-package jp.careapp.counseling.android.ui.review_mode.userDetail
+package jp.careapp.counseling.android.ui.review_mode.user_detail
 
 import android.graphics.Color
 import android.os.Build
@@ -121,7 +121,7 @@ class RMUserDetailFragment : BaseFragment<FragmentRmUserDetailBinding, RMUserDet
     private fun showDialogBlock() {
         context?.let { context ->
             RMCommonAlertDialog.getInstanceCommonAlertdialog(context).showDialog()
-                .setDialogTitle("${user.name} さんををブロックしますか？")
+                .setDialogTitle(String.format(getString(R.string.dialog_msg_block), user.name))
                 .setTextPositiveButton(R.string.confirm_block_alert)
                 .setTextNegativeButton(R.string.cancel)
                 .setOnPositivePressed {

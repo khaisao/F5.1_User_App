@@ -1,52 +1,55 @@
 package jp.careapp.counseling.android.ui.review_mode.settingNickName
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.SingleLiveEvent
-import jp.careapp.counseling.android.data.pref.RxPreferences
-import jp.careapp.counseling.android.network.RMApiInterface
-import jp.careapp.counseling.android.utils.ActionState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class RMSettingNickNameViewModel @ViewModelInject constructor(
-    private val rmApiInterface: RMApiInterface,
-    private val rxPreferences: RxPreferences
+@HiltViewModel
+class RMSettingNickNameViewModel @Inject constructor(
+    private val mRepository: RmSettingNickNameRepository
 ) : BaseViewModel() {
-    val actionState = SingleLiveEvent<ActionState>()
+
+    val mActionState = SingleLiveEvent<RMSettingNickNameActionState>()
+
     private val _nickname = MutableLiveData<String>()
     val nickname: LiveData<String> = _nickname
 
     init {
-        val nickName = rxPreferences.getNickName()
-        nickName?.let {
-            _nickname.value = it
-        }
+        val nickName = mRepository.getNickNamePreferences()
+        nickName?.let { _nickname.value = it }
     }
 
-    fun saveNickName(nickName: String) {
-        try {
-            isLoading.value = true
-            viewModelScope.launch(Dispatchers.IO) {
-                val response = rmApiInterface.updateNickName(nickName)
-                withContext(Dispatchers.Main) {
-                    isLoading.value = false
+    fun updateNickName(nickName: String) {
+        isLoading.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            supervisorScope {
+                try {
+                    val response = mRepository.updateNickName(nickName)
                     if (response.errors.isEmpty()) {
-                        rxPreferences.setNickName(nickName)
-                        _nickname.value = nickName
-                        actionState.value = ActionState.SaveNickNameSuccess(true)
-                    } else {
-                        actionState.value = ActionState.SaveNickNameSuccess(false)
+                        mRepository.saveNickNamePreferences(nickName)
+                        withContext(Dispatchers.Main) {
+                            _nickname.value = nickName
+                            mActionState.value = RMSettingNickNameActionState.UpdateNickNameSuccess
+                        }
                     }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                } finally {
+                    withContext(Dispatchers.Main) { isLoading.value = false }
                 }
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            isLoading.value = false
         }
     }
+}
+
+sealed class RMSettingNickNameActionState {
+    object UpdateNickNameSuccess : RMSettingNickNameActionState()
 }

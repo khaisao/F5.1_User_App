@@ -1,13 +1,11 @@
 package jp.careapp.counseling.android.ui.review_mode.settingContact
 
-import android.app.Application
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.SingleLiveEvent
-import jp.careapp.counseling.R
 import jp.careapp.counseling.android.network.RMApiInterface
 import jp.careapp.counseling.android.ui.review_mode.settingContact.RMSettingContactFragment.Companion.REPLY_REQUIRED
 import jp.careapp.counseling.android.utils.ActionState
@@ -15,10 +13,11 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class RMSettingContactViewModel @ViewModelInject constructor(
-    private val rmApiInterface: RMApiInterface,
-    private val application: Application
+@HiltViewModel
+class RMSettingContactViewModel @Inject constructor(
+    private val rmApiInterface: RMApiInterface
 ) : BaseViewModel() {
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
@@ -26,24 +25,12 @@ class RMSettingContactViewModel @ViewModelInject constructor(
 
     val actionState = SingleLiveEvent<ActionState>()
 
-    private val _dataCategory = MutableLiveData<List<String>>()
-    val dataCategory: LiveData<List<String>> = _dataCategory
     private val _isEnableBtnSend = MutableLiveData<Boolean>()
     val isEnableBtnSend: LiveData<Boolean> = _isEnableBtnSend
 
     private var mCategory = ""
     private var mContent = ""
     private var mReply = REPLY_REQUIRED
-
-    init {
-        getDataCategory()
-    }
-
-    private fun getDataCategory() {
-        _dataCategory.value = arrayListOf(
-            application.getString(R.string.contact_category_about_account_deletion),
-        )
-    }
 
     fun sendContact() {
         isLoading.value = true

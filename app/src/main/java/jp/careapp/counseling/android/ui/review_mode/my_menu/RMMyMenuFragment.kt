@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.dialog.RMCommonAlertDialog
-import jp.careapp.counseling.BuildConfig
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.MenuItem
 import jp.careapp.counseling.android.data.pref.RxPreferences
@@ -31,7 +30,6 @@ class RMMyMenuFragment : BaseFragment<FragmentRmMyMenuBinding, RMMyMenuViewModel
     @Inject
     lateinit var rxPreferences: RxPreferences
 
-    private val shareViewModel: ShareViewModel by activityViewModels()
     private val viewModel: RMMyMenuViewModel by viewModels()
     override fun getVM() = viewModel
 
@@ -103,26 +101,13 @@ class RMMyMenuFragment : BaseFragment<FragmentRmMyMenuBinding, RMMyMenuViewModel
                 }
             }
             MenuItem.DELETE_ACCOUNT -> {
-                appNavigation.openRMMyMenuToRMSettingContact()
+                if (!isDoubleClick) appNavigation.openRMMyMenuToRMSettingContact()
             }
             MenuItem.TERMS_OF_SERVICE -> {
-                if (!isDoubleClick) {
-                    openWebView(
-                        "${BuildConfig.BROWSER_DOMAIN}${Define.TERM_PATH}",
-                        R.string.term
-                    )
-                }
+                if (!isDoubleClick) appNavigation.openRMTermOfService()
             }
             MenuItem.PRIVACY_POLICY -> {
-                if (!isDoubleClick) {
-                    openWebView(
-                        "${BuildConfig.BROWSER_DOMAIN}${Define.PRIVACY_POLICY_PATH}",
-                        R.string.privacy_policy
-                    )
-                }
-            }
-            MenuItem.COMMERCIAL_TRANSACTION_LAW -> {
-                // TODO
+                if (!isDoubleClick) appNavigation.openRMPrivacyPolicy()
             }
             else -> {}
         }

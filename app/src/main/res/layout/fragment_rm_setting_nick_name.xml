@@ -3,33 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/duck_egg_blue"
+        android:orientation="vertical"
         tools:context=".android.ui.review_mode.settingNickName.RMSettingNickNameFragment">
 
         <jp.careapp.counseling.android.utils.customView.ToolBarCommon
             android:id="@+id/toolBar"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:bg_toolbar="@android:color/transparent"
             app:color_title="@color/color_070707"
+            app:hide_line_bottom="true"
             app:src_btn_right="@string/save"
             app:src_left="@drawable/ic_rm_arrow_left"
             app:string_title="@string/nickname_update" />
 
         <jp.careapp.counseling.android.ui.custom.EditTextCounterRM
             android:id="@+id/edtNickName"
-            android:layout_width="0dp"
-            style="@style/text_14"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_16"
             android:layout_marginHorizontal="@dimen/margin_16"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/margin_16"
             app:layout_constraintTop_toBottomOf="@id/toolBar" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

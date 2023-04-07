@@ -1,35 +1,35 @@
-package jp.careapp.counseling.android.ui.terms_of_service
+package jp.careapp.counseling.android.ui.review_mode.terms_of_service
 
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.navigation.AppNavigation
-import jp.careapp.counseling.android.ui.privacy_policy.PrivacyPolicyListAdapter
+import jp.careapp.counseling.android.ui.review_mode.privacy_policy.RMPrivacyPolicyListAdapter
 import jp.careapp.counseling.android.utils.customView.ToolBarCommon
-import jp.careapp.counseling.databinding.FragmentTermsOfServiceBinding
+import jp.careapp.counseling.databinding.FragmentRmTermsOfServiceBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TermsOfServiceFragment :
-    BaseFragment<FragmentTermsOfServiceBinding, TermsOfServiceViewModel>() {
+class RMTermsOfServiceFragment :
+    BaseFragment<FragmentRmTermsOfServiceBinding, RMTermsOfServiceViewModel>() {
 
     @Inject
     lateinit var appNavigation: AppNavigation
 
-    override val layoutId: Int = R.layout.fragment_terms_of_service
+    override val layoutId: Int = R.layout.fragment_rm_terms_of_service
 
-    private val mViewModel: TermsOfServiceViewModel by viewModels()
+    private val mViewModel: RMTermsOfServiceViewModel by viewModels()
     override fun getVM() = mViewModel
 
-    private var mAdapter: PrivacyPolicyListAdapter? = null
+    private var mAdapter: RMPrivacyPolicyListAdapter? = null
 
     override fun initView() {
         super.initView()
 
         setUpToolBar()
 
-        mAdapter = PrivacyPolicyListAdapter()
+        mAdapter = RMPrivacyPolicyListAdapter()
         binding.rcvTermsOfService.apply {
             adapter = mAdapter
             setHasFixedSize(true)

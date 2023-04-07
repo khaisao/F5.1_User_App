@@ -1,4 +1,4 @@
-package jp.careapp.counseling.android.ui.review_mode.userDetail
+package jp.careapp.counseling.android.ui.review_mode.user_detail
 
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -22,10 +22,13 @@ fun TextView.setStatus(rmPerformerStatus: Int) {
 
 @BindingAdapter("rmPerformerStatus")
 fun LinearLayout.setStatus(rmPerformerStatus: Int) {
-    background = if (rmPerformerStatus == 0)
-        ContextCompat.getDrawable(context, R.drawable.bg_rm_btn_chat_msg_disable)
-    else
-        ContextCompat.getDrawable(context, R.drawable.bg_rm_btn_chat_msg_enable)
+    if (rmPerformerStatus == 0) {
+        background = ContextCompat.getDrawable(context, R.drawable.bg_rm_btn_chat_msg_disable)
+        isEnabled = false
+    } else {
+        background = ContextCompat.getDrawable(context, R.drawable.bg_rm_btn_chat_msg_enable)
+        isEnabled = true
+    }
 }
 
 @BindingAdapter("isFavorite")

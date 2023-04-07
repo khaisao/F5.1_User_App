@@ -1,6 +1,5 @@
 package jp.careapp.counseling.android.ui.review_mode.block_list
 
-import android.graphics.Color
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -43,7 +42,6 @@ class RMBlockListFragment : BaseFragment<FragmentBlockListBinding, RMBlockListVi
                     if (!isDoubleClick)
                         findNavController().navigateUp()
                 }
-                setRootLayoutBackgroundColor(Color.TRANSPARENT)
             }
 
             rvBlock.apply {

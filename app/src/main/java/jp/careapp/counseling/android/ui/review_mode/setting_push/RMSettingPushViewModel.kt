@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
+import jp.careapp.core.utils.SingleLiveEvent
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.network.RMApiInterface
 import jp.careapp.counseling.android.ui.review_mode.setting_push.RMSettingPushFragment.Companion.PUSH_DO_NOT_RECEIVE
@@ -20,6 +21,9 @@ class RMSettingPushViewModel @Inject constructor(
     private val rmApiInterface: RMApiInterface,
     private val rxPreferences: RxPreferences
 ) : BaseViewModel() {
+
+    val mActionState = SingleLiveEvent<RMSettingPushActionState>()
+
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
     }
@@ -47,9 +51,14 @@ class RMSettingPushViewModel @Inject constructor(
 
     private fun updateStateSwitch(isSuccess: Boolean, pushMail: Int?) {
         if (isSuccess) {
+            mActionState.value = RMSettingPushActionState.SettingPushSuccess
             _pushMail.value = if (pushMail == PUSH_RECEIVE) PUSH_DO_NOT_RECEIVE else PUSH_RECEIVE
         } else {
             _pushMail.value = _pushMail.value
         }
     }
+}
+
+sealed class RMSettingPushActionState {
+    object SettingPushSuccess : RMSettingPushActionState()
 }

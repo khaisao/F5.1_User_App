@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:background="@drawable/bg_bottom_sheet_user_detail"
-        tools:context=".android.ui.review_mode.userDetail.userDetailBottomSheet.UserDetailBottomSheetFragment">
+        tools:context=".android.ui.review_mode.user_detail.userDetailBottomSheet.UserDetailBottomSheetFragment">
 
         <LinearLayout
             android:layout_width="match_parent"

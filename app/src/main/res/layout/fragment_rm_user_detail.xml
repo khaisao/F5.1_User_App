@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dodger_blue"
-        tools:context=".android.ui.review_mode.userDetail.RMUserDetailFragment">
+        tools:context=".android.ui.review_mode.user_detail.RMUserDetailFragment">
 
         <jp.careapp.counseling.android.utils.customView.ToolBarCommon
             android:id="@+id/toolBar"
@@ -131,7 +131,7 @@
                     android:contentDescription="@null"
                     android:src="@drawable/ic_message_chat" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     style="@style/text_bold_14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -162,7 +162,7 @@
                     android:contentDescription="@null"
                     android:src="@drawable/ic_make_video" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     style="@style/text_bold_14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

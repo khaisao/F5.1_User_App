@@ -1,4 +1,4 @@
-package jp.careapp.counseling.android.ui.review_mode.buyPoint
+package jp.careapp.counseling.android.ui.review_mode.buy_point
 
 import android.graphics.Color
 import android.os.Bundle
@@ -7,7 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
-import jp.careapp.core.utils.dialog.CommonAlertDialog
+import jp.careapp.core.utils.dialog.RMCommonAlertDialog
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.MemberResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
@@ -111,7 +111,7 @@ class RMBuyPointFragment : BaseFragment<FragmentRmBuyPointBinding, RMBuyPointVie
     private var handleBuyPointResult: Observer<Boolean> = Observer {
         if (it) {
             initAdapter(false)
-            CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+            RMCommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
                 .showDialog()
                 .setDialogTitle(R.string.buy_point_suscess)
                 .setTextPositiveButton(R.string.text_OK)
@@ -130,13 +130,12 @@ class RMBuyPointFragment : BaseFragment<FragmentRmBuyPointBinding, RMBuyPointVie
         }
     }
 
-    fun formatPoint(point: Int) {
+    private fun formatPoint(point: Int) {
         val symbols = DecimalFormatSymbols(Locale(","))
         val df = DecimalFormat()
         df.decimalFormatSymbols = symbols
         df.groupingSize = 3
-        binding.tvCurrentPoint.text =
-            String.format(getString(R.string.format_point_pts), df.format(point))
+        binding.tvCurrentPoint.text = df.format(point)
     }
 
     override fun setOnClick() {

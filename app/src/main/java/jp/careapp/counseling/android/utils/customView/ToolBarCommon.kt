@@ -2,7 +2,6 @@ package jp.careapp.counseling.android.utils.customView
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.Typeface
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
@@ -11,6 +10,7 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.FontRes
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
@@ -19,7 +19,7 @@ import jp.careapp.counseling.R
 
 class ToolBarCommon : Toolbar {
     lateinit var toolbar: ConstraintLayout
-    lateinit var btnRight: TextView
+    lateinit var btnRight: AppCompatButton
     lateinit var rootLayout: View
     lateinit var btnLeft: ImageView
     lateinit var ivRight: ImageView

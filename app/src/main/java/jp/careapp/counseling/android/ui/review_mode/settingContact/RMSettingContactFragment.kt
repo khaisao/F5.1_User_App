@@ -1,8 +1,8 @@
 package jp.careapp.counseling.android.ui.review_mode.settingContact
 
-import android.graphics.Color
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,8 +27,19 @@ class RMSettingContactFragment :
     private val mViewModel: RMSettingContactViewModel by viewModels()
     override fun getVM(): RMSettingContactViewModel = mViewModel
 
+    private val adapterSpinner by lazy {
+        ArrayAdapter(
+            requireContext(),
+            R.layout.rm_list_popup_window_item,
+            arrayListOf(getString(R.string.contact_category_about_account_deletion))
+        )
+    }
+
     override fun initView() {
         super.initView()
+
+        binding.spinner.adapter = adapterSpinner
+        binding.spinner.onItemSelectedListener = this
 
         setUpToolBar()
         setUpEditText()
@@ -37,9 +48,7 @@ class RMSettingContactFragment :
     override fun setOnClick() {
         super.setOnClick()
 
-        binding.btnSend.setOnClickListener {
-            mViewModel.sendContact()
-        }
+        binding.btnSend.setOnClickListener { if (!isDoubleClick) mViewModel.sendContact() }
 
         binding.radioGroup.setOnCheckedChangeListener { _, id ->
             mViewModel.setReply(
@@ -55,12 +64,6 @@ class RMSettingContactFragment :
         }
     }
 
-    private fun setUpSpinner(dataSpinner: List<String>) {
-        binding.spinner.adapter =
-            SpinnerAdapter(requireContext(), R.layout.list_popup_window_item, dataSpinner)
-        binding.spinner.onItemSelectedListener = this
-    }
-
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         mViewModel.setCategory(parent?.getItemAtPosition(position) as String)
     }
@@ -68,7 +71,6 @@ class RMSettingContactFragment :
     override fun onNothingSelected(p0: AdapterView<*>?) {}
 
     private fun setUpToolBar() {
-        binding.toolBar.setRootLayoutBackgroundColor(Color.TRANSPARENT)
         binding.toolBar.setOnToolBarClickListener(object : ToolBarCommon.OnToolBarClickListener() {
             override fun onClickLeft() {
                 super.onClickLeft()
@@ -80,14 +82,8 @@ class RMSettingContactFragment :
     override fun bindingStateView() {
         super.bindingStateView()
 
-        mViewModel.dataCategory.observe(viewLifecycleOwner) {
-            setUpSpinner(it)
-        }
-
         mViewModel.isEnableBtnSend.observe(viewLifecycleOwner) {
-            it?.let {
-                binding.btnSend.isEnabled = it
-            }
+            binding.btnSend.isEnabled = it
         }
 
         mViewModel.actionState.observe(viewLifecycleOwner) {

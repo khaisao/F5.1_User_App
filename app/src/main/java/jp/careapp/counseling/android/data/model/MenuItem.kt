@@ -14,8 +14,7 @@ enum class MenuItem(val label: String, val typeField: TypeField, val isTitle: Bo
     DELETE_ACCOUNT("アカウントの削除", BOTTOM),
     SERVICE("サービス", NONE, true),
     TERMS_OF_SERVICE("利用規約", TOP),
-    PRIVACY_POLICY("プライバシーポリシー", CENTER),
-    COMMERCIAL_TRANSACTION_LAW("特定商取引法に基づく表示", BOTTOM)
+    PRIVACY_POLICY("プライバシーポリシー", BOTTOM)
 }
 
 enum class TypeField {

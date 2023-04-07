@@ -96,13 +96,6 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
-        <action
-            android:id="@+id/action_RMStartFragment_to_RMPrivacyPolicyFragment"
-            app:destination="@id/RMPrivacyPolicyFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
 
     <fragment
@@ -126,4 +119,23 @@
         android:name="jp.careapp.counseling.android.ui.review_mode.privacy_policy.RMPrivacyPolicyFragment"
         android:label="RMPrivacyPolicyFragment"
         tools:layout="@layout/fragment_rm_privacy_policy" />
+    <fragment
+        android:id="@+id/RMTermsOfServiceFragment"
+        android:name="jp.careapp.counseling.android.ui.review_mode.terms_of_service.RMTermsOfServiceFragment"
+        android:label="RMTermsOfServiceFragment"
+        tools:layout="@layout/fragment_rm_terms_of_service" />
+    <action
+        android:id="@+id/action_global_RMPrivacyPolicyFragment"
+        app:destination="@id/RMPrivacyPolicyFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+    <action
+        android:id="@+id/action_global_RMTermsOfServiceFragment"
+        app:destination="@id/RMTermsOfServiceFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
 </navigation>

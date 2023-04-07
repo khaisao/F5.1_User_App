@@ -14,7 +14,9 @@
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:bg_toolbar="@android:color/transparent"
             app:color_title="@color/color_070707"
+            app:hide_line_bottom="true"
             app:src_left="@drawable/ic_rm_arrow_left"
             app:string_title="@string/contact_us" />
 
@@ -22,34 +24,37 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="@dimen/padding_24">
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp">
 
             <TextView
-                android:id="@+id/textView5"
-                style="@style/text_bold_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/hiragino_sans_w6"
                 android:gravity="center"
                 android:text="@string/thanks_for_contact_us"
-                android:textColor="@color/color_070707" />
+                android:textColor="@color/color_070707"
+                android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/textView6"
-                style="@style/text_14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_24dp"
+                android:fontFamily="@font/hiragino_sans_w3"
+                android:lineSpacingExtra="4dp"
                 android:text="@string/setting_contact_finish_text_1"
-                android:textColor="@color/color_070707" />
+                android:textColor="@color/color_070707"
+                android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/textView7"
-                style="@style/text_14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_16"
+                android:fontFamily="@font/hiragino_sans_w3"
+                android:lineSpacingExtra="4dp"
                 android:text="@string/setting_contact_finish_text_2"
-                android:textColor="@color/color_070707" />
+                android:textColor="@color/color_070707"
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
 </layout>
