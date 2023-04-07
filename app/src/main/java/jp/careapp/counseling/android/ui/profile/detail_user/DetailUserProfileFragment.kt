@@ -6,9 +6,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewTreeObserver
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -20,6 +22,7 @@ import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.adapter.GalleryAdapter
+import jp.careapp.counseling.android.data.model.live_stream.ConnectResult
 import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.network.GalleryResponse
 import jp.careapp.counseling.android.data.network.ThumbnailImageResponse
@@ -28,13 +31,19 @@ import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.BuyPointBottomFragment
+import jp.careapp.counseling.android.ui.calling.CallConnectionDialog
 import jp.careapp.counseling.android.ui.calling.CallingViewModel
+import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.buy_point.PurchasePointBottomSheet
 import jp.careapp.counseling.android.ui.profile.block_report.BlockAndReportBottomFragment
 import jp.careapp.counseling.android.ui.profile.tab_review.TabReviewFragment
 import jp.careapp.counseling.android.ui.profile.tab_user_info_detail.TabDetailUserProfileFragment
 import jp.careapp.counseling.android.ui.profile.update_trouble_sheet.TroubleSheetUpdateFragment
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
+import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.FLAX_LOGIN_AUTH_RESPONSE
+import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.USER_PROFILE
+import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.VIEW_STATUS
 import jp.careapp.counseling.android.utils.Define
+import jp.careapp.counseling.android.utils.SocketInfo.RESULT_NG
 import jp.careapp.counseling.android.utils.extensions.getBustSize
 import jp.careapp.counseling.android.utils.extensions.hasPermissions
 import jp.careapp.counseling.databinding.FragmentDetailUserProfileBinding
@@ -42,7 +51,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailUserProfileFragment :
-    BaseFragment<FragmentDetailUserProfileBinding, DetailUserProfileViewModel>() {
+    BaseFragment<FragmentDetailUserProfileBinding, DetailUserProfileViewModel>(),
+    CallConnectionDialog.CallingCancelListener {
 
     @Inject
     lateinit var appNavigation: AppNavigation
@@ -60,11 +70,10 @@ class DetailUserProfileFragment :
     private val shareViewModel: ShareViewModel by activityViewModels()
     private var typeScreen = ""
 
-
     override fun getVM(): DetailUserProfileViewModel = viewModel
 
     // data screen
-    // user laod from server
+    // user load from server
     private var consultantResponse: ConsultantResponse? = null
 
     // user in list user from local
@@ -78,6 +87,7 @@ class DetailUserProfileFragment :
     private var position: Int = 0
     private var numberTimeCanScrollDown = 0
     private var numberMaxTimeCanScrollDown = 0
+    private var loginType = 0
 
     // item check favorite when first chat
     private var isShowFromUserDisable: Boolean = false
@@ -191,21 +201,46 @@ class DetailUserProfileFragment :
 
         binding.llCallConsult.setOnClickListener {
             if (!isDoubleClick) {
-                if (hasPermissions(arrayOf(RECORD_AUDIO))) {
-                    checkPoint()
-                } else if (shouldShowRequestPermissionRationale(RECORD_AUDIO)) {
-                    showDialogNeedMicrophonePermission()
-                } else {
-                    showDialogRequestMicrophonePermission()
+                when {
+                    hasPermissions(arrayOf(RECORD_AUDIO)) -> {
+                        checkPoint()
+                    }
+                    shouldShowRequestPermissionRationale(RECORD_AUDIO) -> {
+                        showDialogNeedMicrophonePermission()
+                    }
+                    else -> {
+                        showDialogRequestMicrophonePermission()
+                    }
                 }
+                loginType = 0
+                viewModel.viewerStatus = 0
             }
         }
 
         binding.llPeep.setOnClickListener {
             if (!isDoubleClick) {
                 checkPoint()
+                loginType = 1
+                viewModel.viewerStatus = 1
             }
         }
+    }
+
+    override fun callingCancel() {
+        viewModel.cancelCall()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.userProfileResult.removeObservers(viewLifecycleOwner)
+        viewModel.statusFavorite.removeObservers(viewLifecycleOwner)
+        viewModel.statusRemoveFavorite.removeObservers(viewLifecycleOwner)
+        viewModel.isFirstChat.removeObservers(viewLifecycleOwner)
+        viewModel.blockUserResult.removeObservers(viewLifecycleOwner)
+        viewModel.userGallery.removeObservers(viewLifecycleOwner)
+        viewModel.connectResult.removeObservers(viewLifecycleOwner)
+        viewModel.isButtonEnable.removeObservers(viewLifecycleOwner)
+        viewModel.isLoginSuccess.removeObservers(viewLifecycleOwner)
     }
 
     private fun openChatScreen(isShowFreeMess: Boolean = false) {
@@ -289,16 +324,16 @@ class DetailUserProfileFragment :
     private fun showDialogRequestBuyPoint() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
-            .setDialogTitle(R.string.msg_title_request_buy_point)
-            .setTextPositiveButton(R.string.buy_point)
+            .setDialogTitle(R.string.live_stream_title_request_buy_point)
+            .setTextPositiveButton(R.string.live_stream_buy_point)
             .setTextNegativeButton(R.string.cancel_block_alert)
             .setOnPositivePressed { dialog ->
                 val bundle = Bundle().also {
                     it.putInt(BUNDLE_KEY.TYPE_BUY_POINT, Define.BUY_POINT_FIRST)
                 }
-                handleBuyPoint.buyPoint(childFragmentManager, bundle,
-                    object : BuyPointBottomFragment.HandleBuyPoint {
-                        override fun buyPointSucess() {
+                handleBuyPoint.buyPointLiveStream(childFragmentManager, bundle,
+                    object : PurchasePointBottomSheet.PurchasePointCallback {
+                        override fun purchasePointSuccess() {
                             checkPoint()
                         }
                     }
@@ -312,16 +347,12 @@ class DetailUserProfileFragment :
     private fun showDialogConfirmCall() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
-            .setDialogTitle(R.string.content_confirm_call)
+            .setDialogTitle(getString(R.string.content_confirm_call, consultantResponse?.name))
             .setTextPositiveButton(R.string.confirm_block_alert)
             .setTextNegativeButton(R.string.cancel_block_alert)
             .setOnPositivePressed {
                 it.dismiss()
-                if (callingViewModel.isCalling()) {
-                    showDialogWarningDuringCall()
-                } else {
-                    openCalling()
-                }
+                openCalling()
             }.setOnNegativePressed {
                 it.dismiss()
                 openChatScreen(true)
@@ -336,13 +367,7 @@ class DetailUserProfileFragment :
     }
 
     private fun openCalling() {
-        Bundle().also {
-            it.putString(BUNDLE_KEY.PERFORMER_NAME, consultantResponse?.name ?: "")
-            it.putString(BUNDLE_KEY.PERFORMER_CODE, consultantResponse?.code ?: "")
-            it.putString(BUNDLE_KEY.PERFORMER_IMAGE, consultantResponse?.imageUrl ?: "")
-        }.let {
-            appNavigation.openToCalling(it)
-        }
+        consultantResponse?.code?.let { viewModel.startCall(it) }
     }
 
     fun doBuyPoint() {
@@ -399,29 +424,84 @@ class DetailUserProfileFragment :
         }
     }
 
+    private fun setButtonEnable(isEnable: Boolean) {
+        binding.ivMessage.isEnabled = isEnable
+        binding.llCallConsult.isEnabled = isEnable
+        binding.llPeep.isEnabled = isEnable
+    }
+
     override fun bindingStateView() {
         super.bindingStateView()
         viewModel.userProfileResult.observe(viewLifecycleOwner, handleResultDetailUser)
         viewModel.statusFavorite.observe(viewLifecycleOwner, handleResultStatusFavorite)
         viewModel.statusRemoveFavorite.observe(viewLifecycleOwner, handleResuleStatusUnFavorite)
         viewModel.isFirstChat.observe(viewLifecycleOwner, handleFirstChat)
-        viewModel.blockUserResult.observe(viewLifecycleOwner
-            , handleBlockResult)
+        viewModel.blockUserResult.observe(
+            viewLifecycleOwner, handleBlockResult
+        )
         viewModel.userGallery.observe(viewLifecycleOwner, handleResultUserGallery)
+        viewModel.connectResult.observe(viewLifecycleOwner, connectResultHandle)
+        viewModel.isButtonEnable.observe(viewLifecycleOwner, buttonEnableHandle)
+        viewModel.isLoginSuccess.observe(viewLifecycleOwner, loginSuccessHandle)
+    }
 
+    private val connectResultHandle: Observer<ConnectResult> = Observer {
+        consultantResponse?.let { performerResponse ->
+            run {
+                val fragment: Fragment? =
+                    childFragmentManager.findFragmentByTag("CallConnectionDialog")
+                val dialog: CallConnectionDialog
+                if (fragment != null) {
+                    dialog = fragment as CallConnectionDialog
+                    if (it.result == RESULT_NG) {
+                        dialog.setMessage(it.message, true)
+                    } else {
+                        dialog.setMessage(getString(R.string.call_content))
+                        dialog.setCallingCancelListener(this@DetailUserProfileFragment)
+                    }
+                } else {
+                    val message =
+                        if (it.result == RESULT_NG) it.message else getString(R.string.call_content)
+                    val isError = it.result == RESULT_NG
+                    dialog = CallConnectionDialog.newInstance(performerResponse, message, isError)
+                    dialog.show(childFragmentManager, "CallConnectionDialog")
+                }
+            }
+        }
+    }
+
+    private val loginSuccessHandle: Observer<Boolean> = Observer {
+        if (it) {
+            val fragment: Fragment? = childFragmentManager.findFragmentByTag("CallConnectionDialog")
+            if (fragment != null) (fragment as CallConnectionDialog).dismiss()
+            val bundle = Bundle().apply {
+                putSerializable(FLAX_LOGIN_AUTH_RESPONSE, viewModel.flaxLoginAuthResponse)
+                putSerializable(USER_PROFILE, consultantResponse)
+                putInt(VIEW_STATUS, loginType)
+            }
+            appNavigation.openUserDetailToLiveStream(bundle)
+        }
+    }
+
+    private val buttonEnableHandle: Observer<Boolean> = Observer {
+        setButtonEnable(it)
     }
 
     private var handleResultUserGallery: Observer<List<GalleryResponse>?> = Observer {
         if (it != null && it.isNotEmpty()) {
-            if (it.size <= 3) {
-                numberTimeCanScrollDown = 0
-            } else if (it.size % 3 == 0) {
-                numberTimeCanScrollDown = it.size / 3 - 1
-            } else if (it.size % 3 != 0) {
-                numberTimeCanScrollDown = it.size / 3
+            when {
+                it.size <= 3 -> {
+                    numberTimeCanScrollDown = 0
+                }
+                it.size % 3 == 0 -> {
+                    numberTimeCanScrollDown = it.size / 3 - 1
+                }
+                it.size % 3 != 0 -> {
+                    numberTimeCanScrollDown = it.size / 3
+                }
             }
-            if(numberTimeCanScrollDown >=1){
-                binding.ivArrowDown.visibility=VISIBLE
+            if (numberTimeCanScrollDown >= 1) {
+                binding.ivArrowDown.visibility = VISIBLE
             }
             numberMaxTimeCanScrollDown = numberTimeCanScrollDown
             galleryAdapter.submitList(it)
@@ -510,7 +590,7 @@ class DetailUserProfileFragment :
         }
     }
 
-    private fun setClickForDialogBlock(consultantResponse: ConsultantResponse){
+    private fun setClickForDialogBlock(consultantResponse: ConsultantResponse) {
         consultantResponse.also { user ->
             binding.ivMore.setOnClickListener {
                 if (!isDoubleClick) {
@@ -520,7 +600,9 @@ class DetailUserProfileFragment :
                             override fun clickBlock() {
                                 if (!isDoubleClick) {
                                     user.let { data ->
-                                        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+                                        CommonAlertDialog.getInstanceCommonAlertdialog(
+                                            requireContext()
+                                        )
                                             .showDialog()
                                             .setDialogTitleWithString(
                                                 resources.getString(R.string.block_this_woman)
@@ -564,12 +646,16 @@ class DetailUserProfileFragment :
 
                 rvGallery.isNestedScrollingEnabled = false
 
-                Glide.with(this@DetailUserProfileFragment).asGif().load(R.drawable.ic_ballon_call).into(ivBallonLiveGl50)
-                Glide.with(this@DetailUserProfileFragment).asGif().load(R.drawable.ic_ballon_peep).into(ivBallonPeep)
+                Glide.with(this@DetailUserProfileFragment).asGif()
+                    .load(R.drawable.ic_ballon_call).into(ivBallonLiveGl50)
+                Glide.with(this@DetailUserProfileFragment).asGif()
+                    .load(R.drawable.ic_ballon_peep).into(ivBallonPeep)
 
                 val isWaiting = ConsultantResponse.isWaiting(user.callStatus, user.chatStatus)
-                val isLiveStream = ConsultantResponse.isLiveStream(user.callStatus, user.chatStatus)
-                val isPrivateLiveStream = ConsultantResponse.isPrivateLiveStream(user.callStatus, user.chatStatus)
+                val isLiveStream =
+                    ConsultantResponse.isLiveStream(user.callStatus, user.chatStatus)
+                val isPrivateLiveStream =
+                    ConsultantResponse.isPrivateLiveStream(user.callStatus, user.chatStatus)
                 val isOffline = ConsultantResponse.isOffline(user.callStatus, user.chatStatus)
 
                 val presenceStatusBgResId = when {
@@ -646,11 +732,17 @@ class DetailUserProfileFragment :
                 llCallConsult.visibility = if (isWaiting || isLiveStream) VISIBLE else GONE
                 ivBallonPeep.visibility = if (isLiveStream) VISIBLE else GONE
                 llPeep.visibility = if (isLiveStream) VISIBLE else GONE
-                ivPrivateDelivery.visibility = if (isPrivateLiveStream || isOffline) VISIBLE else GONE
+                ivPrivateDelivery.visibility =
+                    if (isPrivateLiveStream || isOffline) VISIBLE else GONE
                 ivBallonLiveGl50.visibility = if (isWaiting) VISIBLE else GONE
 
                 changeStatusIsFavorite(user.isFavorite)
-                binding.imgRanking.setImageResource(ConsultantResponse.getImageViewForRank(user.ranking,user.recommendRanking))
+                binding.imgRanking.setImageResource(
+                    ConsultantResponse.getImageViewForRank(
+                        user.ranking,
+                        user.recommendRanking
+                    )
+                )
 
             }
         }

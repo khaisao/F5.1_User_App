@@ -16,14 +16,17 @@ import jp.careapp.counseling.android.data.model.InforRegistrationRequest
 import jp.careapp.counseling.android.data.network.ApiObjectResponse
 import jp.careapp.counseling.android.data.network.RegistrationResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
+import jp.careapp.counseling.android.keystore.KeyService
 import jp.careapp.counseling.android.network.ApiInterface
+import jp.careapp.counseling.android.utils.Define
 import kotlinx.coroutines.launch
 import java.util.*
 
 class RegistrationViewModel @ViewModelInject constructor(
     private val application: Application,
     private val apiInterface: ApiInterface,
-    private val rxPreferences: RxPreferences
+    private val rxPreferences: RxPreferences,
+    private val keyService: KeyService
 ) : BaseViewModel() {
 
     val dateOfBirth = MutableLiveData<String>()
@@ -117,7 +120,7 @@ class RegistrationViewModel @ViewModelInject constructor(
                             rxPreferences.saveUserInfo(
                                 userResponse.token,
                                 userResponse.tokenExpire,
-                                userResponse.passWord,
+                                keyService.encrypt(Define.KEY_ALIAS, userResponse.passWord) ?: "",
                                 userResponse.memberCode
                             )
                             memberCode = userResponse.memberCode

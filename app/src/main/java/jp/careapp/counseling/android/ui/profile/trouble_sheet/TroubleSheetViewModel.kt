@@ -18,9 +18,11 @@ import jp.careapp.counseling.android.data.model.user_profile.TroubleSheetRequest
 import jp.careapp.counseling.android.data.network.MemberResponse
 import jp.careapp.counseling.android.data.network.TroubleSheetResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
+import jp.careapp.counseling.android.keystore.KeyService
 import jp.careapp.counseling.android.network.ApiInterface
 import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeViewModel
 import jp.careapp.counseling.android.utils.AdjustUtils
+import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.appsflyer.AppsFlyerUtil
 import kotlinx.coroutines.launch
 import java.util.*
@@ -28,7 +30,8 @@ import java.util.*
 
 class TroubleSheetViewModel @ViewModelInject constructor(
     private val apiInterface: ApiInterface,
-    private val rxPreferences: RxPreferences
+    private val rxPreferences: RxPreferences,
+    private val keyService: KeyService
 ) :
     BaseViewModel() {
     val statusSendTrouble = SingleLiveEvent<Boolean>()
@@ -128,7 +131,7 @@ class TroubleSheetViewModel @ViewModelInject constructor(
                             rxPreferences.saveUserInfo(
                                 userResponse.token,
                                 userResponse.tokenExpire,
-                                userResponse.passWord,
+                                keyService.encrypt(Define.KEY_ALIAS, userResponse.passWord) ?: "",
                                 userResponse.memberCode
                             )
                             rxPreferences.saveEmail(
@@ -159,7 +162,7 @@ class TroubleSheetViewModel @ViewModelInject constructor(
                             rxPreferences.saveUserInfo(
                                 userResponse.token,
                                 userResponse.tokenExpire,
-                                userResponse.passWord,
+                                keyService.encrypt(Define.KEY_ALIAS, userResponse.passWord) ?: "",
                                 userResponse.memberCode
                             )
                             memberCode = userResponse.memberCode

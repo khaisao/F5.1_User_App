@@ -564,4 +564,8 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     override fun openExitLiveStreamToMessage(bundle: Bundle?) {
         openScreen(R.id.action_exitLivestreamFragment_to_chatMessageFragment, bundle)
     }
+
+    override fun openUserDetailToLiveStream(bundle: Bundle?) {
+        openScreen(R.id.action_UserProfile_to_LiveStreamFragment, bundle)
+    }
 }

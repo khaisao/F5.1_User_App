@@ -2,21 +2,23 @@ package jp.careapp.counseling.android.network.socket
 
 import jp.careapp.counseling.android.utils.SocketInfo.HEADER_ORIGIN
 import okhttp3.*
+import org.json.JSONException
+import org.json.JSONObject
 import timber.log.Timber
 import java.net.URI
 import java.security.KeyStore
 import java.security.SecureRandom
+import java.util.EventListener
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.*
 
-class CallingWebSocketClient constructor(
-    private val handleMessage: (String) -> Unit
-) {
+class CallingWebSocketClient {
     companion object {
         const val TAG = "CallingWebSocketClient"
     }
 
     private lateinit var webSocket: WebSocket
+    private var webSocketCallBack: ChatWebSocketCallBack? = null
 
     fun connect(url: String) {
         Timber.tag(TAG).d("Connecting: $url")
@@ -82,7 +84,12 @@ class CallingWebSocketClient constructor(
             override fun onMessage(webSocket: WebSocket, text: String) {
                 super.onMessage(webSocket, text)
                 Timber.tag(TAG).d("onMessage: $text")
-                handleMessage(text)
+                try {
+                    val json = JSONObject(text)
+                    webSocketCallBack!!.onHandleMessage(json)
+                } catch (e: JSONException) {
+                    Timber.e("JSONException $e")
+                }
             }
         }
     }
@@ -90,5 +97,21 @@ class CallingWebSocketClient constructor(
     fun closeWebSocket(reason: String = "") {
         webSocket.close(1000, reason)
         Timber.tag(TAG).d("Client close socket")
+    }
+
+    fun setCallback(callBack: ChatWebSocketCallBack?) {
+        webSocketCallBack = callBack
+    }
+
+    interface ChatWebSocketCallBack {
+        fun onHandleMessage(jsonMessage: JSONObject)
+    }
+
+    interface MaruCastLoginCallBack {
+        fun loginSuccess()
+    }
+
+    interface WhisperEventListener : EventListener {
+        fun sendWhisperMessage(message: String?)
     }
 }

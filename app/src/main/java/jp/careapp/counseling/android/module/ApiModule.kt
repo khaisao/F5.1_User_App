@@ -12,6 +12,7 @@ import dagger.hilt.components.SingletonComponent
 import jp.careapp.core.utils.Constants
 import jp.careapp.counseling.BuildConfig
 import jp.careapp.counseling.android.data.pref.RxPreferences
+import jp.careapp.counseling.android.keystore.KeyService
 import jp.careapp.counseling.android.network.*
 import jp.careapp.counseling.android.utils.event.NetworkEvent
 import okhttp3.Cache
@@ -77,7 +78,7 @@ class ApiModule {
     ):
             AuthApiInterface {
         val retrofit = Retrofit.Builder()
-            .baseUrl(jp.careapp.counseling.BuildConfig.BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .client(client)
             .addConverterFactory(NullOnEmptyConverterFactory())
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -162,8 +163,9 @@ class ApiModule {
     fun providerAuthenticator(
         rxPreferences: RxPreferences,
         gson: Gson,
-        networkEvent: NetworkEvent
-    ) = TokenAuthenticator(rxPreferences, gson, networkEvent)
+        networkEvent: NetworkEvent,
+        keyService: KeyService
+    ) = TokenAuthenticator(rxPreferences, gson, networkEvent, keyService)
 
     @Singleton
     @Provides

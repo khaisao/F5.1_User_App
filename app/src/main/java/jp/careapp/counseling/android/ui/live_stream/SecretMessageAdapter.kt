@@ -1,16 +1,11 @@
 package jp.careapp.counseling.android.ui.live_stream
 
 import android.content.Context
-import android.graphics.BlurMaskFilter
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.MaskFilterSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import jp.careapp.counseling.android.data.model.message.BaseMessageResponse
-import jp.careapp.counseling.android.data.model.message.MessageResponse
+import jp.careapp.counseling.android.data.network.LiveStreamChatResponse
 import jp.careapp.counseling.android.ui.message.BaseMessageAdapterLoadMore
 import jp.careapp.counseling.android.ui.message.MessageDiffUtil
 import jp.careapp.counseling.databinding.ItemMessageOwnerBinding
@@ -19,7 +14,7 @@ import jp.careapp.counseling.databinding.ItemSecretMessagePerformerBinding
 
 class SecretMessageAdapter constructor(
     private val context: Context,
-) : BaseMessageAdapterLoadMore<BaseMessageResponse>(MessageDiffUtil() as DiffUtil.ItemCallback<BaseMessageResponse>) {
+) : BaseMessageAdapterLoadMore<LiveStreamChatResponse>(MessageDiffUtil() as DiffUtil.ItemCallback<LiveStreamChatResponse>) {
     private val layoutInflater by lazy {
         LayoutInflater.from(context)
     }
@@ -27,11 +22,11 @@ class SecretMessageAdapter constructor(
     override fun onBinViewHolderNomal(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is MessageOwnerViewHolder -> {
-                holder.bindData(getItem(position) as MessageResponse?)
+                holder.bindData(getItem(position))
                 holder.binding.contentMessageTv.requestLayout()
             }
             is MessagePerformerViewHolder -> {
-                holder.bindData(getItem(position) as MessageResponse?, context)
+                holder.bindData(getItem(position))
                 holder.binding.contentMessageTv.requestLayout()
             }
         }
@@ -58,8 +53,8 @@ class SecretMessageAdapter constructor(
 
     override fun getItemViewType(position: Int): Int {
         val item = getItem(position)
-        return if (item is MessageResponse) {
-            if (item.sendMail) {
+        return if (item is LiveStreamChatResponse) {
+            if (!item.isPerformer) {
                 MESSAGE_OWNER
             } else {
                 MESSAGE_PERFORMER
@@ -73,11 +68,11 @@ class SecretMessageAdapter constructor(
         val binding: ItemMessageOwnerBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bindData(
-            messageResponse: MessageResponse?
+            messageResponse: LiveStreamChatResponse?
         ) {
             binding.apply {
                 messageResponse?.let { data ->
-                    contentMessageTv.text = data.body
+                    contentMessageTv.text = data.message
                 }
             }
         }
@@ -87,30 +82,11 @@ class SecretMessageAdapter constructor(
         val binding: ItemSecretMessagePerformerBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bindData(
-            messageResponse: MessageResponse?,
-            context: Context
+            messageResponse: LiveStreamChatResponse?
         ) {
             binding.apply {
                 messageResponse?.let { data ->
-
-                    if (data.payFlag && !data.open) {
-                        val radius = contentMessageTv.textSize / 1.5f
-                        val filter = BlurMaskFilter(radius, BlurMaskFilter.Blur.NORMAL)
-                        val blurString = SpannableString(data.body)
-                        blurString.setSpan(
-                            MaskFilterSpan(filter),
-                            data.payPreviewCount,
-                            blurString.length,
-                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                        )
-                        contentMessageTv.text = blurString
-                        contentMessageTv.setTextIsSelectable(false)
-
-                    } else {
-                        contentMessageTv.text = data.body
-                        contentMessageTv.setTextIsSelectable(true)
-                    }
-
+                    contentMessageTv.text = data.message
                 }
             }
         }
@@ -122,26 +98,19 @@ class SecretMessageAdapter constructor(
     }
 }
 
-class MessageDiffUtil : DiffUtil.ItemCallback<BaseMessageResponse?>() {
+class MessageDiffUtil : DiffUtil.ItemCallback<LiveStreamChatResponse?>() {
 
     override fun areItemsTheSame(
-        oldItem: BaseMessageResponse,
-        newItem: BaseMessageResponse
+        oldItem: LiveStreamChatResponse,
+        newItem: LiveStreamChatResponse
     ): Boolean {
-        return if (oldItem is MessageResponse && newItem is MessageResponse) {
-            oldItem.code == newItem.code
-        } else {
-            false
-        }
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(
-        oldItem: BaseMessageResponse,
-        newItem: BaseMessageResponse
+        oldItem: LiveStreamChatResponse,
+        newItem: LiveStreamChatResponse
     ): Boolean {
-        if (oldItem is MessageResponse && newItem is MessageResponse) {
             return oldItem == newItem
-        }
-        return false
     }
 }

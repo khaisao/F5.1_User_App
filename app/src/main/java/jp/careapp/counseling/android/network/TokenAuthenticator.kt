@@ -1,15 +1,17 @@
 package jp.careapp.counseling.android.network
 
 import android.os.Build
-import jp.careapp.counseling.android.data.network.ApiObjectResponse
-import jp.careapp.counseling.android.data.network.LoginResponse
-import jp.careapp.counseling.android.data.pref.RxPreferences
-import jp.careapp.counseling.android.utils.event.NetworkEvent
-import jp.careapp.counseling.android.utils.event.NetworkState
-import jp.careapp.counseling.android.utils.result.Result
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
+import jp.careapp.counseling.android.data.network.ApiObjectResponse
+import jp.careapp.counseling.android.data.network.LoginResponse
+import jp.careapp.counseling.android.data.pref.RxPreferences
+import jp.careapp.counseling.android.keystore.KeyService
+import jp.careapp.counseling.android.utils.Define.Companion.KEY_ALIAS
+import jp.careapp.counseling.android.utils.event.NetworkEvent
+import jp.careapp.counseling.android.utils.event.NetworkState
+import jp.careapp.counseling.android.utils.result.Result
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.Authenticator
 import okhttp3.Request
@@ -22,12 +24,12 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import javax.inject.Inject
-import kotlin.jvm.Throws
 
 class TokenAuthenticator @Inject constructor(
     private val rxPreferences: RxPreferences,
     private val gson: Gson,
-    private val networkEvent: NetworkEvent
+    private val networkEvent: NetworkEvent,
+    private val keyService: KeyService
 ) : Authenticator {
 
     @ExperimentalCoroutinesApi
@@ -56,7 +58,7 @@ class TokenAuthenticator @Inject constructor(
         }
         val postData = JsonObject().apply {
             addProperty("email", rxPreferences.getEmail())
-            addProperty("password", rxPreferences.getPassword())
+            addProperty("password", keyService.decrypt(KEY_ALIAS, rxPreferences.getPassword()))
             addProperty("device_name", Build.MODEL)
         }
 
@@ -89,7 +91,7 @@ class TokenAuthenticator @Inject constructor(
                 rxPreferences.saveUserInfo(
                     refreshTokenResult.dataResponse.token,
                     refreshTokenResult.dataResponse.tokenExpire,
-                    rxPreferences.getPassword() ?: "",
+                    keyService.decrypt(KEY_ALIAS, rxPreferences.getPassword()) ?: "",
                     refreshTokenResult.dataResponse.memberCode
                 )
             }

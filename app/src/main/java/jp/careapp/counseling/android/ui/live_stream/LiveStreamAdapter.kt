@@ -7,54 +7,63 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import jp.careapp.counseling.R
-import jp.careapp.counseling.android.data.network.LiveStreamCommentResponse
+import jp.careapp.counseling.android.data.network.LiveStreamChatResponse
 import jp.careapp.counseling.databinding.ItemLiveStreamNormalCommentBinding
 import jp.careapp.counseling.databinding.ItemLiveStreamPerformerCommentBinding
 import jp.careapp.counseling.databinding.ItemLiveStreamWhisperCommentBinding
 
 class LiveStreamAdapter :
-    ListAdapter<LiveStreamCommentResponse, RecyclerView.ViewHolder>(LiveStreamDiffUtil()) {
-    class NormalCommentViewHolder(private val binding: ItemLiveStreamNormalCommentBinding) :
+    ListAdapter<LiveStreamChatResponse, RecyclerView.ViewHolder>(LiveStreamDiffUtil()) {
+
+    class MessageViewHolder(private val binding: ItemLiveStreamNormalCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(comment: LiveStreamCommentResponse) {
+        fun bind(message: LiveStreamChatResponse) {
             binding.tvComment.setLiveStreamCommentText(
-                "視聴者名 ${comment.comment}",
+                "視聴者名 ${message.message}",
                 R.color.color_dadada
             )
         }
     }
 
-    class PerformerCommentViewHolder(private val binding: ItemLiveStreamPerformerCommentBinding) :
+    class PerformerMessageViewHolder(private val binding: ItemLiveStreamPerformerCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(comment: LiveStreamCommentResponse) {
-            binding.tvComment.setLiveStreamCommentText(
-                "配信者名 ${comment.comment}",
+        fun bind(message: LiveStreamChatResponse) {
+            binding.tvMessage.setLiveStreamCommentText(
+                "配信者名 ${message.message}",
                 R.color.color_ff8de8
             )
         }
     }
 
-    class WhisperCommentViewHolder(private val binding: ItemLiveStreamWhisperCommentBinding) :
+    class WhisperViewHolder(private val binding: ItemLiveStreamWhisperCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(comment: LiveStreamCommentResponse) {
-            binding.tvComment.setLiveStreamCommentText(
-                "視聴者名 ${comment.comment}",
+        fun bind(message: LiveStreamChatResponse) {
+            binding.tvMessage.setLiveStreamCommentText(
+                "視聴者名 ${message.message}",
                 R.color.color_dadada
             )
         }
     }
 
-    override fun getItemViewType(position: Int) = when (getItem(position).type) {
-        LiveStreamCommentType.NORMAL -> LiveStreamCommentType.NORMAL
-        LiveStreamCommentType.PERFORMER -> LiveStreamCommentType.PERFORMER
-        LiveStreamCommentType.WHISPER -> LiveStreamCommentType.WHISPER
-        else -> throw Throwable("")
+    class PerformerWhisperViewHolder(private val binding: ItemLiveStreamWhisperCommentBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(message: LiveStreamChatResponse) {
+            binding.tvMessage.setLiveStreamCommentText(
+                "配信者名 ${message.message}",
+                R.color.color_dadada
+            )
+        }
+    }
+
+    override fun getItemViewType(position: Int) = when (getItem(position).isPerformer) {
+        false -> if (getItem(position).isWhisper) LiveStreamCommentType.WHISPER else LiveStreamCommentType.NORMAL
+        else -> if (getItem(position).isWhisper) LiveStreamCommentType.PERFORMER_WHISPER else LiveStreamCommentType.PERFORMER
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             LiveStreamCommentType.NORMAL -> {
-                NormalCommentViewHolder(
+                MessageViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
                         R.layout.item_live_stream_normal_comment,
@@ -64,7 +73,7 @@ class LiveStreamAdapter :
                 )
             }
             LiveStreamCommentType.PERFORMER -> {
-                PerformerCommentViewHolder(
+                PerformerMessageViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
                         R.layout.item_live_stream_performer_comment,
@@ -74,7 +83,17 @@ class LiveStreamAdapter :
                 )
             }
             LiveStreamCommentType.WHISPER -> {
-                WhisperCommentViewHolder(
+                WhisperViewHolder(
+                    DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.context),
+                        R.layout.item_live_stream_whisper_comment,
+                        parent,
+                        false
+                    )
+                )
+            }
+            LiveStreamCommentType.PERFORMER_WHISPER -> {
+                PerformerWhisperViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
                         R.layout.item_live_stream_whisper_comment,
@@ -89,47 +108,48 @@ class LiveStreamAdapter :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
-        when (item.type) {
-            LiveStreamCommentType.NORMAL -> {
-                val myViewHolder = holder as NormalCommentViewHolder
-                myViewHolder.bind(item)
+        when (item.isPerformer) {
+            false -> {
+                if (!item.isWhisper) {
+                    val myViewHolder = holder as MessageViewHolder
+                    myViewHolder.bind(item)
+                } else {
+                    val myViewHolder = holder as WhisperViewHolder
+                    myViewHolder.bind(item)
+                }
             }
-            LiveStreamCommentType.PERFORMER -> {
-                val myViewHolder = holder as PerformerCommentViewHolder
-                myViewHolder.bind(item)
+            else -> {
+                if (!item.isWhisper) {
+                    val myViewHolder = holder as PerformerMessageViewHolder
+                    myViewHolder.bind(item)
+                } else {
+                    val myViewHolder = holder as PerformerWhisperViewHolder
+                    myViewHolder.bind(item)
+                }
             }
-            LiveStreamCommentType.WHISPER -> {
-                val myViewHolder = holder as WhisperCommentViewHolder
-                myViewHolder.bind(item)
-            }
-            else -> {}
         }
     }
 
-    override fun submitList(list: MutableList<LiveStreamCommentResponse>?) {
-        val result = arrayListOf<LiveStreamCommentResponse>()
+    override fun submitList(list: MutableList<LiveStreamChatResponse>?) {
+        val result = arrayListOf<LiveStreamChatResponse>()
         list?.forEach {
-            when (it.type) {
-                LiveStreamCommentType.NORMAL -> result.add(it.copy())
-                LiveStreamCommentType.PERFORMER -> result.add(it.copy())
-                LiveStreamCommentType.WHISPER -> result.add(it.copy())
-            }
+            result.add(it)
         }
         super.submitList(result)
     }
 }
 
-class LiveStreamDiffUtil : DiffUtil.ItemCallback<LiveStreamCommentResponse>() {
+class LiveStreamDiffUtil : DiffUtil.ItemCallback<LiveStreamChatResponse>() {
     override fun areItemsTheSame(
-        oldItem: LiveStreamCommentResponse,
-        newItem: LiveStreamCommentResponse
+        oldItem: LiveStreamChatResponse,
+        newItem: LiveStreamChatResponse
     ): Boolean {
         return oldItem == newItem
     }
 
     override fun areContentsTheSame(
-        oldItem: LiveStreamCommentResponse,
-        newItem: LiveStreamCommentResponse
+        oldItem: LiveStreamChatResponse,
+        newItem: LiveStreamChatResponse
     ): Boolean {
         return oldItem == newItem
     }

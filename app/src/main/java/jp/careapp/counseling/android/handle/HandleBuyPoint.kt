@@ -9,6 +9,7 @@ import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.BuyPointBottomFragment
+import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.buy_point.PurchasePointBottomSheet
 import jp.careapp.counseling.android.utils.Define
 import javax.inject.Inject
 
@@ -57,6 +58,50 @@ class HandleBuyPoint @Inject constructor(
                 fragmentManager,
                 bundle,
                 handleBuyPoint
+            )
+        }
+    }
+
+    fun buyPointLiveStream(
+        fragmentManager: FragmentManager,
+        bundle: Bundle? = null,
+        callBack: PurchasePointBottomSheet.PurchasePointCallback? = null,
+        isClickSendMessage: Boolean = false
+    ) {
+        if (isFullMode) {
+            val webViewBundle = Bundle().apply {
+                putString(Define.TITLE_WEB_VIEW, context.getString(R.string.buy_point))
+            }
+            val lastBuyLog = rxPreferences.getLastBuyLog()
+            if (!isClickSendMessage || rxPreferences.getFirstBuyCredit() || lastBuyLog == null) {
+                webViewBundle.putString(Define.URL_WEB_VIEW, Define.URL_BUY_POINT)
+            } else {
+                val creditPrices = rxPreferences.getCreditPrices()
+                val credit =
+                    if (creditPrices.last().priceWithoutTax.defaultValue() == lastBuyLog.price.defaultValue()) {
+                        creditPrices.last()
+                    } else {
+                        creditPrices.firstOrNull {
+                            it.priceWithoutTax.defaultValue() > lastBuyLog.price.defaultValue()
+                        }
+                    }
+                if (credit == null) {
+                    webViewBundle.putString(Define.URL_WEB_VIEW, Define.URL_BUY_POINT)
+                } else {
+                    val url = Define.URL_CREDIT_PURCHASE_CONFIRM +
+                            "?point=${credit.getTotalPoint()}" +
+                            "&&money=${credit.price}" +
+                            "&&realPoint=${credit.buyPoint}" +
+                            "&&price_without_tax=${credit.priceWithoutTax}"
+                    webViewBundle.putString(Define.URL_WEB_VIEW, url)
+                }
+            }
+            appNavigation.openScreenToWebview(webViewBundle)
+        } else {
+            PurchasePointBottomSheet.showPointBottomSheet(
+                fragmentManager,
+                bundle,
+                callBack
             )
         }
     }

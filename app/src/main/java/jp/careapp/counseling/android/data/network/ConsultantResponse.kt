@@ -45,6 +45,10 @@ data class ConsultantResponse(
         const val PREVIOUS = 0
         const val WEEK = 1
         const val MONTH = 2
+        const val STATUS_OFFLINE = 0
+        const val STATUS_WAITING = 1
+        const val STATUS_LIVE_STREAM = 2
+        const val STATUS_PRIVATE_LIVE_STREAM = 3
 
         fun from(performer: Performer): ConsultantResponse {
             return ConsultantResponse(
@@ -56,6 +60,18 @@ data class ConsultantResponse(
                 status = performer.status,
                 thumbnailImageUrl = performer.thumbnailImageUrl
             )
+        }
+
+        fun getPerformerStatus(callStatus: Int, chatStatus: Int): Int {
+            return if ((callStatus == 1 && chatStatus == 0) || (callStatus == 2 && chatStatus == 0)) {
+                STATUS_WAITING
+            } else if ((callStatus == 0 && chatStatus == 1) || (callStatus == 0 && chatStatus == 2)) {
+                STATUS_LIVE_STREAM
+            } else if (callStatus == 0 && chatStatus == 3) {
+                STATUS_PRIVATE_LIVE_STREAM
+            } else {
+                STATUS_OFFLINE
+            }
         }
 
         fun isWaiting(callStatus: Int, chatStatus: Int): Boolean {

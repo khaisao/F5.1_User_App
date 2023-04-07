@@ -284,4 +284,5 @@ interface AppNavigation : BaseNavigator {
 
     fun openExitLiveStreamToMessage(bundle: Bundle? = null)
 
+    fun openUserDetailToLiveStream(bundle: Bundle?)
 }

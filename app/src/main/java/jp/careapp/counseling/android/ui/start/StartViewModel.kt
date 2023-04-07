@@ -6,13 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.counseling.android.data.pref.RxPreferences
+import jp.careapp.counseling.android.keystore.KeyService
 import jp.careapp.counseling.android.network.ApiInterface
 import jp.careapp.counseling.android.ui.splash.SplashViewModel
+import jp.careapp.counseling.android.utils.Define
 import kotlinx.coroutines.launch
 
 class StartViewModel @ViewModelInject constructor(
     private val apiInterface: ApiInterface,
-    private val rxPreferences: RxPreferences
+    private val rxPreferences: RxPreferences,
+    private val keyService: KeyService
 ) : BaseViewModel() {
 
     val screenCode = MutableLiveData<Int>()
@@ -31,7 +34,7 @@ class StartViewModel @ViewModelInject constructor(
                             rxPreferences.saveUserInfo(
                                 userResponse.token,
                                 userResponse.tokenExpire,
-                                password,
+                                keyService.encrypt(Define.KEY_ALIAS, password) ?: "",
                                 memberCode
                             )
                             screenCode.value = SplashViewModel.SCREEN_CODE_TOP

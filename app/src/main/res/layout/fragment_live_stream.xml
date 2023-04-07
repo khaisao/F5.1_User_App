@@ -18,11 +18,12 @@
         android:layout_height="match_parent"
         tools:context=".android.ui.live_stream.LiveStreamFragment">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <org.marge.marucast_android_client.views.VideoRendererView
             android:id="@+id/performerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
+            app:isMirror="true"
+
             android:src="@drawable/ic_no_image" />
 
         <androidx.core.widget.NestedScrollView
@@ -229,15 +230,18 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintWidth_percent="0.106" />
 
-                <View
+                <org.marge.marucast_android_client.views.VideoRendererView
                     android:id="@+id/memberViewCamera"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginEnd="8dp"
+                    android:translationZ="@dimen/_1sdp"
                     app:layout_constraintDimensionRatio="88:156"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ivPerformer"
                     app:layout_constraintWidth_percent="0.235"
+                    app:isMirror="true"
+                    app:scaling_type="fit"
                     tools:background="@android:color/holo_green_light" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
@@ -335,8 +339,8 @@
                     app:layout_constraintBottom_toTopOf="@id/barrier2"
                     app:layout_constraintEnd_toStartOf="@id/guideline10"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:reverseLayout="true"
                     app:stackFromEnd="false"
+                    app:reverseLayout="false"
                     tools:itemCount="5"
                     tools:listitem="@layout/item_live_stream_normal_comment" />
 
@@ -370,10 +374,7 @@
                     android:visibility="gone"
                     app:constraint_referenced_ids="btnWhisper, btnParty, btnPoint"
                     tools:visibility="visible" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.core.widget.NestedScrollView>
-
     </FrameLayout>
 </layout>

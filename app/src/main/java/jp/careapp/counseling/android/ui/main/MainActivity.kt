@@ -47,10 +47,7 @@ import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.BuyPointFragment
-import jp.careapp.counseling.android.ui.calling.ActionState
-import jp.careapp.counseling.android.ui.calling.CallState
 import jp.careapp.counseling.android.ui.calling.CallingViewModel
-import jp.careapp.counseling.android.ui.calling.MinimizeCallState
 import jp.careapp.counseling.android.ui.labo.detail.LabDetailFragment
 import jp.careapp.counseling.android.ui.message.ChatMessageFragment
 import jp.careapp.counseling.android.ui.my_page.MyPageFragment
@@ -225,23 +222,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 appNavigation.openToCalling()
             })
         }
-        callingViewModel.minimizeCallState.observe(this) {
-            binding.apply {
-                when (it) {
-                    is MinimizeCallState.ACTIVE -> {
-                        if (it.avatarUrl.isNotEmpty()) {
-                            ivAvatar.loadImage(it.avatarUrl, true)
-                        } else {
-                            ivAvatar.loadImage(R.drawable.ic_avatar_default, true)
-                        }
-                        clActiveCall.isVisible = true
-                    }
-                    MinimizeCallState.INACTIVE -> {
-                        clActiveCall.isVisible = false
-                    }
-                }
-            }
-        }
         callingViewModel.isConfigAudioCall.observe(this) {
             it?.let {
                 if (it) {
@@ -256,31 +236,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 audioManager.isSpeakerphoneOn = !it
             }
         }
-        callingViewModel.callState.observe(this) {
-            when (it) {
-                is CallState.CONNECTING -> {
-                    startCallingService()
-                }
-                is CallState.TALKING -> {}
-            }
-        }
-        callingViewModel.actionState.observe(this) {
-            when (it) {
-                ActionState.EndCall -> {
-                    if (appNavigation.currentFragmentId() == R.id.callingFragment) {
-                        appNavigation.navigateUp()
-                    }
-                    stopCallingService()
-                    EventBus.getDefault().post(EventBusAction.ReloadMessage)
-                    dialogWarningPoint?.let { dialog ->
-                        if (dialog.isShowing) dialog.dismiss()
-                    }
-                }
-                ActionState.ShowDialogWarningPoint -> {
-                    showDialogWarningPoint()
-                }
-            }
-        }
     }
 
     private fun showDialogWarningPoint() {
@@ -293,7 +248,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             .setOnPositivePressed {
                 if (appNavigation.currentFragmentId() == R.id.callingFragment) {
                     appNavigation.navigateUp()
-                    callingViewModel.showMinimizeCall(true)
                 }
                 if (rxPreferences.isFullMode()) {
                     val bundle = Bundle().apply {

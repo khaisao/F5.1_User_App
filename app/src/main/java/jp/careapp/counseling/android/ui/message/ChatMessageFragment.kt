@@ -59,7 +59,6 @@ import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.extensions.toPayLength
 import jp.careapp.counseling.android.utils.extensions.toPayPoint
 import jp.careapp.counseling.databinding.FragmentChatMessageBinding
-import java.util.*
 import javax.inject.Inject
 
 
@@ -475,11 +474,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
             .setTextNegativeButton(R.string.send_free_mess)
             .setOnPositivePressed {
                 it.dismiss()
-                if (callingViewModel.isCalling()) {
-                    showDialogWarningDuringCall()
-                } else {
-                    openCalling()
-                }
+                openCalling()
             }.setOnNegativePressed {
                 it.dismiss()
             }

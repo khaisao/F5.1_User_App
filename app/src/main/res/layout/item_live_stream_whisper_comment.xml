@@ -9,7 +9,7 @@
         android:background="@drawable/bg_item_live_stream_comment">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvComment"
+            android:id="@+id/tvMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_live_stream_whisper_comment"

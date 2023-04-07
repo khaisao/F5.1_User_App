@@ -1,6 +1,5 @@
 package jp.careapp.counseling.android.data.pref
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
@@ -112,14 +111,16 @@ class AppPreferences @Inject constructor(
         passWord: String,
         memberCode: String
     ) {
-        mPrefs.edit().putString(PREF_PARAM_ACCESS_TOKEN, token).apply()
-        mPrefs.edit().putString(PREF_PARAM_TOKEN_EXPIRE, tokenExpire).apply()
-        if (passWord.isNotEmpty()) {
-            mPrefs.edit().putString(PREF_PARAM_PASSWORD, passWord).apply()
-        }
-        if (!memberCode.isNullOrEmpty()) {
-            mPrefs.edit().putString(PREF_PARAM_MEMBER_CODE, memberCode).apply()
-        }
+        mPrefs.edit().apply {
+            putString(PREF_PARAM_ACCESS_TOKEN, token)
+            putString(PREF_PARAM_TOKEN_EXPIRE, tokenExpire)
+            if (passWord.isNotEmpty()) {
+                putString(PREF_PARAM_PASSWORD, passWord)
+            }
+            if (memberCode.isNotEmpty()) {
+                putString(PREF_PARAM_MEMBER_CODE, memberCode)
+            }
+        }.also { it.apply() }
     }
 
     override fun getTokenExpire() = get(PREF_PARAM_TOKEN_EXPIRE)
@@ -135,38 +136,45 @@ class AppPreferences @Inject constructor(
     }
 
     override fun setIsFirstTimeUse(state: Boolean) {
-        mPrefs.edit().putBoolean(PREF_KEY_IS_FIRST_TIME_USE, state).apply()
+        mPrefs.edit().apply {
+            putBoolean(PREF_KEY_IS_FIRST_TIME_USE, state)
+        }.also { it.apply() }
     }
 
     override fun setIsFirstTimeUseLab(state: Boolean) {
-        mPrefs.edit().putBoolean(PREF_KEY_IS_FIRST_TIME_USE_LAB, state).apply()
+        mPrefs.edit().apply {
+            putBoolean(PREF_KEY_IS_FIRST_TIME_USE_LAB, state)
+        }.also { it.apply() }
     }
 
     override fun getMemberCode() = get(PREF_PARAM_MEMBER_CODE)
 
     override fun saveNewLastViewDateTime(dateTime: String) {
-        mPrefs.edit().putString(PREF_NEW_LAST_VIEW_DATE_TIME, dateTime).apply()
+        mPrefs.edit().apply {
+            putString(PREF_NEW_LAST_VIEW_DATE_TIME, dateTime)
+        }.also { it.apply() }
     }
 
     override fun getNewLastViewDateTime() = get(PREF_NEW_LAST_VIEW_DATE_TIME)
 
     override fun saveMemberInfo(memberResponse: MemberResponse) {
-        mPrefs.edit().putInt(PREF_KEY_POINT, memberResponse.point).apply()
-        mPrefs.edit().putLong(PREF_KEY_BUY_TIME, memberResponse.buyTime).apply()
-        mPrefs.edit().putBoolean(PREF_FIRST_BUY_CREDIT, memberResponse.firstBuyCredit).apply()
-        mPrefs.edit()
-            .putBoolean(PREF_KEY_IS_FULL_MODE, memberResponse.disPlay == MODE_USER.MODE_ALL).apply()
-        mPrefs.edit()
-            .putInt(PREF_SIGNED_UP_STATUS, memberResponse.signupStatus ?: SignedUpStatus.UNKNOWN)
-            .apply()
-        put(PREF_KEY_LAST_BUY_LOG, Gson().toJson(memberResponse.lastBuyLog))
+        mPrefs.edit().apply {
+            putInt(PREF_KEY_POINT, memberResponse.point)
+            putLong(PREF_KEY_BUY_TIME, memberResponse.buyTime)
+            putBoolean(PREF_FIRST_BUY_CREDIT, memberResponse.firstBuyCredit)
+            putBoolean(PREF_KEY_IS_FULL_MODE, memberResponse.disPlay == MODE_USER.MODE_ALL)
+            putInt(PREF_SIGNED_UP_STATUS, memberResponse.signupStatus ?: SignedUpStatus.UNKNOWN)
+            put(PREF_KEY_LAST_BUY_LOG, Gson().toJson(memberResponse.lastBuyLog))
+        }.also { it.apply() }
         saveTroubleSheet(memberResponse.troubleSheetResponse)
     }
 
     override fun saveTroubleSheet(troubleSheetResponse: TroubleSheetResponse) {
         val gson = Gson()
         val json = gson.toJson(troubleSheetResponse)
-        mPrefs.edit().putString(PREF_KEY_TROUBLE_INFO, json).apply()
+        mPrefs.edit().apply {
+            putString(PREF_KEY_TROUBLE_INFO, json)
+        }.also { it.apply() }
     }
 
     override fun getPoint(): Int {
@@ -174,7 +182,9 @@ class AppPreferences @Inject constructor(
     }
 
     override fun setPoint(point: Int) {
-        mPrefs.edit().putInt(PREF_KEY_POINT, point).apply()
+        mPrefs.edit().apply {
+            putInt(PREF_KEY_POINT, point)
+        }.also { it.apply() }
     }
 
     override fun getTimeBuy(): Long {
@@ -190,13 +200,17 @@ class AppPreferences @Inject constructor(
     }
 
     override fun saveDeviceToken(deviceToken: String) {
-        mPrefs.edit().putString(PREF_KEY_DEVICE_TOKEN, deviceToken).apply()
+        mPrefs.edit().apply {
+            putString(PREF_KEY_DEVICE_TOKEN, deviceToken)
+        }.also { it.apply() }
     }
 
     override fun getDeviceToken() = get(PREF_KEY_DEVICE_TOKEN)
 
     override fun saveNumberUnreadMessage(number: Int) {
-        mPrefs.edit().putInt(PREF_KEY_UNREAD_MESSAGE, number).apply()
+        mPrefs.edit().apply {
+            putInt(PREF_KEY_UNREAD_MESSAGE, number)
+        }.also { it.apply() }
     }
 
     override fun getNumberUnreadMessage(): Int {
@@ -204,7 +218,9 @@ class AppPreferences @Inject constructor(
     }
 
     override fun saveDeepLink(deepLink: String) {
-        mPrefs.edit().putString(PREF_KEY_DEEP_LINK, deepLink).apply()
+        mPrefs.edit().apply {
+            putString(PREF_KEY_DEEP_LINK, deepLink)
+        }.also { it.apply() }
     }
 
     override fun getDeepLink() = get(PREF_KEY_DEEP_LINK)
@@ -213,7 +229,9 @@ class AppPreferences @Inject constructor(
         mPrefs.getBoolean(PREF_KEY_FIRST_SHOW_GUIDE_USE_USER_PROFILE, true)
 
     override fun saveFirstShowGuideUser(isFirstUse: Boolean) {
-        mPrefs.edit().putBoolean(PREF_KEY_FIRST_SHOW_GUIDE_USE_USER_PROFILE, isFirstUse).apply()
+        mPrefs.edit().apply {
+            putBoolean(PREF_KEY_FIRST_SHOW_GUIDE_USE_USER_PROFILE, isFirstUse)
+        }.also { it.apply() }
     }
 
     override fun getTroubleInfo(): TroubleSheetResponse? {
@@ -230,7 +248,9 @@ class AppPreferences @Inject constructor(
     override fun saveListCategory(listCategory: List<CategoryResponse>) {
         val gson = Gson()
         val json = gson.toJson(listCategory)
-        mPrefs.edit().putString(PREF_KEY_CATEGORY, json).apply()
+        mPrefs.edit().apply {
+            putString(PREF_KEY_CATEGORY, json)
+        }.also { it.apply() }
     }
 
     override fun getListCategory(): List<CategoryResponse>? {
@@ -248,7 +268,9 @@ class AppPreferences @Inject constructor(
     override fun saveListTemplate(listCategory: List<FreeTemplateResponse>) {
         val gson = Gson()
         val json = gson.toJson(listCategory)
-        mPrefs.edit().putString(PREF_KEY_TEMPLATE, json).apply()
+        mPrefs.edit().apply {
+            putString(PREF_KEY_TEMPLATE, json)
+        }.also { it.apply() }
     }
 
     override fun getListTemplate(): List<FreeTemplateResponse>? {
@@ -266,7 +288,9 @@ class AppPreferences @Inject constructor(
     override fun saveHistorySearchSelection(historySelection: HistorySelection) {
         val gson = Gson()
         val json = gson.toJson(historySelection)
-        mPrefs.edit().putString(PREF_KEY_SELECTION, json).apply()
+        mPrefs.edit().apply {
+            putString(PREF_KEY_SELECTION, json)
+        }.also { it.apply() }
     }
 
     override fun getHistorySearchSelection(): HistorySelection {
@@ -281,16 +305,19 @@ class AppPreferences @Inject constructor(
         return historySelection
     }
 
-    @SuppressLint("CommitPrefEdits")
     override fun setFirstRegister(isTheFirst: Boolean) {
-        mPrefs.edit().putBoolean(PREF_KEY_THE_REGISTER, isTheFirst).apply()
+        mPrefs.edit().apply {
+            putBoolean(PREF_KEY_THE_REGISTER, isTheFirst)
+        }.also { it.apply() }
     }
 
     override fun getFirstRegister(): Boolean = mPrefs.getBoolean(PREF_KEY_THE_REGISTER, false)
 
     override fun saveFirstReview(isTheFirst: Boolean, memberCode: String?, performerCode: String) {
         val key: String = PREF_KEY_IS_FIRST_REVIEW + "_" + memberCode + "_" + performerCode
-        mPrefs.edit().putBoolean(key, isTheFirst).apply()
+        mPrefs.edit().apply {
+            putBoolean(key, isTheFirst)
+        }.also { it.apply() }
     }
 
     override fun isFirstReview(memberCode: String?, performerCode: String): Boolean {
@@ -303,20 +330,26 @@ class AppPreferences @Inject constructor(
 
 
     override fun setSignedUpStatus(status: Int) {
-        mPrefs.edit().putInt(PREF_SIGNED_UP_STATUS, status).apply()
+        mPrefs.edit().apply {
+            putInt(PREF_SIGNED_UP_STATUS, status)
+        }.also { it.apply() }
     }
 
     override fun getDesiredResponse(): Int =
         mPrefs.getInt(PREF_DESIRED_RESPONSE, 0)
 
     override fun setDesiredResponse(status: Int) {
-        mPrefs.edit().putInt(PREF_DESIRED_RESPONSE, status).apply()
+        mPrefs.edit().apply {
+            putInt(PREF_DESIRED_RESPONSE, status)
+        }.also { it.apply() }
     }
 
     override fun getGenre(): Int = mPrefs.getInt(PREF_GENRE_SELECTED, -1)
 
     override fun setGenre(id: Int) {
-        mPrefs.edit().putInt(PREF_GENRE_SELECTED, id).apply()
+        mPrefs.edit().apply {
+            putInt(PREF_GENRE_SELECTED, id)
+        }.also { it.apply() }
     }
 
     override fun getLastBuyLog(): LastBuyLog? {
@@ -383,7 +416,9 @@ class AppPreferences @Inject constructor(
     }
 
     override fun setNickName(nickName: String) {
-        mPrefs.edit().putString(PREF_KEY_NICK_NAME, nickName).apply()
+        mPrefs.edit().apply {
+            putString(PREF_KEY_NICK_NAME, nickName)
+        }.also { it.apply() }
     }
 
     override fun getNickName(): String? {
@@ -391,7 +426,9 @@ class AppPreferences @Inject constructor(
     }
 
     override fun setContent(content: String) {
-        mPrefs.edit().putString(PREF_KEY_CONTENT, content).apply()
+        mPrefs.edit().apply {
+            putString(PREF_KEY_CONTENT, content)
+        }.also { it.apply() }
     }
 
     override fun getContent(): String? {
@@ -399,7 +436,9 @@ class AppPreferences @Inject constructor(
     }
 
     override fun setPushMail(pushMail: Int) {
-        mPrefs.edit().putInt(PREF_KEY_PUSH_MAIL, pushMail).apply()
+        mPrefs.edit().apply {
+            putInt(PREF_KEY_PUSH_MAIL, pushMail)
+        }.also { it.apply() }
     }
 
     override fun getPushMail(): Int {
@@ -407,7 +446,9 @@ class AppPreferences @Inject constructor(
     }
 
     override fun setAppMode(appMode: Int) {
-        mPrefs.edit().putInt(PREF_KEY_IS_REVIEW_MODE, appMode).apply()
+        mPrefs.edit().apply {
+            putInt(PREF_KEY_IS_REVIEW_MODE, appMode)
+        }.also { it.apply() }
     }
 
     override fun getAppMode(): Int {
@@ -443,14 +484,18 @@ class AppPreferences @Inject constructor(
     override fun getMemberPoint(): Int = mPrefs.getInt(PREF_KEY_MEMBER_POINT, 0)
 
     override fun saveSettingNotificationNM(statusNotification: Int) {
-        mPrefs.edit().putInt(PREF_KEY_MEMBER_STATUS_NOTIFICATION, statusNotification).apply()
+        mPrefs.edit().apply {
+            putInt(PREF_KEY_MEMBER_STATUS_NOTIFICATION, statusNotification)
+        }.also { it.apply() }
     }
 
     override fun getSettingNotificationNM(): Int =
         mPrefs.getInt(PREF_KEY_MEMBER_STATUS_NOTIFICATION, 1)
 
     override fun saveMemberAge(age: Int) {
-        mPrefs.edit().putInt(PREF_KEY_MEMBER_AGE, age).apply()
+        mPrefs.edit().apply {
+            putInt(PREF_KEY_MEMBER_AGE, age)
+        }.also { it.apply() }
     }
 
     override fun switchMode() {

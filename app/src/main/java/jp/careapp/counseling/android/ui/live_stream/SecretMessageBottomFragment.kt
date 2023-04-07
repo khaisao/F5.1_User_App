@@ -17,8 +17,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.utils.DeviceUtil
 import jp.careapp.core.utils.screenHeight
 import jp.careapp.counseling.R
-import jp.careapp.counseling.android.data.model.message.MessageResponse
+import jp.careapp.counseling.android.data.network.LiveStreamChatResponse
 import jp.careapp.counseling.android.navigation.AppNavigation
+import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.PERFORMER
 import jp.careapp.counseling.databinding.FragmentSecretMessageBottomBinding
 import javax.inject.Inject
 
@@ -28,14 +29,16 @@ class SecretMessageBottomFragment : BottomSheetDialogFragment() {
     companion object {
         var isShow: Boolean = false
         fun showSecretMessageBottomSheet(
+            listWhisperMessage: ArrayList<LiveStreamChatResponse>,
             fragmentManager: FragmentManager,
             itemView: ClickItemView
         ) {
             val bundle = Bundle()
             val fragment = SecretMessageBottomFragment()
             fragment.setClickItemView(itemView)
+            bundle.putParcelableArrayList(PERFORMER, listWhisperMessage)
             fragment.arguments = bundle
-            fragment.show(fragmentManager, "")
+            fragment.show(fragmentManager, "SecretMessageBottomFragment")
         }
     }
 
@@ -126,25 +129,6 @@ class SecretMessageBottomFragment : BottomSheetDialogFragment() {
         binding.messageRv.layoutManager = layoutManager
         adapter = SecretMessageAdapter(requireContext())
         binding.messageRv.adapter = adapter
-
-        // TODO Remove sample data
-        adapter.submitList(
-            listOf(
-                MessageResponse(body = "a"),
-                MessageResponse(body = getString(R.string.message_default_performer)),
-                MessageResponse(
-                    body = getString(R.string.message_default_performer),
-                    sendMail = true
-                ),
-                MessageResponse(body = "a", sendMail = true),
-                MessageResponse(body = "a", sendMail = true),
-                MessageResponse(body = "a", sendMail = true),
-                MessageResponse(body = "a", sendMail = true),
-                MessageResponse(body = "a", sendMail = true),
-                MessageResponse(body = "a", sendMail = true),
-                MessageResponse(body = "a", sendMail = true)
-            )
-        )
         binding.messageRv.scrollToPosition(adapter.itemCount - 1)
         binding.contentMessageEdt.addTextChangedListener {
             sendMessageEnable = if (TextUtils.isEmpty(it?.toString()?.trim() ?: "")) {
@@ -163,10 +147,26 @@ class SecretMessageBottomFragment : BottomSheetDialogFragment() {
             }
         }
         setOnClickView()
+
+        val listWhisperMessage: ArrayList<LiveStreamChatResponse>? =
+            arguments?.getParcelableArrayList(PERFORMER)
+        listWhisperMessage?.let {
+            adapter.submitList(listWhisperMessage)
+        }
+    }
+
+    fun updateMessageList(listWhisperMessage: ArrayList<LiveStreamChatResponse>) {
+        adapter.submitList(listWhisperMessage)
+        binding.messageRv.scrollToPosition(adapter.itemCount - 1)
     }
 
     private fun setOnClickView() {
-
+        binding.sendMessageIv.setOnClickListener {
+            if (binding.contentMessageEdt.text.isNotEmpty()) {
+                clickItemView.clickSend(binding.contentMessageEdt.text.toString())
+                binding.contentMessageEdt.text?.clear()
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -181,6 +181,6 @@ class SecretMessageBottomFragment : BottomSheetDialogFragment() {
     }
 
     interface ClickItemView {
-        fun clickSend()
+        fun clickSend(sendMessage: String)
     }
 }
