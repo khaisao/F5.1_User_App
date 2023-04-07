@@ -5,6 +5,7 @@ import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -136,6 +137,8 @@ class UserDetailMsgFragment :
     override fun initView() {
         super.initView()
 
+        binding.scrollView.fitsSystemWindows = Build.VERSION.SDK_INT < Build.VERSION_CODES.R
+
         val layoutManager = LinearLayoutManager(context)
         layoutManager.stackFromEnd = false
 
@@ -179,7 +182,7 @@ class UserDetailMsgFragment :
                     "drawable", requireContext().packageName
                 )
             )
-                .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen._10sdp)))
+                .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen.margin_10)))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.toolBar.userAvatar)
         } else {
@@ -190,7 +193,7 @@ class UserDetailMsgFragment :
                 )
             ).transforms(
                 CenterCrop(),
-                RoundedCorners(resources.getDimensionPixelSize(R.dimen._10sdp))
+                RoundedCorners(resources.getDimensionPixelSize(R.dimen.margin_10))
             )
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.toolBar.userAvatar)
@@ -430,18 +433,18 @@ class UserDetailMsgFragment :
         val screenHeight = binding.rootLayout.rootView.height
         val keypadHeight = screenHeight - r.bottom
         if (keypadHeight > screenHeight * 0.15) {
-            binding.edtSentMsg.setMargins(
-                requireContext().convertSourceToPixel(R.dimen._16sdp),
-                requireContext().convertSourceToPixel(R.dimen.dimen_8),
+            binding.bottomBar.setMargins(
+                0,
+                0,
                 0,
                 requireContext().convertSourceToPixel(R.dimen.dimen_8)
             )
         } else {
-            binding.edtSentMsg.setMargins(
+            binding.bottomBar.setMargins(
                 0,
-                requireContext().convertSourceToPixel(R.dimen.dimen_8),
                 0,
-                requireContext().convertSourceToPixel(R.dimen._42sdp)
+                0,
+                requireContext().convertSourceToPixel(R.dimen.margin_29)
             )
         }
     }
