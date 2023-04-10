@@ -1,6 +1,6 @@
 package jp.careapp.counseling.android.ui.review_mode.online_list
 
-import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -8,7 +8,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.adapter.BaseAdapterLoadMore
-import jp.careapp.counseling.android.model.network.RMPerformerResponse
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.review_mode.top.RMTopViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
@@ -27,16 +26,14 @@ class RMOnlineListFragment : BaseFragment<FragmentRmOnlineListBinding, RMOnlineL
 
     override val layoutId = R.layout.fragment_rm_online_list
 
-    private val _adapter by lazy {
-        RMPerformerAdapter(
-            requireContext(),
-            onClickListener = {
-                if (!isDoubleClick) {
-                    val bundle = Bundle().apply {
-                        putString(BUNDLE_KEY.PERFORMER_CODE, (it as RMPerformerResponse).code)
-                    }
-                    appNavigation.openRMTopToRMUserDetail(bundle)
-                }
+    private var _adapter: RMPerformerAdapter? = null
+
+    override fun initView() {
+        super.initView()
+
+        _adapter = RMPerformerAdapter(
+            onClickUser = {
+                viewModel.handleOnClickUser(it)
             }
         ).apply {
             if (getLoadMorelistener() == null) {
@@ -50,13 +47,7 @@ class RMOnlineListFragment : BaseFragment<FragmentRmOnlineListBinding, RMOnlineL
                 )
             }
         }
-    }
-
-    override fun initView() {
-        super.initView()
-
         binding.rvOnline.apply {
-            itemAnimator = null
             setHasFixedSize(true)
             adapter = _adapter
             addItemDecoration(SpacingItemDecorator(resources.getDimensionPixelSize(R.dimen.margin_8)))
@@ -73,15 +64,13 @@ class RMOnlineListFragment : BaseFragment<FragmentRmOnlineListBinding, RMOnlineL
     override fun bindingStateView() {
         super.bindingStateView()
 
-        viewModel.listPerformers.observe(viewLifecycleOwner) {
-            it?.let {
-                _adapter.submitList(it)
-            }
+        viewModel.onlineListLiveData.observe(viewLifecycleOwner) {
+            _adapter?.submitList(it)
         }
 
         viewModel.loadMoreState.observe(viewLifecycleOwner) {
             it?.let {
-                _adapter.apply {
+                _adapter?.apply {
                     when (it) {
                         LoadMoreState.ENABLE_LOAD_MORE -> {
                             setDisableLoadmore(false)
@@ -99,9 +88,16 @@ class RMOnlineListFragment : BaseFragment<FragmentRmOnlineListBinding, RMOnlineL
             }
         }
 
-        viewModel.iShowNoData.observe(viewLifecycleOwner) {
-            it?.let {
-                binding.tvNoData.isVisible = it
+        viewModel.isShowNoData.observe(viewLifecycleOwner) {
+            binding.tvNoData.isVisible = it
+        }
+
+        viewModel.mActionState.observe(viewLifecycleOwner) {
+            when (it) {
+                is RMOnlineListActionState.NavigateToUserDetail -> {
+                    val bundle = bundleOf(BUNDLE_KEY.PERFORMER_CODE to it.userCode)
+                    appNavigation.openRMTopToRMUserDetail(bundle)
+                }
             }
         }
     }
@@ -116,6 +112,7 @@ class RMOnlineListFragment : BaseFragment<FragmentRmOnlineListBinding, RMOnlineL
 
     override fun onDestroyView() {
         binding.rvOnline.adapter = null
+        _adapter = null
         super.onDestroyView()
     }
 }

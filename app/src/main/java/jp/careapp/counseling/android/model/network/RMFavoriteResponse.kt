@@ -18,5 +18,7 @@ data class RMFavoriteResponse(
     @SerializedName("call_status")
     val callStatus: Int? = 0,
     @SerializedName("status")
-    val status: Int? = 0
+    val status: Int? = 0,
+    @SerializedName("chat_status")
+    val chatStatus: Int?
 ) : BasePerformerResponse()

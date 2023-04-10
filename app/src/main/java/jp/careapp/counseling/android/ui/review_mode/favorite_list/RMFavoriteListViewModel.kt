@@ -5,50 +5,66 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
+import jp.careapp.core.utils.SingleLiveEvent
 import jp.careapp.counseling.android.model.network.RMBlockListResponse
 import jp.careapp.counseling.android.model.network.RMFavoriteResponse
 import jp.careapp.counseling.android.network.RMApiInterface
 import jp.careapp.counseling.android.ui.review_mode.user_detail.RMUserDetailRepository
 import jp.careapp.counseling.android.utils.extensions.toListData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
 class RMFavoriteListViewModel @Inject constructor(
-    private val rmApiInterface: RMApiInterface,
-    private val mRepository: RMUserDetailRepository,
+    private val mRepository: RMFavoriteListRepository,
 ) : BaseViewModel() {
-    private val _listFavorite = MutableLiveData<List<RMFavoriteResponse>>(listOf())
-    val listFavorite: LiveData<List<RMFavoriteResponse>> = _listFavorite
-    private val _iShowNoData = MutableLiveData(false)
-    val iShowNoData: LiveData<Boolean> = _iShowNoData
+
+    private var favoriteList = arrayListOf<RMFavoriteResponse>()
+
+    private val _favoriteListLiveData =
+        MutableLiveData<ArrayList<RMFavoriteResponse>>(arrayListOf())
+    val favoriteListLiveData: LiveData<ArrayList<RMFavoriteResponse>>
+        get() = _favoriteListLiveData
+
+    private val _isShowNoData = MutableLiveData<Boolean>()
+    val isShowNoData: LiveData<Boolean> = _isShowNoData
+
+    val mActionState = SingleLiveEvent<RMFavoriteListActionState>()
 
     init {
         getListFavorite()
     }
 
     fun getListFavorite() {
+        isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
-            isLoading.postValue(true)
-            try {
-                val blockList = withContext(Dispatchers.IO) { fetchBlocks() }
-                blockList ?: return@launch
+            supervisorScope {
+                try {
+                    val blockResponse = mRepository.getBlockList()
+                    val favoriteResponse = mRepository.getFavoriteList()
 
-                val response = rmApiInterface.getFavorites()
-                withContext(Dispatchers.Main) {
-                    if (response.errors.isEmpty()) {
-                        response.dataResponse.let {
-                            _listFavorite.value = removeBlockListIfNeed(blockList, it.toListData())
+                    if (favoriteResponse.errors.isEmpty()) {
+                        val favoriteData =
+                            favoriteResponse.dataResponse.toListData<RMFavoriteResponse>()
+
+                        val blockData = if (blockResponse.errors.isEmpty()) {
+                            blockResponse.dataResponse.toListData<RMBlockListResponse>()
+                        } else {
+                            listOf()
+                        }
+
+                        favoriteList = removeBlockListIfNeed(blockData, favoriteData)
+
+                        withContext(Dispatchers.Main) {
+                            _isShowNoData.value = checkShowNoData()
+                            _favoriteListLiveData.value = favoriteList
                         }
                     }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                } finally {
+                    withContext(Dispatchers.Main) { isLoading.value = false }
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            } finally {
-                _iShowNoData.postValue(_listFavorite.value.isNullOrEmpty())
-                isLoading.postValue(false)
             }
         }
     }
@@ -56,40 +72,51 @@ class RMFavoriteListViewModel @Inject constructor(
     private fun removeBlockListIfNeed(
         blockList: List<RMBlockListResponse>,
         favoriteList: List<RMFavoriteResponse>
-    ): List<RMFavoriteResponse> {
-        return favoriteList.filter { currentFavorite ->
-            currentFavorite.code != blockList.find { it.code == currentFavorite.code }?.code
+    ): ArrayList<RMFavoriteResponse> {
+        return ArrayList(favoriteList.filter { currentFavorite -> currentFavorite.code != blockList.find { it.code == currentFavorite.code }?.code })
+    }
+
+    fun handleOnClickUser(position: Int) {
+        favoriteList[position].code?.let {
+            mActionState.value = RMFavoriteListActionState.NavigateToUserDetail(it)
         }
     }
 
-    private suspend fun fetchBlocks(): List<RMBlockListResponse>? {
-        return try {
-            val response = rmApiInterface.getBlockList()
-            response.let {
-                if (it.errors.isEmpty()) {
-                    it.dataResponse.toListData()
-                } else null
-            }
-        } catch (e: Exception) {
-            null
-        }
-    }
-
-    fun deleteFavorite(code: String) {
-        try {
-            isLoading.value = true
-            viewModelScope.launch(Dispatchers.IO) {
-                val response = mRepository.deleteFavoriteUser(code)
-                withContext(Dispatchers.Main) {
-                    isLoading.value = false
+    fun deleteFavorite(position: Int) {
+        isLoading.value = true
+        viewModelScope.launch {
+            supervisorScope {
+                try {
+                    val userCode = favoriteList[position].code.toString()
+                    val response = mRepository.deleteFavoriteUser(userCode)
                     if (response.errors.isEmpty()) {
-                        _listFavorite.value = _listFavorite.value?.filterNot { it.code == code }
-                        _iShowNoData.value = _listFavorite.value.isNullOrEmpty()
+                        favoriteList.forEach { user ->
+                            if (user.code == userCode) {
+                                favoriteList.remove(user)
+                            }
+                        }
+                        withContext(Dispatchers.Main) {
+                            _isShowNoData.value = checkShowNoData()
+                            _favoriteListLiveData.value = favoriteList
+                        }
                     }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                } finally {
+                    withContext(Dispatchers.Main) { isLoading.value = false }
                 }
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
     }
+
+    private fun checkShowNoData(): Boolean {
+        if (favoriteList.isEmpty()) {
+            return true
+        }
+        return false
+    }
+}
+
+sealed class RMFavoriteListActionState {
+    class NavigateToUserDetail(val userCode: String) : RMFavoriteListActionState()
 }

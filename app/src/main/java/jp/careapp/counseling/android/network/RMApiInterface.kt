@@ -12,7 +12,7 @@ interface RMApiInterface {
     suspend fun getWebSocketToken(): ApiObjectResponse<WebsocketResponse>
 
     @FormUrlEncoded
-    @POST("api/member/without-email")
+    @POST("api/member/memapp-reviewer")
     suspend fun setNickNameRM(
         @Field("name") name: String,
         @Field("sex") sex: Int = 3,
@@ -34,7 +34,7 @@ interface RMApiInterface {
     @GET("api/member")
     suspend fun getMember(): ApiObjectResponse<MemberResponse>
 
-    @GET("api/dummy-performers")
+    @GET("api/memapp-dummy-performers")
     suspend fun getDummyPerformers(
         @QueryMap params: HashMap<String, Any>
     ): ApiObjectResponse<List<RMPerformerResponse>>

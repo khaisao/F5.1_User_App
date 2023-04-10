@@ -7,9 +7,12 @@
 
         <import type="android.view.View" />
 
+        <import type="jp.careapp.counseling.android.model.network.RMBlockListResponse" />
+
         <variable
-            name="performerResponse"
-            type="jp.careapp.counseling.android.model.network.BasePerformerResponse" />
+            name="user"
+            type="jp.careapp.counseling.android.model.network.RMBlockListResponse" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,12 +36,12 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewNickName"
             style="@style/text_bold_14"
-            namePerformerResponse="@{performerResponse}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="18dp"
             android:includeFontPadding="false"
+            android:text="@{user.name}"
             android:textColor="@color/color_070707"
             app:layout_constraintEnd_toStartOf="@+id/btn_delete"
             app:layout_constraintStart_toEndOf="@+id/image"
@@ -48,7 +51,6 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_delete"
             style="@style/text_12"
-            performerResponse="@{performerResponse}"
             android:layout_width="0dp"
             android:layout_height="@dimen/_28sdp"
             android:layout_marginEnd="@dimen/margin_16"

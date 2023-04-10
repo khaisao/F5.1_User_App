@@ -1,4 +1,4 @@
-package jp.careapp.counseling.android.ui.review_mode.block_list
+package jp.careapp.counseling.android.ui.review_mode.favorite_list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,71 +11,73 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import jp.careapp.counseling.R
-import jp.careapp.counseling.android.model.network.RMBlockListResponse
-import jp.careapp.counseling.databinding.ItemRmBlockListBinding
+import jp.careapp.counseling.android.model.network.RMFavoriteResponse
+import jp.careapp.counseling.databinding.ItemRmFavoriteListBinding
 
-class RMBlockListAdapter(
+class RMFavoriteListAdapter(
+    private val onClickUser: (Int) -> Unit,
     private val onClickDelete: (Int) -> Unit
-) : ListAdapter<RMBlockListResponse, RMBlockListAdapter.RMBlockListViewHolder>(RMBlockListDiffUtil()) {
+) : ListAdapter<RMFavoriteResponse, RMFavoriteListAdapter.RMFavoriteListViewHolder>(
+    RMFavoriteListDiffUtil()
+) {
 
-    class RMBlockListViewHolder(
-        val binding: ItemRmBlockListBinding,
+    class RMFavoriteListViewHolder(
+        private val binding: ItemRmFavoriteListBinding,
+        private val onClickUser: (Int) -> Unit,
         private val onClickDelete: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
+            binding.root.setOnClickListener { onClickUser.invoke(absoluteAdapterPosition) }
             binding.btnDelete.setOnClickListener { onClickDelete.invoke(absoluteAdapterPosition) }
         }
 
-        fun bind(user: RMBlockListResponse) {
+        fun bind(user: RMFavoriteResponse) {
+            binding.user = user
             Glide.with(binding.image).load(R.drawable.ic_no_image)
                 .transform(
                     CenterCrop(),
-                    RoundedCorners(binding.image.resources.getDimensionPixelSize(R.dimen._10sdp))
+                    RoundedCorners(binding.image.resources.getDimensionPixelSize(R.dimen.margin_20))
                 )
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.image)
-            binding.user = user
             binding.executePendingBindings()
         }
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): RMBlockListViewHolder {
-        return RMBlockListViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RMFavoriteListViewHolder {
+        return RMFavoriteListViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
-                R.layout.item_rm_block_list,
+                R.layout.item_rm_favorite_list,
                 parent,
                 false
-            ), onClickDelete
+            ), onClickUser, onClickDelete
         )
     }
 
-    override fun onBindViewHolder(holder: RMBlockListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RMFavoriteListViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    override fun submitList(list: MutableList<RMBlockListResponse>?) {
-        val result = arrayListOf<RMBlockListResponse>()
+    override fun submitList(list: MutableList<RMFavoriteResponse>?) {
+        val result = arrayListOf<RMFavoriteResponse>()
         list?.forEach { result.add(it.copy()) }
         super.submitList(list)
     }
 }
 
-class RMBlockListDiffUtil : DiffUtil.ItemCallback<RMBlockListResponse>() {
+class RMFavoriteListDiffUtil : DiffUtil.ItemCallback<RMFavoriteResponse>() {
     override fun areItemsTheSame(
-        oldItem: RMBlockListResponse,
-        newItem: RMBlockListResponse
+        oldItem: RMFavoriteResponse,
+        newItem: RMFavoriteResponse
     ): Boolean {
         return oldItem.code == newItem.code
     }
 
     override fun areContentsTheSame(
-        oldItem: RMBlockListResponse,
-        newItem: RMBlockListResponse
+        oldItem: RMFavoriteResponse,
+        newItem: RMFavoriteResponse
     ): Boolean {
         return oldItem == newItem
     }

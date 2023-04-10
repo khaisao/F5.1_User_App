@@ -7,9 +7,12 @@
 
         <import type="android.view.View" />
 
+        <import type="jp.careapp.counseling.android.model.network.RMFavoriteResponse" />
+
         <variable
-            name="performerResponse"
-            type="jp.careapp.counseling.android.model.network.BasePerformerResponse" />
+            name="user"
+            type="RMFavoriteResponse" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,16 +37,15 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/statusImage"
+            iv_status_online="@{user.presenceStatus}"
             android:layout_width="@dimen/_12sdp"
             android:layout_height="@dimen/_12sdp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/bg_rm_online_status"
             app:layout_constraintBottom_toBottomOf="@+id/image"
-            app:layout_constraintEnd_toEndOf="@+id/image" />
+            app:layout_constraintEnd_toEndOf="@+id/image"
+            tools:src="@drawable/bg_rm_online_status" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_delete"
-            performerResponse="@{performerResponse}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginEnd="16dp"
@@ -67,12 +69,12 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textViewNickName"
-                namePerformerResponse="@{performerResponse}"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/hiragino_sans_w6"
                 android:gravity="center_vertical"
+                android:text="@{user.name}"
                 android:textColor="#070707"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/btn_delete"
@@ -88,7 +90,7 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_video"
-                    cameraPerformerResponse="@{performerResponse}"
+                    cameraPerformerResponse="@{user.chatStatus}"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:src="@drawable/iv_video"
@@ -100,16 +102,16 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_message"
-                    msgPerformerResponse="@{performerResponse}"
+                    msgPerformerResponse="@{user.presenceStatus}"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="2dp"
-                    android:src="@drawable/ic_message"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintStart_toEndOf="@id/iv_video"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.075" />
+                    app:layout_constraintWidth_percent="0.075"
+                    android:src="@drawable/ic_message" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

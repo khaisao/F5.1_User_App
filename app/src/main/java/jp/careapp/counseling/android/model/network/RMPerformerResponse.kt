@@ -50,5 +50,7 @@ data class RMPerformerResponse(
     @SerializedName("status")
     val status: Int?,
     @SerializedName("thumbnail_image_url")
-    val thumbnailImageUrl: String?
+    val thumbnailImageUrl: String?,
+    @SerializedName("chat_status")
+    val chatStatus: Int?
 ): BasePerformerResponse()

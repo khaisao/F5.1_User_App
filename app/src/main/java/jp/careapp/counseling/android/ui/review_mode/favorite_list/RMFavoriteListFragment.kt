@@ -7,9 +7,7 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
-import jp.careapp.counseling.android.model.network.RMFavoriteResponse
 import jp.careapp.counseling.android.navigation.AppNavigation
-import jp.careapp.counseling.android.ui.review_mode.online_list.RMFavoritePerformerAdapter
 import jp.careapp.counseling.android.ui.review_mode.top.RMTopViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.databinding.FragmentRmFavoriteListBinding
@@ -21,45 +19,33 @@ class RMFavoriteListFragment :
     @Inject
     lateinit var appNavigation: AppNavigation
 
-    private val viewModel: RMFavoriteListViewModel by viewModels()
-    override fun getVM() = viewModel
+    private val mViewModel: RMFavoriteListViewModel by viewModels()
+    override fun getVM() = mViewModel
 
     private val rmTopViewModel: RMTopViewModel by activityViewModels()
 
     override val layoutId = R.layout.fragment_rm_favorite_list
 
-    private val _adapter by lazy {
-        RMFavoritePerformerAdapter(requireContext(),
-            onClickListener = {
-                if (!isDoubleClick) {
-                    val bundle = Bundle().apply {
-                        (it as? RMFavoriteResponse)?.code?.let {
-                            putString(BUNDLE_KEY.PERFORMER_CODE, it)
-                        }
-                    }
-                    appNavigation.openRMTopToRMUserDetail(bundle)
-                }
-            },
-            onClickDelete = {
-                (it as RMFavoriteResponse).code?.let { code ->
-                    viewModel.deleteFavorite(code)
-                }
-            }
-        )
-    }
+    private var mAdapter: RMFavoriteListAdapter? = null
 
     override fun initView() {
         super.initView()
 
+        mAdapter = RMFavoriteListAdapter(onClickUser = {
+            mViewModel.handleOnClickUser(it)
+        }, onClickDelete = {
+            mViewModel.deleteFavorite(it)
+        })
+
         binding.rvFavorite.apply {
             setHasFixedSize(true)
-            adapter = _adapter
+            adapter = mAdapter
         }
 
         binding.srFavorite.apply {
             setOnRefreshListener {
                 isRefreshing = false
-                viewModel.getListFavorite()
+                mViewModel.getListFavorite()
             }
         }
     }
@@ -67,12 +53,23 @@ class RMFavoriteListFragment :
     override fun bindingStateView() {
         super.bindingStateView()
 
-        viewModel.listFavorite.observe(viewLifecycleOwner) {
-            _adapter.submitList(it)
+        mViewModel.favoriteListLiveData.observe(viewLifecycleOwner) {
+            mAdapter?.submitList(it)
         }
 
-        viewModel.iShowNoData.observe(viewLifecycleOwner) {
+        mViewModel.isShowNoData.observe(viewLifecycleOwner) {
             binding.tvNoData.isVisible = it
+        }
+
+        mViewModel.mActionState.observe(viewLifecycleOwner) {
+            when (it) {
+                is RMFavoriteListActionState.NavigateToUserDetail -> {
+                    val bundle = Bundle().apply {
+                        putString(BUNDLE_KEY.PERFORMER_CODE, it.userCode)
+                    }
+                    appNavigation.openRMTopToRMUserDetail(bundle)
+                }
+            }
         }
     }
 
@@ -80,12 +77,13 @@ class RMFavoriteListFragment :
         super.onResume()
         if (rmTopViewModel.isNeedUpdateData) {
             rmTopViewModel.isNeedUpdateData = false
-            viewModel.getListFavorite()
+            mViewModel.getListFavorite()
         }
     }
 
     override fun onDestroyView() {
         binding.rvFavorite.adapter = null
+        mAdapter = null
         super.onDestroyView()
     }
 }
