@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.keystore.KeyService
@@ -12,10 +13,12 @@ import jp.careapp.counseling.android.network.socket.CallingWebSocketClient
 import jp.careapp.counseling.android.utils.calling.CallSoundManager
 import jp.careapp.counseling.android.utils.calling.MediaServerManager
 import java.util.*
+import javax.inject.Inject
 
 const val TAG = "CallingViewModel"
 
-class CallingViewModel @ViewModelInject constructor(
+@HiltViewModel
+class CallingViewModel @Inject constructor(
     private val application: Application,
     private val apiInterface: ApiInterface,
     private val rxPreferences: RxPreferences,

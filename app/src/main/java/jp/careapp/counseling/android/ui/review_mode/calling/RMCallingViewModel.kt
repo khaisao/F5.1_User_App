@@ -15,6 +15,7 @@ import jp.careapp.counseling.android.data.network.socket.*
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.network.ApiInterface
 import jp.careapp.counseling.android.network.socket.CallingWebSocketClient
+import jp.careapp.counseling.android.network.socket.FlaxWebSocketManager
 import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.SocketInfo.ACTION_CALL
 import jp.careapp.counseling.android.utils.SocketInfo.ACTION_CANCEL_CALL
@@ -28,6 +29,7 @@ import jp.careapp.counseling.android.utils.calling.MediaServerManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import timber.log.Timber
 import java.net.URLEncoder
 import java.util.*
@@ -39,8 +41,8 @@ class RMCallingViewModel @ViewModelInject constructor(
     private val apiInterface: ApiInterface,
     private val rxPreferences: RxPreferences,
     private val callSoundManager: CallSoundManager,
-    private val socketClient: CallingWebSocketClient
-) : BaseViewModel() {
+    private val flaxWebSocketManager: FlaxWebSocketManager,
+    ) : BaseViewModel(),CallingWebSocketClient.ChatWebSocketCallBack {
 
     private val _isConfigAudioCall: MutableLiveData<Boolean?> = MutableLiveData(null)
     val isConfigAudioCall: MutableLiveData<Boolean?> = _isConfigAudioCall
@@ -105,7 +107,7 @@ class RMCallingViewModel @ViewModelInject constructor(
                         append("&performerCode=$performerCode")
                         append("&ownerCode=${Define.OWNER_CODE}")
                     }
-                    socketClient.connect(urlStartCall)
+                    flaxWebSocketManager.flaxConnect(urlStartCall,this@RMCallingViewModel)
                     lastPoint = rxPreferences.getPoint()
                 }
             } catch (e: Exception) {
@@ -133,7 +135,7 @@ class RMCallingViewModel @ViewModelInject constructor(
     }
 
     private fun cancelCall() {
-        socketClient.sendMessage(gson.toJson(SocketSendMessage(action = ACTION_CANCEL_CALL)))
+        flaxWebSocketManager.sendMessage(gson.toJson(SocketSendMessage(action = ACTION_CANCEL_CALL)))
     }
 
     private fun startTimer() {
@@ -192,7 +194,7 @@ class RMCallingViewModel @ViewModelInject constructor(
     }
 
     private fun handlePerformerLogin() {
-        socketClient.closeWebSocket()
+        flaxWebSocketManager.flaxLogout()
         LoginMemberParam(
             BuildConfig.WS_OWNER,
             performer.performerCode,
@@ -203,7 +205,7 @@ class RMCallingViewModel @ViewModelInject constructor(
                 gson.toJson(it),
                 "UTF-8"
             )
-            socketClient.connect(url)
+            flaxWebSocketManager.flaxConnect(url,this)
         }
     }
 
@@ -301,6 +303,10 @@ class RMCallingViewModel @ViewModelInject constructor(
 
     fun isCalling(): Boolean {
         return _callState.value != null
+    }
+
+    override fun onHandleMessage(jsonMessage: JSONObject) {
+       TODO("Not yet implemented")
     }
 }
 
