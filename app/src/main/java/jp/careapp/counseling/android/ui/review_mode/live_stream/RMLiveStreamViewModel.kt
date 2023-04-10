@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.SingleLiveEvent
-import jp.careapp.counseling.android.data.network.LiveStreamCommentResponse
+import jp.careapp.counseling.android.data.network.LiveStreamChatResponse
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamActionState
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamMode
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamRepository
@@ -30,8 +30,8 @@ class RMLiveStreamViewModel @Inject constructor(
     val currentModeLiveData: LiveData<Int>
         get() = _currentModeLiveData
 
-    private val _commentList = MutableLiveData<ArrayList<LiveStreamCommentResponse>>()
-    val commentList: LiveData<ArrayList<LiveStreamCommentResponse>>
+    private val _commentList = MutableLiveData<ArrayList<LiveStreamChatResponse>>()
+    val commentList: LiveData<ArrayList<LiveStreamChatResponse>>
         get() = _commentList
 
     val mActionState = SingleLiveEvent<LiveStreamActionState>()
@@ -58,27 +58,21 @@ class RMLiveStreamViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             supervisorScope {
                 try {
-                    val abc = arrayListOf<LiveStreamCommentResponse>()
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment", 1))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Performer Comment", 2))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Whisper Comment", 3))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 2", 1))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 3", 1))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 4", 2))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 5", 3))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 6", 1))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 7", 3))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 8", 2))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
-                    abc.add(LiveStreamCommentResponse("Hai Dang Le Vu Normal Comment 9", 1))
+                    val abc = arrayListOf<LiveStreamChatResponse>()
+                    abc.add(LiveStreamChatResponse(
+                        id = 2,
+                        isPerformer = true,
+                        isWhisper = false,
+                        name = "Hai Dang Le Vu",
+                        message = "Message"
+                    ))
+                    abc.add(LiveStreamChatResponse(
+                        id = 2,
+                        isPerformer = true,
+                        isWhisper = false,
+                        name = "Hai Dang Le Vu",
+                        message = "Message"
+                    ))
                     withContext(Dispatchers.Main) {
                         _commentList.value = abc
                     }

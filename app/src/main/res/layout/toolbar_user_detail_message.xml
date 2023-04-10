@@ -32,17 +32,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_status_bar" />
 
-        <ImageView
-            android:id="@+id/userAvatar"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_user_avatar"
             android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="@dimen/_4sdp"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_no_image"
             app:layout_constraintBottom_toBottomOf="@id/btn_left"
-            app:layout_constraintDimensionRatio="1:1"
+            android:layout_marginStart="@dimen/_4sdp"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="@dimen/margin_10"
             app:layout_constraintStart_toEndOf="@+id/btn_left"
-            app:layout_constraintTop_toTopOf="@id/btn_left" />
+            app:layout_constraintTop_toTopOf="@id/btn_left"
+            android:layout_height="32dp">
+            <ImageView
+                android:id="@+id/userAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_no_image"/>
+        </com.google.android.material.card.MaterialCardView>
+
+
 
         <TextView
             android:id="@+id/title_back_tv"
@@ -54,10 +63,10 @@
             android:lines="1"
             android:gravity="center_vertical"
             android:textColor="@color/color_070707"
-            app:layout_constraintBottom_toBottomOf="@+id/userAvatar"
+            app:layout_constraintBottom_toBottomOf="@+id/cv_user_avatar"
             app:layout_constraintEnd_toStartOf="@+id/btnCamera"
-            app:layout_constraintStart_toEndOf="@+id/userAvatar"
-            app:layout_constraintTop_toTopOf="@+id/userAvatar"
+            app:layout_constraintStart_toEndOf="@+id/cv_user_avatar"
+            app:layout_constraintTop_toTopOf="@+id/cv_user_avatar"
             tools:text="名前 なまえ" />
 
         <ImageView
