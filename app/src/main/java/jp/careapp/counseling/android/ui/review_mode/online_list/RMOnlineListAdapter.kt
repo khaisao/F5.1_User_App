@@ -60,7 +60,7 @@ class RMPerformerAdapter(private val onClickUser: (Int) -> Unit) :
     override fun submitList(list: MutableList<RMPerformerResponse>?) {
         val result = arrayListOf<RMPerformerResponse>()
         list?.forEach { result.add(it.copy()) }
-        super.submitList(list)
+        super.submitList(result)
     }
 }
 

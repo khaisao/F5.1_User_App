@@ -8,8 +8,6 @@ import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.SingleLiveEvent
 import jp.careapp.counseling.android.model.network.RMBlockListResponse
 import jp.careapp.counseling.android.model.network.RMFavoriteResponse
-import jp.careapp.counseling.android.network.RMApiInterface
-import jp.careapp.counseling.android.ui.review_mode.user_detail.RMUserDetailRepository
 import jp.careapp.counseling.android.utils.extensions.toListData
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -90,11 +88,7 @@ class RMFavoriteListViewModel @Inject constructor(
                     val userCode = favoriteList[position].code.toString()
                     val response = mRepository.deleteFavoriteUser(userCode)
                     if (response.errors.isEmpty()) {
-                        favoriteList.forEach { user ->
-                            if (user.code == userCode) {
-                                favoriteList.remove(user)
-                            }
-                        }
+                        favoriteList.removeAt(position)
                         withContext(Dispatchers.Main) {
                             _isShowNoData.value = checkShowNoData()
                             _favoriteListLiveData.value = favoriteList

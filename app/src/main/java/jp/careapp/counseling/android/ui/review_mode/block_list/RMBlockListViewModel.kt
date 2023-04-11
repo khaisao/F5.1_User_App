@@ -37,7 +37,8 @@ class RMBlockListViewModel @Inject constructor(
                 try {
                     val response = mRepository.getBlockList()
                     if (response.errors.isEmpty()) {
-                        blockList = ArrayList(response.toListData<RMBlockListResponse>())
+                        blockList =
+                            ArrayList(response.dataResponse.toListData<RMBlockListResponse>())
                     }
                     withContext(Dispatchers.Main) {
                         _isShowNoData.value = checkShowNoData()
@@ -55,7 +56,6 @@ class RMBlockListViewModel @Inject constructor(
     }
 
     fun deleteBlock(position: Int) {
-
         isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             supervisorScope {
@@ -63,11 +63,7 @@ class RMBlockListViewModel @Inject constructor(
                     val userCode = blockList[position].code.toString()
                     val response = mRepository.deleteBlock(userCode)
                     if (response.errors.isEmpty()) {
-                        blockList.forEach { user ->
-                            if (user.code == userCode) {
-                                blockList.remove(user)
-                            }
-                        }
+                        blockList.removeAt(position)
                         withContext(Dispatchers.Main) {
                             _isShowNoData.value = checkShowNoData()
                             _blockListLiveData.value = blockList

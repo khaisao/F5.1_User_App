@@ -4,10 +4,8 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.provider.Settings
 import android.webkit.CookieManager
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
@@ -15,10 +13,7 @@ import jp.careapp.core.utils.dialog.RMCommonAlertDialog
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.MenuItem
 import jp.careapp.counseling.android.data.pref.RxPreferences
-import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.navigation.AppNavigation
-import jp.careapp.counseling.android.utils.ActionState
-import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.databinding.FragmentRmMyMenuBinding
 import javax.inject.Inject
 
@@ -30,28 +25,27 @@ class RMMyMenuFragment : BaseFragment<FragmentRmMyMenuBinding, RMMyMenuViewModel
     @Inject
     lateinit var rxPreferences: RxPreferences
 
-    private val viewModel: RMMyMenuViewModel by viewModels()
-    override fun getVM() = viewModel
+    private val mViewModel: RMMyMenuViewModel by viewModels()
+    override fun getVM() = mViewModel
 
     override val layoutId = R.layout.fragment_rm_my_menu
 
-    private val _adapter by lazy {
-        RMMyMenuAdapter(requireContext()) {
-            onClickItemMenu(it)
-        }
-    }
+    private var mAdapter: RMMyMenuAdapter? = null
 
     override fun initView() {
         super.initView()
 
+        mAdapter = RMMyMenuAdapter(requireContext()) {
+            onClickItemMenu(it)
+        }
         binding.rvMyMenu.apply {
             setHasFixedSize(true)
-
-            adapter = _adapter
-            _adapter.submitList(MenuItem.values().toList())
+            adapter = mAdapter
+            mAdapter?.submitList(MenuItem.values().toList())
         }
 
-        binding.point = rxPreferences.getPoint()
+        mViewModel.showData()
+        binding.viewModel = mViewModel
         binding.executePendingBindings()
     }
 
@@ -120,7 +114,7 @@ class RMMyMenuFragment : BaseFragment<FragmentRmMyMenuBinding, RMMyMenuViewModel
                 .setTextPositiveButton(R.string.accept_withdrawal)
                 .setTextNegativeButton(R.string.cancel)
                 .setOnPositivePressed {
-                    viewModel.handleWithdrawal(getString(R.string.reason_withdrawal))
+                    mViewModel.handleWithdrawal(getString(R.string.reason_withdrawal))
                     it.dismiss()
                 }.setOnNegativePressed {
                     it.dismiss()
@@ -128,27 +122,12 @@ class RMMyMenuFragment : BaseFragment<FragmentRmMyMenuBinding, RMMyMenuViewModel
         }
     }
 
-    private fun openWebView(url: String, titleResId: Int) {
-        Bundle().apply {
-            putString(
-                Define.TITLE_WEB_VIEW,
-                getString(titleResId)
-            )
-            putString(
-                Define.URL_WEB_VIEW,
-                url
-            )
-        }.also {
-            appNavigation.openScreenToWebview(it)
-        }
-    }
-
     override fun bindingStateView() {
         super.bindingStateView()
 
-        viewModel.actionState.observe(viewLifecycleOwner) {
-            if (it is ActionState.WithdrawalSuccess) {
-                if (it.isSuccess) {
+        mViewModel.mActionState.observe(viewLifecycleOwner) {
+            when (it) {
+                is RMMyMenuActionState.WithdrawalSuccess -> {
                     reinitializeData()
                     appNavigation.openTabRMMyMenuToRMStart()
                 }
@@ -175,6 +154,7 @@ class RMMyMenuFragment : BaseFragment<FragmentRmMyMenuBinding, RMMyMenuViewModel
 
     override fun onDestroyView() {
         binding.rvMyMenu.adapter = null
+        mAdapter = null
         super.onDestroyView()
     }
 }

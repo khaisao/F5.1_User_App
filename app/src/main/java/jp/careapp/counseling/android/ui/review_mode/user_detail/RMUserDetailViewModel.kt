@@ -113,6 +113,15 @@ class RMUserDetailViewModel @Inject constructor(
     }
 
     fun onClickCallVideo() {}
+
+    fun onClickBlock() {
+        mActionState.value = RMUserDetailActionState.ShowDialogBlock(_user.value?.name.toString())
+    }
+
+    fun onClickReport() {
+        mActionState.value =
+            RMUserDetailActionState.NavigateToUserDetailReport(_user.value?.code.toString())
+    }
 }
 
 sealed class RMUserDetailActionState {
@@ -122,4 +131,8 @@ sealed class RMUserDetailActionState {
     object BlockUserSuccess : RMUserDetailActionState()
 
     object AddAndDeleteFavoriteSuccess : RMUserDetailActionState()
+
+    class ShowDialogBlock(val userName: String) : RMUserDetailActionState()
+
+    class NavigateToUserDetailReport(val userCode: String) : RMUserDetailActionState()
 }

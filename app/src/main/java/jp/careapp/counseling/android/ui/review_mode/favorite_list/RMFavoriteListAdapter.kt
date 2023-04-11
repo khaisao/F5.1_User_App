@@ -63,7 +63,7 @@ class RMFavoriteListAdapter(
     override fun submitList(list: MutableList<RMFavoriteResponse>?) {
         val result = arrayListOf<RMFavoriteResponse>()
         list?.forEach { result.add(it.copy()) }
-        super.submitList(list)
+        super.submitList(result)
     }
 }
 

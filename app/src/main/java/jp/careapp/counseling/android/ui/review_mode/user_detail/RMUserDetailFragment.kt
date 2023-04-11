@@ -1,7 +1,5 @@
 package jp.careapp.counseling.android.ui.review_mode.user_detail
 
-import android.graphics.Color
-import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
@@ -15,7 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.dialog.RMCommonAlertDialog
 import jp.careapp.counseling.R
-import jp.careapp.counseling.android.model.network.RMUserDetailResponse
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.review_mode.top.RMTopViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
@@ -36,8 +33,6 @@ class RMUserDetailFragment : BaseFragment<FragmentRmUserDetailBinding, RMUserDet
     override fun getVM(): RMUserDetailViewModel = mViewModel
 
     private val rmTopViewModel: RMTopViewModel by activityViewModels()
-
-    private lateinit var user: RMUserDetailResponse
 
     override fun initView() {
         super.initView()
@@ -80,10 +75,10 @@ class RMUserDetailFragment : BaseFragment<FragmentRmUserDetailBinding, RMUserDet
         })
     }
 
-    private fun showDialogBlock() {
+    private fun showDialogBlock(userName: String) {
         context?.let { context ->
             RMCommonAlertDialog.getInstanceCommonAlertdialog(context).showDialog()
-                .setDialogTitle(String.format(getString(R.string.dialog_msg_block), user.name))
+                .setDialogTitle(String.format(getString(R.string.dialog_msg_block), userName))
                 .setTextPositiveButton(R.string.confirm_block_alert)
                 .setTextNegativeButton(R.string.cancel)
                 .setOnPositivePressed {
@@ -101,14 +96,11 @@ class RMUserDetailFragment : BaseFragment<FragmentRmUserDetailBinding, RMUserDet
             LlRvUserDetailBottomSheetBinding.inflate(LayoutInflater.from(requireContext()))
 
         bottomSheetBinding.llItemBlockUser.setOnClickListener {
-            showDialogBlock()
+            mViewModel.onClickBlock()
             bottomSheetDialog.dismiss()
         }
         bottomSheetBinding.llItemReportUser.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString(BUNDLE_KEY.PERFORMER_CODE, mViewModel.userCode)
-            }
-            appNavigation.openRMUserDetailToRMUserDetailReport(bundle)
+            mViewModel.onClickReport()
             bottomSheetDialog.dismiss()
         }
 
@@ -137,6 +129,12 @@ class RMUserDetailFragment : BaseFragment<FragmentRmUserDetailBinding, RMUserDet
 
                 is RMUserDetailActionState.AddAndDeleteFavoriteSuccess -> {
                     rmTopViewModel.isNeedUpdateData = true
+                }
+
+                is RMUserDetailActionState.ShowDialogBlock -> showDialogBlock(it.userName)
+
+                is RMUserDetailActionState.NavigateToUserDetailReport -> {
+                    appNavigation.openRMUserDetailToRMUserDetailReport(bundleOf(BUNDLE_KEY.PERFORMER_CODE to it.userCode))
                 }
             }
         }

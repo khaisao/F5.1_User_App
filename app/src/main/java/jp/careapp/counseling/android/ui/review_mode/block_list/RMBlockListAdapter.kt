@@ -61,7 +61,7 @@ class RMBlockListAdapter(
     override fun submitList(list: MutableList<RMBlockListResponse>?) {
         val result = arrayListOf<RMBlockListResponse>()
         list?.forEach { result.add(it.copy()) }
-        super.submitList(list)
+        super.submitList(result)
     }
 }
 
