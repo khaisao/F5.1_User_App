@@ -5,13 +5,12 @@
 
     <data>
 
-        <variable
-            name="follow"
-            type="Boolean" />
+        <import type="jp.careapp.counseling.android.ui.review_mode.user_detail.RMUserDetailViewModel" />
 
         <variable
-            name="status"
-            type="Integer" />
+            name="viewModel"
+            type="RMUserDetailViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,11 +23,13 @@
             android:id="@+id/toolBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:bg_toolbar="@android:color/transparent"
+            app:color_title="@color/color_070707"
             app:hide_line_bottom="true"
+            app:iv_right="@drawable/ic_rm_navi_move_live"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:iv_right="@drawable/ic_rm_navi_move_live"
             app:src_left="@drawable/ic_rm_arrow_left" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,6 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_99sdp"
+                android:text="@{viewModel.user.name}"
                 android:textColor="@color/color_070707"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +59,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvStatus"
                 style="@style/text_12"
-                rmPerformerStatus="@{status}"
+                rmPerformerStatus="@{viewModel.user.presenceStatus}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -94,13 +96,11 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.798" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivFavorite"
-                isFavorite="@{follow}"
+                isFavorite="@{viewModel.isFavorite}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginBottom="@dimen/margin_9"
-                android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@id/btnMessageChat"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@id/guideline11"
@@ -111,7 +111,7 @@
 
             <LinearLayout
                 android:id="@+id/btnMessageChat"
-                rmPerformerStatus="@{status}"
+                chatButtonStatus="@{viewModel.user.presenceStatus}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/margin_24dp"
@@ -142,7 +142,7 @@
 
             <LinearLayout
                 android:id="@+id/btnCallVideo"
-                rmPerformerStatus="@{status}"
+                callButtonStatus="@{viewModel.user.chatStatus}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/margin_24dp"
@@ -172,16 +172,15 @@
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivProfile"
             android:layout_width="@dimen/_151sdp"
             android:layout_height="@dimen/_151sdp"
             android:layout_marginTop="@dimen/_44sdp"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_no_image"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_no_image" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

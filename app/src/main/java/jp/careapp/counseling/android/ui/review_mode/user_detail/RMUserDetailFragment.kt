@@ -1,10 +1,9 @@
 package jp.careapp.counseling.android.ui.review_mode.user_detail
 
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.WindowManager
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -19,7 +18,6 @@ import jp.careapp.counseling.R
 import jp.careapp.counseling.android.model.network.RMUserDetailResponse
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.review_mode.top.RMTopViewModel
-import jp.careapp.counseling.android.utils.ActionState
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.customView.ToolBarCommon
 import jp.careapp.counseling.databinding.FragmentRmUserDetailBinding
@@ -44,67 +42,31 @@ class RMUserDetailFragment : BaseFragment<FragmentRmUserDetailBinding, RMUserDet
     override fun initView() {
         super.initView()
 
-        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-
         setUpToolBar()
 
-        mViewModel.user.observe(viewLifecycleOwner) {
-            user = it
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                Glide.with(binding.ivProfile).load(
-                    resources.getIdentifier(
-                        "ic_no_image",
-                        "drawable", requireContext().packageName
-                    )
-                )
-                    .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen._20sdp)))
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(binding.ivProfile)
-            } else {
-                Glide.with(binding.ivProfile).load(
-                    resources.getIdentifier(
-                        "ic_no_image",
-                        "drawable", requireContext().packageName
-                    )
-                ).transforms(
-                    CenterCrop(),
-                    RoundedCorners(resources.getDimensionPixelSize(R.dimen._20sdp))
-                )
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(binding.ivProfile)
-            }
-            binding.tvNickName.text = it.name
-            binding.tvNickName.bringToFront()
-            binding.status = it.presenceStatus
-            binding.follow = user.isFavorite
-            binding.executePendingBindings()
-        }
+        binding.viewModel = mViewModel
 
-        mViewModel.isFavorite.observe(viewLifecycleOwner) {
-            binding.follow = it
-            binding.executePendingBindings()
-        }
+        Glide.with(binding.ivProfile).load(R.drawable.ic_no_image)
+            .transform(
+                CenterCrop(),
+                RoundedCorners(resources.getDimensionPixelSize(R.dimen._20sdp))
+            )
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(binding.ivProfile)
+        binding.executePendingBindings()
     }
 
     override fun setOnClick() {
         super.setOnClick()
 
-        binding.btnMessageChat.setOnClickListener {
-            Bundle().apply {
-                putString(BUNDLE_KEY.PERFORMER_CODE, user.code ?: "")
-                putString(BUNDLE_KEY.PERFORMER_NAME, user.name ?: "")
-            }.let {
-                appNavigation.openRMUserDetailToUserDetailMsg(it)
-            }
-        }
+        binding.btnMessageChat.setOnClickListener { mViewModel.onClickMessageChat() }
 
-        binding.btnCallVideo.setOnClickListener { }
+        binding.btnCallVideo.setOnClickListener { mViewModel.onClickCallVideo() }
 
         binding.ivFavorite.setOnClickListener { mViewModel.onClickUserFavorite() }
     }
 
     private fun setUpToolBar() {
-        binding.toolBar.setRootLayoutBackgroundColor(Color.TRANSPARENT)
         binding.toolBar.setOnToolBarClickListener(object : ToolBarCommon.OnToolBarClickListener() {
             override fun onClickLeft() {
                 super.onClickLeft()
@@ -157,21 +119,24 @@ class RMUserDetailFragment : BaseFragment<FragmentRmUserDetailBinding, RMUserDet
     override fun bindingStateView() {
         super.bindingStateView()
 
-        mViewModel.actionState.observe(viewLifecycleOwner) {
-            it?.let {
-                when (it) {
-                    is ActionState.BlockUserSuccess -> {
-                        if (it.isSuccess) {
-                            rmTopViewModel.isNeedUpdateData = true
-                            appNavigation.navigateUp()
-                        }
-                    }
-                    is ActionState.AddAndDeleteFavoriteSuccess -> {
-                        if (it.isSuccess) {
-                            rmTopViewModel.isNeedUpdateData = true
-                        }
-                    }
-                    else -> {}
+        mViewModel.mActionState.observe(viewLifecycleOwner) {
+            when (it) {
+                is RMUserDetailActionState.NavigateToUserDetailMessage -> {
+                    appNavigation.openRMUserDetailToUserDetailMsg(
+                        bundleOf(
+                            BUNDLE_KEY.PERFORMER_CODE to it.userCode,
+                            BUNDLE_KEY.PERFORMER_NAME to it.userName
+                        )
+                    )
+                }
+
+                is RMUserDetailActionState.BlockUserSuccess -> {
+                    rmTopViewModel.isNeedUpdateData = true
+                    appNavigation.navigateUp()
+                }
+
+                is RMUserDetailActionState.AddAndDeleteFavoriteSuccess -> {
+                    rmTopViewModel.isNeedUpdateData = true
                 }
             }
         }

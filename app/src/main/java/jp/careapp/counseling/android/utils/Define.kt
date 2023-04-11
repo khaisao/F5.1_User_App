@@ -740,7 +740,6 @@ sealed class ActionState {
     class SaveProfileMessageSuccess(val isSuccess: Boolean) : ActionState()
     class WithdrawalSuccess(val isSuccess: Boolean) : ActionState()
     class BlockUserSuccess(val isSuccess: Boolean) : ActionState()
-    class AddAndDeleteFavoriteSuccess(val isSuccess: Boolean) : ActionState()
     class SendReportSuccess(val isSuccess: Boolean) : ActionState()
     class SendContactSuccess(val isSuccess: Boolean) : ActionState()
 }
