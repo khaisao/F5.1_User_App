@@ -5,9 +5,11 @@
 
     <data>
 
+        <import type="jp.careapp.counseling.android.ui.review_mode.my_menu.RMMyMenuViewModel" />
+
         <variable
-            name="point"
-            type="Integer" />
+            name="viewModel"
+            type="RMMyMenuViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -19,60 +21,55 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/rlPoint"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/bg_rm_point_info"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvNickName"
-                    style="@style/text_bold_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_24sdp"
-                    android:text="@string/nick_name"
-                    android:textColor="@color/white"
+                    android:fontFamily="@font/hiragino_sans_w6"
+                    android:gravity="center"
+                    android:text="@{viewModel.userName}"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
                     tools:text="@string/nick_name" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/tvPoint"
                     style="@style/text_bold_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvNickName"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/_24sdp"
-                    android:layout_marginBottom="@dimen/_24sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="24dp"
                     android:background="@drawable/bg_rm_btn_point"
-                    android:drawablePadding="@dimen/_4sdp"
-                    android:paddingVertical="@dimen/_8sdp"
-                    android:paddingStart="@dimen/_38sdp"
-                    android:paddingEnd="@dimen/_37sdp"
-                    android:text="@{point.toString()}"
+                    android:drawablePadding="4dp"
+                    android:minHeight="36dp"
+                    android:paddingHorizontal="36dp"
+                    android:paddingVertical="8dp"
+                    android:text="@{String.valueOf(viewModel.userPoint)}"
                     android:textColor="@color/color_070707"
                     app:drawableStartCompat="@drawable/ic_rv_point"
                     tools:text="10,000" />
-            </RelativeLayout>
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_my_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_16sdp"
                 android:clipToPadding="false"
-                android:paddingHorizontal="@dimen/_16sdp"
-                android:paddingBottom="@dimen/_16sdp"
+                android:orientation="vertical"
+                android:overScrollMode="never"
+                android:padding="16dp"
+                app:itemAnimator="@{null}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rlPoint"
                 tools:listitem="@layout/item_field" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@color/color_background_common"
         android:elevation="1dp"
+        android:paddingVertical="4dp"
         tools:ignore="RtlCompat">
 
         <View
@@ -26,13 +27,12 @@
             android:id="@+id/btn_left"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:contentDescription="@null"
-            android:padding="@dimen/padding_16dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_status_bar"
-            app:layout_constraintWidth_percent="0.13"
+            app:layout_constraintWidth_percent="0.085"
             tools:src="@drawable/ic_arrow_left" />
 
         <TextView
@@ -58,19 +58,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_status_bar"
-            tools:text="@string/save" />
+            tools:text="@string/save"
+            tools:visibility="visible" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivRight"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/height_toolbar_common"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
             android:contentDescription="@null"
-            android:padding="@dimen/padding_16dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_status_bar"
-            app:layout_constraintWidth_percent="0.14"
+            app:layout_constraintWidth_percent="0.085"
             tools:ignore="UseAppTint"
             tools:src="@drawable/ic_close_black_24dp"
             tools:visibility="gone" />
@@ -94,7 +96,8 @@
             app:layout_constraintTop_toTopOf="@id/btn_left"
             app:layout_constraintWidth_percent="0.139"
             tools:enabled="true"
-            tools:text="@string/save" />
+            tools:text="@string/save"
+            tools:visibility="gone" />
 
         <View
             android:id="@+id/line_bottom"

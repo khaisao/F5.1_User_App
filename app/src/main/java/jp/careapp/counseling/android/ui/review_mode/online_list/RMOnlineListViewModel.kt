@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
+import jp.careapp.core.utils.SingleLiveEvent
 import jp.careapp.counseling.android.model.network.RMBlockListResponse
 import jp.careapp.counseling.android.model.network.RMPerformerResponse
-import jp.careapp.counseling.android.network.RMApiInterface
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.LoadMoreState
 import jp.careapp.counseling.android.utils.extensions.toListData
@@ -18,22 +18,31 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RMOnlineListViewModel @Inject constructor(
-    private val rmApiInterface: RMApiInterface
+    private val mRepository: RMOnlineListRepository
 ) : BaseViewModel() {
-    private val _listPerformers = MutableLiveData<List<RMPerformerResponse>>(listOf())
-    val listPerformers: LiveData<List<RMPerformerResponse>> = _listPerformers
+
+    private var onlineList = arrayListOf<RMPerformerResponse>()
+
+    private val _onlineListLiveData = MutableLiveData<ArrayList<RMPerformerResponse>>()
+    val onlineListLiveData: LiveData<ArrayList<RMPerformerResponse>> = _onlineListLiveData
+
     private val _loadMoreState = MutableLiveData<Int>()
     val loadMoreState: LiveData<Int> = _loadMoreState
-    private val _iShowNoData = MutableLiveData(false)
-    val iShowNoData: LiveData<Boolean> = _iShowNoData
+
+    private val _isShowNoData = MutableLiveData<Boolean>()
+    val isShowNoData: LiveData<Boolean> = _isShowNoData
 
     var page = 1
+
+    val mActionState = SingleLiveEvent<RMOnlineListActionState>()
 
     init {
         getDummyPerformers(true)
     }
 
     fun getDummyPerformers(isShowLoading: Boolean = false, isLoadMore: Boolean = false) {
+        val temp = arrayListOf<RMPerformerResponse>()
+
         viewModelScope.launch(Dispatchers.IO) {
             isLoading.postValue(isShowLoading)
             try {
@@ -41,7 +50,7 @@ class RMOnlineListViewModel @Inject constructor(
                 blockList ?: return@launch
 
                 if (!isLoadMore) page = 1
-                val response = rmApiInterface.getDummyPerformers(getParamsRequest(page))
+                val response = mRepository.getDummyPerformers(getParamsRequest(page))
                 withContext(Dispatchers.Main) {
                     if (response.errors.isEmpty()) {
                         response.dataResponse.let { listPerformers ->
@@ -54,19 +63,12 @@ class RMOnlineListViewModel @Inject constructor(
                                     page++
                                 }
                             }
-                            if (!isLoadMore) {
-                                _listPerformers.value =
-                                    removeBlockListIfNeed(blockList, listPerformers)
-                            } else {
-                                _listPerformers.value =
-                                    removeBlockListIfNeed(
-                                        blockList,
-                                        _listPerformers.value?.plus(listPerformers) ?: listOf()
-                                    )
-                            }
+                            listPerformers.forEach { temp.add(it) }
                         }
                     }
-                    _iShowNoData.value = _listPerformers.value.isNullOrEmpty()
+                    onlineList = removeBlockListIfNeed(blockList, temp)
+                    _onlineListLiveData.value = onlineList
+                    _isShowNoData.value = checkShowNoData()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -80,10 +82,10 @@ class RMOnlineListViewModel @Inject constructor(
     private fun removeBlockListIfNeed(
         blockList: List<RMBlockListResponse>,
         performerList: List<RMPerformerResponse>
-    ): List<RMPerformerResponse> {
-        return performerList.filter { currentPerformer ->
+    ): ArrayList<RMPerformerResponse> {
+        return ArrayList(performerList.filter { currentPerformer ->
             currentPerformer.code != blockList.find { it.code == currentPerformer.code }?.code
-        }
+        })
     }
 
     private fun getParamsRequest(page: Int): HashMap<String, Any> {
@@ -99,7 +101,7 @@ class RMOnlineListViewModel @Inject constructor(
 
     private suspend fun fetchBlocks(): List<RMBlockListResponse>? {
         return try {
-            val response = rmApiInterface.getBlockList()
+            val response = mRepository.getBlockList()
             response.let {
                 if (it.errors.isEmpty()) {
                     it.dataResponse.toListData()
@@ -109,4 +111,21 @@ class RMOnlineListViewModel @Inject constructor(
             null
         }
     }
+
+    fun handleOnClickUser(position: Int) {
+        onlineList[position].code?.let {
+            mActionState.value = RMOnlineListActionState.NavigateToUserDetail(it)
+        }
+    }
+
+    private fun checkShowNoData(): Boolean {
+        if (onlineList.isEmpty()) {
+            return true
+        }
+        return false
+    }
+}
+
+sealed class RMOnlineListActionState {
+    class NavigateToUserDetail(val userCode: String) : RMOnlineListActionState()
 }

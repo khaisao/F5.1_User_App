@@ -40,8 +40,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:minHeight="44dp"
                 android:background="@drawable/bg_rm_spinner"
+                android:minHeight="44dp"
                 android:theme="@style/SpinnerTheme" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -69,6 +69,7 @@
                 android:paddingVertical="@dimen/margin_10"
                 android:textColor="@color/color_070707"
                 android:textColorHint="@color/color_c0c3c9"
+                android:textCursorDrawable="@null"
                 android:textSize="14sp"
                 tools:lines="9" />
 

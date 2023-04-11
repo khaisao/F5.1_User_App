@@ -6,7 +6,6 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
-import jp.careapp.counseling.android.model.network.RMBlockListResponse
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.databinding.FragmentBlockListBinding
 import javax.inject.Inject
@@ -16,26 +15,22 @@ class RMBlockListFragment : BaseFragment<FragmentBlockListBinding, RMBlockListVi
     @Inject
     lateinit var appNavigation: AppNavigation
 
-    private val viewModel: RMBlockListViewModel by viewModels()
+    private val mViewModel: RMBlockListViewModel by viewModels()
 
     override val layoutId = R.layout.fragment_block_list
 
-    override fun getVM() = viewModel
+    override fun getVM() = mViewModel
 
-    private val _adapter by lazy {
-        RMBlockListAdapter(requireContext(),
-            onClickListener = {},
-            onClickDelete = {
-                (it as? RMBlockListResponse)?.code?.let { code ->
-                    viewModel.deleteBlock(code)
-                }
-            }
-        )
-    }
+    private var mAdapter: RMBlockListAdapter? = null
 
     override fun initView() {
         super.initView()
 
+        mAdapter = RMBlockListAdapter(
+            onClickDelete = {
+                mViewModel.deleteBlock(it)
+            }
+        )
         binding.apply {
             toolBar.apply {
                 btnLeft.setOnClickListener {
@@ -46,7 +41,7 @@ class RMBlockListFragment : BaseFragment<FragmentBlockListBinding, RMBlockListVi
 
             rvBlock.apply {
                 setHasFixedSize(true)
-                adapter = _adapter
+                adapter = mAdapter
             }
         }
     }
@@ -54,21 +49,18 @@ class RMBlockListFragment : BaseFragment<FragmentBlockListBinding, RMBlockListVi
     override fun bindingStateView() {
         super.bindingStateView()
 
-        viewModel.listBlock.observe(viewLifecycleOwner) {
-            it?.let {
-                _adapter.submitList(it)
-            }
+        mViewModel.blockListLiveData.observe(viewLifecycleOwner) {
+            mAdapter?.submitList(it)
         }
 
-        viewModel.iShowNoData.observe(viewLifecycleOwner) {
-            it?.let {
-                binding.tvNoData.isVisible = it
-            }
+        mViewModel.isShowNoData.observe(viewLifecycleOwner) {
+            binding.tvNoData.isVisible = it
         }
     }
 
     override fun onDestroyView() {
         binding.rvBlock.adapter = null
+        mAdapter = null
         super.onDestroyView()
     }
 }

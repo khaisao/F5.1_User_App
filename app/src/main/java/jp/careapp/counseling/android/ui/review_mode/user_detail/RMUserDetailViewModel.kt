@@ -1,37 +1,40 @@
 package jp.careapp.counseling.android.ui.review_mode.user_detail
 
 import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.SingleLiveEvent
 import jp.careapp.counseling.android.model.network.RMUserDetailResponse
-import jp.careapp.counseling.android.utils.ActionState
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class RMUserDetailViewModel @ViewModelInject constructor(
+@HiltViewModel
+class RMUserDetailViewModel @Inject constructor(
     private val mRepository: RMUserDetailRepository,
     @Assisted
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
-    val actionState = SingleLiveEvent<ActionState>()
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
     }
 
     private val _user = MutableLiveData<RMUserDetailResponse>()
-    val user: LiveData<RMUserDetailResponse> = _user
+    val user: LiveData<RMUserDetailResponse>
+        get() = _user
 
     private val _isFavorite = MutableLiveData<Boolean>()
     val isFavorite: LiveData<Boolean> = _isFavorite
+
+    val mActionState = SingleLiveEvent<RMUserDetailActionState>()
 
     var userCode: String = ""
 
@@ -63,9 +66,7 @@ class RMUserDetailViewModel @ViewModelInject constructor(
             withContext(Dispatchers.Main) {
                 isLoading.value = false
                 if (response.errors.isEmpty()) {
-                    actionState.value = ActionState.BlockUserSuccess(true)
-                } else {
-                    actionState.value = ActionState.BlockUserSuccess(false)
+                    mActionState.value = RMUserDetailActionState.BlockUserSuccess
                 }
             }
         }
@@ -84,9 +85,7 @@ class RMUserDetailViewModel @ViewModelInject constructor(
                 isLoading.value = false
                 if (response.errors.isEmpty()) {
                     _isFavorite.value = true
-                    actionState.value = ActionState.AddAndDeleteFavoriteSuccess(true)
-                } else {
-                    actionState.value = ActionState.AddAndDeleteFavoriteSuccess(false)
+                    mActionState.value = RMUserDetailActionState.AddAndDeleteFavoriteSuccess
                 }
             }
         }
@@ -100,11 +99,40 @@ class RMUserDetailViewModel @ViewModelInject constructor(
                 isLoading.value = false
                 if (response.errors.isEmpty()) {
                     _isFavorite.value = false
-                    actionState.value = ActionState.AddAndDeleteFavoriteSuccess(true)
-                } else {
-                    actionState.value = ActionState.AddAndDeleteFavoriteSuccess(false)
+                    mActionState.value = RMUserDetailActionState.AddAndDeleteFavoriteSuccess
                 }
             }
         }
     }
+
+    fun onClickMessageChat() {
+        mActionState.value = RMUserDetailActionState.NavigateToUserDetailMessage(
+            _user.value?.code.toString(),
+            _user.value?.name.toString()
+        )
+    }
+
+    fun onClickCallVideo() {}
+
+    fun onClickBlock() {
+        mActionState.value = RMUserDetailActionState.ShowDialogBlock(_user.value?.name.toString())
+    }
+
+    fun onClickReport() {
+        mActionState.value =
+            RMUserDetailActionState.NavigateToUserDetailReport(_user.value?.code.toString())
+    }
+}
+
+sealed class RMUserDetailActionState {
+    class NavigateToUserDetailMessage(val userCode: String, val userName: String) :
+        RMUserDetailActionState()
+
+    object BlockUserSuccess : RMUserDetailActionState()
+
+    object AddAndDeleteFavoriteSuccess : RMUserDetailActionState()
+
+    class ShowDialogBlock(val userName: String) : RMUserDetailActionState()
+
+    class NavigateToUserDetailReport(val userCode: String) : RMUserDetailActionState()
 }
