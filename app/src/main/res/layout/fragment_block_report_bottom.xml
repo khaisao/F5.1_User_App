@@ -36,7 +36,6 @@
 
                 <TextView
                     style="@style/text_16"
-                    android:layout_marginLeft="@dimen/margin_20"
                     android:text="@string/block"
                     android:textColor="@color/color_F0F0F0" />
             </LinearLayout>
@@ -54,7 +53,6 @@
 
                 <TextView
                     style="@style/text_16"
-                    android:layout_marginStart="@dimen/margin_20"
                     android:text="@string/report"
                     android:textColor="@color/color_F0F0F0" />
             </LinearLayout>
