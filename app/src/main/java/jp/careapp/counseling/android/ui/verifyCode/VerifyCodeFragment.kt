@@ -12,7 +12,6 @@ import androidx.core.text.HtmlCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import jp.careapp.core.base.BaseActivity
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.DeviceUtil
@@ -29,7 +28,6 @@ import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeViewModel.Companion
 import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeViewModel.Companion.SCREEN_CODE_TOP
 import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeViewModel.Companion.SCREEN_CODE_TUTORIAL
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
-import jp.careapp.counseling.android.utils.customView.ToolBarCommon
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.utils.SignedUpStatus
@@ -351,8 +349,13 @@ class VerifyCodeFragment :
         viewModel.isLoading.observeForever(isLoadingObserver)
         viewModel.codeScreenAfterVerify.observeForever(verifyCodeScreenObserver)
         viewModel.numberError.observeForever(numberErrorObserver)
-        viewModel.isUpdateEmailSuccess.observeForever(isUpdateEmailObserver)
         shareViewModel.isFocusVerifyCode.observe(viewLifecycleOwner, isFocusObserver)
+
+        viewModel.mActionState.observe(viewLifecycleOwner) {
+            when (it) {
+                is VerifyCodeActionState.EditEmailSuccess -> showDialogEditEmailSuccess()
+            }
+        }
     }
 
     private var isLoadingObserver: Observer<Boolean> = Observer {
@@ -409,19 +412,16 @@ class VerifyCodeFragment :
         }
     }
 
-    private var isUpdateEmailObserver: Observer<Boolean> = Observer {
-        if (it) {
-            activity?.let { it1 ->
-                CommonAlertDialog.getInstanceCommonAlertdialog(it1)
-                    .showDialog()
-                    .setDialogTitleWithString(it1.getString(R.string.updated_profile))
-                    .setTextOkButton(R.string.text_OK)
-                    .setOnOkButtonPressed {
-                        it.dismiss()
-                        appNavigation.navigateUp()
-//                        findNavController().popBackStack(R.id.inputEmailFragment, true)
-                    }
-            }
+    private fun showDialogEditEmailSuccess() {
+        activity?.let { it1 ->
+            CommonAlertDialog.getInstanceCommonAlertdialog(it1)
+                .showDialog()
+                .setDialogTitleWithString(it1.getString(R.string.updated_profile))
+                .setTextOkButton(R.string.text_OK)
+                .setOnOkButtonPressed {
+                    it.dismiss()
+                    appNavigation.navigateUp()
+                }
         }
     }
 
@@ -492,7 +492,6 @@ class VerifyCodeFragment :
         viewModel.numberError.removeObservers(viewLifecycleOwner)
         viewModel.isLoading.removeObservers(viewLifecycleOwner)
         viewModel.codeScreenAfterVerify.removeObservers(viewLifecycleOwner)
-        viewModel.isUpdateEmailSuccess.removeObservers(viewLifecycleOwner)
 
         if (activity is BaseActivity<*, *>) {
             (activity as BaseActivity<*, *>).setHandleDispathTouch(true)

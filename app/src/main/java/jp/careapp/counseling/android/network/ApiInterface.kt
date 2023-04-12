@@ -41,7 +41,7 @@ interface ApiInterface {
     suspend fun sendVerifyCode(
         @Field("email") email: String,
         @Field("auth_code") authCode: String
-    ): ApiObjectResponse<InforUserResponse>
+    ): ApiObjectResponse<InfoUserResponse>
 
     @GET("api/news/count")
     suspend fun getCountNotification(
