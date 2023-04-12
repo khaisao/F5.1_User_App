@@ -19,6 +19,7 @@ import jp.careapp.counseling.android.data.network.TypeRankingResponse
 import jp.careapp.counseling.android.ui.message.ChatMessageAdapter
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.extensions.getBustSize
+import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler
 import jp.careapp.counseling.databinding.*
 
 class RankingTopAdapter(
@@ -56,37 +57,31 @@ class RankingTopAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(typeRanking: TypeRankingResponse) {
             typeRanking.let {
-                typeRanking.performerResponse?.let { performer ->
-                    Glide.with(context).load(performer.imageUrl)
-                        .apply(RequestOptions().placeholder(R.drawable.ic_avatar_default))
+                typeRanking.performerResponse?.let { consultant ->
+                    Glide.with(context).load(consultant.imageUrl)
+                        .apply(RequestOptions().placeholder(R.drawable.default_avt_performer))
                         .into(binding.ivAvatar)
 
-                    val (statusResId, statusText) = when {
-                        ConsultantResponse.isWaiting(performer.callStatus, performer.chatStatus) -> {
-                            R.drawable.bg_performer_status_waiting to R.string.presence_status_waiting
-                        }
-                        ConsultantResponse.isLiveStream(performer.callStatus, performer.chatStatus) -> {
-                            R.drawable.bg_performer_status_live_streaming to R.string.presence_status_live_streaming
-                        }
-                        ConsultantResponse.isPrivateLiveStream(performer.callStatus, performer.chatStatus) -> {
-                            R.drawable.bg_performer_status_private_delivery to R.string.presence_status_private_delivery
-                        }
-                        else -> {
-                            R.drawable.bg_performer_status_offline to R.string.presence_status_offline
-                        }
-                    }
-                    binding.tvStatus.setBackgroundResource(statusResId)
-                    binding.tvStatus.text = binding.root.context.resources.getString(statusText)
+                    val status = PerformerStatusHandler.getStatus(consultant.callStatus,consultant.chatStatus)
 
-                    val bustSize = context.getBustSize(performer.bust)
+                    val statusText = PerformerStatusHandler.getStatusText(status, context.resources)
+
+                    val statusBg = PerformerStatusHandler.getStatusBg(status)
+
+                    binding.tvStatus.text = statusText
+
+                    binding.tvStatus.setBackgroundResource(statusBg)
+
+
+                    val bustSize = context.getBustSize(consultant.bust)
                     if (bustSize == "") {
                         binding.tvSize.visibility = View.GONE
                     } else {
                         binding.tvSize.visibility = View.VISIBLE
                         binding.tvSize.text = bustSize
                     }
-                    binding.tvAge.text = performer.age.toString() + context.resources.getString(R.string.age_raw)
-                    binding.tvName.text = performer.name
+                    binding.tvAge.text = consultant.age.toString() + context.resources.getString(R.string.age_raw)
+                    binding.tvName.text = consultant.name
                 }
 
                 val drawableRes = if (typeRanking.ranking == 1 || typeRanking.recommendRanking == 1) {
@@ -121,37 +116,30 @@ class RankingTopAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(typeRanking: TypeRankingResponse) {
             typeRanking.let {
-                typeRanking.performerResponse?.let { performer ->
-                    Glide.with(context).load(performer.imageUrl)
-                        .apply(RequestOptions().placeholder(R.drawable.ic_avatar_default))
+                typeRanking.performerResponse?.let { consultant ->
+                    Glide.with(context).load(consultant.imageUrl)
+                        .apply(RequestOptions().placeholder(R.drawable.default_avt_performer))
                         .into(binding.ivAvatar)
 
-                    val (statusResId, statusText) = when {
-                        ConsultantResponse.isWaiting(performer.callStatus, performer.chatStatus) -> {
-                            R.drawable.bg_performer_status_waiting to R.string.presence_status_waiting
-                        }
-                        ConsultantResponse.isLiveStream(performer.callStatus, performer.chatStatus) -> {
-                            R.drawable.bg_performer_status_live_streaming to R.string.presence_status_live_streaming
-                        }
-                        ConsultantResponse.isPrivateLiveStream(performer.callStatus, performer.chatStatus) -> {
-                            R.drawable.bg_performer_status_private_delivery to R.string.presence_status_private_delivery
-                        }
-                        else -> {
-                            R.drawable.bg_performer_status_offline to R.string.presence_status_offline
-                        }
-                    }
-                    binding.tvStatus.setBackgroundResource(statusResId)
-                    binding.tvStatus.text = binding.root.context.resources.getString(statusText)
+                    val status = PerformerStatusHandler.getStatus(consultant.callStatus,consultant.chatStatus)
 
-                    val bustSize = context.getBustSize(performer.bust)
+                    val statusText = PerformerStatusHandler.getStatusText(status, context.resources)
+
+                    val statusBg = PerformerStatusHandler.getStatusBg(status)
+
+                    binding.tvStatus.text = statusText
+
+                    binding.tvStatus.setBackgroundResource(statusBg)
+
+                    val bustSize = context.getBustSize(consultant.bust)
                     if (bustSize == "") {
                         binding.tvSize.visibility = View.GONE
                     } else {
                         binding.tvSize.visibility = View.VISIBLE
                         binding.tvSize.text = bustSize
                     }
-                    binding.tvAge.text = performer.age.toString() + context.resources.getString(R.string.age_raw)
-                    binding.tvName.text = performer.name
+                    binding.tvAge.text = consultant.age.toString() + context.resources.getString(R.string.age_raw)
+                    binding.tvName.text = consultant.name
                 }
             }
             binding.ivBackgroundMain.setImageResource(when (typeRankingLayout) {

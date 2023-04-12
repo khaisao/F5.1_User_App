@@ -96,7 +96,9 @@
             app:layout_constraintTop_toBottomOf="@id/gl_tv_status_top" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_marginHorizontal="@dimen/margin_10"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/gl_ll_info_bottom"
             app:layout_constraintEnd_toStartOf="@id/gl_ll_info_end"
@@ -109,6 +111,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name"
+                android:maxWidth="160dp"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/white" />
 
             <TextView
@@ -118,6 +123,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_6"
                 android:text="Bust"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/white" />
 
             <TextView
@@ -127,6 +134,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_6"
                 android:text="Age"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/white" />
         </LinearLayout>
 
