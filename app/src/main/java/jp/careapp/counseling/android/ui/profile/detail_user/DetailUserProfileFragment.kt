@@ -32,11 +32,8 @@ import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.BuyPointBottomFragment
 import jp.careapp.counseling.android.ui.calling.CallConnectionDialog
-import jp.careapp.counseling.android.ui.calling.CallingViewModel
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.buy_point.PurchasePointBottomSheet
 import jp.careapp.counseling.android.ui.profile.block_report.BlockAndReportBottomFragment
-import jp.careapp.counseling.android.ui.profile.tab_review.TabReviewFragment
-import jp.careapp.counseling.android.ui.profile.tab_user_info_detail.TabDetailUserProfileFragment
 import jp.careapp.counseling.android.ui.profile.update_trouble_sheet.TroubleSheetUpdateFragment
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.FLAX_LOGIN_AUTH_RESPONSE
@@ -46,6 +43,9 @@ import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.SocketInfo.RESULT_NG
 import jp.careapp.counseling.android.utils.extensions.getBustSize
 import jp.careapp.counseling.android.utils.extensions.hasPermissions
+import jp.careapp.counseling.android.utils.performer_extension.PerformerRankingHandler
+import jp.careapp.counseling.android.utils.performer_extension.PerformerStatus
+import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler
 import jp.careapp.counseling.databinding.FragmentDetailUserProfileBinding
 import javax.inject.Inject
 
@@ -66,7 +66,6 @@ class DetailUserProfileFragment :
     override val layoutId = R.layout.fragment_detail_user_profile
 
     private val viewModel: DetailUserProfileViewModel by viewModels()
-    private val callingViewModel: CallingViewModel by activityViewModels()
     private val shareViewModel: ShareViewModel by activityViewModels()
     private var typeScreen = ""
 
@@ -79,12 +78,8 @@ class DetailUserProfileFragment :
     // user in list user from local
     private var consultantResponseLocal: ConsultantResponse? = null
 
-    private var userInforTabAdapter: UserInforTabAdapter? = null
-    private var tabDetailUserProfileFragment: TabDetailUserProfileFragment? = null
-    private var tabReviewFragment: TabReviewFragment? = null
     private var isFirstChat: Boolean? = null
     private var previousScreen = ""
-    private var position: Int = 0
     private var numberTimeCanScrollDown = 0
     private var numberMaxTimeCanScrollDown = 0
     private var loginType = 0
@@ -492,6 +487,7 @@ class DetailUserProfileFragment :
             when {
                 it.size <= 3 -> {
                     numberTimeCanScrollDown = 0
+                    binding.ivArrowDown.visibility = GONE
                 }
                 it.size % 3 == 0 -> {
                     numberTimeCanScrollDown = it.size / 3 - 1
@@ -651,29 +647,15 @@ class DetailUserProfileFragment :
                 Glide.with(this@DetailUserProfileFragment).asGif()
                     .load(R.drawable.ic_ballon_peep).into(ivBallonPeep)
 
-                val isWaiting = ConsultantResponse.isWaiting(user.callStatus, user.chatStatus)
-                val isLiveStream =
-                    ConsultantResponse.isLiveStream(user.callStatus, user.chatStatus)
-                val isPrivateLiveStream =
-                    ConsultantResponse.isPrivateLiveStream(user.callStatus, user.chatStatus)
-                val isOffline = ConsultantResponse.isOffline(user.callStatus, user.chatStatus)
+                val status = PerformerStatusHandler.getStatus(user.callStatus,user.chatStatus)
 
-                val presenceStatusBgResId = when {
-                    isWaiting -> R.drawable.bg_performer_status_waiting
-                    isLiveStream -> R.drawable.bg_performer_status_live_streaming
-                    isPrivateLiveStream -> R.drawable.bg_performer_status_private_delivery
-                    else -> R.drawable.bg_performer_status_offline
-                }
+                val statusText = PerformerStatusHandler.getStatusText(status, requireContext().resources)
 
-                val presenceStatusText = when {
-                    isWaiting -> resources.getString(R.string.presence_status_waiting)
-                    isLiveStream -> resources.getString(R.string.presence_status_live_streaming)
-                    isPrivateLiveStream -> resources.getString(R.string.presence_status_private_delivery)
-                    else -> resources.getString(R.string.presence_status_offline)
-                }
+                val statusBg = PerformerStatusHandler.getStatusBg(status)
 
-                presenceStatusTv.setBackgroundResource(presenceStatusBgResId)
-                presenceStatusTv.text = presenceStatusText
+                presenceStatusTv.text = statusText
+
+                presenceStatusTv.setBackgroundResource(statusBg)
 
                 ivState.setImageResource(
                     when (user.stage) {
@@ -692,6 +674,7 @@ class DetailUserProfileFragment :
                     }
                 )
 
+                binding.ivStateBeginner.visibility = if (user.isRookie == 1) VISIBLE else GONE
 
                 if (user.profilePattern == 1) {
                     avatarIv.visibility = VISIBLE
@@ -719,7 +702,7 @@ class DetailUserProfileFragment :
 
                 userNameTv.text = user.name
 
-                if (isLiveStream) {
+                if (status == PerformerStatus.LIVE_STREAM) {
                     ivMessage.setImageResource(R.drawable.ic_message_small_detail)
                     tvLiveStreamCount.text =
                         (user.loginMemberCount + user.peepingMemberCount).toString()
@@ -729,16 +712,19 @@ class DetailUserProfileFragment :
                     llStatusViewerCount.visibility = GONE
                 }
 
-                llCallConsult.visibility = if (isWaiting || isLiveStream) VISIBLE else GONE
-                ivBallonPeep.visibility = if (isLiveStream) VISIBLE else GONE
-                llPeep.visibility = if (isLiveStream) VISIBLE else GONE
+                llCallConsult.visibility =
+                    if (status == PerformerStatus.WAITING || status == PerformerStatus.LIVE_STREAM) VISIBLE else GONE
+                ivBallonPeep.visibility =
+                    if (status == PerformerStatus.LIVE_STREAM) VISIBLE else GONE
+                llPeep.visibility = if (status == PerformerStatus.LIVE_STREAM) VISIBLE else GONE
                 ivPrivateDelivery.visibility =
-                    if (isPrivateLiveStream || isOffline) VISIBLE else GONE
-                ivBallonLiveGl50.visibility = if (isWaiting) VISIBLE else GONE
+                    if (status == PerformerStatus.PRIVATE_LIVE_STREAM || status == PerformerStatus.PREMIUM_PRIVATE_LIVE_STREAM || status == PerformerStatus.OFFLINE) VISIBLE else GONE
+                ivBallonLiveGl50.visibility =
+                    if (status == PerformerStatus.WAITING) VISIBLE else GONE
 
                 changeStatusIsFavorite(user.isFavorite)
                 binding.imgRanking.setImageResource(
-                    ConsultantResponse.getImageViewForRank(
+                    PerformerRankingHandler.getImageViewForRank(
                         user.ranking,
                         user.recommendRanking
                     )
