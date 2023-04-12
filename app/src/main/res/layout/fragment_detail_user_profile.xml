@@ -189,13 +189,16 @@
                     app:layout_constraintTop_toBottomOf="@id/iv_bg_message_notice">
 
                     <TextView
+                        android:layout_width="0dp"
                         android:id="@+id/user_name_tv"
                         style="@style/text_bold_16"
                         android:layout_marginTop="@dimen/margin_12"
                         android:shadowColor="@color/color_9A33FF"
                         android:shadowRadius="18"
                         android:textColor="@color/white"
+                        android:layout_marginEnd="@dimen/margin_3"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/fl_follow"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
@@ -261,10 +264,10 @@
                         android:id="@+id/divider1"
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:layout_marginTop="@dimen/margin_20"
+                        android:layout_marginTop="@dimen/margin_13"
                         android:background="@color/color_402C70"
                         app:layout_constraintStart_toStartOf="@id/user_name_tv"
-                        app:layout_constraintTop_toBottomOf="@id/fl_follow" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_age" />
 
                     <TextView
                         android:id="@+id/tv_message_of_the_day"

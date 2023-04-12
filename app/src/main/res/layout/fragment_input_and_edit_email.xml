@@ -122,6 +122,8 @@
                         tools:textColor="@color/white" />
 
                     <TextView
+                        android:textAlignment="center"
+                        style="@style/text_12"
                         android:id="@+id/tv_already_have_acc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -132,10 +134,12 @@
                         android:text="@string/already_have_acc" />
 
                     <TextView
+                        style="@style/text_10"
                         android:id="@+id/link_privacy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_24dp"
+                        android:lineSpacingExtra="@dimen/margin_2"
                         android:layout_marginTop="@dimen/margin_top_email_24"
                         android:layout_marginRight="@dimen/margin_24dp"
                         android:clickable="true"

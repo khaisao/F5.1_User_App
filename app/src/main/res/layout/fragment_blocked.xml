@@ -38,7 +38,7 @@
             android:layout_marginTop="@dimen/height_80"
             android:fontFamily="@font/hiragino_sans_w3"
             android:gravity="center"
-            android:text="@string/no_block_data"
+            android:text="@string/no_women_blocked"
             android:textColor="#70658d"
             android:textSize="14sp"
             android:visibility="gone" />
