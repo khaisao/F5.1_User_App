@@ -108,14 +108,14 @@ class AppPreferences @Inject constructor(
     override fun saveUserInfo(
         token: String,
         tokenExpire: String,
-        passWord: String,
+        password: String,
         memberCode: String
     ) {
         mPrefs.edit().apply {
             putString(PREF_PARAM_ACCESS_TOKEN, token)
             putString(PREF_PARAM_TOKEN_EXPIRE, tokenExpire)
-            if (passWord.isNotEmpty()) {
-                putString(PREF_PARAM_PASSWORD, passWord)
+            if (password.isNotEmpty()) {
+                putString(PREF_PARAM_PASSWORD, password)
             }
             if (memberCode.isNotEmpty()) {
                 putString(PREF_PARAM_MEMBER_CODE, memberCode)

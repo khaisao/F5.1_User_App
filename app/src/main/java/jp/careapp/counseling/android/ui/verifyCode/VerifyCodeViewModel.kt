@@ -6,21 +6,20 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.GsonBuilder
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.base.NetworkException
+import jp.careapp.core.utils.SingleLiveEvent
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.AppApplication
 import jp.careapp.counseling.android.data.network.ApiObjectResponse
-import jp.careapp.counseling.android.data.network.InforUserResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.keystore.KeyService
-import jp.careapp.counseling.android.network.ApiInterface
 import jp.careapp.counseling.android.utils.Define
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import retrofit2.HttpException
 
 class VerifyCodeViewModel @ViewModelInject constructor(
-    private val apiInterface: ApiInterface,
     private val rxPreferences: RxPreferences,
-    private val keyService: KeyService
+    private val keyService: KeyService,
+    private val mRepository: VerifyCodeRepository
 ) : BaseViewModel() {
 
     companion object {
@@ -34,48 +33,52 @@ class VerifyCodeViewModel @ViewModelInject constructor(
 
     var email: String? = null
 
-    private val memberInforResult = MutableLiveData<ApiObjectResponse<InforUserResponse>>()
-
     val codeScreenAfterVerify = MutableLiveData<Int>()
     var countError: Int = 0
     val numberError = MutableLiveData<Int>()
 
-    var isUpdateEmailSuccess = MutableLiveData(false)
+    val mActionState = SingleLiveEvent<VerifyCodeActionState>()
 
     init {
         countError = 0
     }
 
     fun sendVerifyCode(email: String, authCode: String) {
-        viewModelScope.launch {
-            isLoading.value = true
-            try {
-                memberInforResult.value =
-                    email?.let { apiInterface.sendVerifyCode(it, authCode) }
-                memberInforResult.value?.let {
-                    if (it.errors.isEmpty()) {
-                        val userResponse = it.dataResponse
-                        userResponse.let {
-                            val token = userResponse.token
-                            val tokenExpire = userResponse.tokenExpire
-                            val passWord =
-                                keyService.encrypt(Define.KEY_ALIAS, userResponse.password) ?: ""
-                            val memberCode = userResponse.memberCode
-                            rxPreferences.saveUserInfo(token, tokenExpire, passWord, memberCode)
-                            openScreen(userResponse.status)
+        isLoading.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            supervisorScope {
+                try {
+                    val response = mRepository.sendVerifyCode(email, authCode)
+                    if (response.errors.isEmpty()) {
+                        val dataResponse = response.dataResponse
+                        val token = dataResponse.token.toString()
+                        val tokenExpire = dataResponse.tokenExpire.toString()
+                        val password =
+                            keyService.encrypt(Define.KEY_ALIAS, dataResponse.password.toString())
+                                ?: ""
+                        val memberCode = dataResponse.memberCode.toString()
+                        mRepository.saveUserInfo(token, tokenExpire, password, memberCode)
+                        mRepository.saveEmail(email)
+                        withContext(Dispatchers.Main) {
+                            dataResponse.status?.let { openScreen(it) }
                         }
-                        saveEmail(email)
+                    }
+                } catch (e: Exception) {
+                    if (e is NetworkException) {
+                        withContext(Dispatchers.Main) {
+                            numberError.value = 0
+                        }
+                    } else {
+                        countError++
+                        withContext(Dispatchers.Main) {
+                            numberError.value = countError
+                        }
+                    }
+                } finally {
+                    withContext(Dispatchers.Main) {
+                        isLoading.value = false
                     }
                 }
-                isLoading.value = false
-            } catch (e: Exception) {
-                if (e is NetworkException) {
-                    numberError.value = 0
-                } else {
-                    countError++
-                    numberError.value = countError
-                }
-                isLoading.value = false
             }
         }
     }
@@ -84,21 +87,25 @@ class VerifyCodeViewModel @ViewModelInject constructor(
         return countError
     }
 
-    fun sendVerifyCodeWhenEditEmail(emailEdit: String, authCode: String) {
-        viewModelScope.launch {
-            isLoading.value = true
-            try {
-                val result =
-                    emailEdit.let { apiInterface.sendVerifyCodeAfterEditEmail(it, authCode) }
-                if (result.errors.isEmpty()) {
-                    saveEmail(emailEdit)
+    fun sendVerifyCodeWhenEditEmail(email: String, authCode: String) {
+        isLoading.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            supervisorScope {
+                try {
+                    val response = mRepository.sendVerifyCodeAfterEditEmail(email, authCode)
+                    if (response.errors.isEmpty()) {
+                        mRepository.saveEmail(email)
+                        withContext(Dispatchers.Main) {
+                            mActionState.value = VerifyCodeActionState.EditEmailSuccess
+                        }
+                    }
+                } catch (throwable: Throwable) {
+                    handleError(throwable)
+                } finally {
+                    withContext(Dispatchers.Main) {
+                        isLoading.value = false
+                    }
                 }
-                isUpdateEmailSuccess.value = true
-                isLoading.value = false
-            } catch (throwable: Throwable) {
-                handleError(throwable)
-                isUpdateEmailSuccess.value = false
-                isLoading.value = false
             }
         }
     }
@@ -118,7 +125,7 @@ class VerifyCodeViewModel @ViewModelInject constructor(
                         errorMessage.append(" ").append(it)
                     }
                     if (AppApplication.getAppContext()
-                        ?.getString(R.string.duplicate_email_address) == errorMessage.toString()
+                            ?.getString(R.string.duplicate_email_address) == errorMessage.toString()
                             .trim()
                     ) {
                         numberError.value = 0
@@ -149,8 +156,8 @@ class VerifyCodeViewModel @ViewModelInject constructor(
             3 -> codeScreenAfterVerify.value = SCREEN_CODE_REREGISTER
         }
     }
+}
 
-    private fun saveEmail(email: String) {
-        rxPreferences.saveEmail(email)
-    }
+sealed class VerifyCodeActionState {
+    object EditEmailSuccess : VerifyCodeActionState()
 }
