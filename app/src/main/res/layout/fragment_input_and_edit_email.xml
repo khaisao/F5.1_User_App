@@ -7,7 +7,7 @@
         android:id="@+id/rlInputEmail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_background_modal"
+        android:background="@color/color_background_dialog"
         android:focusable="true"
         android:focusableInTouchMode="true">
 
@@ -47,9 +47,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginLeft="@dimen/margin_24dp"
-                        android:layout_marginTop="@dimen/margin_title_email_32"
-                        android:layout_marginRight="@dimen/margin_24dp"
+                        android:layout_marginHorizontal="@dimen/margin_24"
+                        android:layout_marginTop="@dimen/margin_32"
                         android:fontFamily="@font/hiragino_sans_w6"
                         android:maxLines="2"
                         android:text="@string/title_input_email"
@@ -62,9 +61,8 @@
                         style="@style/text_bold_14"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_24dp"
-                        android:layout_marginTop="@dimen/margin_top_email_24"
-                        android:layout_marginRight="@dimen/margin_24dp"
+                        android:layout_marginTop="@dimen/margin_24"
+                        android:layout_marginHorizontal="@dimen/margin_24"
                         android:background="@drawable/bg_input_text"
                         android:drawableStart="@drawable/icon_form_mail"
                         android:drawablePadding="@dimen/margin_12"
@@ -72,10 +70,8 @@
                         android:importantForAutofill="no"
                         android:inputType="textEmailAddress"
                         android:lines="1"
-                        android:paddingLeft="@dimen/padding_10"
-                        android:paddingTop="@dimen/padding_12"
-                        android:paddingRight="@dimen/padding_10"
-                        android:paddingBottom="@dimen/padding_12"
+                        android:paddingHorizontal="@dimen/margin_10"
+                        android:paddingVertical="@dimen/margin_12"
                         android:textColor="@color/white"
                         android:textColorHint="@color/color_70658D"
                         tools:hint="@string/hint_input_email_register"
@@ -85,10 +81,9 @@
                         android:id="@+id/ll_error_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_24dp"
                         android:layout_marginTop="@dimen/margin_10"
-                        android:layout_marginRight="@dimen/margin_24dp"
-                        android:visibility="invisible">
+                        android:layout_marginHorizontal="@dimen/margin_24"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -107,10 +102,8 @@
                         android:id="@+id/btnEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_24dp"
+                        android:layout_marginHorizontal="@dimen/margin_24"
                         android:layout_marginTop="@dimen/margin_16"
-                        android:layout_marginEnd="@dimen/margin_24dp"
-                        android:layout_marginBottom="@dimen/margin_12"
                         android:background="@drawable/bg_gradient"
                         android:enabled="false"
                         android:fontFamily="@font/hiragino_sans_w6"
@@ -122,27 +115,27 @@
                         tools:textColor="@color/white" />
 
                     <TextView
-                        android:textAlignment="center"
-                        style="@style/text_12"
                         android:id="@+id/tv_already_have_acc"
+                        style="@style/text_12"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_24dp"
-                        android:layout_marginTop="@dimen/margin_top_email_24"
-                        android:layout_marginRight="@dimen/margin_24dp"
+                        android:layout_marginHorizontal="@dimen/margin_17"
+                        android:layout_marginTop="@dimen/margin_17"
                         android:clickable="true"
-                        android:text="@string/already_have_acc" />
+                        android:padding="@dimen/margin_7"
+                        android:text="@string/already_have_acc"
+                        android:textAlignment="center" />
 
                     <TextView
-                        style="@style/text_10"
                         android:id="@+id/link_privacy"
+                        style="@style/text_10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_24dp"
-                        android:lineSpacingExtra="@dimen/margin_2"
-                        android:layout_marginTop="@dimen/margin_top_email_24"
-                        android:layout_marginRight="@dimen/margin_24dp"
+                        android:layout_marginHorizontal="@dimen/margin_17"
+                        android:layout_marginVertical="@dimen/margin_17"
                         android:clickable="true"
+                        android:lineSpacingExtra="@dimen/margin_2"
+                        android:padding="@dimen/margin_7"
                         android:text="@string/link_privacy"
                         android:textAlignment="center" />
 
@@ -151,7 +144,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_1"
                         android:layout_marginHorizontal="@dimen/margin_24"
-                        android:layout_marginTop="@dimen/margin_34"
                         android:alpha="0.15"
                         android:background="@color/white" />
 
