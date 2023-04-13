@@ -184,6 +184,8 @@
                     android:id="@+id/tv_name"
                     style="@style/text_bold_14"
                     android:paddingBottom="@dimen/margin_2"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_text_F0F0F0" />
