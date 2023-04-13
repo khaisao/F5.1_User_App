@@ -45,14 +45,6 @@
         app:popExitAnim="@anim/slide_out_left" />
 
     <action
-        android:id="@+id/action_registrationFragment_to_selectCategoryFragment"
-        app:destination="@id/selectCategoryFragment"
-        app:enterAnim="@anim/slide_in_left"
-        app:exitAnim="@anim/slide_out_right"
-        app:popEnterAnim="@anim/slide_in_right"
-        app:popExitAnim="@anim/slide_out_left" />
-
-    <action
         android:id="@+id/action_verifyCode_to_TopFragment"
         app:destination="@id/topFragment"
         app:enterAnim="@anim/slide_in_left"
@@ -80,9 +72,6 @@
             app:destination="@id/webViewFragment"
             app:enterAnim="@anim/slide_up"
             app:popExitAnim="@anim/slide_down" />
-        <action
-            android:id="@+id/action_tabMyPage_to_UpdateTrouble"
-            app:destination="@id/troubleSheetUpdateFragment" />
 
         <action
             android:id="@+id/action_TopFragment_to_SearchFragment"
@@ -210,15 +199,6 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
             app:popUpToInclusive="true" />
-
-        <action
-            android:id="@+id/action_UserProfile_to_TroubleSheet"
-            app:destination="@id/troubleSheetFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_UserProfile_to_ReportUser"
             app:destination="@id/reportUserFragment"
@@ -230,15 +210,6 @@
         <action
             android:id="@+id/action_UserProfile_to_ChatMessage"
             app:destination="@id/chatMessageFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpToInclusive="true" />
-
-        <action
-            android:id="@+id/action_UserProfile_to_TroubleSheetUpdate"
-            app:destination="@id/troubleSheetUpdateFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
@@ -269,50 +240,7 @@
         android:id="@+id/liveStreamFragment"
         android:name="jp.careapp.counseling.android.ui.live_stream.LiveStreamFragment"
         android:label="LiveStreamFragment"
-        tools:layout="@layout/fragment_live_stream"></fragment>
-
-    <fragment
-        android:id="@+id/troubleSheetFragment"
-        android:name="jp.careapp.counseling.android.ui.profile.trouble_sheet.TroubleSheetFragment"
-        android:label="TroubleSheetFragment"
-        tools:layout="@layout/fragment_user_profile">
-        <action
-            android:id="@+id/action_TroubleSheet_to_ChooseTypeTroubleFragment"
-            app:destination="@id/chooseTypeFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_TroubleSheet_to_ChatMessage"
-            app:destination="@id/chatMessageFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpTo="@id/troubleSheetFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_troubleSheetFragment_to_topFragment"
-            app:destination="@id/topFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_troubleSheetFragment_to_tutorialFragment"
-            app:destination="@id/tutorialFragment" />
-
-        <action
-            android:id="@+id/action_troubleSheetFragment_to_partnerInfoFragment"
-            app:destination="@id/partnerInfoFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
-    </fragment>
+        tools:layout="@layout/fragment_live_stream" />
 
     <fragment
         android:id="@+id/partnerInfoFragment"
@@ -423,11 +351,6 @@
             app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
-        android:id="@+id/chooseTypeFragment"
-        android:name="jp.careapp.counseling.android.ui.profile.trouble_sheet.ChooseTypeTroubleFragment"
-        android:label="ChooseTypeTroubleFragment"
-        tools:layout="@layout/fragment_user_profile" />
-    <fragment
         android:id="@+id/webViewFragment"
         android:name="jp.careapp.counseling.android.ui.webView.WebViewFragment"
         android:label="WebViewFragment"
@@ -447,30 +370,6 @@
         android:label="ReportFragment"
         tools:layout="@layout/fragment_user_report" />
 
-    <fragment
-        android:id="@+id/troubleSheetUpdateFragment"
-        android:name="jp.careapp.counseling.android.ui.profile.update_trouble_sheet.TroubleSheetUpdateFragment"
-        android:label="TroubleSheetUpdateFragment"
-        tools:layout="@layout/fragment_trouble_sheet_update">
-        <action
-            android:id="@+id/action_TroubleSheetUpdate_to_ChooseTypeTroubleFragment"
-            app:destination="@id/chooseTypeFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpToInclusive="true" />
-
-        <action
-            android:id="@+id/action_TroubleSheetUpdate_to_ChatMessage"
-            app:destination="@id/chatMessageFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpTo="@id/troubleSheetUpdateFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
     <fragment
         android:id="@+id/settingFragment"
         android:name="jp.careapp.counseling.android.ui.setting.SettingFragment"
@@ -579,15 +478,6 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
             app:popUpToInclusive="true" />
-
-        <action
-            android:id="@+id/action_ChatMessgae_to_TroubleSheet"
-            app:destination="@id/troubleSheetUpdateFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_ChatMessgae_to_UserProfile"
             app:destination="@id/userProfileFragment"
@@ -648,46 +538,11 @@
             android:id="@+id/action_withdrawalFragment_to_welcomeActivity"
             app:destination="@id/welcomeActivity" />
     </fragment>
-    <fragment
-        android:id="@+id/selectCategoryFragment"
-        android:name="jp.careapp.counseling.android.ui.select_category.SelectCategoryFragment"
-        android:label="SelectCategoryFragment">
-        <action
-            android:id="@+id/action_selectCategoryFragment_to_troubleSheetFragment"
-            app:destination="@id/troubleSheetFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
-    </fragment>
+
     <fragment
         android:id="@+id/tutorialFragment"
         android:name="jp.careapp.counseling.android.ui.tutorial.TutorialFragment"
         android:label="TutorialFragment" />
-    <fragment
-        android:id="@+id/newQuestionFragment"
-        android:name="jp.careapp.counseling.android.ui.new_question.NewQuestionFragment"
-        android:label="NewQuestionFragment">
-        <action
-            android:id="@+id/action_newQuestionFragment_to_chooseTypeCategoryFragment"
-            app:destination="@id/chooseTypeCategoryFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
-    </fragment>
-
-    <action
-        android:id="@+id/action_laboFragment_to_newQuestionFragment"
-        app:destination="@id/newQuestionFragment"
-        app:enterAnim="@anim/slide_in_left"
-        app:exitAnim="@anim/slide_out_right"
-        app:popEnterAnim="@anim/slide_in_right"
-        app:popExitAnim="@anim/slide_out_left" />
-    <fragment
-        android:id="@+id/chooseTypeCategoryFragment"
-        android:name="jp.careapp.counseling.android.ui.new_question.ChooseTypeCategoryFragment"
-        android:label="ChooseTypeCategoryFragment" />
 
     <action
         android:id="@+id/action_labFragment_to_labDetailFragment"
@@ -772,16 +627,6 @@
         app:popUpToInclusive="true" />
 
     <action
-        android:id="@+id/action_global_troubleSheetUpdateFragment"
-        app:destination="@id/troubleSheetUpdateFragment"
-        app:enterAnim="@anim/slide_in_left"
-        app:exitAnim="@anim/slide_out_right"
-        app:popEnterAnim="@anim/slide_in_right"
-        app:popExitAnim="@anim/slide_out_left"
-        app:popUpTo="@id/splashFragment"
-        app:popUpToInclusive="true" />
-
-    <action
         android:id="@+id/action_global_fragmentNotification"
         app:destination="@id/fragmentNotification"
         app:enterAnim="@anim/slide_in_left"
@@ -812,16 +657,6 @@
         tools:layout="@layout/fragment_calling">
 
         <action
-            android:id="@+id/action_callingFragment_to_updateTroubleSheet"
-            app:destination="@id/troubleSheetUpdateFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpTo="@id/callingFragment"
-            app:popUpToInclusive="true" />
-
-        <action
             android:id="@+id/action_callingFragment_to_ChatMessage"
             app:destination="@id/chatMessageFragment"
             app:enterAnim="@anim/slide_in_left"
@@ -846,7 +681,7 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"/>
+            app:popExitAnim="@anim/slide_out_left" />
 
     </fragment>
     <fragment
@@ -922,16 +757,16 @@
     </fragment>
     <fragment
         android:id="@+id/exitLivestreamFragment"
-        tools:layout="@layout/fragment_exit_livestream"
         android:name="jp.careapp.counseling.android.ui.live_stream.ExitLivestreamFragment"
-        android:label="ExitLivestreamFragment" >
+        android:label="ExitLivestreamFragment"
+        tools:layout="@layout/fragment_exit_livestream">
         <action
             android:id="@+id/action_exitLivestreamFragment_to_chatMessageFragment"
+            app:destination="@id/chatMessageFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:destination="@id/chatMessageFragment" />
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
 
     <action
@@ -942,11 +777,4 @@
         app:popEnterAnim="@anim/slide_in_right"
         app:popExitAnim="@anim/slide_out_left"
         app:popUpToInclusive="true" />
-    <fragment
-        android:id="@+id/liveStreamFragment"
-        android:name="jp.careapp.counseling.android.ui.live_stream.LiveStreamFragment"
-        android:label="LiveStreamFragment"
-        tools:layout="@layout/fragment_live_stream"/>
-
-
 </navigation>

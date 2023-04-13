@@ -15,9 +15,6 @@ interface AppNavigation : BaseNavigator {
 
     fun openStartToTopScreen(bundle: Bundle? = null)
 
-    // TODO
-    fun openRegistrationToRegisterNameScreen(bundle: Bundle? = null)
-
     fun openStartToInputAndEditEmailScreen(bundle: Bundle? = null)
 
     fun openLoginEmailScreen(bundle: Bundle? = null)
@@ -50,8 +47,6 @@ interface AppNavigation : BaseNavigator {
 
     fun openTopToBuyPointScreen(bundle: Bundle? = null)
 
-    fun openRegistrationToTermsOfServiceScreen(bundle: Bundle? = null)
-
     fun openRegistrationToTopScreen(bundle: Bundle? = null)
 
     fun openTopToUserProfileScreen(bundle: Bundle)
@@ -72,19 +67,11 @@ interface AppNavigation : BaseNavigator {
 
     fun openRegistrationToTutorialScreen(bundle: Bundle? = null)
 
-    fun openDetailUserToTroubleSheet(bundle: Bundle? = null)
-
-    fun openTroubleSheetToChooseTypeTrouble(bundle: Bundle)
-
     fun openVerifyCodeToEditProfileScreen(bundle: Bundle? = null)
 
     fun openEditProfileToEditEmailScreen(bundle: Bundle? = null)
 
     fun openUserProfileToReportScreen(bundle: Bundle? = null)
-
-    fun openMyPageToUpdateTroubleSheet(bundle: Bundle? = null)
-
-    fun openTroubleSheetUpdateToChooseTypeTrouble(bundle: Bundle?)
 
     fun openMypageToSetting(bundle: Bundle? = null)
 
@@ -136,19 +123,11 @@ interface AppNavigation : BaseNavigator {
 
     fun openChatMessageToBuyPoint(data: Bundle? = null)
 
-    fun openChatMessageToEditTroubleSheet(data: Bundle? = null)
-
     fun openDetailUserToChatMessage(data: Bundle? = null)
-
-    fun openDetailUserToTroubleSheetUpdate(data: Bundle? = null)
 
     fun openToCalling(data: Bundle? = null)
 
     fun openCallingToLivestream(data: Bundle? = null)
-
-    fun openTroubleSheetToChatMessage(data: Bundle? = null)
-
-    fun openTroubleSheetUpdateToChatMessage(data: Bundle? = null)
 
     fun openChatMessageToUserProfile(data: Bundle? = null)
 
@@ -168,23 +147,9 @@ interface AppNavigation : BaseNavigator {
 
     fun openWithdrawalFinish(bundle: Bundle? = null)
 
-    fun openSelectCategoryToTroubleSheet(data: Bundle? = null)
-
-    fun openTroubleSheetToTopScreen(data: Bundle? = null)
-
-    fun openTroubleSheetToPartnerInfoScreen(data: Bundle? = null)
-
-    fun openRegistrationToSelectCategoryScreen(data: Bundle? = null)
-
-    fun openTroubleSheetToTutorialScreen(bundle: Bundle? = null)
-
     fun openSearchLabScreen(bundle: Bundle? = null)
 
     fun openSelectionCagoryFromSearch(bundle: Bundle? = null)
-
-    fun openLaboToNewQuestionScreen(bundle: Bundle? = null)
-
-    fun openNewQuestionToChooseTypeCategoryScreen(bundle: Bundle? = null)
 
     fun openLabToLabDetailScreen(bundle: Bundle? = null)
 
@@ -196,15 +161,11 @@ interface AppNavigation : BaseNavigator {
 
     fun openHomeToLabDetailScreen(bundle: Bundle? = null)
 
-    fun openGlobalToTroubleSheetUpdateFragment(bundle: Bundle? = null)
-
     fun openGlobalToSettingNotification(bundle: Bundle? = null)
 
     fun openPartnerInfoToTopScreen(bundle: Bundle? = null)
 
     fun openPartnerInfoToTutorialScreen(bundle: Bundle? = null)
-
-    fun openCallingToUpdateTroubleSheet(bundle: Bundle? = null)
 
     fun openCallingToChatMessage(bundle: Bundle? = null)
 

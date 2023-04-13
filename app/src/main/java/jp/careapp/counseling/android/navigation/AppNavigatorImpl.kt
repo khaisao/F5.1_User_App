@@ -29,10 +29,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_startFragment_to_TopFragment, bundle)
     }
 
-    override fun openRegistrationToRegisterNameScreen(bundle: Bundle?) {
-        openScreen(R.id.action_registrationFragment_to_registerNameFragment, bundle)
-    }
-
     override fun openStartToInputAndEditEmailScreen(bundle: Bundle?) {
         openScreen(R.id.action_startFragment_to_InputEmailFragment, bundle)
     }
@@ -97,10 +93,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_TopFragment_to_BuyPointFragment, bundle)
     }
 
-    override fun openRegistrationToTermsOfServiceScreen(bundle: Bundle?) {
-        openScreen(R.id.action_registrationFragment_to_TermsFragment, bundle)
-    }
-
     override fun openRegistrationToTopScreen(bundle: Bundle?) {
         openScreen(R.id.action_registrationFragment_to_topFragment, bundle)
     }
@@ -131,14 +123,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openMyPageToEditProfile(bundle: Bundle?) {
         openScreen(R.id.action_topFragment_to_fragmentEditProfile, bundle)
-    }
-
-    override fun openDetailUserToTroubleSheet(bundle: Bundle?) {
-        openScreen(R.id.action_UserProfile_to_TroubleSheet, bundle)
-    }
-
-    override fun openTroubleSheetToChooseTypeTrouble(bundle: Bundle) {
-        openScreen(R.id.action_TroubleSheet_to_ChooseTypeTroubleFragment, bundle)
     }
 
     override fun openHomeToBannerFirstTimeUseScreen(bundle: Bundle?) {
@@ -191,14 +175,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openUserProfileToReportScreen(bundle: Bundle?) {
         openScreen(R.id.action_UserProfile_to_ReportUser, bundle)
-    }
-
-    override fun openMyPageToUpdateTroubleSheet(bundle: Bundle?) {
-        openScreen(R.id.action_tabMyPage_to_UpdateTrouble, bundle)
-    }
-
-    override fun openTroubleSheetUpdateToChooseTypeTrouble(bundle: Bundle?) {
-        openScreen(R.id.action_TroubleSheetUpdate_to_ChooseTypeTroubleFragment, bundle)
     }
 
     override fun openMypageToSetting(bundle: Bundle?) {
@@ -269,16 +245,8 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_ChatMessage_to_BuyPoint, data)
     }
 
-    override fun openChatMessageToEditTroubleSheet(data: Bundle?) {
-        openScreen(R.id.action_ChatMessgae_to_TroubleSheet, data)
-    }
-
     override fun openDetailUserToChatMessage(data: Bundle?) {
         openScreen(R.id.action_UserProfile_to_ChatMessage, data)
-    }
-
-    override fun openDetailUserToTroubleSheetUpdate(data: Bundle?) {
-        openScreen(R.id.action_UserProfile_to_TroubleSheetUpdate, data)
     }
 
     override fun openToCalling(data: Bundle?) {
@@ -287,14 +255,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openCallingToLivestream(data: Bundle?) {
         openScreen(R.id.action_callingFragment_to_liveStreamFragment, data)
-    }
-
-    override fun openTroubleSheetToChatMessage(data: Bundle?) {
-        openScreen(R.id.action_TroubleSheet_to_ChatMessage, data)
-    }
-
-    override fun openTroubleSheetUpdateToChatMessage(data: Bundle?) {
-        openScreen(R.id.action_TroubleSheetUpdate_to_ChatMessage, data)
     }
 
     override fun openChatMessageToUserProfile(data: Bundle?) {
@@ -333,40 +293,12 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_withdrawalFragment_to_withdrawalFinishFragment, bundle)
     }
 
-    override fun openSelectCategoryToTroubleSheet(data: Bundle?) {
-        openScreen(R.id.action_selectCategoryFragment_to_troubleSheetFragment, data)
-    }
-
-    override fun openTroubleSheetToTopScreen(data: Bundle?) {
-        openScreen(R.id.action_troubleSheetFragment_to_topFragment, data)
-    }
-
-    override fun openTroubleSheetToPartnerInfoScreen(data: Bundle?) {
-        openScreen(R.id.action_troubleSheetFragment_to_partnerInfoFragment, data)
-    }
-
-    override fun openRegistrationToSelectCategoryScreen(data: Bundle?) {
-        openScreen(R.id.action_registrationFragment_to_selectCategoryFragment, data)
-    }
-
-    override fun openTroubleSheetToTutorialScreen(bundle: Bundle?) {
-        openScreen(R.id.action_troubleSheetFragment_to_tutorialFragment, bundle)
-    }
-
     override fun openSearchLabScreen(bundle: Bundle?) {
         openScreen(R.id.action_to_search_lab, bundle)
     }
 
     override fun openSelectionCagoryFromSearch(bundle: Bundle?) {
         openScreen(R.id.action_searchLabFragment_to_selectionCategoryFragment, bundle)
-    }
-
-    override fun openLaboToNewQuestionScreen(bundle: Bundle?) {
-        openScreen(R.id.action_laboFragment_to_newQuestionFragment, bundle)
-    }
-
-    override fun openNewQuestionToChooseTypeCategoryScreen(bundle: Bundle?) {
-        openScreen(R.id.action_newQuestionFragment_to_chooseTypeCategoryFragment, bundle)
     }
 
     override fun openLabToLabDetailScreen(bundle: Bundle?) {
@@ -389,10 +321,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_homeFragment_to_LabDetailFragment, bundle)
     }
 
-    override fun openGlobalToTroubleSheetUpdateFragment(bundle: Bundle?) {
-        openScreen(R.id.action_global_troubleSheetUpdateFragment, bundle)
-    }
-
     override fun openGlobalToSettingNotification(bundle: Bundle?) {
         openScreen(R.id.action_global_fragmentNotification, bundle)
     }
@@ -403,10 +331,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openPartnerInfoToTutorialScreen(bundle: Bundle?) {
         openScreen(R.id.action_partnerInfoFragment_to_tutorialFragment, bundle)
-    }
-
-    override fun openCallingToUpdateTroubleSheet(bundle: Bundle?) {
-        openScreen(R.id.action_callingFragment_to_updateTroubleSheet, bundle)
     }
 
     override fun openCallingToChatMessage(bundle: Bundle?) {

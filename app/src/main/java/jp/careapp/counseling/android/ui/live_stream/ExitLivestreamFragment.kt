@@ -23,7 +23,6 @@ import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.BuyPointBottomFragment
 import jp.careapp.counseling.android.ui.profile.detail_user.DetailUserProfileViewModel
-import jp.careapp.counseling.android.ui.profile.update_trouble_sheet.TroubleSheetUpdateFragment
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.databinding.FragmentExitLivestreamBinding
@@ -177,10 +176,6 @@ class ExitLivestreamFragment :
                         consultantResponseLocal?.name ?: ""
                     )
                     bundle.putBoolean(BUNDLE_KEY.PROFILE_SCREEN, false)
-                    bundle.putInt(
-                        BUNDLE_KEY.FIRST_CHAT,
-                        TroubleSheetUpdateFragment.FIRST_CHAT
-                    )
                     bundle.putBoolean(BUNDLE_KEY.IS_SHOW_FREE_MESS, isShowFreeMess)
                     bundle.putInt(BUNDLE_KEY.CALL_RESTRICTION, consultantResponseLocal?.callRestriction ?: 0)
                     appNavigation.openDetailUserToChatMessage(bundle)

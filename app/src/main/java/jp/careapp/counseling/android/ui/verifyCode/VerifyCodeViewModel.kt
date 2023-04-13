@@ -1,9 +1,9 @@
 package jp.careapp.counseling.android.ui.verifyCode
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.GsonBuilder
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.base.NetworkException
 import jp.careapp.core.utils.SingleLiveEvent
@@ -15,8 +15,10 @@ import jp.careapp.counseling.android.keystore.KeyService
 import jp.careapp.counseling.android.utils.Define
 import kotlinx.coroutines.*
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class VerifyCodeViewModel @ViewModelInject constructor(
+@HiltViewModel
+class VerifyCodeViewModel @Inject constructor(
     private val rxPreferences: RxPreferences,
     private val keyService: KeyService,
     private val mRepository: VerifyCodeRepository
@@ -28,7 +30,6 @@ class VerifyCodeViewModel @ViewModelInject constructor(
         val SCREEN_CODE_BAD_USER = 2
         val SCREEN_CODE_REREGISTER = 3 // withdraw
         val SCREEN_CODE_TUTORIAL = 4
-        val SCREEN_CODE_SELECT_CATEGORY = 5
     }
 
     var email: String? = null
