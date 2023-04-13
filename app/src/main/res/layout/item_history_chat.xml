@@ -14,12 +14,12 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="93dp">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/iv_person"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="70dp"
+                android:layout_height="93dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_avt_performer"
@@ -94,10 +94,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_6"
                     android:ellipsize="end"
-                    android:maxWidth="130dp"
+                    android:maxWidth="200dp"
                     android:maxLines="1"
                     android:paddingBottom="@dimen/margin_8"
-                    android:text="This is very long name "
                     android:textColor="@color/color_text_F0F0F0" />
 
                 <TextView
@@ -109,7 +108,6 @@
                     android:layout_marginBottom="@dimen/margin_3"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Size"
                     android:textColor="@color/color_text_E3DFEF" />
 
                 <TextView
@@ -120,7 +118,6 @@
                     android:layout_marginBottom="@dimen/margin_3"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="age"
                     android:textColor="@color/color_text_E3DFEF" />
 
             </LinearLayout>

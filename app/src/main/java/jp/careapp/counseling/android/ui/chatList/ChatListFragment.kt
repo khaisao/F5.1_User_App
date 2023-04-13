@@ -116,7 +116,6 @@ class ChatListFragment : BaseFragment<ChatListFragmentBinding, ChatListViewModel
     private var handleHistoryChat: Observer<List<HistoryChatResponse>> = Observer {
         mAdapter.run {
             submitList(it)
-            // nếu page đầu tiên thì scroll về vị trí đầu tiên
             if (viewModel.getPaidMessPage() == 2 && mAdapter.itemCount > 0) {
                 binding.historyChatRv.smoothScrollToPosition(0)
             }
