@@ -43,7 +43,6 @@ import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.BuyPointBottomFragment
-import jp.careapp.counseling.android.ui.calling.CallingViewModel
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.DISABLE_LOAD_MORE
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.ENABLE_LOAD_MORE
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.HIDDEN_LOAD_MORE
@@ -77,7 +76,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
     private val viewModel: ChatMessageViewModel by viewModels()
     private val shareViewModel: ShareViewModel by activityViewModels()
-    private val callingViewModel: CallingViewModel by activityViewModels()
 
     override val layoutId = R.layout.fragment_chat_message
     override fun getVM(): ChatMessageViewModel = viewModel
@@ -153,7 +151,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         )
     }
 
-    val keyboardLayoutListener = OnGlobalLayoutListener {
+    private val keyboardLayoutListener = OnGlobalLayoutListener {
         val r = Rect()
         binding.rootLayout.getWindowVisibleDisplayFrame(r)
     }
@@ -395,6 +393,10 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                 binding.contentMessageEdt.clearFocus()
             }
         }
+
+        binding.ivBack.setOnClickListener {
+            appNavigation.navigateUp()
+        }
     }
 
     private fun checkPoint() {
@@ -549,7 +551,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     }
 
     private var messageResultResponse: Observer<DataMessage> = Observer {
-        if (!it.isLoadMore && it.dataMsg.isNullOrEmpty()) {
+        if (!it.isLoadMore && it.dataMsg.isEmpty()) {
             mAdapter.submitList(
                 listOf(MessageResponse(body = getString(R.string.message_default_performer)))
             )
@@ -745,8 +747,5 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         )
         popupWindow.isOutsideTouchable = true
     }
-    private lateinit var clickItemView: TemplateBottomFragment.ClickItemView
-    fun setClickItemView(clickItemView: TemplateBottomFragment.ClickItemView) {
-        this.clickItemView = clickItemView
-    }
+
 }

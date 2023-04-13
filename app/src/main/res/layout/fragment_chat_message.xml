@@ -159,12 +159,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_5dp"
                 android:orientation="vertical"
                 android:paddingVertical="@dimen/padding_10"
                 app:layout_constraintBottom_toBottomOf="@id/iv_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/margin_10"
                 app:layout_constraintStart_toEndOf="@id/iv_back"
                 app:layout_constraintTop_toTopOf="@id/iv_back">
 
@@ -182,7 +184,7 @@
                     android:id="@+id/tv_name"
                     style="@style/text_bold_14"
                     android:paddingBottom="@dimen/margin_2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_text_F0F0F0" />
             </LinearLayout>
