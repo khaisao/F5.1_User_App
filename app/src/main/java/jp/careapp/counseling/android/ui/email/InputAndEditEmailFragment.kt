@@ -222,10 +222,6 @@ class InputAndEditEmailFragment :
     override fun setOnClick() {
         super.setOnClick()
 
-        binding.ivCloseDialog.setOnClickListener {
-            appNavigation.navigateUp()
-        }
-
         binding.btnEmail.setOnClickListener {
             if (!isDoubleClick) {
                 if (codeScreen == SCREEN_EDIT_EMAIL) {
@@ -250,6 +246,7 @@ class InputAndEditEmailFragment :
             }
             appNavigation.openLoginEmailScreen(bundle)
         }
+
     }
 
     private fun getEmail(): String {

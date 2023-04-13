@@ -173,16 +173,6 @@
 
         </com.lihang.ShadowLayout>
 
-        <ImageView
-            android:id="@+id/iv_close_dialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_16"
-            android:src="@drawable/ic_dialog_close"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sl_input_email" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
