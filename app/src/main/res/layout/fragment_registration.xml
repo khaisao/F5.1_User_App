@@ -1,131 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_background_common"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical"
-        tools:context=".android.ui.registration.RegistrationFragment">
+        android:background="@color/color_background_common">
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/padding_40">
-
-                <ImageView
-                    android:layout_width="@dimen/_60sdp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/margin_44"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/logo" />
-
-                <TextView
-                    android:id="@+id/tv_input_profile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/margin_32"
-                    android:text="@string/register_complete"
-                    android:textColor="@color/color_text_E3DFEF"
-                    android:textSize="@dimen/text_size_20"
-                    android:textStyle="bold" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    style="@style/text_bold_14"
-                    android:id="@+id/tv_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_24dp"
-                    android:layout_marginTop="@dimen/margin_top_email_24"
-                    android:layout_marginRight="@dimen/margin_24dp"
-                    android:background="@drawable/bg_input_text"
-                    android:drawableStart="@drawable/ic_form_user"
-                    android:drawablePadding="@dimen/margin_12"
-                    android:elevation="4dp"
-                    android:importantForAutofill="no"
-                    android:inputType="textEmailAddress"
-                    android:lines="1"
-                    android:paddingLeft="@dimen/padding_10"
-                    android:paddingTop="@dimen/padding_12"
-                    android:paddingBottom="@dimen/padding_12"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/color_70658D"
-                    android:hint="@string/title_register_name"
-                    tools:ignore="RtlSymmetry" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_24"
-                    android:layout_marginTop="@dimen/margin_26"
-                    android:orientation="horizontal">
-
-                    <androidx.appcompat.widget.AppCompatCheckBox
-                        android:id="@+id/cbTerm"
-                        android:layout_width="@dimen/margin_20"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_7"
-                        android:background="@color/color_background_common"
-                        android:button="@drawable/cb_circular"
-                        android:paddingTop="@dimen/margin_5dp"
-                        android:paddingBottom="@dimen/margin_5dp" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingTop="@dimen/padding_5dp">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/hiragino_sans_w6"
-                            android:paddingTop="@dimen/margin_5dp"
-                            android:paddingBottom="@dimen/margin_5dp"
-                            android:text="@string/receive_email_from_spark_live"
-                            android:textColor="@color/color_text_F0F0F0"
-                            android:textSize="@dimen/text_size_14" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/margin_30"
-                            android:text="@string/title_receive_email"
-                            android:textColor="@color/color_B2A9CC"
-                            android:textSize="@dimen/text_size_12" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnRegistration"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_24dp"
-                    android:layout_marginTop="34dp"
-                    android:layout_marginEnd="@dimen/margin_24dp"
-                    android:background="@drawable/bg_gradient"
-                    android:enabled="false"
-                    android:text="@string/register_with_this_content"
-                    android:textSize="@dimen/text_size_16"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
-
-        <jp.careapp.counseling.android.utils.customView.GenderSelectView
-            android:id="@+id/genderSelectView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone" />
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp">
 
-    </RelativeLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageView6"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_32"
+                android:src="@drawable/logo"
+                app:layout_constraintDimensionRatio="74:64"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.2"
+                app:layout_goneMarginTop="32dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_input_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_32"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:gravity="center"
+                android:text="@string/register_complete"
+                android:textColor="#f0f0f0"
+                android:textSize="@dimen/text_size_20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtNickName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_email_24"
+                android:background="@drawable/bg_input_text"
+                android:drawableStart="@drawable/ic_form_user"
+                android:drawablePadding="16dp"
+                android:fontFamily="@font/hiragino_sans_w3"
+                android:hint="@string/title_register_name"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:lines="1"
+                android:maxLength="10"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="16dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/color_70658D"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_input_profile"
+                tools:ignore="RtlSymmetry" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/cbTerm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                android:button="@drawable/cb_circular"
+                android:checked="true"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:padding="8dp"
+                android:text="@string/receive_email_from_spark_live"
+                android:textColor="@color/color_F0F0F0"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/edtNickName"
+                app:layout_constraintTop_toBottomOf="@id/edtNickName" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textView3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:fontFamily="@font/hiragino_sans_w3"
+                android:lineSpacingExtra="6dp"
+                android:text="@string/title_receive_email"
+                android:textColor="@color/color_B2A9CC"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/cbTerm"
+                app:layout_constraintTop_toBottomOf="@id/cbTerm" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnRegistration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/bg_nm_btn_primary"
+                android:enabled="false"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:gravity="center"
+                android:minHeight="44dp"
+                android:paddingVertical="16dp"
+                android:text="@string/register_with_this_content"
+                android:textColor="@drawable/color_text_btn_primary"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView3"
+                tools:enabled="true" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

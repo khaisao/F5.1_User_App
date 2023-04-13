@@ -34,7 +34,8 @@ import jp.careapp.counseling.android.ui.buy_point.BuyPointBottomFragment
 import jp.careapp.counseling.android.ui.calling.CallConnectionDialog
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.buy_point.PurchasePointBottomSheet
 import jp.careapp.counseling.android.ui.profile.block_report.BlockAndReportBottomFragment
-import jp.careapp.counseling.android.ui.profile.update_trouble_sheet.TroubleSheetUpdateFragment
+import jp.careapp.counseling.android.ui.profile.tab_review.TabReviewFragment
+import jp.careapp.counseling.android.ui.profile.tab_user_info_detail.TabDetailUserProfileFragment
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.FLAX_LOGIN_AUTH_RESPONSE
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.USER_PROFILE
@@ -259,10 +260,6 @@ class DetailUserProfileFragment :
                         consultantResponse?.name ?: ""
                     )
                     bundle.putBoolean(BUNDLE_KEY.PROFILE_SCREEN, false)
-                    bundle.putInt(
-                        BUNDLE_KEY.FIRST_CHAT,
-                        TroubleSheetUpdateFragment.FIRST_CHAT
-                    )
                     bundle.putBoolean(BUNDLE_KEY.IS_SHOW_FREE_MESS, isShowFreeMess)
                     bundle.putInt(BUNDLE_KEY.CALL_RESTRICTION, consultantResponse?.callRestriction ?: 0)
                     appNavigation.openDetailUserToChatMessage(bundle)

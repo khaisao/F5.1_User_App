@@ -20,7 +20,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -34,9 +33,7 @@ import jp.careapp.core.base.BaseActivity
 import jp.careapp.core.utils.DeviceUtil
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.core.utils.dialog.LoadingDialog
-import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
-import jp.careapp.counseling.android.data.event.EventBusAction
 import jp.careapp.counseling.android.data.event.NotifiEvent
 import jp.careapp.counseling.android.data.model.labo.LaboResponse
 import jp.careapp.counseling.android.data.network.ConsultantResponse
@@ -51,13 +48,10 @@ import jp.careapp.counseling.android.ui.calling.CallingViewModel
 import jp.careapp.counseling.android.ui.labo.detail.LabDetailFragment
 import jp.careapp.counseling.android.ui.message.ChatMessageFragment
 import jp.careapp.counseling.android.ui.my_page.MyPageFragment
-import jp.careapp.counseling.android.ui.new_question.NewQuestionFragment
 import jp.careapp.counseling.android.ui.news.NewsFragment
 import jp.careapp.counseling.android.ui.notification.NotificationFragment
 import jp.careapp.counseling.android.ui.profile.list_user_profile.UserProfileFragment
-import jp.careapp.counseling.android.ui.profile.update_trouble_sheet.TroubleSheetUpdateFragment
 import jp.careapp.counseling.android.ui.registration.RegistrationFragment
-import jp.careapp.counseling.android.ui.select_category.SelectCategoryFragment
 import jp.careapp.counseling.android.ui.splash.SplashFragment
 import jp.careapp.counseling.android.ui.start.StartFragment
 import jp.careapp.counseling.android.ui.top.TopFragment
@@ -266,8 +260,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun handleNavigateBeforeOpenCalling() {
-        if (appNavigation.currentFragmentId() == R.id.troubleSheetUpdateFragment
-            || appNavigation.currentFragmentId() == R.id.buyPointFragment
+        if (appNavigation.currentFragmentId() == R.id.buyPointFragment
             || appNavigation.currentFragmentId() == R.id.webViewFragment
         ) {
             appNavigation.navigateUp()
@@ -491,16 +484,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     appNavigation.openGlobalToSettingNotification(bundle)
                 }
             }
-            Define.Intent.EDIT_SEET -> {
-                val currentFragment: Fragment =
-                    navHostFragment.childFragmentManager.fragments[0]
-                if (currentFragment is TroubleSheetUpdateFragment) {
-                    appNavigation.popopBackStackToDetination(R.id.troubleSheetUpdateFragment)
-                } else {
-                    currentFragment.dismissAllDialog()
-                    appNavigation.openGlobalToTroubleSheetUpdateFragment()
-                }
-            }
             Define.Intent.MESSAGE -> {
                 val currentFragment: Fragment =
                     navHostFragment.childFragmentManager.fragments[0]
@@ -675,17 +658,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                 }
                             } else if (currentFragment is SplashFragment || currentFragment is StartFragment) {
                                 // nothing
-                            } else if (currentFragment is NewQuestionFragment) {
-                                var dataError: String
-                                try {
-                                    dataError = status.exception.errors.joinToString()
-                                } catch (e: java.lang.Exception) {
-                                    dataError = ""
-                                    networkEvent.publish(NetworkState.ERROR)
-                                }
-                                if (dataError == getString(R.string.not_enough_points)) {
-                                    handleBuyPoint.buyPoint(supportFragmentManager)
-                                }
                             } else {
                                 var dataError: String
                                 try {
@@ -826,18 +798,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                         )
                                             .equals(performerCode.toString())
                                     ) {
-                                        if (R.id.troubleSheetUpdateFragment.equals(
-                                                appNavigation.navController?.currentDestination?.id
-                                                    ?: 0
-                                            )
-                                        ) {
-                                            EventBus.getDefault().post(NotifiEvent(""))
-                                        } else {
-                                            appNavigation.popopBackStackToDetination(R.id.chatMessageFragment)
-                                            if (getCurrentFragment() is ChatMessageFragment) {
-                                                (getCurrentFragment() as ChatMessageFragment).apply {
-                                                    reloadData()
-                                                }
+                                        appNavigation.popopBackStackToDetination(R.id.chatMessageFragment)
+                                        if (getCurrentFragment() is ChatMessageFragment) {
+                                            (getCurrentFragment() as ChatMessageFragment).apply {
+                                                reloadData()
                                             }
                                         }
                                     } else {
@@ -1027,8 +991,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onBackPressed() {
         val currentFragment: Fragment =
             navHostFragment.childFragmentManager.fragments[0]
-        if (currentFragment is TutorialFragment || currentFragment is RegistrationFragment || currentFragment is SelectCategoryFragment) {
-            if (currentFragment is RegistrationFragment && rxPreferences.getSignedUpStatus() == SignedUpStatus.LOGIN_WITHOUT_EMAIL) {
+        if (currentFragment is TutorialFragment || currentFragment is RegistrationFragment) {
+            if (currentFragment is RegistrationFragment) {
                 super.onBackPressed()
             }
         } else if (currentFragment is TopFragment) {

@@ -71,9 +71,6 @@ interface ApiInterface {
     @POST("api/member")
     suspend fun register(@Body registrationRequest: InforRegistrationRequest): ApiObjectResponse<RegistrationResponse>
 
-    @POST("api/member/without-email")
-    suspend fun registerWithoutEmail(@Body request: InfoRegistrationWithoutEmailRequest): ApiObjectResponse<RegistrationWithoutEmailResponse>
-
     @PATCH("api/member")
     suspend fun updateProfile(
         @Body() updateMember: ParamsUpdateMember

@@ -91,10 +91,11 @@ object StringUtils {
             }
         }
 
-    fun CharSequence?.isValidEmail() =
+    fun CharSequence?.isValidEmail() = true
 //        !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
-        !isNullOrEmpty() && Pattern.compile(REGEX_EMAIL, Pattern.CASE_INSENSITIVE).matcher(this)
-            .matches()
+    // TODO: Enable bottom of this line
+//        !isNullOrEmpty() && Pattern.compile(REGEX_EMAIL, Pattern.CASE_INSENSITIVE).matcher(this)
+//            .matches()
 
     fun String.isEmailValid(): Boolean {
         val expression = "^[\\w.-]+@([\\w\\-]+\\.)+[A-Z]{2,8}$"
