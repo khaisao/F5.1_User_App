@@ -49,11 +49,10 @@
                         android:layout_marginStart="@dimen/margin_24"
                         android:layout_marginTop="@dimen/margin_32"
                         android:layout_marginEnd="@dimen/margin_24"
-                        android:fontFamily="@font/hiragino_sans_w6"
                         android:maxLines="2"
                         android:text="@string/title_verify_code"
                         android:textColor="@color/color_text_F0F0F0"
-                        android:textSize="@dimen/text_size_16"
+                        style="@style/text_bold_16"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -167,29 +166,55 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margin_4dp"
-                            android:fontFamily="@font/hiragino_sans_w6"
                             android:text="@string/please_enter_exactly_code"
                             android:textAlignment="center"
                             android:textColor="@color/color_alert_error"
-                            android:textSize="@dimen/text_size_12"
+                            style="@style/text_bold_12"
                             android:textStyle="bold"
                             android:visibility="visible" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/text_14"
+                    <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/tvEnterCode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_24"
                         android:layout_marginTop="@dimen/margin_24"
                         android:layout_marginEnd="@dimen/margin_24"
-                        android:text="@string/please_enter_code"
-                        android:textAlignment="center"
-                        android:textColor="@color/color_text_E3DFEF"
+                        android:orientation="vertical"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/ll_error_code" />
+                        app:layout_constraintTop_toBottomOf="@+id/ll_error_code">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/text_14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/stated_in_the_email_received"
+                            android:textAlignment="center"
+                            android:textColor="@color/color_text_E3DFEF" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginTop="@dimen/margin_3">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/text_bold_14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/four_digit_number"
+                                android:textColor="@color/color_text_E3DFEF" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/text_14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/please_enter_tv"
+                                android:textColor="@color/color_text_E3DFEF" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/text_12"

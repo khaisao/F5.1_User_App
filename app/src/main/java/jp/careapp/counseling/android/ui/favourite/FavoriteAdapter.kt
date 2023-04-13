@@ -12,9 +12,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import jp.careapp.core.utils.getDurationBreakdown
 import jp.careapp.counseling.R
-import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.network.FavoriteResponse
 import jp.careapp.counseling.android.utils.extensions.getBustSize
+import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler
 import jp.careapp.counseling.databinding.ItemFavouriteBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -52,15 +52,15 @@ class FavoriteViewHolder(
     private val events: EventFavoriteAction,
     private val context: Context
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(item: FavoriteResponse) {
+    fun bind(consultant: FavoriteResponse) {
         binding.apply {
-            favorite = item
+            favorite = consultant
             event = events
             lifecycleOwner = this@FavoriteViewHolder.lifecycleOwner
             executePendingBindings()
         }
-        binding.tvName.text=item.name
-        Glide.with(context).load(item.thumbnailImageUrl)
+        binding.tvName.text=consultant.name
+        Glide.with(context).load(consultant.thumbnailImageUrl)
             .apply(
                 RequestOptions()
                     .placeholder(R.drawable.default_avt_performer)
@@ -77,33 +77,16 @@ class FavoriteViewHolder(
                 context.getDurationBreakdown(System.currentTimeMillis() - startDate)
         }
 
-        if (ConsultantResponse.isWaiting(item.callStatus, item.chatStatus)) {
-            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_waiting)
-            binding.tvStatus.text =
-                context.resources.getString(R.string.presence_status_waiting)
-        } else if (ConsultantResponse.isLiveStream(
-                item.callStatus,
-                item.chatStatus
-            )
-        ) {
-            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
-            binding.tvStatus.text =
-                context.resources.getString(R.string.presence_status_live_streaming)
-        } else if (ConsultantResponse.isPrivateLiveStream(
-                item.callStatus,
-                item.chatStatus
-            )
-        ) {
-            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
-            binding.tvStatus.text =
-                context.resources.getString(R.string.presence_status_private_delivery)
-        } else {
-            binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
-            binding.tvStatus.text =
-                context.resources.getString(R.string.presence_status_offline)
-        }
+        val status = PerformerStatusHandler.getStatus(consultant.callStatus,consultant.chatStatus)
 
-        val bustSize = context.getBustSize(item.bust)
+        val statusText = PerformerStatusHandler.getStatusText(status, context.resources)
+
+        val statusBg = PerformerStatusHandler.getStatusBg(status)
+
+        binding.tvStatus.setBackgroundResource(statusBg)
+        binding.tvStatus.text = statusText
+
+        val bustSize = context.getBustSize(consultant.bust)
         if (bustSize == "") {
             binding.tvSize.visibility = View.GONE
         } else {
@@ -111,7 +94,7 @@ class FavoriteViewHolder(
             binding.tvSize.text = bustSize
         }
 
-        binding.tvAge.text = item.age.toString() + context.resources.getString(R.string.age_raw)
+        binding.tvAge.text = consultant.age.toString() + context.resources.getString(R.string.age_raw)
 
     }
 

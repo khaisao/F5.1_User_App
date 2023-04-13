@@ -12,7 +12,6 @@ import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import android.view.WindowManager
 import android.widget.PopupWindow
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
@@ -58,6 +57,8 @@ import jp.careapp.counseling.android.utils.CallRestriction
 import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.extensions.toPayLength
 import jp.careapp.counseling.android.utils.extensions.toPayPoint
+import jp.careapp.counseling.android.utils.performer_extension.PerformerStatus
+import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler
 import jp.careapp.counseling.databinding.FragmentChatMessageBinding
 import javax.inject.Inject
 
@@ -330,32 +331,24 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
         if (performerDetail != null) {
             binding.apply {
-                if (ConsultantResponse.isWaiting(performerDetail.callStatus,performerDetail.chatStatus)) {
-                    tvStatus.setBackgroundResource(R.drawable.bg_performer_status_waiting)
-                    tvStatus.text =
-                        resources.getString(R.string.presence_status_waiting)
-                } else if (ConsultantResponse.isLiveStream(performerDetail.callStatus,performerDetail.chatStatus)) {
-                    tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
-                    tvStatus.text =
-                        resources.getString(R.string.presence_status_live_streaming)
-                } else if (ConsultantResponse.isPrivateLiveStream(performerDetail.callStatus,performerDetail.chatStatus)) {
-                    tvStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
-                    tvStatus.text =
-                        resources.getString(R.string.presence_status_private_delivery)
-                } else {
-                    tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
-                    tvStatus.text =
-                        resources.getString(R.string.presence_status_offline)
-                }
-                if (ConsultantResponse.isWaiting(performerDetail.callStatus,performerDetail.chatStatus) || ConsultantResponse.isLiveStream(
-                        performerDetail.callStatus,performerDetail.chatStatus
-                    )
+
+                val status = PerformerStatusHandler.getStatus(performerDetail.callStatus,performerDetail.chatStatus)
+
+                val statusText = PerformerStatusHandler.getStatusText(status, requireContext().resources)
+
+                val statusBg = PerformerStatusHandler.getStatusBg(status)
+
+                tvStatus.text = statusText
+
+                tvStatus.setBackgroundResource(statusBg)
+
+                if (status == PerformerStatus.WAITING || status == PerformerStatus.LIVE_STREAM
                 ) {
                     llWatchLiveStream.visibility = VISIBLE
                 } else {
                     llWatchLiveStream.visibility = GONE
                 }
-                if (ConsultantResponse.isLiveStream(performerDetail.callStatus,performerDetail.chatStatus)) {
+                if (status == PerformerStatus.LIVE_STREAM) {
                     llPeep.visibility = VISIBLE
                 } else {
                     llPeep.visibility = GONE

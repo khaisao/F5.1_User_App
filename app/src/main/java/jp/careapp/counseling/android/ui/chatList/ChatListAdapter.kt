@@ -3,6 +3,7 @@ package jp.careapp.counseling.android.ui.chatList
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -12,8 +13,9 @@ import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.adapter.BaseAdapterLoadMore
 import jp.careapp.counseling.android.data.model.history_chat.HistoryChatResponse
-import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.utils.extensions.getBustSize
+import jp.careapp.counseling.android.utils.performer_extension.PerformerRankingHandler
+import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler
 import jp.careapp.counseling.databinding.ItemHistoryChatBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -53,36 +55,31 @@ class ChatListAdapter constructor(
         ) {
             historyChatResponse?.let { data ->
                 binding.apply {
-                    data.performer.let {
-                        if (!data.fromOwnerMail && it != null) {
-                            binding.ivPerson.loadImage(it.imageUrl, R.drawable.ic_avatar_default, false)
-                            val bustSize = context.getBustSize(it.bust)
+                    data.performer.let { consultant ->
+                        if (!data.fromOwnerMail && consultant != null) {
+                            binding.ivPerson.loadImage(consultant.imageUrl, R.drawable.ic_avatar_default, false)
+                            val bustSize = context.getBustSize(consultant.bust)
                             if (bustSize == "") {
                                 binding.tvSize.visibility = GONE
                             } else {
                                 binding.tvSize.visibility = VISIBLE
                                 binding.tvSize.text = bustSize
                             }
-                            binding.tvName.text = it.name
-                            binding.tvAge.text = String.format(context.getString(R.string.age_pattern),it.age)
-                            binding.ivRanking.setImageResource(ConsultantResponse.getImageViewForRank(it.ranking,it.recommendRanking))
-                            if (ConsultantResponse.isWaiting(it.callStatus,it.chatStatus)) {
-                                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_waiting)
-                                binding.tvStatus.text =
-                                    context.resources.getString(R.string.presence_status_waiting)
-                            } else if (ConsultantResponse.isWaiting(it.callStatus,it.chatStatus)) {
-                                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_live_streaming)
-                                binding.tvStatus.text =
-                                    context.resources.getString(R.string.presence_status_live_streaming)
-                            } else if (ConsultantResponse.isWaiting(it.callStatus,it.chatStatus)) {
-                                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_private_delivery)
-                                binding.tvStatus.text =
-                                    context.resources.getString(R.string.presence_status_private_delivery)
-                            } else {
-                                binding.tvStatus.setBackgroundResource(R.drawable.bg_performer_status_offline)
-                                binding.tvStatus.text =
-                                    context.resources.getString(R.string.presence_status_offline)
-                            }
+                            binding.ivStateBeginner.visibility = if(consultant.isRookie == 1) View.VISIBLE else View.GONE
+                            binding.tvName.text = consultant.name
+                            binding.tvAge.text = String.format(context.getString(R.string.age_pattern),consultant.age)
+                            binding.ivRanking.setImageResource(PerformerRankingHandler.getImageViewForRank(consultant.ranking,consultant.recommendRanking))
+
+                            val status = PerformerStatusHandler.getStatus(consultant.callStatus,consultant.chatStatus)
+
+                            val statusText = PerformerStatusHandler.getStatusText(status, context.resources)
+
+                            val statusBg = PerformerStatusHandler.getStatusBg(status)
+
+                            binding.tvStatus.text = statusText
+
+                            binding.tvStatus.setBackgroundResource(statusBg)
+
                         } else {
                             Glide.with(binding.ivPerson).load(
                                 context.resources.getIdentifier(

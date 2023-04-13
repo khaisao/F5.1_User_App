@@ -146,7 +146,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         viewModel.lisBanner.observe(viewLifecycleOwner) {
             it?.let {
                 binding.vpBanner.isVisible = it.isNotEmpty()
-                binding.tabIndicator.isVisible = it.size > 1
                 bannerAdapter.submitList(it) {
                     binding.vpBanner.setCurrentItem(0, false)
                 }

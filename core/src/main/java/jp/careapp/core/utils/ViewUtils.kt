@@ -2,6 +2,8 @@ package jp.careapp.core.utils
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Typeface
+import android.os.Build
 import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableString
@@ -9,10 +11,8 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
-import android.util.Log
 import android.view.*
 import android.view.animation.AnimationUtils
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView

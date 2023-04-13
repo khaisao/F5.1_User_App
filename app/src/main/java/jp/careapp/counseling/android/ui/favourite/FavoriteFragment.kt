@@ -212,12 +212,6 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
                     }
             }
         )
-
-        viewModels.isShowNoData.observe(viewLifecycleOwner, isShowNoDataObserver)
-    }
-
-    private var isShowNoDataObserver: Observer<Boolean> = Observer {
-        showNoData(it)
     }
 
     private fun showNoData(isShow: Boolean) {

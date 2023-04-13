@@ -28,6 +28,8 @@ data class Performer(
     val ranking: RankingResponse? = null,
     @SerializedName("recommend_ranking")
     val recommendRanking: Int = 0,
+    @SerializedName("is_rookie")
+    val isRookie: Int = 0,
     @SerializedName("presence_status")
     val presenceStatus: Int = 0,
     @SerializedName("call_status")
