@@ -23,7 +23,7 @@
     <string name="title_search_category">お悩み</string>
     <string name="please_enter_valid_email">有効なメールアドレスを入力してください</string>
     <string name="please_enter_valid_name">ニックネームを入力してください</string>
-    <string name="link_privacy">利用を継続する事でPEAK LIVEの<![CDATA[<br /><b><font color=#B47AFF><a href="link">利用規約</a></font></b>]]>に同意したものとみなされます。</string>
+    <string name="link_privacy">利用を継続する事でSPARK LIVEの<![CDATA[<br /><b><font color=#B47AFF><a href="link">利用規約</a></font></b>]]>に同意したものとみなされます。</string>
     <string name="link_privacy_login">ログインすると<![CDATA[<b><font color=#B47AFF><a href="link">利用規約</a></font></b>]]>に承認します。</string>
     <string name="already_have_acc">アカウントをお持ちですか？<![CDATA[<b><font color=#B47AFF><a href="link">ログインする</a></font></b>]]></string>
     <string name="login_note">ログインすると<![CDATA[<b><font color=#B47AFF><a href="link">利用規約</a></font></b>]]>に承認します。</string>

@@ -81,20 +81,6 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
         <action
-            android:id="@+id/action_topFragment_to_termsOfServiceFragment"
-            app:destination="@id/termsOfServiceFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
-        <action
-            android:id="@+id/action_topFragment_to_privacyPolicyFragment"
-            app:destination="@id/privacyPolicyFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
-        <action
             android:id="@+id/action_topFragment_to_usePointsGuideFragment"
             app:destination="@id/usePointsGuideFragment"
             app:enterAnim="@anim/slide_in_left"
@@ -118,13 +104,6 @@
         <action
             android:id="@+id/action_topFragment_to_fragmentNotification"
             app:destination="@id/fragmentNotification"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
-        <action
-            android:id="@+id/action_topFragment_to_contactUsFragment"
-            app:destination="@id/contactUsFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
@@ -371,45 +350,16 @@
         tools:layout="@layout/fragment_user_report" />
 
     <fragment
-        android:id="@+id/settingFragment"
-        android:name="jp.careapp.counseling.android.ui.setting.SettingFragment"
-        android:label="SettingFragment">
-        <action
-            android:id="@+id/action_settingFragment_to_webViewFragment"
-            app:destination="@id/webViewFragment"
-            app:enterAnim="@anim/slide_up"
-            app:popExitAnim="@anim/slide_down" />
-        <action
-            android:id="@+id/action_settingFragment_to_blockedFragment"
-            app:destination="@id/blockedFragment" />
-        <action
-            android:id="@+id/action_settingFragment_to_withdrawalFragment"
-            app:destination="@id/withdrawalFragment" />
-        <action
-            android:id="@+id/action_settingFragment_to_withdrawalStartFragment"
-            app:destination="@id/withdrawalStartFragment" />
-        <action
-            android:id="@+id/action_settingFragment_to_deleteAccountFragment"
-            app:destination="@id/deleteAccountFragment" />
-
-        <action
-            android:id="@+id/action_settingFragment_to_partnerInfoFragment"
-            app:destination="@id/partnerInfoFragment" />
-    </fragment>
-    <action
-        android:id="@+id/action_tabMyPage_to_Setting"
-        app:destination="@+id/settingFragment" />
-    <fragment
         android:id="@+id/blockedFragment"
         android:name="jp.careapp.counseling.android.ui.blocked.BlockedFragment"
         android:label="BlockedFragment"
         tools:layout="@layout/fragment_blocked" />
+
     <fragment
         android:id="@+id/withdrawalFragment"
         android:name="jp.careapp.counseling.android.ui.withdrawal.WithdrawalFragment"
         android:label="WithdrawalFragment"
         tools:layout="@layout/fragment_withdrawal">
-
         <action
             android:id="@+id/action_withdrawalFragment_to_withdrawalFinishFragment"
             app:destination="@id/withdrawalFinishFragment"
@@ -425,18 +375,7 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
     </fragment>
-    <fragment
-        android:id="@+id/withdrawalStartFragment"
-        android:name="jp.careapp.counseling.android.ui.withdrawal.start.WithdrawalStartFragment"
-        android:label="WithdrawalStartFragment">
 
-        <action
-            android:id="@+id/action_withdrawalStartFragment_to_editProfileFragment"
-            app:destination="@id/fragmentEditProfile" />
-        <action
-            android:id="@+id/action_withdrawalStartFragment_to_withdrawalFragment"
-            app:destination="@id/withdrawalFragment" />
-    </fragment>
     <activity
         android:id="@+id/welcomeActivity"
         android:name="jp.careapp.counseling.android.ui.welcome.WelcomeActivity"
@@ -530,6 +469,7 @@
         app:exitAnim="@anim/slide_out_right"
         app:popEnterAnim="@anim/slide_in_right"
         app:popExitAnim="@anim/slide_out_left" />
+
     <fragment
         android:id="@+id/withdrawalFinishFragment"
         android:name="jp.careapp.counseling.android.ui.withdrawal.finish.WithdrawalFinishFragment"
@@ -538,11 +478,6 @@
             android:id="@+id/action_withdrawalFragment_to_welcomeActivity"
             app:destination="@id/welcomeActivity" />
     </fragment>
-
-    <fragment
-        android:id="@+id/tutorialFragment"
-        android:name="jp.careapp.counseling.android.ui.tutorial.TutorialFragment"
-        android:label="TutorialFragment" />
 
     <action
         android:id="@+id/action_labFragment_to_labDetailFragment"
@@ -635,12 +570,6 @@
         app:popExitAnim="@anim/slide_out_left"
         app:popUpTo="@id/splashFragment"
         app:popUpToInclusive="true" />
-
-    <fragment
-        android:id="@+id/deleteAccountFragment"
-        android:name="jp.careapp.counseling.android.ui.delete_account.DeleteAccountFragment"
-        android:label="DeleteAccountFragment"
-        tools:layout="@layout/fragment_delete_account" />
 
     <action
         android:id="@+id/action_global_to_calling"
@@ -777,4 +706,25 @@
         app:popEnterAnim="@anim/slide_in_right"
         app:popExitAnim="@anim/slide_out_left"
         app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_global_termsOfServiceFragment"
+        app:destination="@id/termsOfServiceFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+    <action
+        android:id="@+id/action_global_privacyPolicyFragment"
+        app:destination="@id/privacyPolicyFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+    <action
+        android:id="@+id/action_global_contactUsFragment"
+        app:destination="@id/contactUsFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
 </navigation>

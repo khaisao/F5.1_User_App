@@ -3,15 +3,14 @@ package jp.careapp.counseling.android.ui.email
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
 import android.text.Html
 import android.text.TextUtils
-import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.View.*
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.WindowManager
 import androidx.core.text.HtmlCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -29,8 +28,6 @@ import jp.careapp.counseling.android.ui.email.InputAndEditMailViewModel.Companio
 import jp.careapp.counseling.android.ui.email.InputAndEditMailViewModel.Companion.SCREEN_REGISTER_WITH_EMAIL
 import jp.careapp.counseling.android.ui.main.MainViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
-import jp.careapp.counseling.android.utils.Define
-import jp.careapp.counseling.android.utils.SignedUpStatus
 import jp.careapp.counseling.databinding.FragmentInputAndEditEmailBinding
 import javax.inject.Inject
 
@@ -62,12 +59,7 @@ class InputAndEditEmailFragment :
         try {
             if (arguments != null) {
                 codeScreen = arguments?.getInt(BUNDLE_KEY.CODE_SCREEN) ?: SCREEN_LOGIN_WITH_EMAIL
-                email =
-                    if (rxPreferences.getSignedUpStatus() == SignedUpStatus.LOGIN_WITHOUT_EMAIL) {
-                        ""
-                    } else {
-                        arguments?.getString(BUNDLE_KEY.EMAIL) ?: ""
-                    }
+                email = arguments?.getString(BUNDLE_KEY.EMAIL) ?: ""
                 binding.etInputEmail.setText(email)
             } else {
                 codeScreen = SCREEN_REGISTER_WITH_EMAIL
@@ -75,9 +67,11 @@ class InputAndEditEmailFragment :
         } catch (e: Exception) {
         }
         changeStatusButton()
-        handleInputName()
-        openWebPrivacy()
         displayView()
+
+        binding.etInputEmail.addTextChangedListener {
+            validateEmailPattern(it.toString().trim())
+        }
     }
 
     private fun displayView() {
@@ -127,32 +121,6 @@ class InputAndEditEmailFragment :
                 cvRegisterButton.visibility = VISIBLE
             }
         }
-    }
-
-    private fun handleInputName() {
-        binding.etInputEmail.addTextChangedListener(
-            object : TextWatcher {
-                override fun onTextChanged(
-                    s: CharSequence,
-                    start: Int,
-                    before: Int,
-                    count: Int
-                ) {
-                    validateEmailPattern(s.toString())
-                }
-
-                override fun beforeTextChanged(
-                    s: CharSequence,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
-
-                override fun afterTextChanged(s: Editable) {
-                }
-            }
-        )
     }
 
     private fun changeStatusButton() {
@@ -247,22 +215,11 @@ class InputAndEditEmailFragment :
             appNavigation.openLoginEmailScreen(bundle)
         }
 
+        binding.linkPrivacy.setOnClickListener { if (!isDoubleClick) appNavigation.openTermsOfService() }
     }
 
     private fun getEmail(): String {
         return binding.etInputEmail.text.toString().trim()
-    }
-
-    private fun openWebPrivacy() {
-        binding.linkPrivacy.setOnClickListener {
-            if (!isDoubleClick) {
-                val bundle = Bundle().apply {
-                    putString(Define.TITLE_WEB_VIEW, getString(R.string.PrivacyPolicy))
-                    putString(Define.URL_WEB_VIEW, Define.URL_PRIVACY)
-                }
-                appNavigation.openScreenToWebview(bundle)
-            }
-        }
     }
 
     override fun bindingStateView() {

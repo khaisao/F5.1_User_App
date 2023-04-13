@@ -73,22 +73,6 @@ interface AppNavigation : BaseNavigator {
 
     fun openUserProfileToReportScreen(bundle: Bundle? = null)
 
-    fun openMypageToSetting(bundle: Bundle? = null)
-
-    fun openSettingToWebview(bundle: Bundle? = null)
-
-    fun openSettingToBlockedList(bundle: Bundle? = null)
-
-    fun openSettingToWithdrawal(bundle: Bundle? = null)
-
-    fun openSettingToWithdrawalStart(bundle: Bundle? = null)
-
-    fun openSettingToDeleteAccount(bundle: Bundle? = null)
-
-    fun openWithdrawalStartToEditProfile(bundle: Bundle? = null)
-
-    fun openWithdrawalStartToWithdrawal(bundle: Bundle? = null)
-
     fun openWithdrawalToStart(bundle: Bundle? = null)
 
     fun openTopToSearchScreen(bundle: Bundle? = null)
@@ -211,10 +195,6 @@ interface AppNavigation : BaseNavigator {
 
     fun openRMTopToRMBuyPoint(bundle: Bundle? = null)
 
-    fun openMyPageToTermsOfService(bundle: Bundle? = null)
-
-    fun openMyPageToPrivacyPolicy(bundle: Bundle? = null)
-
     fun openMyPageToUsePointsGuide(bundle: Bundle? = null)
 
     fun openEditProfileToEditNickName(bundle: Bundle? = null)
@@ -222,8 +202,6 @@ interface AppNavigation : BaseNavigator {
     fun openMyPageToBlocked(bundle: Bundle? = null)
 
     fun openMyPageToNotification(bundle: Bundle? = null)
-
-    fun openMyPageToContactUs(bundle: Bundle? = null)
 
     fun openContactUsToContactUsConfirm(bundle: Bundle? = null)
 
@@ -246,4 +224,10 @@ interface AppNavigation : BaseNavigator {
     fun openExitLiveStreamToMessage(bundle: Bundle? = null)
 
     fun openUserDetailToLiveStream(bundle: Bundle?)
+
+    fun openTermsOfService(bundle: Bundle? = null)
+
+    fun openPrivacyPolicy(bundle: Bundle? = null)
+
+    fun openContactUs(bundle: Bundle? = null)
 }
