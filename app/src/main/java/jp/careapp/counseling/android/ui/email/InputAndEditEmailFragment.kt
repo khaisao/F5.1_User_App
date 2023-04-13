@@ -7,9 +7,7 @@ import android.text.Editable
 import android.text.Html
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.MotionEvent
-import android.view.View
 import android.view.View.*
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.WindowManager
@@ -183,7 +181,7 @@ class InputAndEditEmailFragment :
 
     private fun validateEmailPattern(content: String) {
         if (content.isValidEmail()) {
-            binding.llErrorEmail.visibility = INVISIBLE
+            binding.llErrorEmail.visibility = GONE
             if (codeScreen == SCREEN_EDIT_EMAIL) {
                 if (content == email) {
                     disableButton()
@@ -195,7 +193,7 @@ class InputAndEditEmailFragment :
             }
         } else {
             binding.llErrorEmail.visibility =
-                if (!TextUtils.isEmpty(content)) VISIBLE else INVISIBLE
+                if (!TextUtils.isEmpty(content)) VISIBLE else GONE
             disableButton()
         }
     }
@@ -224,10 +222,6 @@ class InputAndEditEmailFragment :
     override fun setOnClick() {
         super.setOnClick()
 
-        binding.ivCloseDialog.setOnClickListener {
-            appNavigation.navigateUp()
-        }
-
         binding.btnEmail.setOnClickListener {
             if (!isDoubleClick) {
                 if (codeScreen == SCREEN_EDIT_EMAIL) {
@@ -252,6 +246,7 @@ class InputAndEditEmailFragment :
             }
             appNavigation.openLoginEmailScreen(bundle)
         }
+
     }
 
     private fun getEmail(): String {
