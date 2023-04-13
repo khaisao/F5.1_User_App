@@ -53,7 +53,6 @@ import jp.careapp.counseling.android.ui.notification.NotificationFragment
 import jp.careapp.counseling.android.ui.profile.list_user_profile.UserProfileFragment
 import jp.careapp.counseling.android.ui.registration.RegistrationFragment
 import jp.careapp.counseling.android.ui.splash.SplashFragment
-import jp.careapp.counseling.android.ui.start.StartFragment
 import jp.careapp.counseling.android.ui.top.TopFragment
 import jp.careapp.counseling.android.ui.tutorial.TutorialFragment
 import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeFragment
@@ -656,7 +655,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                             it.dismiss()
                                         }
                                 }
-                            } else if (currentFragment is SplashFragment || currentFragment is StartFragment) {
+                            } else if (currentFragment is SplashFragment) {
                                 // nothing
                             } else {
                                 var dataError: String

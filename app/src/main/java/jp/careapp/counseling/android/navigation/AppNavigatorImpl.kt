@@ -177,38 +177,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_UserProfile_to_ReportUser, bundle)
     }
 
-    override fun openMypageToSetting(bundle: Bundle?) {
-        openScreen(R.id.action_tabMyPage_to_Setting, bundle)
-    }
-
-    override fun openSettingToWebview(bundle: Bundle?) {
-        openScreen(R.id.action_settingFragment_to_webViewFragment, bundle)
-    }
-
-    override fun openSettingToBlockedList(bundle: Bundle?) {
-        openScreen(R.id.action_settingFragment_to_blockedFragment, bundle)
-    }
-
-    override fun openSettingToWithdrawal(bundle: Bundle?) {
-        openScreen(R.id.action_settingFragment_to_withdrawalFragment, bundle)
-    }
-
-    override fun openSettingToWithdrawalStart(bundle: Bundle?) {
-        openScreen(R.id.action_settingFragment_to_withdrawalStartFragment, bundle)
-    }
-
-    override fun openSettingToDeleteAccount(bundle: Bundle?) {
-        openScreen(R.id.action_settingFragment_to_deleteAccountFragment, bundle)
-    }
-
-    override fun openWithdrawalStartToEditProfile(bundle: Bundle?) {
-        openScreen(R.id.action_withdrawalStartFragment_to_editProfileFragment, bundle)
-    }
-
-    override fun openWithdrawalStartToWithdrawal(bundle: Bundle?) {
-        openScreen(R.id.action_withdrawalStartFragment_to_withdrawalFragment, bundle)
-    }
-
     override fun openWithdrawalToStart(bundle: Bundle?) {
         openScreen(R.id.action_withdrawalFragment_to_welcomeActivity, bundle)
     }
@@ -421,14 +389,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_RMTopFragment_to_RMBuyPointFragment, bundle)
     }
 
-    override fun openMyPageToTermsOfService(bundle: Bundle?) {
-        openScreen(R.id.action_topFragment_to_termsOfServiceFragment, bundle)
-    }
-
-    override fun openMyPageToPrivacyPolicy(bundle: Bundle?) {
-        openScreen(R.id.action_topFragment_to_privacyPolicyFragment, bundle)
-    }
-
     override fun openMyPageToUsePointsGuide(bundle: Bundle?) {
         openScreen(R.id.action_topFragment_to_usePointsGuideFragment, bundle)
     }
@@ -443,10 +403,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openMyPageToNotification(bundle: Bundle?) {
         openScreen(R.id.action_topFragment_to_fragmentNotification, bundle)
-    }
-
-    override fun openMyPageToContactUs(bundle: Bundle?) {
-        openScreen(R.id.action_topFragment_to_contactUsFragment, bundle)
     }
 
     override fun openContactUsToContactUsConfirm(bundle: Bundle?) {
@@ -491,5 +447,17 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openUserDetailToLiveStream(bundle: Bundle?) {
         openScreen(R.id.action_UserProfile_to_LiveStreamFragment, bundle)
+    }
+
+    override fun openTermsOfService(bundle: Bundle?) {
+        openScreen(R.id.action_global_termsOfServiceFragment, bundle)
+    }
+
+    override fun openPrivacyPolicy(bundle: Bundle?) {
+        openScreen(R.id.action_global_privacyPolicyFragment, bundle)
+    }
+
+    override fun openContactUs(bundle: Bundle?) {
+        openScreen(R.id.action_global_contactUsFragment, bundle)
     }
 }

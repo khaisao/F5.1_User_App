@@ -1,6 +1,5 @@
 package jp.careapp.counseling.android.ui.verificationCodeHelp
 
-import android.os.Bundle
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -47,8 +46,10 @@ class VerificationCodeHelpFragment :
             if (requireArguments().containsKey(BUNDLE_KEY.CODE_SCREEN)) {
                 codeScreen = requireArguments()?.getInt(BUNDLE_KEY.CODE_SCREEN)!!
                 email = requireArguments()?.getString(BUNDLE_KEY.EMAIL)!!
-                isFocusEditTextEmail = requireArguments()?.getBoolean(BUNDLE_KEY.FOCUS_EDITTEXT_EMAIL)!!
-                isFocusEditTextVerify = requireArguments()?.getBoolean(BUNDLE_KEY.FOCUS_EDITTEXT_VERIFY)!!
+                isFocusEditTextEmail =
+                    requireArguments()?.getBoolean(BUNDLE_KEY.FOCUS_EDITTEXT_EMAIL)!!
+                isFocusEditTextVerify =
+                    requireArguments()?.getBoolean(BUNDLE_KEY.FOCUS_EDITTEXT_VERIFY)!!
             }
         }
         binding.tvYourEmail.text = email
@@ -87,14 +88,7 @@ class VerificationCodeHelpFragment :
                 }
             }
         }
-        binding.btContactUs.setOnClickListener {
-            if (!isDoubleClick) {
-                val bundle = Bundle().apply {
-                    putString("type_contact", this@VerificationCodeHelpFragment::class.java.simpleName)
-                }
-//                appNavigation.openMyPageToContact(bundle)
-            }
-        }
+        binding.btContactUs.setOnClickListener { if (!isDoubleClick) appNavigation.openContactUs() }
     }
 
     override fun onBackPressed() {
