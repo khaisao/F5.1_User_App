@@ -32,7 +32,6 @@ import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.BuyPointBottomFragment
 import jp.careapp.counseling.android.ui.calling.CallConnectionDialog
-import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.buy_point.PurchasePointBottomSheet
 import jp.careapp.counseling.android.ui.profile.block_report.BlockAndReportBottomFragment
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.FLAX_LOGIN_AUTH_RESPONSE
@@ -81,7 +80,7 @@ class DetailUserProfileFragment :
     private var previousScreen = ""
     private var numberTimeCanScrollDown = 0
     private var numberMaxTimeCanScrollDown = 0
-    private var loginType = 0
+    private var viewerType = 0
 
     // item check favorite when first chat
     private var isShowFromUserDisable: Boolean = false
@@ -208,16 +207,16 @@ class DetailUserProfileFragment :
                         showDialogRequestMicrophonePermission()
                     }
                 }
-                loginType = 0
+                viewerType = 0
                 viewModel.viewerStatus = 0
             }
         }
 
         binding.llPeep.setOnClickListener {
             if (!isDoubleClick) {
-                checkPoint()
-                loginType = 1
+                viewerType = 1
                 viewModel.viewerStatus = 1
+                showDialogConfirmCall()
             }
         }
     }
@@ -323,9 +322,9 @@ class DetailUserProfileFragment :
                 val bundle = Bundle().also {
                     it.putInt(BUNDLE_KEY.TYPE_BUY_POINT, Define.BUY_POINT_FIRST)
                 }
-                handleBuyPoint.buyPointLiveStream(childFragmentManager, bundle,
-                    object : PurchasePointBottomSheet.PurchasePointCallback {
-                        override fun purchasePointSuccess() {
+                handleBuyPoint.buyPoint(childFragmentManager, bundle,
+                    object : BuyPointBottomFragment.HandleBuyPoint {
+                        override fun buyPointSucess() {
                             checkPoint()
                         }
                     }
@@ -347,7 +346,6 @@ class DetailUserProfileFragment :
                 openCalling()
             }.setOnNegativePressed {
                 it.dismiss()
-                openChatScreen(true)
             }
     }
 
@@ -359,7 +357,7 @@ class DetailUserProfileFragment :
     }
 
     private fun openCalling() {
-        consultantResponse?.code?.let { viewModel.startCall(it) }
+        consultantResponse?.code?.let { viewModel.connectLiveStream(it) }
     }
 
     fun doBuyPoint() {
@@ -370,7 +368,7 @@ class DetailUserProfileFragment :
             bundle,
             object : BuyPointBottomFragment.HandleBuyPoint {
                 override fun buyPointSucess() {
-                    activity?.let { it1 ->
+                    activity?.let {
                         handleOpenChatScreen()
                     }
                 }
@@ -469,7 +467,7 @@ class DetailUserProfileFragment :
             val bundle = Bundle().apply {
                 putSerializable(FLAX_LOGIN_AUTH_RESPONSE, viewModel.flaxLoginAuthResponse)
                 putSerializable(USER_PROFILE, consultantResponse)
-                putInt(VIEW_STATUS, loginType)
+                putInt(VIEW_STATUS, viewerType)
             }
             appNavigation.openUserDetailToLiveStream(bundle)
         }
@@ -621,7 +619,7 @@ class DetailUserProfileFragment :
                             override fun clickReport() {
                                 if (!isDoubleClick) {
                                     val bundle = Bundle()
-                                    bundle.putString(BUNDLE_KEY.USER_PROFILE, user.code)
+                                    bundle.putString(USER_PROFILE, user.code)
                                     appNavigation.openUserProfileToReportScreen(bundle)
 
                                 }
@@ -753,7 +751,7 @@ class DetailUserProfileFragment :
             bundle.putString(BUNDLE_KEY.SCREEN_TYPE, previousScreen)
             val performer =
                 if (listPerformer.size > position) listPerformer.get(position) else null
-            bundle.putSerializable(BUNDLE_KEY.USER_PROFILE, performer)
+            bundle.putSerializable(USER_PROFILE, performer)
             detailUserProfileFragment.arguments = bundle
             return detailUserProfileFragment
         }

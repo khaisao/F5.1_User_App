@@ -72,6 +72,7 @@ class Define {
         const val URL_LIST_POINT_CREDIT = "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/stripe/buy-point-list.html"
         const val URL_LIST_POINT_PAY_PAY = "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/paypay/buy-point-list.html"
         const val URL_LIST_POINT_AMAZON_PAY = "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/amazon/buy-point-list.html"
+        const val URL_LIVE_STREAM_POINT_PURCHASE = "${BuildConfig.WEB_DOMAIN}/popup/payment/credit"
         // TODO (Change  owner_code)
         //  const val OWNER_CODE = 6257353
         const val OWNER_CODE = 249085
@@ -352,6 +353,8 @@ class BUNDLE_KEY {
         // Live Stream
         const val FLAX_LOGIN_AUTH_RESPONSE = "FLAX_LOGIN_AUTH_RESPONSE"
         const val VIEW_STATUS = "VIEW_STATUS"
+        const val CAMERA_SETTING = "CAMERA_SETTING"
+        const val MIC_SETTING = "MIC_SETTING"
     }
 }
 

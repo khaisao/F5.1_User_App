@@ -45,34 +45,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/divider"
                 tools:text="@string/point_purchase_reason" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/point_purchase_button_1"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cost_point_rv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_24"
-                android:background="@drawable/bg_gradient_common"
-                android:text="@string/pointLoadingText"
-                android:textColor="@color/white" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/point_purchase_button_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_24"
-                android:layout_marginTop="@dimen/margin_8"
-                android:background="@drawable/bg_gradient_common"
-                android:text="@string/pointLoadingText"
-                android:textColor="@color/white" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/point_purchase_button_3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_24"
-                android:layout_marginTop="@dimen/margin_8"
-                android:background="@drawable/bg_gradient_common"
-                android:text="@string/pointLoadingText"
-                android:textColor="@color/white" />
+                android:layout_height="match_parent"
+                android:isScrollContainer="false"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_livestream_buy_point" />
 
             <TextView
                 android:id="@+id/cancel_button_tv"

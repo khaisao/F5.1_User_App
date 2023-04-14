@@ -11,7 +11,10 @@ import jp.careapp.counseling.R
 import jp.careapp.counseling.android.AppApplication
 import jp.careapp.counseling.android.data.network.ApiObjectResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -109,9 +112,8 @@ class VerifyCodeViewModel @Inject constructor(
     private fun handleError(throwable: Throwable) {
         if (throwable is HttpException) {
             countError++
-            val httpException = throwable as HttpException
             try {
-                val errorBody = httpException.response()!!.errorBody()!!.string()
+                val errorBody = throwable.response()!!.errorBody()!!.string()
                 val gson = GsonBuilder().create()
                 val apiObjectResponse =
                     gson.fromJson(errorBody, ApiObjectResponse::class.java)

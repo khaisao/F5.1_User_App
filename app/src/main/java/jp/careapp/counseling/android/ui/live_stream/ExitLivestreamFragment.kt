@@ -2,6 +2,8 @@ package jp.careapp.counseling.android.ui.live_stream
 
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -49,6 +51,8 @@ class ExitLivestreamFragment :
 
     private var consultantResponseLocal: ConsultantResponse? = null
 
+    private var errorMessage: String = ""
+
     private val shareViewModel: ShareViewModel by activityViewModels()
 
     private var isFirstChat: Boolean? = null
@@ -57,7 +61,7 @@ class ExitLivestreamFragment :
 
     private var isShowFromUserDisable: Boolean = false
 
-    private lateinit var behavior:  AppBarLayout.Behavior
+    private lateinit var behavior: AppBarLayout.Behavior
 
 
     @Inject
@@ -83,6 +87,7 @@ class ExitLivestreamFragment :
             consultantResponseLocal =
                 bundle.getSerializable(BUNDLE_KEY.USER_PROFILE) as? ConsultantResponse
             previousScreen = bundle.getString(BUNDLE_KEY.SCREEN_TYPE, "")
+            errorMessage = bundle.getString(BUNDLE_KEY.TITLE, "")
         }
 
         consultantResponseLocal?.code?.let { detailViewModel.loadMailInfo(it) }
@@ -114,6 +119,12 @@ class ExitLivestreamFragment :
         val params = binding.alRv.layoutParams as CoordinatorLayout.LayoutParams
         behavior = params.behavior as AppBarLayout.Behavior
 
+        if (errorMessage.isNotEmpty()) {
+            binding.tvError.visibility = VISIBLE
+            binding.tvError.text = errorMessage
+        } else {
+            binding.tvError.visibility = GONE
+        }
     }
 
     override fun setOnClick() {

@@ -14,9 +14,7 @@ import jp.careapp.counseling.android.data.network.ApiObjectResponse
 import jp.careapp.counseling.android.data.network.LoginResponse
 import jp.careapp.counseling.android.data.network.MemberResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
-import jp.careapp.counseling.android.keystore.KeyService
 import jp.careapp.counseling.android.network.ApiInterface
-import jp.careapp.counseling.android.utils.Define.Companion.KEY_ALIAS
 import jp.careapp.counseling.android.utils.Define.Companion.NORMAL_MODE
 import jp.careapp.counseling.android.utils.dummyCategoryData
 import jp.careapp.counseling.android.utils.dummyFreeTemplateData
@@ -30,7 +28,6 @@ class SplashViewModel @ViewModelInject constructor(
     private val apiInterface: ApiInterface,
     private val rxPreferences: RxPreferences,
     private val mRepository: SplashRepository,
-    private val keyService: KeyService
 ) : BaseViewModel() {
 
     companion object {
@@ -162,7 +159,7 @@ class SplashViewModel @ViewModelInject constructor(
                 loginResult.value = rxPreferences.getEmail()?.let {
                     apiInterface.login(
                         it,
-                        keyService.decrypt(KEY_ALIAS, rxPreferences.getPassword()) ?: "",
+                        rxPreferences.getPassword() ?: "",
                         deviceName
                     )
                 }

@@ -6,7 +6,6 @@ import com.google.gson.reflect.TypeToken
 import jp.careapp.counseling.android.data.network.ApiObjectResponse
 import jp.careapp.counseling.android.data.network.LoginResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
-import jp.careapp.counseling.android.keystore.KeyService
 import jp.careapp.counseling.android.utils.event.NetworkEvent
 import jp.careapp.counseling.android.utils.event.NetworkState
 import jp.careapp.counseling.android.utils.result.Result
@@ -27,7 +26,6 @@ class TokenAuthenticator @Inject constructor(
     private val rxPreferences: RxPreferences,
     private val gson: Gson,
     private val networkEvent: NetworkEvent,
-    private val keyService: KeyService
 ) : Authenticator {
 
     @ExperimentalCoroutinesApi

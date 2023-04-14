@@ -10,48 +10,51 @@ import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.LiveStreamChatResponse
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamCommentType
 import jp.careapp.counseling.android.ui.live_stream.setLiveStreamCommentText
-import jp.careapp.counseling.databinding.ItemLiveStreamNormalCommentBinding
-import jp.careapp.counseling.databinding.ItemLiveStreamPerformerCommentBinding
-import jp.careapp.counseling.databinding.ItemLiveStreamWhisperCommentBinding
+import jp.careapp.counseling.databinding.ItemLiveStreamMessageBinding
+import jp.careapp.counseling.databinding.ItemLiveStreamWhisperBinding
 
 class RMLiveStreamAdapter :
     ListAdapter<LiveStreamChatResponse, RecyclerView.ViewHolder>(LiveStreamDiffUtil()) {
-    class NormalMessageViewHolder(private val binding: ItemLiveStreamNormalCommentBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(comment: LiveStreamChatResponse) {
-            binding.tvComment.setLiveStreamCommentText(
-                "視聴者名 ${comment.message}",
-                R.color.color_dadada
-            )
-        }
-    }
-
-    class PerformerMessageViewHolder(private val binding: ItemLiveStreamPerformerCommentBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(comment: LiveStreamChatResponse) {
-            binding.tvMessage.setLiveStreamCommentText(
-                "配信者名 ${comment.message}",
-                R.color.color_ff8de8
-            )
-        }
-    }
-
-    class WhisperMessageViewHolder(private val binding: ItemLiveStreamWhisperCommentBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(comment: LiveStreamChatResponse) {
-            binding.tvMessage.setLiveStreamCommentText(
-                "視聴者名 ${comment.message}",
-                R.color.color_dadada
-            )
-        }
-    }
-
-    class PerformerWhisperMessageViewHolder(private val binding: ItemLiveStreamWhisperCommentBinding) :
+    class NormalMessageViewHolder(private val binding: ItemLiveStreamMessageBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(message: LiveStreamChatResponse) {
             binding.tvMessage.setLiveStreamCommentText(
-                "配信者名 ${message.message}",
+                message.name!!,
+                message.message!!,
                 R.color.color_dadada
+            )
+        }
+    }
+
+    class PerformerMessageViewHolder(private val binding: ItemLiveStreamMessageBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(message: LiveStreamChatResponse) {
+            binding.tvMessage.setLiveStreamCommentText(
+                message.name!!,
+                message.message!!,
+                R.color.color_89e9ff
+            )
+        }
+    }
+
+    class WhisperMessageViewHolder(private val binding: ItemLiveStreamWhisperBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(message: LiveStreamChatResponse) {
+            binding.tvMessage.setLiveStreamCommentText(
+                message.name!!,
+                message.message!!,
+                R.color.color_dadada
+            )
+        }
+    }
+
+    class PerformerWhisperMessageViewHolder(private val binding: ItemLiveStreamWhisperBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(message: LiveStreamChatResponse) {
+            binding.tvMessage.setLiveStreamCommentText(
+                message.name!!,
+                message.message!!,
+                R.color.color_89e9ff
             )
         }
     }
@@ -70,7 +73,7 @@ class RMLiveStreamAdapter :
                 NormalMessageViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.item_live_stream_normal_comment,
+                        R.layout.item_live_stream_message,
                         parent,
                         false
                     )
@@ -80,7 +83,7 @@ class RMLiveStreamAdapter :
                 PerformerMessageViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.item_live_stream_performer_comment,
+                        R.layout.item_live_stream_message,
                         parent,
                         false
                     )
@@ -90,7 +93,17 @@ class RMLiveStreamAdapter :
                 WhisperMessageViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.item_live_stream_whisper_comment,
+                        R.layout.item_live_stream_whisper,
+                        parent,
+                        false
+                    )
+                )
+            }
+            LiveStreamCommentType.PERFORMER_WHISPER -> {
+                WhisperMessageViewHolder(
+                    DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.context),
+                        R.layout.item_live_stream_whisper,
                         parent,
                         false
                     )
