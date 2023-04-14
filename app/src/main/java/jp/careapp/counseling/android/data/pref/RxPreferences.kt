@@ -27,6 +27,8 @@ interface RxPreferences {
 
     fun saveUserInfo(token: String, tokenExpire: String, password: String, memberCode: String)
 
+    fun updateUserInformation(token: String?, tokenExpire: String?, memberCode: String?)
+
     fun getTokenExpire(): String?
 
     fun getPassword(): String?

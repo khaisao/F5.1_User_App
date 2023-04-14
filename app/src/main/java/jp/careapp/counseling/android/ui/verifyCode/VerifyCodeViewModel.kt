@@ -11,8 +11,6 @@ import jp.careapp.counseling.R
 import jp.careapp.counseling.android.AppApplication
 import jp.careapp.counseling.android.data.network.ApiObjectResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
-import jp.careapp.counseling.android.keystore.KeyService
-import jp.careapp.counseling.android.utils.Define
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -20,7 +18,6 @@ import javax.inject.Inject
 @HiltViewModel
 class VerifyCodeViewModel @Inject constructor(
     private val rxPreferences: RxPreferences,
-    private val keyService: KeyService,
     private val mRepository: VerifyCodeRepository
 ) : BaseViewModel() {
 
@@ -54,9 +51,7 @@ class VerifyCodeViewModel @Inject constructor(
                         val dataResponse = response.dataResponse
                         val token = dataResponse.token.toString()
                         val tokenExpire = dataResponse.tokenExpire.toString()
-                        val password =
-                            keyService.encrypt(Define.KEY_ALIAS, dataResponse.password.toString())
-                                ?: ""
+                        val password = dataResponse.password.toString()
                         val memberCode = dataResponse.memberCode.toString()
                         mRepository.saveUserInfo(token, tokenExpire, password, memberCode)
                         mRepository.saveEmail(email)

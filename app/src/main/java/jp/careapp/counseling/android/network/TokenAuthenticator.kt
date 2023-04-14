@@ -2,13 +2,11 @@ package jp.careapp.counseling.android.network
 
 import android.os.Build
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import jp.careapp.counseling.android.data.network.ApiObjectResponse
 import jp.careapp.counseling.android.data.network.LoginResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.keystore.KeyService
-import jp.careapp.counseling.android.utils.Define.Companion.KEY_ALIAS
 import jp.careapp.counseling.android.utils.event.NetworkEvent
 import jp.careapp.counseling.android.utils.event.NetworkState
 import jp.careapp.counseling.android.utils.result.Result
@@ -35,13 +33,13 @@ class TokenAuthenticator @Inject constructor(
     @ExperimentalCoroutinesApi
     override fun authenticate(route: Route?, response: Response): Request? {
         val refreshResult = refreshToken("${jp.careapp.counseling.BuildConfig.BASE_URL}api/login")
-        if (refreshResult)
-            return response.request.newBuilder()
-                .header("Authorization", rxPreferences.getToken() ?: "")
+        return if (refreshResult)
+            response.request.newBuilder()
+                .header("Authorization", "Bearer ${rxPreferences.getToken().toString()}")
                 .build()
         else {
             networkEvent.publish(NetworkState.UNAUTHORIZED)
-            return null
+            null
         }
     }
 
@@ -51,20 +49,17 @@ class TokenAuthenticator @Inject constructor(
         val urlConnection = refreshUrl.openConnection() as HttpURLConnection
         urlConnection.apply {
             doInput = true
+            doOutput = true
             setRequestProperty("Accept", "application/json")
-            setRequestProperty("Content-Type", "application/json")
             requestMethod = "POST"
             useCaches = false
         }
-        val postData = JsonObject().apply {
-            addProperty("email", rxPreferences.getEmail())
-            addProperty("password", keyService.decrypt(KEY_ALIAS, rxPreferences.getPassword()))
-            addProperty("device_name", Build.MODEL)
-        }
 
-        urlConnection.doOutput = true
+        val urlParameters =
+            "email=${rxPreferences.getEmail()}&password=${rxPreferences.getPassword()}&device_name=${Build.MODEL}"
+
         DataOutputStream(urlConnection.outputStream).apply {
-            writeBytes(postData.toString())
+            writeBytes(urlParameters)
             flush()
             close()
         }
@@ -88,12 +83,13 @@ class TokenAuthenticator @Inject constructor(
                 return false
             }
             if (refreshTokenResult != null) {
-                rxPreferences.saveUserInfo(
-                    refreshTokenResult.dataResponse.token,
-                    refreshTokenResult.dataResponse.tokenExpire,
-                    keyService.decrypt(KEY_ALIAS, rxPreferences.getPassword()) ?: "",
-                    refreshTokenResult.dataResponse.memberCode
-                )
+                with(refreshTokenResult.dataResponse) {
+                    rxPreferences.updateUserInformation(
+                        token,
+                        tokenExpire,
+                        memberCode
+                    )
+                }
             }
             return true
         } else

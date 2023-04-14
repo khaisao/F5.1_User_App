@@ -506,4 +506,14 @@ class AppPreferences @Inject constructor(
         remove(PREF_PARAM_TOKEN_EXPIRE)
         logout()
     }
+
+    override fun updateUserInformation(
+        token: String?,
+        tokenExpire: String?,
+        memberCode: String?
+    ) {
+        mPrefs.edit().putString(PREF_PARAM_ACCESS_TOKEN, token).apply()
+        mPrefs.edit().putString(PREF_PARAM_TOKEN_EXPIRE, tokenExpire).apply()
+        mPrefs.edit().putString(PREF_PARAM_MEMBER_CODE, memberCode).apply()
+    }
 }
