@@ -571,48 +571,6 @@
         app:popUpTo="@id/splashFragment"
         app:popUpToInclusive="true" />
 
-    <action
-        android:id="@+id/action_global_to_calling"
-        app:destination="@id/callingFragment"
-        app:enterAnim="@anim/slide_in_left"
-        app:exitAnim="@anim/slide_out_right"
-        app:popEnterAnim="@anim/slide_in_right"
-        app:popExitAnim="@anim/slide_out_left" />
-
-    <fragment
-        android:id="@+id/callingFragment"
-        android:name="jp.careapp.counseling.android.ui.calling.CallingFragment"
-        android:label="CallingFragment"
-        tools:layout="@layout/fragment_calling">
-
-        <action
-            android:id="@+id/action_callingFragment_to_ChatMessage"
-            app:destination="@id/chatMessageFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpTo="@id/callingFragment"
-            app:popUpToInclusive="true" />
-
-        <action
-            android:id="@+id/action_callingFragment_to_buyPointFragment"
-            app:destination="@id/buyPointFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpTo="@id/callingFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_callingFragment_to_liveStreamFragment"
-            app:destination="@id/liveStreamFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
-
-    </fragment>
     <fragment
         android:id="@+id/termsOfServiceFragment"
         android:name="jp.careapp.counseling.android.ui.terms_of_service.TermsOfServiceFragment"

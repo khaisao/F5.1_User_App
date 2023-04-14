@@ -12,6 +12,7 @@ import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.view.WindowManager
 import android.widget.PopupWindow
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
@@ -32,6 +33,7 @@ import jp.careapp.core.utils.DeviceUtil
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.core.utils.dialog.OnPositiveDialogListener
 import jp.careapp.core.utils.loadImage
+import jp.careapp.core.utils.setMargins
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.message.*
 import jp.careapp.counseling.android.data.network.ConsultantResponse
@@ -154,6 +156,23 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     private val keyboardLayoutListener = OnGlobalLayoutListener {
         val r = Rect()
         binding.rootLayout.getWindowVisibleDisplayFrame(r)
+        val screenHeight = binding.rootLayout.rootView.height
+        val keypadHeight = screenHeight - r.bottom
+        if (keypadHeight > screenHeight * 0.15) {
+            binding.bottomBar.setMargins(
+                0,
+                0,
+                0,
+                0
+            )
+        } else {
+            binding.bottomBar.setMargins(
+                0,
+                0,
+                0,
+                0
+            )
+        }
     }
 
     private var templateMessageBottom: TemplateBottomFragment? = null
@@ -191,6 +210,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         if (activity is BaseActivity<*, *>) {
             (activity as BaseActivity<*, *>).setHandleDispathTouch(false)
         }
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         loadData()
     }
 
@@ -252,6 +272,13 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         }
         binding.rvMessageTemplate.adapter = templateAdapter
         templateAdapter.submitList(listTemplate)
+
+        if(performerCode == ""){
+            binding.tvStatus.visibility = GONE
+            binding.tvName.text = requireContext().resources.getString(R.string.notice_from_management)
+            binding.bottomBar.visibility = GONE
+            binding.rvMessageTemplate.visibility = GONE
+        }
     }
 
     private fun handleShowDialogPointFree() {
@@ -312,20 +339,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         this.pointPerchar = performerDetail?.pointPerChar ?: 0
         mAdapter.setPointPerChar(this.pointPerchar)
         formatCharactorToPoint(binding.contentMessageEdt.text.toString().length, this.pointPerchar)
-        when (performerDetail?.status) {
-            Define.USER_BAD -> {
-                binding.userBadIv.visibility = VISIBLE
-                binding.contentSendMessRl.visibility = GONE
-            }
-            Define.USER_WITH_DRAWAL -> {
-                binding.userBadIv.visibility = VISIBLE
-                binding.contentSendMessRl.visibility = GONE
-            }
-            else -> {
-                binding.userBadIv.visibility = GONE
-                binding.contentSendMessRl.visibility = VISIBLE
-            }
-        }
 
         if (performerDetail != null) {
             binding.apply {
@@ -469,7 +482,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
             .setTextNegativeButton(R.string.send_free_mess)
             .setOnPositivePressed {
                 it.dismiss()
-                openCalling()
             }.setOnNegativePressed {
                 it.dismiss()
             }
@@ -481,19 +493,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
             .setDialogTitle(R.string.msg_warning_during_call)
             .setTextPositiveButton(R.string.text_OK)
     }
-
-    private fun openCalling() {
-        val consultant = viewModel.getCurrentConsultant()
-        Bundle().also {
-            it.putString(BUNDLE_KEY.PERFORMER_NAME, consultant?.name ?: "")
-            it.putString(BUNDLE_KEY.PERFORMER_CODE, consultant?.code ?: "")
-            it.putString(BUNDLE_KEY.PERFORMER_IMAGE, consultant?.imageUrl ?: "")
-        }.let {
-            appNavigation.openToCalling(it)
-        }
-    }
-
-
 
     private fun sendFreeTemplate(code: String, templateId: Int) {
         activity?.let {
@@ -694,7 +693,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         if (it && !isReviewEnable) {
             isReviewEnable = true
             if (!rxPreferences.isFirstReview(rxPreferences.getMemberCode(), performerCode)) {
-                activity?.let { createNewReview() }
                 rxPreferences.saveFirstReview(true, rxPreferences.getMemberCode(), performerCode)
             }
         }
@@ -726,16 +724,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     fun reloadData() {
         templateMessageBottom?.dismiss()
         activity?.let { viewModel.loadMessage(it, this.performerCode, false) }
-    }
-
-
-    private fun createNewReview() {
-        val bundle = Bundle().apply {
-            putString(BUNDLE_KEY.PERFORMER_CODE, performerDetail?.code)
-            putString(BUNDLE_KEY.PERFORMER_NAME, performerDetail?.name)
-            putString(BUNDLE_KEY.PERFORMER_IMAGE, performerDetail?.imageUrl)
-        }
-        appNavigation.openReviewConsultant(bundle)
     }
 
     private fun showDialogPointFree(context: Context) {

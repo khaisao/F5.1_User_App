@@ -212,7 +212,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         binding.apply {
             clActiveCall.setOnTouchListener(OnDragTouchListener(clActiveCall, clContainer) {
                 handleNavigateBeforeOpenCalling()
-                appNavigation.openToCalling()
             })
         }
         callingViewModel.isConfigAudioCall.observe(this) {
@@ -239,9 +238,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             .setTextPositiveButton(R.string.buy_point)
             .setTextNegativeButton(R.string.cancel)
             .setOnPositivePressed {
-                if (appNavigation.currentFragmentId() == R.id.callingFragment) {
-                    appNavigation.navigateUp()
-                }
                 if (rxPreferences.isFullMode()) {
                     val bundle = Bundle().apply {
                         putString(Define.TITLE_WEB_VIEW, getString(R.string.buy_point))
@@ -593,9 +589,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                 .setTextOkButton(R.string.ok)
                                 .setOnOkButtonPressed {
                                     it.dismiss()
-                                    if (appNavigation.currentFragmentId() == R.id.callingFragment) {
-                                        appNavigation.navigateUp()
-                                    }
                                 }
                             networkEvent.publish(NetworkState.INITIALIZE)
                         }

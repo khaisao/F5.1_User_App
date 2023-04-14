@@ -217,14 +217,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_UserProfile_to_ChatMessage, data)
     }
 
-    override fun openToCalling(data: Bundle?) {
-        openScreen(R.id.action_global_to_calling, data)
-    }
-
-    override fun openCallingToLivestream(data: Bundle?) {
-        openScreen(R.id.action_callingFragment_to_liveStreamFragment, data)
-    }
-
     override fun openChatMessageToUserProfile(data: Bundle?) {
         openScreen(R.id.action_ChatMessgae_to_UserProfile, data)
     }
@@ -299,14 +291,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openPartnerInfoToTutorialScreen(bundle: Bundle?) {
         openScreen(R.id.action_partnerInfoFragment_to_tutorialFragment, bundle)
-    }
-
-    override fun openCallingToChatMessage(bundle: Bundle?) {
-        openScreen(R.id.action_callingFragment_to_ChatMessage, bundle)
-    }
-
-    override fun openCallingToBuyPoint(bundle: Bundle?) {
-        openScreen(R.id.action_callingFragment_to_buyPointFragment, bundle)
     }
 
     override fun openRMEnterNameToRmTop(bundle: Bundle?) {

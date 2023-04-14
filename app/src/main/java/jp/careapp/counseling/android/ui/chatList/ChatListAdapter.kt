@@ -57,7 +57,8 @@ class ChatListAdapter constructor(
                 binding.apply {
                     data.performer.let { consultant ->
                         if (!data.fromOwnerMail && consultant != null) {
-                            binding.ivPerson.loadImage(consultant.imageUrl, R.drawable.ic_avatar_default, false)
+                            binding.llRanking.visibility = VISIBLE
+                            binding.ivPerson.loadImage(consultant.imageUrl, R.drawable.default_avt_performer, false)
                             val bustSize = context.getBustSize(consultant.bust)
                             if (bustSize == "") {
                                 binding.tvSize.visibility = GONE
@@ -88,6 +89,8 @@ class ChatListAdapter constructor(
                                 )
                             )
                                 .into(binding.ivPerson)
+                            binding.llRanking.visibility = INVISIBLE
+                            binding.tvName.text = context.resources.getString(R.string.notice_from_management)
                         }
                     }
                 }
