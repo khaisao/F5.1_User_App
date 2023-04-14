@@ -9,141 +9,114 @@
         android:background="@color/color_background_common"
         android:orientation="vertical">
 
-
-        <include
-            android:id="@+id/layoutPointFree"
-            layout="@layout/dialog_recommend_use_point_free"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/bottom_bar"
-            android:visibility="invisible" />
-
-        <ScrollView
+        <ImageView
+            android:id="@+id/iv_avt_background"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/iv_avt_background"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:src="@drawable/default_avt_performer" />
-        </ScrollView>
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_avt_performer" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/message_rv"
+        <jp.careapp.counseling.android.utils.customView.DisableScrollNestedScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:clipToPadding="false"
-            android:descendantFocusability="beforeDescendants"
-            android:paddingLeft="@dimen/margin_16"
-            android:paddingRight="@dimen/margin_16"
-            android:paddingBottom="@dimen/margin_16"
-            app:layout_constraintBottom_toTopOf="@+id/rv_message_template"
-            app:layout_constraintTop_toBottomOf="@id/tool_bar"
-            app:reverseLayout="true"
-            app:stackFromEnd="true"
-            tools:listitem="@layout/item_message_performer" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_message_template"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingStart="@dimen/margin_16"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/bottom_bar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:listitem="@layout/item_template">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-
-        <RelativeLayout
-            android:id="@+id/bottom_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:fillViewport="true"
             android:fitsSystemWindows="true"
-            android:layout_alignParentBottom="true"
-            android:background="@color/color_background_common"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tool_bar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/content_send_mess_rl"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/padding_12">
+                android:layout_height="match_parent"
+                android:focusableInTouchMode="true">
 
-                <EditText
-                    android:id="@+id/content_message_edt"
-                    style="@style/text_14"
-                    android:layout_width="0dp"
-                    android:layout_marginStart="@dimen/margin_12"
-                    android:layout_marginTop="@dimen/margin_8"
-                    android:background="@drawable/bg_edt_message"
-                    android:hint="@string/input_content_message"
-                    android:inputType="textMultiLine"
-                    android:maxHeight="180dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/message_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:clipToPadding="false"
+                    android:descendantFocusability="beforeDescendants"
                     android:paddingLeft="@dimen/margin_16"
-                    android:paddingTop="@dimen/margin_11"
                     android:paddingRight="@dimen/margin_16"
-                    android:paddingBottom="@dimen/margin_11"
-                    android:scrollbars="vertical"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/purple_AEA2D1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/send_message_iv"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:paddingBottom="@dimen/margin_16"
+                    app:layout_constraintBottom_toTopOf="@+id/rv_message_template"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:reverseLayout="true"
+                    app:stackFromEnd="true"
+                    tools:listitem="@layout/item_message_performer" />
 
-                <ImageView
-                    android:id="@+id/send_message_iv"
-                    android:layout_width="wrap_content"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_message_template"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/content_message_edt"
-                    android:layout_alignParentEnd="true"
-                    android:paddingLeft="@dimen/margin_14"
-                    android:paddingTop="@dimen/margin_16"
-                    android:paddingRight="@dimen/padding_16dp"
-                    android:paddingBottom="@dimen/margin_8"
-                    android:src="@drawable/ic_message_inactive"
-                    app:layout_constraintBottom_toBottomOf="@id/content_message_edt"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/margin_16"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toTopOf="@id/bottom_bar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:listitem="@layout/item_template">
 
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/bottom_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/color_background_common"
+                    android:paddingBottom="@dimen/margin_12"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <EditText
+                        android:id="@+id/content_message_edt"
+                        style="@style/text_14"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="@dimen/margin_12"
+                        android:layout_marginTop="@dimen/margin_8"
+                        android:background="@drawable/bg_edt_message"
+                        android:hint="@string/input_content_message"
+                        android:inputType="textMultiLine"
+                        android:maxHeight="180dp"
+                        android:paddingLeft="@dimen/margin_16"
+                        android:paddingTop="@dimen/margin_11"
+                        android:paddingRight="@dimen/margin_16"
+                        android:paddingBottom="@dimen/margin_11"
+                        android:scrollbars="vertical"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/purple_AEA2D1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/send_message_iv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/send_message_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/content_message_edt"
+                        android:layout_alignParentEnd="true"
+                        android:paddingLeft="@dimen/margin_14"
+                        android:paddingTop="@dimen/margin_16"
+                        android:paddingRight="@dimen/padding_16dp"
+                        android:paddingBottom="@dimen/margin_8"
+                        android:src="@drawable/ic_message_inactive"
+                        app:layout_constraintBottom_toBottomOf="@id/content_message_edt"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
+        </jp.careapp.counseling.android.utils.customView.DisableScrollNestedScrollView>
 
-            <ImageView
-                android:id="@+id/user_quit_iv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:paddingLeft="@dimen/margin_34"
-                android:paddingTop="@dimen/margin_8"
-                android:paddingRight="@dimen/margin_34"
-                android:paddingBottom="@dimen/margin_34"
-                android:src="@drawable/ic_user_quit"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/user_bad_iv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:paddingLeft="@dimen/margin_34"
-                android:paddingTop="@dimen/margin_8"
-                android:paddingRight="@dimen/margin_34"
-                android:paddingBottom="@dimen/margin_34"
-                android:src="@drawable/ic_user_bad"
-                android:visibility="gone" />
-
-        </RelativeLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_background_common"
+            android:minHeight="56dp"
             android:paddingVertical="@dimen/padding_6dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -162,11 +135,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_5dp"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:paddingVertical="@dimen/padding_10"
                 app:layout_constraintBottom_toBottomOf="@id/iv_back"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/margin_10"
+                app:layout_constraintEnd_toStartOf="@id/ll_status"
                 app:layout_constraintStart_toEndOf="@id/iv_back"
                 app:layout_constraintTop_toTopOf="@id/iv_back">
 
@@ -183,15 +157,16 @@
                 <TextView
                     android:id="@+id/tv_name"
                     style="@style/text_bold_14"
-                    android:paddingBottom="@dimen/margin_2"
-                    android:maxLines="1"
-                    android:ellipsize="end"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/margin_2"
                     android:textColor="@color/color_text_F0F0F0" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_10"
@@ -206,9 +181,9 @@
                     android:layout_marginEnd="@dimen/margin_8"
                     android:background="@drawable/bg_gradient"
                     android:gravity="center"
-                    android:visibility="gone"
                     android:paddingHorizontal="@dimen/padding_10"
-                    android:paddingVertical="@dimen/padding_6dp">
+                    android:paddingVertical="@dimen/padding_6dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -230,9 +205,9 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_gradient_orangered"
                     android:gravity="center"
-                    android:visibility="gone"
                     android:paddingHorizontal="@dimen/padding_10"
-                    android:paddingVertical="@dimen/padding_6dp">
+                    android:paddingVertical="@dimen/padding_6dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="wrap_content"

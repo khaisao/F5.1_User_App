@@ -109,10 +109,6 @@ interface AppNavigation : BaseNavigator {
 
     fun openDetailUserToChatMessage(data: Bundle? = null)
 
-    fun openToCalling(data: Bundle? = null)
-
-    fun openCallingToLivestream(data: Bundle? = null)
-
     fun openChatMessageToUserProfile(data: Bundle? = null)
 
     fun popopBackStackToDetination(destination: Int)
@@ -150,10 +146,6 @@ interface AppNavigation : BaseNavigator {
     fun openPartnerInfoToTopScreen(bundle: Bundle? = null)
 
     fun openPartnerInfoToTutorialScreen(bundle: Bundle? = null)
-
-    fun openCallingToChatMessage(bundle: Bundle? = null)
-
-    fun openCallingToBuyPoint(bundle: Bundle? = null)
 
     fun openRMEnterNameToRmTop(bundle: Bundle? = null)
 
