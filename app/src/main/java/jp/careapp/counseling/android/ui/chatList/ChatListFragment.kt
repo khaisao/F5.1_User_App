@@ -144,4 +144,14 @@ class ChatListFragment : BaseFragment<ChatListFragmentBinding, ChatListViewModel
         }
         super.onDestroy()
     }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(typeMessageScreen: Int) =
+            ChatListFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(BUNDLE_KEY.TYPE_MESSAGE_SCREEN, typeMessageScreen)
+                }
+            }
+    }
 }

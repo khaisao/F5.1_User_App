@@ -14,22 +14,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/tabMessage"
-        android:name="jp.careapp.counseling.android.ui.chatList.ChatListFragment"
-        android:label="ChatListFragment"
-        tools:layout="@layout/chat_list_fragment" />
-
-    <fragment
         android:id="@+id/tabRank"
         android:name="jp.careapp.counseling.android.ui.rank.RankFragment"
         android:label="RankFragment"
         tools:layout="@layout/rank_fragment" />
-
-<!--    <fragment-->
-<!--        android:id="@+id/tabFavorite"-->
-<!--        android:name="jp.careapp.counseling.android.ui.favourite.FavoriteFragment"-->
-<!--        android:label="FavoriteFragment"-->
-<!--        tools:layout="@layout/fragment_favourite" />-->
 
     <fragment
         android:id="@+id/tabMyPage"
@@ -44,6 +32,12 @@
         android:label="FavoriteMainFragment" />
 
     <include app:graph="@navigation/main_navigation" />
+
+    <fragment
+        android:id="@+id/tabMessage"
+        android:name="jp.careapp.counseling.android.ui.message.MessageMainFragment"
+        tools:layout="@layout/fragment_message_main"
+        android:label="MessageMainFragment" />
 
 
 </navigation>

@@ -34,8 +34,6 @@ import jp.careapp.counseling.android.ui.buy_point.BuyPointBottomFragment
 import jp.careapp.counseling.android.ui.calling.CallConnectionDialog
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.buy_point.PurchasePointBottomSheet
 import jp.careapp.counseling.android.ui.profile.block_report.BlockAndReportBottomFragment
-import jp.careapp.counseling.android.ui.profile.tab_review.TabReviewFragment
-import jp.careapp.counseling.android.ui.profile.tab_user_info_detail.TabDetailUserProfileFragment
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.FLAX_LOGIN_AUTH_RESPONSE
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.USER_PROFILE
@@ -104,7 +102,7 @@ class DetailUserProfileFragment :
         val bundle = arguments
         if (bundle != null) {
             consultantResponseLocal =
-                bundle.getSerializable(BUNDLE_KEY.USER_PROFILE) as? ConsultantResponse
+                bundle.getSerializable(USER_PROFILE) as? ConsultantResponse
             previousScreen = bundle.getString(BUNDLE_KEY.SCREEN_TYPE, "")
         }
         super.onViewCreated(view, savedInstanceState)
@@ -124,7 +122,9 @@ class DetailUserProfileFragment :
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 binding.avatarIv.viewTreeObserver.removeOnGlobalLayoutListener(this);
-                galleryAdapter = GalleryAdapter(requireContext(), binding.avatarIv.height)
+                galleryAdapter = GalleryAdapter(requireContext(), binding.avatarIv.height) {
+                    Glide.with(requireContext()).load(it.thumbnailImage?.url).into(binding.avatarIv)
+                }
                 binding.rvGallery.layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 binding.rvGallery.adapter = galleryAdapter

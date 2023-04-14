@@ -1,11 +1,8 @@
 package jp.careapp.counseling.android.adapter
 
 import android.content.Context
-import android.graphics.Point
-import android.view.Display
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +12,8 @@ import jp.careapp.counseling.databinding.ItemGalleryBinding
 
 class GalleryAdapter(
     val context: Context,
-    val screenWidth:Int
+    val screenWidth:Int,
+    val onClickListener: (GalleryResponse) -> Unit
 ) :
     ListAdapter<GalleryResponse, GalleryAdapter.GalleryHolder>(DiffCallback()) {
 
@@ -44,7 +42,10 @@ class GalleryAdapter(
             itemView.layoutParams.height = screenWidth / 3+20
             Glide.with(context)
                 .load(item.thumbnailImage?.url)
-                .into(binding.ivMain1)
+                .into(binding.ivMain)
+            binding.ivMain.setOnClickListener {
+                onClickListener(item)
+            }
         }
     }
 

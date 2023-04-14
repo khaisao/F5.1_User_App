@@ -14,12 +14,6 @@
             android:background="@color/color_background_common"
             android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:alpha="0.15"
-                android:background="@color/white" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/history_chat_rv"
                 android:layout_width="match_parent"
