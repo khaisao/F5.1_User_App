@@ -4,8 +4,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.SingleLiveEvent
-import jp.careapp.counseling.android.keystore.KeyService
-import jp.careapp.counseling.android.utils.Define
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
@@ -14,7 +12,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
-    private val keyService: KeyService,
     private val mRepository: RegistrationRepository
 ) : BaseViewModel() {
 
@@ -35,9 +32,7 @@ class RegistrationViewModel @Inject constructor(
                         val dataResponse = response.dataResponse
                         val token = dataResponse.token.toString()
                         val tokenExpire = dataResponse.tokenExpire.toString()
-                        val password =
-                            keyService.encrypt(Define.KEY_ALIAS, dataResponse.password.toString())
-                                ?: ""
+                        val password = dataResponse.password.toString()
                         val memberCode = dataResponse.memberCode.toString()
                         mRepository.saveUserInfo(token, tokenExpire, password, memberCode)
                         mRepository.saveMemberName(userName)
