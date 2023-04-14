@@ -1,7 +1,12 @@
 package jp.careapp.counseling.android.ui.live_stream
 
 import android.Manifest
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Rect
+import android.media.AudioManager
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -28,7 +33,7 @@ import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.network.socket.MaruCastManager
-import jp.careapp.counseling.android.ui.buy_point.BuyPointBottomFragment
+import jp.careapp.counseling.android.ui.live_stream.InformationPerformerBottomFragment.ClickItemView
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.CHANGE_TO_PARTY_MODE
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.PERFORMER_OUT_CONFIRM
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.PREMIUM_PRIVATE_MODE_REGISTER
@@ -40,10 +45,11 @@ import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companio
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.TWO_SHOT_VALUE_2
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.UI_BUY_POINT
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.UI_DISMISS_PRIVATE_MODE
-import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.UI_LOGOUT
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.UI_SHOW_CONFIRM_CLOSE_PRIVATE_MODE
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.UI_SHOW_WAITING_PRIVATE_MODE
+import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.buy_point.PurchasePointBottomSheet
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.camera_micrro_switch.CameraMicroSwitchBottomSheet
+import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.camera_micrro_switch.LiveStreamMicAndCameraChangeCallback
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.confirm.LiveStreamConfirmBottomSheet
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.confirm.LiveStreamConfirmBottomSheetDialogListener
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.connect_private.ConnectPrivateBottomSheet
@@ -58,12 +64,13 @@ import jp.careapp.counseling.android.utils.SocketInfo.RESULT_NG
 import jp.careapp.counseling.android.utils.showSoftKeyboard
 import jp.careapp.counseling.databinding.FragmentLiveStreamBinding
 import org.marge.marucast_android_client.views.VideoRendererView
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamViewModel>(),
     LiveStreamConfirmBottomSheetDialogListener, LiveStreamConnectPrivateListener,
-    MaruCastManager.SwitchViewerCallback {
+    MaruCastManager.SwitchViewerCallback, LiveStreamMicAndCameraChangeCallback {
 
     @Inject
     lateinit var appNavigation: AppNavigation
@@ -87,6 +94,22 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     private var consultantResponse: ConsultantResponse? = null
 
     private var currentMode = LiveStreamMode.PARTY
+
+    private var filter: IntentFilter? = null
+
+    private var earphoneEventReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val action = intent!!.action ?: return
+            if (Intent.ACTION_HEADSET_PLUG == action) {
+                Timber.i("Intent.ACTION_HEADSET_PLUG")
+                val state = intent.getIntExtra("state", -1)
+                val mode =
+                    if (state == 0) AudioManager.MODE_IN_COMMUNICATION else AudioManager.MODE_IN_CALL
+                val isSpeakerphoneOn = state == 0
+                mViewModel.setAudioConfig(mode, isSpeakerphoneOn)
+            }
+        }
+    }
 
     private val cameraAndAudioPermissionLauncher =
         registerPermission { onCameraAndAudioPermissionResult(it) }
@@ -158,6 +181,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 .apply(
                     RequestOptions()
                         .placeholder(R.drawable.default_avt_performer)
+                        .circleCrop()
                 )
                 .into(binding.ivPerformer)
             binding.tvPerformerName.text = it.name
@@ -174,10 +198,28 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         mViewModel.handleConnect(requireActivity(), this)
 
         updateModeStatus()
+
+        filter = IntentFilter().apply {
+            addAction(Intent.ACTION_HEADSET_PLUG)
+            addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
+        }
+        requireContext().registerReceiver(earphoneEventReceiver, filter)
     }
 
     override fun setOnClick() {
         super.setOnClick()
+
+        binding.ivPerformer.setOnClickListener {
+            showPerformerInfoBottomSheet(object : ClickItemView {
+                override fun onAddFollowClick() {
+                    consultantResponse?.isFavorite = true
+                }
+
+                override fun onRemoveFollowClick() {
+                    consultantResponse?.isFavorite = false
+                }
+            })
+        }
 
         binding.btnComment.setOnClickListener {
             if (!isDoubleClick) {
@@ -230,16 +272,18 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                         )
                     )
                 } else if (currentMode == LiveStreamMode.PREMIUM_PRIVATE) {
-                    if (maruCastManager.isPublishing()!!) {
-                        maruCastManager.muteStream()
-                    } else {
-                        maruCastManager.publishStream()
-                    }
+                    CameraMicroSwitchBottomSheet.newInstance(
+                        mViewModel.isMicMute(),
+                        mViewModel.isCameraMute(),
+                        this
+                    ).show(childFragmentManager, "CameraMicroSwitchBottomSheet")
                 }
             }
         }
 
-        binding.btnPoint.setOnClickListener { }
+        binding.btnPoint.setOnClickListener {
+            showPointPurchaseBottomSheet()
+        }
 
         binding.edtComment.addTextChangedListener {
             binding.btnSendComment.isEnabled = getInputComment().isNotBlank()
@@ -252,9 +296,11 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             }
         }
 
-        binding.btnClose.setOnClickListener { if (!isDoubleClick) appNavigation.navigateUp() }
+        binding.btnClose.setOnClickListener { if (!isDoubleClick) showLogoutConfirm() }
 
-        binding.btnCameraFlip.setOnClickListener { }
+        binding.btnCameraFlip.setOnClickListener {
+            maruCastManager.switchCamera()
+        }
     }
 
     override fun bindingStateView() {
@@ -285,25 +331,6 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             }
         }
 
-        mViewModel.mActionState.observe(viewLifecycleOwner) {
-            when (it) {
-                is LiveStreamActionState.ChangeToPremiumPrivateFromPrivate -> {
-                    showLiveStreamConfirmBottomSheet(PREMIUM_PRIVATE_MODE_REGISTER, this)
-                }
-
-                is LiveStreamActionState.OpenBottomSheetSettingCameraAndMic -> {
-//                    cameraAndAudioPermissionLauncher.launchMultiplePermission(
-//                        arrayOf(
-//                            Manifest.permission.CAMERA,
-//                            Manifest.permission.RECORD_AUDIO
-//                        )
-//                    )
-                    val bottomSheet = CameraMicroSwitchBottomSheet()
-                    bottomSheet.show(childFragmentManager, "")
-                }
-            }
-        }
-
         bindingConnectResult()
         bindingUpdateUIMode()
         bindingViewerType()
@@ -317,7 +344,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             if (it.result == RESULT_NG) {
                 when {
                     it.isLogout -> {
-                        // TODO Handle logout : Go to finish live stream screen
+                        logout(it.message)
                     }
                     it.isShowToast -> {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -338,16 +365,14 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 }
                 UI_SHOW_CONFIRM_CLOSE_PRIVATE_MODE -> {
                     dismissBottomSheet("ConnectPrivateBottomSheet")
-                    showErrorDialog(getString(R.string.cancel_title))
+                    // showErrorDialog(getString(R.string.cancel_title)) TODO Check popup or bottom sheet
+                    showPrivateModeDenied()
                 }
                 UI_SHOW_WAITING_PRIVATE_MODE -> {
                     showPrivateModeRequest()
                 }
                 UI_BUY_POINT -> {
 
-                }
-                UI_LOGOUT -> {
-                    // TODO Handle logout : Go to finish live stream screen
                 }
             }
         }
@@ -445,12 +470,11 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             .setOnPositivePressed {
                 it.dismiss()
             }
-
     }
 
     private fun showPrivateModeDenied() {
         val bottomSheet = LiveStreamNoticeBottomSheet()
-        bottomSheet.show(childFragmentManager, "")
+        bottomSheet.show(childFragmentManager, "LiveStreamNoticeBottomSheet")
     }
 
     private fun showLiveStreamConfirmBottomSheet(
@@ -461,20 +485,57 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         bottomSheet.show(childFragmentManager, "LiveStreamConfirmBottomSheet")
     }
 
-    /**
-     * ポイント購入ボトムシートを表示する
-     */
+    private fun showPerformerInfoBottomSheet(itemView: ClickItemView) {
+        InformationPerformerBottomFragment.showInfoPerformerBottomSheet(
+            childFragmentManager,
+            itemView,
+            consultantResponse!!
+        )
+    }
+
+    private fun logout(logoutMessage: String) {
+        val bundle = Bundle().apply {
+            putSerializable(BUNDLE_KEY.USER_PROFILE, consultantResponse)
+            putSerializable(BUNDLE_KEY.TITLE, logoutMessage)
+        }
+        appNavigation.openLiveStreamToExitLiveStream(bundle)
+    }
+
+    private fun showLogoutConfirm() {
+        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+            .showDialog()
+            .setContent(R.string.logout_confirm)
+            .setTextPositiveButton(R.string.confirm_block_alert)
+            .setTextNegativeButton(R.string.cancel_block_alert)
+            .setOnPositivePressed {
+                it.dismiss()
+                logout(getString(R.string.logout_text))
+            }.setOnNegativePressed {
+                it.dismiss()
+            }
+    }
+
     private fun showPointPurchaseBottomSheet() {
         val bundle = Bundle()
         bundle.putInt(BUNDLE_KEY.TYPE_BUY_POINT, Define.BUY_POINT_FIRST)
-        handleBuyPoint.buyPoint(
-            childFragmentManager,
-            bundle,
-            object : BuyPointBottomFragment.HandleBuyPoint {
-                override fun buyPointSucess() {
-                    activity?.let { it1 ->
-                        // TODO
+        handleBuyPoint.buyPointLiveStream(childFragmentManager, bundle,
+            object : PurchasePointBottomSheet.PurchasePointCallback {
+                override fun onPointItemClick(point: Int, money: Int) {
+                    val purchasePointUrl = buildString {
+                        append(Define.URL_LIVE_STREAM_POINT_PURCHASE)
+                        append("?token=${rxPreferences.getToken()}")
+                        append("&&point=${point}")
+                        append("&money=${money}")
                     }
+                    val arguments = Bundle().apply {
+                        putString(Define.TITLE_WEB_VIEW, getString(R.string.buy_point))
+                        putString(Define.URL_WEB_VIEW, purchasePointUrl)
+                    }
+                    appNavigation.openScreenToWebview(arguments)
+                }
+
+                override fun purchasePointSuccess() {
+                    // TODO Handle after buy point
                 }
             }
         )
@@ -519,6 +580,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
     override fun onDestroyView() {
         super.onDestroyView()
+        requireContext().unregisterReceiver(earphoneEventReceiver)
     }
 
     override fun onSwitchViewerGroupVisible(isVisible: Boolean) {
@@ -531,5 +593,13 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
     override fun getViewerView(): VideoRendererView {
         return binding.memberViewCamera
+    }
+
+    override fun onMicChange(_isMicMute: Boolean) {
+        mViewModel.updateMicSetting(_isMicMute)
+    }
+
+    override fun onCameraChange(_isCameraMute: Boolean) {
+        mViewModel.updateCameraSetting(_isCameraMute)
     }
 }

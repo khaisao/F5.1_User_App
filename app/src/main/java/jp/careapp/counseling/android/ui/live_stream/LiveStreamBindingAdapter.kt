@@ -17,12 +17,13 @@ fun View.bindVisibility(content: SpannableString?) {
     }
 }
 
-fun TextView.setLiveStreamCommentText(content: String, resourceColor: Int) {
-    val span = SpannableString(content)
+fun TextView.setLiveStreamCommentText(name: String, content: String, resourceColor: Int) {
+    val message = "$name　$content"
+    val span = SpannableString(message)
     span.setSpan(
         ForegroundColorSpan(ContextCompat.getColor(this.context, resourceColor)),
         0,
-        4,
+        name.length,
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )
     text = span

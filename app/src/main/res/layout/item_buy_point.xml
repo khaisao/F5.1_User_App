@@ -9,7 +9,6 @@
         <variable
             name="data"
             type="ItemPoint" />
-
     </data>
 
     <FrameLayout

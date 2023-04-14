@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="jp.careapp.counseling.android.data.model.CreditItem" />
+
+        <variable
+            name="data"
+            type="CreditItem" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_item_buy_point">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/hiragino_sans_w6"
+            android:gravity="center"
+            android:paddingVertical="16dp"
+            android:text="@{`¥` + data.price + ` / ` + data.buyPoint + `pts`}"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:text="¥000 / 000pts" />
+    </FrameLayout>
+</layout>

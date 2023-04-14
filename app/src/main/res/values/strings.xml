@@ -745,4 +745,6 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="four_digit_number">4桁の数字</string>
     <string name="please_enter_tv">を入力してください</string>
     <string name="please_confirm_your_email">メールアドレスを確認してください</string>
+    <string name="logout_confirm">ログアウトしますか？</string>
+    <string name="logout_text">ログアウトしました</string>
 </resources>

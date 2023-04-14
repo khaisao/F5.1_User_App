@@ -16,6 +16,7 @@ import android.view.WindowManager
 import android.widget.PopupWindow
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -35,6 +36,7 @@ import jp.careapp.core.utils.dialog.OnPositiveDialogListener
 import jp.careapp.core.utils.loadImage
 import jp.careapp.core.utils.setMargins
 import jp.careapp.counseling.R
+import jp.careapp.counseling.android.data.model.live_stream.ConnectResult
 import jp.careapp.counseling.android.data.model.message.*
 import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.network.FreeTemplateResponse
@@ -45,6 +47,7 @@ import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.BuyPointBottomFragment
+import jp.careapp.counseling.android.ui.calling.CallConnectionDialog
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.DISABLE_LOAD_MORE
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.ENABLE_LOAD_MORE
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.HIDDEN_LOAD_MORE
@@ -56,6 +59,8 @@ import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.CHAT_MESSAGE
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.THRESHOLD_SHOW_REVIEW_APP
 import jp.careapp.counseling.android.utils.CallRestriction
 import jp.careapp.counseling.android.utils.Define
+import jp.careapp.counseling.android.utils.SocketInfo
+import jp.careapp.counseling.android.utils.extensions.hasPermissions
 import jp.careapp.counseling.android.utils.extensions.toPayLength
 import jp.careapp.counseling.android.utils.extensions.toPayPoint
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatus
@@ -65,7 +70,8 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessageViewModel>() {
+class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessageViewModel>(),
+    CallConnectionDialog.CallingCancelListener {
 
     @Inject
     lateinit var appNavigation: AppNavigation
@@ -107,6 +113,8 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     private var isSendFreeMessage = false
 
     private var isReviewEnable = false
+
+    private var viewerType = 0
 
     private val mAdapter: ChatMessageAdapter by lazy {
         ChatMessageAdapter(requireContext(), onClickListener = ({ message, typeClick ->
@@ -353,8 +361,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
                 tvStatus.setBackgroundResource(statusBg)
 
-                if (status == PerformerStatus.WAITING || status == PerformerStatus.LIVE_STREAM
-                ) {
+                if (status == PerformerStatus.WAITING || status == PerformerStatus.LIVE_STREAM) {
                     llWatchLiveStream.visibility = VISIBLE
                 } else {
                     llWatchLiveStream.visibility = GONE
@@ -409,6 +416,32 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
         binding.ivBack.setOnClickListener {
             appNavigation.navigateUp()
+
+            binding.llWatchLiveStream.setOnClickListener {
+                if (!isDoubleClick) {
+                    when {
+                        hasPermissions(arrayOf(Manifest.permission.RECORD_AUDIO)) -> {
+                            checkPoint()
+                        }
+                        shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO) -> {
+                            showDialogNeedMicrophonePermission()
+                        }
+                        else -> {
+                            showDialogRequestMicrophonePermission()
+                        }
+                    }
+                    viewerType = 0
+                    viewModel.viewerStatus = 0
+                }
+            }
+
+            binding.llPeep.setOnClickListener {
+                if (!isDoubleClick) {
+                    checkPoint()
+                    viewerType = 1
+                    viewModel.viewerStatus = 1
+                }
+            }
         }
     }
 
@@ -494,6 +527,13 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
             .setTextPositiveButton(R.string.text_OK)
     }
 
+    private fun openCalling() {
+        val consultant = viewModel.getCurrentConsultant()
+        consultant?.code?.let {
+            viewModel.connectLiveStream(it)
+        }
+    }
+
     private fun sendFreeTemplate(code: String, templateId: Int) {
         activity?.let {
             viewModel.sendFreeTemplate(FreeTemplateRequest(code, templateId), it)
@@ -526,6 +566,11 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         viewModel.loadMemberInfo()
     }
 
+    private fun setButtonEnable(isEnable: Boolean) {
+        binding.llWatchLiveStream.isEnabled = isEnable
+        binding.llPeep.isEnabled = isEnable
+    }
+
     override fun bindingStateView() {
         super.bindingStateView()
         viewModel.messageResult.observe(viewLifecycleOwner, messageResultResponse)
@@ -539,7 +584,10 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
             viewLifecycleOwner,
             closeFirstMessagePerformerInLocal
         )
-        viewModel.isHasTransmissionMessage.observe(viewLifecycleOwner, transmissionMessageResult)
+        viewModel.isHasTransmissionMessage.observe(
+            viewLifecycleOwner,
+            transmissionMessageResult
+        )
         viewModel.isEnoughMessageForReview.observe(viewLifecycleOwner, showReviewResult)
         viewModel.openPayMessageResult.observe(viewLifecycleOwner, openPayMessageResponse)
         viewModel.isEnableButtonSend.observe(viewLifecycleOwner, Observer {
@@ -547,6 +595,58 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                 binding.sendMessageIv.isEnabled = it
             }
         })
+        viewModel.connectResult.observe(viewLifecycleOwner, connectResultHandle)
+        viewModel.isButtonEnable.observe(viewLifecycleOwner, buttonEnableHandle)
+        viewModel.isLoginSuccess.observe(viewLifecycleOwner, loginSuccessHandle)
+    }
+
+    private val connectResultHandle: Observer<ConnectResult> = Observer {
+        viewModel.getCurrentConsultant()?.let { performerResponse ->
+            run {
+                val fragment: Fragment? =
+                    childFragmentManager.findFragmentByTag("CallConnectionDialog")
+                val dialog: CallConnectionDialog
+                if (fragment != null) {
+                    dialog = fragment as CallConnectionDialog
+                    if (it.result == SocketInfo.RESULT_NG) {
+                        dialog.setMessage(it.message, true)
+                    } else {
+                        dialog.setMessage(getString(R.string.call_content))
+                        dialog.setCallingCancelListener(this@ChatMessageFragment)
+                    }
+                } else {
+                    val message =
+                        if (it.result == SocketInfo.RESULT_NG) it.message else getString(R.string.call_content)
+                    val isError = it.result == SocketInfo.RESULT_NG
+                    dialog =
+                        CallConnectionDialog.newInstance(performerResponse, message, isError)
+                    dialog.show(childFragmentManager, "CallConnectionDialog")
+                }
+            }
+        }
+    }
+
+    private val loginSuccessHandle: Observer<Boolean> = Observer {
+        if (it) {
+            val fragment: Fragment? =
+                childFragmentManager.findFragmentByTag("CallConnectionDialog")
+            if (fragment != null) (fragment as CallConnectionDialog).dismiss()
+            val bundle = Bundle().apply {
+                putSerializable(
+                    BUNDLE_KEY.FLAX_LOGIN_AUTH_RESPONSE,
+                    viewModel.flaxLoginAuthResponse
+                )
+                viewModel.getCurrentConsultant()?.let { userProfile ->
+                    putSerializable(BUNDLE_KEY.USER_PROFILE, userProfile)
+                }
+                putInt(BUNDLE_KEY.VIEW_STATUS, viewerType)
+            }
+            appNavigation.openUserDetailToLiveStream(bundle)
+        }
+    }
+
+    private val buttonEnableHandle: Observer<Boolean> = Observer {
+        setButtonEnable(it)
     }
 
     private var messageResultResponse: Observer<DataMessage> = Observer {
@@ -719,6 +819,10 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
             shareViewModel.setMessagePerformerCode("")
         }
         super.onDestroy()
+    }
+
+    override fun callingCancel() {
+        viewModel.cancelCall()
     }
 
     fun reloadData() {

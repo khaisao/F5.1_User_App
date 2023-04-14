@@ -6,20 +6,30 @@ import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.DateUtil
+import jp.careapp.counseling.BuildConfig
 import jp.careapp.counseling.android.AppApplication
 import jp.careapp.counseling.android.data.event.EventBusAction
+import jp.careapp.counseling.android.data.model.live_stream.ConnectResult
 import jp.careapp.counseling.android.data.model.message.*
 import jp.careapp.counseling.android.data.model.user_profile.ActionLoadProfile
 import jp.careapp.counseling.android.data.network.ConsultantResponse
+import jp.careapp.counseling.android.data.network.FlaxLoginAuthResponse
+import jp.careapp.counseling.android.data.network.FssMemberAuthResponse
 import jp.careapp.counseling.android.data.network.MemberResponse
 import jp.careapp.counseling.android.data.network.socket.SocketActionSend
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.network.ApiInterface
+import jp.careapp.counseling.android.network.socket.CallingWebSocketClient
+import jp.careapp.counseling.android.network.socket.FlaxWebSocketManager
+import jp.careapp.counseling.android.network.socket.MaruCastManager
 import jp.careapp.counseling.android.ui.chatList.ChatListViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.PERFORMER_MSG_SHOW_REVIEW_APP
+import jp.careapp.counseling.android.utils.Define
+import jp.careapp.counseling.android.utils.SocketInfo
 import jp.careapp.counseling.android.utils.dummyFreeTemplateData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
@@ -28,12 +38,19 @@ import me.leolin.shortcutbadger.ShortcutBadger
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.json.JSONException
+import org.json.JSONObject
+import timber.log.Timber
+import java.io.UnsupportedEncodingException
+import java.net.URLEncoder
 
 class ChatMessageViewModel @ViewModelInject constructor(
     private val apiInterface: ApiInterface,
-    private val rxPreferences: RxPreferences
-) :
-    BaseViewModel() {
+    private val rxPreferences: RxPreferences,
+    private val flaxWebSocketManager: FlaxWebSocketManager,
+    private val maruCastManager: MaruCastManager,
+) : BaseViewModel(), CallingWebSocketClient.ChatWebSocketCallBack,
+    CallingWebSocketClient.MaruCastLoginCallBack {
     var page = 1
 
     // result handle show/hide/disable loadmore
@@ -77,8 +94,18 @@ class ChatMessageViewModel @ViewModelInject constructor(
 
     val isEnableButtonSend = MutableLiveData<Boolean>()
 
+    // Live stream
+    private val gson by lazy { Gson() }
+    val isButtonEnable = MutableLiveData<Boolean>()
+    val isLoginSuccess = MutableLiveData(false)
+    val connectResult = MutableLiveData<ConnectResult>()
+    private var cancelButtonClickedFlag = false
+    var flaxLoginAuthResponse: FlaxLoginAuthResponse? = null
+    var viewerStatus: Int = 0
+
     init {
         saveListFreeTemplate()
+        getConfigCall()
     }
 
     fun loadMessage(
@@ -94,28 +121,28 @@ class ChatMessageViewModel @ViewModelInject constructor(
             page = 1
             dataMessageMap.clear()
         }
-        var params = HashMap<String, Any>()
+        val params = HashMap<String, Any>()
         if (performerCode != "")
-            params.put(BUNDLE_KEY.PERFORMER_CODE, performerCode)
+            params[BUNDLE_KEY.PERFORMER_CODE] = performerCode
         else
-            params.put(BUNDLE_KEY.PERFORMER_CODE, "0")
-        params.put(BUNDLE_KEY.PAGE, page)
-        params.put(BUNDLE_KEY.LIMIT, BUNDLE_KEY.LIMIT_20)
-        params.put(BUNDLE_KEY.PARAM_SORT, BUNDLE_KEY.SEND_DATE)
-        params.put(BUNDLE_KEY.PARAM_ODER, BUNDLE_KEY.DESC)
+            params[BUNDLE_KEY.PERFORMER_CODE] = "0"
+        params[BUNDLE_KEY.PAGE] = page
+        params[BUNDLE_KEY.LIMIT] = BUNDLE_KEY.LIMIT_20
+        params[BUNDLE_KEY.PARAM_SORT] = BUNDLE_KEY.SEND_DATE
+        params[BUNDLE_KEY.PARAM_ODER] = BUNDLE_KEY.DESC
         viewModelScope.launch {
             if (!isLoadmore && isShowLoading) {
                 isLoading.value = true
             }
             try {
-                var responseMessage = apiInterface.loadMessage(params)
+                val responseMessage = apiInterface.loadMessage(params)
                 if (responseMessage.errors.isEmpty()) {
                     if (responseMessage.pagination.total > PERFORMER_MSG_SHOW_REVIEW_APP) {
-                        isEnoughMessageForReview.value = true;
+                        isEnoughMessageForReview.value = true
                     }
                     if (!responseMessage.dataResponse.isNullOrEmpty()) {
                         hiddenLoadMoreHandle.value = ChatListViewModel.ENABLE_LOAD_MORE
-                        page = page + 1
+                        page += 1
                         val data = responseMessage.dataResponse
                         data.forEach {
                             val time = DateUtil.convertStringToDateString(
@@ -126,12 +153,12 @@ class ChatMessageViewModel @ViewModelInject constructor(
                             if (dataMessageMap.containsKey(time)) {
                                 dataMessageMap.get(time)?.add(it)
                             } else {
-                                var listMessage = mutableListOf<BaseMessageResponse>()
+                                val listMessage = mutableListOf<BaseMessageResponse>()
                                 listMessage.add(it)
                                 dataMessageMap.put(time, listMessage)
                             }
                         }
-                        var messageResultConvert = mutableListOf<BaseMessageResponse>()
+                        val messageResultConvert = mutableListOf<BaseMessageResponse>()
                         for ((key, value) in dataMessageMap) {
                             messageResultConvert.addAll(value)
                             messageResultConvert.add(
@@ -217,7 +244,7 @@ class ChatMessageViewModel @ViewModelInject constructor(
                 val response = apiInterface.openPayMessage(mailCode)
                 response.let {
                     if (it.errors.isEmpty()) {
-                        it.dataResponse?.let { data ->
+                        it.dataResponse.let { data ->
                             openPayMessageResult.value = data
                             subtractPoint.value = true
                         }
@@ -240,14 +267,14 @@ class ChatMessageViewModel @ViewModelInject constructor(
 
     fun loadMessageAfterSend(activity: Activity, performerCode: String) {
         this.isLoadMessageAfterSend = true
-        var params = HashMap<String, Any>()
-        params.put(BUNDLE_KEY.PERFORMER_CODE, performerCode)
-        params.put(BUNDLE_KEY.LIMIT, 1)
-        params.put(BUNDLE_KEY.PARAM_SORT, BUNDLE_KEY.SEND_DATE)
-        params.put(BUNDLE_KEY.PARAM_ODER, BUNDLE_KEY.DESC)
+        val params = HashMap<String, Any>()
+        params[BUNDLE_KEY.PERFORMER_CODE] = performerCode
+        params[BUNDLE_KEY.LIMIT] = 1
+        params[BUNDLE_KEY.PARAM_SORT] = BUNDLE_KEY.SEND_DATE
+        params[BUNDLE_KEY.PARAM_ODER] = BUNDLE_KEY.DESC
         viewModelScope.launch {
             try {
-                var responseMessage = apiInterface.loadMessage(params)
+                val responseMessage = apiInterface.loadMessage(params)
                 if (responseMessage.errors.isEmpty()) {
                     if (responseMessage.pagination.total >= PERFORMER_MSG_SHOW_REVIEW_APP) {
                         isEnoughMessageForReview.value = true;
@@ -265,13 +292,13 @@ class ChatMessageViewModel @ViewModelInject constructor(
                             } else {
                                 val newMap = dataMessageMap.clone()
                                 dataMessageMap.clear()
-                                var listMessage = mutableListOf<BaseMessageResponse>()
+                                val listMessage = mutableListOf<BaseMessageResponse>()
                                 listMessage.add(0, it)
-                                dataMessageMap.put(time, listMessage)
+                                dataMessageMap[time] = listMessage
                                 dataMessageMap.putAll(newMap as LinkedHashMap<String, MutableList<BaseMessageResponse>>)
                             }
                         }
-                        var messageResultConvert = mutableListOf<BaseMessageResponse>()
+                        val messageResultConvert = mutableListOf<BaseMessageResponse>()
                         for ((key, value) in dataMessageMap) {
                             messageResultConvert.addAll(value)
                             messageResultConvert.add(
@@ -304,7 +331,7 @@ class ChatMessageViewModel @ViewModelInject constructor(
                 val response = apiInterface.sendMessage(messageRequest)
                 response.let {
                     if (it.errors.isEmpty()) {
-                        it.dataResponse?.let { data ->
+                        it.dataResponse.let { data ->
                             sendMessageResult.value = data
                             subtractPoint.value = true
                         }
@@ -331,7 +358,7 @@ class ChatMessageViewModel @ViewModelInject constructor(
                 val response = apiInterface.getUserProfileDetail(code)
                 response.let {
                     if (it.errors.isEmpty()) {
-                        it.dataResponse?.let { data ->
+                        it.dataResponse.let { data ->
                             userProfileResult.postValue(data)
                         }
                     }
@@ -354,7 +381,7 @@ class ChatMessageViewModel @ViewModelInject constructor(
                 val response = apiInterface.sendFirstMessage(messageRequest)
                 response.let {
                     if (it.errors.isEmpty()) {
-                        it.dataResponse?.let { data ->
+                        it.dataResponse.let { data ->
                             isCloseFirstMessageInLocal.value = true
                             sendMessageResult.value = data
                         }
@@ -379,7 +406,7 @@ class ChatMessageViewModel @ViewModelInject constructor(
                 val response = apiInterface.sendFreeTemplate(freeTemplateRequest)
                 response.let {
                     if (it.errors.isEmpty()) {
-                        it.dataResponse?.let { data ->
+                        it.dataResponse.let { data ->
                             sendMessageResult.value = data
                         }
                     }
@@ -412,7 +439,7 @@ class ChatMessageViewModel @ViewModelInject constructor(
                 val response = apiInterface.getMember()
                 response.let {
                     if (it.errors.isEmpty()) {
-                        it.dataResponse?.let { data ->
+                        it.dataResponse.let { data ->
                             memberInFoResult.value = data
                         }
                     }
@@ -481,6 +508,160 @@ class ChatMessageViewModel @ViewModelInject constructor(
 
     fun getCurrentConsultant(): ConsultantResponse? {
         return userProfileResult.value
+    }
+
+    // Handle for live stream
+    private fun getConfigCall() {
+        viewModelScope.launch(NonCancellable + Dispatchers.IO) {
+            try {
+                apiInterface.getConfigCall().let {
+                    Timber.d("getConfigCall: ${gson.toJson(it)}")
+                    rxPreferences.saveConfigCall(it)
+                    refreshCallToken().apply {
+                        rxPreferences.setCallToken(token ?: "")
+                    }
+                }
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
+        }
+    }
+
+    private suspend fun refreshCallToken(): FssMemberAuthResponse {
+        val urlAuth = buildString {
+            append(rxPreferences.getConfigCall().fssMemberAppAuthUrl)
+            append("?id=${URLEncoder.encode(rxPreferences.getEmail(), "UTF-8")}")
+            append("&pass=${rxPreferences.getPassword()}")
+        }
+        return apiInterface.fssMemberAppAuth(urlAuth)
+    }
+
+    private fun startCall(performerCode: String) {
+        val urlStartCall = buildString {
+            append(rxPreferences.getConfigCall().wsMemberLoginRequest)
+            append("?action=${SocketInfo.ACTION_CALL}")
+            append("&roomCode=$performerCode")
+            append("&token=${rxPreferences.getCallToken()}")
+            append("&performerCode=$performerCode")
+            append("&ownerCode=${Define.OWNER_CODE}")
+        }
+        flaxWebSocketManager.flaxConnect(urlStartCall, this@ChatMessageViewModel)
+    }
+
+    fun connectLiveStream(performerCode: String) {
+        if (viewerStatus == 0) {
+            startCall(performerCode)
+        } else {
+            connectFlaxChatSocket(performerCode, viewerStatus)
+        }
+    }
+
+    fun cancelCall() {
+        flaxWebSocketManager.cancelCall()
+    }
+
+    override fun onHandleMessage(jsonMessage: JSONObject) {
+        try {
+            val action = if (jsonMessage.has(SocketInfo.KEY_ACTION)) jsonMessage.getString(
+                SocketInfo.KEY_ACTION
+            ) else ""
+            val result = if (jsonMessage.has(SocketInfo.KEY_RESULT)) jsonMessage.getString(
+                SocketInfo.KEY_RESULT
+            ) else ""
+            val isNeedCall: Boolean? =
+                if (jsonMessage.has(SocketInfo.KEY_IS_NEED_CALL)) jsonMessage.getBoolean(SocketInfo.KEY_IS_NEED_CALL) else null
+            if (result == SocketInfo.RESULT_NG || action == SocketInfo.ACTION_PERFORMER_RESPONSE) {
+                handleNGResponse(jsonMessage)
+            } else if (action == SocketInfo.ACTION_LOGIN_REQUEST && isNeedCall != null && isNeedCall) {
+                handleLoginRequest()
+            } else if (action == SocketInfo.ACTION_PERFORMER_LOGIN || isNeedCall != null && !isNeedCall) {
+                // isNeedCallがfalseの場合はパフォーマー側が配信しているのでそのままチャット画面に遷移する
+                handlePerformerLogin()
+            } else if (action == SocketInfo.ACTION_LOGIN) {
+                handleLogin(jsonMessage)
+            } else if (action == SocketInfo.ACTION_CANCEL_CALL) {
+                cancelButtonClickedFlag = true
+                flaxWebSocketManager.flaxLogout()
+                isButtonEnable.postValue(true)
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+    }
+
+    @Throws(JSONException::class)
+    private fun handleNGResponse(message: JSONObject) {
+        if (!cancelButtonClickedFlag) {
+            // エラーメッセージがerrorに入っていたりmessageに入っていたりするので以下のようにする必要がある
+            val errorMessage =
+                when {
+                    message.has(SocketInfo.ACTION_MESSAGE) -> message.getString(SocketInfo.ACTION_MESSAGE)
+                    message.has(SocketInfo.KEY_ERROR) -> message.getString(SocketInfo.KEY_ERROR)
+                    else -> "拒否されました"
+                }
+            connectResult.postValue(ConnectResult(SocketInfo.RESULT_NG, errorMessage))
+            flaxWebSocketManager.flaxLogout()
+        }
+        if (message.has(SocketInfo.KEY_ERROR) && message.getString(SocketInfo.KEY_ERROR) == "トークンが無効です") {
+            viewModelScope.launch {
+                refreshCallToken()
+            }
+        }
+        isButtonEnable.postValue(true)
+        cancelButtonClickedFlag = false
+    }
+
+    private fun handleLoginRequest() {
+        connectResult.postValue(ConnectResult(SocketInfo.RESULT_OK))
+    }
+
+    private fun handlePerformerLogin() {
+        flaxWebSocketManager.flaxLogout()
+        userProfileResult.value?.code?.let { performerCode ->
+            connectFlaxChatSocket(performerCode, viewerStatus)
+        }
+    }
+
+    @Throws(JSONException::class)
+    private fun handleLogin(message: JSONObject) {
+        flaxLoginAuthResponse = FlaxLoginAuthResponse(
+            message.getString(SocketInfo.KEY_MEMBER_CODE),
+            message.getString(SocketInfo.KEY_PERFORMER_CODE),
+            message.getString(SocketInfo.KEY_MEDIA_SERVER_OWNER_CODE),
+            message.getString(SocketInfo.KEY_MEDIA_SERVER),
+            message.getString(SocketInfo.KEY_SESSION_CODE),
+            message.getString(SocketInfo.KEY_PERFORMER_THUMB_IMAGE),
+            message.getInt(BUNDLE_KEY.STATUS)
+        )
+        maruCastManager.setLoginCallBack(this)
+        maruCastManager.connectServer(flaxLoginAuthResponse!!)
+    }
+
+    override fun loginSuccess() {
+        isButtonEnable.postValue(true)
+        isLoginSuccess.postValue(true)
+        rxPreferences.setCallToken("")
+    }
+
+    private fun connectFlaxChatSocket(performerCode: String, callType: Int) {
+        val param = JSONObject()
+        try {
+            param.put(SocketInfo.AUTH_OWN_NAME, BuildConfig.WS_OWNER)
+            param.put(SocketInfo.KEY_PERFORMER_CODE, performerCode)
+            param.put(SocketInfo.AUTH_TOKEN, rxPreferences.getCallToken())
+            param.put(BUNDLE_KEY.STATUS, callType)
+            val urlStr: String =
+                BuildConfig.WS_URL_LOGIN_CALL + "?data=" + URLEncoder.encode(
+                    param.toString(),
+                    "UTF-8"
+                )
+            flaxWebSocketManager.flaxConnect(urlStr, this)
+            rxPreferences.setCallToken("")
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        } catch (e: UnsupportedEncodingException) {
+            e.printStackTrace()
+        }
     }
 
     companion object {

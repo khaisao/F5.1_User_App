@@ -4,7 +4,6 @@ import android.app.Activity
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.appsflyer.AFInAppEventParameterName
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.counseling.android.data.model.CreditItem
 import jp.careapp.counseling.android.data.network.MemberResponse

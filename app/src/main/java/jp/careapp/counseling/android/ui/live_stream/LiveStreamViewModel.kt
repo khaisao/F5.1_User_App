@@ -9,20 +9,14 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
-import jp.careapp.core.utils.SingleLiveEvent
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.live_stream.ConnectResult
 import jp.careapp.counseling.android.data.network.FlaxLoginAuthResponse
 import jp.careapp.counseling.android.data.network.LiveStreamChatResponse
-import jp.careapp.counseling.android.data.network.socket.ChatLogMessage
 import jp.careapp.counseling.android.data.network.socket.SocketSendMessage
-import jp.careapp.counseling.android.data.pref.RxPreferences
-import jp.careapp.counseling.android.keystore.KeyService
-import jp.careapp.counseling.android.network.ApiInterface
 import jp.careapp.counseling.android.network.socket.CallingWebSocketClient
 import jp.careapp.counseling.android.network.socket.FlaxWebSocketManager
 import jp.careapp.counseling.android.network.socket.MaruCastManager
-import jp.careapp.counseling.android.ui.calling.PerformerInfo
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.PERFORMER
 import jp.careapp.counseling.android.utils.SocketInfo
@@ -52,23 +46,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LiveStreamViewModel @Inject constructor(
-    private val mRepository: LiveStreamRepository,
     private val application: Application,
-    private val apiInterface: ApiInterface,
-    private val rxPreferences: RxPreferences,
     private val flaxWebSocketManager: FlaxWebSocketManager,
     private val maruCastManager: MaruCastManager,
-    private val keyService: KeyService,
     private val audioManager: AudioManager
 ) : BaseViewModel(), CallingWebSocketClient.ChatWebSocketCallBack {
-
-    private val _performerInfo = MutableLiveData<PerformerInfo>(null)
-    val performerInfo: MutableLiveData<PerformerInfo> get() = _performerInfo
-
-    private val _isMuteMic = MutableLiveData(false)
-    val isMuteMic: MutableLiveData<Boolean> = _isMuteMic
-    private val _isMuteSpeaker = MutableLiveData(true)
-    val isMuteSpeaker: MutableLiveData<Boolean> = _isMuteSpeaker
 
     private lateinit var socketClient: CallingWebSocketClient
 
@@ -99,16 +81,16 @@ class LiveStreamViewModel @Inject constructor(
     val viewerStatus: LiveData<Int>
         get() = _viewerStatus
 
-    val mActionState = SingleLiveEvent<LiveStreamActionState>()
-
     private var isLogout = false
     private var oldAudioMode = 0
     private var oldSpeakerPhone = false
 
     private val gson by lazy { Gson() }
-    private var performer = PerformerInfo()
     private var lastPoint = 0
     private var flaxLoginAuthResponse: FlaxLoginAuthResponse? = null
+
+    private var isMicMute = false
+    private var isCameraMute = false
 
     init {
         configAudio()
@@ -125,37 +107,28 @@ class LiveStreamViewModel @Inject constructor(
         updateChatLog(message, name = "あなた", false)
     }
 
+    fun updateMicSetting(_isMicMute: Boolean = false) {
+        audioManager.isMicrophoneMute = _isMicMute
+        isMicMute = _isMicMute
+    }
+
+    fun updateCameraSetting(_isCameraMute: Boolean = false) {
+        if (isCameraMute != _isCameraMute) {
+            maruCastManager.muteStream()
+        }
+        isCameraMute = _isCameraMute
+    }
+
+    fun isMicMute() = isMicMute
+
+    fun isCameraMute() = isCameraMute
+
     fun setFlaxLoginAuthResponse(response: FlaxLoginAuthResponse?) {
         flaxLoginAuthResponse = response
     }
 
     fun setViewerStatus(status: Int) {
         _viewerStatus.value = status
-    }
-
-    fun setPerformerInfo(name: String, performerCode: String, imageUrl: String) {
-        performer.let {
-            it.name = name
-            it.performerCode = performerCode
-            it.imageUrl = imageUrl
-        }
-        _performerInfo.value = performer
-    }
-
-    fun changeMic() {
-        _isMuteMic.value?.let {
-            _isMuteMic.value = !it
-        }
-    }
-
-    fun changeSpeaker() {
-        _isMuteSpeaker.value?.let {
-            _isMuteSpeaker.value = !it
-        }
-    }
-
-    fun setSocketCallback(callback: CallingWebSocketClient.ChatWebSocketCallBack?) {
-        flaxWebSocketManager.setCallback(callback)
     }
 
     fun updateMode(mode: Int) {
@@ -179,9 +152,6 @@ class LiveStreamViewModel @Inject constructor(
             }
             BUY_POINT -> {
                 _updateUIMode.postValue(UI_BUY_POINT)
-            }
-            LOGOUT -> {
-                _updateUIMode.postValue(UI_LOGOUT)
             }
         }
     }
@@ -207,9 +177,13 @@ class LiveStreamViewModel @Inject constructor(
         maruCastManager.handleConnected(activity)
     }
 
+    fun setAudioConfig(audioMode: Int, isSpeakerPhoneOn: Boolean) {
+        audioManager.mode = audioMode
+        audioManager.isSpeakerphoneOn = isSpeakerPhoneOn
+    }
+
     private fun handleSocketCallback() {
         flaxWebSocketManager.setCallback(this)
-
     }
 
     private fun configAudio() {
@@ -242,28 +216,26 @@ class LiveStreamViewModel @Inject constructor(
         _whisperList.postValue(listWhisper)
     }
 
-    private fun handleChatLog(chatLog: ChatLogMessage) {
-        val currentPoint = chatLog.point.toInt()
-        if (currentPoint < 1000 && lastPoint >= 1000) {
-            mActionState.postValue(LiveStreamActionState.ShowDialogWarningPoint)
-        }
-        lastPoint = currentPoint
-    }
-
-    private fun endCall() {
-        if (::socketClient.isInitialized) socketClient.closeWebSocket()
-        mActionState.postValue(LiveStreamActionState.EndCall)
-        resetData()
-    }
+    // TODO Handle point when chat
+//    private fun handleChatLog(chatLog: ChatLogMessage) {
+//        val currentPoint = chatLog.point.toInt()
+//        if (currentPoint < 1000 && lastPoint >= 1000) {
+//            mActionState.postValue(LiveStreamActionState.ShowDialogWarningPoint)
+//        }
+//        lastPoint = currentPoint
+//    }
+//
+//    private fun endCall() {
+//        if (::socketClient.isInitialized) socketClient.closeWebSocket()
+//        mActionState.postValue(LiveStreamActionState.EndCall)
+//        resetData()
+//    }
 
     private fun cancelCall() {
         socketClient.sendMessage(gson.toJson(SocketSendMessage(action = SocketInfo.ACTION_CANCEL_CALL)))
     }
 
     private fun resetData() {
-        performer = PerformerInfo()
-        _isMuteMic.postValue(false)
-        _isMuteSpeaker.postValue(true)
         lastPoint = 0
     }
 
@@ -383,7 +355,6 @@ class LiveStreamViewModel @Inject constructor(
         const val UI_SHOW_CONFIRM_CLOSE_PRIVATE_MODE = 2
         const val UI_SHOW_WAITING_PRIVATE_MODE = 3
         const val UI_BUY_POINT = 4
-        const val UI_LOGOUT = 5
 
         // MODE
         const val PARTY = 0
@@ -391,7 +362,6 @@ class LiveStreamViewModel @Inject constructor(
         const val PRIVATE_CANCEL = 11
         const val PREMIUM_PRIVATE = 30
         const val BUY_POINT = 20
-        const val LOGOUT = -1
     }
 }
 

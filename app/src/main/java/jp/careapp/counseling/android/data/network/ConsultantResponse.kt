@@ -36,7 +36,7 @@ data class ConsultantResponse(
     @SerializedName("status") val status: Int = 0,
     @SerializedName("login_member_count") val loginMemberCount: Int = 0,
     @SerializedName("peeping_member_count") val peepingMemberCount: Int = 0,
-    @SerializedName("is_favorite") val isFavorite: Boolean = false,
+    @SerializedName("is_favorite") var isFavorite: Boolean = false,
     @SerializedName("point_per_minute") val pointPerMinute: Int = 0,
     @SerializedName("call_status") val callStatus: Int = DEFAULT_CALL_STATUS,
     @SerializedName("chat_status") val chatStatus: Int = DEFAULT_CALL_STATUS,

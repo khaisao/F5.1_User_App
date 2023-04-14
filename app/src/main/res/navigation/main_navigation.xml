@@ -210,8 +210,7 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpToInclusive="true" />
+            app:popExitAnim="@anim/slide_out_left" />
 
     </fragment>
 
@@ -219,7 +218,17 @@
         android:id="@+id/liveStreamFragment"
         android:name="jp.careapp.counseling.android.ui.live_stream.LiveStreamFragment"
         android:label="LiveStreamFragment"
-        tools:layout="@layout/fragment_live_stream" />
+        tools:layout="@layout/fragment_live_stream">
+
+        <action
+            android:id="@+id/action_liveStreamFragment_to_exitLiveStreamFragment"
+            app:destination="@id/exitLivestreamFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/partnerInfoFragment"
@@ -645,7 +654,7 @@
     <fragment
         android:id="@+id/exitLivestreamFragment"
         android:name="jp.careapp.counseling.android.ui.live_stream.ExitLivestreamFragment"
-        android:label="ExitLivestreamFragment"
+        android:label="ExitLiveStreamFragment"
         tools:layout="@layout/fragment_exit_livestream">
         <action
             android:id="@+id/action_exitLivestreamFragment_to_chatMessageFragment"
@@ -656,14 +665,6 @@
             app:popExitAnim="@anim/slide_out_left" />
     </fragment>
 
-    <action
-        android:id="@+id/action_liveStreamFragment_to_exitLiveStreamFragment"
-        app:destination="@id/exitLivestreamFragment"
-        app:enterAnim="@anim/slide_in_left"
-        app:exitAnim="@anim/slide_out_right"
-        app:popEnterAnim="@anim/slide_in_right"
-        app:popExitAnim="@anim/slide_out_left"
-        app:popUpToInclusive="true" />
     <action
         android:id="@+id/action_global_termsOfServiceFragment"
         app:destination="@id/termsOfServiceFragment"

@@ -16,14 +16,12 @@ import jp.careapp.counseling.android.data.network.FssMemberAuthResponse
 import jp.careapp.counseling.android.data.network.GalleryResponse
 import jp.careapp.counseling.android.data.network.socket.SocketActionSend
 import jp.careapp.counseling.android.data.pref.RxPreferences
-import jp.careapp.counseling.android.keystore.KeyService
 import jp.careapp.counseling.android.network.ApiInterface
 import jp.careapp.counseling.android.network.socket.CallingWebSocketClient
 import jp.careapp.counseling.android.network.socket.FlaxWebSocketManager
 import jp.careapp.counseling.android.network.socket.MaruCastManager
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.STATUS
 import jp.careapp.counseling.android.utils.Define
-import jp.careapp.counseling.android.utils.Define.Companion.KEY_ALIAS
 import jp.careapp.counseling.android.utils.SocketInfo
 import jp.careapp.counseling.android.utils.SocketInfo.ACTION_CANCEL_CALL
 import jp.careapp.counseling.android.utils.SocketInfo.ACTION_LOGIN
@@ -59,10 +57,8 @@ class DetailUserProfileViewModel @ViewModelInject constructor(
     private val rxPreferences: RxPreferences,
     private val flaxWebSocketManager: FlaxWebSocketManager,
     private val maruCastManager: MaruCastManager,
-    private val keyService: KeyService
 ) : BaseViewModel(), CallingWebSocketClient.ChatWebSocketCallBack,
     CallingWebSocketClient.MaruCastLoginCallBack {
-    val TAG = "DetailUserProfileViewModel"
     val userProfileResult = MutableLiveData<ConsultantResponse?>()
     val userGallery = MutableLiveData<List<GalleryResponse>?>()
     val statusFavorite = MutableLiveData<Boolean>()
@@ -91,15 +87,14 @@ class DetailUserProfileViewModel @ViewModelInject constructor(
         viewModelScope.launch(NonCancellable + Dispatchers.IO) {
             try {
                 apiInterface.getConfigCall().let {
-                    Timber.tag(jp.careapp.counseling.android.ui.calling.TAG)
-                        .d("getConfigCall: ${gson.toJson(it)}")
+                    Timber.d("getConfigCall: ${gson.toJson(it)}")
                     rxPreferences.saveConfigCall(it)
                     refreshCallToken().apply {
                         rxPreferences.setCallToken(token ?: "")
                     }
                 }
             } catch (e: Exception) {
-                Timber.tag(jp.careapp.counseling.android.ui.calling.TAG).e(e)
+                Timber.e(e)
             }
         }
     }
@@ -108,12 +103,12 @@ class DetailUserProfileViewModel @ViewModelInject constructor(
         val urlAuth = buildString {
             append(rxPreferences.getConfigCall().fssMemberAppAuthUrl)
             append("?id=${URLEncoder.encode(rxPreferences.getEmail(), "UTF-8")}")
-            append("&pass=${keyService.decrypt(KEY_ALIAS, rxPreferences.getPassword() ?: "")}")
+            append("&pass=${rxPreferences.getPassword() ?: ""}")
         }
         return apiInterface.fssMemberAppAuth(urlAuth)
     }
 
-    fun startCall(performerCode: String) {
+    private fun startCall(performerCode: String) {
         val urlStartCall = buildString {
             append(rxPreferences.getConfigCall().wsMemberLoginRequest)
             append("?action=${SocketInfo.ACTION_CALL}")
@@ -123,6 +118,14 @@ class DetailUserProfileViewModel @ViewModelInject constructor(
             append("&ownerCode=${Define.OWNER_CODE}")
         }
         flaxWebSocketManager.flaxConnect(urlStartCall, this@DetailUserProfileViewModel)
+    }
+
+    fun connectLiveStream(performerCode: String) {
+        if (viewerStatus == 0) {
+            startCall(performerCode)
+        } else {
+            connectFlaxChatSocket(performerCode, viewerStatus)
+        }
     }
 
     fun cancelCall() {
@@ -336,12 +339,11 @@ class DetailUserProfileViewModel @ViewModelInject constructor(
             param.put(AUTH_TOKEN, rxPreferences.getCallToken())
             param.put(STATUS, callType)
             val urlStr: String =
-                BuildConfig.WS_URL_LOGIN_CALL.toString() + "?data=" + URLEncoder.encode(
+                BuildConfig.WS_URL_LOGIN_CALL + "?data=" + URLEncoder.encode(
                     param.toString(),
                     "UTF-8"
                 )
             flaxWebSocketManager.flaxConnect(urlStr, this)
-            // 一度使用したトークンは2回使えないので削除しておき、次回接続時にトークンが無ければ再度取得する
             rxPreferences.setCallToken("")
         } catch (e: JSONException) {
             e.printStackTrace()

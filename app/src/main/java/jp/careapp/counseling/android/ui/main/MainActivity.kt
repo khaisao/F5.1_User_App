@@ -2,10 +2,8 @@ package jp.careapp.counseling.android.ui.main
 
 import android.animation.ObjectAnimator
 import android.app.Activity
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Color
 import android.media.AudioManager
 import android.net.Uri
@@ -34,7 +32,6 @@ import jp.careapp.core.utils.DeviceUtil
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.core.utils.dialog.LoadingDialog
 import jp.careapp.counseling.R
-import jp.careapp.counseling.android.data.event.NotifiEvent
 import jp.careapp.counseling.android.data.model.labo.LaboResponse
 import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.network.socket.SocketActionSend
@@ -44,7 +41,6 @@ import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.BuyPointFragment
-import jp.careapp.counseling.android.ui.calling.CallingViewModel
 import jp.careapp.counseling.android.ui.labo.detail.LabDetailFragment
 import jp.careapp.counseling.android.ui.message.ChatMessageFragment
 import jp.careapp.counseling.android.ui.my_page.MyPageFragment
@@ -67,7 +63,6 @@ import jp.careapp.counseling.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOn
-import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -93,7 +88,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private val viewModel: MainViewModel by viewModels()
     private val shareViewModel: ShareViewModel by viewModels()
-    private val callingViewModel: CallingViewModel by viewModels()
 
     private val listView: List<NotificationView> by lazy {
         listOf(
@@ -127,24 +121,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private val audioManager: AudioManager by lazy {
         getSystemService(Context.AUDIO_SERVICE) as AudioManager
-    }
-    private var headsetPlugReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            context?.let {
-                if (intent?.action == Intent.ACTION_HEADSET_PLUG) {
-                    val state = intent.getIntExtra("state", -1)
-                    if (state == 0) {
-                        audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
-                        callingViewModel.isMuteSpeaker.value?.let { isMute ->
-                            audioManager.isSpeakerphoneOn = !isMute
-                        }
-                    } else {
-                        audioManager.mode = AudioManager.MODE_IN_CALL
-                        audioManager.isSpeakerphoneOn = false
-                    }
-                }
-            }
-        }
     }
 
     private var dialogWarningPoint: CommonAlertDialog? = null
@@ -214,20 +190,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 handleNavigateBeforeOpenCalling()
             })
         }
-        callingViewModel.isConfigAudioCall.observe(this) {
-            it?.let {
-                if (it) {
-                    configAudio()
-                } else {
-                    resetAudio()
-                }
-            }
-        }
-        callingViewModel.isMuteSpeaker.observe(this) {
-            it?.let {
-                audioManager.isSpeakerphoneOn = !it
-            }
-        }
     }
 
     private fun showDialogWarningPoint() {
@@ -290,31 +252,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
     }
 
-    private fun configAudio() {
-        callingViewModel.savePreviousAudioConfig(audioManager.mode, audioManager.isSpeakerphoneOn)
-        audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
-        audioManager.isSpeakerphoneOn = false
-
-        registerReceiver(headsetPlugReceiver, IntentFilter(Intent.ACTION_HEADSET_PLUG))
-        registerReceiver(
-            headsetPlugReceiver,
-            IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
-        )
-    }
-
-    private fun resetAudio() {
-        callingViewModel.getPreviousAudioConfig()?.let {
-            audioManager.mode = it.mode
-            audioManager.isSpeakerphoneOn = it.isSpeakerphoneOn
-        }
-        try {
-            unregisterReceiver(headsetPlugReceiver)
-        } catch (e: IllegalArgumentException) {
-            Timber.tag("MainActivity").e(e)
-        }
-    }
-
-    fun transparentStatusBar(activity: Activity) {
+    private fun transparentStatusBar(activity: Activity) {
         activity.window.decorView.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 

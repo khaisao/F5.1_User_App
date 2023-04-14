@@ -38,7 +38,7 @@ class InformationPerformerBottomFragment : BottomSheetDialogFragment() {
             val fragment = InformationPerformerBottomFragment()
             fragment.setClickItemView(itemView)
             fragment.arguments = bundle
-            fragment.show(fragmentManager, "")
+            fragment.show(fragmentManager, "InformationPerformerBottomFragment")
         }
     }
 

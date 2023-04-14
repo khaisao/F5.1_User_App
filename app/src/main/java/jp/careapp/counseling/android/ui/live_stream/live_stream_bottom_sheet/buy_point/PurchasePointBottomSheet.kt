@@ -20,8 +20,9 @@ class PurchasePointBottomSheet : BottomSheetDialogFragment() {
 
     private val mViewModel: PurchasePointViewModel by viewModels()
 
+    lateinit var purchasePointAdapter: PurchasePointAdapter
+
     private var purchasePointCallback: PurchasePointCallback? = null
-    private var pointUrl: String? = null
     private var type = 0
 
     companion object {
@@ -57,7 +58,6 @@ class PurchasePointBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        setOnClick()
         bindingStateView()
     }
 
@@ -65,7 +65,6 @@ class PurchasePointBottomSheet : BottomSheetDialogFragment() {
         val bundle = arguments
         if (bundle != null) {
             type = bundle.getInt(BUNDLE_KEY.TYPE_BUY_POINT, 0)
-            pointUrl = bundle.getString(BUNDLE_KEY.POINT_URL, "")
         }
         when (type) {
             0 -> {
@@ -75,31 +74,18 @@ class PurchasePointBottomSheet : BottomSheetDialogFragment() {
                 binding.titlePointTv.text = getString(R.string.insufficient_points)
             }
         }
-        pointUrl?.let {
-            mViewModel.getPurchasePointConfig(it)
+        mViewModel.getCreditPrices()
+        purchasePointAdapter = PurchasePointAdapter {
+            purchasePointCallback?.onPointItemClick(it.buyPoint ?: 0, it.price ?: 0)
         }
-    }
-
-    private fun setOnClick() {
-        binding.pointPurchaseButton1.setOnClickListener {
-
-        }
-        binding.pointPurchaseButton2.setOnClickListener {
-
-        }
-        binding.pointPurchaseButton3.setOnClickListener {
-
-        }
+        binding.costPointRv.adapter = purchasePointAdapter
     }
 
     private fun bindingStateView() {
-        mViewModel.fssPurchasePoint.observe(viewLifecycleOwner) {
-            binding.pointPurchaseButton1.text =
-                getString(R.string.pointButtonText, it.set1.price, it.set1.point)
-            binding.pointPurchaseButton2.text =
-                getString(R.string.pointButtonText, it.set2.price, it.set2.point)
-            binding.pointPurchaseButton3.text =
-                getString(R.string.pointButtonText, it.set3.price, it.set3.point)
+        mViewModel.listPointItem.observe(viewLifecycleOwner) {
+            purchasePointAdapter.run {
+                submitList(it)
+            }
         }
     }
 
@@ -108,6 +94,7 @@ class PurchasePointBottomSheet : BottomSheetDialogFragment() {
     }
 
     interface PurchasePointCallback {
+        fun onPointItemClick(point: Int, money: Int)
         fun purchasePointSuccess()
     }
 
