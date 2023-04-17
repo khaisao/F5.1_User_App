@@ -14,8 +14,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:color_title="@color/color_F0F0F0"
+            app:iv_right="@drawable/ic_close_black_24dp"
             app:src_left="@drawable/ic_arrow_left"
             tools:string_title="@string/title_difficult_with_login" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#2A1F45" />
 
         <WebView
             android:id="@+id/webView"

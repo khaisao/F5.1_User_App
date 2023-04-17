@@ -1,7 +1,8 @@
 package jp.careapp.counseling.android.ui.buy_point
 
-import androidx.hilt.lifecycle.ViewModelInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
+import javax.inject.Inject
 
-class ChoosPaymentMethodViewModel @ViewModelInject constructor() :
-    BaseViewModel()
+@HiltViewModel
+class ChoosPaymentMethodViewModel @Inject constructor() : BaseViewModel()
