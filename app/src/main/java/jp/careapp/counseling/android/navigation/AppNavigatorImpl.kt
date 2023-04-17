@@ -109,10 +109,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_tabMyPage_to_favoriteFragment, bundle)
     }
 
-    override fun openMyPageToLabScreen(bundle: Bundle?) {
-        openScreen(R.id.action_tabMyPage_to_laboFragment, bundle)
-    }
-
     override fun openMyPageToSettingNotification(bundle: Bundle?) {
         openScreen(R.id.action_tabMyPage_to_fragmentNotification, bundle)
     }
@@ -251,34 +247,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openWithdrawalFinish(bundle: Bundle?) {
         openScreen(R.id.action_withdrawalFragment_to_withdrawalFinishFragment, bundle)
-    }
-
-    override fun openSearchLabScreen(bundle: Bundle?) {
-        openScreen(R.id.action_to_search_lab, bundle)
-    }
-
-    override fun openSelectionCagoryFromSearch(bundle: Bundle?) {
-        openScreen(R.id.action_searchLabFragment_to_selectionCategoryFragment, bundle)
-    }
-
-    override fun openLabToLabDetailScreen(bundle: Bundle?) {
-        openScreen(R.id.action_labFragment_to_labDetailFragment, bundle)
-    }
-
-    override fun openLabDetailToBuyPointScreen(bundle: Bundle?) {
-        openScreen(R.id.action_labDetailFragment_to_buyPointFragment, bundle)
-    }
-
-    override fun openLabDetailToUserProfileScreen(bundle: Bundle?) {
-        openScreen(R.id.action_labDetailFragment_to_userProfileFragment, bundle)
-    }
-
-    override fun openLabDetailToReportLaboScreen(bundle: Bundle?) {
-        openScreen(R.id.action_labDetailFragment_to_reportLaboFragment, bundle)
-    }
-
-    override fun openHomeToLabDetailScreen(bundle: Bundle?) {
-        openScreen(R.id.action_homeFragment_to_LabDetailFragment, bundle)
     }
 
     override fun openGlobalToSettingNotification(bundle: Bundle?) {

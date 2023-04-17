@@ -55,8 +55,6 @@ interface AppNavigation : BaseNavigator {
 
     fun openMyPageToFavorite(bundle: Bundle? = null)
 
-    fun openMyPageToLabScreen(bundle: Bundle? = null)
-
     fun openMyPageToSettingNotification(bundle: Bundle? = null)
 
     fun openMyPageToNews(bundle: Bundle? = null)
@@ -126,20 +124,6 @@ interface AppNavigation : BaseNavigator {
     fun openVerifyCodeHelpToInputEmail(bundle: Bundle? = null)
 
     fun openWithdrawalFinish(bundle: Bundle? = null)
-
-    fun openSearchLabScreen(bundle: Bundle? = null)
-
-    fun openSelectionCagoryFromSearch(bundle: Bundle? = null)
-
-    fun openLabToLabDetailScreen(bundle: Bundle? = null)
-
-    fun openLabDetailToBuyPointScreen(bundle: Bundle? = null)
-
-    fun openLabDetailToUserProfileScreen(bundle: Bundle? = null)
-
-    fun openLabDetailToReportLaboScreen(bundle: Bundle? = null)
-
-    fun openHomeToLabDetailScreen(bundle: Bundle? = null)
 
     fun openGlobalToSettingNotification(bundle: Bundle? = null)
 
