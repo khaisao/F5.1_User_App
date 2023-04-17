@@ -55,7 +55,7 @@
                     android:scheme="careapp" />
                 <data
                     android:host="buypoint"
-                    android:scheme="careapp" />
+                    android:scheme="sparklive" />
                 <data
                     android:host="freepoint"
                     android:scheme="careapp" />

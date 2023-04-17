@@ -111,6 +111,7 @@
     <string name="sheet">お悩みシート</string>
     <string name="favorite">お気に入り</string>
     <string name="buy_point">ポイント購入</string>
+    <string name="select_payment_method">決済方法選択</string>
     <string name="live_stream_buy_point">購入する</string>
     <string name="news">お知らせ</string>
     <string name="alert">通知設定</string>

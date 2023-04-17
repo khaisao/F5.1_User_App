@@ -46,7 +46,7 @@ import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
-import jp.careapp.counseling.android.ui.buy_point.BuyPointBottomFragment
+import jp.careapp.counseling.android.ui.buy_point.bottom_sheet.BuyPointBottomFragment
 import jp.careapp.counseling.android.ui.calling.CallConnectionDialog
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.DISABLE_LOAD_MORE
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.ENABLE_LOAD_MORE

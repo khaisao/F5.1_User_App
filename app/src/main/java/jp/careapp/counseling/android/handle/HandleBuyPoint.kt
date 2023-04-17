@@ -8,9 +8,10 @@ import jp.careapp.core.utils.ConverterUtils.Companion.defaultValue
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.navigation.AppNavigation
-import jp.careapp.counseling.android.ui.buy_point.BuyPointBottomFragment
+import jp.careapp.counseling.android.ui.buy_point.bottom_sheet.BuyPointBottomFragment
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.buy_point.PurchasePointBottomSheet
 import jp.careapp.counseling.android.utils.Define
+import jp.careapp.counseling.android.utils.configUrlBuyPoints
 import javax.inject.Inject
 
 class HandleBuyPoint @Inject constructor(
@@ -26,11 +27,14 @@ class HandleBuyPoint @Inject constructor(
     ) {
         if (isFullMode) {
             val webViewBundle = Bundle().apply {
-                putString(Define.TITLE_WEB_VIEW, context.getString(R.string.buy_point))
+                putString(Define.TITLE_WEB_VIEW, context.getString(R.string.select_payment_method))
             }
             val lastBuyLog = rxPreferences.getLastBuyLog()
             if (!isClickSendMessage || rxPreferences.getFirstBuyCredit() || lastBuyLog == null) {
-                webViewBundle.putString(Define.URL_WEB_VIEW, "${Define.URL_BUY_POINT}${rxPreferences.getToken()}")
+                webViewBundle.putString(
+                    Define.URL_WEB_VIEW,
+                    configUrlBuyPoints(rxPreferences.getToken().toString())
+                )
             } else {
                 val creditPrices = rxPreferences.getCreditPrices()
                 val credit =
@@ -42,7 +46,10 @@ class HandleBuyPoint @Inject constructor(
                         }
                     }
                 if (credit == null) {
-                    webViewBundle.putString(Define.URL_WEB_VIEW, Define.URL_BUY_POINT)
+                    webViewBundle.putString(
+                        Define.URL_WEB_VIEW,
+                        configUrlBuyPoints(rxPreferences.getToken().toString())
+                    )
                 } else {
                     val url = Define.URL_CREDIT_PURCHASE_CONFIRM +
                             "?point=${credit.getTotalPoint()}" +

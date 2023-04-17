@@ -141,7 +141,7 @@ class MyPageViewModel @Inject constructor(
         val menuItem = data[position] as NMMenuItem.NMMenuItemField
 
         when (menuItem.key) {
-            BUY_POINTS -> {}
+            BUY_POINTS -> mActionState.value = MyPageActionState.NavigateToBuyPoints
             EDIT_PROFILE -> mActionState.value = MyPageActionState.NavigateToEditProfile
             BLOCK_LIST -> mActionState.value = MyPageActionState.NavigateToBlocked
             SETTING_PUSH -> mActionState.value = MyPageActionState.NavigateToSettingNotification
@@ -155,6 +155,8 @@ class MyPageViewModel @Inject constructor(
 }
 
 sealed class MyPageActionState {
+
+    object NavigateToBuyPoints : MyPageActionState()
 
     object NavigateToEditProfile : MyPageActionState()
     object NavigateToBlocked : MyPageActionState()

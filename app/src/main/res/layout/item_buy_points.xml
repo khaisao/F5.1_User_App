@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="jp.careapp.counseling.android.model.buy_point.ItemPoint" />
+
+        <variable
+            name="data"
+            type="ItemPoint" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_bg_item_buy_points"
+        android:padding="28dp">
+
+        <jp.careapp.counseling.android.ui.custom.OutlineTextView
+            android:id="@+id/tvPointCount"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@null"
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/hiragino_sans_w6"
+            android:gravity="center"
+            android:shadowColor="@color/color_9a33ff"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="16"
+            android:text="@{data.pointCount}"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/ic_buy_point"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="9,700pts" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_item_buy_points"
+            android:fontFamily="@font/hiragino_sans_w6"
+            android:gravity="center"
+            android:text="@{data.money}"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="100:32"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.27"
+            tools:text="¥15,800" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,9 +1,9 @@
 package jp.careapp.counseling.android.ui.buy_point
 
 import android.app.Activity
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.counseling.android.data.model.CreditItem
 import jp.careapp.counseling.android.data.network.MemberResponse
@@ -12,10 +12,11 @@ import jp.careapp.counseling.android.handle.BillingManager
 import jp.careapp.counseling.android.model.buy_point.ItemPoint
 import jp.careapp.counseling.android.network.ApiInterface
 import jp.careapp.counseling.android.utils.AdjustUtils
-import jp.careapp.counseling.android.utils.appsflyer.AppsFlyerUtil
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class BuyPointViewModel @ViewModelInject constructor(
+@HiltViewModel
+class BuyPointViewModel @Inject constructor(
     billingManager: BillingManager,
     private val apiInterface: ApiInterface,
     private val rxPreferences: RxPreferences

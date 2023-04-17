@@ -159,11 +159,6 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
                         view.loadUrl(url)
                     } else if (Define.CALL_BACK_BUY_POINT_GOOGLE_ == url) {
                         appNavigation.openWebBuyPointToBuyPointGoogle()
-                    } else if (Define.CALL_BACK_BUY_POINT_PAYPAY == url) {
-                        appNavigation.navController?.let {
-                            it.popBackStack()
-                            showBuyPointSuccessDialog(R.string.buy_point_suscess)
-                        }
                     } else {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                         startActivity(intent)
@@ -213,6 +208,8 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
                     if (binding.webView.canGoBack()) {
                         startLoading()
                         binding.webView.goBack()
+                    } else {
+                        appNavigation.navigateUp()
                     }
                 }
 
