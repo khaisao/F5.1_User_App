@@ -14,52 +14,65 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/margin_64"
         android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/bg_item_blocked">
+        android:layout_marginTop="8dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_person"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="3:4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.14"
-            app:srcUrl="@{blocked.thumbnailImageUrl}"
-            tools:src="@drawable/ic_no_image" />
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            app:cardCornerRadius="@dimen/margin_6"
+            app:cardBackgroundColor="@color/color_2C2147"
+            android:layout_height="match_parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_person"
+                    android:layout_width="@dimen/margin_48"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.14"
+                    tools:src="@drawable/default_avt_performer" />
 
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="@dimen/_0sdp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:fontFamily="@font/hiragino_sans_w6"
-            android:gravity="center_vertical"
-            android:text="@{blocked.name}"
-            android:textColor="#f0f0f0"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_person"
-            app:layout_constraintEnd_toStartOf="@+id/tv_blocked"
-            app:layout_constraintStart_toEndOf="@+id/iv_person"
-            app:layout_constraintTop_toTopOf="@+id/iv_person"
-            tools:text="レー・ブー・ハイ・ダン" />
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="@dimen/_0sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/hiragino_sans_w6"
+                    android:gravity="center_vertical"
+                    android:text="@{blocked.name}"
+                    android:textColor="#f0f0f0"
+                    android:textSize="14sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_person"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_blocked"
+                    app:layout_constraintStart_toEndOf="@+id/iv_person"
+                    app:layout_constraintTop_toTopOf="@+id/iv_person"
+                    tools:text="レー・ブー・ハイ・ダン" />
 
-        <TextView
-            android:id="@+id/tv_blocked"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/bg_blocked_btn_delete"
-            android:fontFamily="@font/hiragino_sans_w3"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="10dp"
-            android:text="@string/release"
-            android:textColor="#b2a9cc"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_person"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_person" />
+                <TextView
+                    android:id="@+id/tv_blocked"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/bg_blocked_btn_delete"
+                    android:fontFamily="@font/hiragino_sans_w3"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="10dp"
+                    android:text="@string/release"
+                    android:textColor="#b2a9cc"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_person"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/iv_person" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
