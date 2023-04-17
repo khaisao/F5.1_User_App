@@ -52,14 +52,13 @@ class Define {
         const val URL_HOW_TO_USE = "https://careapp.tayori.com/q/careapp-helpcenter/category/34544"
         const val URL_LEGAL = "http://web.careapp.jp/webview/legal.html"
         const val URL_TWITTER = "https://twitter.com/careapp_jp"
-        const val URL_HELP = "https://careapp.tayori.com/q/careapp-helpcenter"
         const val URL_SETTLEMENT = "https://web.careapp.jp/webview/fund_settlement.html"
         const val URL_FREE_POINT =
             "${BuildConfig.WEB_DOMAIN}/webview/member/freepoint/free-point.html"
         const val URL_STRIPE_BUY_POINT =
             "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/stripe/buy-point-list.html"
         const val URL_BUY_POINT =
-            "${BuildConfig.WEB_DOMAIN}/payment/methods?webview=false&&token="
+            "${BuildConfig.WEB_DOMAIN}/payment/methods?"
         const val URL_CREDIT_PURCHASE_CONFIRM =
             "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/stripe/purchase-oneclick-confirm.html"
         const val URL_CONFIRM_POINT =
@@ -68,14 +67,10 @@ class Define {
             "webview/member/purchase/stripe/purchase-confirm.html"
         const val URL_BUY_POINT_CREDIT_CARD_ONECLICK_CONFIRM_SEGMENT =
             "webview/member/purchase/stripe/purchase-oneclick-confirm.html"
-        const val URL_LIST_POINT_BANK = "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/banks/buy-point-list.html?point=0"
-        const val URL_LIST_POINT_CREDIT = "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/stripe/buy-point-list.html"
-        const val URL_LIST_POINT_PAY_PAY = "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/paypay/buy-point-list.html"
-        const val URL_LIST_POINT_AMAZON_PAY = "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/amazon/buy-point-list.html"
+        const val URL_LIST_POINT_CREDIT =
+            "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/stripe/buy-point-list.html"
         const val URL_LIVE_STREAM_POINT_PURCHASE = "${BuildConfig.WEB_DOMAIN}/popup/payment/credit"
-        // TODO (Change  owner_code)
-        //  const val OWNER_CODE = 6257353
-        const val OWNER_CODE = 249085
+        const val OWNER_CODE = 870
         const val APP_CODE = "CareappAndroid"
         const val PREFIX_CARE_APP = "careapp://"
         const val CALL_BACK_BUY_POINT_GOOGLE_ = "careapp://buypoint"
@@ -83,10 +78,8 @@ class Define {
         const val TYPE_ERROR = "ERROR"
         const val TYPE_MAINTENANCE = "MAINTENANCE"
         const val RESPONSE = 1
-        const val SPEED_ANWSER = 2
 
         const val MAX_LENGTH_CONTENT_NEW_QUESTION = 128
-        const val POINT_PER_A_POST = 100
         const val LIMIT_CHAR_CONTENT = 30
         const val INVALID_VALUE_OF_CATEGORY = -1
 
@@ -99,11 +92,8 @@ class Define {
         const val BLOG_ID = "id"
         const val TYPE_CONTACT = "type_contact"
 
-        const val BLOG_PATH = "support/blogs"
         const val PRIVACY_POLICY_PATH = "support/privacy"
         const val TERM_PATH = "support/terms"
-        const val RE_APPROACH_SUPPORT_PATH = "support/blogs/80"
-        const val NEW_APPROACH_SUPPORT_PATH = "support/blogs/79"
 
         // App mode
         const val NORMAL_MODE = 2
@@ -173,8 +163,6 @@ class Define {
             const val LABO = "labo"
             const val PAYMENT_METHOD = "payment_method"
             const val CREDIT = "payment_01"
-            const val AMAZON_PAY = "payment_02"
-            const val PAY_PAY = "payment_03"
             const val BANK = "payment_04"
             const val BLOG = "blog"
             const val CONTACT = "contact"
@@ -746,4 +734,8 @@ sealed class ActionState {
     class BlockUserSuccess(val isSuccess: Boolean) : ActionState()
     class SendReportSuccess(val isSuccess: Boolean) : ActionState()
     class SendContactSuccess(val isSuccess: Boolean) : ActionState()
+}
+
+fun configUrlBuyPoints(token: String): String {
+    return "${Define.URL_BUY_POINT}token=${token}&&platform=android"
 }

@@ -203,7 +203,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 if (rxPreferences.isFullMode()) {
                     val bundle = Bundle().apply {
                         putString(Define.TITLE_WEB_VIEW, getString(R.string.buy_point))
-                        putString(Define.URL_WEB_VIEW, Define.URL_BUY_POINT)
+                        putString(
+                            Define.URL_WEB_VIEW,
+                            configUrlBuyPoints(rxPreferences.getToken().toString())
+                        )
                     }
                     appNavigation.openScreenToWebview(bundle)
                 } else {
@@ -429,7 +432,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     appNavigation.openTopToChatMessage(bundle)
                 }
             }
-            Define.Intent.PAYMENT_METHOD, Define.Intent.CREDIT, Define.Intent.AMAZON_PAY, Define.Intent.PAY_PAY, Define.Intent.BANK -> {
+            Define.Intent.PAYMENT_METHOD, Define.Intent.CREDIT, Define.Intent.BANK -> {
                 if (rxPreferences.isFullMode()) {
                     val bundle = Bundle().apply {
                         putString(Define.TITLE_WEB_VIEW, getString(R.string.buy_point))
@@ -459,10 +462,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun getUrlWebView(linkType: String): String {
         return when (linkType) {
             Define.Intent.PAYMENT_METHOD -> Define.URL_BUY_POINT
-            Define.Intent.BANK -> Define.URL_LIST_POINT_BANK
             Define.Intent.CREDIT -> Define.URL_LIST_POINT_CREDIT
-            Define.Intent.PAY_PAY -> Define.URL_LIST_POINT_PAY_PAY
-            Define.Intent.AMAZON_PAY -> Define.URL_LIST_POINT_AMAZON_PAY
             else -> ""
         }
     }

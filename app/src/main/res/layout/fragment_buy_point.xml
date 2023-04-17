@@ -1,83 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_background_common">
+        android:background="@color/color_background_common"
+        android:orientation="vertical">
 
         <jp.careapp.counseling.android.utils.customView.ToolBarCommon
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hide_line_bottom="true"
+            app:iv_right="@drawable/ic_close_black_24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:src_left="@drawable/ic_arrow_left"
             app:string_title="@string/title_buy_point" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#2A1F45" />
+
         <LinearLayout
-            android:id="@+id/title_point_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_332167"
-            android:gravity="center"
-            android:paddingTop="@dimen/margin_17"
-            android:paddingBottom="@dimen/margin_17"
-            app:layout_constraintTop_toBottomOf="@+id/tool_bar">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="16dp">
 
-            <TextView
-                style="@style/text_12"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textView14"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/hiragino_sans_w3"
+                android:gravity="center_vertical|end"
                 android:text="@string/my_point"
-                android:textColor="@color/color_E3DFEF" />
+                android:textSize="14sp" />
 
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:layout_marginLeft="@dimen/margin_6dp"
-                android:src="@drawable/ic_point" />
-
-            <TextView
-                android:id="@+id/point_tv"
-                style="@style/text_bold_15"
-                android:layout_marginLeft="@dimen/margin_4dp"
-                android:text="10,000pts"
-                android:textColor="@color/color_E3DFEF" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPoint"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:drawableStart="@drawable/ic_point_buy_point"
+                android:drawablePadding="4dp"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:gravity="center_vertical"
+                android:textColor="#f0f0f0"
+                android:textSize="14sp"
+                tools:text="000,000pts" />
         </LinearLayout>
 
-        <androidx.core.widget.NestedScrollView
+        <View
             android:layout_width="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_point_ll"
-            android:layout_height="0dp">
+            android:layout_height="1dp"
+            android:background="#2A1F45" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/cost_point_rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:isScrollContainer="false"
-                    android:overScrollMode="never"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_buy_point" />
-
-                <TextView
-                    android:id="@+id/tv_settlement"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_20"
-                    android:gravity="center"
-                    android:text="@string/settlement"
-                    android:textColor="@color/color_alert_error"
-                    android:textSize="@dimen/text_size_18" />
-
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cost_point_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:orientation="vertical"
+            app:itemAnimator="@{null}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_buy_points" />
+    </LinearLayout>
 
 </layout>

@@ -130,11 +130,12 @@
     <color name="color_2A1F45">#2A1F45</color> <!--    rgb 42 31 69-->
     <color name="color_F0F0F0">#F0F0F0</color>
 
-    <color name="color_070707">#070707</color><!--    rgb 7 7 7-->
+    <color name="color_070707">#070707</color>
     <color name="color_eff3fc">#eff3fc</color>
     <color name="color_ff288b">#ff288b</color>
     <color name="color_ff8de8">#ff8de8</color>
     <color name="color_dadada">#dadada</color>
     <color name="color_89e9ff">#89e9ff</color>
+    <color name="color_9a33ff">#9a33ff</color>
 
 </resources>

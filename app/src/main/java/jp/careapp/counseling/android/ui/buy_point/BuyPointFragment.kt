@@ -18,7 +18,7 @@ import jp.careapp.counseling.android.utils.customView.ToolBarCommon
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import java.util.* // ktlint-disable no-wildcard-imports
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -36,7 +36,7 @@ class BuyPointFragment : BaseFragment<FragmentBuyPointBinding, BuyPointViewModel
 
     private var isFromNotification = false
 
-    lateinit var costPointAdapter: CostPointAdapter
+    lateinit var mAdapter: BuyPointsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -62,7 +62,7 @@ class BuyPointFragment : BaseFragment<FragmentBuyPointBinding, BuyPointViewModel
     }
 
     private fun initAdapter(firstBuy: Boolean) {
-        costPointAdapter = CostPointAdapter { item ->
+        mAdapter = BuyPointsAdapter { item ->
             if (!isDoubleClick) {
                 activity?.let { viewModel.startBilling(item, it) }
             }
@@ -103,8 +103,8 @@ class BuyPointFragment : BaseFragment<FragmentBuyPointBinding, BuyPointViewModel
             BUY_POINT.FIST_BUY_COIN_8.costFirst,
             BUY_POINT.FIST_BUY_COIN_8.money
         )
-        costPointAdapter.run { submitList(listOf(item1, item2, item3, item4)) }
-        binding.costPointRv.adapter = costPointAdapter
+        mAdapter.run { submitList(listOf(item1, item2, item3, item4)) }
+        binding.costPointRv.adapter = mAdapter
     }
 
     override fun bindingStateView() {
@@ -135,20 +135,32 @@ class BuyPointFragment : BaseFragment<FragmentBuyPointBinding, BuyPointViewModel
         }
     }
 
-    fun formatPoint(point: Int) {
+    private fun formatPoint(point: Int) {
         val symbols = DecimalFormatSymbols(Locale(","))
         val df = DecimalFormat()
         df.decimalFormatSymbols = symbols
         df.groupingSize = 3
-        binding.pointTv.text = String.format(getString(R.string.format_point_pts), df.format(point))
+        binding.tvPoint.text = String.format(getString(R.string.format_point_pts), df.format(point))
     }
 
     override fun setOnClick() {
         super.setOnClick()
+
         binding.toolBar.setOnToolBarClickListener(
             object : ToolBarCommon.OnToolBarClickListener() {
                 override fun onClickLeft() {
                     super.onClickLeft()
+                    if (isFromNotification) {
+
+                        appNavigation.openBuyPointToTopScreen()
+                    } else {
+                        appNavigation.navigateUp()
+                    }
+                }
+
+                override fun onClickRight() {
+                    super.onClickRight()
+
                     if (isFromNotification) {
                         appNavigation.openBuyPointToTopScreen()
                     } else {
@@ -157,13 +169,6 @@ class BuyPointFragment : BaseFragment<FragmentBuyPointBinding, BuyPointViewModel
                 }
             }
         )
-        binding.tvSettlement.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString(Define.TITLE_WEB_VIEW, getString(R.string.settlement))
-                putString(Define.URL_WEB_VIEW, Define.URL_SETTLEMENT)
-            }
-            appNavigation.openScreenToWebview(bundle)
-        }
     }
 
     override fun onDestroyView() {

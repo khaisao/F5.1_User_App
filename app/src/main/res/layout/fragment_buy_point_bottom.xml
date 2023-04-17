@@ -52,7 +52,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:itemCount="5"
-                tools:listitem="@layout/item_buy_point" />
+                tools:listitem="@layout/item_buy_points_bottom_sheet" />
 
             <TextView
                 android:id="@+id/tvContent"

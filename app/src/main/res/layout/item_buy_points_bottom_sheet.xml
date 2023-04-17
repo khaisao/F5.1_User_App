@@ -4,11 +4,11 @@
 
     <data>
 
-        <import type="jp.careapp.counseling.android.data.model.CreditItem" />
+        <import type="jp.careapp.counseling.android.model.buy_point.ItemPoint" />
 
         <variable
             name="data"
-            type="CreditItem" />
+            type="ItemPoint" />
     </data>
 
     <FrameLayout
@@ -23,9 +23,10 @@
             android:fontFamily="@font/hiragino_sans_w6"
             android:gravity="center"
             android:paddingVertical="16dp"
-            android:text="@{`¥` + data.price + ` / ` + data.buyPoint + `pts`}"
+            android:text="@{data.money + `/` + data.pointCount}"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             tools:text="¥000 / 000pts" />
     </FrameLayout>
+
 </layout>
