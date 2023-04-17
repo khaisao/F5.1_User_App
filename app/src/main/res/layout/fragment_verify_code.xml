@@ -7,7 +7,7 @@
         android:id="@+id/clVerifyCode"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_background_modal"
+        android:background="@color/color_background_dialog"
         android:focusable="true"
         android:focusableInTouchMode="true"
         tools:context=".android.ui.verifyCode.VerifyCodeFragment"
