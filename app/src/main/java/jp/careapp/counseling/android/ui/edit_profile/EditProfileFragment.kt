@@ -2,7 +2,7 @@ package jp.careapp.counseling.android.ui.edit_profile
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.DateUtil
@@ -22,7 +22,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
 
     override val layoutId = R.layout.fragment_edit_profile
 
-    private val mViewModel: EditProfileViewModel by activityViewModels()
+    private val mViewModel: EditProfileViewModel by viewModels()
     override fun getVM() = mViewModel
 
     override fun initView() {

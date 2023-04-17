@@ -22,7 +22,7 @@ object EdtState {
 object StringUtils {
 
     const val REGEX_EMAIL =
-        "^[a-z][a-z0-9_\\-\\.]{2,32}[a-z0-9\\-_]@[a-z0-9]{2,}(\\.[a-z0-9]{2,}){1,2}\$"
+        "^[a-z][a-z0-9_\\-\\.+]{2,32}[a-z0-9\\-_]@[a-z0-9]{2,}(\\.[a-z0-9]{2,}){1,2}\$"
 
     fun String.validatepassword(): Int {
         if (TextUtils.isEmpty(this) || TextUtils.isEmpty(this.trim())) {
@@ -91,11 +91,9 @@ object StringUtils {
             }
         }
 
-    fun CharSequence?.isValidEmail() = true
-//        !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
-    // TODO: Enable bottom of this line
-//        !isNullOrEmpty() && Pattern.compile(REGEX_EMAIL, Pattern.CASE_INSENSITIVE).matcher(this)
-//            .matches()
+    fun CharSequence?.isValidEmail() =
+        !isNullOrEmpty() && Pattern.compile(REGEX_EMAIL, Pattern.CASE_INSENSITIVE).matcher(this)
+            .matches()
 
     fun String.isEmailValid(): Boolean {
         val expression = "^[\\w.-]+@([\\w\\-]+\\.)+[A-Z]{2,8}$"

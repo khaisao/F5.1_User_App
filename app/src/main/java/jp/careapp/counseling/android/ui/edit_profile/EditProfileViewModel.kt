@@ -1,9 +1,9 @@
 package jp.careapp.counseling.android.ui.edit_profile
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
@@ -14,8 +14,10 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 import java.util.*
+import javax.inject.Inject
 
-class EditProfileViewModel @ViewModelInject constructor(
+@HiltViewModel
+class EditProfileViewModel @Inject constructor(
     private val mRepository: EditProfileRepository
 ) : BaseViewModel() {
 

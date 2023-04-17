@@ -30,12 +30,13 @@
             android:layout_marginTop="16dp"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/edtMail"
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_custom_edt_counter"
                 android:fontFamily="@font/hiragino_sans_w3"
+                android:inputType="textEmailAddress"
                 android:padding="16dp"
                 android:textColor="#f0f0f0"
                 android:textSize="14sp"
@@ -56,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_nm_btn_primary"
+                android:enabled="false"
                 android:fontFamily="@font/hiragino_sans_w6"
                 android:gravity="center"
                 android:minHeight="44dp"

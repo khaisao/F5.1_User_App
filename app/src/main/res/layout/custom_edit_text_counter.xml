@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="ハイ・ダン" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvCounter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

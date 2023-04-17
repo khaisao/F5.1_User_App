@@ -32,24 +32,24 @@ class EditMailFragment : BaseFragment<FragmentEditMailBinding, EditMailViewModel
 
         mViewModel.getEmail()
 
-        binding.edtMail.addTextChangedListener { mViewModel.handleEdtMail(it.toString().trim()) }
+        binding.edtEmail.addTextChangedListener { mViewModel.checkValidEmail(it.toString().trim()) }
     }
 
     override fun bindingStateView() {
         super.bindingStateView()
 
-        mViewModel.memberMail.observe(viewLifecycleOwner) {
-            binding.edtMail.setText(it)
-        }
+        mViewModel.userEmailLiveData.observe(viewLifecycleOwner) { binding.edtEmail.setText(it) }
 
-        mViewModel.isValidMail.observe(viewLifecycleOwner) {
-            binding.btnSave.isEnabled = !it
+        mViewModel.isEnableButtonSave.observe(viewLifecycleOwner) { binding.btnSave.isEnabled = it }
+
+        mViewModel.isShowWrongFormatEmail.observe(viewLifecycleOwner) {
             binding.llItemWrongMailFormat.isVisible = it
         }
 
         mViewModel.mActionState.observe(viewLifecycleOwner) {
             when (it) {
                 is EditMailActionState.EditMailSuccess -> {
+                    binding.btnSave.isEnabled = false
                     appNavigation.openEditMailToVerifyCode(
                         bundleOf(
                             BUNDLE_KEY.CODE_SCREEN to InputAndEditMailViewModel.SCREEN_EDIT_EMAIL,
@@ -66,7 +66,7 @@ class EditMailFragment : BaseFragment<FragmentEditMailBinding, EditMailViewModel
         super.setOnClick()
 
         binding.btnSave.setOnClickListener {
-            mViewModel.updateMail(binding.edtMail.text.toString().trim())
+            mViewModel.updateMail(binding.edtEmail.text.toString().trim())
         }
     }
 
