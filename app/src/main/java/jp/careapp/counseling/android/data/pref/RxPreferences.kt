@@ -1,7 +1,6 @@
 package jp.careapp.counseling.android.data.pref
 
 import jp.careapp.counseling.android.data.model.CreditItem
-import jp.careapp.counseling.android.data.model.HistorySelection
 import jp.careapp.counseling.android.data.network.*
 import javax.inject.Singleton
 
@@ -82,10 +81,6 @@ interface RxPreferences {
     fun saveListTemplate(listCategory: List<FreeTemplateResponse>)
 
     fun getListTemplate(): List<FreeTemplateResponse>?
-
-    fun saveHistorySearchSelection(historySelection: HistorySelection)
-
-    fun getHistorySearchSelection(): HistorySelection
 
     fun setFirstRegister(isTheFirst: Boolean)
 

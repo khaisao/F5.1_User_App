@@ -8,7 +8,6 @@ import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.qualifiers.ApplicationContext
 import jp.careapp.core.utils.Constants
 import jp.careapp.counseling.android.data.model.CreditItem
-import jp.careapp.counseling.android.data.model.HistorySelection
 import jp.careapp.counseling.android.data.network.*
 import jp.careapp.counseling.android.ui.review_mode.setting_push.RMSettingPushFragment.Companion.PUSH_RECEIVE
 import jp.careapp.counseling.android.utils.Define.Companion.NORMAL_MODE
@@ -283,26 +282,6 @@ class AppPreferences @Inject constructor(
         } catch (e: Exception) {
         }
         return list
-    }
-
-    override fun saveHistorySearchSelection(historySelection: HistorySelection) {
-        val gson = Gson()
-        val json = gson.toJson(historySelection)
-        mPrefs.edit().apply {
-            putString(PREF_KEY_SELECTION, json)
-        }.also { it.apply() }
-    }
-
-    override fun getHistorySearchSelection(): HistorySelection {
-        var historySelection = HistorySelection()
-        try {
-            val historySelectionJson = mPrefs.getString(PREF_KEY_SELECTION, "")
-            val gson = Gson()
-            val myType = object : TypeToken<HistorySelection>() {}.type
-            historySelection = gson.fromJson(historySelectionJson, myType)
-        } catch (e: Exception) {
-        }
-        return historySelection
     }
 
     override fun setFirstRegister(isTheFirst: Boolean) {

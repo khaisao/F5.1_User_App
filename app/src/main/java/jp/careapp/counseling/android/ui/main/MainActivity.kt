@@ -41,7 +41,6 @@ import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.BuyPointFragment
-import jp.careapp.counseling.android.ui.labo.detail.LabDetailFragment
 import jp.careapp.counseling.android.ui.message.ChatMessageFragment
 import jp.careapp.counseling.android.ui.my_page.MyPageFragment
 import jp.careapp.counseling.android.ui.news.NewsFragment
@@ -805,32 +804,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 } catch (e: Exception) {
                     Timber.e(e)
                 }
-            }
-        }
-
-        // Handle data notification labo
-        if (questionId > 0) {
-            if (getCurrentFragment() != null && getCurrentFragment() is LabDetailFragment) {
-                getCurrentFragment().arguments?.apply {
-                    var labId = -1
-                    if (containsKey(BUNDLE_KEY.LAB)) {
-                        val lab = getSerializable(BUNDLE_KEY.LAB) as LaboResponse
-                        labId = lab.id
-                    } else if (containsKey(BUNDLE_KEY.LAB_ID)) {
-                        labId = getInt(BUNDLE_KEY.LAB_ID)
-                    }
-                    (getCurrentFragment() as LabDetailFragment).apply {
-                        if (questionId == labId) {
-                            reloadData()
-                        } else {
-                            reloadData(questionId)
-                        }
-                    }
-                }
-            } else {
-                val bundle = Bundle()
-                bundle.putSerializable(BUNDLE_KEY.LAB_ID, questionId)
-                appNavigation.openHomeToLabDetailScreen(bundle)
             }
         }
     }

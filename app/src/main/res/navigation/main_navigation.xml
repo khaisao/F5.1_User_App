@@ -267,15 +267,6 @@
         android:id="@+id/action_tabMyPage_to_favoriteFragment"
         app:destination="@id/favoriteFragment" />
 
-    <fragment
-        android:id="@+id/laboFragment"
-        android:name="jp.careapp.counseling.android.ui.labo.LaboFragment"
-        android:label="LaboFragment"
-        tools:layout="@layout/fragment_labo" />
-
-    <action
-        android:id="@+id/action_tabMyPage_to_laboFragment"
-        app:destination="@id/laboFragment" />
     <action
         android:id="@+id/action_tabMyPage_to_fragmentNotification"
         app:destination="@id/fragmentNotification" />
@@ -487,88 +478,6 @@
             android:id="@+id/action_withdrawalFragment_to_welcomeActivity"
             app:destination="@id/welcomeActivity" />
     </fragment>
-
-    <action
-        android:id="@+id/action_labFragment_to_labDetailFragment"
-        app:destination="@id/labDetailFragment"
-        app:enterAnim="@anim/slide_in_left"
-        app:exitAnim="@anim/slide_out_right"
-        app:popEnterAnim="@anim/slide_in_right"
-        app:popExitAnim="@anim/slide_out_left"
-        app:popUpToInclusive="true" />
-
-    <fragment
-        android:id="@+id/labDetailFragment"
-        android:name="jp.careapp.counseling.android.ui.labo.detail.LabDetailFragment"
-        android:label="LabDetailFragment"
-        tools:layout="@layout/fragment_lab_detail">
-
-        <action
-            android:id="@+id/action_labDetailFragment_to_buyPointFragment"
-            app:destination="@id/buyPointFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpToInclusive="true" />
-
-        <action
-            android:id="@+id/action_labDetailFragment_to_userProfileFragment"
-            app:destination="@id/userProfileFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpToInclusive="true" />
-
-        <action
-            android:id="@+id/action_labDetailFragment_to_reportLaboFragment"
-            app:destination="@id/reportLaboFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpToInclusive="true" />
-
-    </fragment>
-    <fragment
-        android:id="@+id/searchLabFragment"
-        android:name="jp.careapp.counseling.android.ui.search_lab.SearchLabFragment"
-        android:label="SearchLabFragment">
-        <action
-            android:id="@+id/action_searchLabFragment_to_selectionCategoryFragment"
-            app:destination="@id/selectionCategoryFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/reportLaboFragment"
-        android:name="jp.careapp.counseling.android.ui.labo.report.ReportLaboFragment"
-        android:label="ReportLaboFragment" />
-
-    <action
-        android:id="@+id/action_to_search_lab"
-        app:destination="@id/searchLabFragment"
-        app:enterAnim="@anim/slide_in_left"
-        app:exitAnim="@anim/slide_out_right"
-        app:popEnterAnim="@anim/slide_in_right"
-        app:popExitAnim="@anim/slide_out_left" />
-    <fragment
-        android:id="@+id/selectionCategoryFragment"
-        android:name="jp.careapp.counseling.android.ui.search_lab.SelectionCategoryFragment"
-        android:label="SelectionCategoryFragment" />
-
-    <action
-        android:id="@+id/action_homeFragment_to_LabDetailFragment"
-        app:destination="@id/labDetailFragment"
-        app:enterAnim="@anim/slide_in_left"
-        app:exitAnim="@anim/slide_out_right"
-        app:popEnterAnim="@anim/slide_in_right"
-        app:popExitAnim="@anim/slide_out_left"
-        app:popUpToInclusive="true" />
 
     <action
         android:id="@+id/action_global_fragmentNotification"
