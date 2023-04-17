@@ -26,25 +26,38 @@ class EditNickNameFragment : BaseFragment<FragmentEditNickNameBinding, EditNickN
 
         setUpToolBar()
 
-        binding.edtNickName.setTextChangeListener { count ->
-            binding.btnSave.isEnabled = count != 0 && binding.edtNickName.getText().isNotBlank()
-        }
+        mViewModel.getUserName()
 
-        binding.btnSave.setOnClickListener { if (!isDoubleClick) mViewModel.editMemberName(binding.edtNickName.getText()) }
+        binding.edtNickName.setTextChangeListener { count ->
+            mViewModel.checkEnableButtonSave(count, binding.edtNickName.getText())
+        }
     }
 
     override fun bindingStateView() {
         super.bindingStateView()
 
-        mViewModel.memberNickName.observe(viewLifecycleOwner) {
+        mViewModel.userNameLiveData.observe(viewLifecycleOwner) {
             binding.edtNickName.setText(it)
         }
 
         mViewModel.mActionState.observe(viewLifecycleOwner) {
             when (it) {
-                is EditNickNameActionState.EditNickNameSuccess -> showDialogEditNickNameSuccess()
+                is EditNickNameActionState.EditNickNameSuccess -> {
+                    showDialogEditNickNameSuccess()
+                    binding.btnSave.isEnabled = false
+                }
             }
         }
+
+        mViewModel.isEnableButtonSave.observe(viewLifecycleOwner) {
+            binding.btnSave.isEnabled = it
+        }
+    }
+
+    override fun setOnClick() {
+        super.setOnClick()
+
+        binding.btnSave.setOnClickListener { if (!isDoubleClick) mViewModel.editMemberName(binding.edtNickName.getText()) }
     }
 
     private fun setUpToolBar() {

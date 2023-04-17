@@ -16,14 +16,25 @@ import javax.inject.Inject
 class EditNickNameViewModel @Inject constructor(private val mRepository: EditNickNameRepository) :
     BaseViewModel() {
 
-    private val _memberNickName = MutableLiveData<String>()
-    val memberNickName: LiveData<String>
-        get() = _memberNickName
+    private var userName = ""
+
+    private val _userNameLiveData = MutableLiveData<String>()
+    val userNameLiveData: LiveData<String>
+        get() = _userNameLiveData
+
+    private val _isEnableButtonSave = MutableLiveData(false)
+    val isEnableButtonSave: LiveData<Boolean>
+        get() = _isEnableButtonSave
 
     val mActionState = SingleLiveEvent<EditNickNameActionState>()
 
-    init {
-        _memberNickName.value = mRepository.getMemberNickName()
+    fun getUserName() {
+        userName = mRepository.getMemberNickName().toString()
+        _userNameLiveData.value = userName
+    }
+
+    fun checkEnableButtonSave(count: Int, userName: String) {
+        _isEnableButtonSave.value = count != 0 && this.userName != userName
     }
 
     fun editMemberName(memberName: String) {

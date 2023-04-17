@@ -39,7 +39,7 @@ class EditTextCounter : FrameLayout {
 
     fun setTextChangeListener(listener: (Int) -> Unit) {
         binding.edt.addTextChangedListener {
-            binding.tvCounter.text = "${it?.count() ?: 0}"
+            binding.tvCounter.text = "${10 - (it?.count() ?: 0)}"
             listener.invoke(it?.count() ?: 0)
         }
     }
@@ -48,7 +48,7 @@ class EditTextCounter : FrameLayout {
 
     fun setText(text: String) {
         binding.edt.setText(text)
-        binding.tvCounter.text = "${binding.edt.text?.count() ?: 0}"
+        binding.tvCounter.text = "${10 - (binding.edt.text?.count() ?: 0)}"
     }
 
     fun setHint(hint: String?) {
