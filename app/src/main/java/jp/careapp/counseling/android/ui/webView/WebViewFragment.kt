@@ -3,7 +3,6 @@ package jp.careapp.counseling.android.ui.webView
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.net.Uri
 import android.webkit.*
 import androidx.activity.OnBackPressedCallback
@@ -15,7 +14,6 @@ import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.counseling.BuildConfig
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.user_profile.ActionLoadProfile
-import jp.careapp.counseling.android.data.network.BlogResponse
 import jp.careapp.counseling.android.data.pref.AppPreferences
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.utils.Define
@@ -63,37 +61,9 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
                     loadUrl(urlWebView)
                 }
             }
-
-            if (it.containsKey(Define.BLOG_ID)) {
-                val blogId = it.getString(Define.BLOG_ID).toString()
-                viewModel.getBlog(blogId)
-            }
         }
-        binding.webView.setBackgroundColor(resources.getColor(R.color.color_background_common))
+
         handleBackPress()
-    }
-
-    override fun bindingStateView() {
-        super.bindingStateView()
-
-        viewModel.blogResult.observe(viewLifecycleOwner) {
-            it?.let {
-                initBlog(it)
-            }
-        }
-    }
-
-    private fun initBlog(blog: BlogResponse) {
-        binding.toolBar.setTvTitle(blog.title)
-        binding.webView.apply {
-            settings.domStorageEnabled = true
-            settings.javaScriptEnabled = true
-            setBackgroundColor(Color.WHITE)
-            webChromeClient = WebChromeClient()
-            webViewClient = getWebViewClient("")
-            clearCache(true)
-            loadData(blog.content.toString(), "text/html", "UTF-8")
-        }
     }
 
     private fun loadJs(webview: WebView, script: String) {
@@ -152,8 +122,9 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
 
             override fun shouldOverrideUrlLoading(
                 view: WebView,
-                url: String
+                request: WebResourceRequest
             ): Boolean {
+                val url = request.url.toString()
                 try {
                     if (URLUtil.isNetworkUrl(url)) {
                         view.loadUrl(url)

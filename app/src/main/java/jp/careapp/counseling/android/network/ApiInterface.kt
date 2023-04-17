@@ -346,9 +346,6 @@ interface ApiInterface {
     @GET("api/app-banners")
     suspend fun getListBanner(): ApiObjectResponse<List<BannerResponse>>
 
-    @GET("api/blogs/{id}")
-    suspend fun getBlogs(@Path("id") id: String): ApiObjectResponse<BlogResponse>
-
     @GET("api/app-mode")
     suspend fun getAppMode(): ApiObjectResponse<AppModeResponse>
 }
