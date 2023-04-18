@@ -28,7 +28,7 @@
             android:orientation="vertical"
             android:paddingHorizontal="16dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
@@ -37,18 +37,30 @@
                 android:textColor="#f0f0f0"
                 android:textSize="14sp" />
 
-            <Spinner
-                android:id="@+id/spinner"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/bg_nm_spinner"
-                android:minHeight="44dp"
-                android:paddingHorizontal="16dp"
-                android:theme="@style/SpinnerTheme"
-                tools:listitem="@layout/list_popup_window_item" />
+                android:background="@null"
+                app:endIconDrawable="@drawable/ic_nm_drop_down_spinner"
+                app:endIconTint="#F0F0F0">
 
-            <TextView
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_nm_edit_text"
+                    android:fontFamily="@font/hiragino_sans_w3"
+                    android:inputType="none"
+                    android:text="@string/contact_category_please_select"
+                    android:textColor="#f0f0f0"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
@@ -57,7 +69,7 @@
                 android:textColor="#f0f0f0"
                 android:textSize="14sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edtContent"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -76,7 +88,7 @@
                 android:textSize="14sp"
                 tools:lines="9" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_32"
@@ -93,7 +105,7 @@
 
                 <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/radioBtnNecessary"
-                    style="@style/RMRadioButtonStyle"
+                    style="@style/NMRadioButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
@@ -103,7 +115,7 @@
 
                 <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/radioBtnUnnecessary"
-                    style="@style/RMRadioButtonStyle"
+                    style="@style/NMRadioButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_24"

@@ -20,7 +20,7 @@ class ContactUsViewModel @Inject constructor(private val application: Applicatio
     val statusBtnConfirm: LiveData<Boolean>
         get() = _statusBtnConfirm
 
-    private var mCategory = ""
+    private var mCategory = application.getString(R.string.contact_category_please_select)
     private var mContent = ""
     private var mReply = REPLY_REQUIRED
 

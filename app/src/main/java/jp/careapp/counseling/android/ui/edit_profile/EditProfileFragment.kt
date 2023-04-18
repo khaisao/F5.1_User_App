@@ -86,7 +86,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
                     DateUtil.getDateTimeDisplayByFormat(
                         DateUtil.DATE_FORMAT_3,
                         mCalendar
-                    )
+                    ), year, monthOfYear, dayOfMonth
                 )
             }
         }

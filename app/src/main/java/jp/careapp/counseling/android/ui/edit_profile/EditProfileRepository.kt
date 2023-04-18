@@ -14,7 +14,11 @@ class EditProfileRepository @Inject constructor(
 
     fun getMemberMail() = rxPreferences.getEmail().toString()
 
+    fun getMemberBirth() = rxPreferences.getMemberBirth()
+
     fun getMemberAge() = rxPreferences.getMemberAge().toString()
+
+    fun saveMemberBirth(birth: String) = rxPreferences.saveMemberBirth(birth)
 
     fun saveMemberAge(age: Int) = rxPreferences.saveMemberAge(age)
 

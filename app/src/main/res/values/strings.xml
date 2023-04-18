@@ -749,4 +749,12 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="please_confirm_your_email">メールアドレスを確認してください</string>
     <string name="logout_confirm">ログアウトしますか？</string>
     <string name="logout_text">ログアウトしました</string>
+
+    <string-array name="nm_contact_us_category">
+        <item>決済について</item>
+        <item>パフォーマーについて</item>
+        <item>アカウントについて</item>
+        <item>機能について</item>
+        <item>その他</item>
+    </string-array>
 </resources>

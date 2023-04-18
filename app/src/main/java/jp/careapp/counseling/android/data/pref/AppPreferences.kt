@@ -495,4 +495,8 @@ class AppPreferences @Inject constructor(
         mPrefs.edit().putString(PREF_PARAM_TOKEN_EXPIRE, tokenExpire).apply()
         mPrefs.edit().putString(PREF_PARAM_MEMBER_CODE, memberCode).apply()
     }
+
+    override fun saveMemberBirth(birth: String) {
+        mPrefs.edit().putString(PREF_KEY_MEMBER_BIRTH, birth).apply()
+    }
 }
