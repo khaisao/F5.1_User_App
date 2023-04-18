@@ -389,7 +389,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="no_ranking_result">現在この期間のランキングはありません。</string>
     <!--    maintenance-->
     <string name="under_maintenance">メンテナンス中</string>
-    <string name="careia_maintenance">ケアプリはただいまメンテナンス中のため、ご利用いただくことができません。\n\nメンテナンス情報、終了時刻などはTwitterのケアプリ公式アカウントにてご案内しております。</string>
+    <string name="careia_maintenance">SPARK LIVEはただいまメンテナンス中のため、ご利用いただくことができません。\nメンテナンス情報、終了時刻などはTwitterのSPARK LIVE公式アカウントにてご案内しております。</string>
     <string name="careia_error">たいへん申し訳ございません。\n現在ケアプリをご利用いただく事ができません。\nしばらく時間をおいて、再度お試しください。\n\n緊急メンテナンスなどの場合、\nTwitter公式アカウントにてご案内しております。</string>
     <string name="error_maintenance">エラーが発生しました。</string>
 
