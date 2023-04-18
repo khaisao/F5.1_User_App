@@ -112,11 +112,6 @@ class DetailUserProfileFragment :
 
     override fun initView() {
         super.initView()
-        consultantResponseLocal?.let {
-//            initViewpager(it)
-        }
-
-
         binding.avatarIv.viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {

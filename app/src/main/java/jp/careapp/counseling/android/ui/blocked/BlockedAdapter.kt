@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.FavoriteResponse
 import jp.careapp.counseling.databinding.ItemBlockedBinding
@@ -18,7 +19,7 @@ class BlockedAdapter(private val onClickBlock: (Int) -> Unit) :
         fun bind(item: FavoriteResponse, onClickBlock: (Int) -> Unit) {
             binding.blocked = item
             binding.executePendingBindings()
-
+            Glide.with(binding.ivPerson).load(item.thumbnailImageUrl).placeholder(R.drawable.default_avt_performer).into(binding.ivPerson)
             binding.tvBlocked.setOnClickListener { onClickBlock.invoke(absoluteAdapterPosition) }
         }
     }

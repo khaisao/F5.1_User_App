@@ -65,6 +65,9 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvName"
+                        android:layout_width="0dp"
+                        android:layout_marginHorizontal="@dimen/margin_10"
+                        android:textAlignment="center"
                         style="@style/text_bold_16"
                         android:layout_marginTop="@dimen/margin_24"
                         android:textColor="@color/color_text_F0F0F0"
@@ -73,7 +76,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/sl_avatar"
                         app:layout_constraintVertical_chainStyle="packed"
                         tools:text="なまえさんに発信しています" />
-
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:src="@drawable/ic_call_loading"
@@ -91,20 +93,18 @@
                     <TextView
                         android:id="@+id/tvNote"
                         style="@style/text_12"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_marginHorizontal="32dp"
                         android:layout_marginTop="20dp"
                         android:gravity="center"
+                        android:textAlignment="center"
                         android:padding="10dp"
                         android:text="@string/call_content"
                         android:textColor="@color/color_B2A9CC"
                         android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ivMotion"
-
-                        />
-
+                        app:layout_constraintTop_toBottomOf="@id/ivMotion"/>
 
                     <TextView
                         android:gravity="center"

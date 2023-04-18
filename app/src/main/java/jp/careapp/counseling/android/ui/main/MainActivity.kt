@@ -573,7 +573,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                             val currentFragment: Fragment =
                                 navHostFragment.childFragmentManager.fragments[0]
                             if (currentFragment is VerifyCodeFragment) {
-                                if (status.exception.errors.joinToString() != getString(R.string.authentication_code_incorrect)) {
+                                if (status.exception.errors.joinToString() != getString(R.string.authentication_code_incorrect) && status.exception.errors.joinToString() != getString(
+                                        R.string.authorization_code_expired
+                                    )
+                                ) {
                                     CommonAlertDialog.getInstanceCommonAlertdialog(
                                         this@MainActivity,
                                         TYPE_DIALOG.GENERIC
