@@ -171,4 +171,6 @@ interface RxPreferences {
     fun saveMemberAge(age: Int)
 
     fun switchMode()
+
+    fun saveMemberBirth(birth: String)
 }

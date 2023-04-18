@@ -11,9 +11,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
-import java.time.ZoneId
-import java.time.temporal.ChronoUnit
-import java.util.*
+import java.time.Period
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,21 +36,24 @@ class EditProfileViewModel @Inject constructor(
     fun getData() {
         _memberName.value = mRepository.getMemberNickName()
         _memberMail.value = mRepository.getMemberMail()
-        _memberAge.value = "${mRepository.getMemberAge()}歳"
+        showMemberAge(mRepository.getMemberBirth().toString())
     }
 
-    fun editMemberBirth(memberBirth: String) {
+    fun editMemberBirth(memberBirth: String, year: Int, month: Int, day: Int) {
         isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             supervisorScope {
                 try {
                     val response = mRepository.editMemberBirth(memberBirth)
                     if (response.errors.isEmpty()) {
-                        val age = Calendar.getInstance().toInstant().atZone(ZoneId.systemDefault())
-                            .toLocalDate().until(LocalDate.now(), ChronoUnit.YEARS).toInt()
+                        val age = Period.between(
+                            LocalDate.of(year, month, day),
+                            LocalDate.now()
+                        ).years
+                        mRepository.saveMemberBirth(memberBirth)
                         mRepository.saveMemberAge(age)
                         withContext(Dispatchers.Main) {
-                            _memberAge.value = "${mRepository.getMemberAge()}歳"
+                            showMemberAge(memberBirth)
                             mActionState.value = EditProfileActionState.UpdateMemberBirthSuccess
                         }
                     }
@@ -64,6 +65,14 @@ class EditProfileViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    private fun showMemberAge(memberBirth: String) {
+        if (memberBirth == "1900-01-01") {
+            _memberAge.value = "未設定"
+        } else {
+            _memberAge.value = "${mRepository.getMemberAge()}歳"
         }
     }
 }
