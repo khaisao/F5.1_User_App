@@ -145,21 +145,6 @@
     <string name="favorite_counselor">お気に入り一覧</string>
     <string name="leaving">去る</string>
 
-
-    <!--   tutorial  -->
-    <string name="title_step_1">ケアプリへようこそ！</string>
-    <string name="content_step_1"><![CDATA[<font color=\'#E3DFEF\'>ケアプリでは経験豊富な恋愛アドバイザーが人に言いづらい恋愛に関する悩みを解決します！<br />
-               相談内容は他人に知られることがありませんので安心してご相談ください。</font><br /><br />
-               <font color=\'#AEA2D1\'>【注意事項】<br />ケアプリは恋愛相談アプリです。<br />
-               医療行為や法律に関する事など対応出来ないケースもございます。詳しくは利用規約・ヘルプをご覧ください。<br /></font>]]></string>
-
-    <string name="title_step_2">相談したい\n恋愛アドバイザーを探します</string>
-    <string name="content_step_2"><![CDATA[<font color=\'#E3DFEF\'>得意な相談ジャンルや先生からのメッセージや他の人のレビューを見て、相談したい恋愛アドバイザーを選びましょう。<br /><br />
-               メッセージの料金は恋愛アドバイザーのステージによって異なります。</font><br /><br />]]></string>
-    <string name="tv_next">次へ</string>
-    <string name="tv_complete">完了</string>
-    <string name="enter_later">あとで入力する</string>
-
     <!-- buy point-->
     <string name="title_buy_point">ポイント購入</string>
     <string name="my_point">所持ポイント</string>

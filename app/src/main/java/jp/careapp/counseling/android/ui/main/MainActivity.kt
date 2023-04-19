@@ -32,7 +32,6 @@ import jp.careapp.core.utils.DeviceUtil
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.core.utils.dialog.LoadingDialog
 import jp.careapp.counseling.R
-import jp.careapp.counseling.android.data.model.labo.LaboResponse
 import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.network.socket.SocketActionSend
 import jp.careapp.counseling.android.data.pref.AppPreferences
@@ -49,7 +48,6 @@ import jp.careapp.counseling.android.ui.profile.list_user_profile.UserProfileFra
 import jp.careapp.counseling.android.ui.registration.RegistrationFragment
 import jp.careapp.counseling.android.ui.splash.SplashFragment
 import jp.careapp.counseling.android.ui.top.TopFragment
-import jp.careapp.counseling.android.ui.tutorial.TutorialFragment
 import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeFragment
 import jp.careapp.counseling.android.utils.*
 import jp.careapp.counseling.android.utils.Define.Companion.PREFIX_CARE_APP
@@ -897,10 +895,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onBackPressed() {
         val currentFragment: Fragment =
             navHostFragment.childFragmentManager.fragments[0]
-        if (currentFragment is TutorialFragment || currentFragment is RegistrationFragment) {
-            if (currentFragment is RegistrationFragment) {
-                super.onBackPressed()
-            }
+
+        if (currentFragment is RegistrationFragment) {
+            super.onBackPressed()
         } else if (currentFragment is TopFragment) {
             moveTaskToBack(true)
         } else {
