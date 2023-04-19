@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -81,10 +82,14 @@ class ChatListAdapter constructor(
 
                             binding.tvStatus.setBackgroundResource(statusBg)
 
+                            binding.ivPerson.scaleType = ImageView.ScaleType.CENTER_CROP
+
                         } else {
+                            binding.ivPerson.scaleType = ImageView.ScaleType.FIT_CENTER
+
                             Glide.with(binding.ivPerson).load(
                                 context.resources.getIdentifier(
-                                    "thumb",
+                                    "thumbstaff",
                                     "drawable", context.packageName
                                 )
                             )

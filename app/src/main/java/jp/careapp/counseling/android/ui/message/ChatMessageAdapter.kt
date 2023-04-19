@@ -173,7 +173,7 @@ class ChatMessageAdapter constructor(
                     else
                         Glide.with(avatarIv).load(
                             context.resources.getIdentifier(
-                                "thumb",
+                                "thumbstaff",
                                 "drawable", context.packageName
                             )
                         )
