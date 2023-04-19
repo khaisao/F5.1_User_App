@@ -9,25 +9,7 @@ interface AppNavigation : BaseNavigator {
 
     fun openSplashToLoginScreen(bundle: Bundle? = null)
 
-    fun openSplashToReRegisterScreen(bundle: Bundle? = null)
-
-    fun openSplashToBadUserScreen(bundle: Bundle? = null)
-
-    fun openStartToTopScreen(bundle: Bundle? = null)
-
-    fun openStartToInputAndEditEmailScreen(bundle: Bundle? = null)
-
     fun openLoginEmailScreen(bundle: Bundle? = null)
-
-    fun openSplashToStartScreen(bundle: Bundle? = null)
-
-    fun openStartToDifficultLoginScreen(bundle: Bundle? = null)
-
-    fun openStartToTermsScreen(bundle: Bundle? = null)
-
-    fun openStartToPrivacyScreen(bundle: Bundle? = null)
-
-    fun openStartWithoutLoginToRegistrationScreen(bundle: Bundle? = null)
 
     fun openInputEmailToVerifyCode(bundle: Bundle? = null)
 
@@ -36,14 +18,6 @@ interface AppNavigation : BaseNavigator {
     fun openVerifyCodeToRegistrationScreen(bundle: Bundle? = null)
 
     fun openVerifyCodeToTopScreen(bundle: Bundle? = null)
-
-    fun openVerifyCodeToReRegisterScreen(bundle: Bundle? = null)
-
-    fun openVerifyCodeToBadUserScreen(bundle: Bundle? = null)
-
-    fun openTutorialToTopScreen(bundle: Bundle? = null)
-
-    fun openVerifyCodeToTutorialScreen(bundle: Bundle? = null)
 
     fun openTopToBuyPointScreen(bundle: Bundle? = null)
 
@@ -62,12 +36,6 @@ interface AppNavigation : BaseNavigator {
     fun openMyPageToEditProfile(bundle: Bundle? = null)
 
     fun openHomeToBannerFirstTimeUseScreen(bundle: Bundle? = null)
-
-    fun openRegistrationToTutorialScreen(bundle: Bundle? = null)
-
-    fun openVerifyCodeToEditProfileScreen(bundle: Bundle? = null)
-
-    fun openEditProfileToEditEmailScreen(bundle: Bundle? = null)
 
     fun openUserProfileToReportScreen(bundle: Bundle? = null)
 
@@ -126,10 +94,6 @@ interface AppNavigation : BaseNavigator {
     fun openWithdrawalFinish(bundle: Bundle? = null)
 
     fun openGlobalToSettingNotification(bundle: Bundle? = null)
-
-    fun openPartnerInfoToTopScreen(bundle: Bundle? = null)
-
-    fun openPartnerInfoToTutorialScreen(bundle: Bundle? = null)
 
     fun openRMEnterNameToRmTop(bundle: Bundle? = null)
 

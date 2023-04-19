@@ -24,14 +24,15 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"/>
+            app:popExitAnim="@anim/slide_out_left" />
 
     </fragment>
 
     <fragment
         android:id="@+id/verifyFragment"
         android:name="jp.careapp.counseling.android.ui.verifyCode.VerifyCodeFragment"
-        android:label="VerifyCodeFragment">
+        android:label="VerifyCodeFragment"
+        tools:layout="@layout/fragment_verify_code">
         <action
             android:id="@+id/action_verifyCode_to_VerifyCodeHelpFragment"
             app:destination="@id/verificationCodeHelpFragment"
@@ -41,40 +42,8 @@
             app:popExitAnim="@anim/slide_out_left" />
 
         <action
-            android:id="@+id/action_verifyCode_to_RegistrationFragment"
-            app:destination="@id/registration_navigation"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
-
-        <action
-            android:id="@+id/action_verifyCode_to_TutorialFragment"
-            app:destination="@id/tutorialFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
-
-        <action
-            android:id="@+id/action_verifyCode_to_ReRegisterFragment"
-            app:destination="@id/reRegisterFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
-
-        <action
-            android:id="@+id/action_verifyCode_to_BadUserFragment"
-            app:destination="@id/badUserFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
-
-        <action
-            android:id="@+id/action_verifyCode_to_EditProfileFragment"
-            app:destination="@id/editProfileFragment"
+            android:id="@+id/action_verifyFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
@@ -82,18 +51,11 @@
 
     </fragment>
 
-    <include app:graph="@navigation/registration_navigation" />
-
-    <fragment
-        android:id="@+id/tutorialFragment"
-        android:name="jp.careapp.counseling.android.ui.tutorial.TutorialFragment"
-        android:label="TutorialFragment"
-        tools:layout="@layout/fragment_tutorial"/>
-
     <fragment
         android:id="@+id/verificationCodeHelpFragment"
         android:name="jp.careapp.counseling.android.ui.verificationCodeHelp.VerificationCodeHelpFragment"
-        android:label="VerificationCodeHelpFragment">
+        android:label="VerificationCodeHelpFragment"
+        tools:layout="@layout/fragment_verification_code_help">
 
         <action
             android:id="@+id/action_verifyCode_to_InputEmailFragment"
@@ -105,22 +67,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/reRegisterFragment"
-        android:name="jp.careapp.counseling.android.ui.reRegister.ReRegisterFragment"
-        android:label="ReRegisterFragment" />
-
-    <fragment
-        android:id="@+id/badUserFragment"
-        android:name="jp.careapp.counseling.android.ui.badUser.BadUserFragment"
-        android:label="BadUserFragment" />
-
-    <fragment
-        android:id="@+id/editProfileFragment"
-        android:name="jp.careapp.counseling.android.ui.edit_profile.EditProfileFragment"
-        android:label="EditProfileFragment">
-        <action
-            android:id="@+id/action_fragmentEditProfile_to_editEmailfragment"
-            app:destination="@id/inputEmailFragment" />
-    </fragment>
+        android:id="@+id/registrationFragment"
+        android:name="jp.careapp.counseling.android.ui.registration.RegistrationFragment"
+        android:label="RegistrationFragment"
+        tools:layout="@layout/fragment_registration" />
 
 </navigation>

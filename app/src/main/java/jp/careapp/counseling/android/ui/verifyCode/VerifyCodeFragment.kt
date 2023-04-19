@@ -346,7 +346,6 @@ class VerifyCodeFragment :
 
     override fun bindingStateView() {
         super.bindingStateView()
-        viewModel.isLoading.observeForever(isLoadingObserver)
         viewModel.codeScreenAfterVerify.observeForever(verifyCodeScreenObserver)
         viewModel.numberError.observeForever(numberErrorObserver)
         shareViewModel.isFocusVerifyCode.observe(viewLifecycleOwner, isFocusObserver)
@@ -358,33 +357,15 @@ class VerifyCodeFragment :
         }
     }
 
-    private var isLoadingObserver: Observer<Boolean> = Observer {
-        showHideLoading(it)
-    }
-
     private var verifyCodeScreenObserver: Observer<Int> = Observer {
         when (it) {
             SCREEN_CODE_REGISTER -> {
                 rxPreferences.setSignedUpStatus(SignedUpStatus.UNKNOWN)
                 appNavigation.openVerifyCodeToRegistrationScreen()
             }
-            SCREEN_CODE_TUTORIAL -> appNavigation.openVerifyCodeToTutorialScreen()
             SCREEN_CODE_TOP -> {
                 appNavigation.openVerifyCodeToTopScreen()
                 shareViewModel.setHaveToken(true)
-            }
-            SCREEN_CODE_BAD_USER -> {
-                appNavigation.openVerifyCodeToBadUserScreen()
-                clearAllValueCode()
-                isSaveStateVerifyCode = true
-            }
-            SCREEN_CODE_REREGISTER -> {
-                val bundle = Bundle().apply {
-                    putString(BUNDLE_KEY.EMAIL, email)
-                }
-                appNavigation.openVerifyCodeToReRegisterScreen(bundle)
-                clearAllValueCode()
-                isSaveStateVerifyCode = true
             }
         }
     }

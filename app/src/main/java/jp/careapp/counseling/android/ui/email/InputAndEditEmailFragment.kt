@@ -224,13 +224,8 @@ class InputAndEditEmailFragment :
 
     override fun bindingStateView() {
         super.bindingStateView()
-        viewModel.isLoading.observeForever(isLoadingObserver)
         viewModel.isSuccess.observeForever(isSuccessObserver)
         viewModel.isComeBackFromBackGround.observe(viewLifecycleOwner, isFocusObserver)
-    }
-
-    private var isLoadingObserver: Observer<Boolean> = Observer {
-        showHideLoading(it)
     }
 
     private var isSuccessObserver: Observer<Boolean> = Observer {

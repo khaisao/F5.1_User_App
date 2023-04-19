@@ -17,44 +17,8 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 //        openScreen(R.id.action_homeFragment_to_listUserFragment, bundle)
     }
 
-    override fun openSplashToReRegisterScreen(bundle: Bundle?) {
-        openScreen(R.id.action_splashFragment_to_ReRegisterFragment, bundle)
-    }
-
-    override fun openSplashToBadUserScreen(bundle: Bundle?) {
-        openScreen(R.id.action_splashFragment_to_badUserFragment, bundle)
-    }
-
-    override fun openStartToTopScreen(bundle: Bundle?) {
-        openScreen(R.id.action_startFragment_to_TopFragment, bundle)
-    }
-
-    override fun openStartToInputAndEditEmailScreen(bundle: Bundle?) {
-        openScreen(R.id.action_startFragment_to_InputEmailFragment, bundle)
-    }
-
     override fun openLoginEmailScreen(bundle: Bundle?) {
         openScreen(R.id.action_inputEmailFragment_self, bundle)
-    }
-
-    override fun openSplashToStartScreen(bundle: Bundle?) {
-        openScreen(R.id.action_splashFragment_to_startFragment, bundle)
-    }
-
-    override fun openStartToDifficultLoginScreen(bundle: Bundle?) {
-        openScreen(R.id.action_startFragment_to_DifficultyWithLoginFragment, bundle)
-    }
-
-    override fun openStartToTermsScreen(bundle: Bundle?) {
-        openScreen(R.id.action_startFragment_to_TermsFragment, bundle)
-    }
-
-    override fun openStartToPrivacyScreen(bundle: Bundle?) {
-        openScreen(R.id.action_startFragment_to_PrivacyFragment, bundle)
-    }
-
-    override fun openStartWithoutLoginToRegistrationScreen(bundle: Bundle?) {
-        openScreen(R.id.action_startFragment_to_RegistrationFragment, bundle)
     }
 
     override fun openInputEmailToVerifyCode(bundle: Bundle?) {
@@ -66,27 +30,11 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     }
 
     override fun openVerifyCodeToRegistrationScreen(bundle: Bundle?) {
-        openScreen(R.id.action_verifyCode_to_RegistrationFragment, bundle)
+        openScreen(R.id.action_verifyFragment_to_registrationFragment, bundle)
     }
 
     override fun openVerifyCodeToTopScreen(bundle: Bundle?) {
         openScreen(R.id.action_verifyCode_to_TopFragment, bundle)
-    }
-
-    override fun openVerifyCodeToReRegisterScreen(bundle: Bundle?) {
-        openScreen(R.id.action_verifyCode_to_ReRegisterFragment, bundle)
-    }
-
-    override fun openVerifyCodeToBadUserScreen(bundle: Bundle?) {
-        openScreen(R.id.action_verifyCode_to_BadUserFragment, bundle)
-    }
-
-    override fun openTutorialToTopScreen(bundle: Bundle?) {
-        openScreen(R.id.action_tutorial_to_TopFragment, bundle)
-    }
-
-    override fun openVerifyCodeToTutorialScreen(bundle: Bundle?) {
-        openScreen(R.id.action_verifyCode_to_TutorialFragment, bundle)
     }
 
     override fun openTopToBuyPointScreen(bundle: Bundle?) {
@@ -125,10 +73,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_homeFragment_to_BannerFirstTimeUseFragment, bundle)
     }
 
-    override fun openRegistrationToTutorialScreen(bundle: Bundle?) {
-        openScreen(R.id.action_registrationFragment_to_tutorialFragment, bundle)
-    }
-
     override fun openTopToSearchScreen(bundle: Bundle?) {
         openScreen(R.id.action_TopFragment_to_SearchFragment, bundle)
     }
@@ -159,14 +103,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openOtherScreenToTopScreen(bundle: Bundle?) {
         openScreen(R.id.topFragment, bundle)
-    }
-
-    override fun openVerifyCodeToEditProfileScreen(bundle: Bundle?) {
-        openScreen(R.id.action_verifyCode_to_EditProfileFragment, bundle)
-    }
-
-    override fun openEditProfileToEditEmailScreen(bundle: Bundle?) {
-        openScreen(R.id.action_fragmentEditProfile_to_editEmailfragment, bundle)
     }
 
     override fun openUserProfileToReportScreen(bundle: Bundle?) {
@@ -251,14 +187,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openGlobalToSettingNotification(bundle: Bundle?) {
         openScreen(R.id.action_global_fragmentNotification, bundle)
-    }
-
-    override fun openPartnerInfoToTopScreen(bundle: Bundle?) {
-        openScreen(R.id.action_partnerInfoFragment_to_topFragment, bundle)
-    }
-
-    override fun openPartnerInfoToTutorialScreen(bundle: Bundle?) {
-        openScreen(R.id.action_partnerInfoFragment_to_tutorialFragment, bundle)
     }
 
     override fun openRMEnterNameToRmTop(bundle: Bundle?) {
