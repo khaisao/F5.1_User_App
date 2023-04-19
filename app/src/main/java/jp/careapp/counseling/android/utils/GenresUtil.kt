@@ -3,10 +3,6 @@ package jp.careapp.counseling.android.utils
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.AppApplication
 import jp.careapp.counseling.android.data.model.GenResItem
-import jp.careapp.counseling.android.data.model.history_chat.Performer
-import jp.careapp.counseling.android.data.network.AnswerResponse
-import jp.careapp.counseling.android.data.network.LabDetailResponse
-import jp.careapp.counseling.android.data.network.MemberResponse
 
 class GenresUtil {
     companion object {

@@ -145,21 +145,6 @@
     <string name="favorite_counselor">お気に入り一覧</string>
     <string name="leaving">去る</string>
 
-
-    <!--   tutorial  -->
-    <string name="title_step_1">ケアプリへようこそ！</string>
-    <string name="content_step_1"><![CDATA[<font color=\'#E3DFEF\'>ケアプリでは経験豊富な恋愛アドバイザーが人に言いづらい恋愛に関する悩みを解決します！<br />
-               相談内容は他人に知られることがありませんので安心してご相談ください。</font><br /><br />
-               <font color=\'#AEA2D1\'>【注意事項】<br />ケアプリは恋愛相談アプリです。<br />
-               医療行為や法律に関する事など対応出来ないケースもございます。詳しくは利用規約・ヘルプをご覧ください。<br /></font>]]></string>
-
-    <string name="title_step_2">相談したい\n恋愛アドバイザーを探します</string>
-    <string name="content_step_2"><![CDATA[<font color=\'#E3DFEF\'>得意な相談ジャンルや先生からのメッセージや他の人のレビューを見て、相談したい恋愛アドバイザーを選びましょう。<br /><br />
-               メッセージの料金は恋愛アドバイザーのステージによって異なります。</font><br /><br />]]></string>
-    <string name="tv_next">次へ</string>
-    <string name="tv_complete">完了</string>
-    <string name="enter_later">あとで入力する</string>
-
     <!-- buy point-->
     <string name="title_buy_point">ポイント購入</string>
     <string name="my_point">所持ポイント</string>
@@ -389,7 +374,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="no_ranking_result">現在この期間のランキングはありません。</string>
     <!--    maintenance-->
     <string name="under_maintenance">メンテナンス中</string>
-    <string name="careia_maintenance">ケアプリはただいまメンテナンス中のため、ご利用いただくことができません。\n\nメンテナンス情報、終了時刻などはTwitterのケアプリ公式アカウントにてご案内しております。</string>
+    <string name="careia_maintenance">SPARK LIVEはただいまメンテナンス中のため、ご利用いただくことができません。\nメンテナンス情報、終了時刻などはTwitterのSPARK LIVE公式アカウントにてご案内しております。</string>
     <string name="careia_error">たいへん申し訳ございません。\n現在ケアプリをご利用いただく事ができません。\nしばらく時間をおいて、再度お試しください。\n\n緊急メンテナンスなどの場合、\nTwitter公式アカウントにてご案内しております。</string>
     <string name="error_maintenance">エラーが発生しました。</string>
 

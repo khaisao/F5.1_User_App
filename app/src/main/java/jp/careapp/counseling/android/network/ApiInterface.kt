@@ -4,7 +4,6 @@ import com.google.gson.JsonObject
 import jp.careapp.core.model.network.NotificationResponse
 import jp.careapp.counseling.android.data.model.*
 import jp.careapp.counseling.android.data.model.history_chat.HistoryChatResponse
-import jp.careapp.counseling.android.data.model.labo.LaboResponse
 import jp.careapp.counseling.android.data.model.message.FreeTemplateRequest
 import jp.careapp.counseling.android.data.model.message.MessageRequest
 import jp.careapp.counseling.android.data.model.message.MessageResponse
@@ -285,28 +284,12 @@ interface ApiInterface {
     @PATCH("api/member/trouble-genre")
     suspend fun updateGenre(@Field("genre") genre: Int): ApiObjectResponse<Any>
 
-    @GET("api/counseling-labo/questions/{id}")
-    suspend fun getLabDetail(
-        @Path("id") id: Int,
-        @QueryMap params: MutableMap<String, Any>
-    ): ApiObjectResponse<LabDetailResponse>
-
-    @FormUrlEncoded
-    @PATCH("api/counseling-labo/questions/{id}/best-answer")
-    suspend fun chooseBestAnswer(
-        @Path("id") id: Int,
-        @FieldMap params: MutableMap<String, Any>
-    ): ApiObjectResponse<Any>
-
     @FormUrlEncoded
     @POST("api/counseling-labo/questions/{id}/check-favorite")
     suspend fun changeLabFavorite(
         @Path("id") id: Int,
         @FieldMap params: MutableMap<String, Any>
     ): ApiObjectResponse<Any>
-
-    @GET("api/counseling-labo/questions")
-    suspend fun getLabo(@QueryMap params: MutableMap<String, Any>): ApiObjectResponse<List<LaboResponse>>
 
     @GET("/api/prices")
     suspend fun getCreditPrices(
