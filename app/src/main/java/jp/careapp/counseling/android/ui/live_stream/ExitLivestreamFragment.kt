@@ -90,7 +90,6 @@ class ExitLivestreamFragment :
             errorMessage = bundle.getString(BUNDLE_KEY.TITLE, "")
         }
 
-        consultantResponseLocal?.code?.let { detailViewModel.loadMailInfo(it) }
         binding.rvConsultant.layoutManager = GridLayoutManager(context, 2)
         binding.rvConsultant.adapter = adapter
 
@@ -167,38 +166,19 @@ class ExitLivestreamFragment :
     }
 
     private fun openChatScreen(isShowFreeMess: Boolean = false) {
-        if (isFirstChat == null) {
-            consultantResponseLocal?.code?.let { it1 ->
-                detailViewModel.loadMailInfo(
-                    it1
-                )
-            }
-        } else {
-            isFirstChat?.let {
-                if (it) {
-                    // transition to trouble sheet screen
-                    val bundle = Bundle()
-                    bundle.putString(
-                        BUNDLE_KEY.PERFORMER_CODE,
-                        consultantResponseLocal?.code ?: ""
-                    )
-                    bundle.putString(
-                        BUNDLE_KEY.PERFORMER_NAME,
-                        consultantResponseLocal?.name ?: ""
-                    )
-                    bundle.putBoolean(BUNDLE_KEY.PROFILE_SCREEN, false)
-                    bundle.putBoolean(BUNDLE_KEY.IS_SHOW_FREE_MESS, isShowFreeMess)
-                    bundle.putInt(BUNDLE_KEY.CALL_RESTRICTION, consultantResponseLocal?.callRestriction ?: 0)
-                    appNavigation.openExitLiveStreamToMessage(bundle)
-                } else {
-                    if ((rxPreferences.getPoint() == 0)) {
-                        doBuyPoint()
-                    } else {
-                        handleOpenChatScreen(isShowFreeMess)
-                    }
-                }
-            }
-        }
+        val bundle = Bundle()
+        bundle.putString(
+            BUNDLE_KEY.PERFORMER_CODE,
+            consultantResponseLocal?.code ?: ""
+        )
+        bundle.putString(
+            BUNDLE_KEY.PERFORMER_NAME,
+            consultantResponseLocal?.name ?: ""
+        )
+        bundle.putBoolean(BUNDLE_KEY.PROFILE_SCREEN, false)
+        bundle.putBoolean(BUNDLE_KEY.IS_SHOW_FREE_MESS, isShowFreeMess)
+        bundle.putInt(BUNDLE_KEY.CALL_RESTRICTION, consultantResponseLocal?.callRestriction ?: 0)
+        appNavigation.openExitLiveStreamToMessage(bundle)
     }
 
     private fun doBuyPoint() {

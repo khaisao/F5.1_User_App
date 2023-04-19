@@ -215,6 +215,10 @@ class DetailUserProfileFragment :
                 checkPointForPeep()
             }
         }
+
+        binding.ivPrivateDelivery.setOnClickListener {
+            openChatScreen()
+        }
     }
 
     override fun callingCancel(isError: Boolean) {
@@ -235,38 +239,19 @@ class DetailUserProfileFragment :
     }
 
     private fun openChatScreen(isShowFreeMess: Boolean = false) {
-        if (isFirstChat == null) {
-            consultantResponseLocal?.code?.let { it1 ->
-                viewModel.loadMailInfo(
-                    it1
-                )
-            }
-        } else {
-            isFirstChat?.let {
-                if (it) {
-                    // transition to trouble sheet screen
-                    val bundle = Bundle()
-                    bundle.putString(
-                        BUNDLE_KEY.PERFORMER_CODE,
-                        consultantResponse?.code ?: ""
-                    )
-                    bundle.putString(
-                        BUNDLE_KEY.PERFORMER_NAME,
-                        consultantResponse?.name ?: ""
-                    )
-                    bundle.putBoolean(BUNDLE_KEY.PROFILE_SCREEN, false)
-                    bundle.putBoolean(BUNDLE_KEY.IS_SHOW_FREE_MESS, isShowFreeMess)
-                    bundle.putInt(BUNDLE_KEY.CALL_RESTRICTION, consultantResponse?.callRestriction ?: 0)
-                    appNavigation.openDetailUserToChatMessage(bundle)
-                } else {
-                    if ((rxPreferences.getPoint() == 0)) {
-                        doBuyPoint()
-                    } else {
-                        handleOpenChatScreen(isShowFreeMess)
-                    }
-                }
-            }
-        }
+        val bundle = Bundle()
+        bundle.putString(
+            BUNDLE_KEY.PERFORMER_CODE,
+            consultantResponseLocal?.code ?: ""
+        )
+        bundle.putString(
+            BUNDLE_KEY.PERFORMER_NAME,
+            consultantResponse?.name ?: ""
+        )
+        bundle.putBoolean(BUNDLE_KEY.PROFILE_SCREEN, false)
+        bundle.putBoolean(BUNDLE_KEY.IS_SHOW_FREE_MESS, isShowFreeMess)
+        bundle.putInt(BUNDLE_KEY.CALL_RESTRICTION, consultantResponse?.callRestriction ?: 0)
+        appNavigation.openDetailUserToChatMessage(bundle)
     }
 
     private fun checkPoint() {
@@ -440,8 +425,6 @@ class DetailUserProfileFragment :
     private fun loadData() {
         consultantResponseLocal?.code?.let {
             viewModel.loadDetailUser(it)
-            // check user is first chat
-            viewModel.loadMailInfo(it)
         }
     }
 
@@ -556,9 +539,9 @@ class DetailUserProfileFragment :
 
     private var handleResultDetailUser: Observer<ConsultantResponse?> = Observer {
         if (it != null) {
+            consultantResponse = it
             showDataUserProfile(it)
             setClickForDialogBlock(it)
-            consultantResponse = it
         } else {
             consultantResponse = consultantResponseLocal
             if (consultantResponseLocal != null) {
