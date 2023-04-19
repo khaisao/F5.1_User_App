@@ -62,7 +62,6 @@
     <string name="tab_chat">メッセージ</string>
     <string name="tab_rank">ランキング</string>
     <string name="tab_my_page">マイページ</string>
-    <string name="message_point_free"><![CDATA[はじめてご利用の方には<font color="#ffd500"><bold> 無料ポイントを付与 </bold></font>しておりますので、この機会にぜひご利用下さい。]]></string>
     <string name="content_notification">%1$sさんからメッセージが届きました</string>
 
     <string name="title_navigation_rank">ランキング</string>

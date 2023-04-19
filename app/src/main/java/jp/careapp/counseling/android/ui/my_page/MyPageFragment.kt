@@ -32,7 +32,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>() {
     override fun initView() {
         super.initView()
 
-        mViewModel.showData()
+        mViewModel.getMemberInfo()
 
         mAdapter = MyPageAdapter { mViewModel.onClickItemMenu(it) }
         binding.rcvMyPageMenu.apply {
