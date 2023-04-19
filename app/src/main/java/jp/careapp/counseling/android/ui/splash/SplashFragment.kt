@@ -97,16 +97,13 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
             viewModel.isUpdate.observe(viewLifecycleOwner, Observer {
                 if (!it)
                     when (screenCode) {
-                        SplashViewModel.SCREEN_CODE_START -> appNavigation.openSplashToStartScreen()
+                        SplashViewModel.SCREEN_CODE_START -> appNavigation.openActionToLogin()
                         SplashViewModel.SCREEN_CODE_TOP -> {
                             appNavigation.openSplashToTopScreen()
                             shareViewModel.setHaveToken(true)
                         }
-                        SplashViewModel.SCREEN_CODE_REGISTER -> appNavigation.openSplashToReRegisterScreen()
-                        SplashViewModel.SCREEN_CODE_BAD_USER -> appNavigation.openSplashToBadUserScreen()
                         SplashViewModel.SCREEN_CODE_START_RM -> appNavigation.openSplashToRMStart()
                         SplashViewModel.SCREEN_CODE_REGISTER_RM -> appNavigation.openSplashToRMStart()
-                        SplashViewModel.SCREEN_CODE_BAD_USER_RM -> appNavigation.openSplashToRMStart()
                         SplashViewModel.SCREEN_CODE_TOP_RM -> appNavigation.openSplashToRMTop()
                     }
             })

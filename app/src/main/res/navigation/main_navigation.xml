@@ -6,7 +6,6 @@
     app:startDestination="@id/welcome_navigation">
 
     <include app:graph="@navigation/welcome_navigation" />
-    <include app:graph="@navigation/start_navigation" />
 
     <action
         android:id="@+id/action_splashFragment_to_TopFragment"
@@ -17,24 +16,6 @@
         app:popExitAnim="@anim/slide_out_left"
         app:popUpTo="@id/splashFragment"
         app:popUpToInclusive="true" />
-
-    <action
-        android:id="@+id/action_startFragment_to_TopFragment"
-        app:destination="@id/topFragment"
-        app:enterAnim="@anim/slide_in_left"
-        app:exitAnim="@anim/slide_out_right"
-        app:popEnterAnim="@anim/slide_in_right"
-        app:popExitAnim="@anim/slide_out_left"
-        app:popUpTo="@id/startFragment"
-        app:popUpToInclusive="true" />
-
-    <action
-        android:id="@+id/action_tutorial_to_TopFragment"
-        app:destination="@id/topFragment"
-        app:enterAnim="@anim/slide_in_left"
-        app:exitAnim="@anim/slide_out_right"
-        app:popEnterAnim="@anim/slide_in_right"
-        app:popExitAnim="@anim/slide_out_left" />
 
     <action
         android:id="@+id/action_registrationFragment_to_topFragment"
@@ -127,7 +108,7 @@
         app:popUpToInclusive="true" />
 
     <action
-        android:id="@+id/action_fragmentEditProfile_to_editEmailfragment"
+        android:id="@+id/action_to_login"
         app:destination="@id/login_navigation" />
 
     <action
@@ -231,26 +212,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/partnerInfoFragment"
-        android:name="jp.careapp.counseling.android.ui.partner.PartnerInfoFragment"
-        android:label="PartnerInfoFragment">
-
-        <action
-            android:id="@+id/action_partnerInfoFragment_to_topFragment"
-            app:destination="@id/topFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpToInclusive="true" />
-
-        <action
-            android:id="@+id/action_partnerInfoFragment_to_tutorialFragment"
-            app:destination="@id/tutorialFragment" />
-
-    </fragment>
-
-    <fragment
         android:id="@+id/favoriteFragment"
         android:name="jp.careapp.counseling.android.ui.favourite.FavoriteFragment"
         android:label="FavoriteFragment" />
@@ -263,6 +224,7 @@
         app:popEnterAnim="@anim/slide_in_right"
         app:popExitAnim="@anim/slide_out_left"
         app:popUpToInclusive="true" />
+
     <action
         android:id="@+id/action_tabMyPage_to_favoriteFragment"
         app:destination="@id/favoriteFragment" />
@@ -270,6 +232,7 @@
     <action
         android:id="@+id/action_tabMyPage_to_fragmentNotification"
         app:destination="@id/fragmentNotification" />
+
     <fragment
         android:id="@+id/fragmentNotification"
         android:name="jp.careapp.counseling.android.ui.notification.NotificationFragment"
@@ -447,13 +410,6 @@
         android:id="@+id/reviewConsultant"
         android:name="jp.careapp.counseling.android.ui.reviewConsultant.ReviewConsultantFragment"
         android:label="ReviewConsultantFragment" />
-
-    <include app:graph="@navigation/start_navigation" />
-    <action
-        android:id="@+id/action_to_login"
-        app:destination="@id/start_navigation"
-        app:popUpTo="@+id/main_navigation"
-        app:popUpToInclusive="true" />
 
     <action
         android:id="@+id/action_MainActivity_to_ChatMessage"
