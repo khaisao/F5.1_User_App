@@ -26,9 +26,8 @@
                     android:background="@color/color_background_common"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tabIndicatorColor="@color/white"
-                    app:tabIndicatorFullWidth="false"
-                    app:tabTextAppearance="@style/tab_text" >
+                    app:tabIndicatorHeight="0dp"
+                    app:tabTextAppearance="@style/tab_text_message" >
 
                 </com.google.android.material.tabs.TabLayout>
 

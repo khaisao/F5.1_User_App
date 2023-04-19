@@ -44,7 +44,7 @@ class MessageMainFragment : BaseFragment<FragmentMessageMainBinding, ChatMessage
 
     private fun setupViewPager() {
         pagerAdapter = BasePagerAdapter(childFragmentManager)
-        pagerAdapter.addFragment(fragmentMessageAll, resources.getString(R.string.all))
+        pagerAdapter.addFragment(fragmentMessageAll, resources.getString(R.string.title_navigation_list_message))
         binding.vpMain.adapter = pagerAdapter
         binding.tlMain.setupWithViewPager(binding.vpMain)
         binding.vpMain.apply {

@@ -734,6 +734,17 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="please_confirm_your_email">メールアドレスを確認してください</string>
     <string name="logout_confirm">ログアウトしますか？</string>
     <string name="logout_text">ログアウトしました</string>
+    <string name="methods_title">決済方法選択</string>
+    <string name="buy_point_title">ポイント購入</string>
+    <string name="bank_title">銀行振込決済</string>
+    <string name="credit_title">クレジットカード決済</string>
+    <string name="credit_first_title">クレジットカード決済</string>
+    <string name="credit_result_success">決済成功</string>
+    <string name="credit_result_fail">決済成功</string>
+    <string name="recharge_bank_title">入金報告</string>
+    <string name="recharge_bank_success_title">決済成功</string>
+    <string name="auto_charge_title">オートチャージ設定</string>
+    <string name="service_act_title">資金決済法に基づく表示</string>
 
     <string-array name="nm_contact_us_category">
         <item>決済について</item>

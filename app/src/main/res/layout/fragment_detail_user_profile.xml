@@ -347,15 +347,15 @@
 
         <ImageView
             android:id="@+id/iv_ballon_peep"
-            app:layout_constraintStart_toStartOf="@id/gl_vertical_66"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/line_bottom_ballon"
-            android:src="@drawable/ic_ballon_peep"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="-20dp"
-            android:visibility="gone"
             android:adjustViewBounds="true"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"/>
+            android:src="@drawable/ic_ballon_peep"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/line_bottom_ballon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/gl_vertical_66" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_vertical_50"
@@ -414,7 +414,7 @@
                         android:src="@drawable/ic_call_detail" />
 
                     <TextView
-                        style="@style/text_bold_16"
+                        style="@style/text_bold_14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/live_viewing"
@@ -448,7 +448,7 @@
                         android:src="@drawable/ic_peep" />
 
                     <TextView
-                        style="@style/text_bold_16"
+                        style="@style/text_bold_14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/peep"

@@ -419,7 +419,7 @@ class DetailUserProfileFragment :
         super.bindingStateView()
         viewModel.userProfileResult.observe(viewLifecycleOwner, handleResultDetailUser)
         viewModel.statusFavorite.observe(viewLifecycleOwner, handleResultStatusFavorite)
-        viewModel.statusRemoveFavorite.observe(viewLifecycleOwner, handleResuleStatusUnFavorite)
+        viewModel.statusRemoveFavorite.observe(viewLifecycleOwner, handleResultStatusUnFavorite)
         viewModel.isFirstChat.observe(viewLifecycleOwner, handleFirstChat)
         viewModel.blockUserResult.observe(
             viewLifecycleOwner, handleBlockResult
@@ -545,13 +545,13 @@ class DetailUserProfileFragment :
             if (isShowFromUserDisable) {
                 viewModel.statusFavorite.value = false
             }
-            changeStatusIsFavorite(true)
+            setIconFavoriteWhenClick(true)
         }
     }
 
-    private var handleResuleStatusUnFavorite: Observer<Boolean> = Observer {
+    private var handleResultStatusUnFavorite: Observer<Boolean> = Observer {
         if (it) {
-            changeStatusIsFavorite(false)
+            setIconFavoriteWhenClick(false)
         }
     }
 
@@ -559,7 +559,22 @@ class DetailUserProfileFragment :
         this.isFirstChat = it
     }
 
-    private fun changeStatusIsFavorite(isFavorite: Boolean) {
+    private fun setIconFavoriteWhenLoadData(isFavorite: Boolean) {
+        if (isFavorite) {
+            binding.apply {
+                removeFavoriteTv.visibility = VISIBLE
+                addFavoriteTv.visibility = GONE
+            }
+
+        } else {
+            binding.apply {
+                removeFavoriteTv.visibility = GONE
+                addFavoriteTv.visibility = VISIBLE
+            }
+        }
+    }
+
+    private fun setIconFavoriteWhenClick(isFavorite: Boolean) {
         if (isFavorite) {
             binding.apply {
                 removeFavoriteTv.visibility = VISIBLE
@@ -712,14 +727,13 @@ class DetailUserProfileFragment :
                 ivBallonLiveGl50.visibility =
                     if (status == PerformerStatus.WAITING) VISIBLE else GONE
 
-                changeStatusIsFavorite(user.isFavorite)
+                setIconFavoriteWhenLoadData(user.isFavorite)
                 binding.imgRanking.setImageResource(
                     PerformerRankingHandler.getImageViewForRank(
                         user.ranking,
                         user.recommendRanking
                     )
                 )
-
             }
         }
     }
@@ -730,11 +744,6 @@ class DetailUserProfileFragment :
         const val GOLD = 3
         const val PLATINUM = 4
         const val DIAMOND = 6
-        const val ACCEPTING = 1
-        const val LEAVING = 0
-        const val PREVIOUS = 0
-        const val WEEK = 1
-        const val MONTH = 2
 
         fun getInstance(
             position: Int,
