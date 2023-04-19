@@ -36,10 +36,27 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
     private val viewModel: WebViewViewModel by viewModels()
     override fun getVM() = viewModel
 
+    private lateinit var webViewTitle:  Map<String, String>
+
     override fun initView() {
         super.initView()
         if (BuildConfig.DEBUG)
             WebView.setWebContentsDebuggingEnabled(true)
+
+        webViewTitle = mapOf(
+            "/payment/methods" to requireContext().getString(R.string.methods_title),
+            "/payment/buy-point" to requireContext().getString(R.string.buy_point_title),
+            "/payment/bank" to requireContext().getString(R.string.bank_title),
+            "/payment/credit" to requireContext().getString(R.string.credit_title),
+            "/payment/credit-first" to requireContext().getString(R.string.credit_first_title),
+            "/payment/credit-result-success" to requireContext().getString(R.string.credit_result_success),
+            "/payment/credit-result-fail" to requireContext().getString(R.string.credit_result_fail),
+            "/payment/recharge-bank" to requireContext().getString(R.string.recharge_bank_title),
+            "/payment/recharge-bank-success" to requireContext().getString(R.string.recharge_bank_success_title),
+            "/payment/auto-charge" to requireContext().getString(R.string.auto_charge_title),
+            "/payment/service-act" to requireContext().getString(R.string.service_act_title)
+        )
+
         configWebView()
     }
 
@@ -56,9 +73,17 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
                     settings.domStorageEnabled = true
                     webViewClient = getWebViewClient(urlWebView)
                     settings.javaScriptEnabled = true
-                    webChromeClient = WebChromeClient()
                     clearCache(true)
                     loadUrl(urlWebView)
+                }
+
+                binding.webView.webChromeClient = object : WebChromeClient() {
+                    override fun onProgressChanged(view: WebView, newProgress: Int) {
+                        super.onProgressChanged(view, newProgress)
+                        if (view.url != null) {
+                            setTitleByUrl(view.url!!)
+                        }
+                    }
                 }
             }
         }
@@ -66,8 +91,8 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
         handleBackPress()
     }
 
-    private fun loadJs(webview: WebView, script: String) {
-        webview.loadUrl(
+    private fun loadJs(webView: WebView, script: String) {
+        webView.loadUrl(
             "javascript:" +
                     "function addScriptTag() { " +
                     "\n  var headTag = document.getElementsByTagName(\"head\")[0]; " +
@@ -79,6 +104,21 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
                     "\n addScriptTag();" +
                     ""
         )
+    }
+
+    private fun setTitleByUrl(urlWebView: String) {
+        try {
+
+            val path = urlWebView.substringAfter(BuildConfig.WEB_DOMAIN).substringBefore("?")
+                .substring(0)
+            val title = webViewTitle[path]
+            if (title != "") {
+                binding.toolBar.setTvTitle(title)
+            } else {
+                binding.toolBar.setTvTitle(requireContext().getString(R.string.methods_title))
+            }
+        } catch (_: Exception) {
+        }
     }
 
     private fun startLoading() {
