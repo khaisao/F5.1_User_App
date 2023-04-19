@@ -189,7 +189,7 @@ class ExitLivestreamFragment :
                     bundle.putBoolean(BUNDLE_KEY.PROFILE_SCREEN, false)
                     bundle.putBoolean(BUNDLE_KEY.IS_SHOW_FREE_MESS, isShowFreeMess)
                     bundle.putInt(BUNDLE_KEY.CALL_RESTRICTION, consultantResponseLocal?.callRestriction ?: 0)
-                    appNavigation.openDetailUserToChatMessage(bundle)
+                    appNavigation.openExitLiveStreamToMessage(bundle)
                 } else {
                     if ((rxPreferences.getPoint() == 0)) {
                         doBuyPoint()
