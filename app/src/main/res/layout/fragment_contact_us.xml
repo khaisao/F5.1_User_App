@@ -32,116 +32,121 @@
                 android:orientation="vertical"
                 android:paddingHorizontal="16dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:fontFamily="@font/hiragino_sans_w6"
-                android:text="@string/enquiry"
-                android:textColor="#f0f0f0"
-                android:textSize="14sp" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@null"
-                app:endIconDrawable="@drawable/ic_nm_drop_down_spinner"
-                app:endIconTint="#F0F0F0">
-
-                <AutoCompleteTextView
-                    android:id="@+id/autoCompleteTextView"
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_nm_edit_text"
-                    android:fontFamily="@font/hiragino_sans_w3"
-                    android:inputType="none"
-                    android:text="@string/contact_category_please_select"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/hiragino_sans_w6"
+                    android:text="@string/enquiry"
                     android:textColor="#f0f0f0"
                     android:textSize="14sp" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:fontFamily="@font/hiragino_sans_w6"
-                android:text="@string/contact_us_content"
-                android:textColor="#f0f0f0"
-                android:textSize="14sp" />
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edtContent"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_nm_edit_text"
-                android:ems="10"
-                android:fontFamily="@font/hiragino_sans_w3"
-                android:gravity="top|start"
-                android:hint="@string/please_enter_contact_us_content"
-                android:inputType="textMultiLine"
-                android:maxLines="9"
-                android:paddingHorizontal="16dp"
-                android:paddingTop="16dp"
-                android:textColor="#f0f0f0"
-                android:textColorHint="#70658d"
-                android:textSize="14sp"
-                tools:lines="9" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_32"
-                android:text="@string/reply_option"
-                android:textColor="#f0f0f0"
-                android:textSize="14sp" />
-
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_4dp"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/radioBtnNecessary"
-                    style="@style/NMRadioButtonStyle"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:padding="8dp"
-                    android:text="@string/necessary"
-                    tools:checked="true" />
+                    android:layout_marginTop="8dp"
+                    app:boxBackgroundColor="#2c2147"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxStrokeColor="@drawable/nm_box_color_spinner"
+                    app:endIconTint="#F0F0F0">
 
-                <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/radioBtnUnnecessary"
-                    style="@style/NMRadioButtonStyle"
-                    android:layout_width="wrap_content"
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/hiragino_sans_w3"
+                        android:inputType="none"
+                        android:padding="16dp"
+                        android:text="@string/contact_category_please_select"
+                        android:textColor="#f0f0f0"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_24"
-                    android:padding="8dp"
-                    android:text="@string/unnecessary" />
-            </RadioGroup>
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/hiragino_sans_w6"
+                    android:text="@string/contact_us_content"
+                    android:textColor="#f0f0f0"
+                    android:textSize="14sp" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnConfirmContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:background="@drawable/bg_nm_btn_primary"
-                android:enabled="false"
-                android:fontFamily="@font/hiragino_sans_w6"
-                android:gravity="center"
-                android:minHeight="44dp"
-                android:paddingVertical="16dp"
-                android:text="@string/check_the_contents"
-                android:textColor="@color/color_btn_primary"
-                android:textSize="14sp"
-                tools:enabled="true" />
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_nm_edit_text"
+                    android:ems="10"
+                    android:fontFamily="@font/hiragino_sans_w3"
+                    android:gravity="top|start"
+                    android:hint="@string/please_enter_contact_us_content"
+                    android:inputType="textMultiLine"
+                    android:maxLines="9"
+                    android:paddingHorizontal="16dp"
+                    android:paddingTop="16dp"
+                    android:textColor="#f0f0f0"
+                    android:textColorHint="#70658d"
+                    android:textSize="14sp"
+                    tools:lines="9" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_32"
+                    android:text="@string/reply_option"
+                    android:textColor="#f0f0f0"
+                    android:textSize="14sp" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_4dp"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radioBtnNecessary"
+                        style="@style/NMRadioButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:padding="8dp"
+                        android:text="@string/necessary"
+                        tools:checked="true" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radioBtnUnnecessary"
+                        style="@style/NMRadioButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_24"
+                        android:padding="8dp"
+                        android:text="@string/unnecessary" />
+                </RadioGroup>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnConfirmContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/bg_nm_btn_primary"
+                    android:enabled="false"
+                    android:fontFamily="@font/hiragino_sans_w6"
+                    android:gravity="center"
+                    android:minHeight="44dp"
+                    android:paddingVertical="16dp"
+                    android:text="@string/check_the_contents"
+                    android:textColor="@color/color_btn_primary"
+                    android:textSize="14sp"
+                    tools:enabled="true" />
 
             </LinearLayout>
 

@@ -152,20 +152,9 @@ class TopFragment : BaseFragment<FragmentTopBinding, TopViewModel>() {
         get() = rxPreferences.getSignedUpStatus() == SignedUpStatus.LOGIN_WITHOUT_EMAIL ||
                 !(viewModel.memberInFoResult.value?.isHaveTroubleSheet ?: true)
 
-    private fun setUpIconBottomNavigation() {
-        val menu: Menu = binding.bottomNav.menu
-        context?.let {
-            menu.findItem(R.id.tabMyPage).icon = it.getDrawableCompat(
-                if (isShowMyPageWarning)
-                    R.drawable.ic_tab_my_page_warning else R.drawable.ic_tab_mypage
-            )
-        }
-    }
-
     private fun setupBottomNavigationBar() {
         val bottomNavigationView = binding.bottomNav
         bottomNavigationView.itemIconTintList = null
-        setUpIconBottomNavigation()
 
         navController =
             Navigation.findNavController(activity as Activity, R.id.top_nav_host_fragment)
@@ -254,7 +243,6 @@ class TopFragment : BaseFragment<FragmentTopBinding, TopViewModel>() {
             binding.tvPoint.text = String.format(getString(R.string.point), df.format(it.point))
             rxPreferences.setSignedUpStatus(it.signupStatus ?: SignedUpStatus.UNKNOWN)
 
-            setUpIconBottomNavigation()
             shareViewModel.needUpdateProfile.postValue(true)
         }
     }
@@ -311,7 +299,6 @@ class TopFragment : BaseFragment<FragmentTopBinding, TopViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        showDialogPointFree(requireContext(), rxPreferences.getFirstRegister())
         activity?.let {
             viewModel.connectSocket()
         }
@@ -336,26 +323,4 @@ class TopFragment : BaseFragment<FragmentTopBinding, TopViewModel>() {
         badge.getPadding(Rect(2, 2, 2, 2))
         return badge
     }
-
-    private fun showDialogPointFree(context: Context, isShow: Boolean) {
-        val view = View.inflate(context, R.layout.dialog_point_free, null)
-        view.findViewById<TextView>(R.id.tv_message).text =
-            Html.fromHtml(resources.getString(R.string.message_point_free))
-        val builder = AlertDialog.Builder(context)
-        builder.setView(view)
-        val dialog = builder.create()
-        if (isShow)
-            dialog.show()
-        dialog.window?.setBackgroundDrawableResource(R.color.transparent)
-        dialog.window?.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.setCancelable(false)
-        view.findViewById<AppCompatButton>(R.id.btn_ok).setOnClickListener {
-            rxPreferences.setFirstRegister(false)
-            dialog.dismiss()
-        }
-    }
-
 }

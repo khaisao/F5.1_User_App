@@ -62,7 +62,6 @@
     <string name="tab_chat">メッセージ</string>
     <string name="tab_rank">ランキング</string>
     <string name="tab_my_page">マイページ</string>
-    <string name="message_point_free"><![CDATA[はじめてご利用の方には<font color="#ffd500"><bold> 無料ポイントを付与 </bold></font>しておりますので、この機会にぜひご利用下さい。]]></string>
     <string name="content_notification">%1$sさんからメッセージが届きました</string>
 
     <string name="title_navigation_rank">ランキング</string>
@@ -689,7 +688,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="peep">のぞく</string>
     <string name="go_home">ホームへ戻る</string>
 
-    <string name="you_dont_want_to_receive_an_email_for_a_long_time">1週間経ってもご連絡が届かない場合\n・迷惑フォルダに届いている\n・ご登録メールアドレスが間違っている\n・ドメイン指定受信を設定している \n@peaklive.jpの受信を許可してください</string>
+    <string name="you_dont_want_to_receive_an_email_for_a_long_time">1週間経ってもご連絡が届かない場合\n・迷惑フォルダに届いている\n・ご登録メールアドレスが間違っている\n・ドメイン指定受信を設定している \n　@peaklive.jpの受信を許可してください</string>
     <string name="back_to_home">ホームに戻る</string>
     <string name="use_points_guide">料金説明</string>
     <string name="consumption_points">消費ポイント</string>
@@ -749,7 +748,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
 
     <string-array name="nm_contact_us_category">
         <item>決済について</item>
-        <item>パフォーマーについて</item>
+        <item>パフォーマーの相談について</item>
         <item>アカウントについて</item>
         <item>機能について</item>
         <item>その他</item>

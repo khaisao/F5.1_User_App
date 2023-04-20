@@ -34,4 +34,6 @@ class MyPageRepository @Inject constructor(
     fun getMemberAge() = rxPreferences.getMemberAge()
 
     fun getMemberPoint() = rxPreferences.getMemberPoint()
+
+    fun getMemberBirth() = rxPreferences.getMemberBirth()
 }

@@ -48,7 +48,6 @@ class MyPageViewModel @Inject constructor(
 
     init {
         getDataMyPageMenu()
-        getMemberInfo()
     }
 
     private fun getDataMyPageMenu() {
@@ -101,23 +100,27 @@ class MyPageViewModel @Inject constructor(
         _dataLiveData.value = data
     }
 
-    private fun getMemberInfo() {
+    fun getMemberInfo() {
         isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             supervisorScope {
                 try {
                     val response = mRepository.getMemberInfo()
                     if (response.errors.isEmpty()) {
-                        response.dataResponse.let {
-                            mRepository.saveMemberInfoEditProfile(
-                                it.name,
-                                it.mail,
-                                it.age,
-                                it.birth,
-                                it.sex,
-                                it.point,
-                                it.pushMail
-                            )
+                        val dataResponse = response.dataResponse
+                        mRepository.saveMemberInfoEditProfile(
+                            dataResponse.name,
+                            dataResponse.mail,
+                            dataResponse.age,
+                            dataResponse.birth,
+                            dataResponse.sex,
+                            dataResponse.point,
+                            dataResponse.pushMail
+                        )
+                        withContext(Dispatchers.Main) {
+                            _memberName.value = mRepository.getMemberNickName()
+                            _memberPoint.value = mRepository.getMemberPoint()
+                            showMemberAge(mRepository.getMemberBirth().toString())
                         }
                     }
                 } catch (e: Exception) {
@@ -131,10 +134,12 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    fun showData() {
-        _memberName.value = mRepository.getMemberNickName()
-        _memberAge.value = "${mRepository.getMemberAge()}歳"
-        _memberPoint.value = mRepository.getMemberPoint()
+    private fun showMemberAge(memberBirth: String) {
+        if (memberBirth == "1900-01-01") {
+            _memberAge.value = "未設定"
+        } else {
+            _memberAge.value = "${mRepository.getMemberAge()}歳"
+        }
     }
 
     fun onClickItemMenu(position: Int) {
