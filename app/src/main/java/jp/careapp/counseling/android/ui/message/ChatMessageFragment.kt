@@ -437,9 +437,9 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
             binding.llPeep.setOnClickListener {
                 if (!isDoubleClick) {
-                    checkPoint()
                     viewerType = 1
                     viewModel.viewerStatus = 1
+                    checkPointForPeep()
                 }
             }
         }
@@ -448,6 +448,14 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     private fun checkPoint() {
         if ((rxPreferences.getPoint() > 1000)) {
             showDialogRequestBuyPoint()
+        } else {
+            showDialogConfirmCall()
+        }
+    }
+
+    private fun checkPointForPeep() {
+        if ((rxPreferences.getPoint() == 0)) {
+            showDialogRequestBuyPointForPeep()
         } else {
             showDialogConfirmCall()
         }
@@ -487,8 +495,8 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     private fun showDialogRequestBuyPoint() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
-            .setContent(R.string.msg_title_request_buy_point)
-            .setTextPositiveButton(R.string.buy_point)
+            .setContent(R.string.live_stream_title_request_buy_point)
+            .setTextPositiveButton(R.string.live_stream_buy_point)
             .setTextNegativeButton(R.string.cancel_block_alert)
             .setOnPositivePressed { dialog ->
                 val bundle = Bundle().also {
@@ -507,14 +515,43 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
             }
     }
 
+    private fun showDialogRequestBuyPointForPeep() {
+        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+            .showDialog()
+            .setContent(R.string.live_stream_peep_title_request_buy_point)
+            .setTextPositiveButton(R.string.live_stream_buy_point)
+            .setTextNegativeButton(R.string.cancel_block_alert)
+            .setOnPositivePressed { dialog ->
+                val bundle = Bundle().also {
+                    it.putInt(BUNDLE_KEY.TYPE_BUY_POINT, Define.BUY_POINT_FIRST)
+                }
+                handleBuyPoint.buyPoint(childFragmentManager, bundle,
+                    object : BuyPointBottomFragment.HandleBuyPoint {
+                        override fun buyPointSucess() {
+                            checkPointForPeep()
+                        }
+                    }
+                )
+                dialog.dismiss()
+            }.setOnNegativePressed {
+                it.dismiss()
+            }
+    }
+
     private fun showDialogConfirmCall() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
-            .setContent(R.string.msg_confirm_call)
-            .setTextPositiveButton(R.string.confirm_call)
-            .setTextNegativeButton(R.string.send_free_mess)
+            .setDialogTitle(
+                getString(
+                    R.string.content_confirm_call,
+                    viewModel.getCurrentConsultant()?.name
+                )
+            )
+            .setTextPositiveButton(R.string.confirm_block_alert)
+            .setTextNegativeButton(R.string.cancel_block_alert)
             .setOnPositivePressed {
                 it.dismiss()
+                openCalling()
             }.setOnNegativePressed {
                 it.dismiss()
             }
@@ -529,8 +566,12 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
     private fun openCalling() {
         val consultant = viewModel.getCurrentConsultant()
-        consultant?.code?.let {
-            viewModel.connectLiveStream(it)
+        consultant?.let { performer ->
+            val status =
+                PerformerStatusHandler.getStatus(performer.callStatus, performer.chatStatus)
+            performer.code?.let {
+                viewModel.connectLiveStream(it, status)
+            }
         }
     }
 
@@ -608,11 +649,11 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                 val dialog: CallConnectionDialog
                 if (fragment != null) {
                     dialog = fragment as CallConnectionDialog
+                    dialog.setCallingCancelListener(this@ChatMessageFragment)
                     if (it.result == SocketInfo.RESULT_NG) {
                         dialog.setMessage(it.message, true)
                     } else {
                         dialog.setMessage(getString(R.string.call_content))
-                        dialog.setCallingCancelListener(this@ChatMessageFragment)
                     }
                 } else {
                     val message =
@@ -620,6 +661,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                     val isError = it.result == SocketInfo.RESULT_NG
                     dialog =
                         CallConnectionDialog.newInstance(performerResponse, message, isError)
+                    dialog.setCallingCancelListener(this@ChatMessageFragment)
                     dialog.show(childFragmentManager, "CallConnectionDialog")
                 }
             }
@@ -642,6 +684,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                 putInt(BUNDLE_KEY.VIEW_STATUS, viewerType)
             }
             appNavigation.openUserDetailToLiveStream(bundle)
+            viewModel.resetData()
         }
     }
 
@@ -821,8 +864,8 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         super.onDestroy()
     }
 
-    override fun callingCancel() {
-        viewModel.cancelCall()
+    override fun callingCancel(isError: Boolean) {
+        viewModel.cancelCall(isError)
     }
 
     fun reloadData() {

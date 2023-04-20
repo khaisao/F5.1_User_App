@@ -340,4 +340,8 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     override fun openContactUs(bundle: Bundle?) {
         openScreen(R.id.action_global_contactUsFragment, bundle)
     }
+
+    override fun openLiveStreamBuyPointCredit(bundle: Bundle?) {
+        openScreen(R.id.action_liveStreamFragment_to_buyPointCreditFragment, bundle)
+    }
 }

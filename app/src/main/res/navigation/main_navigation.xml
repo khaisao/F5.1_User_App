@@ -209,7 +209,18 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
             app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_liveStreamFragment_to_buyPointCreditFragment"
+            app:destination="@id/buyPointCreditFragment"
+            app:enterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
+
+    <fragment
+        android:id="@+id/buyPointCreditFragment"
+        android:name="jp.careapp.counseling.android.ui.live_stream.LiveStreamBuyPointFragment"
+        android:label="LiveStreamBuyPointFragment" />
 
     <fragment
         android:id="@+id/favoriteFragment"

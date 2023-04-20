@@ -70,10 +70,13 @@ class Define {
         const val URL_LIST_POINT_CREDIT =
             "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/stripe/buy-point-list.html"
         const val URL_LIVE_STREAM_POINT_PURCHASE = "${BuildConfig.WEB_DOMAIN}/popup/payment/credit"
-        const val OWNER_CODE = 870
+        // TODO (Change  owner_code)
+        //  const val OWNER_CODE = 6257353
+        const val OWNER_CODE = 249085
         const val APP_CODE = "CareappAndroid"
         const val PREFIX_CARE_APP = "careapp://"
         const val CALL_BACK_BUY_POINT_GOOGLE_ = "careapp://buypoint"
+        const val CALL_BACK_BUY_POINT_CREDIT_CLOSE = "sparklive://close"
         const val CALL_BACK_BUY_POINT_PAYPAY = "careapp://mymenu"
         const val TYPE_ERROR = "ERROR"
         const val TYPE_MAINTENANCE = "MAINTENANCE"
@@ -710,6 +713,8 @@ object SocketInfo {
     const val ACTION_CHANGE_CHAT_STATUS = "ChangeChatStatus"
     const val RESULT_NG = "NG"
     const val RESULT_OK = "OK"
+    const val RESULT_NONE = "NONE"
+    const val MESSAGE_COLOR = "#FFFFFF"
 
 }
 

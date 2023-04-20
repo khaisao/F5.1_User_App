@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewTreeObserver
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -210,15 +209,17 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         super.setOnClick()
 
         binding.ivPerformer.setOnClickListener {
-            showPerformerInfoBottomSheet(object : ClickItemView {
-                override fun onAddFollowClick() {
-                    consultantResponse?.isFavorite = true
-                }
+            if (!isDoubleClick) {
+                showPerformerInfoBottomSheet(object : ClickItemView {
+                    override fun onAddFollowClick() {
+                        consultantResponse?.isFavorite = true
+                    }
 
-                override fun onRemoveFollowClick() {
-                    consultantResponse?.isFavorite = false
-                }
-            })
+                    override fun onRemoveFollowClick() {
+                        consultantResponse?.isFavorite = false
+                    }
+                })
+            }
         }
 
         binding.btnComment.setOnClickListener {
@@ -238,16 +239,18 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         )
 
         binding.btnWhisper.setOnClickListener {
-            val whisperList = mViewModel.whisperList.value ?: arrayListOf()
-            SecretMessageBottomFragment.showSecretMessageBottomSheet(
-                whisperList,
-                childFragmentManager,
-                object : SecretMessageBottomFragment.ClickItemView {
-                    override fun clickSend(sendMessage: String) {
-                        mViewModel.sendWhisperMessage(sendMessage)
+            if (!isDoubleClick) {
+                val whisperList = mViewModel.whisperList.value ?: arrayListOf()
+                SecretMessageBottomFragment.showSecretMessageBottomSheet(
+                    whisperList,
+                    childFragmentManager,
+                    object : SecretMessageBottomFragment.ClickItemView {
+                        override fun clickSend(sendMessage: String) {
+                            mViewModel.sendWhisperMessage(sendMessage)
+                        }
                     }
-                }
-            )
+                )
+            }
         }
 
         binding.btnPrivate.setOnClickListener {
@@ -282,7 +285,9 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         }
 
         binding.btnPoint.setOnClickListener {
-            showPointPurchaseBottomSheet()
+            if (!isDoubleClick) {
+                showPointPurchaseBottomSheet()
+            }
         }
 
         binding.edtComment.addTextChangedListener {
@@ -299,7 +304,9 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         binding.btnClose.setOnClickListener { if (!isDoubleClick) showLogoutConfirm() }
 
         binding.btnCameraFlip.setOnClickListener {
-            maruCastManager.switchCamera()
+            if (!isDoubleClick) {
+                maruCastManager.switchCamera()
+            }
         }
     }
 
@@ -345,9 +352,6 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 when {
                     it.isLogout -> {
                         logout(it.message)
-                    }
-                    it.isShowToast -> {
-                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
                     else -> {
                         showErrorDialog(it.message)
@@ -465,9 +469,10 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     private fun showErrorDialog(errorMessage: String) {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
-            .setContent(errorMessage)
-            .setTextPositiveButton(R.string.ok)
-            .setOnPositivePressed {
+            .setDialogTitle(errorMessage)
+            .setTextOkButton(R.string.close)
+            .setOnOkButtonBackground(R.drawable.bg_cancel_btn)
+            .setOnOkButtonPressed {
                 it.dismiss()
             }
     }
@@ -499,6 +504,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             putSerializable(BUNDLE_KEY.TITLE, logoutMessage)
         }
         appNavigation.openLiveStreamToExitLiveStream(bundle)
+        mViewModel.logout()
     }
 
     private fun showLogoutConfirm() {
@@ -509,7 +515,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             .setTextNegativeButton(R.string.cancel_block_alert)
             .setOnPositivePressed {
                 it.dismiss()
-                logout(getString(R.string.logout_text))
+                logout("")
             }.setOnNegativePressed {
                 it.dismiss()
             }
@@ -528,10 +534,9 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                         append("&money=${money}")
                     }
                     val arguments = Bundle().apply {
-                        putString(Define.TITLE_WEB_VIEW, getString(R.string.buy_point))
                         putString(Define.URL_WEB_VIEW, purchasePointUrl)
                     }
-                    appNavigation.openScreenToWebview(arguments)
+                    appNavigation.openLiveStreamBuyPointCredit(arguments)
                 }
 
                 override fun purchasePointSuccess() {

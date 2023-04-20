@@ -89,32 +89,33 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
-
                     <TextView
                         android:id="@+id/tvNote"
                         style="@style/text_12"
                         android:layout_width="0dp"
-                        android:layout_marginHorizontal="32dp"
+                        android:layout_marginStart="24dp"
                         android:layout_marginTop="20dp"
+                        android:layout_marginEnd="15dp"
                         android:gravity="center"
-                        android:textAlignment="center"
-                        android:padding="10dp"
+                        android:lineSpacingMultiplier="1.5"
                         android:text="@string/call_content"
+                        android:textAlignment="center"
                         android:textColor="@color/color_B2A9CC"
                         android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ivMotion"/>
+                        app:layout_constraintTop_toBottomOf="@id/ivMotion" />
 
                     <TextView
-                        android:gravity="center"
                         android:id="@+id/ivEndCall"
+                        style="@style/text_bold_14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="@dimen/margin_15"
                         android:layout_marginTop="@dimen/margin_32"
-                        android:paddingHorizontal="@dimen/margin_30"
                         android:background="@drawable/bg_cancel_calling"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/margin_30"
+                        android:paddingVertical="@dimen/margin_15"
                         android:src="@drawable/ic_call_end"
                         android:text="@string/cancel_block_alert"
                         app:layout_constraintDimensionRatio="1:1"
@@ -123,7 +124,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/tvNote"
                         app:layout_constraintVertical_chainStyle="packed"
                         app:layout_constraintWidth_percent="0.16" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 

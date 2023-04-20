@@ -65,6 +65,11 @@ class CommonAlertDialog constructor(context: Context) : Dialog(context) {
         return this
     }
 
+    fun setOnOkButtonBackground(resId: Int): CommonAlertDialog {
+        btnOk.setBackgroundResource(resId)
+        return this
+    }
+
     fun setOnPositivePressed(onPositivePressed: ((CommonAlertDialog) -> Unit)?): CommonAlertDialog {
         btnConfirm.setOnClickListener {
             onPositivePressed?.invoke(this)

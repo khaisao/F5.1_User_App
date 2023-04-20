@@ -19,6 +19,8 @@ class CallConnectionDialog : BaseDialogFragment<FragmentCallingBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
+        val message = arguments?.getString(KEY_MSG, getString(R.string.call_content))
+        val isError = arguments?.getBoolean(KEY_ERROR) ?: false
         val performerInfo: ConsultantResponse =
             arguments?.get(PERFORMER) as ConsultantResponse
         binding.apply {
@@ -32,14 +34,12 @@ class CallConnectionDialog : BaseDialogFragment<FragmentCallingBinding>() {
                 .into(binding.ivMotion)
             ivEndCall.setOnClickListener {
                 if (!isDoubleClick) {
-                    callingCancelListener?.callingCancel()
+                    callingCancelListener?.callingCancel(isError)
                     dismiss()
                 }
             }
         }
 
-        val message = arguments?.getString(KEY_MSG, getString(R.string.call_content))
-        val isError = arguments?.getBoolean(KEY_ERROR)
         setMessage(message, isError)
     }
 
@@ -59,7 +59,7 @@ class CallConnectionDialog : BaseDialogFragment<FragmentCallingBinding>() {
     }
 
     interface CallingCancelListener {
-        fun callingCancel()
+        fun callingCancel(isError: Boolean)
     }
 
     companion object {

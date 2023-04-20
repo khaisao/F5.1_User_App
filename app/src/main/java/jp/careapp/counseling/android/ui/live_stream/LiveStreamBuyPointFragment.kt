@@ -1,8 +1,9 @@
-package jp.careapp.counseling.android.ui.webView
+package jp.careapp.counseling.android.ui.live_stream
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.webkit.*
 import androidx.activity.OnBackPressedCallback
@@ -18,72 +19,45 @@ import jp.careapp.counseling.android.data.pref.AppPreferences
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.Define.Companion.URL_FREE_POINT
-import jp.careapp.counseling.android.utils.customView.ToolBarCommon
-import jp.careapp.counseling.databinding.FragmentWebViewBinding
+import jp.careapp.counseling.databinding.FragmentLiveStreamBuyPointBinding
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>() {
+class LiveStreamBuyPointFragment :
+    BaseFragment<FragmentLiveStreamBuyPointBinding, LiveStreamBuyPointViewModel>() {
 
     @Inject
     lateinit var appNavigation: AppNavigation
 
     @Inject
     lateinit var preferences: AppPreferences
-    override val layoutId = R.layout.fragment_web_view
-    private val viewModel: WebViewViewModel by viewModels()
+    override val layoutId = R.layout.fragment_live_stream_buy_point
+    private val viewModel: LiveStreamBuyPointViewModel by viewModels()
     override fun getVM() = viewModel
-
-    private lateinit var webViewTitle:  Map<String, String>
 
     override fun initView() {
         super.initView()
         if (BuildConfig.DEBUG)
             WebView.setWebContentsDebuggingEnabled(true)
-
-        webViewTitle = mapOf(
-            "/payment/methods" to requireContext().getString(R.string.methods_title),
-            "/payment/buy-point" to requireContext().getString(R.string.buy_point_title),
-            "/payment/bank" to requireContext().getString(R.string.bank_title),
-            "/payment/credit" to requireContext().getString(R.string.credit_title),
-            "/payment/credit-first" to requireContext().getString(R.string.credit_first_title),
-            "/payment/credit-result-success" to requireContext().getString(R.string.credit_result_success),
-            "/payment/credit-result-fail" to requireContext().getString(R.string.credit_result_fail),
-            "/payment/recharge-bank" to requireContext().getString(R.string.recharge_bank_title),
-            "/payment/recharge-bank-success" to requireContext().getString(R.string.recharge_bank_success_title),
-            "/payment/auto-charge" to requireContext().getString(R.string.auto_charge_title),
-            "/payment/service-act" to requireContext().getString(R.string.service_act_title)
-        )
-
         configWebView()
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun configWebView() {
         requireArguments().let {
-            if (it.containsKey(Define.TITLE_WEB_VIEW)) {
-                binding.toolBar.setTvTitle(it.getString(Define.TITLE_WEB_VIEW).toString())
-            }
-
             if (it.containsKey(Define.URL_WEB_VIEW)) {
                 val urlWebView = it.getString(Define.URL_WEB_VIEW).toString()
                 binding.webView.apply {
+                    setBackgroundColor(Color.TRANSPARENT)
+                    setBackgroundResource(0)
                     settings.domStorageEnabled = true
                     webViewClient = getWebViewClient(urlWebView)
                     settings.javaScriptEnabled = true
+                    webChromeClient = WebChromeClient()
                     clearCache(true)
                     loadUrl(urlWebView)
-                }
-
-                binding.webView.webChromeClient = object : WebChromeClient() {
-                    override fun onProgressChanged(view: WebView, newProgress: Int) {
-                        super.onProgressChanged(view, newProgress)
-                        if (view.url != null) {
-                            setTitleByUrl(view.url!!)
-                        }
-                    }
                 }
             }
         }
@@ -106,21 +80,6 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
         )
     }
 
-    private fun setTitleByUrl(urlWebView: String) {
-        try {
-
-            val path = urlWebView.substringAfter(BuildConfig.WEB_DOMAIN).substringBefore("?")
-                .substring(0)
-            val title = webViewTitle[path]
-            if (title != "") {
-                binding.toolBar.setTvTitle(title)
-            } else {
-                binding.toolBar.setTvTitle(requireContext().getString(R.string.methods_title))
-            }
-        } catch (_: Exception) {
-        }
-    }
-
     private fun startLoading() {
         showHideLoading(true)
     }
@@ -137,8 +96,6 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
             ""
         }
         val env = if (BuildConfig.BUILD_TYPE == "release") "PRODUCTION" else "STAGING"
-        val scriptFreePoint =
-            "var token=\"${token}\"; var domain = \"${BuildConfig.BASE_URL}\"; var env = \"${env}\"; handleFreePointView();"
         val scriptBuyPoint =
             "var token=\"${token}\"; var domain = \"${BuildConfig.BASE_URL}\"; var env = \"${env}\"; handlePointInfo(); var store = \"googleplay\""
         return object : WebViewClient() {
@@ -154,10 +111,7 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
             override fun onPageFinished(view: WebView, url: String?) {
                 super.onPageFinished(view, url)
                 endLoading()
-                if (urlWebView == URL_FREE_POINT)
-                    loadJs(view, scriptFreePoint)
-                else
-                    loadJs(view, scriptBuyPoint)
+                loadJs(view, scriptBuyPoint)
             }
 
             override fun shouldOverrideUrlLoading(
@@ -170,12 +124,8 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
                         URLUtil.isNetworkUrl(url) -> {
                             view.loadUrl(url)
                         }
-                        Define.CALL_BACK_BUY_POINT_GOOGLE_ == url -> {
-                            appNavigation.openWebBuyPointToBuyPointGoogle()
-                        }
-                        else -> {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                            startActivity(intent)
+                        Define.CALL_BACK_BUY_POINT_CREDIT_CLOSE == url -> {
+                            appNavigation.navigateUp()
                         }
                     }
                 } catch (e: Exception) {
@@ -212,31 +162,6 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
             view.loadUrl(url)
             return true
         }
-    }
-
-    override fun setOnClick() {
-        super.setOnClick()
-        binding.toolBar.setOnToolBarClickListener(
-            object : ToolBarCommon.OnToolBarClickListener() {
-                override fun onClickLeft() {
-                    super.onClickLeft()
-                    if (binding.webView.canGoBack()) {
-                        startLoading()
-                        binding.webView.goBack()
-                    } else {
-                        appNavigation.navigateUp()
-                    }
-                }
-
-                override fun onClickRight() {
-                    super.onClickRight()
-                    appNavigation.navController?.let {
-                        notifyUpdateIfNeed()
-                        it.popBackStack()
-                    }
-                }
-            }
-        )
     }
 
     private fun handleBackPress() {
