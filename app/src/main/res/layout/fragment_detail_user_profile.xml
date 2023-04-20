@@ -79,6 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_12"
+                    android:layout_marginTop="@dimen/margin_1"
                     android:gravity="center_vertical"
                     app:layout_constraintTop_toBottomOf="@id/gl_avatar_bottom">
                     
@@ -138,7 +139,6 @@
                             android:textColor="@color/white" />
                     </LinearLayout>
 
-
                     <ImageView
                         android:id="@+id/iv_state"
                         android:layout_width="wrap_content"
@@ -155,6 +155,13 @@
 
                 </LinearLayout>
 
+                <View
+                    android:id="@+id/straight_line_bottom_ranking"
+                    android:layout_marginBottom="@dimen/margin_3"
+                    app:layout_constraintBottom_toBottomOf="@id/ll_ranking"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
                 <ImageView
                     android:id="@+id/iv_bg_message_notice"
                     android:layout_width="0dp"
@@ -164,7 +171,7 @@
                     android:src="@drawable/bg_message_notice"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ll_ranking" />
+                    app:layout_constraintTop_toBottomOf="@id/straight_line_bottom_ranking" />
 
                 <TextView
                     android:id="@+id/tv_message_notice"
@@ -301,20 +308,20 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cl_info" />
 
-                <ImageView
-                    android:id="@+id/iv_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_6"
-                    android:layout_marginTop="@dimen/margin_8"
-                    android:padding="@dimen/padding_4"
-                    android:src="@drawable/ic_back_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_6"
+            android:layout_marginTop="@dimen/margin_8"
+            android:padding="@dimen/padding_4"
+            android:src="@drawable/ic_back_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/divider"
@@ -397,7 +404,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -468,7 +475,7 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:src="@drawable/ic_request_detail"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
         </LinearLayout>
 

@@ -106,20 +106,22 @@
                         android:id="@+id/ll_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layoutDirection="rtl"
+                        android:gravity="end"
                         app:layout_constraintStart_toStartOf="@id/cl_status"
                         app:layout_constraintTop_toBottomOf="@id/iv_ranking">
 
                         <TextView
-                            android:id="@+id/tv_name"
+                            android:id="@+id/tv_age"
                             style="@style/text_bold_10"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/margin_2"
                             android:ellipsize="end"
                             android:fontFamily="@font/hiragino_sans_w6"
-                            android:maxWidth="150dp"
                             android:maxLines="1"
                             android:paddingBottom="@dimen/padding_6dp"
-                            android:text="This is very long name"
+                            android:text="Age"
                             android:textColor="@color/color_text_F0F0F0" />
 
                         <TextView
@@ -135,17 +137,18 @@
                             android:textColor="@color/color_text_F0F0F0" />
 
                         <TextView
-                            android:id="@+id/tv_age"
+                            android:id="@+id/tv_name"
                             style="@style/text_bold_10"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/margin_2"
                             android:ellipsize="end"
                             android:fontFamily="@font/hiragino_sans_w6"
+                            android:maxWidth="130dp"
                             android:maxLines="1"
                             android:paddingBottom="@dimen/padding_6dp"
-                            android:text="Age"
+                            android:text="This is very loawegng asname"
                             android:textColor="@color/color_text_F0F0F0" />
+
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <TextView
@@ -161,8 +164,10 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/ll_info" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </com.google.android.material.card.MaterialCardView>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

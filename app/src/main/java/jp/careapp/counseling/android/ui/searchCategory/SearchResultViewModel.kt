@@ -87,6 +87,7 @@ class SearchResultViewModel @ViewModelInject constructor(
     }
 
     fun getListBlockedConsultant() {
+        listBlockedConsultantResult.value?.dataResponse?.clear()
         viewModelScope.launch {
             try {
                 apiInterface.getListBlockedConsultant().let {

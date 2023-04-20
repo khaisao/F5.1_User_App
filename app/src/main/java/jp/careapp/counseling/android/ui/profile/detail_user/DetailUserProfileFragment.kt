@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -116,7 +117,7 @@ class DetailUserProfileFragment :
         binding.avatarIv.viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
-                binding.avatarIv.viewTreeObserver.removeOnGlobalLayoutListener(this);
+                binding.avatarIv.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 galleryAdapter = GalleryAdapter(requireContext(), binding.avatarIv.height) {
                     Glide.with(requireContext()).load(it.thumbnailImage?.url).into(binding.avatarIv)
                 }
@@ -125,9 +126,7 @@ class DetailUserProfileFragment :
                 binding.rvGallery.adapter = galleryAdapter
             }
         })
-
     }
-
 
     override fun setOnClick() {
         super.setOnClick()
@@ -215,6 +214,10 @@ class DetailUserProfileFragment :
                 checkPointForPeep()
             }
         }
+
+        binding.ivPrivateDelivery.setOnClickListener {
+            openChatScreen()
+        }
     }
 
     override fun callingCancel(isError: Boolean) {
@@ -235,46 +238,29 @@ class DetailUserProfileFragment :
     }
 
     private fun openChatScreen(isShowFreeMess: Boolean = false) {
-        if (isFirstChat == null) {
-            consultantResponseLocal?.code?.let { it1 ->
-                viewModel.loadMailInfo(
-                    it1
-                )
-            }
-        } else {
-            isFirstChat?.let {
-                if (it) {
-                    // transition to trouble sheet screen
-                    val bundle = Bundle()
-                    bundle.putString(
-                        BUNDLE_KEY.PERFORMER_CODE,
-                        consultantResponse?.code ?: ""
-                    )
-                    bundle.putString(
-                        BUNDLE_KEY.PERFORMER_NAME,
-                        consultantResponse?.name ?: ""
-                    )
-                    bundle.putBoolean(BUNDLE_KEY.PROFILE_SCREEN, false)
-                    bundle.putBoolean(BUNDLE_KEY.IS_SHOW_FREE_MESS, isShowFreeMess)
-                    bundle.putInt(BUNDLE_KEY.CALL_RESTRICTION, consultantResponse?.callRestriction ?: 0)
-                    appNavigation.openDetailUserToChatMessage(bundle)
-                } else {
-                    if ((rxPreferences.getPoint() == 0)) {
-                        doBuyPoint()
-                    } else {
-                        handleOpenChatScreen(isShowFreeMess)
-                    }
-                }
-            }
-        }
+        val bundle = Bundle()
+        bundle.putString(
+            BUNDLE_KEY.PERFORMER_CODE,
+            consultantResponseLocal?.code ?: ""
+        )
+        bundle.putString(
+            BUNDLE_KEY.PERFORMER_NAME,
+            consultantResponse?.name ?: ""
+        )
+        bundle.putBoolean(BUNDLE_KEY.PROFILE_SCREEN, false)
+        bundle.putBoolean(BUNDLE_KEY.IS_SHOW_FREE_MESS, isShowFreeMess)
+        bundle.putInt(BUNDLE_KEY.CALL_RESTRICTION, consultantResponse?.callRestriction ?: 0)
+        appNavigation.openDetailUserToChatMessage(bundle)
     }
 
     private fun checkPoint() {
-        if (rxPreferences.getPoint() < 1000) {
-            showDialogRequestBuyPoint()
-        } else {
-            showDialogConfirmCall()
-        }
+//        if (rxPreferences.getPoint() < 1000) {
+//            showDialogRequestBuyPoint()
+//        } else {
+//            showDialogConfirmCall()
+//        }
+        showDialogConfirmCall()
+
     }
 
     private fun checkPointForPeep() {
@@ -376,13 +362,6 @@ class DetailUserProfileFragment :
             }
     }
 
-    private fun showDialogWarningDuringCall() {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-            .showDialog()
-            .setDialogTitle(R.string.msg_warning_during_call)
-            .setTextPositiveButton(R.string.text_OK)
-    }
-
     private fun openCalling() {
         consultantResponse?.let { performer ->
             val status =
@@ -426,22 +405,9 @@ class DetailUserProfileFragment :
         }
     }
 
-
-    private fun showDialogAlreadyFavorite() {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-            .showDialog()
-            .setDialogTitle(R.string.favorited_alert)
-            .setTextPositiveButton(R.string.text_OK)
-            .setOnPositivePressed {
-                it.dismiss()
-            }
-    }
-
     private fun loadData() {
         consultantResponseLocal?.code?.let {
             viewModel.loadDetailUser(it)
-            // check user is first chat
-            viewModel.loadMailInfo(it)
         }
     }
 
@@ -556,9 +522,9 @@ class DetailUserProfileFragment :
 
     private var handleResultDetailUser: Observer<ConsultantResponse?> = Observer {
         if (it != null) {
+            consultantResponse = it
             showDataUserProfile(it)
             setClickForDialogBlock(it)
-            consultantResponse = it
         } else {
             consultantResponse = consultantResponseLocal
             if (consultantResponseLocal != null) {
@@ -786,6 +752,7 @@ class DetailUserProfileFragment :
         const val PLATINUM = 4
         const val DIAMOND = 6
 
+        @JvmStatic
         fun getInstance(
             position: Int,
             listPerformer: ArrayList<ConsultantResponse>,

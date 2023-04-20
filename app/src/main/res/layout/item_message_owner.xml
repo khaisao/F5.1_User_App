@@ -39,6 +39,7 @@
             android:paddingLeft="@dimen/margin_12"
             android:paddingRight="@dimen/margin_12"
             android:textColor="@color/white"
+            android:lineSpacingExtra="@dimen/margin_3"
             android:textIsSelectable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

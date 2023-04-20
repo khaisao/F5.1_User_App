@@ -94,7 +94,7 @@ class ConsultantAdapter(
                 binding.tvSize.visibility = View.GONE
             } else {
                 binding.tvSize.visibility = View.VISIBLE
-                binding.tvSize.text = bustSize
+                binding.tvSize.text = "(" + bustSize + ")"
             }
         }
     }

@@ -7,6 +7,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.Realm
 import io.realm.RealmResults
 import jp.careapp.core.base.BaseViewModel
@@ -20,12 +21,14 @@ import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 const val LIMIT_NUMBER = 50
 
-class HomeViewModel @ViewModelInject constructor(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val apiInterface: ApiInterface
 ) : BaseViewModel() {
 
@@ -67,6 +70,7 @@ class HomeViewModel @ViewModelInject constructor(
 
     fun getListBlockedConsultant() {
         listConsultantTemp = arrayListOf()
+        listBlockedConsultantResult.value?.dataResponse?.clear()
         viewModelScope.launch {
             try {
                 apiInterface.getListBlockedConsultant().let {
@@ -144,8 +148,11 @@ class HomeViewModel @ViewModelInject constructor(
                     it.code == consultant.code
                 }
             }
+            Log.d("asgasgasg", "list: ${listConsultantTemp.size}")
+            Log.d("asgasgasg", "listblock: ${listBlockedConsultantResult.value!!.dataResponse.size}")
             listConsultantTemp.clear()
             listConsultantTemp.addAll(dataResult)
+            Log.d("asgasgasg", "afterblock:${listConsultantTemp.size} ")
         }
         loadDataSuccess()
     }

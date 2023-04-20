@@ -231,25 +231,6 @@ class DetailUserProfileViewModel @ViewModelInject constructor(
         }
     }
 
-    /**
-     * if count email == 0 => don't send message
-     */
-    fun loadMailInfo(code: String) {
-        viewModelScope.launch {
-            isLoading.value = true
-            try {
-                val response = apiInterface.getEmailSentByMember(code)
-                response.let {
-                    if (it.errors.isEmpty()) {
-                        isFirstChat.value = response.dataResponse.isEmpty()
-                    }
-                }
-                isLoading.value = false
-            } catch (throwable: Throwable) {
-                isLoading.value = false
-            }
-        }
-    }
 
     fun resetData() {
         connectResult.value = ConnectResult(result = RESULT_NONE)

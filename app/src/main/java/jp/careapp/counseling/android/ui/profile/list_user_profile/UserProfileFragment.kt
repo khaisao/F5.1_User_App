@@ -20,7 +20,7 @@ import jp.careapp.counseling.android.data.network.MemberResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.navigation.AppNavigation
-import jp.careapp.counseling.android.ui.profile.UserProfileViewModel
+import jp.careapp.counseling.android.ui.profile.list_user_profile.UserProfileViewModel
 import jp.careapp.counseling.android.ui.profile.block_report.BlockAndReportBottomFragment
 import jp.careapp.counseling.android.ui.profile.detail_user.DetailUserProfileFragment
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
