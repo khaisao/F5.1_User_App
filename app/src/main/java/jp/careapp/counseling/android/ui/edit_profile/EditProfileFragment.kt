@@ -42,7 +42,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
 
         binding.llMemberBirth.setOnClickListener { if (!isDoubleClick) showDatePickerDialog() }
 
-        binding.llMemberMail.setOnClickListener { if (!isDoubleClick) appNavigation.openEditProfileToEditMail() }
+        binding.llMemberMail.setOnClickListener { if (!isDoubleClick) appNavigation.openEditMail() }
     }
 
     override fun bindingStateView() {

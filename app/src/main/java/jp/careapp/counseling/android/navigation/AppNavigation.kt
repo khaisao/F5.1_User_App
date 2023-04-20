@@ -29,8 +29,6 @@ interface AppNavigation : BaseNavigator {
 
     fun openMyPageToFavorite(bundle: Bundle? = null)
 
-    fun openMyPageToSettingNotification(bundle: Bundle? = null)
-
     fun openMyPageToNews(bundle: Bundle? = null)
 
     fun openMyPageToEditProfile(bundle: Bundle? = null)
@@ -89,11 +87,7 @@ interface AppNavigation : BaseNavigator {
 
     fun openTopToChatMessage(bundle: Bundle? = null)
 
-    fun openVerifyCodeHelpToInputEmail(bundle: Bundle? = null)
-
     fun openWithdrawalFinish(bundle: Bundle? = null)
-
-    fun openGlobalToSettingNotification(bundle: Bundle? = null)
 
     fun openRMEnterNameToRmTop(bundle: Bundle? = null)
 
@@ -131,8 +125,6 @@ interface AppNavigation : BaseNavigator {
 
     fun openUserDetailMessageToRMTop(bundle: Bundle? = null)
 
-    fun openWithdrawalToSettingNotification(bundle: Bundle? = null)
-
     fun openRMTopToRMBuyPoint(bundle: Bundle? = null)
 
     fun openMyPageToUsePointsGuide(bundle: Bundle? = null)
@@ -141,13 +133,11 @@ interface AppNavigation : BaseNavigator {
 
     fun openMyPageToBlocked(bundle: Bundle? = null)
 
-    fun openMyPageToNotification(bundle: Bundle? = null)
+    fun openSettingNotification(bundle: Bundle? = null)
 
     fun openContactUsToContactUsConfirm(bundle: Bundle? = null)
 
     fun openContactUsConfirmToContactUsFinish(bundle: Bundle? = null)
-
-    fun openEditProfileToEditMail(bundle: Bundle? = null)
 
     fun openEditMailToVerifyCode(bundle: Bundle? = null)
 
@@ -172,4 +162,8 @@ interface AppNavigation : BaseNavigator {
     fun openContactUs(bundle: Bundle? = null)
 
     fun openLiveStreamBuyPointCredit(bundle: Bundle? = null)
+
+    fun openEditMail(bundle: Bundle? = null)
+
+    fun openVerifyCodeHelpToVerifyCode(bundle: Bundle? = null)
 }

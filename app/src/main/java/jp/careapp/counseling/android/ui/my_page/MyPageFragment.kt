@@ -63,7 +63,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>() {
                 }
                 is MyPageActionState.NavigateToEditProfile -> appNavigation.openMyPageToEditProfile()
                 is MyPageActionState.NavigateToBlocked -> appNavigation.openMyPageToBlocked()
-                is MyPageActionState.NavigateToSettingNotification -> appNavigation.openMyPageToNotification()
+                is MyPageActionState.NavigateToSettingNotification -> appNavigation.openSettingNotification()
                 is MyPageActionState.NavigateToUsePointsGuide -> appNavigation.openMyPageToUsePointsGuide()
                 is MyPageActionState.NavigateToTermOfService -> appNavigation.openTermsOfService()
                 is MyPageActionState.NavigateToPrivacyPolicy -> appNavigation.openPrivacyPolicy()

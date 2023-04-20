@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/edit_mail_navigation"
+    app:startDestination="@id/editMailFragment">
+
+    <fragment
+        android:id="@+id/editMailFragment"
+        android:name="jp.careapp.counseling.android.ui.edit_mail.EditMailFragment"
+        android:label="EditMailFragment"
+        tools:layout="@layout/fragment_edit_mail">
+        <action
+            android:id="@+id/action_editMailFragment_to_verify_code_navigation"
+            app:destination="@id/verify_code_navigation"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+    <include app:graph="@navigation/verify_code_navigation" />
+</navigation>

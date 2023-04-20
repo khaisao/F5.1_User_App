@@ -35,7 +35,7 @@ class WithdrawalFragment : BaseFragment<FragmentWithdrawalBinding, WithdrawalVie
             R.color.color_B47AFF,
             71,
             74
-        ) { appNavigation.openWithdrawalToSettingNotification() }
+        ) { appNavigation.openSettingNotification() }
 
         binding.edtReason.onTextChange {
             binding.btnConfirm.isEnabled = getInputReason().isNotBlank()

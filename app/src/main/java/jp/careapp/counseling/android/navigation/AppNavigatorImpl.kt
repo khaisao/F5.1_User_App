@@ -22,15 +22,15 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     }
 
     override fun openInputEmailToVerifyCode(bundle: Bundle?) {
-        openScreen(R.id.action_inputEmailFragment_to_VerifyCodeFragment, bundle)
+        openScreen(R.id.action_inputEmailFragment_to_verify_code_navigation, bundle)
     }
 
     override fun openVerifyCodeToVerifyCodeHelpScreen(bundle: Bundle?) {
-        openScreen(R.id.action_verifyCode_to_VerifyCodeHelpFragment, bundle)
+        openScreen(R.id.action_verifyCodeFragment_to_verificationCodeHelpFragment, bundle)
     }
 
     override fun openVerifyCodeToRegistrationScreen(bundle: Bundle?) {
-        openScreen(R.id.action_verifyFragment_to_registrationFragment, bundle)
+        openScreen(R.id.action_verifyCodeFragment_to_registrationFragment, bundle)
     }
 
     override fun openVerifyCodeToTopScreen(bundle: Bundle?) {
@@ -55,10 +55,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openMyPageToFavorite(bundle: Bundle?) {
         openScreen(R.id.action_tabMyPage_to_favoriteFragment, bundle)
-    }
-
-    override fun openMyPageToSettingNotification(bundle: Bundle?) {
-        openScreen(R.id.action_tabMyPage_to_fragmentNotification, bundle)
     }
 
     override fun openMyPageToNews(bundle: Bundle?) {
@@ -177,16 +173,8 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_Top_to_ChatMessage, bundle)
     }
 
-    override fun openVerifyCodeHelpToInputEmail(bundle: Bundle?) {
-        openScreen(R.id.action_verifyCode_to_InputEmailFragment, bundle)
-    }
-
     override fun openWithdrawalFinish(bundle: Bundle?) {
         openScreen(R.id.action_withdrawalFragment_to_withdrawalFinishFragment, bundle)
-    }
-
-    override fun openGlobalToSettingNotification(bundle: Bundle?) {
-        openScreen(R.id.action_global_fragmentNotification, bundle)
     }
 
     override fun openRMEnterNameToRmTop(bundle: Bundle?) {
@@ -261,10 +249,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_UserDetailMessageFragment_to_RMTopFragment, bundle)
     }
 
-    override fun openWithdrawalToSettingNotification(bundle: Bundle?) {
-        openScreen(R.id.action_withdrawalFragment_to_fragmentNotification, bundle)
-    }
-
     override fun openRMTopToRMBuyPoint(bundle: Bundle?) {
         openScreen(R.id.action_RMTopFragment_to_RMBuyPointFragment, bundle)
     }
@@ -281,8 +265,8 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_topFragment_to_blockedFragment, bundle)
     }
 
-    override fun openMyPageToNotification(bundle: Bundle?) {
-        openScreen(R.id.action_topFragment_to_fragmentNotification, bundle)
+    override fun openSettingNotification(bundle: Bundle?) {
+        openScreen(R.id.action_global_fragmentNotification, bundle)
     }
 
     override fun openContactUsToContactUsConfirm(bundle: Bundle?) {
@@ -293,12 +277,8 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_contactUsConfirmFragment_to_contactUsFinishFragment, bundle)
     }
 
-    override fun openEditProfileToEditMail(bundle: Bundle?) {
-        openScreen(R.id.action_fragmentEditProfile_to_editMailFragment, bundle)
-    }
-
     override fun openEditMailToVerifyCode(bundle: Bundle?) {
-        openScreen(R.id.action_editMailFragment_to_verifyCodeFragment, bundle)
+        openScreen(R.id.action_editMailFragment_to_verify_code_navigation, bundle)
     }
 
     override fun openMyPageToFAQ(bundle: Bundle?) {
@@ -343,5 +323,13 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openLiveStreamBuyPointCredit(bundle: Bundle?) {
         openScreen(R.id.action_liveStreamFragment_to_buyPointCreditFragment, bundle)
+    }
+
+    override fun openEditMail(bundle: Bundle?) {
+        openScreen(R.id.action_global_edit_mail_navigation, bundle)
+    }
+
+    override fun openVerifyCodeHelpToVerifyCode(bundle: Bundle?) {
+        openScreen(R.id.action_verificationCodeHelpFragment_to_verifyCodeFragment, bundle)
     }
 }
