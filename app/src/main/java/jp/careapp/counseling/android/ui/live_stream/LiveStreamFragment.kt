@@ -498,10 +498,11 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         )
     }
 
-    private fun logout(logoutMessage: String) {
+    private fun logout(logoutMessage: String, isHavePoint : Boolean = true) {
         val bundle = Bundle().apply {
             putSerializable(BUNDLE_KEY.USER_PROFILE, consultantResponse)
             putSerializable(BUNDLE_KEY.TITLE, logoutMessage)
+            putSerializable(BUNDLE_KEY.HAVE_POINT, isHavePoint)
         }
         appNavigation.openLiveStreamToExitLiveStream(bundle)
         mViewModel.logout()

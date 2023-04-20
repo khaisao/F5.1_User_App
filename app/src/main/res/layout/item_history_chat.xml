@@ -76,51 +76,63 @@
                     android:adjustViewBounds="true" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_info"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_3"
-                android:layout_marginBottom="@dimen/margin_6"
-                android:gravity="center_vertical"
+            <FrameLayout
+                android:id="@+id/fl_info"
+                app:layout_constraintTop_toBottomOf="@id/ll_ranking"
                 app:layout_constraintEnd_toStartOf="@id/iv_news"
                 app:layout_constraintStart_toStartOf="@id/ll_ranking"
-                app:layout_constraintTop_toBottomOf="@id/ll_ranking">
+                android:layout_width="0dp"
+                android:layout_marginEnd="@dimen/margin_5dp"
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tv_name"
-                    style="@style/text_bold_14"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/ll_info"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_6"
-                    android:ellipsize="end"
-                    android:maxWidth="200dp"
-                    android:maxLines="1"
-                    android:paddingBottom="@dimen/margin_8"
-                    android:textColor="@color/color_text_F0F0F0" />
+                    android:layout_marginTop="@dimen/margin_3"
+                    android:layout_marginBottom="@dimen/margin_6"
+                    android:gravity="end"
+                    android:layoutDirection="rtl"
+                    app:layout_constraintEnd_toStartOf="@id/iv_news"
+                    app:layout_constraintStart_toStartOf="@id/ll_ranking"
+                    app:layout_constraintTop_toBottomOf="@id/ll_ranking">
 
-                <TextView
-                    android:id="@+id/tv_size"
-                    style="@style/text_13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_6"
-                    android:layout_marginBottom="@dimen/margin_3"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="@color/color_text_E3DFEF" />
+                    <TextView
+                        android:id="@+id/tv_size"
+                        style="@style/text_13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Size"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/color_text_E3DFEF" />
 
-                <TextView
-                    android:id="@+id/tv_age"
-                    style="@style/text_13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_3"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="@color/color_text_E3DFEF" />
+                    <TextView
+                        android:id="@+id/tv_age"
+                        style="@style/text_13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="age"
+                        android:layout_marginStart="@dimen/margin_6"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/color_text_E3DFEF" />
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_name"
+                        style="@style/text_bold_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:layout_marginStart="@dimen/margin_6"
+                        android:text="Nameasgasgasgasgasgags"
+                        android:maxLines="1"
+                        android:paddingBottom="@dimen/margin_8"
+                        android:textColor="@color/color_text_F0F0F0" />
+
+                </LinearLayout>
+
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/tv_body"
@@ -131,11 +143,11 @@
                 android:ellipsize="end"
                 android:lines="2"
                 android:maxLines="2"
+                android:text="This is body"
                 android:textColor="@color/color_B2A9CC"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/ll_ranking"
-                app:layout_constraintTop_toBottomOf="@id/ll_info" />
-
+                app:layout_constraintTop_toBottomOf="@id/fl_info" />
 
             <ImageView
                 android:id="@+id/iv_news"

@@ -120,14 +120,24 @@ class ListTypeRankingFragment :
                     )
                     viewModel.listRankingResult.observe(
                         viewLifecycleOwner,
-                        Observer {
-                            if (it.size > 6) {
-                                val ranking49List = it.subList(0, 6)
+                        Observer { listRanking ->
+                            if (listRanking.size > 6) {
+                                val ranking49List = listRanking.subList(0, 6)
                                 ranking49Adapter.submitList(ranking49List)
-                                val ranking1030List = it.subList(6, it.size)
+                                val ranking1030List = listRanking.subList(6, listRanking.size)
+                                if (ranking1030List.size % 3 == 1) {
+                                    ranking1030List.add(TypeRankingResponse())
+                                    ranking1030List.add(TypeRankingResponse())
+                                } else if (ranking1030List.size % 3 == 2) {
+                                    ranking1030List.add(TypeRankingResponse())
+                                }
                                 ranking1030Adapter.submitList(ranking1030List)
                             } else {
-                                ranking49Adapter.submitList(it)
+                                if (listRanking.size % 2 != 0) {
+                                    listRanking.add(TypeRankingResponse())
+                                }
+                                ranking49Adapter.submitList(listRanking)
+
                             }
                         }
                     )

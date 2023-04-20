@@ -41,6 +41,7 @@ class ExitLiveStreamViewModel @Inject constructor(private val apiInterface: ApiI
 
     fun getListBlockedConsultant() {
         listConsultantTemp = arrayListOf()
+        listBlockedConsultantResult.value?.dataResponse?.clear()
         viewModelScope.launch {
             try {
                 apiInterface.getListBlockedConsultant().let {

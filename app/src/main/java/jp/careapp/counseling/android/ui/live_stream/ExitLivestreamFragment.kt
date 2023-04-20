@@ -1,6 +1,7 @@
 package jp.careapp.counseling.android.ui.live_stream
 
 import android.os.Bundle
+import android.text.BoringLayout
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -61,6 +62,8 @@ class ExitLivestreamFragment :
 
     private var isShowFromUserDisable: Boolean = false
 
+    private var isHavePoint: Boolean = true
+
     private lateinit var behavior: AppBarLayout.Behavior
 
 
@@ -88,6 +91,7 @@ class ExitLivestreamFragment :
                 bundle.getSerializable(BUNDLE_KEY.USER_PROFILE) as? ConsultantResponse
             previousScreen = bundle.getString(BUNDLE_KEY.SCREEN_TYPE, "")
             errorMessage = bundle.getString(BUNDLE_KEY.TITLE, "")
+            isHavePoint = bundle.getBoolean(BUNDLE_KEY.HAVE_POINT, true)
         }
 
         binding.rvConsultant.layoutManager = GridLayoutManager(context, 2)
@@ -117,6 +121,8 @@ class ExitLivestreamFragment :
 
         val params = binding.alRv.layoutParams as CoordinatorLayout.LayoutParams
         behavior = params.behavior as AppBarLayout.Behavior
+
+        binding.tvBuyPoint.visibility = if(isHavePoint) GONE else VISIBLE
 
         if (errorMessage.isNotEmpty()) {
             binding.tvError.visibility = VISIBLE
@@ -223,8 +229,8 @@ class ExitLivestreamFragment :
             viewLifecycleOwner
         ) {
             if (!it.isNullOrEmpty()) {
-                binding.rvConsultant.visibility = View.VISIBLE
-                binding.llNoResult.visibility = View.GONE
+                binding.rvConsultant.visibility = VISIBLE
+                binding.llNoResult.visibility = GONE
                 behavior.setDragCallback(object : DragCallback() {
                     override fun canDrag(appBarLayout: AppBarLayout): Boolean {
                         return true
@@ -232,8 +238,8 @@ class ExitLivestreamFragment :
                 })
                 adapter.submitList(it)
             } else {
-                binding.rvConsultant.visibility = View.GONE
-                binding.llNoResult.visibility = View.VISIBLE
+                binding.rvConsultant.visibility = GONE
+                binding.llNoResult.visibility = VISIBLE
                 behavior.setDragCallback(object : DragCallback() {
                     override fun canDrag(appBarLayout: AppBarLayout): Boolean {
                         return false
@@ -246,8 +252,6 @@ class ExitLivestreamFragment :
         detailViewModel.statusRemoveFavorite.observe(viewLifecycleOwner, handleResultStatusUnFavorite)
         detailViewModel.isFirstChat.observe(viewLifecycleOwner, handleFirstChat)
         detailViewModel.isLoading.observe(viewLifecycleOwner, isLoadingObserver)
-
-
     }
 
     private fun onClickDetailConsultant(
@@ -263,14 +267,14 @@ class ExitLivestreamFragment :
     private fun changeStatusIsFavorite(isFavorite: Boolean) {
         if (isFavorite) {
             binding.apply {
-                ivRemoveFollow.visibility = View.VISIBLE
-                ivAddFollow.visibility = View.GONE
+                ivRemoveFollow.visibility = VISIBLE
+                ivAddFollow.visibility = GONE
             }
 
         } else {
             binding.apply {
-                ivRemoveFollow.visibility = View.GONE
-                ivAddFollow.visibility = View.VISIBLE
+                ivRemoveFollow.visibility = GONE
+                ivAddFollow.visibility = VISIBLE
             }
         }
     }

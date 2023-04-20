@@ -10,13 +10,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
-import jp.careapp.counseling.android.data.model.message.MessageResponse
-import jp.careapp.counseling.android.data.model.message.TimeMessageResponse
-import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.network.TypeRankingResponse
-import jp.careapp.counseling.android.ui.message.ChatMessageAdapter
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.extensions.getBustSize
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -116,7 +117,7 @@ class DetailUserProfileFragment :
         binding.avatarIv.viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
-                binding.avatarIv.viewTreeObserver.removeOnGlobalLayoutListener(this);
+                binding.avatarIv.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 galleryAdapter = GalleryAdapter(requireContext(), binding.avatarIv.height) {
                     Glide.with(requireContext()).load(it.thumbnailImage?.url).into(binding.avatarIv)
                 }
@@ -125,9 +126,7 @@ class DetailUserProfileFragment :
                 binding.rvGallery.adapter = galleryAdapter
             }
         })
-
     }
-
 
     override fun setOnClick() {
         super.setOnClick()
@@ -255,11 +254,13 @@ class DetailUserProfileFragment :
     }
 
     private fun checkPoint() {
-        if (rxPreferences.getPoint() < 1000) {
-            showDialogRequestBuyPoint()
-        } else {
-            showDialogConfirmCall()
-        }
+//        if (rxPreferences.getPoint() < 1000) {
+//            showDialogRequestBuyPoint()
+//        } else {
+//            showDialogConfirmCall()
+//        }
+        showDialogConfirmCall()
+
     }
 
     private fun checkPointForPeep() {
@@ -361,13 +362,6 @@ class DetailUserProfileFragment :
             }
     }
 
-    private fun showDialogWarningDuringCall() {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-            .showDialog()
-            .setDialogTitle(R.string.msg_warning_during_call)
-            .setTextPositiveButton(R.string.text_OK)
-    }
-
     private fun openCalling() {
         consultantResponse?.let { performer ->
             val status =
@@ -409,17 +403,6 @@ class DetailUserProfileFragment :
         } else {
             appNavigation.openDetailUserToChatMessage(bundle)
         }
-    }
-
-
-    private fun showDialogAlreadyFavorite() {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-            .showDialog()
-            .setDialogTitle(R.string.favorited_alert)
-            .setTextPositiveButton(R.string.text_OK)
-            .setOnPositivePressed {
-                it.dismiss()
-            }
     }
 
     private fun loadData() {
@@ -769,6 +752,7 @@ class DetailUserProfileFragment :
         const val PLATINUM = 4
         const val DIAMOND = 6
 
+        @JvmStatic
         fun getInstance(
             position: Int,
             listPerformer: ArrayList<ConsultantResponse>,

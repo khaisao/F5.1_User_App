@@ -2,10 +2,7 @@ package jp.careapp.counseling.android.ui.live_stream
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
+import android.view.*
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
@@ -53,7 +50,6 @@ class SecretMessageBottomFragment : BottomSheetDialogFragment() {
 
     private lateinit var adapter: SecretMessageAdapter
 
-
     override fun onStart() {
         super.onStart()
         val view = view
@@ -90,7 +86,7 @@ class SecretMessageBottomFragment : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
+        setStyle(STYLE_NORMAL, R.style.CustomSecretDialogStyle)
     }
 
     override fun onCreateView(
@@ -117,12 +113,13 @@ class SecretMessageBottomFragment : BottomSheetDialogFragment() {
                 // Remove the listener to avoid multiple calls
                 constraintLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 // Set the height of cl_main to 50% of the screen height
-                val desiredHeight = (requireContext().screenHeight * 0.5).toInt()
+                val desiredHeight = (requireContext().screenHeight * 0.6).toInt()
                 val layoutParams = constraintLayout.layoutParams
                 layoutParams.height = desiredHeight
                 constraintLayout.layoutParams = layoutParams
             }
         })
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         layoutManager.stackFromEnd = true

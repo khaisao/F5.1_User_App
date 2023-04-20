@@ -1,4 +1,4 @@
-package jp.careapp.counseling.android.ui.profile
+package jp.careapp.counseling.android.ui.profile.list_user_profile
 
 import android.app.Activity
 import androidx.hilt.lifecycle.ViewModelInject

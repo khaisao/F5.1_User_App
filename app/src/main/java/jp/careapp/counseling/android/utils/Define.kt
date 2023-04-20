@@ -224,6 +224,7 @@ class BUNDLE_KEY {
         const val POSITION_SELECT: String = "POSITION_SELECT"
         const val TYPE_SEARCH: String = "TYPE_SEARCH"
         const val TITLE: String = "TITLE"
+        const val HAVE_POINT: String = "HAVE_POINT"
         const val USER_PROFILE: String = "USER_PROFILE"
         const val USER_PROFILE_BOTTOM_SHEET: String = "USER_PROFILE_BOTTOM_SHEET"
         const val FIRST_BUY_POINT = "FIRST_BUY_POINT"

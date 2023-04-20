@@ -42,6 +42,7 @@ class HistoryViewModel @ViewModelInject constructor(
     }
     fun getListBlockedConsultant() {
         listConsultantTemp = arrayListOf()
+        listBlockedConsultantResult.value?.dataResponse?.clear()
         viewModelScope.launch {
             isLoading.value=true
             try {

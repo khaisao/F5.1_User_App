@@ -80,7 +80,7 @@ class ReportFragment : BaseFragment<FragmentUserReportBinding, ReportViewModel>(
                 .setTextOkButton(R.string.ok_en)
                 .setOnOkButtonPressed { dialog ->
                     dialog.dismiss()
-                    appNavigation.navigateUp()
+                    binding.contentReportEdt.text.clear()
                 }
         }
     }
