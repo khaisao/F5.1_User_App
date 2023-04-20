@@ -2,7 +2,6 @@ package jp.careapp.counseling.android.ui.profile.detail_user
 
 import android.app.Activity
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
@@ -14,7 +13,6 @@ import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.network.FlaxLoginAuthResponse
 import jp.careapp.counseling.android.data.network.FssMemberAuthResponse
 import jp.careapp.counseling.android.data.network.GalleryResponse
-import jp.careapp.counseling.android.data.network.socket.SocketActionSend
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.network.ApiInterface
 import jp.careapp.counseling.android.network.socket.CallingWebSocketClient
@@ -42,7 +40,9 @@ import jp.careapp.counseling.android.utils.SocketInfo.KEY_PERFORMER_THUMB_IMAGE
 import jp.careapp.counseling.android.utils.SocketInfo.KEY_RESULT
 import jp.careapp.counseling.android.utils.SocketInfo.KEY_SESSION_CODE
 import jp.careapp.counseling.android.utils.SocketInfo.RESULT_NG
+import jp.careapp.counseling.android.utils.SocketInfo.RESULT_NONE
 import jp.careapp.counseling.android.utils.SocketInfo.RESULT_OK
+import jp.careapp.counseling.android.utils.performer_extension.PerformerStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
@@ -71,11 +71,7 @@ class DetailUserProfileViewModel @ViewModelInject constructor(
     var flaxLoginAuthResponse: FlaxLoginAuthResponse? = null
     var viewerStatus: Int = 0
 
-
-    private val _newMessage = MutableLiveData<SocketActionSend>()
     val blockUserResult = MutableLiveData<Boolean>()
-
-    val newMessage: LiveData<SocketActionSend> get() = _newMessage
 
     private val gson by lazy { Gson() }
 
@@ -120,16 +116,19 @@ class DetailUserProfileViewModel @ViewModelInject constructor(
         flaxWebSocketManager.flaxConnect(urlStartCall, this@DetailUserProfileViewModel)
     }
 
-    fun connectLiveStream(performerCode: String) {
-        if (viewerStatus == 0) {
+    fun connectLiveStream(performerCode: String, status: PerformerStatus) {
+        if (viewerStatus == 0 && status == PerformerStatus.WAITING) {
             startCall(performerCode)
         } else {
             connectFlaxChatSocket(performerCode, viewerStatus)
         }
     }
 
-    fun cancelCall() {
-        flaxWebSocketManager.cancelCall()
+    fun cancelCall(isError: Boolean) {
+        connectResult.value = ConnectResult(result = RESULT_NONE)
+        if (!isError) {
+            flaxWebSocketManager.cancelCall()
+        }
     }
 
     fun loadDetailUser(code: String) {
@@ -250,6 +249,11 @@ class DetailUserProfileViewModel @ViewModelInject constructor(
                 isLoading.value = false
             }
         }
+    }
+
+    fun resetData() {
+        connectResult.value = ConnectResult(result = RESULT_NONE)
+        isLoginSuccess.value = false
     }
 
     override fun onHandleMessage(jsonMessage: JSONObject) {

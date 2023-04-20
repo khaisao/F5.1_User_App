@@ -3,7 +3,6 @@ package jp.careapp.counseling.android.ui.live_stream
 import android.app.Activity
 import android.app.Application
 import android.media.AudioManager
-import android.text.Html
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -14,6 +13,7 @@ import jp.careapp.counseling.android.data.model.live_stream.ConnectResult
 import jp.careapp.counseling.android.data.network.FlaxLoginAuthResponse
 import jp.careapp.counseling.android.data.network.LiveStreamChatResponse
 import jp.careapp.counseling.android.data.network.socket.SocketSendMessage
+import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.network.socket.CallingWebSocketClient
 import jp.careapp.counseling.android.network.socket.FlaxWebSocketManager
 import jp.careapp.counseling.android.network.socket.MaruCastManager
@@ -47,6 +47,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LiveStreamViewModel @Inject constructor(
     private val application: Application,
+    private val rxPreferences: RxPreferences,
     private val flaxWebSocketManager: FlaxWebSocketManager,
     private val maruCastManager: MaruCastManager,
     private val audioManager: AudioManager
@@ -104,7 +105,7 @@ class LiveStreamViewModel @Inject constructor(
     fun sendChatMessage(message: String) {
         if (message.isEmpty()) return
         flaxWebSocketManager.sendMessage(message)
-        updateChatLog(message, name = "あなた", false)
+        updateChatLog(message, name = rxPreferences.getNickName() ?: "あなた", false)
     }
 
     fun updateMicSetting(_isMicMute: Boolean = false) {
@@ -277,10 +278,8 @@ class LiveStreamViewModel @Inject constructor(
                             var i = 0
                             while (i < chatMessageArray.length()) {
                                 val chatMessage = chatMessageArray.getJSONObject(i)
-                                val handleName =
-                                    Html.escapeHtml(chatMessage.getString(KEY_HANDLE))
-                                val messageStr =
-                                    Html.escapeHtml(chatMessage.getString(ACTION_MESSAGE))
+                                val handleName = chatMessage.getString(KEY_HANDLE)
+                                val messageStr = chatMessage.getString(ACTION_MESSAGE)
                                 val userCode = chatMessage.getString(KEY_USER_CODE)
                                 if (userCode != flaxLoginAuthResponse?.memberCode) {
                                     val isPerformer =
@@ -295,20 +294,9 @@ class LiveStreamViewModel @Inject constructor(
                         var i = 0
                         while (i < whisperMessageArray.length()) {
                             val whisperMessage = whisperMessageArray.getJSONObject(i)
-                            val handleName = Html.escapeHtml(whisperMessage.getString(KEY_HANDLE))
-                            val messageStr =
-                                Html.escapeHtml(whisperMessage.getString(ACTION_MESSAGE))
-                            var isPerformer = false
-                            if (whisperMessage.getString(KEY_USER_TYPE) == PERFORMER) {
-                                isPerformer = true
-                                _connectResult.postValue(
-                                    ConnectResult(
-                                        RESULT_NG,
-                                        handleName + "様よりささやきが通知されました",
-                                        true
-                                    )
-                                )
-                            }
+                            val handleName = whisperMessage.getString(KEY_HANDLE)
+                            val messageStr = whisperMessage.getString(ACTION_MESSAGE)
+                            val isPerformer = whisperMessage.getString(KEY_USER_TYPE) == PERFORMER
                             updateWhisperLog(messageStr, handleName, isPerformer)
                             i++
                         }

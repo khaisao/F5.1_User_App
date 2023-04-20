@@ -170,4 +170,6 @@ interface AppNavigation : BaseNavigator {
     fun openPrivacyPolicy(bundle: Bundle? = null)
 
     fun openContactUs(bundle: Bundle? = null)
+
+    fun openLiveStreamBuyPointCredit(bundle: Bundle? = null)
 }

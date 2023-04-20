@@ -575,6 +575,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="msg_title_request_mic">マイクへのアクセスを\n許可しますか？</string>
     <string name="msg_title_request_buy_point">所持ポイント1000pts以上保有して\nいないと、通話機能をご利用いただ\nけません。</string>
     <string name="live_stream_title_request_buy_point">ライブ視聴するためには1,000pts以上の所持ポイントが必要です。</string>
+    <string name="live_stream_peep_title_request_buy_point">所持ポイントが不足しております、購入してください。</string>
     <string name="msg_explain_request_mic">電話相談をするためにはマイクへの\nアクセス権限が必要です。</string>
     <string name="accept_permission">許可する</string>
     <string name="denied_permission">許可しない</string>

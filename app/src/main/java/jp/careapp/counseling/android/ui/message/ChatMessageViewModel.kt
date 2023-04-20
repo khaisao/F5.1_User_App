@@ -31,6 +31,7 @@ import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.PERFORMER_MSG_SH
 import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.SocketInfo
 import jp.careapp.counseling.android.utils.dummyFreeTemplateData
+import jp.careapp.counseling.android.utils.performer_extension.PerformerStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
@@ -451,6 +452,11 @@ class ChatMessageViewModel @ViewModelInject constructor(
         }
     }
 
+    fun resetData() {
+        connectResult.value = ConnectResult(result = SocketInfo.RESULT_NONE)
+        isLoginSuccess.value = false
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     open fun onMessageEvent(event: SocketActionSend) {
         Log.e("ChatMessageViewModel", "onMessageEvent: $event")
@@ -548,16 +554,19 @@ class ChatMessageViewModel @ViewModelInject constructor(
         flaxWebSocketManager.flaxConnect(urlStartCall, this@ChatMessageViewModel)
     }
 
-    fun connectLiveStream(performerCode: String) {
-        if (viewerStatus == 0) {
+    fun connectLiveStream(performerCode: String, status: PerformerStatus) {
+        if (viewerStatus == 0 && status == PerformerStatus.WAITING) {
             startCall(performerCode)
         } else {
             connectFlaxChatSocket(performerCode, viewerStatus)
         }
     }
 
-    fun cancelCall() {
-        flaxWebSocketManager.cancelCall()
+    fun cancelCall(isError: Boolean) {
+        connectResult.value = ConnectResult(result = SocketInfo.RESULT_NONE)
+        if (!isError) {
+            flaxWebSocketManager.cancelCall()
+        }
     }
 
     override fun onHandleMessage(jsonMessage: JSONObject) {
@@ -575,7 +584,6 @@ class ChatMessageViewModel @ViewModelInject constructor(
             } else if (action == SocketInfo.ACTION_LOGIN_REQUEST && isNeedCall != null && isNeedCall) {
                 handleLoginRequest()
             } else if (action == SocketInfo.ACTION_PERFORMER_LOGIN || isNeedCall != null && !isNeedCall) {
-                // isNeedCallがfalseの場合はパフォーマー側が配信しているのでそのままチャット画面に遷移する
                 handlePerformerLogin()
             } else if (action == SocketInfo.ACTION_LOGIN) {
                 handleLogin(jsonMessage)

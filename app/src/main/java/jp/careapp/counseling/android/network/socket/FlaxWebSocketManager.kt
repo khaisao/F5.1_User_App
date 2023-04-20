@@ -1,6 +1,5 @@
 package jp.careapp.counseling.android.network.socket
 
-import jp.careapp.counseling.android.utils.Define.Intent.Companion.MESSAGE
 import jp.careapp.counseling.android.utils.SocketInfo
 import jp.careapp.counseling.android.utils.SocketInfo.KEY_ACTION
 import jp.careapp.counseling.android.utils.SocketInfo.KEY_COLOR
@@ -54,8 +53,10 @@ class FlaxWebSocketManager @Inject constructor() {
     fun sendMessage(message: String) {
         val json = JSONObject()
         try {
-            json.put(KEY_ACTION, SocketInfo.ACTION_WRITE)
-            json.put(MESSAGE, message)
+            json.put(KEY_ACTION, SocketInfo.ACTION_MESSAGE)
+            json.put(KEY_MESSAGE_TYPE, SocketInfo.ACTION_WRITE)
+            json.put(KEY_MSG, message)
+            json.put(KEY_COLOR, SocketInfo.MESSAGE_COLOR)
             socketClient?.sendMessage(json.toString())
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -69,7 +70,7 @@ class FlaxWebSocketManager @Inject constructor() {
             json.put(KEY_ACTION, SocketInfo.ACTION_MESSAGE)
             json.put(KEY_MESSAGE_TYPE, SocketInfo.ACTION_WHISPER)
             json.put(KEY_MSG, message)
-            json.put(KEY_COLOR, "#FFFFFF")
+            json.put(KEY_COLOR, SocketInfo.MESSAGE_COLOR)
             socketClient?.sendMessage(json.toString())
         } catch (e: JSONException) {
             e.printStackTrace()

@@ -38,8 +38,8 @@ class CameraMicroSwitchBottomSheet : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val isMicMute = arguments?.getBoolean(BUNDLE_KEY.MIC_SETTING)
         val isCameraMute = arguments?.getBoolean(BUNDLE_KEY.CAMERA_SETTING)
-        binding.scMicrophone.isChecked = isMicMute ?: false
-        binding.scCamera.isChecked = isCameraMute ?: false
+        binding.scMicrophone.isChecked = !(isMicMute ?: true)
+        binding.scCamera.isChecked = !(isCameraMute ?: true)
 
         binding.scMicrophone.setOnCheckedChangeListener { _, isChecked ->
             settingCallback?.onMicChange(!isChecked)

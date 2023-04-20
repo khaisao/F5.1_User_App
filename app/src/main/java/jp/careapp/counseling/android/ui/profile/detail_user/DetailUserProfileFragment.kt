@@ -30,14 +30,15 @@ import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
-import jp.careapp.counseling.android.ui.calling.CallConnectionDialog
 import jp.careapp.counseling.android.ui.buy_point.bottom_sheet.BuyPointBottomFragment
+import jp.careapp.counseling.android.ui.calling.CallConnectionDialog
 import jp.careapp.counseling.android.ui.profile.block_report.BlockAndReportBottomFragment
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.FLAX_LOGIN_AUTH_RESPONSE
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.USER_PROFILE
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.VIEW_STATUS
 import jp.careapp.counseling.android.utils.Define
+import jp.careapp.counseling.android.utils.SocketInfo
 import jp.careapp.counseling.android.utils.SocketInfo.RESULT_NG
 import jp.careapp.counseling.android.utils.extensions.getBustSize
 import jp.careapp.counseling.android.utils.extensions.hasPermissions
@@ -211,13 +212,13 @@ class DetailUserProfileFragment :
             if (!isDoubleClick) {
                 viewerType = 1
                 viewModel.viewerStatus = 1
-                showDialogConfirmCall()
+                checkPointForPeep()
             }
         }
     }
 
-    override fun callingCancel() {
-        viewModel.cancelCall()
+    override fun callingCancel(isError: Boolean) {
+        viewModel.cancelCall(isError)
     }
 
     override fun onDestroyView() {
@@ -271,6 +272,14 @@ class DetailUserProfileFragment :
     private fun checkPoint() {
         if (rxPreferences.getPoint() < 1000) {
             showDialogRequestBuyPoint()
+        } else {
+            showDialogConfirmCall()
+        }
+    }
+
+    private fun checkPointForPeep() {
+        if (rxPreferences.getPoint() == 0) {
+            showDialogRequestBuyPointForPeep()
         } else {
             showDialogConfirmCall()
         }
@@ -330,6 +339,29 @@ class DetailUserProfileFragment :
             }
     }
 
+    private fun showDialogRequestBuyPointForPeep() {
+        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+            .showDialog()
+            .setDialogTitle(R.string.live_stream_peep_title_request_buy_point)
+            .setTextPositiveButton(R.string.live_stream_buy_point)
+            .setTextNegativeButton(R.string.cancel_block_alert)
+            .setOnPositivePressed { dialog ->
+                val bundle = Bundle().also {
+                    it.putInt(BUNDLE_KEY.TYPE_BUY_POINT, Define.BUY_POINT_FIRST)
+                }
+                handleBuyPoint.buyPoint(childFragmentManager, bundle,
+                    object : BuyPointBottomFragment.HandleBuyPoint {
+                        override fun buyPointSucess() {
+                            checkPointForPeep()
+                        }
+                    }
+                )
+                dialog.dismiss()
+            }.setOnNegativePressed {
+                it.dismiss()
+            }
+    }
+
     private fun showDialogConfirmCall() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
@@ -352,7 +384,11 @@ class DetailUserProfileFragment :
     }
 
     private fun openCalling() {
-        consultantResponse?.code?.let { viewModel.connectLiveStream(it) }
+        consultantResponse?.let { performer ->
+            val status =
+                PerformerStatusHandler.getStatus(performer.callStatus, performer.chatStatus)
+            performer.code?.let { viewModel.connectLiveStream(it, status) }
+        }
     }
 
     fun doBuyPoint() {
@@ -431,25 +467,29 @@ class DetailUserProfileFragment :
     }
 
     private val connectResultHandle: Observer<ConnectResult> = Observer {
-        consultantResponse?.let { performerResponse ->
-            run {
-                val fragment: Fragment? =
-                    childFragmentManager.findFragmentByTag("CallConnectionDialog")
-                val dialog: CallConnectionDialog
-                if (fragment != null) {
-                    dialog = fragment as CallConnectionDialog
-                    if (it.result == RESULT_NG) {
-                        dialog.setMessage(it.message, true)
-                    } else {
-                        dialog.setMessage(getString(R.string.call_content))
+        if (it.result != SocketInfo.RESULT_NONE) {
+            consultantResponse?.let { performerResponse ->
+                run {
+                    val fragment: Fragment? =
+                        childFragmentManager.findFragmentByTag("CallConnectionDialog")
+                    val dialog: CallConnectionDialog
+                    if (fragment != null) {
+                        dialog = fragment as CallConnectionDialog
                         dialog.setCallingCancelListener(this@DetailUserProfileFragment)
+                        if (it.result == RESULT_NG) {
+                            dialog.setMessage(it.message, true)
+                        } else {
+                            dialog.setMessage(getString(R.string.call_content))
+                        }
+                    } else {
+                        val message =
+                            if (it.result == RESULT_NG) it.message else getString(R.string.call_content)
+                        val isError = it.result == RESULT_NG
+                        dialog =
+                            CallConnectionDialog.newInstance(performerResponse, message, isError)
+                        dialog.setCallingCancelListener(this@DetailUserProfileFragment)
+                        dialog.show(childFragmentManager, "CallConnectionDialog")
                     }
-                } else {
-                    val message =
-                        if (it.result == RESULT_NG) it.message else getString(R.string.call_content)
-                    val isError = it.result == RESULT_NG
-                    dialog = CallConnectionDialog.newInstance(performerResponse, message, isError)
-                    dialog.show(childFragmentManager, "CallConnectionDialog")
                 }
             }
         }
@@ -465,6 +505,7 @@ class DetailUserProfileFragment :
                 putInt(VIEW_STATUS, viewerType)
             }
             appNavigation.openUserDetailToLiveStream(bundle)
+            viewModel.resetData()
         }
     }
 
