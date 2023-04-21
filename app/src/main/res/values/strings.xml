@@ -740,7 +740,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="credit_title">クレジットカード決済</string>
     <string name="credit_first_title">クレジットカード決済</string>
     <string name="credit_result_success">決済成功</string>
-    <string name="credit_result_fail">決済成功</string>
+    <string name="credit_result_fail">決済失敗</string>
     <string name="recharge_bank_title">入金報告</string>
     <string name="recharge_bank_success_title">決済成功</string>
     <string name="auto_charge_title">オートチャージ設定</string>
