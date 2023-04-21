@@ -89,6 +89,7 @@
                             android:scrollbars="vertical"
                             android:textColor="@color/color_070707"
                             android:textColorHint="@color/color_c0c3c9"
+                            android:textCursorDrawable="@null"
                             tools:ignore="Autofill" />
                     </com.lihang.ShadowLayout>
 
