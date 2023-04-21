@@ -1,7 +1,7 @@
 package jp.careapp.counseling.android.ui.review_mode.settingContact
 
-import android.view.View
-import android.widget.AdapterView
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.widget.ArrayAdapter
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
@@ -16,8 +16,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class RMSettingContactFragment :
-    BaseFragment<FragmentRmSettingContactBinding, RMSettingContactViewModel>(),
-    AdapterView.OnItemSelectedListener {
+    BaseFragment<FragmentRmSettingContactBinding, RMSettingContactViewModel>() {
 
     @Inject
     lateinit var appNavigation: AppNavigation
@@ -38,11 +37,19 @@ class RMSettingContactFragment :
     override fun initView() {
         super.initView()
 
-        binding.spinner.adapter = adapterSpinner
-        binding.spinner.onItemSelectedListener = this
+        binding.autoCompleteTextView.setDropDownBackgroundDrawable(ColorDrawable(Color.WHITE))
+        binding.autoCompleteTextView.setOnItemClickListener { parent, _, position, _ ->
+            mViewModel.setCategory(parent?.getItemAtPosition(position) as String)
+        }
 
         setUpToolBar()
         setUpEditText()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        binding.autoCompleteTextView.setAdapter(adapterSpinner)
     }
 
     override fun setOnClick() {
@@ -63,12 +70,6 @@ class RMSettingContactFragment :
             mViewModel.setContent(it.toString().trim())
         }
     }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        mViewModel.setCategory(parent?.getItemAtPosition(position) as String)
-    }
-
-    override fun onNothingSelected(p0: AdapterView<*>?) {}
 
     private fun setUpToolBar() {
         binding.toolBar.setOnToolBarClickListener(object : ToolBarCommon.OnToolBarClickListener() {
