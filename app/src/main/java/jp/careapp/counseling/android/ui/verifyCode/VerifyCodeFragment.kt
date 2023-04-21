@@ -22,11 +22,8 @@ import jp.careapp.counseling.databinding.FragmentVerifyCodeBinding
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.email.InputAndEditMailViewModel
 import jp.careapp.counseling.android.ui.main.OnBackPressedListener
-import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeViewModel.Companion.SCREEN_CODE_BAD_USER
 import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeViewModel.Companion.SCREEN_CODE_REGISTER
-import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeViewModel.Companion.SCREEN_CODE_REREGISTER
 import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeViewModel.Companion.SCREEN_CODE_TOP
-import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeViewModel.Companion.SCREEN_CODE_TUTORIAL
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.counseling.android.data.pref.RxPreferences

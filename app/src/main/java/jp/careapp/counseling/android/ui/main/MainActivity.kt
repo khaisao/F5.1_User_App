@@ -404,19 +404,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     shareViewModel.setTabSelected(ShareViewModel.TAB_MY_PAGE_SELECTED)
                 }
             }
-            Define.Intent.SETTING_NOTIFICATION -> {
-                val currentFragment: Fragment =
-                    navHostFragment.childFragmentManager.fragments[0]
-                if (currentFragment is NotificationFragment) {
-                    appNavigation.popopBackStackToDetination(R.id.fragmentNotification)
-                } else {
-                    currentFragment.dismissAllDialog()
-                    val bundle = Bundle().apply {
-                        putBoolean(Define.Intent.OPEN_DIRECT, true)
-                    }
-                    appNavigation.openGlobalToSettingNotification(bundle)
-                }
-            }
             Define.Intent.MESSAGE -> {
                 val currentFragment: Fragment =
                     navHostFragment.childFragmentManager.fragments[0]

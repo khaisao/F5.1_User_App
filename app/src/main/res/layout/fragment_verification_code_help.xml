@@ -64,8 +64,10 @@
                         <TextView
                             android:id="@+id/tvYourEmail"
                             style="@style/text_bold_18"
-                            android:layout_gravity="center_horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_gravity="center"
                             android:layout_marginTop="@dimen/margin_32"
+                            android:gravity="center"
                             android:textColor="@color/color_F0F0F0"
                             tools:text="1234@abc.net" />
 

@@ -83,13 +83,6 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
         <action
-            android:id="@+id/action_topFragment_to_fragmentNotification"
-            app:destination="@id/fragmentNotification"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
-        <action
             android:id="@+id/action_topFragment_to_FAQFragment"
             app:destination="@id/FAQFragment"
             app:enterAnim="@anim/slide_in_left"
@@ -109,7 +102,11 @@
 
     <action
         android:id="@+id/action_to_login"
-        app:destination="@id/login_navigation" />
+        app:destination="@id/login_navigation"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
 
     <action
         android:id="@+id/action_ranking_to_userProfilefragment"
@@ -240,10 +237,6 @@
         android:id="@+id/action_tabMyPage_to_favoriteFragment"
         app:destination="@id/favoriteFragment" />
 
-    <action
-        android:id="@+id/action_tabMyPage_to_fragmentNotification"
-        app:destination="@id/fragmentNotification" />
-
     <fragment
         android:id="@+id/fragmentNotification"
         android:name="jp.careapp.counseling.android.ui.notification.NotificationFragment"
@@ -281,28 +274,8 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
-        <action
-            android:id="@+id/action_fragmentEditProfile_to_editMailFragment"
-            app:destination="@id/editMailFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
 
-    <fragment
-        android:id="@+id/editMailFragment"
-        android:name="jp.careapp.counseling.android.ui.edit_mail.EditMailFragment"
-        android:label="EditEmailfragment"
-        tools:layout="@layout/fragment_edit_mail">
-        <action
-            android:id="@+id/action_editMailFragment_to_verifyCodeFragment"
-            app:destination="@id/verifyCodeFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
-    </fragment>
     <fragment
         android:id="@+id/webViewFragment"
         android:name="jp.careapp.counseling.android.ui.webView.WebViewFragment"
@@ -337,13 +310,6 @@
         <action
             android:id="@+id/action_withdrawalFragment_to_withdrawalFinishFragment"
             app:destination="@id/withdrawalFinishFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
-        <action
-            android:id="@+id/action_withdrawalFragment_to_fragmentNotification"
-            app:destination="@id/fragmentNotification"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
@@ -446,16 +412,6 @@
             app:destination="@id/welcomeActivity" />
     </fragment>
 
-    <action
-        android:id="@+id/action_global_fragmentNotification"
-        app:destination="@id/fragmentNotification"
-        app:enterAnim="@anim/slide_in_left"
-        app:exitAnim="@anim/slide_out_right"
-        app:popEnterAnim="@anim/slide_in_right"
-        app:popExitAnim="@anim/slide_out_left"
-        app:popUpTo="@id/splashFragment"
-        app:popUpToInclusive="true" />
-
     <fragment
         android:id="@+id/termsOfServiceFragment"
         android:name="jp.careapp.counseling.android.ui.terms_of_service.TermsOfServiceFragment"
@@ -510,11 +466,6 @@
         android:label="ContactUsFinishFragment"
         tools:layout="@layout/fragment_contact_us_finish" />
     <fragment
-        android:id="@+id/verifyCodeFragment"
-        android:name="jp.careapp.counseling.android.ui.verifyCode.VerifyCodeFragment"
-        android:label="VerifyCodeFragment"
-        tools:layout="@layout/fragment_verify_code" />
-    <fragment
         android:id="@+id/FAQFragment"
         android:name="jp.careapp.counseling.android.ui.faq.FAQFragment"
         android:label="FAQFragment"
@@ -558,6 +509,21 @@
     <action
         android:id="@+id/action_global_contactUsFragment"
         app:destination="@id/contactUsFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+    <include app:graph="@navigation/edit_mail_navigation" />
+    <action
+        android:id="@+id/action_global_edit_mail_navigation"
+        app:destination="@id/edit_mail_navigation"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+    <action
+        android:id="@+id/action_global_fragmentNotification"
+        app:destination="@id/fragmentNotification"
         app:enterAnim="@anim/slide_in_left"
         app:exitAnim="@anim/slide_out_right"
         app:popEnterAnim="@anim/slide_in_right"

@@ -72,23 +72,37 @@ class VerificationCodeHelpFragment :
             }
         )
 
-        if (codeScreen == SCREEN_LOGIN_WITH_EMAIL) {
-            binding.btnEditContact.setOnClickListener {
-                if (!isDoubleClick) {
+        binding.btnEditContact.setOnClickListener {
+            if (!isDoubleClick) {
+                if (codeScreen == SCREEN_LOGIN_WITH_EMAIL) {
                     appNavigation.popopBackStackToDetination(R.id.inputEmailFragment)
                     shareViewModel.setFocusEditText(isFocusEditTextEmail)
                     shareViewModel.setFocusVerifyCode(isFocusEditTextVerify)
-                }
-            }
-            binding.btReSendEmail.setOnClickListener {
-                if (!isDoubleClick) {
-                    appNavigation.popopBackStackToDetination(R.id.inputEmailFragment)
-                    shareViewModel.setFocusEditText(isFocusEditTextEmail)
-                    shareViewModel.setFocusVerifyCode(isFocusEditTextVerify)
+                } else {
+                    appNavigation.openEditMail()
                 }
             }
         }
+
+        binding.btReSendEmail.setOnClickListener {
+            if (codeScreen == SCREEN_LOGIN_WITH_EMAIL) {
+                viewModel.resendOtp(email)
+            } else {
+                appNavigation.openEditMail()
+            }
+        }
+
         binding.btContactUs.setOnClickListener { if (!isDoubleClick) appNavigation.openContactUs() }
+    }
+
+    override fun bindingStateView() {
+        super.bindingStateView()
+
+        viewModel.mActionState.observe(viewLifecycleOwner) {
+            when (it) {
+                is VerifyCodeHelpActionState.ResendOtpSuccess -> appNavigation.navigateUp()
+            }
+        }
     }
 
     override fun onBackPressed() {
