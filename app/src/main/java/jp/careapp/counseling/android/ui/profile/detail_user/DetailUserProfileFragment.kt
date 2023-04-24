@@ -32,10 +32,12 @@ import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.bottom_sheet.BuyPointBottomFragment
-import jp.careapp.counseling.android.ui.calling.CallConnectionDialog
+import jp.careapp.counseling.android.ui.live_stream.CallConnectionDialog
 import jp.careapp.counseling.android.ui.profile.block_report.BlockAndReportBottomFragment
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.FLAX_LOGIN_AUTH_RESPONSE
+import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.ROOT_SCREEN
+import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.SCREEN_DETAIL
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.USER_PROFILE
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.VIEW_STATUS
 import jp.careapp.counseling.android.utils.Define
@@ -469,6 +471,7 @@ class DetailUserProfileFragment :
                 putSerializable(FLAX_LOGIN_AUTH_RESPONSE, viewModel.flaxLoginAuthResponse)
                 putSerializable(USER_PROFILE, consultantResponse)
                 putInt(VIEW_STATUS, viewerType)
+                putInt(ROOT_SCREEN, SCREEN_DETAIL)
             }
             appNavigation.openUserDetailToLiveStream(bundle)
             viewModel.resetData()

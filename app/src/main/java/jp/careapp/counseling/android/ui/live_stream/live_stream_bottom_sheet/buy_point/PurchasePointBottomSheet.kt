@@ -10,6 +10,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
+import jp.careapp.counseling.android.utils.Define.Companion.BUY_POINT_UNDER_500
+import jp.careapp.counseling.android.utils.Define.Companion.INSU_POINT
 import jp.careapp.counseling.databinding.FragmentPurchasePointBottomBinding
 
 @AndroidEntryPoint
@@ -20,10 +22,10 @@ class PurchasePointBottomSheet : BottomSheetDialogFragment() {
 
     private val mViewModel: PurchasePointViewModel by viewModels()
 
-    lateinit var purchasePointAdapter: PurchasePointAdapter
+    private lateinit var purchasePointAdapter: PurchasePointAdapter
 
     private var purchasePointCallback: PurchasePointCallback? = null
-    private var type = 0
+    private var type = 1
 
     companion object {
         var fragment: PurchasePointBottomSheet? = null
@@ -32,12 +34,10 @@ class PurchasePointBottomSheet : BottomSheetDialogFragment() {
             bundle: Bundle? = null,
             purchasePointCallback: PurchasePointCallback? = null
         ) {
-            if (fragment == null) {
-                fragment = PurchasePointBottomSheet()
-                purchasePointCallback?.let { fragment?.setPurchasePointCallback(it) }
-                fragment?.arguments = bundle
-                fragment?.show(fragmentManager, "PurchasePointBottomSheet")
-            }
+            val fragment = PurchasePointBottomSheet()
+            purchasePointCallback?.let { fragment.setPurchasePointCallback(it) }
+            fragment.arguments = bundle
+            fragment.show(fragmentManager, "PurchasePointBottomSheet")
         }
     }
 
@@ -67,11 +67,14 @@ class PurchasePointBottomSheet : BottomSheetDialogFragment() {
             type = bundle.getInt(BUNDLE_KEY.TYPE_BUY_POINT, 0)
         }
         when (type) {
-            0 -> {
+            INSU_POINT -> {
                 binding.titlePointTv.text = getString(R.string.point_purchase)
             }
+            BUY_POINT_UNDER_500 -> {
+                binding.titlePointTv.text = getString(R.string.point_purchase_under_500)
+            }
             else -> {
-                binding.titlePointTv.text = getString(R.string.insufficient_points)
+                binding.titlePointTv.text = getString(R.string.point_purchase_under_1000)
             }
         }
         mViewModel.getCreditPrices()
@@ -96,7 +99,6 @@ class PurchasePointBottomSheet : BottomSheetDialogFragment() {
 
     interface PurchasePointCallback {
         fun onPointItemClick(point: Int, money: Int)
-        fun purchasePointSuccess()
     }
 
     override fun onDestroyView() {

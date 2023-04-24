@@ -19,6 +19,7 @@ import jp.careapp.counseling.android.network.socket.FlaxWebSocketManager
 import jp.careapp.counseling.android.network.socket.MaruCastManager
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.PERFORMER
+import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.POINT
 import jp.careapp.counseling.android.utils.SocketInfo
 import jp.careapp.counseling.android.utils.SocketInfo.ACTION_ASK_TWO_SHOT
 import jp.careapp.counseling.android.utils.SocketInfo.ACTION_CANCEL_TWO_SHOT
@@ -81,6 +82,10 @@ class LiveStreamViewModel @Inject constructor(
     private val _viewerStatus = MutableLiveData<Int>()
     val viewerStatus: LiveData<Int>
         get() = _viewerStatus
+
+    private val _pointState = MutableLiveData<PointState>(PointState.StartCheck)
+    val pointState: LiveData<PointState>
+        get() = _pointState
 
     private var isLogout = false
     private var oldAudioMode = 0
@@ -217,20 +222,9 @@ class LiveStreamViewModel @Inject constructor(
         _whisperList.postValue(listWhisper)
     }
 
-    // TODO Handle point when chat
-//    private fun handleChatLog(chatLog: ChatLogMessage) {
-//        val currentPoint = chatLog.point.toInt()
-//        if (currentPoint < 1000 && lastPoint >= 1000) {
-//            mActionState.postValue(LiveStreamActionState.ShowDialogWarningPoint)
-//        }
-//        lastPoint = currentPoint
-//    }
-//
-//    private fun endCall() {
-//        if (::socketClient.isInitialized) socketClient.closeWebSocket()
-//        mActionState.postValue(LiveStreamActionState.EndCall)
-//        resetData()
-//    }
+    fun endPointChecking() {
+        _pointState.postValue(PointState.EndCheck)
+    }
 
     private fun cancelCall() {
         socketClient.sendMessage(gson.toJson(SocketSendMessage(action = SocketInfo.ACTION_CANCEL_CALL)))
@@ -273,6 +267,12 @@ class LiveStreamViewModel @Inject constructor(
             } else if (result == RESULT_OK) {
                 when (action) {
                     ACTION_RELOAD, ACTION_CHAT_LOG -> try {
+                        val point = jsonMessage.getString(POINT).toInt()
+                        if (_pointState.value == PointState.StartCheck && point <= 1000 && point > 500) {
+                            _pointState.postValue(PointState.PointUnder1000)
+                        } else if (_pointState.value == PointState.PointUnder1000 && point <= 500) {
+                            _pointState.postValue(PointState.PointUnder500)
+                        }
                         val chatMessageArray: JSONArray = jsonMessage.getJSONArray(KEY_CHAT)
                         run {
                             var i = 0
@@ -358,4 +358,11 @@ sealed class LiveStreamActionState {
     object OpenBottomSheetSettingCameraAndMic : LiveStreamActionState()
     object EndCall : LiveStreamActionState()
     object ShowDialogWarningPoint : LiveStreamActionState()
+}
+
+sealed class PointState {
+    object StartCheck : PointState()
+    object PointUnder1000 : PointState()
+    object PointUnder500 : PointState()
+    object EndCheck : PointState()
 }

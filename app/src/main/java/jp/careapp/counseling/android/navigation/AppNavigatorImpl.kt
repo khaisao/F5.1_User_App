@@ -332,4 +332,8 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     override fun openVerifyCodeHelpToVerifyCode(bundle: Bundle?) {
         openScreen(R.id.action_verificationCodeHelpFragment_to_verifyCodeFragment, bundle)
     }
+
+    override fun openExitLiveStreamToUserDetailFragment(bundle: Bundle?) {
+        openScreen(R.id.action_exitLivestreamFragment_to_userProfileFragment, bundle)
+    }
 }

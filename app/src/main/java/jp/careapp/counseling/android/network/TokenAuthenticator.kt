@@ -66,13 +66,13 @@ class TokenAuthenticator @Inject constructor(
             val input = BufferedReader(InputStreamReader(urlConnection.inputStream))
             val response = StringBuffer()
             while (true) {
-                val inputLine: String? = input.readLine() ?: break
+                val inputLine: String = input.readLine() ?: break
                 response.append(inputLine)
             }
             input.close()
             val typeResponse =
                 object : TypeToken<ApiObjectResponse<LoginResponse>>() {}.type
-            var refreshTokenResult: ApiObjectResponse<LoginResponse>? = null
+            val refreshTokenResult: ApiObjectResponse<LoginResponse>?
             try {
                 refreshTokenResult =
                     Gson().fromJson(response.toString(), typeResponse) as ApiObjectResponse<LoginResponse>?

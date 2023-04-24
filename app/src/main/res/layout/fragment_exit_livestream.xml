@@ -61,20 +61,6 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/iv_close" />
 
-                        <TextView
-                            android:id="@+id/tv_error"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/margin_72"
-                            android:layout_marginTop="@dimen/margin_16"
-                            android:gravity="center"
-                            android:text="エラー文言テキストテキストテキストテキストテキスト"
-                            android:textColor="@color/color_alert_error"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tv_title" />
-
-
                         <com.lihang.ShadowLayout
                             android:id="@+id/sl_avatar"
                             android:layout_width="wrap_content"
@@ -86,7 +72,7 @@
                             app:hl_shadowLimit="@dimen/margin_13"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tv_error">
+                            app:layout_constraintTop_toBottomOf="@id/tv_title">
 
                             <com.google.android.material.card.MaterialCardView
                                 android:layout_width="@dimen/margin_80"
@@ -158,35 +144,17 @@
                         </LinearLayout>
 
                         <TextView
-                            android:id="@+id/tv_buy_point"
-                            style="@style/text_bold_14"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_11"
-                            android:background="@drawable/bg_gradient_common"
-                            android:gravity="center"
-                            android:paddingVertical="@dimen/padding_15"
-                            android:text="@string/buy_point"
-                            android:textColor="@color/white"
-                            app:layout_constraintEnd_toEndOf="@id/ll_message_follow"
-                            app:layout_constraintStart_toStartOf="@id/ll_message_follow"
-                            app:layout_constraintTop_toBottomOf="@id/ll_message_follow" />
-
-                        <TextView
                             android:id="@+id/tv_title_list"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_32"
+                            android:layout_marginTop="@dimen/margin_27"
                             android:text="@string/girl_live_steam"
                             android:textColor="@color/color_F0F0F0"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tv_buy_point" />
+                            app:layout_constraintTop_toBottomOf="@id/ll_message_follow" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
-
             </com.google.android.material.appbar.AppBarLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout

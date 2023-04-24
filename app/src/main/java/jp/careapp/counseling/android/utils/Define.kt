@@ -24,6 +24,7 @@ class Define {
         // Insufficient points
         const val INSU_POINT = 0
         const val BUY_POINT_FIRST = 1
+        const val BUY_POINT_UNDER_500 = 2
 
         // key of in app purchase
         const val IN_APP_PURCHASE_KEY_1: String = "careapp_tier_980"
@@ -347,6 +348,9 @@ class BUNDLE_KEY {
         const val VIEW_STATUS = "VIEW_STATUS"
         const val CAMERA_SETTING = "CAMERA_SETTING"
         const val MIC_SETTING = "MIC_SETTING"
+        const val ROOT_SCREEN = "ROOT_SCREEN"
+        const val SCREEN_DETAIL = 0
+        const val SCREEN_MESSAGE = 1
     }
 }
 

@@ -55,6 +55,7 @@ import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.con
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.connect_private.LiveStreamConnectPrivateListener
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.notice.LiveStreamNoticeBottomSheet
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
+import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.ROOT_SCREEN
 import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.PermissionUtils
 import jp.careapp.counseling.android.utils.PermissionUtils.launchMultiplePermission
@@ -95,6 +96,8 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     private var currentMode = LiveStreamMode.PARTY
 
     private var filter: IntentFilter? = null
+
+    private var rootScreen: Int = 0
 
     private var earphoneEventReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -173,6 +176,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             currentMode = if (viewStatus == 1) LiveStreamMode.PEEP else LiveStreamMode.PARTY
             mViewModel.setViewerStatus(viewStatus)
             consultantResponse = it.getSerializable(BUNDLE_KEY.USER_PROFILE) as ConsultantResponse
+            rootScreen = it.getInt(ROOT_SCREEN)
         }
 
         consultantResponse?.let {
@@ -286,7 +290,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
         binding.btnPoint.setOnClickListener {
             if (!isDoubleClick) {
-                showPointPurchaseBottomSheet()
+                showPointPurchaseBottomSheet(Define.BUY_POINT_FIRST)
             }
         }
 
@@ -344,6 +348,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         bindingTwoShotHandle()
         bindingMessageHandle()
         bindingWhisperHandle()
+        bindingPointCheckingHandle()
     }
 
     private fun bindingConnectResult() {
@@ -351,7 +356,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             if (it.result == RESULT_NG) {
                 when {
                     it.isLogout -> {
-                        logout(it.message)
+                        logout()
                     }
                     else -> {
                         showErrorDialog(it.message)
@@ -365,10 +370,10 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         mViewModel.updateUIMode.observe(viewLifecycleOwner) {
             when (it) {
                 UI_DISMISS_PRIVATE_MODE -> {
-                    dismissBottomSheet("ConnectPrivateBottomSheet")
+                    dismissBottomSheet()
                 }
                 UI_SHOW_CONFIRM_CLOSE_PRIVATE_MODE -> {
-                    dismissBottomSheet("ConnectPrivateBottomSheet")
+                    dismissBottomSheet()
                     // showErrorDialog(getString(R.string.cancel_title)) TODO Check popup or bottom sheet
                     showPrivateModeDenied()
                 }
@@ -415,6 +420,21 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             val fragment = childFragmentManager.findFragmentByTag("SecretMessageBottomFragment")
             if (fragment != null) {
                 (fragment as SecretMessageBottomFragment).updateMessageList(it)
+            }
+        }
+    }
+
+    private fun bindingPointCheckingHandle() {
+        mViewModel.pointState.observe(viewLifecycleOwner) {
+            when (it) {
+                PointState.PointUnder1000 -> {
+                    showPointPurchaseBottomSheet(Define.INSU_POINT)
+                }
+                PointState.PointUnder500 -> {
+                    showPointPurchaseBottomSheet(Define.BUY_POINT_UNDER_500)
+                    mViewModel.endPointChecking()
+                }
+                else -> {}
             }
         }
     }
@@ -498,11 +518,10 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         )
     }
 
-    private fun logout(logoutMessage: String, isHavePoint : Boolean = true) {
+    private fun logout() {
         val bundle = Bundle().apply {
             putSerializable(BUNDLE_KEY.USER_PROFILE, consultantResponse)
-            putSerializable(BUNDLE_KEY.TITLE, logoutMessage)
-            putSerializable(BUNDLE_KEY.HAVE_POINT, isHavePoint)
+            putInt(ROOT_SCREEN, rootScreen)
         }
         appNavigation.openLiveStreamToExitLiveStream(bundle)
         mViewModel.logout()
@@ -511,21 +530,22 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     private fun showLogoutConfirm() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
-            .setContent(R.string.logout_confirm)
+            .setDialogTitle(R.string.logout_confirm)
             .setTextPositiveButton(R.string.confirm_block_alert)
             .setTextNegativeButton(R.string.cancel_block_alert)
             .setOnPositivePressed {
                 it.dismiss()
-                logout("")
+                logout()
             }.setOnNegativePressed {
                 it.dismiss()
             }
     }
 
-    private fun showPointPurchaseBottomSheet() {
+    private fun showPointPurchaseBottomSheet(typeBuyPoint: Int) {
         val bundle = Bundle()
-        bundle.putInt(BUNDLE_KEY.TYPE_BUY_POINT, Define.BUY_POINT_FIRST)
-        handleBuyPoint.buyPointLiveStream(childFragmentManager, bundle,
+        bundle.putInt(BUNDLE_KEY.TYPE_BUY_POINT, typeBuyPoint)
+        handleBuyPoint.buyPointLiveStream(
+            childFragmentManager, bundle,
             object : PurchasePointBottomSheet.PurchasePointCallback {
                 override fun onPointItemClick(point: Int, money: Int) {
                     val purchasePointUrl = buildString {
@@ -538,10 +558,6 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                         putString(Define.URL_WEB_VIEW, purchasePointUrl)
                     }
                     appNavigation.openLiveStreamBuyPointCredit(arguments)
-                }
-
-                override fun purchasePointSuccess() {
-                    // TODO Handle after buy point
                 }
             }
         )
@@ -556,8 +572,9 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         }).show(childFragmentManager, "ConnectPrivateBottomSheet")
     }
 
-    private fun dismissBottomSheet(tag: String) {
-        val fragment: Fragment? = childFragmentManager.findFragmentByTag(tag)
+    private fun dismissBottomSheet() {
+        val fragment: Fragment? =
+            childFragmentManager.findFragmentByTag("BottomSheetDialogFragment")
         if (fragment != null) (fragment as BottomSheetDialogFragment).dismiss()
     }
 

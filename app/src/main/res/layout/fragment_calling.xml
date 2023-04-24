@@ -57,21 +57,21 @@
                                 android:id="@+id/ivAvatar"
                                 android:layout_width="@dimen/dimen_80dp"
                                 android:layout_height="@dimen/dimen_103dp"
-                                android:src="@drawable/default_avt_performer"
-
-                                />
+                                android:contentDescription="@null"
+                                android:src="@drawable/default_avt_performer" />
                         </com.google.android.material.card.MaterialCardView>
                     </com.lihang.ShadowLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvName"
-                        android:layout_width="0dp"
-                        android:layout_marginHorizontal="@dimen/margin_10"
-                        android:textAlignment="center"
                         style="@style/text_bold_16"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_10"
                         android:layout_marginTop="@dimen/margin_24"
-                        android:maxLines="2"
                         android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textAlignment="center"
                         android:textColor="@color/color_text_F0F0F0"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -128,9 +128,6 @@
                         app:layout_constraintWidth_percent="0.16" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
-
         </com.lihang.ShadowLayout>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
