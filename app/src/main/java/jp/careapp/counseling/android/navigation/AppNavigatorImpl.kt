@@ -205,12 +205,12 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_rmTopFragment_to_rmUserDetailFragment, bundle)
     }
 
-    override fun openRMUserDetailToRMCalling(bundle: Bundle?) {
-        openScreen(R.id.action_RMUserDetailFragment_to_RMCallingFragment, bundle)
+    override fun openRMUserDetailToRMLivestream(bundle: Bundle?) {
+        openScreen(R.id.action_RMUserDetailFragment_to_RMLiveStreamFragment, bundle)
     }
 
-    override fun openRMCallingToRMLivestream(bundle: Bundle?) {
-        openScreen(R.id.action_RMCallingFragment_to_RMLiveStreamFragment, bundle)
+    override fun openRMUserDetailMessageToRMLivestream(bundle: Bundle?) {
+        openScreen(R.id.action_userDetailMsgFragment_to_RMLiveStreamFragment, bundle)
     }
 
     override fun openSplashToRMTop(bundle: Bundle?) {

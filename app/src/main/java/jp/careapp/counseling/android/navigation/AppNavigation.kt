@@ -105,9 +105,9 @@ interface AppNavigation : BaseNavigator {
 
     fun openRMTopToRMUserDetail(bundle: Bundle? = null)
 
-    fun openRMUserDetailToRMCalling(bundle: Bundle? = null)
+    fun openRMUserDetailToRMLivestream(bundle: Bundle? = null)
 
-    fun openRMCallingToRMLivestream(bundle: Bundle? = null)
+    fun openRMUserDetailMessageToRMLivestream(bundle: Bundle? = null)
 
     fun openSplashToRMTop(bundle: Bundle? = null)
 

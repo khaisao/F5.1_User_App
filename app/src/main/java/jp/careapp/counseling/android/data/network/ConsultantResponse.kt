@@ -1,7 +1,6 @@
 package jp.careapp.counseling.android.data.network
 
 import com.google.gson.annotations.SerializedName
-import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.history_chat.Performer
 import jp.careapp.counseling.android.utils.CallStatus.DEFAULT_CALL_STATUS
 import java.io.Serializable

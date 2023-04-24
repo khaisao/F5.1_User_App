@@ -1,16 +1,22 @@
 package jp.careapp.counseling.android.ui.review_mode.user_detail_message
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Rect
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.text.Editable
 import android.util.Log
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -30,6 +36,7 @@ import jp.careapp.core.utils.dialog.RMCommonAlertDialog
 import jp.careapp.core.utils.onTextChange
 import jp.careapp.core.utils.setMargins
 import jp.careapp.counseling.R
+import jp.careapp.counseling.android.data.model.live_stream.ConnectResult
 import jp.careapp.counseling.android.data.model.message.BaseMessageResponse
 import jp.careapp.counseling.android.data.model.message.DataMessage
 import jp.careapp.counseling.android.data.model.message.RMMessageRequest
@@ -39,6 +46,9 @@ import jp.careapp.counseling.android.data.network.socket.SocketActionSend
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.model.network.RMConsultantResponse
 import jp.careapp.counseling.android.navigation.AppNavigation
+import jp.careapp.counseling.android.ui.review_mode.calling.PerformerInfo
+import jp.careapp.counseling.android.ui.review_mode.calling.RMCallConnectionDialog
+import jp.careapp.counseling.android.ui.review_mode.calling.RMCallingViewModel
 import jp.careapp.counseling.android.ui.review_mode.top.RMTopViewModel
 import jp.careapp.counseling.android.ui.review_mode.user_detail_message.RMUserDetailMsgAdapter.Companion.MESSAGE_PERFORMER
 import jp.careapp.counseling.android.ui.review_mode.user_detail_message.UserDetailMsgViewModel.Companion.DISABLE_LOAD_MORE
@@ -47,13 +57,16 @@ import jp.careapp.counseling.android.ui.review_mode.user_detail_message.UserDeta
 import jp.careapp.counseling.android.utils.ActionState
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.Define
+import jp.careapp.counseling.android.utils.SocketInfo
+import jp.careapp.counseling.android.utils.extensions.hasPermissions
+import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler
 import jp.careapp.counseling.databinding.FragmentRmUserDetailMessageBinding
 import jp.careapp.counseling.databinding.LlRvUserDetailBottomSheetBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class UserDetailMsgFragment :
-    BaseFragment<FragmentRmUserDetailMessageBinding, UserDetailMsgViewModel>() {
+    BaseFragment<FragmentRmUserDetailMessageBinding, UserDetailMsgViewModel>(),  RMCallConnectionDialog.CallingCancelListener  {
 
     @Inject
     lateinit var appNavigation: AppNavigation
@@ -62,6 +75,8 @@ class UserDetailMsgFragment :
     lateinit var rxPreferences: RxPreferences
 
     private val viewModel: UserDetailMsgViewModel by viewModels()
+    private val callingViewModel: RMCallingViewModel by viewModels()
+
     override fun getVM(): UserDetailMsgViewModel = viewModel
     private val rmTopViewModel: RMTopViewModel by activityViewModels()
 
@@ -81,8 +96,20 @@ class UserDetailMsgFragment :
 
     private var isLoadMore = false
 
+    private var viewerType = 0
+
     private val mAdapter: RMUserDetailMsgAdapter by lazy {
         RMUserDetailMsgAdapter(requireContext())
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            val status =
+                PerformerStatusHandler.getStatus(performerDetail?.callStatus ?: 0, performerDetail?.chatStatus ?: 0)
+            callingViewModel.connectLiveStream(performerDetail?.code ?: "", status)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -221,7 +248,25 @@ class UserDetailMsgFragment :
 
         binding.apply {
             toolBar.apply {
-                btnCamera.setOnClickListener {}
+                btnCamera.setOnClickListener {
+                    if (!isDoubleClick) {
+                        when {
+                            hasPermissions(arrayOf(Manifest.permission.RECORD_AUDIO)) -> {
+                                val status =
+                                    PerformerStatusHandler.getStatus(performerDetail?.callStatus ?: 0, performerDetail?.chatStatus ?: 0)
+                                callingViewModel.connectLiveStream(performerDetail?.code ?: "", status)
+                            }
+                            shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO) -> {
+                                showDialogNeedMicrophonePermission()
+                            }
+                            else -> {
+                                showDialogRequestMicrophonePermission()
+                            }
+                        }
+                        viewerType = 0
+                        callingViewModel.viewerStatus = 0
+                    }
+                }
                 btnLeft.setOnClickListener {
                     if (!isDoubleClick) {
                         appNavigation.navigateUp()
@@ -249,6 +294,37 @@ class UserDetailMsgFragment :
                 onInputtedMessageChange(it)
             }
         }
+    }
+
+    private fun showDialogRequestMicrophonePermission() {
+        RMCommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+            .showDialog()
+            .setDialogTitle(R.string.msg_title_request_mic)
+            .setContent(R.string.msg_explain_request_mic)
+            .setTextPositiveButton(R.string.accept_permission)
+            .setTextNegativeButton(R.string.denied_permission)
+            .setOnPositivePressed {
+                requestPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+                it.dismiss()
+            }.setOnNegativePressed {
+                it.dismiss()
+            }
+    }
+
+    private fun showDialogNeedMicrophonePermission() {
+        RMCommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+            .showDialog()
+            .setDialogTitle(R.string.msg_need_mic_permission)
+            .setTextPositiveButton(R.string.setting)
+            .setTextNegativeButton(R.string.cancel)
+            .setOnPositivePressed {
+                startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.fromParts("package", context?.packageName, null)
+                })
+                it.dismiss()
+            }.setOnNegativePressed {
+                it.dismiss()
+            }
     }
 
     private fun onInputtedMessageChange(editable: Editable?) {
@@ -326,7 +402,73 @@ class UserDetailMsgFragment :
                 }
             }
         }
+        callingViewModel.connectResult.observe(viewLifecycleOwner, connectResultHandle)
+        callingViewModel.isLoginSuccess.observe(viewLifecycleOwner, loginSuccessHandle)
     }
+
+    private val connectResultHandle: Observer<ConnectResult> = Observer {
+        if (it.result != SocketInfo.RESULT_NONE) {
+            performerDetail.let { performerResponse ->
+                run {
+                    val fragment: Fragment? =
+                        childFragmentManager.findFragmentByTag("CallConnectionDialog")
+                    val dialog: RMCallConnectionDialog
+                    if (fragment != null) {
+                        dialog = fragment as RMCallConnectionDialog
+                        dialog.setCallingCancelListener(this@UserDetailMsgFragment)
+                        if (it.result == SocketInfo.RESULT_NG) {
+                            dialog.setMessage(it.message, true)
+                        } else {
+                            dialog.setMessage(getString(R.string.call_content))
+                        }
+                    } else {
+                        val message =
+                            if (it.result == SocketInfo.RESULT_NG) it.message else getString(R.string.call_content)
+                        val isError = it.result == SocketInfo.RESULT_NG
+                        dialog =
+                            RMCallConnectionDialog.newInstance(
+                                PerformerInfo(
+                                    name = performerResponse?.name ?: "",
+                                    performerCode = performerResponse?.code ?: "",
+                                    imageUrl = performerResponse?.thumbnailImageUrl ?: ""
+                                ),
+                                message,
+                                isError
+                            )
+                        dialog.setCallingCancelListener(this@UserDetailMsgFragment)
+                        dialog.show(childFragmentManager, "CallConnectionDialog")
+                    }
+                }
+            }
+        }
+    }
+
+    private val loginSuccessHandle: Observer<Boolean> = Observer {
+        if (it) {
+            val fragment: Fragment? = childFragmentManager.findFragmentByTag("CallConnectionDialog")
+            if (fragment != null) (fragment as RMCallConnectionDialog).dismiss()
+            val bundle = Bundle().apply {
+
+                Log.d("asgagwawg", "${callingViewModel.flaxLoginAuthResponse}: ")
+                putSerializable(
+                    BUNDLE_KEY.PERFORMER,
+                    PerformerInfo(
+                        performerDetail?.name ?: "",
+                        performerDetail?.code ?: "",
+                        performerDetail?.thumbnailImageUrl ?: ""
+                    )
+                )
+                putInt(BUNDLE_KEY.VIEW_STATUS, viewerType)
+                putSerializable(
+                    BUNDLE_KEY.FLAX_LOGIN_AUTH_RESPONSE,
+                    callingViewModel.flaxLoginAuthResponse
+                )
+            }
+            appNavigation.openRMUserDetailMessageToRMLivestream(bundle)
+            callingViewModel.resetData()
+        }
+    }
+
 
     private var messageResultResponse: Observer<DataMessage> = Observer {
         viewModel.userProfileResult.apply {
@@ -477,5 +619,10 @@ class UserDetailMsgFragment :
             }
         }
         super.onDestroy()
+    }
+
+    override fun callingCancel() {
+        callingViewModel.cancelCall()
+        callingViewModel.resetData()
     }
 }
