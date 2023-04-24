@@ -602,15 +602,6 @@ class NotificationView(
     var itemCode: String = ""
 )
 
-class SignedUpStatus {
-    companion object {
-        const val UNKNOWN = -1
-        const val LOGIN_WITH_EMAIL = 1
-        const val LOGIN_WITHOUT_EMAIL = 2
-        const val ACCOUNT_TRANSFER = 3
-    }
-}
-
 object GenderId {
     const val DEFAULT_ID = 0
     const val MALE_ID = 1
@@ -748,4 +739,12 @@ sealed class ActionState {
 
 fun configUrlBuyPoints(token: String): String {
     return "${Define.URL_BUY_POINT}token=${token}&&platform=android"
+}
+
+const val CONTACT_US_MAIL = "CONTACT_US_MAIL"
+const val CONTACT_US_MODE = "CONTACT_US_MODE"
+
+object ContactUsMode {
+    const val CONTACT_WITH_MAIL = 0
+    const val CONTACT_WITHOUT_MAIL = 1
 }

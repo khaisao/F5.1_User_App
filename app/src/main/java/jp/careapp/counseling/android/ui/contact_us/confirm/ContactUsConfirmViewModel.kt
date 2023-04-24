@@ -10,6 +10,9 @@ import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.SingleLiveEvent
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.ui.contact_us.REPLY_REQUIRED
+import jp.careapp.counseling.android.utils.CONTACT_US_MAIL
+import jp.careapp.counseling.android.utils.CONTACT_US_MODE
+import jp.careapp.counseling.android.utils.ContactUsMode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
@@ -42,11 +45,17 @@ class ContactUsConfirmViewModel @Inject constructor(
 
     private var reply = REPLY_REQUIRED
 
+    private var contactUsMode = ContactUsMode.CONTACT_WITH_MAIL
+    private var email = ""
+
     val mActionState = SingleLiveEvent<ContactUsConfirmActionState>()
 
     init {
-        _category.value = savedStateHandle.get<String>(CONTACT_US_CATEGORY)
-        _content.value = savedStateHandle.get<String>(CONTACT_US_CONTENT)
+        _category.value = savedStateHandle.get<String>(CONTACT_US_CATEGORY) ?: ""
+        _content.value = savedStateHandle.get<String>(CONTACT_US_CONTENT) ?: ""
+        email = savedStateHandle.get<String>(CONTACT_US_MAIL) ?: ""
+        contactUsMode =
+            savedStateHandle.get<Int>(CONTACT_US_MODE) ?: ContactUsMode.CONTACT_WITHOUT_MAIL
         savedStateHandle.get<Int>(CONTACT_US_REPLY)?.let { reply = it }
 
         if (reply == REPLY_REQUIRED) {
@@ -61,11 +70,25 @@ class ContactUsConfirmViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             supervisorScope {
                 try {
-                    val response =
-                        mRepository.sendContactUs(category.value!!, content.value!!, reply)
+                    val response = if (contactUsMode == ContactUsMode.CONTACT_WITH_MAIL) {
+                        mRepository.sendContactWithMail(
+                            category.value.toString(),
+                            content.value.toString(),
+                            reply,
+                            email
+                        )
+                    } else {
+                        mRepository.sendContactWithoutMail(
+                            category.value.toString(),
+                            content.value.toString(),
+                            reply
+                        )
+                    }
+
                     if (response.errors.isEmpty()) {
                         withContext(Dispatchers.Main) {
-                            mActionState.value = ContactUsConfirmActionState.SendContactUsSuccess
+                            mActionState.value =
+                                ContactUsConfirmActionState.SendContactUsSuccess(contactUsMode)
                         }
                     }
                 } catch (e: Exception) {
@@ -81,5 +104,5 @@ class ContactUsConfirmViewModel @Inject constructor(
 }
 
 sealed class ContactUsConfirmActionState {
-    object SendContactUsSuccess : ContactUsConfirmActionState()
+    class SendContactUsSuccess(val contactUsMode: Int) : ContactUsConfirmActionState()
 }

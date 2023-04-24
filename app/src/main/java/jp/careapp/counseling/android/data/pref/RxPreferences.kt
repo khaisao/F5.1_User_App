@@ -32,14 +32,6 @@ interface RxPreferences {
 
     fun getPassword(): String?
 
-    fun isFirstTimeUse(): Boolean
-
-    fun isFirstTimeUseLab(): Boolean
-
-    fun setIsFirstTimeUse(state: Boolean)
-
-    fun setIsFirstTimeUseLab(state: Boolean)
-
     fun getMemberCode(): String?
 
     fun saveNewLastViewDateTime(dateTime: String)
@@ -93,10 +85,6 @@ interface RxPreferences {
     fun saveFirstReview(isTheFirst: Boolean, memberCode: String?, performerCode: String)
 
     fun isFirstReview(memberCode: String?, performerCode: String): Boolean
-
-    fun getSignedUpStatus(): Int
-
-    fun setSignedUpStatus(status: Int)
 
     fun getDesiredResponse(): Int
 

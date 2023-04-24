@@ -36,7 +36,6 @@ import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.MODE_USER
-import jp.careapp.counseling.android.utils.SignedUpStatus
 import jp.careapp.counseling.databinding.FragmentTopBinding
 import me.leolin.shortcutbadger.ShortcutBadger
 import java.text.DecimalFormat
@@ -148,10 +147,6 @@ class TopFragment : BaseFragment<FragmentTopBinding, TopViewModel>() {
         }
     }
 
-    private val isShowMyPageWarning: Boolean
-        get() = rxPreferences.getSignedUpStatus() == SignedUpStatus.LOGIN_WITHOUT_EMAIL ||
-                !(viewModel.memberInFoResult.value?.isHaveTroubleSheet ?: true)
-
     private fun setupBottomNavigationBar() {
         val bottomNavigationView = binding.bottomNav
         bottomNavigationView.itemIconTintList = null
@@ -241,7 +236,6 @@ class TopFragment : BaseFragment<FragmentTopBinding, TopViewModel>() {
             df.decimalFormatSymbols = symbols
             df.groupingSize = 3
             binding.tvPoint.text = String.format(getString(R.string.point), df.format(it.point))
-            rxPreferences.setSignedUpStatus(it.signupStatus ?: SignedUpStatus.UNKNOWN)
 
             shareViewModel.needUpdateProfile.postValue(true)
         }
