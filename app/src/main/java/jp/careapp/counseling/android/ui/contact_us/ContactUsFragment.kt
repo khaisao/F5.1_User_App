@@ -11,6 +11,8 @@ import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.contact_us.confirm.CONTACT_US_CATEGORY
 import jp.careapp.counseling.android.ui.contact_us.confirm.CONTACT_US_CONTENT
 import jp.careapp.counseling.android.ui.contact_us.confirm.CONTACT_US_REPLY
+import jp.careapp.counseling.android.utils.CONTACT_US_MAIL
+import jp.careapp.counseling.android.utils.CONTACT_US_MODE
 import jp.careapp.counseling.android.utils.customView.ToolBarCommon
 import jp.careapp.counseling.databinding.FragmentContactUsBinding
 import javax.inject.Inject
@@ -65,7 +67,9 @@ class ContactUsFragment : BaseFragment<FragmentContactUsBinding, ContactUsViewMo
                         bundleOf(
                             CONTACT_US_CATEGORY to it.category,
                             CONTACT_US_CONTENT to it.content,
-                            CONTACT_US_REPLY to it.reply
+                            CONTACT_US_REPLY to it.reply,
+                            CONTACT_US_MAIL to it.mail,
+                            CONTACT_US_MODE to it.contactUsMode
                         )
                     )
                 }

@@ -10,7 +10,6 @@ import jp.careapp.core.utils.SingleLiveEvent
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.AppApplication
 import jp.careapp.counseling.android.data.network.ApiObjectResponse
-import jp.careapp.counseling.android.data.pref.RxPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
@@ -18,23 +17,16 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import javax.inject.Inject
 
+const val SCREEN_CODE_TOP = 0
+const val SCREEN_CODE_REGISTER = 1
+
 @HiltViewModel
 class VerifyCodeViewModel @Inject constructor(
-    private val rxPreferences: RxPreferences,
     private val mRepository: VerifyCodeRepository
 ) : BaseViewModel() {
 
-    companion object {
-        val SCREEN_CODE_TOP = 0
-        val SCREEN_CODE_REGISTER = 1
-        val SCREEN_CODE_BAD_USER = 2
-        val SCREEN_CODE_REREGISTER = 3 // withdraw
-        val SCREEN_CODE_TUTORIAL = 4
-    }
-
     var email: String? = null
 
-    val codeScreenAfterVerify = MutableLiveData<Int>()
     var countError: Int = 0
     val numberError = MutableLiveData<Int>()
 
@@ -59,7 +51,12 @@ class VerifyCodeViewModel @Inject constructor(
                         mRepository.saveUserInfo(token, tokenExpire, password, memberCode)
                         mRepository.saveEmail(email)
                         withContext(Dispatchers.Main) {
-                            dataResponse.status?.let { openScreen(it) }
+                            when (dataResponse.status) {
+                                SCREEN_CODE_TOP -> mActionState.value =
+                                    VerifyCodeActionState.NavigateToTop
+                                SCREEN_CODE_REGISTER -> mActionState.value =
+                                    VerifyCodeActionState.NavigateToRegister
+                            }
                         }
                     }
                 } catch (e: Exception) {
@@ -137,25 +134,12 @@ class VerifyCodeViewModel @Inject constructor(
             numberError.value = 0
         }
     }
-
-    private fun openScreen(status: Int) {
-        when (status) {
-            0 -> {
-                if (rxPreferences.isFirstTimeUse()) {
-                    codeScreenAfterVerify.value = SCREEN_CODE_TUTORIAL
-                    rxPreferences.setIsFirstTimeUseLab(true)
-                    rxPreferences.setIsFirstTimeUse(false)
-                } else {
-                    codeScreenAfterVerify.value = SCREEN_CODE_TOP
-                }
-            }
-            1 -> codeScreenAfterVerify.value = SCREEN_CODE_REGISTER
-            2 -> codeScreenAfterVerify.value = SCREEN_CODE_BAD_USER
-            3 -> codeScreenAfterVerify.value = SCREEN_CODE_REREGISTER
-        }
-    }
 }
 
 sealed class VerifyCodeActionState {
     object EditEmailSuccess : VerifyCodeActionState()
+
+    object NavigateToTop : VerifyCodeActionState()
+
+    object NavigateToRegister : VerifyCodeActionState()
 }

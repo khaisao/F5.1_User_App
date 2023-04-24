@@ -1,10 +1,12 @@
 package jp.careapp.counseling.android.ui.contact_us.confirm
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.navigation.AppNavigation
+import jp.careapp.counseling.android.utils.CONTACT_US_MODE
 import jp.careapp.counseling.android.utils.customView.ToolBarCommon
 import jp.careapp.counseling.databinding.FragmentContactUsConfirmBinding
 import javax.inject.Inject
@@ -34,7 +36,9 @@ class ContactUsConfirmFragment :
 
         mViewModel.mActionState.observe(viewLifecycleOwner) {
             when (it) {
-                is ContactUsConfirmActionState.SendContactUsSuccess -> appNavigation.openContactUsConfirmToContactUsFinish()
+                is ContactUsConfirmActionState.SendContactUsSuccess -> appNavigation.openContactUsConfirmToContactUsFinish(
+                    bundleOf(CONTACT_US_MODE to it.contactUsMode)
+                )
             }
         }
     }

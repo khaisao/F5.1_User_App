@@ -1,7 +1,6 @@
 package jp.careapp.counseling.android.network
 
 import com.google.gson.JsonObject
-import jp.careapp.core.model.network.NotificationResponse
 import jp.careapp.counseling.android.data.model.*
 import jp.careapp.counseling.android.data.model.history_chat.HistoryChatResponse
 import jp.careapp.counseling.android.data.model.message.FreeTemplateRequest
@@ -15,8 +14,6 @@ import jp.careapp.counseling.android.model.user_profile.ReviewUserProfile
 import jp.careapp.counseling.android.utils.SocketInfo
 import okhttp3.RequestBody
 import retrofit2.http.*
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 interface ApiInterface {
 
@@ -41,15 +38,6 @@ interface ApiInterface {
         @Field("email") email: String,
         @Field("auth_code") authCode: String
     ): ApiObjectResponse<InfoUserResponse>
-
-    @GET("api/news/count")
-    suspend fun getCountNotification(
-        @Query("category") category: Int = 1,
-        @Query("start_at_to") endDate: String = LocalDateTime.now()
-            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toString(),
-        @Query("start_at_from") startDate: String = LocalDateTime.now()
-            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toString(),
-    ): ApiObjectResponse<NotificationResponse>
 
     @GET("api/member/favorites")
     suspend fun getMemberFavorite(): JsonObject
@@ -106,13 +94,10 @@ interface ApiInterface {
     suspend fun getEmailSentByMember(@Query("performer_code") code: String): ApiObjectResponse<List<MailInfoOfUser>>
 
     @POST("api/member/contact")
-    suspend fun sendContactUs(@Body contactMemberRequest: ContactMemberRequest): ApiObjectResponse<Any>
+    suspend fun sendContactWithoutMail(@Body contactRequestWithoutMail: ContactRequestWithoutMail): ApiObjectResponse<Any>
 
     @POST("api/contact")
-    suspend fun addContact(@Body() contactRequest: ContactRequest): ApiObjectResponse<Any>
-
-    @POST("api/contact")
-    suspend fun addContactWithoutMail(@Body() contactRequest: ContactRequestWithoutMail): ApiObjectResponse<Any>
+    suspend fun sendContactWithMail(@Body contactRequestWithMail: ContactRequestWithMail): ApiObjectResponse<Any>
 
     @GET("api/performers/count")
     suspend fun getTotalNumberConsultant(@QueryMap params: MutableMap<String, Any>): ApiObjectResponse<NumberNotificationResponse>
@@ -277,19 +262,9 @@ interface ApiInterface {
     @POST("api/member/mails/free-template")
     suspend fun sendFreeTemplate(@Body freeTemplateRequest: FreeTemplateRequest): ApiObjectResponse<SendMessageResponse>
 
-    @POST("api/counseling-labo/questions")
-    suspend fun senNewQuestion(@Body newQuestionRequest: NewQuestionRequest): ApiObjectResponse<SendMessageResponse>
-
     @FormUrlEncoded
     @PATCH("api/member/trouble-genre")
     suspend fun updateGenre(@Field("genre") genre: Int): ApiObjectResponse<Any>
-
-    @FormUrlEncoded
-    @POST("api/counseling-labo/questions/{id}/check-favorite")
-    suspend fun changeLabFavorite(
-        @Path("id") id: Int,
-        @FieldMap params: MutableMap<String, Any>
-    ): ApiObjectResponse<Any>
 
     @GET("/api/prices")
     suspend fun getCreditPrices(
@@ -300,13 +275,6 @@ interface ApiInterface {
     @FormUrlEncoded
     @POST("/api/member/account-delete")
     suspend fun deleteAccount(
-        @Field("reason") reason: String = ""
-    ): ApiObjectResponse<Any>
-
-    @FormUrlEncoded
-    @POST("api/counseling-labo/questions/{id}/report")
-    suspend fun reportLabo(
-        @Path("id") id: Int,
         @Field("reason") reason: String = ""
     ): ApiObjectResponse<Any>
 

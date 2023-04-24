@@ -1,5 +1,6 @@
 package jp.careapp.counseling.android.ui.verificationCodeHelp
 
+import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -17,6 +18,9 @@ import jp.careapp.counseling.android.utils.customView.ToolBarCommon
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.counseling.android.ui.email.InputAndEditMailViewModel.Companion.SCREEN_EDIT_EMAIL
 import jp.careapp.counseling.android.ui.email.InputAndEditMailViewModel.Companion.SCREEN_REGISTER_WITH_EMAIL
+import jp.careapp.counseling.android.utils.CONTACT_US_MAIL
+import jp.careapp.counseling.android.utils.CONTACT_US_MODE
+import jp.careapp.counseling.android.utils.ContactUsMode
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -92,7 +96,16 @@ class VerificationCodeHelpFragment :
 
         binding.btReSendEmail.setOnClickListener { viewModel.resendOtp(email) }
 
-        binding.btContactUs.setOnClickListener { if (!isDoubleClick) appNavigation.openContactUs() }
+        binding.btContactUs.setOnClickListener {
+            if (!isDoubleClick) {
+                appNavigation.openContactUs(
+                    bundleOf(
+                        CONTACT_US_MAIL to email,
+                        CONTACT_US_MODE to ContactUsMode.CONTACT_WITH_MAIL
+                    )
+                )
+            }
+        }
     }
 
     override fun bindingStateView() {

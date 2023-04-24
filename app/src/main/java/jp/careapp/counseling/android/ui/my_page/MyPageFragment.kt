@@ -9,6 +9,8 @@ import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.bottom_sheet.BuyPointBottomFragment
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
+import jp.careapp.counseling.android.utils.CONTACT_US_MODE
+import jp.careapp.counseling.android.utils.ContactUsMode
 import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.databinding.FragmentMypageBinding
 import javax.inject.Inject
@@ -68,7 +70,11 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>() {
                 is MyPageActionState.NavigateToTermOfService -> appNavigation.openTermsOfService()
                 is MyPageActionState.NavigateToPrivacyPolicy -> appNavigation.openPrivacyPolicy()
                 is MyPageActionState.NavigateToFAQ -> appNavigation.openMyPageToFAQ()
-                is MyPageActionState.NavigateToContactUs -> appNavigation.openContactUs()
+                is MyPageActionState.NavigateToContactUs -> appNavigation.openContactUs(
+                    bundleOf(
+                        CONTACT_US_MODE to ContactUsMode.CONTACT_WITHOUT_MAIL
+                    )
+                )
             }
         }
     }

@@ -12,7 +12,6 @@ import jp.careapp.counseling.android.data.network.*
 import jp.careapp.counseling.android.ui.review_mode.setting_push.RMSettingPushFragment.Companion.PUSH_RECEIVE
 import jp.careapp.counseling.android.utils.Define.Companion.NORMAL_MODE
 import jp.careapp.counseling.android.utils.MODE_USER
-import jp.careapp.counseling.android.utils.SignedUpStatus
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,8 +25,6 @@ class AppPreferences @Inject constructor(
         const val PREF_PARAM_EMAIL_USER = "PREF_PARAM_EMAIL_USER"
         const val PREF_PARAM_TOKEN_EXPIRE = "PREF_PARAM_TOKEN_EXPIRE"
         const val PREF_PARAM_PASSWORD = "PREF_PARAM_PASSWORD"
-        const val PREF_KEY_IS_FIRST_TIME_USE = "PREF_KEY_IS_FIRST_TIME_USE"
-        const val PREF_KEY_IS_FIRST_TIME_USE_LAB = "PREF_KEY_IS_FIRST_TIME_USE_LAB"
         const val PREF_NEW_LAST_VIEW_DATE_TIME = "PREF_NEW_LAST_VIEW_DATE_TIME"
         const val PREF_PARAM_MEMBER_CODE = "PREF_PARAM_MEMBER_CODE"
         const val PREF_KEY_POINT = "PREF_KEY_POINT"
@@ -40,12 +37,10 @@ class AppPreferences @Inject constructor(
         const val PREF_KEY_TROUBLE_INFO = "PREF_KEY_TROUBLE_INFO"
         const val PREF_KEY_CATEGORY = "PREF_KEY_CATEGORY"
         const val PREF_KEY_TEMPLATE = "PREF_KEY_TEMPLATE"
-        const val PREF_KEY_SELECTION = "PREF_KEY_SELECTION"
         const val PREF_KEY_THE_REGISTER = "KEY_THE_REGISTER"
         const val PREF_FIRST_BUY_CREDIT = "FIRST_BUY_CREDIT"
         const val PREF_KEY_IS_FULL_MODE = "PREF_KEY_IS_FULL_MODE"
         const val PREF_KEY_IS_FIRST_REVIEW = "PREF_KEY_IS_FIRST_REVIEW"
-        const val PREF_SIGNED_UP_STATUS = "PREF_SIGNED_UP_STATUS"
         const val PREF_DESIRED_RESPONSE = "PREF_DESIRED_RESPONSE"
         const val PREF_GENRE_SELECTED = "PREF_GENRE_SELECTED"
         const val PREF_KEY_LAST_BUY_LOG = "PREF_KEY_LAST_BUY_LOG"
@@ -126,26 +121,6 @@ class AppPreferences @Inject constructor(
 
     override fun getPassword() = get(PREF_PARAM_PASSWORD)
 
-    override fun isFirstTimeUse(): Boolean {
-        return mPrefs.getBoolean(PREF_KEY_IS_FIRST_TIME_USE, true)
-    }
-
-    override fun isFirstTimeUseLab(): Boolean {
-        return mPrefs.getBoolean(PREF_KEY_IS_FIRST_TIME_USE_LAB, false)
-    }
-
-    override fun setIsFirstTimeUse(state: Boolean) {
-        mPrefs.edit().apply {
-            putBoolean(PREF_KEY_IS_FIRST_TIME_USE, state)
-        }.also { it.apply() }
-    }
-
-    override fun setIsFirstTimeUseLab(state: Boolean) {
-        mPrefs.edit().apply {
-            putBoolean(PREF_KEY_IS_FIRST_TIME_USE_LAB, state)
-        }.also { it.apply() }
-    }
-
     override fun getMemberCode() = get(PREF_PARAM_MEMBER_CODE)
 
     override fun saveNewLastViewDateTime(dateTime: String) {
@@ -162,7 +137,6 @@ class AppPreferences @Inject constructor(
             putLong(PREF_KEY_BUY_TIME, memberResponse.buyTime)
             putBoolean(PREF_FIRST_BUY_CREDIT, memberResponse.firstBuyCredit)
             putBoolean(PREF_KEY_IS_FULL_MODE, memberResponse.disPlay == MODE_USER.MODE_ALL)
-            putInt(PREF_SIGNED_UP_STATUS, memberResponse.signupStatus ?: SignedUpStatus.UNKNOWN)
             put(PREF_KEY_LAST_BUY_LOG, Gson().toJson(memberResponse.lastBuyLog))
         }.also { it.apply() }
         saveTroubleSheet(memberResponse.troubleSheetResponse)
@@ -302,16 +276,6 @@ class AppPreferences @Inject constructor(
     override fun isFirstReview(memberCode: String?, performerCode: String): Boolean {
         val key: String = PREF_KEY_IS_FIRST_REVIEW + "_" + memberCode + "_" + performerCode
         return mPrefs.getBoolean(key, false)
-    }
-
-    override fun getSignedUpStatus(): Int =
-        mPrefs.getInt(PREF_SIGNED_UP_STATUS, SignedUpStatus.UNKNOWN)
-
-
-    override fun setSignedUpStatus(status: Int) {
-        mPrefs.edit().apply {
-            putInt(PREF_SIGNED_UP_STATUS, status)
-        }.also { it.apply() }
     }
 
     override fun getDesiredResponse(): Int =

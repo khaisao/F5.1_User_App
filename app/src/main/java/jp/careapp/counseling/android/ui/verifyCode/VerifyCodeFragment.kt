@@ -22,12 +22,8 @@ import jp.careapp.counseling.databinding.FragmentVerifyCodeBinding
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.email.InputAndEditMailViewModel
 import jp.careapp.counseling.android.ui.main.OnBackPressedListener
-import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeViewModel.Companion.SCREEN_CODE_REGISTER
-import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeViewModel.Companion.SCREEN_CODE_TOP
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import dagger.hilt.android.AndroidEntryPoint
-import jp.careapp.counseling.android.data.pref.RxPreferences
-import jp.careapp.counseling.android.utils.SignedUpStatus
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -41,9 +37,6 @@ class VerifyCodeFragment :
     private val viewModel: VerifyCodeViewModel by viewModels()
     override fun getVM() = viewModel
     private val shareViewModel: ShareViewModel by activityViewModels()
-
-    @Inject
-    lateinit var rxPreferences: RxPreferences
 
     private var codeScreen = InputAndEditMailViewModel.SCREEN_LOGIN_WITH_EMAIL
     private var email = ""
@@ -328,9 +321,9 @@ class VerifyCodeFragment :
     fun sendAuthCode() {
         if (!TextUtils.isEmpty(binding.etFourCode.text.toString().trim())) {
             val authCode: String = binding.etFirstCode.text.toString().trim() +
-                binding.etSecondCode.text.toString().trim() +
-                binding.etThirdCode.text.toString().trim() +
-                binding.etFourCode.text.toString().trim()
+                    binding.etSecondCode.text.toString().trim() +
+                    binding.etThirdCode.text.toString().trim() +
+                    binding.etFourCode.text.toString().trim()
 
             if (codeScreen == InputAndEditMailViewModel.SCREEN_LOGIN_WITH_EMAIL || codeScreen == InputAndEditMailViewModel.SCREEN_REGISTER_WITH_EMAIL) {
                 viewModel.sendVerifyCode(email, authCode)
@@ -342,26 +335,18 @@ class VerifyCodeFragment :
 
     override fun bindingStateView() {
         super.bindingStateView()
-        viewModel.codeScreenAfterVerify.observeForever(verifyCodeScreenObserver)
+
         viewModel.numberError.observeForever(numberErrorObserver)
         shareViewModel.isFocusVerifyCode.observe(viewLifecycleOwner, isFocusObserver)
 
         viewModel.mActionState.observe(viewLifecycleOwner) {
             when (it) {
                 is VerifyCodeActionState.EditEmailSuccess -> showDialogEditEmailSuccess()
-            }
-        }
-    }
-
-    private var verifyCodeScreenObserver: Observer<Int> = Observer {
-        when (it) {
-            SCREEN_CODE_REGISTER -> {
-                rxPreferences.setSignedUpStatus(SignedUpStatus.UNKNOWN)
-                appNavigation.openVerifyCodeToRegistrationScreen()
-            }
-            SCREEN_CODE_TOP -> {
-                appNavigation.openVerifyCodeToTopScreen()
-                shareViewModel.setHaveToken(true)
+                is VerifyCodeActionState.NavigateToTop -> {
+                    appNavigation.openVerifyCodeToTopScreen()
+                    shareViewModel.setHaveToken(true)
+                }
+                is VerifyCodeActionState.NavigateToRegister -> appNavigation.openVerifyCodeToRegistrationScreen()
             }
         }
     }
@@ -467,8 +452,6 @@ class VerifyCodeFragment :
     override fun onDestroyView() {
         super.onDestroyView()
         viewModel.numberError.removeObservers(viewLifecycleOwner)
-        viewModel.isLoading.removeObservers(viewLifecycleOwner)
-        viewModel.codeScreenAfterVerify.removeObservers(viewLifecycleOwner)
 
         if (activity is BaseActivity<*, *>) {
             (activity as BaseActivity<*, *>).setHandleDispathTouch(true)
