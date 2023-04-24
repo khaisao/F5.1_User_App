@@ -15,7 +15,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "jp.careapp.counseling.android"
+        applicationId "jp.slapp.android"
         minSdkVersion 27
         targetSdkVersion versions.targetSdk
         versionCode versions.versionCode
@@ -42,7 +42,6 @@ android {
 
     buildTypes {
         debug {
-            applicationIdSuffix ".dev"
             buildConfigField "String", "BASE_URL", "\"https://mem-sl.flax5.com/\""
             buildConfigField "String", "WS_URL", "\"wss://sc-sl.flax5.com/socket/member\""
             buildConfigField "String", "WS_ORIGIN", "\"https://web-sl.flax5.com\""
@@ -61,7 +60,6 @@ android {
         }
 
         stagging {
-            applicationIdSuffix ".dev"
             firebaseAppDistribution {
                 releaseNotesFile = "/path/to/releasenotes.txt"
                 groups = "rikkei-test"
