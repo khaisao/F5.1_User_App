@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        tools:background="@drawable/bg_none_field">
+        tools:background="@android:color/black">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTitle"

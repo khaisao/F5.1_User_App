@@ -15,6 +15,8 @@ import jp.careapp.counseling.android.ui.main.OnBackPressedListener
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.customView.ToolBarCommon
 import dagger.hilt.android.AndroidEntryPoint
+import jp.careapp.counseling.android.ui.email.InputAndEditMailViewModel.Companion.SCREEN_EDIT_EMAIL
+import jp.careapp.counseling.android.ui.email.InputAndEditMailViewModel.Companion.SCREEN_REGISTER_WITH_EMAIL
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -74,23 +76,21 @@ class VerificationCodeHelpFragment :
 
         binding.btnEditContact.setOnClickListener {
             if (!isDoubleClick) {
-                if (codeScreen == SCREEN_LOGIN_WITH_EMAIL) {
-                    appNavigation.popopBackStackToDetination(R.id.inputEmailFragment)
-                    shareViewModel.setFocusEditText(isFocusEditTextEmail)
-                    shareViewModel.setFocusVerifyCode(isFocusEditTextVerify)
-                } else {
-                    appNavigation.openEditMail()
+                when (codeScreen) {
+                    SCREEN_LOGIN_WITH_EMAIL, SCREEN_REGISTER_WITH_EMAIL -> {
+                        appNavigation.popopBackStackToDetination(R.id.inputEmailFragment)
+                        shareViewModel.setFocusEditText(isFocusEditTextEmail)
+                        shareViewModel.setFocusVerifyCode(isFocusEditTextVerify)
+                    }
+                    SCREEN_EDIT_EMAIL -> {
+                        appNavigation.openEditMail()
+                    }
+                    else -> {}
                 }
             }
         }
 
-        binding.btReSendEmail.setOnClickListener {
-            if (codeScreen == SCREEN_LOGIN_WITH_EMAIL) {
-                viewModel.resendOtp(email)
-            } else {
-                appNavigation.openEditMail()
-            }
-        }
+        binding.btReSendEmail.setOnClickListener { viewModel.resendOtp(email) }
 
         binding.btContactUs.setOnClickListener { if (!isDoubleClick) appNavigation.openContactUs() }
     }
