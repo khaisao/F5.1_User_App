@@ -126,7 +126,7 @@
                             android:background="@color/white" />
 
                         <TextView
-                            style="@style/text_bold_18"
+                            style="@style/text_bold_14"
                             android:layout_marginTop="@dimen/margin_32"
                             android:fontFamily="@font/hiragino_sans_w6"
                             android:text="@string/above_method_not_solve_problem"

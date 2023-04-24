@@ -314,7 +314,6 @@ class VerifyCodeFragment :
 
         with(binding.tvNotReceive) {
             setOnClickListener {
-                binding.tvNotReceive.setTextColor(resources.getColor(R.color.color_6D5D9A))
                 val bundle = Bundle().apply {
                     putInt(BUNDLE_KEY.CODE_SCREEN, codeScreen)
                     putString(BUNDLE_KEY.EMAIL, email)
