@@ -34,21 +34,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-            <TextView
-                android:id="@+id/purchase_point_reason_tv"
-                style="@style/text_14"
-                android:layout_marginBottom="@dimen/margin_16"
-                android:gravity="center"
-                android:textColor="@color/color_B2A9CC"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider"
-                tools:text="@string/point_purchase_reason" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cost_point_rv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/margin_24"
                 android:isScrollContainer="false"
                 android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

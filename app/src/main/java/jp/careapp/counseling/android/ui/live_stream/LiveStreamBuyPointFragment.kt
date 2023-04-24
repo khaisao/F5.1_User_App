@@ -1,10 +1,8 @@
 package jp.careapp.counseling.android.ui.live_stream
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.net.Uri
 import android.webkit.*
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
@@ -18,7 +16,6 @@ import jp.careapp.counseling.android.data.model.user_profile.ActionLoadProfile
 import jp.careapp.counseling.android.data.pref.AppPreferences
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.utils.Define
-import jp.careapp.counseling.android.utils.Define.Companion.URL_FREE_POINT
 import jp.careapp.counseling.databinding.FragmentLiveStreamBuyPointBinding
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
@@ -53,7 +50,7 @@ class LiveStreamBuyPointFragment :
                     setBackgroundColor(Color.TRANSPARENT)
                     setBackgroundResource(0)
                     settings.domStorageEnabled = true
-                    webViewClient = getWebViewClient(urlWebView)
+                    webViewClient = getBuyPointWebViewClient()
                     settings.javaScriptEnabled = true
                     webChromeClient = WebChromeClient()
                     clearCache(true)
@@ -65,21 +62,6 @@ class LiveStreamBuyPointFragment :
         handleBackPress()
     }
 
-    private fun loadJs(webView: WebView, script: String) {
-        webView.loadUrl(
-            "javascript:" +
-                    "function addScriptTag() { " +
-                    "\n  var headTag = document.getElementsByTagName(\"head\")[0]; " +
-                    "\n  var scriptTag = document.createElement(\"script\"); " +
-                    "\n  var content = document.createTextNode('$script');  " +
-                    "\n  scriptTag.appendChild(content); " +
-                    "\n  headTag.appendChild(scriptTag); " +
-                    " \n}" +
-                    "\n addScriptTag();" +
-                    ""
-        )
-    }
-
     private fun startLoading() {
         showHideLoading(true)
     }
@@ -88,16 +70,7 @@ class LiveStreamBuyPointFragment :
         showHideLoading(false)
     }
 
-    private fun getWebViewClient(urlWebView: String): WebViewClient {
-        val token = try {
-            preferences.getToken()?.substring(7)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            ""
-        }
-        val env = if (BuildConfig.BUILD_TYPE == "release") "PRODUCTION" else "STAGING"
-        val scriptBuyPoint =
-            "var token=\"${token}\"; var domain = \"${BuildConfig.BASE_URL}\"; var env = \"${env}\"; handlePointInfo(); var store = \"googleplay\""
+    private fun getBuyPointWebViewClient(): WebViewClient {
         return object : WebViewClient() {
             override fun onPageStarted(
                 view: WebView?,
@@ -111,7 +84,6 @@ class LiveStreamBuyPointFragment :
             override fun onPageFinished(view: WebView, url: String?) {
                 super.onPageFinished(view, url)
                 endLoading()
-                loadJs(view, scriptBuyPoint)
             }
 
             override fun shouldOverrideUrlLoading(
@@ -144,24 +116,6 @@ class LiveStreamBuyPointFragment :
             .setOnPositivePressed {
                 it.dismiss()
             }
-    }
-
-    private inner class Client : WebViewClient() {
-        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-            super.onPageStarted(view, url, favicon)
-            startLoading()
-        }
-
-        override fun onPageFinished(view: WebView?, url: String?) {
-            super.onPageFinished(view, url)
-            endLoading()
-        }
-
-        override
-        fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-            view.loadUrl(url)
-            return true
-        }
     }
 
     private fun handleBackPress() {

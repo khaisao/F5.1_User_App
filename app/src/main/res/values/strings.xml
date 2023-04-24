@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ケアプリ</string>
+    <string name="app_name">SL</string>
     <string name="default_notification_channel_id">CareApp</string>
     <string name="incoming_call_channel_id">calling_in_app</string>
     <string name="incoming_call_channel_name">Calling In App</string>
@@ -159,6 +159,8 @@
     <string name="let_buy_point">まずはポイントを購入しましょう</string>
     <string name="not_found_performer">該当の女性は見つかりませんでした</string>
     <string name="point_purchase">ポイント購入</string>
+    <string name="point_purchase_under_1000">所持ポイントが1000ptsになりました</string>
+    <string name="point_purchase_under_500">所持ポイントが500ptsになりました</string>
     <string name="point_purchase_reason">このままだと\nテキストテキストテキストテキスト</string>
     <string name="pointLoadingText">しばらくお待ちください</string>
     <string name="pointButtonText">￥%1$d/%2$dpts</string>
@@ -508,7 +510,6 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="negative_button_dialog_confirm_new_question">修正する</string>
     <string name="format_limit_character_of_content">あと%s文字必要</string>
     <string name="donot_input_emoji">相談ラボに絵文字は入力できません。</string>
-    <string name="not_enough_points">ポイントが不足しています。</string>
 
     // Lab Detail
     <string name="consultation_lab">相談ラボ</string>

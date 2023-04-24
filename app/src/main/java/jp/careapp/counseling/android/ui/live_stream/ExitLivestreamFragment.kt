@@ -1,8 +1,6 @@
 package jp.careapp.counseling.android.ui.live_stream
 
 import android.os.Bundle
-import android.text.BoringLayout
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -24,10 +22,9 @@ import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
-import jp.careapp.counseling.android.ui.buy_point.bottom_sheet.BuyPointBottomFragment
 import jp.careapp.counseling.android.ui.profile.detail_user.DetailUserProfileViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
-import jp.careapp.counseling.android.utils.Define
+import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.SCREEN_DETAIL
 import jp.careapp.counseling.databinding.FragmentExitLivestreamBinding
 import javax.inject.Inject
 
@@ -52,8 +49,6 @@ class ExitLivestreamFragment :
 
     private var consultantResponseLocal: ConsultantResponse? = null
 
-    private var errorMessage: String = ""
-
     private val shareViewModel: ShareViewModel by activityViewModels()
 
     private var isFirstChat: Boolean? = null
@@ -62,7 +57,7 @@ class ExitLivestreamFragment :
 
     private var isShowFromUserDisable: Boolean = false
 
-    private var isHavePoint: Boolean = true
+    private var rootScreen: Int = 0
 
     private lateinit var behavior: AppBarLayout.Behavior
 
@@ -90,8 +85,7 @@ class ExitLivestreamFragment :
             consultantResponseLocal =
                 bundle.getSerializable(BUNDLE_KEY.USER_PROFILE) as? ConsultantResponse
             previousScreen = bundle.getString(BUNDLE_KEY.SCREEN_TYPE, "")
-            errorMessage = bundle.getString(BUNDLE_KEY.TITLE, "")
-            isHavePoint = bundle.getBoolean(BUNDLE_KEY.HAVE_POINT, true)
+            rootScreen = bundle.getInt(BUNDLE_KEY.ROOT_SCREEN)
         }
 
         binding.rvConsultant.layoutManager = GridLayoutManager(context, 2)
@@ -121,21 +115,16 @@ class ExitLivestreamFragment :
 
         val params = binding.alRv.layoutParams as CoordinatorLayout.LayoutParams
         behavior = params.behavior as AppBarLayout.Behavior
-
-        binding.tvBuyPoint.visibility = if(isHavePoint) GONE else VISIBLE
-
-        if (errorMessage.isNotEmpty()) {
-            binding.tvError.visibility = VISIBLE
-            binding.tvError.text = errorMessage
-        } else {
-            binding.tvError.visibility = GONE
-        }
     }
 
     override fun setOnClick() {
         super.setOnClick()
         binding.ivClose.setOnClickListener {
-            appNavigation.navigateUp()
+            if (rootScreen == SCREEN_DETAIL) {
+                openDetailScreen()
+            } else {
+                openChatScreen()
+            }
         }
 
         binding.ivMessage.setOnClickListener {
@@ -163,12 +152,6 @@ class ExitLivestreamFragment :
                 }
             }
         }
-
-        binding.tvBuyPoint.setOnClickListener {
-            if (!isDoubleClick) {
-                doBuyPoint()
-            }
-        }
     }
 
     private fun openChatScreen(isShowFreeMess: Boolean = false) {
@@ -187,41 +170,11 @@ class ExitLivestreamFragment :
         appNavigation.openExitLiveStreamToMessage(bundle)
     }
 
-    private fun doBuyPoint() {
+    private fun openDetailScreen() {
         val bundle = Bundle()
-        bundle.putInt(BUNDLE_KEY.TYPE_BUY_POINT, Define.BUY_POINT_FIRST)
-        handleBuyPoint.buyPoint(
-            childFragmentManager,
-            bundle,
-            object : BuyPointBottomFragment.HandleBuyPoint {
-                override fun buyPointSucess() {
-                    activity?.let { it1 ->
-                        handleOpenChatScreen()
-                    }
-                }
-            }
-        )
+        bundle.putSerializable(BUNDLE_KEY.USER_PROFILE, consultantResponseLocal)
+        appNavigation.openExitLiveStreamToUserDetailFragment(bundle)
     }
-
-    private fun handleOpenChatScreen(isShowFreeMess: Boolean = false) {
-        val bundle = Bundle()
-        bundle.putString(
-            BUNDLE_KEY.PERFORMER_CODE,
-            consultantResponseLocal?.code ?: ""
-        )
-        bundle.putString(
-            BUNDLE_KEY.PERFORMER_NAME,
-            consultantResponseLocal?.name ?: ""
-        )
-        bundle.putBoolean(BUNDLE_KEY.IS_SHOW_FREE_MESS, isShowFreeMess)
-        bundle.putInt(BUNDLE_KEY.CALL_RESTRICTION, consultantResponseLocal?.callRestriction ?: 0)
-        if (BUNDLE_KEY.CHAT_MESSAGE == previousScreen) {
-            appNavigation.navigateUp()
-        } else {
-            appNavigation.openExitLiveStreamToMessage(bundle)
-        }
-    }
-
 
     override fun bindingStateView() {
         super.bindingStateView()

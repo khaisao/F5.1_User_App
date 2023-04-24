@@ -1,4 +1,4 @@
-package jp.careapp.counseling.android.ui.calling
+package jp.careapp.counseling.android.ui.live_stream
 
 import android.os.Bundle
 import com.bumptech.glide.Glide

@@ -96,21 +96,22 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:visibility="gone" />
-
                     </FrameLayout>
 
                     <TextView
                         android:id="@+id/tvPerformerName"
+                        style="@style/text_12"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxWidth="300dp"
+                        android:maxLines="1"
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:fontFamily="@font/hiragino_sans_w6"
                         android:gravity="center"
-                        android:text="レー・ブー・ハイ・ダン"
                         android:textColor="@color/white"
-                        android:textSize="12sp" />
-
+                        tools:text="レー・ブー・ハイ・ダン" />
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatImageButton

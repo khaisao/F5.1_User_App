@@ -47,7 +47,7 @@ import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.bottom_sheet.BuyPointBottomFragment
-import jp.careapp.counseling.android.ui.calling.CallConnectionDialog
+import jp.careapp.counseling.android.ui.live_stream.CallConnectionDialog
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.DISABLE_LOAD_MORE
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.ENABLE_LOAD_MORE
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.HIDDEN_LOAD_MORE
@@ -56,6 +56,7 @@ import jp.careapp.counseling.android.ui.message.template.TemplateAdapter
 import jp.careapp.counseling.android.ui.message.template.TemplateBottomFragment
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.CHAT_MESSAGE
+import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.SCREEN_MESSAGE
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.THRESHOLD_SHOW_REVIEW_APP
 import jp.careapp.counseling.android.utils.CallRestriction
 import jp.careapp.counseling.android.utils.Define
@@ -682,6 +683,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                     putSerializable(BUNDLE_KEY.USER_PROFILE, userProfile)
                 }
                 putInt(BUNDLE_KEY.VIEW_STATUS, viewerType)
+                putInt(BUNDLE_KEY.ROOT_SCREEN, SCREEN_MESSAGE)
             }
             appNavigation.openUserDetailToLiveStream(bundle)
             viewModel.resetData()

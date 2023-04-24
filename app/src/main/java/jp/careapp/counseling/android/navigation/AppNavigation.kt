@@ -166,4 +166,6 @@ interface AppNavigation : BaseNavigator {
     fun openEditMail(bundle: Bundle? = null)
 
     fun openVerifyCodeHelpToVerifyCode(bundle: Bundle? = null)
+
+    fun openExitLiveStreamToUserDetailFragment(bundle: Bundle? = null)
 }
