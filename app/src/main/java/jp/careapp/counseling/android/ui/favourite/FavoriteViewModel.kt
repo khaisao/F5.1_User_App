@@ -21,7 +21,7 @@ import kotlinx.coroutines.withContext
 class FavoriteViewModel @ViewModelInject constructor(
     private val apiService: ApiInterface,
     private val appNavigation: AppNavigation
-) : BaseViewModel(), EventFavoriteAction {
+) : BaseViewModel() {
 
     private val _refreshFavorite = MutableLiveData<Unit>()
     fun forceRefresh() {
@@ -179,32 +179,7 @@ class FavoriteViewModel @ViewModelInject constructor(
     }
     val error: LiveData<Event<String>> = _error
 
-    override fun onclickItem(item: FavoriteResponse) {
-        val bundle = Bundle()
-        bundle.putInt(BUNDLE_KEY.POSITION_SELECT, 0)
-        val listConsultant = ArrayList(
-            listOf(
-                ConsultantResponse(
-                    code = item.code,
-                    existsImage = item.existsImage,
-                    imageUrl = item.imageUrl,
-                    name = item.name,
-                    presenceStatus = item.presenceStatus,
-                    stage = item.status,
-                    thumbnailImageUrl = item.thumbnailImageUrl
-                )
-            )
-        )
-        bundle.putSerializable(
-            BUNDLE_KEY.LIST_USER_PROFILE,
-            listConsultant
-        )
-        appNavigation.openRankingToUserProfileScreen(bundle)
-    }
-
     private val _showDialogAction = MutableLiveData<Event<FavoriteResponse>>()
     val showDialogAction: LiveData<Event<FavoriteResponse>> = _showDialogAction
-    override fun onClickRelease(item: FavoriteResponse) {
-        _showDialogAction.value = Event(item)
-    }
+
 }

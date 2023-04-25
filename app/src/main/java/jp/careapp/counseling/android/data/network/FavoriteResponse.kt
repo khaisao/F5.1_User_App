@@ -37,8 +37,12 @@ data class FavoriteResponse(
     val peepingMemberCount: Int = 0,
     @SerializedName("thumbnail_image_url")
     val thumbnailImageUrl: String = "",
+    @SerializedName("message_of_the_day")
+    val messageOfTheDay: String = "",
     @SerializedName("call_status")
     val callStatus: Int = DEFAULT_CALL_STATUS,
     @SerializedName("chat_status")
     val chatStatus: Int = DEFAULT_CALL_STATUS,
+    @SerializedName("last_login_date")
+    val lastLoginDate: String? = "",
 ) : Parcelable

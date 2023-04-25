@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,11 +11,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import jp.careapp.core.utils.getDurationBreakdown
 import jp.careapp.counseling.R
-import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.network.HistoryResponse
 import jp.careapp.counseling.android.utils.extensions.getBustSize
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler
-import jp.careapp.counseling.databinding.ItemHistoryBinding
+import jp.careapp.counseling.databinding.ItemFavouriteBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,7 +25,7 @@ class HistoryAdapter(
     HistoryDiffCallBack
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
-        val binding = ItemHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemFavouriteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return HistoryViewHolder(binding)
     }
 
@@ -42,7 +40,7 @@ class HistoryAdapter(
     }
 
     inner class HistoryViewHolder(
-        val binding: ItemHistoryBinding,
+        val binding: ItemFavouriteBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(consultant: HistoryResponse) {
             binding.tvName.text = consultant.name
@@ -53,13 +51,21 @@ class HistoryAdapter(
                 )
                 .into(binding.ivPerson)
 
-            val dateString = consultant.lastLoginDate.toString()
-            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.US)
-            val date = sdf.parse(dateString)
-            val startDate = date?.time
-            if (startDate != null) {
-                binding.tvTime.text =
-                    context.getDurationBreakdown(System.currentTimeMillis() - startDate)
+            val dateString = consultant.lastLoginDate
+            if (dateString != "" && dateString != null) {
+                try {
+                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+                    val date = sdf.parse(dateString)
+                    val startDate = date?.time
+                    if (startDate != null) {
+                        binding.tvTime.text =
+                            context.getDurationBreakdown(System.currentTimeMillis() - startDate)
+                    }
+                } catch (e: Exception) {
+                    binding.tvTime.text = ""
+                }
+            } else {
+                binding.tvTime.text = ""
             }
 
             binding.clMain.setOnClickListener {
@@ -85,6 +91,8 @@ class HistoryAdapter(
             }
 
             binding.tvAge.text = consultant.age.toString() + context.resources.getString(R.string.age_raw)
+
+            binding.tvBody.text = consultant.messageOfTheDay
         }
     }
 }

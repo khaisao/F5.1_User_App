@@ -1,10 +1,10 @@
 package jp.careapp.counseling.android.ui.favourite
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -20,19 +20,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class FavoriteAdapter(
-    private val lifecycleOwner: LifecycleOwner,
-    private val events: EventFavoriteAction,
-    private val context: Context
-) : ListAdapter<FavoriteResponse, FavoriteViewHolder>(
+    private val context: Context,
+    private val onItemClick: (item: FavoriteResponse) -> Unit,
+    ) : ListAdapter<FavoriteResponse, FavoriteAdapter.FavoriteViewHolder>(
     FavoriteDiffCallBack
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
-        return FavoriteViewHolder.from(
-            parent,
-            lifecycleOwner = lifecycleOwner,
-            eventsAction = events,
-            context = context
-        )
+        val binding = ItemFavouriteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return FavoriteViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
@@ -44,76 +39,61 @@ class FavoriteAdapter(
     override fun submitList(list: MutableList<FavoriteResponse>?) {
         super.submitList(list?.let { ArrayList(it) })
     }
-}
 
-class FavoriteViewHolder(
-    private val binding: ItemFavouriteBinding,
-    private val lifecycleOwner: LifecycleOwner,
-    private val events: EventFavoriteAction,
-    private val context: Context
-) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(consultant: FavoriteResponse) {
-        binding.apply {
-            favorite = consultant
-            event = events
-            lifecycleOwner = this@FavoriteViewHolder.lifecycleOwner
-            executePendingBindings()
-        }
-        binding.tvName.text=consultant.name
-        Glide.with(context).load(consultant.thumbnailImageUrl)
-            .apply(
-                RequestOptions()
-                    .placeholder(R.drawable.default_avt_performer)
-            )
-            .into(binding.ivPerson)
+    inner class FavoriteViewHolder(
+        private val binding: ItemFavouriteBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(consultant: FavoriteResponse) {
+            binding.tvName.text=consultant.name
+            Glide.with(context).load(consultant.thumbnailImageUrl)
+                .apply(
+                    RequestOptions()
+                        .placeholder(R.drawable.default_avt_performer)
+                )
+                .into(binding.ivPerson)
 
-        //TODO (remove test data)
-        val dateString = "2023-01-20 08:57:10"
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.US)
-        val date = sdf.parse(dateString)
-        val startDate = date?.time
-        if (startDate != null) {
-            binding.tvTime.text =
-                context.getDurationBreakdown(System.currentTimeMillis() - startDate)
-        }
+            val dateString = consultant.lastLoginDate
 
-        val status = PerformerStatusHandler.getStatus(consultant.callStatus,consultant.chatStatus)
+            if (dateString != "" && dateString != null) {
+                try {
+                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+                    val date = sdf.parse(dateString)
+                    val startDate = date?.time
+                    if (startDate != null) {
+                        binding.tvTime.text =
+                            context.getDurationBreakdown(System.currentTimeMillis() - startDate)
+                    }
+                } catch (e: Exception) {
+                    binding.tvTime.text = ""
+                }
+            } else {
+                binding.tvTime.text = ""
+            }
 
-        val statusText = PerformerStatusHandler.getStatusText(status, context.resources)
+            val status = PerformerStatusHandler.getStatus(consultant.callStatus,consultant.chatStatus)
 
-        val statusBg = PerformerStatusHandler.getStatusBg(status)
+            val statusText = PerformerStatusHandler.getStatusText(status, context.resources)
 
-        binding.tvStatus.setBackgroundResource(statusBg)
-        binding.tvStatus.text = statusText
+            val statusBg = PerformerStatusHandler.getStatusBg(status)
 
-        val bustSize = context.getBustSize(consultant.bust)
-        if (bustSize == "") {
-            binding.tvSize.visibility = View.GONE
-        } else {
-            binding.tvSize.visibility = View.VISIBLE
-            binding.tvSize.text = bustSize
-        }
+            binding.tvStatus.setBackgroundResource(statusBg)
+            binding.tvStatus.text = statusText
 
-        binding.tvAge.text = consultant.age.toString() + context.resources.getString(R.string.age_raw)
+            val bustSize = context.getBustSize(consultant.bust)
+            if (bustSize == "") {
+                binding.tvSize.visibility = View.GONE
+            } else {
+                binding.tvSize.visibility = View.VISIBLE
+                binding.tvSize.text = bustSize
+            }
 
-    }
+            binding.tvAge.text = consultant.age.toString() + context.resources.getString(R.string.age_raw)
 
-    companion object {
-        fun from(
-            parent: ViewGroup,
-            lifecycleOwner: LifecycleOwner,
-            eventsAction: EventFavoriteAction,
-            context: Context
-        ): FavoriteViewHolder {
-            val layoutInflater = LayoutInflater.from(parent.context)
-            val binding: ItemFavouriteBinding =
-                ItemFavouriteBinding.inflate(layoutInflater, parent, false)
-            return FavoriteViewHolder(
-                binding,
-                lifecycleOwner,
-                eventsAction,
-                context
-            )
+            binding.clMain.setOnClickListener {
+                onItemClick(consultant)
+            }
+
+            binding.tvBody.text = consultant.messageOfTheDay
         }
     }
 }
