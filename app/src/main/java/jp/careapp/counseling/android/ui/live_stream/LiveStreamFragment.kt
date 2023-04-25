@@ -562,7 +562,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                     val arguments = Bundle().apply {
                         putString(Define.URL_WEB_VIEW, purchasePointUrl)
                     }
-                    appNavigation.openLiveStreamBuyPointCredit(arguments)
+                    appNavigation.openBuyPointsCredit(arguments)
                 }
             }
         )

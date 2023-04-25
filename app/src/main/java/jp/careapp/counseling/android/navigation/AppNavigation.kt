@@ -161,11 +161,11 @@ interface AppNavigation : BaseNavigator {
 
     fun openContactUs(bundle: Bundle? = null)
 
-    fun openLiveStreamBuyPointCredit(bundle: Bundle? = null)
-
     fun openEditMail(bundle: Bundle? = null)
 
     fun openVerifyCodeHelpToVerifyCode(bundle: Bundle? = null)
 
     fun openExitLiveStreamToUserDetailFragment(bundle: Bundle? = null)
+
+    fun openBuyPointsCredit(bundle: Bundle? = null)
 }

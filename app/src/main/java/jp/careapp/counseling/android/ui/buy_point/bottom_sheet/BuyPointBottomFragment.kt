@@ -222,9 +222,6 @@ class BuyPointBottomFragment : BottomSheetDialogFragment() {
     private val isFirstBuyCredit: Boolean
         get() = rxPreferences.getFirstBuyCredit()
 
-    private val isFullMode: Boolean
-        get() = rxPreferences.isFullMode()
-
     private fun setOnClickView() {
         binding.btnCancel.setOnClickListener { dismiss() }
         binding.container.setOnClickListener { dismiss() }

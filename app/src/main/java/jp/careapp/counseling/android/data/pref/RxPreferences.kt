@@ -80,8 +80,6 @@ interface RxPreferences {
 
     fun getFirstBuyCredit(): Boolean
 
-    fun isFullMode(): Boolean
-
     fun saveFirstReview(isTheFirst: Boolean, memberCode: String?, performerCode: String)
 
     fun isFirstReview(memberCode: String?, performerCode: String): Boolean

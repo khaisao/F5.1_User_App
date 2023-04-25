@@ -1,7 +1,6 @@
 package jp.careapp.counseling.android.ui.message
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.net.Uri
@@ -13,7 +12,6 @@ import android.view.View.*
 import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.WindowManager
-import android.widget.PopupWindow
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -48,6 +46,7 @@ import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.bottom_sheet.BuyPointBottomFragment
 import jp.careapp.counseling.android.ui.live_stream.CallConnectionDialog
+import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.buy_point.PurchasePointBottomSheet
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.DISABLE_LOAD_MORE
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.ENABLE_LOAD_MORE
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.HIDDEN_LOAD_MORE
@@ -60,6 +59,7 @@ import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.SCREEN_MESSAGE
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.THRESHOLD_SHOW_REVIEW_APP
 import jp.careapp.counseling.android.utils.CallRestriction
 import jp.careapp.counseling.android.utils.Define
+import jp.careapp.counseling.android.utils.Define.Companion.BUY_POINT_CHAT_MESSAGE
 import jp.careapp.counseling.android.utils.SocketInfo
 import jp.careapp.counseling.android.utils.extensions.hasPermissions
 import jp.careapp.counseling.android.utils.extensions.toPayLength
@@ -265,8 +265,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
             }
         }
 
-        handleShowDialogPointFree()
-
         arguments?.apply {
             if (containsKey(BUNDLE_KEY.IS_SHOW_FREE_MESS) && getBoolean(BUNDLE_KEY.IS_SHOW_FREE_MESS)) {
                 remove(BUNDLE_KEY.IS_SHOW_FREE_MESS)
@@ -287,11 +285,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
             binding.bottomBar.visibility = GONE
             binding.rvMessageTemplate.visibility = GONE
         }
-    }
-
-    private fun handleShowDialogPointFree() {
-        if (rxPreferences.getTimeBuy() == 0L && rxPreferences.getPoint() == 1000)
-            showDialogPointFree(requireActivity())
     }
 
     private fun handleBackFromReview() {
@@ -386,7 +379,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                     val message = binding.contentMessageEdt.text.toString().trim()
                     sendMessage(code, message, "")
                 } else {
-                    handleBuyPoint.buyPoint(childFragmentManager, isClickSendMessage = true)
+                    showPointPurchaseBottomSheet(BUY_POINT_CHAT_MESSAGE)
                 }
                 binding.contentMessageEdt.clearFocus()
             }
@@ -439,6 +432,28 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                 }
             }
         }
+    }
+
+    private fun showPointPurchaseBottomSheet(typeBuyPoint: Int) {
+        val bundle = Bundle()
+        bundle.putInt(BUNDLE_KEY.TYPE_BUY_POINT, typeBuyPoint)
+        handleBuyPoint.buyPointLiveStream(
+            childFragmentManager, bundle,
+            object : PurchasePointBottomSheet.PurchasePointCallback {
+                override fun onPointItemClick(point: Int, money: Int) {
+                    val purchasePointUrl = buildString {
+                        append(Define.URL_LIVE_STREAM_POINT_PURCHASE)
+                        append("?token=${rxPreferences.getToken()}")
+                        append("&&point=${point}")
+                        append("&money=${money}")
+                    }
+                    val arguments = Bundle().apply {
+                        putString(Define.URL_WEB_VIEW, purchasePointUrl)
+                    }
+                    appNavigation.openBuyPointsCredit(arguments)
+                }
+            }
+        )
     }
 
     private fun checkPoint() {
@@ -597,7 +612,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         super.bindingStateView()
         viewModel.messageResult.observe(viewLifecycleOwner, messageResultResponse)
         viewModel.sendMessageResult.observe(viewLifecycleOwner, sendMessageResponse)
-        viewModel.subtractPoint.observe(viewLifecycleOwner, subtractPointResponse)
         viewModel.userProfileResult.observe(viewLifecycleOwner, userResultResponse)
         viewModel.hiddenLoadMoreHandle.observe(viewLifecycleOwner, hiddenLoadMoreResult)
         viewModel.responseSocket.observe(viewLifecycleOwner, responseSocketResult)
@@ -759,12 +773,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         }
     }
 
-    private var subtractPointResponse: Observer<Boolean> = Observer {
-        if (it) {
-            handleShowDialogPointFree()
-        }
-    }
-
     private var openPayMessageResponse: Observer<SendMessageResponse> = Observer { data ->
         data?.let {
             rxPreferences.setPoint(it.point)
@@ -854,15 +862,4 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         templateMessageBottom?.dismiss()
         activity?.let { viewModel.loadMessage(it, this.performerCode, false) }
     }
-
-    private fun showDialogPointFree(context: Context) {
-        val view = inflate(context, R.layout.dialog_recommend_use_point_free, null)
-        val popupWindow = PopupWindow(
-            view,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        popupWindow.isOutsideTouchable = true
-    }
-
 }

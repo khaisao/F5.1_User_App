@@ -206,11 +206,6 @@
             app:popExitAnim="@anim/slide_out_left"
             app:popUpToInclusive="true" />
 
-        <action
-            android:id="@+id/action_liveStreamFragment_to_buyPointCreditFragment"
-            app:destination="@id/buyPointCreditFragment"
-            app:enterAnim="@anim/slide_up"
-            app:popExitAnim="@anim/slide_down" />
     </fragment>
 
     <fragment
@@ -539,4 +534,12 @@
         app:exitAnim="@anim/slide_out_right"
         app:popEnterAnim="@anim/slide_in_right"
         app:popExitAnim="@anim/slide_out_left" />
+    <action
+        android:id="@+id/action_global_buyPointCreditFragment"
+        app:destination="@id/buyPointCreditFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left"
+        app:popUpTo="@id/splashFragment" />
 </navigation>

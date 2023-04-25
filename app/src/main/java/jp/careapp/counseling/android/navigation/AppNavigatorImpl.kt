@@ -321,10 +321,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_global_contactUsFragment, bundle)
     }
 
-    override fun openLiveStreamBuyPointCredit(bundle: Bundle?) {
-        openScreen(R.id.action_liveStreamFragment_to_buyPointCreditFragment, bundle)
-    }
-
     override fun openEditMail(bundle: Bundle?) {
         openScreen(R.id.action_global_edit_mail_navigation, bundle)
     }
@@ -335,5 +331,9 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openExitLiveStreamToUserDetailFragment(bundle: Bundle?) {
         openScreen(R.id.action_exitLivestreamFragment_to_userProfileFragment, bundle)
+    }
+
+    override fun openBuyPointsCredit(bundle: Bundle?) {
+        openScreen(R.id.action_global_buyPointCreditFragment, bundle)
     }
 }
