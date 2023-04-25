@@ -3,19 +3,26 @@ package jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.bu
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.counseling.R
+import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.Define.Companion.BUY_POINT_UNDER_500
 import jp.careapp.counseling.android.utils.Define.Companion.INSU_POINT
 import jp.careapp.counseling.databinding.FragmentPurchasePointBottomBinding
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PurchasePointBottomSheet : BottomSheetDialogFragment() {
+
+    @Inject
+    lateinit var rxPreferences: RxPreferences
 
     private var _binding: FragmentPurchasePointBottomBinding? = null
     private val binding get() = _binding!!
@@ -58,6 +65,7 @@ class PurchasePointBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        setOnClick()
         bindingStateView()
     }
 
@@ -68,13 +76,18 @@ class PurchasePointBottomSheet : BottomSheetDialogFragment() {
         }
         when (type) {
             INSU_POINT -> {
-                binding.titlePointTv.text = getString(R.string.point_purchase)
+                binding.titlePointTv.text = getString(R.string.point_purchase_under_1000)
+                binding.tvCurrentPoint.visibility = GONE
             }
             BUY_POINT_UNDER_500 -> {
                 binding.titlePointTv.text = getString(R.string.point_purchase_under_500)
+                binding.tvCurrentPoint.visibility = GONE
             }
             else -> {
-                binding.titlePointTv.text = getString(R.string.point_purchase_under_1000)
+                binding.titlePointTv.text = getString(R.string.point_purchase)
+                binding.tvCurrentPoint.text =
+                    getString(R.string.format_point, rxPreferences.getPoint().toString())
+                binding.tvCurrentPoint.visibility = VISIBLE
             }
         }
         mViewModel.getCreditPrices()
@@ -83,6 +96,12 @@ class PurchasePointBottomSheet : BottomSheetDialogFragment() {
             dismiss()
         }
         binding.costPointRv.adapter = purchasePointAdapter
+    }
+
+    private fun setOnClick() {
+        binding.cancelButtonTv.setOnClickListener {
+            dismiss()
+        }
     }
 
     private fun bindingStateView() {

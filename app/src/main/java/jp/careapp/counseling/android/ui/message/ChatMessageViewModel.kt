@@ -97,7 +97,7 @@ class ChatMessageViewModel @ViewModelInject constructor(
 
     // Live stream
     private val gson by lazy { Gson() }
-    val isButtonEnable = MutableLiveData<Boolean>()
+    val isButtonEnable = MutableLiveData<Boolean>(false)
     val isLoginSuccess = MutableLiveData(false)
     val connectResult = MutableLiveData<ConnectResult>()
     private var cancelButtonClickedFlag = false

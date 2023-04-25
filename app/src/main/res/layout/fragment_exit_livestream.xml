@@ -89,7 +89,6 @@
                                     android:layout_height="match_parent"
                                     android:padding="@dimen/padding_5dp"
                                     android:src="@drawable/ic_avatar_default_chat" />
-
                             </com.google.android.material.card.MaterialCardView>
                         </com.lihang.ShadowLayout>
 
@@ -98,12 +97,15 @@
                             style="@style/text_bold_16"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/margin_24dp"
                             android:layout_marginTop="@dimen/margin_16"
-                            android:text="Name"
+                            android:ellipsize="end"
+                            android:maxLines="1"
                             android:textColor="@color/white"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/sl_avatar" />
+                            app:layout_constraintTop_toBottomOf="@id/sl_avatar"
+                            tools:text="Name" />
 
                         <LinearLayout
                             android:id="@+id/ll_message_follow"
