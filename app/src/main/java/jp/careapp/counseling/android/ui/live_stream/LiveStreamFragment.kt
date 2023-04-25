@@ -559,10 +559,9 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                         append("&&point=${point}")
                         append("&money=${money}")
                     }
-                    val arguments = Bundle().apply {
-                        putString(Define.URL_WEB_VIEW, purchasePointUrl)
-                    }
-                    appNavigation.openBuyPointsCredit(arguments)
+                    val buyPointScreen = LiveStreamBuyPointFragment.newInstance(purchasePointUrl)
+                    buyPointScreen.isCancelable = false
+                    buyPointScreen.show(childFragmentManager, "LiveStreamBuyPointFragment")
                 }
             }
         )
