@@ -39,7 +39,7 @@ class GalleryAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: GalleryResponse) {
-            itemView.layoutParams.height = screenWidth / 3+20
+            itemView.layoutParams.height = screenWidth / 3
             Glide.with(context)
                 .load(item.thumbnailImage?.url)
                 .into(binding.ivMain)
@@ -47,12 +47,6 @@ class GalleryAdapter(
                 onClickListener(item)
             }
         }
-    }
-
-
-
-    override fun submitList(list: List<GalleryResponse>?) {
-        super.submitList(list?.let { ArrayList(it) })
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryHolder {

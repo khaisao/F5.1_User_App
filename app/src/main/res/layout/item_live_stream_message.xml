@@ -16,8 +16,8 @@
             android:maxWidth="300dp"
             android:gravity="center_vertical"
             android:padding="6dp"
-            android:lineSpacingExtra="@dimen/margin_3"
+            android:lineSpacingExtra="4dp"
             android:textColor="@android:color/white"
-            tools:text="視聴者名 メッセージメッセージメッセージメッセージメッセージメッセージメッセージ" />
+            tools:text="視聴者名 メッセージメッセージ" />
     </FrameLayout>
 </layout>
