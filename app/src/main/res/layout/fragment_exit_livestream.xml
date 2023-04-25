@@ -82,14 +82,23 @@
                                 app:strokeColor="@color/color_FF3FEE"
                                 app:strokeWidth="1dp">
 
-                                <ImageView
-                                    android:id="@+id/iv_avatar"
-                                    android:scaleType="centerCrop"
+                                <com.google.android.material.card.MaterialCardView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:padding="@dimen/padding_5dp"
-                                    android:src="@drawable/ic_avatar_default_chat" />
+                                    android:layout_margin="@dimen/padding_5dp"
+                                    app:cardBackgroundColor="@color/color_background_common"
+                                    app:cardCornerRadius="10dp">
+
+                                    <ImageView
+                                        android:id="@+id/iv_avatar"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/default_avt_performer" />
+                                </com.google.android.material.card.MaterialCardView>
+
                             </com.google.android.material.card.MaterialCardView>
+
                         </com.lihang.ShadowLayout>
 
                         <TextView

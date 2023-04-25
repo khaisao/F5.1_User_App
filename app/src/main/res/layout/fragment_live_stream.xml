@@ -22,8 +22,7 @@
             android:id="@+id/performerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:isMirror="true"
-            android:src="@drawable/ic_no_image" />
+            app:isMirror="true" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -241,8 +240,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/ivPerformer"
                     app:layout_constraintWidth_percent="0.235"
                     app:isMirror="true"
-                    app:scaling_type="fit"
-                    tools:background="@android:color/holo_green_light" />
+                    app:scaling_type="fit" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/btnCameraFlip"
