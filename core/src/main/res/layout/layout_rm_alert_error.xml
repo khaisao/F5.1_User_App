@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/padding_10"
-            android:layout_marginTop="@dimen/padding_16dp"
+            android:layout_marginTop="@dimen/margin_32dp"
             android:layout_marginRight="@dimen/padding_10"
             android:layout_marginBottom="@dimen/margin_40dp"
             android:background="@drawable/bg_rm_common"
@@ -56,24 +56,29 @@
             android:paddingHorizontal="@dimen/margin_24dp"
             android:paddingVertical="@dimen/padding_15dp"
             android:textColor="@color/background_color_white"
-            android:textSize="@dimen/text_size_14"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:textSize="@dimen/text_size_14"
+            android:fontFamily="@font/hiragino_sans_w6"
             app:layout_constraintTop_toBottomOf="@+id/tv_subTitle"
             tools:ignore="MissingConstraints"
             tools:text="@string/text_OK" />
 
         <TextView
             android:id="@+id/tv_cancel"
-            style="@style/text_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_24dp"
+            android:fontFamily="@font/hiragino_sans_w3"
             android:padding="@dimen/padding_5dp"
             android:textColor="@color/color_868990"
+            android:textSize="@dimen/text_size_14"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_confirm"
             tools:text="@string/cancel_block_alert" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

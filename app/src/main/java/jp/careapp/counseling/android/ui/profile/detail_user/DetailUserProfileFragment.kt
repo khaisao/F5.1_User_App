@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -256,13 +255,11 @@ class DetailUserProfileFragment :
     }
 
     private fun checkPoint() {
-//        if (rxPreferences.getPoint() < 1000) {
-//            showDialogRequestBuyPoint()
-//        } else {
-//            showDialogConfirmCall()
-//        }
-        showDialogConfirmCall()
-
+        if (rxPreferences.getPoint() < 1000) {
+            showDialogRequestBuyPoint()
+        } else {
+            showDialogConfirmCall()
+        }
     }
 
     private fun checkPointForPeep() {

@@ -34,7 +34,7 @@ interface RMApiInterface {
     @GET("api/member")
     suspend fun getMember(): ApiObjectResponse<MemberResponse>
 
-    @GET("api/memapp-dummy-performers")
+    @GET("api/performers")
     suspend fun getDummyPerformers(
         @QueryMap params: HashMap<String, Any>
     ): ApiObjectResponse<List<RMPerformerResponse>>

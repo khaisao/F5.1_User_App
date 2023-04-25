@@ -111,8 +111,8 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
         <action
-            android:id="@+id/action_RMUserDetailFragment_to_RMCallingFragment"
-            app:destination="@id/RMCallingFragment"
+            android:id="@+id/action_RMUserDetailFragment_to_RMLiveStreamFragment"
+            app:destination="@id/RMLiveStreamFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
@@ -169,6 +169,9 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_userDetailMsgFragment_to_RMLiveStreamFragment"
+            app:destination="@id/RMLiveStreamFragment" />
     </fragment>
 
     <fragment
@@ -176,19 +179,7 @@
         android:name="jp.careapp.counseling.android.ui.review_mode.buy_point.RMBuyPointFragment"
         android:label="RMBuyPointFragment"
         tools:layout="@layout/fragment_rm_buy_point" />
-    <fragment
-        android:id="@+id/RMCallingFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.calling.RMCallingFragment"
-        android:label="RMCallingFragment"
-        tools:layout="@layout/fragment_rm_calling">
-        <action
-            android:id="@+id/action_RMCallingFragment_to_RMLiveStreamFragment"
-            app:destination="@id/RMLiveStreamFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"/>
-    </fragment>
+
     <fragment
         android:id="@+id/RMLiveStreamFragment"
         android:name="jp.careapp.counseling.android.ui.review_mode.live_stream.RMLiveStreamFragment"

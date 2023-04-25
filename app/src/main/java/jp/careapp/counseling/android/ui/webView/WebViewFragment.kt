@@ -50,7 +50,8 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
             "/payment/recharge-bank" to requireContext().getString(R.string.recharge_bank_title),
             "/payment/recharge-bank-success" to requireContext().getString(R.string.recharge_bank_success_title),
             "/payment/auto-charge" to requireContext().getString(R.string.auto_charge_title),
-            "/payment/service-act" to requireContext().getString(R.string.service_act_title)
+            "/payment/service-act" to requireContext().getString(R.string.service_act_title),
+            "/term" to requireContext().getString(R.string.term_title)
         )
 
         configWebView()

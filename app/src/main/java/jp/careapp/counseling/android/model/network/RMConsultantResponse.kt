@@ -19,6 +19,7 @@ data class RMConsultantResponse(
     @SerializedName("point_per_minute") val pointPerMinute: Int? = 0,
     @SerializedName("profile_pattern") val profilePattern: Int? = 0,
     @SerializedName("call_status") val callStatus: Int? = 0,
+    @SerializedName("chat_status") val chatStatus: Int? = 0,
     @SerializedName("stage") val stage: Int? = 0,
     @SerializedName("review_average") val reviewAverage: Double? = 0.0,
     @SerializedName("review_score") val reviewScore: Int? = 0,

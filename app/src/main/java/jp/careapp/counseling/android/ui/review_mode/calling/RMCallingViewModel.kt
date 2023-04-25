@@ -1,74 +1,68 @@
 package jp.careapp.counseling.android.ui.review_mode.calling
 
 import android.app.Application
-import android.os.SystemClock
-import androidx.hilt.lifecycle.ViewModelInject
+import androidx.hilt.Assisted
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
-import jp.careapp.core.utils.SingleLiveData
+import jp.careapp.core.utils.SafeCallApi
+import jp.careapp.core.utils.SingleLiveEvent
 import jp.careapp.counseling.BuildConfig
+import jp.careapp.counseling.android.data.model.live_stream.ConnectResult
 import jp.careapp.counseling.android.data.network.FlaxLoginAuthResponse
 import jp.careapp.counseling.android.data.network.FssMemberAuthResponse
-import jp.careapp.counseling.android.data.network.socket.*
+import jp.careapp.counseling.android.data.network.socket.SocketSendMessage
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.network.ApiInterface
 import jp.careapp.counseling.android.network.socket.CallingWebSocketClient
 import jp.careapp.counseling.android.network.socket.FlaxWebSocketManager
+import jp.careapp.counseling.android.network.socket.MaruCastManager
+import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.Define
-import jp.careapp.counseling.android.utils.SocketInfo.ACTION_CALL
-import jp.careapp.counseling.android.utils.SocketInfo.ACTION_CANCEL_CALL
-import jp.careapp.counseling.android.utils.SocketInfo.ACTION_CHAT_LOG
-import jp.careapp.counseling.android.utils.SocketInfo.ACTION_LOGIN
-import jp.careapp.counseling.android.utils.SocketInfo.ACTION_LOGIN_REQUEST
-import jp.careapp.counseling.android.utils.SocketInfo.ACTION_PERFORMER_LOGIN
-import jp.careapp.counseling.android.utils.SocketInfo.ACTION_PERFORMER_RESPONSE
-import jp.careapp.counseling.android.utils.calling.CallSoundManager
-import jp.careapp.counseling.android.utils.calling.MediaServerManager
+import jp.careapp.counseling.android.utils.SocketInfo
+import jp.careapp.counseling.android.utils.performer_extension.PerformerStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
+import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
+import java.io.Serializable
+import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
-import java.util.*
+import javax.inject.Inject
 
 const val TAG = "CallingViewModel"
 
-class RMCallingViewModel @ViewModelInject constructor(
+@HiltViewModel
+class RMCallingViewModel @Inject constructor(
+    @Assisted
+    savedStateHandle: SavedStateHandle,
     private val application: Application,
     private val apiInterface: ApiInterface,
     private val rxPreferences: RxPreferences,
-    private val callSoundManager: CallSoundManager,
     private val flaxWebSocketManager: FlaxWebSocketManager,
-    ) : BaseViewModel(),CallingWebSocketClient.ChatWebSocketCallBack {
+    private val maruCastManager: MaruCastManager,
 
-    private val _isConfigAudioCall: MutableLiveData<Boolean?> = MutableLiveData(null)
-    val isConfigAudioCall: MutableLiveData<Boolean?> = _isConfigAudioCall
-    private val _minimizeCallState = MutableLiveData<MinimizeCallState>(MinimizeCallState.INACTIVE)
-    val minimizeCallState: MutableLiveData<MinimizeCallState> = _minimizeCallState
-    private val _performerInfo = MutableLiveData<PerformerInfo>(null)
-    val performerInfo: MutableLiveData<PerformerInfo> = _performerInfo
-    private val _callState = MutableLiveData<CallState?>(null)
-    val callState: MutableLiveData<CallState?> = _callState
-    private val _isMuteMic = MutableLiveData(false)
-    val isMuteMic: MutableLiveData<Boolean> = _isMuteMic
-    private val _isMuteSpeaker = MutableLiveData(true)
-    val isMuteSpeaker: MutableLiveData<Boolean> = _isMuteSpeaker
-    private val _callDuration = MutableLiveData(0)
-    val callDuration: MutableLiveData<Int> = _callDuration
-    private val _actionState = SingleLiveData<ActionState>()
-    val actionState: SingleLiveData<ActionState> = _actionState
+    ) : BaseViewModel(), CallingWebSocketClient.ChatWebSocketCallBack,
+    CallingWebSocketClient.MaruCastLoginCallBack {
+    val actionState = SingleLiveEvent<jp.careapp.counseling.android.utils.ActionState>()
 
-    private lateinit var mediaServer: MediaServerManager
-    private val gson by lazy { Gson() }
-    private var performer = PerformerInfo()
-    private var previousAudioConfig: AudioConfig? = null
-    private var timer: Timer? = null
+    var userCode: String = ""
+
+    val isButtonEnable = MutableLiveData<Boolean>()
+    val isLoginSuccess = MutableLiveData(false)
+    val connectResult = MutableLiveData<ConnectResult>()
+    private var cancelButtonClickedFlag = false
+    var flaxLoginAuthResponse: FlaxLoginAuthResponse? = null
+    var viewerStatus: Int = 0
+
     private var lastPoint = 0
 
     init {
+        userCode = savedStateHandle.get<String>(BUNDLE_KEY.PERFORMER_CODE).toString()
         getConfigCall()
     }
 
@@ -76,13 +70,18 @@ class RMCallingViewModel @ViewModelInject constructor(
         viewModelScope.launch(NonCancellable + Dispatchers.IO) {
             try {
                 apiInterface.getConfigCall().let {
-                    Timber.tag(TAG).d("getConfigCall: ${gson.toJson(it)}")
+                    Timber.d("getConfigCall: ${SafeCallApi.gson.toJson(it)}")
                     rxPreferences.saveConfigCall(it)
                 }
             } catch (e: Exception) {
-                Timber.tag(TAG).e(e)
+                Timber.e(e)
             }
         }
+    }
+
+    fun resetData() {
+        connectResult.value = ConnectResult(result = SocketInfo.RESULT_NONE)
+        isLoginSuccess.value = false
     }
 
     private suspend fun refreshCallToken(): FssMemberAuthResponse {
@@ -101,237 +100,138 @@ class RMCallingViewModel @ViewModelInject constructor(
                     rxPreferences.setCallToken(token ?: "")
                     val urlStartCall = buildString {
                         append(rxPreferences.getConfigCall().wsMemberLoginRequest)
-                        append("?action=$ACTION_CALL")
+                        append("?action=${SocketInfo.ACTION_CALL}")
                         append("&roomCode=$performerCode")
                         append("&token=$token")
                         append("&performerCode=$performerCode")
                         append("&ownerCode=${Define.OWNER_CODE}")
                     }
-                    flaxWebSocketManager.flaxConnect(urlStartCall,this@RMCallingViewModel)
+                    flaxWebSocketManager.flaxConnect(urlStartCall, this@RMCallingViewModel)
                     lastPoint = rxPreferences.getPoint()
                 }
             } catch (e: Exception) {
-                Timber.tag(TAG).e(e)
+                Timber.e(e)
             }
         }
     }
 
-    private fun endCall() {
-//        if (::mediaServer.isInitialized) mediaServer.logoutRoom()
-//        if (::socketClient.isInitialized) socketClient.closeWebSocket()
-//        _actionState.postValue(ActionState.EndCall)
-//        callSoundManager.stopRingBack()
-//        stopTimer()
-//        resetData()
-        // TODO
-    }
-
-    fun onEndCall() {
-        when (_callState.value) {
-            CallState.CONNECTING -> cancelCall()
-            CallState.TALKING -> endCall()
-            else -> {}
+    fun connectLiveStream(performerCode: String, status: PerformerStatus) {
+        if (viewerStatus == 0 && status == PerformerStatus.WAITING) {
+            startCall(performerCode)
+        } else {
+            connectFlaxChatSocket(performerCode, viewerStatus)
         }
     }
 
-    private fun cancelCall() {
-        flaxWebSocketManager.sendMessage(gson.toJson(SocketSendMessage(action = ACTION_CANCEL_CALL)))
-    }
-
-    private fun startTimer() {
-        val initialTime = SystemClock.elapsedRealtime()
-        timer = Timer().apply {
-            scheduleAtFixedRate(object : TimerTask() {
-                override fun run() {
-                    val newValue: Long = (SystemClock.elapsedRealtime() - initialTime) / 1000
-                    _callDuration.postValue(newValue.toInt())
-                }
-            }, 1000L, 1000L)
-        }
-    }
-
-    private fun stopTimer() {
-        timer?.cancel()
-        timer?.purge()
-        timer = null
-    }
-
-    private fun handleSocketMessage(message: String) {
-        gson.fromJson(message, BaseSocketReceiveMessage::class.java)?.let { data ->
-            if (data.isResultOK()) {
-                when (data.action) {
-                    ACTION_LOGIN_REQUEST -> {
-                        _callState.postValue(CallState.CONNECTING)
-                        callSoundManager.playRingBack()
-                    }
-                    ACTION_PERFORMER_LOGIN -> {
-                        handlePerformerLogin()
-                    }
-                    ACTION_LOGIN -> {
-                        gson.fromJson(message, LoginMessage::class.java)?.let {
-                            handleLogin(it)
-                        }
-                    }
-                    ACTION_CHAT_LOG -> {
-                        gson.fromJson(message, ChatLogMessage::class.java)?.let {
-                            handleChatLog(it)
-                        }
-                    }
-                    ACTION_CANCEL_CALL, ACTION_PERFORMER_RESPONSE -> {
-                        endCall()
-                    }
-                    else -> {}
-                }
-            } else {
-                Timber.tag(TAG).e(data.error)
-                viewModelScope.launch {
-                    stopTimer()
-                    callSoundManager.stopRingBack()
-                    endCall()
-                }
-            }
-        }
+    fun cancelCall() {
+        flaxWebSocketManager.sendMessage(SafeCallApi.gson.toJson(SocketSendMessage(action = SocketInfo.ACTION_CANCEL_CALL)))
     }
 
     private fun handlePerformerLogin() {
         flaxWebSocketManager.flaxLogout()
-        LoginMemberParam(
-            BuildConfig.WS_OWNER,
-            performer.performerCode,
-            rxPreferences.getCallToken(),
-            0
-        ).let {
-            val url = BuildConfig.WS_URL_LOGIN_CALL + "?data=" + URLEncoder.encode(
-                gson.toJson(it),
-                "UTF-8"
-            )
-            flaxWebSocketManager.flaxConnect(url,this)
-        }
-    }
-
-    private fun handleLogin(data: LoginMessage) {
-        FlaxLoginAuthResponse(
-            data.memberCode,
-            data.performerCode,
-            data.mediaServerOwnerCode,
-            data.mediaServer,
-            data.sessionCode,
-            data.performerThumbnailImage
-        ).let { dataLogin ->
-            mediaServer = MediaServerManager(application.applicationContext)
-            mediaServer.apply {
-                loginToRoom(dataLogin) {
-                    callSoundManager.stopRingBack()
-                    mediaServer.publishStream()
-                    _callState.postValue(CallState.TALKING)
-                    _isConfigAudioCall.postValue(true)
-                    startTimer()
-                }
-                setOnPublishSuccessListener {
-                    val isMuteAudio = _isMuteMic.value ?: false
-                    mediaServer.muteAudio(isMuteAudio)
-                }
-            }
-        }
-    }
-
-    private fun handleChatLog(chatLog: ChatLogMessage) {
-        val currentPoint = chatLog.point.toInt()
-        if (currentPoint < 1000 && lastPoint >= 1000) {
-            _actionState.postValue(ActionState.ShowDialogWarningPoint)
-        }
-        lastPoint = currentPoint
-    }
-
-    fun showMinimizeCall(isShow: Boolean) {
-        if (isShow) {
-            _minimizeCallState.postValue(MinimizeCallState.ACTIVE(performer.imageUrl))
-        } else {
-            _minimizeCallState.postValue(MinimizeCallState.INACTIVE)
-        }
-    }
-
-    fun changeMic() {
-        _isMuteMic.value?.let {
-            if (::mediaServer.isInitialized) mediaServer.muteAudio(!it)
-            _isMuteMic.value = !it
-        }
-    }
-
-    fun changeSpeaker() {
-        _isMuteSpeaker.value?.let {
-            _isMuteSpeaker.value = !it
-        }
-    }
-
-    fun setPerformerInfo(name: String, performerCode: String, imageUrl: String) {
-        performer.let {
-            it.name = name
-            it.performerCode = performerCode
-            it.imageUrl = imageUrl
-        }
-        _performerInfo.value = performer
-        startCall(performer.performerCode)
-    }
-
-    fun getPerformerInfo(): PerformerInfo {
-        return performer
-    }
-
-    fun savePreviousAudioConfig(mode: Int, isSpeakerphoneOn: Boolean) {
-        previousAudioConfig = AudioConfig(mode, isSpeakerphoneOn)
-    }
-
-    fun getPreviousAudioConfig(): AudioConfig? {
-        return previousAudioConfig
-    }
-
-    private fun resetData() {
-        performer = PerformerInfo()
-        _isMuteMic.postValue(false)
-        _isMuteSpeaker.postValue(true)
-        _isConfigAudioCall.postValue(false)
-        _minimizeCallState.postValue(MinimizeCallState.INACTIVE)
-        _callState.postValue(null)
-        _callDuration.postValue(0)
-        lastPoint = 0
-    }
-
-    fun isFullMode(): Boolean {
-        return rxPreferences.isFullMode()
-    }
-
-    fun isCalling(): Boolean {
-        return _callState.value != null
+        connectFlaxChatSocket(userCode, viewerStatus)
     }
 
     override fun onHandleMessage(jsonMessage: JSONObject) {
-       TODO("Not yet implemented")
+        try {
+            val action = if (jsonMessage.has(SocketInfo.KEY_ACTION)) jsonMessage.getString(
+                SocketInfo.KEY_ACTION
+            ) else ""
+            val result = if (jsonMessage.has(SocketInfo.KEY_RESULT)) jsonMessage.getString(
+                SocketInfo.KEY_RESULT
+            ) else ""
+            val isNeedCall: Boolean? =
+                if (jsonMessage.has(SocketInfo.KEY_IS_NEED_CALL)) jsonMessage.getBoolean(SocketInfo.KEY_IS_NEED_CALL) else null
+            if (result == SocketInfo.RESULT_NG || action == SocketInfo.ACTION_PERFORMER_RESPONSE) {
+                handleNGResponse(jsonMessage)
+            } else if (action == SocketInfo.ACTION_LOGIN_REQUEST && isNeedCall != null && isNeedCall) {
+                handleLoginRequest()
+            } else if (action == SocketInfo.ACTION_PERFORMER_LOGIN || isNeedCall != null && !isNeedCall) {
+                // isNeedCallがfalseの場合はパフォーマー側が配信しているのでそのままチャット画面に遷移する
+                handlePerformerLogin()
+            } else if (action == SocketInfo.ACTION_LOGIN) {
+                handleLogin(jsonMessage)
+            } else if (action == SocketInfo.ACTION_CANCEL_CALL) {
+                cancelButtonClickedFlag = true
+                flaxWebSocketManager.flaxLogout()
+                isButtonEnable.postValue(true)
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+    }
+
+    @Throws(JSONException::class)
+    private fun handleNGResponse(message: JSONObject) {
+        if (!cancelButtonClickedFlag) {
+            // エラーメッセージがerrorに入っていたりmessageに入っていたりするので以下のようにする必要がある
+            val errorMessage =
+                when {
+                    message.has(SocketInfo.ACTION_MESSAGE) -> message.getString(SocketInfo.ACTION_MESSAGE)
+                    message.has(SocketInfo.KEY_ERROR) -> message.getString(SocketInfo.KEY_ERROR)
+                    else -> "拒否されました"
+                }
+            connectResult.postValue(ConnectResult(SocketInfo.RESULT_NG, errorMessage))
+            flaxWebSocketManager.flaxLogout()
+        }
+        if (message.has(SocketInfo.KEY_ERROR) && message.getString(SocketInfo.KEY_ERROR) == "トークンが無効です") {
+            viewModelScope.launch {
+                refreshCallToken()
+            }
+        }
+        isButtonEnable.postValue(true)
+        cancelButtonClickedFlag = false
+    }
+
+    private fun handleLoginRequest() {
+        connectResult.postValue(ConnectResult(SocketInfo.RESULT_OK))
+    }
+
+    @Throws(JSONException::class)
+    private fun handleLogin(message: JSONObject) {
+        flaxLoginAuthResponse = FlaxLoginAuthResponse(
+            message.getString(SocketInfo.KEY_MEMBER_CODE),
+            message.getString(SocketInfo.KEY_PERFORMER_CODE),
+            message.getString(SocketInfo.KEY_MEDIA_SERVER_OWNER_CODE),
+            message.getString(SocketInfo.KEY_MEDIA_SERVER),
+            message.getString(SocketInfo.KEY_SESSION_CODE),
+            message.getString(SocketInfo.KEY_PERFORMER_THUMB_IMAGE),
+            message.getInt(BUNDLE_KEY.STATUS)
+        )
+        maruCastManager.setLoginCallBack(this)
+        maruCastManager.connectServer(flaxLoginAuthResponse!!)
+    }
+
+    override fun loginSuccess() {
+        isButtonEnable.postValue(true)
+        isLoginSuccess.postValue(true)
+        rxPreferences.setCallToken("")
+    }
+
+    private fun connectFlaxChatSocket(performerCode: String, callType: Int) {
+        val param = JSONObject()
+        try {
+            param.put(SocketInfo.AUTH_OWN_NAME, BuildConfig.WS_OWNER)
+            param.put(SocketInfo.KEY_PERFORMER_CODE, performerCode)
+            param.put(SocketInfo.AUTH_TOKEN, rxPreferences.getCallToken())
+            param.put(BUNDLE_KEY.STATUS, callType)
+            val urlStr: String =
+                BuildConfig.WS_URL_LOGIN_CALL + "?data=" + URLEncoder.encode(
+                    param.toString(),
+                    "UTF-8"
+                )
+            flaxWebSocketManager.flaxConnect(urlStr, this)
+            rxPreferences.setCallToken("")
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        } catch (e: UnsupportedEncodingException) {
+            e.printStackTrace()
+        }
     }
 }
-
-data class AudioConfig(
-    var mode: Int,
-    var isSpeakerphoneOn: Boolean
-)
 
 data class PerformerInfo(
     var name: String = "",
     var performerCode: String = "",
     var imageUrl: String = "",
-)
-
-sealed class CallState {
-    object CONNECTING : CallState()
-    object TALKING : CallState()
-}
-
-sealed class MinimizeCallState {
-    class ACTIVE(val avatarUrl: String) : MinimizeCallState()
-    object INACTIVE : MinimizeCallState()
-}
-
-sealed class ActionState {
-    object EndCall : ActionState()
-    object ShowDialogWarningPoint : ActionState()
-}
+) : Serializable
