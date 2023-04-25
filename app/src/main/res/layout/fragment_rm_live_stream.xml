@@ -19,7 +19,7 @@
         android:layout_height="match_parent"
         tools:context=".android.ui.review_mode.live_stream.LiveStreamFragment">
 
-        <ImageView
+        <org.marge.marucast_android_client.views.VideoRendererView
             android:id="@+id/performerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -117,7 +117,7 @@
                     app:layout_constraintWidth_percent="0.106"
                     tools:visibility="visible" />
 
-                <View
+                <org.marge.marucast_android_client.views.VideoRendererView
                     android:id="@+id/memberViewCamera"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -196,18 +196,18 @@
                     android:layout_marginBottom="8dp"
                     android:background="@drawable/bg_live_stream_edt_comment"
                     android:ems="10"
-                    android:fontFamily="@font/hiragino_sans_w3"
+                    style="@style/text_13"
                     android:gravity="center_vertical"
-                    android:hint="@string/input_comment"
+                    android:hint="@string/input_comment_rm"
                     android:inputType="textMultiLine"
-                    android:paddingHorizontal="8dp"
+                    android:paddingHorizontal="@dimen/margin_15"
+                    android:paddingVertical="@dimen/margin_10"
                     android:textColor="@android:color/white"
                     android:textColorHint="#73FFFFFF"
-                    android:textSize="13sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/btnSendComment"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:text="テキストテキスト" />
+                    tools:text="メッセージを入力" />
 
                 <androidx.constraintlayout.widget.Group
                     android:id="@+id/memberCommentViewGroup"
@@ -237,17 +237,14 @@
                     android:layout_height="180dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginBottom="6dp"
-                    android:fadingEdge="vertical|horizontal"
                     android:orientation="vertical"
-                    android:requiresFadingEdge="vertical|horizontal"
-                    android:visibility="visible"
                     app:itemAnimator="@{null}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toTopOf="@id/barrier2"
                     app:layout_constraintEnd_toStartOf="@id/guideline10"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:reverseLayout="true"
-                    app:stackFromEnd="false"
+                    app:stackFromEnd="true"
+                    app:reverseLayout="false"
                     tools:itemCount="5"
                     tools:listitem="@layout/item_live_stream_message" />
 

@@ -1,5 +1,6 @@
 package jp.careapp.counseling.android.ui.review_mode.online_list
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -39,10 +40,10 @@ class RMOnlineListViewModel @Inject constructor(
     init {
         getDummyPerformers(true)
     }
+    private val temp = arrayListOf<RMPerformerResponse>()
+
 
     fun getDummyPerformers(isShowLoading: Boolean = false, isLoadMore: Boolean = false) {
-        val temp = arrayListOf<RMPerformerResponse>()
-
         viewModelScope.launch(Dispatchers.IO) {
             isLoading.postValue(isShowLoading)
             try {

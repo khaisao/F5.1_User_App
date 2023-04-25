@@ -57,8 +57,12 @@ class MaruCastManager @Inject constructor(
     }
 
     fun logoutRoom() {
-        if (!isRoomExists) return
-        mediaClient.logoutRoom()
+        //To handler log out when performer log out livestream
+        try {
+            if (!isRoomExists) return
+            mediaClient.logoutRoom()
+        } catch (e: Exception) {
+        }
     }
 
     fun handleConnected(activity: Activity?) {

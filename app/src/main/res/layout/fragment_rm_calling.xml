@@ -17,7 +17,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="@color/color_dialog_border"
             app:strokeWidth="1dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,6 +38,7 @@
                     <ImageView
                         android:id="@+id/ivAvatar"
                         android:layout_width="@dimen/_64sdp"
+                        android:scaleType="centerCrop"
                         android:layout_height="@dimen/_64sdp"
                         android:src="@drawable/ic_no_image" />
                 </com.google.android.material.card.MaterialCardView>
@@ -46,8 +46,13 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvName"
+                    android:layout_width="0dp"
+                    android:layout_marginHorizontal="@dimen/margin_36dp"
+                    android:textAlignment="center"
                     style="@style/text_bold_16"
                     android:layout_marginTop="@dimen/margin_24"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:textColor="@color/color_070707"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

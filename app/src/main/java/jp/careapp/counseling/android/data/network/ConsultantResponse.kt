@@ -1,7 +1,6 @@
 package jp.careapp.counseling.android.data.network
 
 import com.google.gson.annotations.SerializedName
-import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.history_chat.Performer
 import jp.careapp.counseling.android.utils.CallStatus.DEFAULT_CALL_STATUS
 import java.io.Serializable
@@ -26,6 +25,7 @@ data class ConsultantResponse(
     @SerializedName("review_total_number") val reviewTotalNumber: Int = 0,
     @SerializedName("review_total_score") val reviewTotalScore: Int = 0,
     @SerializedName("point_per_char") val pointPerChar: Int = 0,
+    @SerializedName("point_setting") val pointSetting: PointSetting? = null,
     @SerializedName("login_plans_datetime") val loginPlansDatetime: String? = "",
     @SerializedName("ranking") val ranking: RankingResponse? = null,
     @SerializedName("recommend_ranking") val recommendRanking: Int = 0,

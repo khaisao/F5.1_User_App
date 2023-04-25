@@ -5,7 +5,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_live_stream_bottom_sheet_dialog"
+        android:background="@drawable/bg_rm_live_stream_bottom_sheet_dialog"
         android:orientation="vertical"
         android:paddingHorizontal="24dp"
         tools:context=".android.ui.review_mode.live_stream.live_stream_bottom_sheet.live_stream_bottom_sheet.notice.LiveStreamNoticeBottomSheet">
@@ -17,22 +17,22 @@
             android:fontFamily="@font/hiragino_sans_w6"
             android:gravity="center"
             android:text="@string/private_mode_denied"
-            android:textColor="#f0f0f0"
+            android:textColor="@color/color_070707"
             android:textSize="16sp" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <TextView
             android:id="@+id/btnClose"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="34dp"
-            android:background="@drawable/bg_nm_btn_primary_disable"
+            android:background="@drawable/bg_rm_cancel_calling"
             android:fontFamily="@font/hiragino_sans_w6"
             android:gravity="center"
             android:minHeight="44dp"
             android:paddingVertical="16dp"
             android:text="@string/close"
-            android:textColor="#b2a9cc" />
+            android:textColor="@color/color_4985FE" />
 
     </LinearLayout>
 </layout>

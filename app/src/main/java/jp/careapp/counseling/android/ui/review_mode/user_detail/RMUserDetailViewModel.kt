@@ -8,7 +8,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.SingleLiveEvent
+import jp.careapp.counseling.android.data.network.ConsultantResponse
+import jp.careapp.counseling.android.data.network.GalleryResponse
+import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.model.network.RMUserDetailResponse
+import jp.careapp.counseling.android.network.ApiInterface
+import jp.careapp.counseling.android.network.socket.FlaxWebSocketManager
+import jp.careapp.counseling.android.network.socket.MaruCastManager
+import jp.careapp.counseling.android.utils.ActionState
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -20,8 +27,13 @@ import javax.inject.Inject
 class RMUserDetailViewModel @Inject constructor(
     private val mRepository: RMUserDetailRepository,
     @Assisted
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    private val flaxWebSocketManager: FlaxWebSocketManager,
+    private val maruCastManager: MaruCastManager,
+    private val rxPreferences: RxPreferences,
+    private val apiInterface: ApiInterface,
 ) : BaseViewModel() {
+    val actionState = SingleLiveEvent<ActionState>()
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
@@ -37,6 +49,15 @@ class RMUserDetailViewModel @Inject constructor(
     val mActionState = SingleLiveEvent<RMUserDetailActionState>()
 
     var userCode: String = ""
+
+
+    val userProfileResult = MutableLiveData<ConsultantResponse?>()
+    val userGallery = MutableLiveData<List<GalleryResponse>?>()
+    val statusFavorite = MutableLiveData<Boolean>()
+    val statusRemoveFavorite = MutableLiveData<Boolean>()
+    val isFirstChat = MutableLiveData<Boolean>()
+    val isButtonEnable = MutableLiveData<Boolean>()
+    var viewerStatus: Int = 0
 
     init {
         userCode = savedStateHandle.get<String>(BUNDLE_KEY.PERFORMER_CODE).toString()
@@ -108,11 +129,10 @@ class RMUserDetailViewModel @Inject constructor(
     fun onClickMessageChat() {
         mActionState.value = RMUserDetailActionState.NavigateToUserDetailMessage(
             _user.value?.code.toString(),
-            _user.value?.name.toString()
+            _user.value?.name.toString(),
+            _user.value?.thumbnailImageUrl.toString()
         )
     }
-
-    fun onClickCallVideo() {}
 
     fun onClickBlock() {
         mActionState.value = RMUserDetailActionState.ShowDialogBlock(_user.value?.name.toString())
@@ -125,7 +145,10 @@ class RMUserDetailViewModel @Inject constructor(
 }
 
 sealed class RMUserDetailActionState {
-    class NavigateToUserDetailMessage(val userCode: String, val userName: String) :
+    class NavigateToUserDetailMessage(
+        val userCode: String, val userName: String,
+        val thumbnailImage: String
+    ) :
         RMUserDetailActionState()
 
     object BlockUserSuccess : RMUserDetailActionState()

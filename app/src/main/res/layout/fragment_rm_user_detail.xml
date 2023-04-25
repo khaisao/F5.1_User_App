@@ -140,9 +140,11 @@
                     android:textColor="@color/white" />
             </LinearLayout>
 
+<!--            TODO ( set to viewModel.user.chatStatus}-->
+
             <LinearLayout
                 android:id="@+id/btnCallVideo"
-                callButtonStatus="@{viewModel.user.chatStatus}"
+                callButtonStatus="@{viewModel.user.callStatus}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/margin_24dp"

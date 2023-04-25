@@ -725,6 +725,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="item_live_stream_peeping">のぞき中</string>
     <string name="item_live_stream_normal">ライブ配信中</string>
     <string name="input_comment">コメントを入力</string>
+    <string name="input_comment_rm">メッセージを入力</string>
     <string name="current_points">所持ポイント</string>
     <string name="setting_push_success">保存されたプッシュ設定</string>
     <string name="dialog_destroy_private_mode">プライベートモードが解除されました</string>
@@ -746,6 +747,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="recharge_bank_success_title">決済成功</string>
     <string name="auto_charge_title">オートチャージ設定</string>
     <string name="service_act_title">資金決済法に基づく表示</string>
+    <string name="term_title">会員規約</string>
 
     <string-array name="nm_contact_us_category">
         <item>決済について</item>
