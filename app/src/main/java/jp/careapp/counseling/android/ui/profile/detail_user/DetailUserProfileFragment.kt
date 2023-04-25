@@ -485,8 +485,12 @@ class DetailUserProfileFragment :
     }
 
     private var handleResultUserGallery: Observer<List<GalleryResponse>?> = Observer {
-        val itemNoImage =
+        val uriNoImage =
             "android.resource://" + requireContext().packageName + "/" + R.drawable.default_avt_performer
+        val itemNoGallery = GalleryResponse(
+            thumbnailImage = ThumbnailImageResponse(url = uriNoImage),
+            comment = ""
+        )
         if (it != null && it.isNotEmpty()) {
             val listGallery = it.toMutableList()
             when {
@@ -494,20 +498,15 @@ class DetailUserProfileFragment :
                     numberTimeCanScrollDown = 0
                     binding.ivArrowDown.visibility = GONE
                     if (it.size % 3 == 1) {
-                        repeat(2) {
-                            listGallery.add(
-                                GalleryResponse(
-                                    thumbnailImage = ThumbnailImageResponse(url = itemNoImage),
-                                    comment = ""
-                                )
-                            )
-                        }
+                        listGallery.add(
+                            itemNoGallery
+                        )
+                        listGallery.add(
+                            itemNoGallery
+                        )
                     } else if (it.size % 3 == 2) {
                         listGallery.add(
-                            GalleryResponse(
-                                thumbnailImage = ThumbnailImageResponse(url = itemNoImage),
-                                comment = ""
-                            )
+                            itemNoGallery
                         )
                     }
                 }
@@ -525,18 +524,9 @@ class DetailUserProfileFragment :
             galleryAdapter.submitList(listGallery)
         } else {
             val listNoGallery = listOf(
-                GalleryResponse(
-                    thumbnailImage = ThumbnailImageResponse(url = itemNoImage),
-                    comment = ""
-                ),
-                GalleryResponse(
-                    thumbnailImage = ThumbnailImageResponse(url = itemNoImage),
-                    comment = ""
-                ),
-                GalleryResponse(
-                    thumbnailImage = ThumbnailImageResponse(url = itemNoImage),
-                    comment = ""
-                )
+                itemNoGallery,
+                itemNoGallery,
+                itemNoGallery
             )
             galleryAdapter.submitList(listNoGallery)
             binding.ivArrowDown.visibility = GONE
