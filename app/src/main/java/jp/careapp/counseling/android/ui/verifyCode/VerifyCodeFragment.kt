@@ -300,11 +300,6 @@ class VerifyCodeFragment :
     override fun setOnClick() {
         super.setOnClick()
 
-        binding.ivCloseDialog.setOnClickListener {
-            shareViewModel.setFocusEditText(isFocusEditTextEmail)
-            appNavigation.navigateUp()
-        }
-
         with(binding.tvNotReceive) {
             setOnClickListener {
                 val bundle = Bundle().apply {
