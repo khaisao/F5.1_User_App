@@ -46,6 +46,7 @@ import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.bottom_sheet.BuyPointBottomFragment
 import jp.careapp.counseling.android.ui.live_stream.CallConnectionDialog
+import jp.careapp.counseling.android.ui.live_stream.LiveStreamBuyPointFragment
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.buy_point.PurchasePointBottomSheet
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.DISABLE_LOAD_MORE
 import jp.careapp.counseling.android.ui.message.ChatMessageViewModel.Companion.ENABLE_LOAD_MORE
@@ -447,10 +448,9 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                         append("&&point=${point}")
                         append("&money=${money}")
                     }
-                    val arguments = Bundle().apply {
-                        putString(Define.URL_WEB_VIEW, purchasePointUrl)
-                    }
-                    appNavigation.openBuyPointsCredit(arguments)
+                    val buyPointScreen = LiveStreamBuyPointFragment.newInstance(purchasePointUrl)
+                    buyPointScreen.isCancelable = false
+                    buyPointScreen.show(childFragmentManager, "LiveStreamBuyPointFragment")
                 }
             }
         )
