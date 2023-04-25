@@ -528,12 +528,4 @@
         app:exitAnim="@anim/slide_out_right"
         app:popEnterAnim="@anim/slide_in_right"
         app:popExitAnim="@anim/slide_out_left" />
-    <action
-        android:id="@+id/action_global_buyPointCreditFragment"
-        app:destination="@id/buyPointCreditFragment"
-        app:enterAnim="@anim/slide_in_left"
-        app:exitAnim="@anim/slide_out_right"
-        app:popEnterAnim="@anim/slide_in_right"
-        app:popExitAnim="@anim/slide_out_left"
-        app:popUpTo="@id/splashFragment" />
 </navigation>

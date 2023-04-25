@@ -166,6 +166,4 @@ interface AppNavigation : BaseNavigator {
     fun openVerifyCodeHelpToVerifyCode(bundle: Bundle? = null)
 
     fun openExitLiveStreamToUserDetailFragment(bundle: Bundle? = null)
-
-    fun openBuyPointsCredit(bundle: Bundle? = null)
 }

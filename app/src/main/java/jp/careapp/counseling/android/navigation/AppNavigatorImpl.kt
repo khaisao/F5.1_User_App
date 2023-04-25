@@ -332,8 +332,4 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     override fun openExitLiveStreamToUserDetailFragment(bundle: Bundle?) {
         openScreen(R.id.action_exitLivestreamFragment_to_userProfileFragment, bundle)
     }
-
-    override fun openBuyPointsCredit(bundle: Bundle?) {
-        openScreen(R.id.action_global_buyPointCreditFragment, bundle)
-    }
 }
