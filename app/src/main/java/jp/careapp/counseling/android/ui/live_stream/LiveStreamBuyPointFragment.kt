@@ -3,39 +3,26 @@ package jp.careapp.counseling.android.ui.live_stream
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.webkit.*
 import androidx.activity.OnBackPressedCallback
-import androidx.annotation.StringRes
-import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import jp.careapp.core.base.BaseFragment
-import jp.careapp.core.utils.dialog.CommonAlertDialog
+import jp.careapp.core.base.BaseDialogFragment
 import jp.careapp.counseling.BuildConfig
 import jp.careapp.counseling.R
-import jp.careapp.counseling.android.data.model.user_profile.ActionLoadProfile
-import jp.careapp.counseling.android.data.pref.AppPreferences
-import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.databinding.FragmentLiveStreamBuyPointBinding
-import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class LiveStreamBuyPointFragment :
-    BaseFragment<FragmentLiveStreamBuyPointBinding, LiveStreamBuyPointViewModel>() {
+class LiveStreamBuyPointFragment : BaseDialogFragment<FragmentLiveStreamBuyPointBinding>() {
 
-    @Inject
-    lateinit var appNavigation: AppNavigation
+    override fun getLayoutId(): Int = R.layout.fragment_live_stream_buy_point
 
-    @Inject
-    lateinit var preferences: AppPreferences
-    override val layoutId = R.layout.fragment_live_stream_buy_point
-    private val viewModel: LiveStreamBuyPointViewModel by viewModels()
-    override fun getVM() = viewModel
-
-    override fun initView() {
-        super.initView()
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
         if (BuildConfig.DEBUG)
             WebView.setWebContentsDebuggingEnabled(true)
         configWebView()
@@ -63,11 +50,11 @@ class LiveStreamBuyPointFragment :
     }
 
     private fun startLoading() {
-        showHideLoading(true)
+        binding.progressBar.visibility = VISIBLE
     }
 
     private fun endLoading() {
-        showHideLoading(false)
+        binding.progressBar.visibility = GONE
     }
 
     private fun getBuyPointWebViewClient(): WebViewClient {
@@ -97,7 +84,7 @@ class LiveStreamBuyPointFragment :
                             view.loadUrl(url)
                         }
                         Define.CALL_BACK_BUY_POINT_CREDIT_CLOSE == url -> {
-                            appNavigation.navigateUp()
+                            dismiss()
                         }
                     }
                 } catch (e: Exception) {
@@ -108,37 +95,20 @@ class LiveStreamBuyPointFragment :
         }
     }
 
-    private fun showBuyPointSuccessDialog(@StringRes title: Int) {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-            .showDialog()
-            .setDialogTitle(title)
-            .setTextPositiveButton(jp.careapp.core.R.string.text_OK)
-            .setOnPositivePressed {
-                it.dismiss()
-            }
-    }
-
     private fun handleBackPress() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    notifyUpdateIfNeed()
-                    appNavigation.navigateUp()
+                    dismiss()
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
-    private fun notifyUpdateIfNeed() {
-        requireArguments().let { bundle ->
-            if (bundle.containsKey(Define.URL_WEB_VIEW)) {
-                bundle.getString(Define.URL_WEB_VIEW).toString().let { url ->
-                    if (url.contains(Define.URL_BUY_POINT_CREDIT_CARD_CONFIRM_SEGMENT) ||
-                        url.contains(Define.URL_BUY_POINT_CREDIT_CARD_ONECLICK_CONFIRM_SEGMENT)
-                    ) {
-                        EventBus.getDefault().post(ActionLoadProfile(true))
-                    }
-                }
+    companion object {
+        fun newInstance(webUrl: String) = LiveStreamBuyPointFragment().apply {
+            arguments = Bundle().also {
+                it.putString(Define.URL_WEB_VIEW, webUrl)
             }
         }
     }
