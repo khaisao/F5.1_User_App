@@ -26,6 +26,7 @@ import jp.careapp.counseling.android.data.model.live_stream.ConnectResult
 import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.network.GalleryResponse
 import jp.careapp.counseling.android.data.network.ThumbnailImageResponse
+import jp.careapp.counseling.android.data.network.TypeRankingResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
@@ -254,12 +255,16 @@ class DetailUserProfileFragment :
         appNavigation.openDetailUserToChatMessage(bundle)
     }
 
+    //TODO
+
     private fun checkPoint() {
-        if (rxPreferences.getPoint() < 1000) {
-            showDialogRequestBuyPoint()
-        } else {
-            showDialogConfirmCall()
-        }
+//        if (rxPreferences.getPoint() < 1000) {
+//            showDialogRequestBuyPoint()
+//        } else {
+//            showDialogConfirmCall()
+//        }
+        showDialogConfirmCall()
+
     }
 
     private fun checkPointForPeep() {
@@ -480,11 +485,31 @@ class DetailUserProfileFragment :
     }
 
     private var handleResultUserGallery: Observer<List<GalleryResponse>?> = Observer {
+        val itemNoImage =
+            "android.resource://" + requireContext().packageName + "/" + R.drawable.default_avt_performer
         if (it != null && it.isNotEmpty()) {
+            val listGallery = it.toMutableList()
             when {
-                it.size <= 3 -> {
+                listGallery.size <= 3 -> {
                     numberTimeCanScrollDown = 0
                     binding.ivArrowDown.visibility = GONE
+                    if (it.size % 3 == 1) {
+                        repeat(2) {
+                            listGallery.add(
+                                GalleryResponse(
+                                    thumbnailImage = ThumbnailImageResponse(url = itemNoImage),
+                                    comment = ""
+                                )
+                            )
+                        }
+                    } else if (it.size % 3 == 2) {
+                        listGallery.add(
+                            GalleryResponse(
+                                thumbnailImage = ThumbnailImageResponse(url = itemNoImage),
+                                comment = ""
+                            )
+                        )
+                    }
                 }
                 it.size % 3 == 0 -> {
                     numberTimeCanScrollDown = it.size / 3 - 1
@@ -497,10 +522,8 @@ class DetailUserProfileFragment :
                 binding.ivArrowDown.visibility = VISIBLE
             }
             numberMaxTimeCanScrollDown = numberTimeCanScrollDown
-            galleryAdapter.submitList(it)
+            galleryAdapter.submitList(listGallery)
         } else {
-            val itemNoImage =
-                "android.resource://" + requireContext().packageName + "/" + R.drawable.default_avt_performer;
             val listNoGallery = listOf(
                 GalleryResponse(
                     thumbnailImage = ThumbnailImageResponse(url = itemNoImage),
