@@ -29,7 +29,7 @@ data class HistoryResponse(
     @SerializedName("status")
     val status: Int = 0,
     @SerializedName("last_login_date")
-    val lastLoginDate: Date?,
+    val lastLoginDate: String?,
     @SerializedName("member_last_login_date")
-    val memberLastLoginDate: Date?,
+    val memberLastLoginDate: String?,
 ) : Serializable

@@ -1,22 +1,21 @@
 package jp.careapp.counseling.android.ui.favourite
 
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import jp.careapp.core.base.BaseViewModel
-import jp.careapp.counseling.android.data.network.*
-import jp.careapp.counseling.android.navigation.AppNavigation
+import jp.careapp.counseling.android.data.network.ApiObjectResponse
+import jp.careapp.counseling.android.data.network.BlockedConsultantResponse
+import jp.careapp.counseling.android.data.network.HistoryResponse
 import jp.careapp.counseling.android.network.ApiInterface
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import kotlinx.coroutines.launch
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 
-const val LIMIT_NUMBER = 50
+const val LIMIT_NUMBER = 100
 
 class HistoryViewModel @ViewModelInject constructor(
     private val apiInterface: ApiInterface,
@@ -77,7 +76,7 @@ class HistoryViewModel @ViewModelInject constructor(
 
     private fun getHistoryMember(page: Int = 1, isShowLoading: Boolean = true) {
         val params: MutableMap<String, Any> = HashMap()
-        params[BUNDLE_KEY.LIMIT] = 10
+        params[BUNDLE_KEY.LIMIT] = 100
         params[BUNDLE_KEY.PAGE] = page
         viewModelScope.launch {
             try {
@@ -90,8 +89,7 @@ class HistoryViewModel @ViewModelInject constructor(
                     getListConsultant()
                     if (isLoadMoreData) isLoadMoreData = false
                 }
-            } catch (throwable: Throwable) {
-                Log.d("arehgaerhaerh", "getHistoryMember: $throwable")
+            } catch (e: Exception) {
             }
         }
     }
@@ -127,10 +125,12 @@ class HistoryViewModel @ViewModelInject constructor(
             mHandler.postDelayed(runnable, 500)
             isFirstTimeLoadData = false
         } else {
+            isLoading.value = false
         }
     }
 
     private val runnable = Runnable {
+        isLoading.value = false
     }
 
     override fun onCleared() {

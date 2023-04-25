@@ -95,8 +95,11 @@ class ListTypeRankingFragment :
         }
     }
 
-    private fun showTopRanking(listTop: List<TypeRankingResponse>) {
-        if (!listTop.isNullOrEmpty()) {
+    private fun showTopRanking(listTop: ArrayList<TypeRankingResponse>) {
+        if (listTop.isNotEmpty()) {
+            if(listTop.size == 1){
+                listTop.add(TypeRankingResponse())
+            }
             binding.tvNoRanking.visibility = View.GONE
             binding.rvRanking49.visibility = View.VISIBLE
             ranking13Adapter.submitList(listTop)
