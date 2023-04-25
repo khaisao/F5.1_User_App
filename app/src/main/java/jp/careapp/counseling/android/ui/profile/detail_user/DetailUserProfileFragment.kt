@@ -255,16 +255,12 @@ class DetailUserProfileFragment :
         appNavigation.openDetailUserToChatMessage(bundle)
     }
 
-    //TODO
-
     private fun checkPoint() {
-//        if (rxPreferences.getPoint() < 1000) {
-//            showDialogRequestBuyPoint()
-//        } else {
-//            showDialogConfirmCall()
-//        }
-        showDialogConfirmCall()
-
+        if (rxPreferences.getPoint() < 1000) {
+            showDialogRequestBuyPoint()
+        } else {
+            showDialogConfirmCall()
+        }
     }
 
     private fun checkPointForPeep() {
