@@ -25,6 +25,7 @@ data class ConsultantResponse(
     @SerializedName("review_total_number") val reviewTotalNumber: Int = 0,
     @SerializedName("review_total_score") val reviewTotalScore: Int = 0,
     @SerializedName("point_per_char") val pointPerChar: Int = 0,
+    @SerializedName("point_setting") val pointSetting: PointSetting? = null,
     @SerializedName("login_plans_datetime") val loginPlansDatetime: String? = "",
     @SerializedName("ranking") val ranking: RankingResponse? = null,
     @SerializedName("recommend_ranking") val recommendRanking: Int = 0,
