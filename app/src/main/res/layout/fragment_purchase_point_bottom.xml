@@ -29,10 +29,15 @@
                 android:layout_marginTop="@dimen/margin_32"
                 android:layout_marginBottom="@dimen/margin_16"
                 android:text="@string/point_purchase"
-                android:textColor="@color/color_E3DFEF"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider" />
+                android:textColor="@color/color_E3DFEF" />
+
+            <TextView
+                android:id="@+id/tv_current_point"
+                style="@style/text_14"
+                android:layout_marginBottom="@dimen/margin_16"
+                android:text="@string/point_purchase"
+                android:textColor="@color/color_FFD600"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cost_point_rv"

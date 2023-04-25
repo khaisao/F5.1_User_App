@@ -5,14 +5,12 @@ import android.app.Application
 import android.media.AudioManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.live_stream.ConnectResult
 import jp.careapp.counseling.android.data.network.FlaxLoginAuthResponse
 import jp.careapp.counseling.android.data.network.LiveStreamChatResponse
-import jp.careapp.counseling.android.data.network.socket.SocketSendMessage
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.network.socket.CallingWebSocketClient
 import jp.careapp.counseling.android.network.socket.FlaxWebSocketManager
@@ -20,7 +18,6 @@ import jp.careapp.counseling.android.network.socket.MaruCastManager
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.PERFORMER
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.POINT
-import jp.careapp.counseling.android.utils.SocketInfo
 import jp.careapp.counseling.android.utils.SocketInfo.ACTION_ASK_TWO_SHOT
 import jp.careapp.counseling.android.utils.SocketInfo.ACTION_CANCEL_TWO_SHOT
 import jp.careapp.counseling.android.utils.SocketInfo.ACTION_CHANGE_CHAT_STATUS
@@ -54,8 +51,6 @@ class LiveStreamViewModel @Inject constructor(
     private val audioManager: AudioManager
 ) : BaseViewModel(), CallingWebSocketClient.ChatWebSocketCallBack {
 
-    private lateinit var socketClient: CallingWebSocketClient
-
     private var currentMode = LiveStreamMode.PARTY
     private val _currentModeLiveData = MutableLiveData(currentMode)
     val currentModeLiveData: LiveData<Int>
@@ -87,12 +82,14 @@ class LiveStreamViewModel @Inject constructor(
     val pointState: LiveData<PointState>
         get() = _pointState
 
+    private val _currentPoint = MutableLiveData(rxPreferences.getPoint())
+    val currentPoint: LiveData<Int>
+        get() = _currentPoint
+
     private var isLogout = false
     private var oldAudioMode = 0
     private var oldSpeakerPhone = false
 
-    private val gson by lazy { Gson() }
-    private var lastPoint = 0
     private var flaxLoginAuthResponse: FlaxLoginAuthResponse? = null
 
     private var isMicMute = false
@@ -226,14 +223,6 @@ class LiveStreamViewModel @Inject constructor(
         _pointState.postValue(PointState.EndCheck)
     }
 
-    private fun cancelCall() {
-        socketClient.sendMessage(gson.toJson(SocketSendMessage(action = SocketInfo.ACTION_CANCEL_CALL)))
-    }
-
-    private fun resetData() {
-        lastPoint = 0
-    }
-
     override fun onHandleMessage(jsonMessage: JSONObject) {
         try {
             val result: String = jsonMessage.getString(KEY_RESULT)
@@ -268,6 +257,7 @@ class LiveStreamViewModel @Inject constructor(
                 when (action) {
                     ACTION_RELOAD, ACTION_CHAT_LOG -> try {
                         val point = jsonMessage.getString(POINT).toInt()
+                        _currentPoint.postValue(point)
                         if (_pointState.value == PointState.StartCheck && point <= 1000 && point > 500) {
                             _pointState.postValue(PointState.PointUnder1000)
                         } else if (_pointState.value == PointState.PointUnder1000 && point <= 500) {

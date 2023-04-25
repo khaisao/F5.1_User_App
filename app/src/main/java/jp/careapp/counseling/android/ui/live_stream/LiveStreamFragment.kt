@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseActivity
 import jp.careapp.core.base.BaseFragment
@@ -349,6 +348,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         bindingMessageHandle()
         bindingWhisperHandle()
         bindingPointCheckingHandle()
+        bindingCurrentPointHandle()
     }
 
     private fun bindingConnectResult() {
@@ -370,11 +370,10 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         mViewModel.updateUIMode.observe(viewLifecycleOwner) {
             when (it) {
                 UI_DISMISS_PRIVATE_MODE -> {
-                    dismissBottomSheet()
+                    dismissPrivateModeConnectionBottomSheet()
                 }
                 UI_SHOW_CONFIRM_CLOSE_PRIVATE_MODE -> {
-                    dismissBottomSheet()
-                    // showErrorDialog(getString(R.string.cancel_title)) TODO Check popup or bottom sheet
+                    dismissPrivateModeConnectionBottomSheet()
                     showPrivateModeDenied()
                 }
                 UI_SHOW_WAITING_PRIVATE_MODE -> {
@@ -436,6 +435,12 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 }
                 else -> {}
             }
+        }
+    }
+
+    private fun bindingCurrentPointHandle() {
+        mViewModel.currentPoint.observe(viewLifecycleOwner) {
+            rxPreferences.setPoint(it)
         }
     }
 
@@ -572,10 +577,10 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         }).show(childFragmentManager, "ConnectPrivateBottomSheet")
     }
 
-    private fun dismissBottomSheet() {
+    private fun dismissPrivateModeConnectionBottomSheet() {
         val fragment: Fragment? =
-            childFragmentManager.findFragmentByTag("BottomSheetDialogFragment")
-        if (fragment != null) (fragment as BottomSheetDialogFragment).dismiss()
+            childFragmentManager.findFragmentByTag("ConnectPrivateBottomSheet")
+        if (fragment != null) (fragment as ConnectPrivateBottomSheet).dismiss()
     }
 
     override fun onClickButtonOKConfirmBottomSheet(mode: String) {
