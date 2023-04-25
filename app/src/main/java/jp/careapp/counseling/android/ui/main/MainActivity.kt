@@ -197,18 +197,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             .setTextPositiveButton(R.string.buy_point)
             .setTextNegativeButton(R.string.cancel)
             .setOnPositivePressed {
-                if (rxPreferences.isFullMode()) {
-                    val bundle = Bundle().apply {
-                        putString(Define.TITLE_WEB_VIEW, getString(R.string.buy_point))
-                        putString(
-                            Define.URL_WEB_VIEW,
-                            configUrlBuyPoints(rxPreferences.getToken().toString())
-                        )
-                    }
-                    appNavigation.openScreenToWebview(bundle)
-                } else {
-                    appNavigation.openWebBuyPointToBuyPointGoogle()
-                }
+                appNavigation.openWebBuyPointToBuyPointGoogle()
                 it.dismiss()
             }
             .setOnNegativePressed {
@@ -417,13 +406,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 }
             }
             Define.Intent.PAYMENT_METHOD, Define.Intent.CREDIT, Define.Intent.BANK -> {
-                if (rxPreferences.isFullMode()) {
-                    val bundle = Bundle().apply {
-                        putString(Define.TITLE_WEB_VIEW, getString(R.string.buy_point))
-                        putString(Define.URL_WEB_VIEW, getUrlWebView(linkType))
-                    }
-                    appNavigation.openScreenToWebview(bundle)
-                } else if (appNavigation.currentFragmentId() != R.id.buyPointFragment) {
+                if (appNavigation.currentFragmentId() != R.id.buyPointFragment) {
                     appNavigation.openWebBuyPointToBuyPointGoogle()
                 }
             }

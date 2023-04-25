@@ -25,48 +25,40 @@ class HandleBuyPoint @Inject constructor(
         handleBuyPoint: BuyPointBottomFragment.HandleBuyPoint? = null,
         isClickSendMessage: Boolean = false
     ) {
-        if (isFullMode) {
-            val webViewBundle = Bundle().apply {
-                putString(Define.TITLE_WEB_VIEW, context.getString(R.string.select_payment_method))
-            }
-            val lastBuyLog = rxPreferences.getLastBuyLog()
-            if (!isClickSendMessage || rxPreferences.getFirstBuyCredit() || lastBuyLog == null) {
+        val webViewBundle = Bundle().apply {
+            putString(Define.TITLE_WEB_VIEW, context.getString(R.string.select_payment_method))
+        }
+        val lastBuyLog = rxPreferences.getLastBuyLog()
+        if (!isClickSendMessage || rxPreferences.getFirstBuyCredit() || lastBuyLog == null) {
+            webViewBundle.putString(
+                Define.URL_WEB_VIEW,
+                configUrlBuyPoints(rxPreferences.getToken().toString())
+            )
+        } else {
+            val creditPrices = rxPreferences.getCreditPrices()
+            val credit =
+                if (creditPrices.last().priceWithoutTax.defaultValue() == lastBuyLog.price.defaultValue()) {
+                    creditPrices.last()
+                } else {
+                    creditPrices.firstOrNull {
+                        it.priceWithoutTax.defaultValue() > lastBuyLog.price.defaultValue()
+                    }
+                }
+            if (credit == null) {
                 webViewBundle.putString(
                     Define.URL_WEB_VIEW,
                     configUrlBuyPoints(rxPreferences.getToken().toString())
                 )
             } else {
-                val creditPrices = rxPreferences.getCreditPrices()
-                val credit =
-                    if (creditPrices.last().priceWithoutTax.defaultValue() == lastBuyLog.price.defaultValue()) {
-                        creditPrices.last()
-                    } else {
-                        creditPrices.firstOrNull {
-                            it.priceWithoutTax.defaultValue() > lastBuyLog.price.defaultValue()
-                        }
-                    }
-                if (credit == null) {
-                    webViewBundle.putString(
-                        Define.URL_WEB_VIEW,
-                        configUrlBuyPoints(rxPreferences.getToken().toString())
-                    )
-                } else {
-                    val url = Define.URL_CREDIT_PURCHASE_CONFIRM +
-                            "?point=${credit.getTotalPoint()}" +
-                            "&&money=${credit.price}" +
-                            "&&realPoint=${credit.buyPoint}" +
-                            "&&price_without_tax=${credit.priceWithoutTax}"
-                    webViewBundle.putString(Define.URL_WEB_VIEW, url)
-                }
+                val url = Define.URL_CREDIT_PURCHASE_CONFIRM +
+                        "?point=${credit.getTotalPoint()}" +
+                        "&&money=${credit.price}" +
+                        "&&realPoint=${credit.buyPoint}" +
+                        "&&price_without_tax=${credit.priceWithoutTax}"
+                webViewBundle.putString(Define.URL_WEB_VIEW, url)
             }
-            appNavigation.openScreenToWebview(webViewBundle)
-        } else {
-            BuyPointBottomFragment.showPointBottomSheet(
-                fragmentManager,
-                bundle,
-                handleBuyPoint
-            )
         }
+        appNavigation.openScreenToWebview(webViewBundle)
     }
 
     fun buyPointLiveStream(
@@ -80,7 +72,4 @@ class HandleBuyPoint @Inject constructor(
                 callBack
             )
     }
-
-    private val isFullMode: Boolean
-        get() = rxPreferences.isFullMode()
 }

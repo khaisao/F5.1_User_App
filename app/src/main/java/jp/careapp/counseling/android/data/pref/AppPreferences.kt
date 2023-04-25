@@ -39,7 +39,6 @@ class AppPreferences @Inject constructor(
         const val PREF_KEY_TEMPLATE = "PREF_KEY_TEMPLATE"
         const val PREF_KEY_THE_REGISTER = "KEY_THE_REGISTER"
         const val PREF_FIRST_BUY_CREDIT = "FIRST_BUY_CREDIT"
-        const val PREF_KEY_IS_FULL_MODE = "PREF_KEY_IS_FULL_MODE"
         const val PREF_KEY_IS_FIRST_REVIEW = "PREF_KEY_IS_FIRST_REVIEW"
         const val PREF_DESIRED_RESPONSE = "PREF_DESIRED_RESPONSE"
         const val PREF_GENRE_SELECTED = "PREF_GENRE_SELECTED"
@@ -136,7 +135,6 @@ class AppPreferences @Inject constructor(
             putInt(PREF_KEY_POINT, memberResponse.point)
             putLong(PREF_KEY_BUY_TIME, memberResponse.buyTime)
             putBoolean(PREF_FIRST_BUY_CREDIT, memberResponse.firstBuyCredit)
-            putBoolean(PREF_KEY_IS_FULL_MODE, memberResponse.disPlay == MODE_USER.MODE_ALL)
             put(PREF_KEY_LAST_BUY_LOG, Gson().toJson(memberResponse.lastBuyLog))
         }.also { it.apply() }
         saveTroubleSheet(memberResponse.troubleSheetResponse)
@@ -166,10 +164,6 @@ class AppPreferences @Inject constructor(
 
     override fun getFirstBuyCredit(): Boolean {
         return mPrefs.getBoolean(PREF_FIRST_BUY_CREDIT, true)
-    }
-
-    override fun isFullMode(): Boolean {
-        return mPrefs.getBoolean(PREF_KEY_IS_FULL_MODE, false)
     }
 
     override fun saveDeviceToken(deviceToken: String) {

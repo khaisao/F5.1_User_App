@@ -25,6 +25,7 @@ class Define {
         const val INSU_POINT = 0
         const val BUY_POINT_FIRST = 1
         const val BUY_POINT_UNDER_500 = 2
+        const val BUY_POINT_CHAT_MESSAGE = 3
 
         // key of in app purchase
         const val IN_APP_PURCHASE_KEY_1: String = "careapp_tier_980"

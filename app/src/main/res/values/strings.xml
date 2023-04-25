@@ -407,8 +407,6 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <!--    point free-->
     <string name="point_free">無料ポイント</string>
     <string name="stripe_buy_point">ポイント購入</string>
-    <string name="recommend_use_point_free">1,500円分の無料相談ポイントを所持しています。ぜひ相談をしてみてください。</string>
-    <string name="baloon_message">今だけたったの100円で追加相談できます！</string>
 
     <!--    Review consultant-->
     <string name="review_consultant_title">レビュー投稿</string>

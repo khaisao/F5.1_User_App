@@ -13,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
+import jp.careapp.counseling.android.utils.Define.Companion.BUY_POINT_CHAT_MESSAGE
 import jp.careapp.counseling.android.utils.Define.Companion.BUY_POINT_UNDER_500
 import jp.careapp.counseling.android.utils.Define.Companion.INSU_POINT
 import jp.careapp.counseling.databinding.FragmentPurchasePointBottomBinding
@@ -81,6 +82,10 @@ class PurchasePointBottomSheet : BottomSheetDialogFragment() {
             }
             BUY_POINT_UNDER_500 -> {
                 binding.titlePointTv.text = getString(R.string.point_purchase_under_500)
+                binding.tvCurrentPoint.visibility = GONE
+            }
+            BUY_POINT_CHAT_MESSAGE -> {
+                binding.titlePointTv.text = getString(R.string.insufficient_points)
                 binding.tvCurrentPoint.visibility = GONE
             }
             else -> {
