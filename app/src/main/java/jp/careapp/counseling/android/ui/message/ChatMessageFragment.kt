@@ -102,7 +102,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     }
 
     private var sendMessageEnable = false
-    private var countPointMessage = 0
     private var performerDetail: ConsultantResponse? = null
     private var isSendMessageSuccess = false
     private var reviewManager: ReviewManager? = null
@@ -347,7 +346,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         this.performerDetail = performerDetail
         this.pointPerchar = performerDetail?.pointPerChar ?: 0
         mAdapter.setPointPerChar(this.pointPerchar)
-        formatCharactorToPoint(binding.contentMessageEdt.text.toString().length, this.pointPerchar)
 
         if (performerDetail != null) {
             binding.apply {
@@ -383,7 +381,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         // send message
         binding.sendMessageIv.setOnClickListener {
             if (!isDoubleClick && sendMessageEnable) {
-                if (countPointMessage <= rxPreferences.getPoint()) {
+                if (rxPreferences.getPoint() >= (performerDetail?.pointSetting?.mail ?: 0)) {
                     val code = this.performerCode
                     val message = binding.contentMessageEdt.text.toString().trim()
                     sendMessage(code, message, "")
@@ -396,9 +394,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
         // handle text input change
         binding.contentMessageEdt.addTextChangedListener {
-            val countCharactor =
-                it.toString().trim().replace("\n", "").length
-            formatCharactorToPoint(countCharactor, pointPerchar)
             if (TextUtils.isEmpty(it?.toString()?.trim() ?: "")) {
                 binding.sendMessageIv.setImageResource(R.drawable.ic_message_inactive)
                 sendMessageEnable = false
@@ -558,13 +553,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
             }
     }
 
-    private fun showDialogWarningDuringCall() {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-            .showDialog()
-            .setDialogTitle(R.string.msg_warning_during_call)
-            .setTextPositiveButton(R.string.text_OK)
-    }
-
     private fun openCalling() {
         val consultant = viewModel.getCurrentConsultant()
         consultant?.let { performer ->
@@ -592,14 +580,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                 MessageRequest(code, subject, message, ""),
                 it1
             )
-        }
-    }
-
-    private fun formatCharactorToPoint(countCharactor: Int, pointPerchar: Int) {
-        if (countCharactor == 0) {
-            //TODO (Handler logic count charactor equal 0)
-        } else {
-            countPointMessage = (pointPerchar) * (((countCharactor - 1) / 10) + 1)
         }
     }
 
