@@ -3,21 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="favorite"
-            type="jp.careapp.counseling.android.data.network.FavoriteResponse" />
-
-        <variable
-            name="event"
-            type="jp.careapp.counseling.android.ui.favourite.EventFavoriteAction" />
-
-    </data>
-
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_marginHorizontal="@dimen/margin_8"
         android:layout_marginBottom="@dimen/margin_6"
         android:minWidth="80dp"
@@ -25,14 +13,14 @@
         app:cardCornerRadius="@dimen/margin_10">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{()->event.onclickItem(favorite)}">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/iv_person"
                 android:layout_width="wrap_content"
-                android:layout_height="110dp"
+                android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_avt_performer"
@@ -63,59 +51,65 @@
                     android:text="ライブ配信中"
                     android:textColor="@color/white" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <FrameLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_10"
-                    android:layout_marginTop="@dimen/margin_8"
-                    android:layout_marginBottom="@dimen/margin_6"
-                    android:gravity="end"
-                    android:layoutDirection="rtl">
+                    android:layout_marginEnd="@dimen/margin_10">
 
-                    <TextView
-                        android:id="@+id/tv_size"
-                        style="@style/text_13"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/margin_3"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="Size"
-                        android:textColor="@color/color_text_E3DFEF" />
+                        android:layout_marginTop="@dimen/margin_8"
+                        android:layout_marginBottom="@dimen/margin_6"
+                        android:gravity="center_vertical"
+                        android:layoutDirection="rtl">
 
-                    <TextView
-                        android:id="@+id/tv_age"
-                        style="@style/text_13"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_6"
-                        android:layout_marginBottom="@dimen/margin_3"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="age"
-                        android:textColor="@color/color_text_E3DFEF" />
+                        <TextView
+                            android:id="@+id/tv_age"
+                            style="@style/text_13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/margin_6"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="age"
+                            android:textColor="@color/color_text_F0F0F0" />
 
-                    <TextView
-                        android:id="@+id/tv_name"
-                        style="@style/text_bold_14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_6"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:paddingBottom="@dimen/margin_8"
-                        android:text="This is very lonewgaegwg name "
-                        android:textColor="@color/color_text_F0F0F0" />
+                        <TextView
+                            android:id="@+id/tv_size"
+                            style="@style/text_13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/margin_6"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Size"
+                            android:textColor="@color/color_text_F0F0F0" />
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/tv_name"
+                            style="@style/text_bold_14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:paddingBottom="@dimen/margin_2"
+                            android:text="This is very long name asfasfasf "
+                            android:textColor="@color/color_text_F0F0F0" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
 
                 <TextView
+                    android:id="@+id/tv_body"
                     style="@style/text_13"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_10"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:text="Text"
                     android:textColor="@color/color_B2A9CC" />
 
             </LinearLayout>
@@ -130,22 +124,6 @@
                 android:textColor="@color/color_B2A9CC"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/ll_info" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_16"
-                android:background="@drawable/bg_text_release"
-                android:onClick="@{()->event.onClickRelease(favorite)}"
-                android:paddingHorizontal="@dimen/margin_16"
-                android:paddingVertical="@dimen/padding_10"
-                android:text="@string/release"
-                android:textColor="@color/color_978DFF"
-                android:textSize="@dimen/text_size_12"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_person"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/iv_person" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,15 +1,13 @@
 package jp.careapp.counseling.android.ui.favourite
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.counseling.R
@@ -56,13 +54,29 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
         arguments?.let {
             typeFavoriteScreen = it.getInt(BUNDLE_KEY.TYPE_ONLINE_LIST_SCREEN)
         }
-    }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
-    override fun bindingStateView() {
-        super.bindingStateView()
-        viewModels.forceRefresh()
-        adapterFavorite = FavoriteAdapter(lifecycleOwner = viewLifecycleOwner, events = viewModels, context = requireContext())
+        adapterFavorite = FavoriteAdapter(context = requireContext(), onItemClick = { item ->
+            val bundle = Bundle()
+            bundle.putInt(BUNDLE_KEY.POSITION_SELECT, 0)
+            val listConsultant = ArrayList(
+                listOf(
+                    ConsultantResponse(
+                        code = item.code,
+                        existsImage = item.existsImage,
+                        imageUrl = item.imageUrl,
+                        name = item.name,
+                        presenceStatus = item.presenceStatus,
+                        stage = item.status,
+                        thumbnailImageUrl = item.thumbnailImageUrl
+                    )
+                )
+            )
+            bundle.putSerializable(
+                BUNDLE_KEY.LIST_USER_PROFILE,
+                listConsultant
+            )
+            appNavigation.openRankingToUserProfileScreen(bundle)
+        })
         adapterHistory = HistoryAdapter(
             context = requireContext(),
             onItemClick = { item ->
@@ -89,35 +103,75 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
                 )
                 appNavigation.openRankingToUserProfileScreen(bundle)
             })
-        adapterFavoriteHome = FavoriteHomeAdapter(lifecycleOwner = viewLifecycleOwner, events = viewModels)
-        binding.apply {
-            if (typeFavoriteScreen == BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_FAVORITE) {
-                rvFavorite.layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                rvFavorite.adapter = adapterFavorite
-            } else if (typeFavoriteScreen == BUNDLE_KEY.TYPE_HISTORY) {
-                rvFavorite.layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                rvFavorite.adapter = adapterHistory
-            } else {
-                rvFavorite.layoutManager = GridLayoutManager(requireContext(), 2)
-                rvFavorite.adapter = adapterFavoriteHome
-            }
+        adapterFavoriteHome = FavoriteHomeAdapter(onItemClick = { item ->
+            val bundle = Bundle()
+            bundle.putInt(BUNDLE_KEY.POSITION_SELECT, 0)
+            val listConsultant = ArrayList(
+                listOf(
+                    ConsultantResponse(
+                        code = item.code,
+                        existsImage = item.existsImage,
+                        imageUrl = item.imageUrl,
+                        name = item.name,
+                        presenceStatus = item.presenceStatus,
+                        stage = item.status,
+                        thumbnailImageUrl = item.thumbnailImageUrl
+                    )
+                )
+            )
+            bundle.putSerializable(
+                BUNDLE_KEY.LIST_USER_PROFILE,
+                listConsultant
+            )
+            appNavigation.openRankingToUserProfileScreen(bundle)
+        })
 
-            appBar.apply {
-                btnLeft.setImageDrawable(resources.getDrawable(R.drawable.ic_arrow_left))
-                btnLeft.setOnClickListener {
-                    if (!isDoubleClick)
-                        findNavController().navigateUp()
+        setUpAdapter()
+
+        if (typeFavoriteScreen == BUNDLE_KEY.TYPE_HISTORY) {
+            binding.rvFavorite.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val listDataSize = historyViewModel.listHistoryConsultantResult.value?.size ?: 0
+                    if (listDataSize > 0) {
+                        val layoutManager = binding.rvFavorite.layoutManager as LinearLayoutManager
+                        if (!historyViewModel.isLoadMoreData) {
+                            if ((layoutManager.findLastCompletelyVisibleItemPosition() == listDataSize - 1) && historyViewModel.isCanLoadMoreData()) {
+                                historyViewModel.isLoadMoreData = true
+                                historyViewModel.loadMoreData()
+                            }
+                        }
+                    }
                 }
-                tvTitle.text = getString(R.string.favorite_counselor)
-                viewStatusBar.visibility = View.GONE
-                lineBottom.isVisible = false
-                arguments?.apply {
-                    binding.appBar.root.isVisible = getBoolean(BUNDLE_KEY.IS_SHOW_TOOLBAR, false)
+            })
+        }
+    }
+
+    private fun setUpAdapter() {
+        binding.apply {
+            when (typeFavoriteScreen) {
+                BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_FAVORITE -> {
+                    rvFavorite.layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    rvFavorite.adapter = adapterFavorite
+                }
+                BUNDLE_KEY.TYPE_HISTORY -> {
+                    rvFavorite.layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    rvFavorite.adapter = adapterHistory
+                }
+                else -> {
+                    rvFavorite.layoutManager = GridLayoutManager(requireContext(), 2)
+                    rvFavorite.adapter = adapterFavoriteHome
                 }
             }
         }
+    }
+
+    override fun bindingStateView() {
+        super.bindingStateView()
+        viewModels.forceRefresh()
+
         viewModels.favoriteLoading.observe(
             viewLifecycleOwner
         ) {

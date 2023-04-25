@@ -59,19 +59,17 @@ fun String.getCurrentDayName(): String {
 }
 
 fun Context.getDurationBreakdown(time: Long): String {
-    val zero: Long = 0
+    val sb = StringBuilder(64)
     var millis = time
     if (millis <= 0) {
-        return "now"
+        return ""
     }
-//    require(millis >= 0) { "Duration must be greater than zero!" }
     val days = TimeUnit.MILLISECONDS.toDays(millis)
     millis -= TimeUnit.DAYS.toMillis(days)
     val hours = TimeUnit.MILLISECONDS.toHours(millis)
     millis -= TimeUnit.HOURS.toMillis(hours)
     val minutes = TimeUnit.MILLISECONDS.toMinutes(millis)
     millis -= TimeUnit.MINUTES.toMillis(minutes)
-    val sb = StringBuilder(64)
 
     if (days > 30) {
         sb.append(1)

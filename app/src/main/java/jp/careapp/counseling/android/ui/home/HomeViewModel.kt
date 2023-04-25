@@ -148,11 +148,8 @@ class HomeViewModel @Inject constructor(
                     it.code == consultant.code
                 }
             }
-            Log.d("asgasgasg", "list: ${listConsultantTemp.size}")
-            Log.d("asgasgasg", "listblock: ${listBlockedConsultantResult.value!!.dataResponse.size}")
             listConsultantTemp.clear()
             listConsultantTemp.addAll(dataResult)
-            Log.d("asgasgasg", "afterblock:${listConsultantTemp.size} ")
         }
         loadDataSuccess()
     }
