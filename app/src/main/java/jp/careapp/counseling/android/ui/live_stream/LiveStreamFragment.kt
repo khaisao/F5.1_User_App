@@ -1,6 +1,7 @@
 package jp.careapp.counseling.android.ui.live_stream
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -8,6 +9,8 @@ import android.content.IntentFilter
 import android.graphics.Rect
 import android.media.AudioManager
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewTreeObserver
@@ -167,6 +170,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun initView() {
         super.initView()
 
@@ -197,6 +201,33 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
         mAdapter = LiveStreamAdapter()
         binding.rcvCommentList.adapter = mAdapter
+
+        binding.btnCameraFlip.bringToFront()
+        binding.memberViewCamera.setOnTouchListener { v, event ->
+            var xDown = 0f
+            var yDown = 0f
+            when (event?.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    xDown = event.x
+                    yDown = event.y
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    val moveX = event.x
+                    val moveY = event.y
+
+                    val distanceX = moveX - xDown
+                    val distanceY = moveY - yDown
+
+                    v.x = v.x + distanceX
+                    v.y = v.y + distanceY
+
+                    xDown = moveX
+                    yDown = moveY
+                }
+            }
+
+            true
+        }
 
         mViewModel.handleConnect(requireActivity(), this)
 
@@ -542,7 +573,6 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             putInt(ROOT_SCREEN, rootScreen)
         }
         appNavigation.openLiveStreamToExitLiveStream(bundle)
-        mViewModel.logout()
     }
 
     private fun showLogoutConfirm() {
@@ -621,6 +651,9 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     override fun onDestroyView() {
         super.onDestroyView()
         requireContext().unregisterReceiver(earphoneEventReceiver)
+        binding.performerView.release()
+        binding.memberViewCamera.release()
+        mViewModel.logout()
     }
 
     override fun onSwitchViewerGroupVisible(isVisible: Boolean) {

@@ -20,7 +20,6 @@ class MaruCastManager @Inject constructor(
     private val mediaClient: MediaClient
 ) : LoginEvent {
     private var activity: Activity? = null
-    private var isMute = false
     private var isPublishing = false
     private var isRoomExists = false
     private var loginCallBack: CallingWebSocketClient.MaruCastLoginCallBack? = null
@@ -95,12 +94,8 @@ class MaruCastManager @Inject constructor(
         mediaClient.switchCamera()
     }
 
-    fun isPublishing(): Boolean? {
+    fun isPublishing(): Boolean {
         return isPublishing
-    }
-
-    fun isMute(): Boolean? {
-        return isMute
     }
 
     fun setRoomExists(flg: Boolean?) {
@@ -125,7 +120,6 @@ class MaruCastManager @Inject constructor(
             isPublishing = true
             switchViewerCallback?.onSwitchViewerGroupVisible(true)
         }
-        isMute = false
     }
 
     fun stopPublish() {
@@ -142,14 +136,18 @@ class MaruCastManager @Inject constructor(
         }
     }
 
-    fun muteStream() {
-        isMute = !isMute
-        Timber.i(isMute.toString())
-        if (isMute) {
+    fun setMicOff(isOff: Boolean) {
+        if (isOff) {
             mediaClient.muteAudio()
-            mediaClient.muteVideo()
         } else {
             mediaClient.unmuteAudio()
+        }
+    }
+
+    fun setCameraOff(isOff: Boolean) {
+        if (isOff) {
+            mediaClient.muteVideo()
+        } else {
             mediaClient.unmuteVideo()
         }
     }

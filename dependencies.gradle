@@ -7,7 +7,8 @@ ext {
             targetSdk            : 31,
             buildTools           : '30.0.2',
             versionCode          : 1,
-            versionName          : '1.0.0',
+//            versionName          : '1.0.0',
+            versionName          : '2023.4.25',
 
 
             // For app

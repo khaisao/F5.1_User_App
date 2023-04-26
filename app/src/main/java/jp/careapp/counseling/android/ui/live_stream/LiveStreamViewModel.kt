@@ -5,6 +5,7 @@ import android.app.Application
 import android.media.AudioManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.counseling.R
@@ -37,6 +38,8 @@ import jp.careapp.counseling.android.utils.SocketInfo.KEY_USER_TYPE
 import jp.careapp.counseling.android.utils.SocketInfo.KEY_WHISPER
 import jp.careapp.counseling.android.utils.SocketInfo.RESULT_NG
 import jp.careapp.counseling.android.utils.SocketInfo.RESULT_OK
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -111,13 +114,19 @@ class LiveStreamViewModel @Inject constructor(
     }
 
     fun updateMicSetting(_isMicMute: Boolean = false) {
-        audioManager.isMicrophoneMute = _isMicMute
+        if (isMicMute != _isMicMute) {
+            viewModelScope.launch(Dispatchers.IO) {
+                maruCastManager.setMicOff(_isMicMute)
+            }
+        }
         isMicMute = _isMicMute
     }
 
     fun updateCameraSetting(_isCameraMute: Boolean = false) {
         if (isCameraMute != _isCameraMute) {
-            maruCastManager.muteStream()
+            viewModelScope.launch(Dispatchers.IO) {
+                maruCastManager.setCameraOff(_isCameraMute)
+            }
         }
         isCameraMute = _isCameraMute
     }
