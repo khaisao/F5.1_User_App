@@ -100,8 +100,6 @@ class DetailUserProfileFragment :
     }
 
     private lateinit var  galleryAdapter:  GalleryAdapter
-    
-    
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val bundle = arguments

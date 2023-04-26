@@ -19,7 +19,6 @@ class UserProfileViewModel @ViewModelInject constructor(
 
     fun loadMemberInfo(activity: Activity) {
         viewModelScope.launch {
-            isLoading.value = true
             try {
                 val response = apiInterface.getMember()
                 response.let {
@@ -28,9 +27,7 @@ class UserProfileViewModel @ViewModelInject constructor(
                         rxPreferences.saveMemberInfo(it.dataResponse)
                     }
                 }
-                isLoading.value = false
             } catch (e: Exception) {
-                isLoading.value = false
                 handleThowable(
                     activity,
                     e,
