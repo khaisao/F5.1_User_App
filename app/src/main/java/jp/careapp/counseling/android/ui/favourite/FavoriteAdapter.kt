@@ -1,16 +1,14 @@
 package jp.careapp.counseling.android.ui.favourite
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import jp.careapp.core.utils.getDurationBreakdown
+import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.FavoriteResponse
 import jp.careapp.counseling.android.utils.extensions.getBustSize
@@ -21,7 +19,7 @@ import java.util.*
 
 class FavoriteAdapter(
     private val context: Context,
-    private val onItemClick: (item: FavoriteResponse) -> Unit,
+    private val listener: (Int, List<FavoriteResponse>) -> Unit,
     ) : ListAdapter<FavoriteResponse, FavoriteAdapter.FavoriteViewHolder>(
     FavoriteDiffCallBack
 ) {
@@ -44,13 +42,13 @@ class FavoriteAdapter(
         private val binding: ItemFavouriteBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(consultant: FavoriteResponse) {
-            binding.tvName.text=consultant.name
-            Glide.with(context).load(consultant.thumbnailImageUrl)
-                .apply(
-                    RequestOptions()
-                        .placeholder(R.drawable.default_avt_performer)
-                )
-                .into(binding.ivPerson)
+
+            binding.tvName.text = consultant.name
+
+            binding.ivPerson.loadImage(
+                consultant.thumbnailImageUrl,
+                R.drawable.default_avt_performer
+            )
 
             val dateString = consultant.lastLoginDate
 
@@ -90,7 +88,7 @@ class FavoriteAdapter(
             binding.tvAge.text = consultant.age.toString() + context.resources.getString(R.string.age_raw)
 
             binding.clMain.setOnClickListener {
-                onItemClick(consultant)
+                listener.invoke(absoluteAdapterPosition, currentList)
             }
 
             binding.tvBody.text = consultant.messageOfTheDay

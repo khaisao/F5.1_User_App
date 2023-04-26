@@ -16,6 +16,7 @@ import jp.careapp.counseling.databinding.FragmentFavouriteBinding
 import jp.careapp.counseling.android.utils.event.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.counseling.android.data.network.ConsultantResponse
+import jp.careapp.counseling.android.data.network.HistoryResponse
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
@@ -55,76 +56,29 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
             typeFavoriteScreen = it.getInt(BUNDLE_KEY.TYPE_ONLINE_LIST_SCREEN)
         }
 
-        adapterFavorite = FavoriteAdapter(context = requireContext(), onItemClick = { item ->
-            val bundle = Bundle()
-            bundle.putInt(BUNDLE_KEY.POSITION_SELECT, 0)
-            val listConsultant = ArrayList(
-                listOf(
-                    ConsultantResponse(
-                        code = item.code,
-                        existsImage = item.existsImage,
-                        imageUrl = item.imageUrl,
-                        name = item.name,
-                        presenceStatus = item.presenceStatus,
-                        stage = item.status,
-                        thumbnailImageUrl = item.thumbnailImageUrl
-                    )
-                )
-            )
-            bundle.putSerializable(
-                BUNDLE_KEY.LIST_USER_PROFILE,
-                listConsultant
-            )
-            appNavigation.openRankingToUserProfileScreen(bundle)
-        })
+        adapterFavorite = FavoriteAdapter(
+            context = requireContext(),
+            listener = { position, listData ->
+                if (!isDoubleClick) {
+                    onClickFavouriteItem(position, listData)
+                }
+            })
+
         adapterHistory = HistoryAdapter(
             context = requireContext(),
-            onItemClick = { item ->
-
-                val bundle = Bundle()
-                bundle.putInt(BUNDLE_KEY.POSITION_SELECT, 0)
-
-                val listConsultant = ArrayList(
-                    listOf(
-                        ConsultantResponse(
-                            code = item.code,
-                            existsImage = item.existsImage,
-                            imageUrl = item.imageUrl,
-                            name = item.name,
-                            stage = item.status,
-                            thumbnailImageUrl = item.thumbnailImageUrl
-                        )
-                    )
-                )
-
-                bundle.putSerializable(
-                    BUNDLE_KEY.LIST_USER_PROFILE,
-                    listConsultant
-                )
-                appNavigation.openRankingToUserProfileScreen(bundle)
+            listener = { position, listData ->
+                if (!isDoubleClick) {
+                    onClickHistoryItem(position, listData)
+                }
             })
-        adapterFavoriteHome = FavoriteHomeAdapter(onItemClick = { item ->
-            val bundle = Bundle()
-            bundle.putInt(BUNDLE_KEY.POSITION_SELECT, 0)
-            val listConsultant = ArrayList(
-                listOf(
-                    ConsultantResponse(
-                        code = item.code,
-                        existsImage = item.existsImage,
-                        imageUrl = item.imageUrl,
-                        name = item.name,
-                        presenceStatus = item.presenceStatus,
-                        stage = item.status,
-                        thumbnailImageUrl = item.thumbnailImageUrl
-                    )
-                )
-            )
-            bundle.putSerializable(
-                BUNDLE_KEY.LIST_USER_PROFILE,
-                listConsultant
-            )
-            appNavigation.openRankingToUserProfileScreen(bundle)
-        })
+
+        adapterFavoriteHome = FavoriteHomeAdapter(
+            context = requireContext(),
+            listener = { position, listData ->
+                if (!isDoubleClick) {
+                    onClickFavouriteItem(position, listData)
+                }
+            })
 
         setUpAdapter()
 
@@ -224,8 +178,12 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
             Observer {
                 if (typeFavoriteScreen == BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_FAVORITE) {
                     adapterFavorite.submitList(it.toMutableList())
+                    showNoData(it.isEmpty())
                 }
-                adapterFavoriteHome.submitList(it.toMutableList())
+                if (typeFavoriteScreen == BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_HOME) {
+                    adapterFavoriteHome.submitList(it.toMutableList())
+                    showNoData(it.isEmpty())
+                }
             }
         )
 
@@ -278,6 +236,39 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
         }
     }
 
+    private fun onClickFavouriteItem(
+        position: Int,
+        listData: List<FavoriteResponse>
+    ) {
+        val bundle = Bundle()
+        bundle.putInt(BUNDLE_KEY.POSITION_SELECT, position)
+        val listConsultantResponse = arrayListOf<ConsultantResponse>()
+        for (item in listData) {
+            val consultantItem = ConsultantResponse(
+                code = item.code
+            )
+            listConsultantResponse.add(consultantItem)
+        }
+        shareViewModel.setListPerformer(listConsultantResponse)
+        appNavigation.openTopToUserProfileScreen(bundle)
+    }
+
+    private fun onClickHistoryItem(
+        position: Int,
+        listData: List<HistoryResponse>
+    ) {
+        val bundle = Bundle()
+        bundle.putInt(BUNDLE_KEY.POSITION_SELECT, position)
+        val listConsultantResponse = arrayListOf<ConsultantResponse>()
+        for (item in listData) {
+            val consultantItem = ConsultantResponse(
+                code = item.code
+            )
+            listConsultantResponse.add(consultantItem)
+        }
+        shareViewModel.setListPerformer(listConsultantResponse)
+        appNavigation.openTopToUserProfileScreen(bundle)
+    }
 
     companion object {
         @JvmStatic
