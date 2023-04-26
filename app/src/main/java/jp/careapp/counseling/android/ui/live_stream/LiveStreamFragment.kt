@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewTreeObserver
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -206,6 +207,8 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
         }
         requireContext().registerReceiver(earphoneEventReceiver, filter)
+
+        handleBackPress()
     }
 
     override fun setOnClick() {
@@ -442,6 +445,16 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         mViewModel.currentPoint.observe(viewLifecycleOwner) {
             rxPreferences.setPoint(it)
         }
+    }
+
+    private fun handleBackPress() {
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    showLogoutConfirm()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     private fun updateModeStatus() {

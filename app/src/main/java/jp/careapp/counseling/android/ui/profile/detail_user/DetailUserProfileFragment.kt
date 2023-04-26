@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +27,6 @@ import jp.careapp.counseling.android.data.model.live_stream.ConnectResult
 import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.network.GalleryResponse
 import jp.careapp.counseling.android.data.network.ThumbnailImageResponse
-import jp.careapp.counseling.android.data.network.TypeRankingResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
@@ -49,6 +49,8 @@ import jp.careapp.counseling.android.utils.performer_extension.PerformerRankingH
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatus
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler
 import jp.careapp.counseling.databinding.FragmentDetailUserProfileBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -128,10 +130,27 @@ class DetailUserProfileFragment :
                 binding.rvGallery.adapter = galleryAdapter
             }
         })
+
+        binding.scrollview.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            if (scrollY == 0) {
+                lifecycleScope.launch {
+                    delay(1000)
+                    binding.swipeRefreshLayout.isEnabled = true
+                }
+            } else {
+                binding.swipeRefreshLayout.isEnabled = false
+            }
+        }
     }
 
     override fun setOnClick() {
         super.setOnClick()
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            loadData()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
+
         binding.ivBack.setOnClickListener {
             if (!isDoubleClick) {
                 appNavigation.navigateUp()
