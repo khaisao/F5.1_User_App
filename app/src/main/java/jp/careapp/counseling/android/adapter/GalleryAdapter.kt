@@ -6,7 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import jp.careapp.core.utils.loadImage
+import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.GalleryResponse
 import jp.careapp.counseling.databinding.ItemGalleryBinding
 
@@ -40,9 +41,7 @@ class GalleryAdapter(
 
         fun bind(item: GalleryResponse) {
             itemView.layoutParams.height = screenWidth / 3
-            Glide.with(context)
-                .load(item.thumbnailImage?.url)
-                .into(binding.ivMain)
+            binding.ivMain.loadImage(item.thumbnailImage?.url, R.drawable.default_avt_performer)
             binding.ivMain.setOnClickListener {
                 onClickListener(item)
             }

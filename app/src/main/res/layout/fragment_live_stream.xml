@@ -338,7 +338,7 @@
                     app:layout_constraintBottom_toTopOf="@id/barrier2"
                     app:layout_constraintEnd_toStartOf="@id/guideline10"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:stackFromEnd="false"
+                    app:stackFromEnd="true"
                     app:reverseLayout="false"
                     tools:itemCount="5"
                     tools:listitem="@layout/item_live_stream_message" />

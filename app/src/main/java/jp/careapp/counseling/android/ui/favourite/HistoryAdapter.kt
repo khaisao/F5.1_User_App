@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import jp.careapp.core.utils.getDurationBreakdown
+import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.HistoryResponse
 import jp.careapp.counseling.android.utils.extensions.getBustSize
@@ -19,9 +18,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class HistoryAdapter(
-    private val onItemClick: (item: HistoryResponse) -> Unit,
-    val context: Context
-) : ListAdapter<HistoryResponse, HistoryAdapter.HistoryViewHolder>(
+    val context: Context,
+    private val listener: (Int, List<HistoryResponse>) -> Unit,
+    ) : ListAdapter<HistoryResponse, HistoryAdapter.HistoryViewHolder>(
     HistoryDiffCallBack
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
@@ -43,13 +42,13 @@ class HistoryAdapter(
         val binding: ItemFavouriteBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(consultant: HistoryResponse) {
+
             binding.tvName.text = consultant.name
-            Glide.with(context).load(consultant.thumbnailImageUrl)
-                .apply(
-                    RequestOptions()
-                        .placeholder(R.drawable.default_avt_performer)
-                )
-                .into(binding.ivPerson)
+
+            binding.ivPerson.loadImage(
+                consultant.thumbnailImageUrl,
+                R.drawable.default_avt_performer
+            )
 
             val dateString = consultant.lastLoginDate
             if (dateString != "" && dateString != null) {
@@ -69,7 +68,7 @@ class HistoryAdapter(
             }
 
             binding.clMain.setOnClickListener {
-                onItemClick(consultant)
+                listener.invoke(absoluteAdapterPosition, currentList)
             }
 
             val status = PerformerStatusHandler.getStatus(consultant.callStatus,consultant.chatStatus)

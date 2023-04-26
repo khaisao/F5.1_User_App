@@ -1,13 +1,12 @@
 package jp.careapp.counseling.android.ui.favourite
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.FavoriteResponse
 import jp.careapp.counseling.android.utils.extensions.getBustSize
@@ -17,7 +16,8 @@ import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHa
 import jp.careapp.counseling.databinding.ItemConsultantBinding
 
 class FavoriteHomeAdapter(
-    private val onItemClick: (item: FavoriteResponse) -> Unit
+    val context: Context,
+    private val listener: (Int, List<FavoriteResponse>) -> Unit
     ) : ListAdapter<FavoriteResponse, FavoriteHomeAdapter.FavoriteHomeViewModel>(
     FavoriteDiffCallBack
 ) {
@@ -40,20 +40,21 @@ class FavoriteHomeAdapter(
         private val binding: ItemConsultantBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(consultant: FavoriteResponse) {
+
             binding.tvName.text = consultant.name
-            Glide.with(binding.root.context).load(consultant.thumbnailImageUrl)
-                .apply(
-                    RequestOptions()
-                        .placeholder(R.drawable.default_avt_performer)
-                )
-                .into(binding.ivAvatar)
+
+            binding.ivAvatar.loadImage(
+                consultant.thumbnailImageUrl,
+                R.drawable.default_avt_performer
+            )
+
             binding.rlConsultant.setOnClickListener {
-                onItemClick(consultant)
+                listener.invoke(absoluteAdapterPosition, currentList)
             }
 
             val status = PerformerStatusHandler.getStatus(consultant.callStatus,consultant.chatStatus)
 
-            val statusText = PerformerStatusHandler.getStatusText(status, binding.root.context.resources)
+            val statusText = PerformerStatusHandler.getStatusText(status, context.resources)
 
             val statusBg = PerformerStatusHandler.getStatusBg(status)
 
@@ -63,7 +64,7 @@ class FavoriteHomeAdapter(
             binding.ivStateBeginner.visibility = if(consultant.isRookie == 1) View.VISIBLE else View.GONE
             binding.tvLiveStreamCount.visibility = if (status == PerformerStatus.LIVE_STREAM) View.VISIBLE else View.GONE
             binding.tvLiveStreamCount.text = (consultant.loginMemberCount + consultant.peepingMemberCount).toString()
-            val bustSize = binding.root.context.getBustSize(consultant.bust)
+            val bustSize = context.getBustSize(consultant.bust)
             if (bustSize == "") {
                 binding.tvSize.visibility = View.GONE
             } else {
