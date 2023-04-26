@@ -53,7 +53,7 @@ class Define {
             "https://careapp.tayori.com/q/careapp-helpcenter/detail/225211"
         const val URL_HOW_TO_USE = "https://careapp.tayori.com/q/careapp-helpcenter/category/34544"
         const val URL_LEGAL = "http://web.careapp.jp/webview/legal.html"
-        const val URL_TWITTER = "https://twitter.com/careapp_jp"
+        const val URL_TWITTER = "https://twitter.com/SPARKLIVE_JP"
         const val URL_SETTLEMENT = "https://web.careapp.jp/webview/fund_settlement.html"
         const val URL_FREE_POINT =
             "${BuildConfig.WEB_DOMAIN}/webview/member/freepoint/free-point.html"
