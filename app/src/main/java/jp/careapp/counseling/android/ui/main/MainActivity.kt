@@ -43,7 +43,6 @@ import jp.careapp.counseling.android.ui.buy_point.BuyPointFragment
 import jp.careapp.counseling.android.ui.message.ChatMessageFragment
 import jp.careapp.counseling.android.ui.my_page.MyPageFragment
 import jp.careapp.counseling.android.ui.news.NewsFragment
-import jp.careapp.counseling.android.ui.notification.NotificationFragment
 import jp.careapp.counseling.android.ui.profile.list_user_profile.UserProfileFragment
 import jp.careapp.counseling.android.ui.registration.RegistrationFragment
 import jp.careapp.counseling.android.ui.splash.SplashFragment
@@ -187,22 +186,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 handleNavigateBeforeOpenCalling()
             })
         }
-    }
-
-    private fun showDialogWarningPoint() {
-        dialogWarningPoint = CommonAlertDialog.getInstanceCommonAlertdialog(this@MainActivity)
-            .showDialog()
-            .setDialogTitle(R.string.title_warning_point)
-            .setContent(R.string.point_less_than_1000)
-            .setTextPositiveButton(R.string.buy_point)
-            .setTextNegativeButton(R.string.cancel)
-            .setOnPositivePressed {
-                appNavigation.openWebBuyPointToBuyPointGoogle()
-                it.dismiss()
-            }
-            .setOnNegativePressed {
-                it.dismiss()
-            }
     }
 
     private fun handleNavigateBeforeOpenCalling() {
