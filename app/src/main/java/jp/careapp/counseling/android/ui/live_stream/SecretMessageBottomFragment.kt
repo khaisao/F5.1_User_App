@@ -113,7 +113,7 @@ class SecretMessageBottomFragment : BottomSheetDialogFragment() {
                 // Remove the listener to avoid multiple calls
                 constraintLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 // Set the height of cl_main to 50% of the screen height
-                val desiredHeight = (requireContext().screenHeight * 0.6).toInt()
+                val desiredHeight = (requireContext().screenHeight * 0.5).toInt()
                 val layoutParams = constraintLayout.layoutParams
                 layoutParams.height = desiredHeight
                 constraintLayout.layoutParams = layoutParams
