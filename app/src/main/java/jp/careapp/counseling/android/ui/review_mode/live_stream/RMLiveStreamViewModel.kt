@@ -89,14 +89,18 @@ class RMLiveStreamViewModel @Inject constructor(
     }
 
     fun updateMicSetting(_isMicMute: Boolean = false) {
-        audioManager.isMicrophoneMute = _isMicMute
+        if (isMicMute != _isMicMute) {
+            viewModelScope.launch(Dispatchers.IO) {
+                maruCastManager.setMicOff(_isMicMute)
+            }
+        }
         isMicMute = _isMicMute
     }
 
     fun updateCameraSetting(_isCameraMute: Boolean = false) {
         if (isCameraMute != _isCameraMute) {
             viewModelScope.launch(Dispatchers.IO) {
-                maruCastManager.muteStream()
+                maruCastManager.setCameraOff(_isCameraMute)
             }
         }
         isCameraMute = _isCameraMute

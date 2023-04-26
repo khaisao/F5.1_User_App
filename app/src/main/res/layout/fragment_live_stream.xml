@@ -13,7 +13,7 @@
 
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".android.ui.live_stream.LiveStreamFragment">
@@ -22,7 +22,12 @@
             android:id="@+id/performerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:isMirror="true" />
+            app:isMirror="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:scaling_type="fit" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -33,97 +38,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivPerformer"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_microphone"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.106"
-                    tools:src="@tools:sample/avatars" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="8dp"
-                    android:orientation="vertical"
-                    android:weightSum="2"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivPerformer"
-                    app:layout_constraintStart_toEndOf="@+id/ivPerformer"
-                    app:layout_constraintTop_toTopOf="@+id/ivPerformer">
-
-                    <FrameLayout
-                        android:id="@+id/llLiveStreamStatus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <include
-                            android:id="@+id/llItemPremiumPrivate"
-                            layout="@layout/item_live_stream_premium_private"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:visibility="gone"
-                            tools:visibility="visible" />
-
-                        <include
-                            android:id="@+id/llItemPrivate"
-                            layout="@layout/item_live_stream_private"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:visibility="gone" />
-
-                        <include
-                            android:id="@+id/llItemPeeping"
-                            layout="@layout/item_live_stream_peeping"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:visibility="gone" />
-
-                        <include
-                            android:id="@+id/llItemParty"
-                            layout="@layout/item_live_stream_party"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:visibility="gone" />
-                    </FrameLayout>
-
-                    <TextView
-                        android:id="@+id/tvPerformerName"
-                        style="@style/text_12"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxWidth="300dp"
-                        android:maxLines="1"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/hiragino_sans_w6"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        tools:text="レー・ブー・ハイ・ダン" />
-                </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/btnClose"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@null"
-                    android:src="@drawable/ic_close_black_24dp"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/ivPerformer"
-                    app:layout_constraintWidth_percent="0.05" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline9"
@@ -228,40 +142,6 @@
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintWidth_percent="0.106" />
-
-                <org.marge.marucast_android_client.views.VideoRendererView
-                    android:id="@+id/memberViewCamera"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginEnd="8dp"
-                    android:translationZ="@dimen/_1sdp"
-                    app:layout_constraintDimensionRatio="88:156"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivPerformer"
-                    app:layout_constraintWidth_percent="0.235"
-                    app:isMirror="true"
-                    app:scaling_type="fit" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/btnCameraFlip"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="2dp"
-                    android:background="@null"
-                    android:src="@drawable/ic_live_stream_camera_flip"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="@id/memberViewCamera"
-                    app:layout_constraintTop_toTopOf="@id/memberViewCamera"
-                    app:layout_constraintWidth_percent="0.06" />
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/memberCameraViewGroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:constraint_referenced_ids="memberViewCamera, btnCameraFlip"
-                    tools:visibility="visible" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnSendComment"
@@ -375,5 +255,129 @@
                     tools:visibility="visible" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
-    </FrameLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivPerformer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_microphone"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.106"
+            tools:src="@tools:sample/avatars" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical"
+            android:weightSum="2"
+            app:layout_constraintBottom_toBottomOf="@+id/ivPerformer"
+            app:layout_constraintStart_toEndOf="@+id/ivPerformer"
+            app:layout_constraintTop_toTopOf="@+id/ivPerformer">
+
+            <FrameLayout
+                android:id="@+id/llLiveStreamStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <include
+                    android:id="@+id/llItemPremiumPrivate"
+                    layout="@layout/item_live_stream_premium_private"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <include
+                    android:id="@+id/llItemPrivate"
+                    layout="@layout/item_live_stream_private"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="gone" />
+
+                <include
+                    android:id="@+id/llItemPeeping"
+                    layout="@layout/item_live_stream_peeping"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="gone" />
+
+                <include
+                    android:id="@+id/llItemParty"
+                    layout="@layout/item_live_stream_party"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvPerformerName"
+                style="@style/text_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:gravity="center"
+                android:maxWidth="300dp"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                tools:text="レー・ブー・ハイ・ダン" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnClose"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            android:background="@null"
+            android:src="@drawable/ic_close_black_24dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivPerformer"
+            app:layout_constraintWidth_percent="0.05" />
+
+        <org.marge.marucast_android_client.views.VideoRendererView
+            android:id="@+id/memberViewCamera"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:clickable="true"
+            app:isMirror="true"
+            app:layout_constraintDimensionRatio="88:156"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivPerformer"
+            app:layout_constraintWidth_percent="0.235"
+            app:scaling_type="fit" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnCameraFlip"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="@id/memberViewCamera"
+            app:layout_constraintTop_toTopOf="@id/memberViewCamera"
+            app:layout_constraintWidth_percent="0.06"
+            app:srcCompat="@drawable/ic_live_stream_camera_flip" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/memberCameraViewGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="memberViewCamera, btnCameraFlip"
+            tools:visibility="visible" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
