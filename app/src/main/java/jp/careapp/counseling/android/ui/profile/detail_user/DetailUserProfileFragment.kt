@@ -306,7 +306,7 @@ class DetailUserProfileFragment :
     private fun showDialogNeedMicrophonePermission() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
-            .setContent(R.string.msg_need_mic_permission)
+            .setDialogTitle(R.string.msg_need_mic_permission)
             .setTextPositiveButton(R.string.setting)
             .setTextNegativeButton(R.string.cancel)
             .setOnPositivePressed {

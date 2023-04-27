@@ -69,6 +69,8 @@ interface AppNavigation : BaseNavigator {
 
     fun openChatMessageToChatListScreen(data: Bundle? = null)
 
+    fun openChatMessageToLivestreamScreen(data: Bundle? = null)
+
     fun openChatMessageToBuyPoint(data: Bundle? = null)
 
     fun openDetailUserToChatMessage(data: Bundle? = null)
