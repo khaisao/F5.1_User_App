@@ -1,6 +1,7 @@
 package jp.careapp.counseling.android.ui.review_mode.live_stream
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -8,6 +9,7 @@ import android.content.IntentFilter
 import android.graphics.Rect
 import android.media.AudioManager
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowManager
@@ -130,6 +132,9 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
         }
     }
 
+    private var xCameraDown = 0f
+    private var yCameraDown = 0f
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleBackPress()
@@ -146,12 +151,10 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
 
     override fun onStop() {
         super.onStop()
-
         binding.root.viewTreeObserver.removeOnGlobalLayoutListener(keyboardLayoutListener)
         if (activity is BaseActivity<*, *>) {
             (activity as BaseActivity<*, *>).setHandleDispathTouch(true)
         }
-
     }
 
     override fun initView() {
@@ -183,9 +186,9 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
 
         mAdapter = LiveStreamAdapter()
         binding.rcvCommentList.adapter = mAdapter
-
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun setOnClick() {
         super.setOnClick()
 
@@ -246,6 +249,26 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
         binding.btnCameraFlip.setOnClickListener {
             maruCastManager.switchCamera()
         }
+
+        binding.clMemberCamera.setOnTouchListener { v, event ->
+            when (event?.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    xCameraDown = event.x
+                    yCameraDown = event.y
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    val moveX = event.x
+                    val moveY = event.y
+
+                    val distanceX = moveX - xCameraDown
+                    val distanceY = moveY - yCameraDown
+
+                    v.x = v.x + distanceX
+                    v.y = v.y + distanceY
+                }
+            }
+            true
+        }
     }
 
     private fun showLogoutConfirm() {
@@ -294,6 +317,19 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
         bindingViewerType()
         bindingTwoShotHandle()
         bindingMessageHandle()
+    }
+
+    override fun onDestroyView() {
+        requireContext().unregisterReceiver(earphoneEventReceiver)
+        try {
+            binding.performerView.release()
+            binding.memberViewCamera.release()
+        } catch (_: Exception) {
+
+        } finally {
+            mViewModel.logout()
+            super.onDestroyView()
+        }
     }
 
 

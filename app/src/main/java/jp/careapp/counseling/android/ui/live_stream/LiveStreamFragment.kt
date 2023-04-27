@@ -649,11 +649,16 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     private fun getInputComment() = binding.edtComment.text?.trim().toString()
 
     override fun onDestroyView() {
-        super.onDestroyView()
         requireContext().unregisterReceiver(earphoneEventReceiver)
-        binding.performerView.release()
-        binding.memberViewCamera.release()
-        mViewModel.logout()
+        try {
+            binding.performerView.release()
+            binding.memberViewCamera.release()
+        } catch (_: Exception) {
+
+        } finally {
+            mViewModel.logout()
+            super.onDestroyView()
+        }
     }
 
     override fun onSwitchViewerGroupVisible(isVisible: Boolean) {

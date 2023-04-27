@@ -14,7 +14,7 @@
     </data>
 
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".android.ui.review_mode.live_stream.LiveStreamFragment">
@@ -42,7 +42,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintGuide_percent="0.982" />
-
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/btnComment"
@@ -115,39 +114,6 @@
                     app:layout_constraintStart_toEndOf="@id/btnVideoMic"
                     app:layout_constraintTop_toTopOf="@id/btnComment"
                     app:layout_constraintWidth_percent="0.106"
-                    tools:visibility="visible" />
-
-                <org.marge.marucast_android_client.views.VideoRendererView
-                    android:id="@+id/memberViewCamera"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="@dimen/_30sdp"
-                    android:layout_marginEnd="8dp"
-                    app:layout_constraintDimensionRatio="88:156"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.235"
-                    tools:background="@android:color/holo_green_light" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/btnCameraFlip"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="2dp"
-                    android:background="@null"
-                    android:src="@drawable/ic_live_stream_camera_flip"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="@id/memberViewCamera"
-                    app:layout_constraintTop_toTopOf="@id/memberViewCamera"
-                    app:layout_constraintWidth_percent="0.06" />
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/memberCameraViewGroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:constraint_referenced_ids="memberViewCamera, btnCameraFlip"
                     tools:visibility="visible" />
 
                 <androidx.constraintlayout.widget.Group
@@ -248,10 +214,47 @@
                     app:reverseLayout="false"
                     tools:itemCount="5"
                     tools:listitem="@layout/item_live_stream_message" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
 
-    </FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_member_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <org.marge.marucast_android_client.views.VideoRendererView
+                android:id="@+id/memberViewCamera"
+                android:layout_width="88dp"
+                android:layout_height="156dp"
+                android:layout_marginTop="@dimen/margin_30"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:background="@android:color/holo_green_light" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btnCameraFlip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:background="@null"
+                android:src="@drawable/ic_live_stream_camera_flip"
+                app:layout_constraintEnd_toEndOf="@id/memberViewCamera"
+                app:layout_constraintTop_toTopOf="@id/memberViewCamera" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/memberCameraViewGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="memberViewCamera, btnCameraFlip"
+                tools:visibility="visible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

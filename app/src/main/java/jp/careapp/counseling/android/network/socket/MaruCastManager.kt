@@ -3,6 +3,9 @@ package jp.careapp.counseling.android.network.socket
 import android.app.Activity
 import jp.careapp.counseling.android.data.network.FlaxLoginAuthResponse
 import jp.careapp.counseling.android.utils.SocketInfo.KEY_SESSION_CODE
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.marge.marucast_android_client.MediaClient
 import org.marge.marucast_android_client.event.Event
@@ -25,6 +28,7 @@ class MaruCastManager @Inject constructor(
     private var loginCallBack: CallingWebSocketClient.MaruCastLoginCallBack? = null
     private var switchViewerCallback: SwitchViewerCallback? = null
     private var flaxLoginAuthResponse: FlaxLoginAuthResponse? = null
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     fun setLoginCallBack(callBack: CallingWebSocketClient.MaruCastLoginCallBack?) {
         this.loginCallBack = callBack
@@ -155,11 +159,13 @@ class MaruCastManager @Inject constructor(
     override fun onLoginSuccess(presenterRoom: PresenterRoom) {
         Timber.i("ろぐいんせいこう")
         setRoomExists(true)
-        activity!!.runOnUiThread { mediaClient.playStream(switchViewerCallback?.getPresenterView()) }
+        coroutineScope.launch {
+            mediaClient.playStream(switchViewerCallback?.getPresenterView())
+        }
     }
 
     override fun onLoginFailure(s: String) {
-        activity!!.runOnUiThread {
+        coroutineScope.launch {
             switchViewerCallback?.getPresenterView()?.release()
         }
     }
