@@ -18,10 +18,8 @@ import jp.careapp.counseling.android.network.socket.CallingWebSocketClient
 import jp.careapp.counseling.android.network.socket.FlaxWebSocketManager
 import jp.careapp.counseling.android.network.socket.MaruCastManager
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamActionState
-import jp.careapp.counseling.android.ui.live_stream.LiveStreamMode
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamRepository
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel
-import jp.careapp.counseling.android.ui.review_mode.calling.PerformerInfo
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.SocketInfo
 import kotlinx.coroutines.Dispatchers
@@ -39,16 +37,6 @@ class RMLiveStreamViewModel @Inject constructor(
     private val maruCastManager: MaruCastManager,
     private val audioManager: AudioManager
 ) : BaseViewModel(), CallingWebSocketClient.ChatWebSocketCallBack {
-
-
-    private val _isMuteMic = MutableLiveData(false)
-    private val _isMuteSpeaker = MutableLiveData(true)
-
-
-    private var currentMode = LiveStreamMode.PARTY
-    private val _currentModeLiveData = MutableLiveData(currentMode)
-    val currentModeLiveData: LiveData<Int>
-        get() = _currentModeLiveData
 
     private val _messageList = MutableLiveData<ArrayList<LiveStreamChatResponse>>()
     val messageList: LiveData<ArrayList<LiveStreamChatResponse>>
@@ -76,8 +64,6 @@ class RMLiveStreamViewModel @Inject constructor(
 
 
     private val gson by lazy { Gson() }
-    private var performer = PerformerInfo()
-    private var lastPoint = 0
     private var flaxLoginAuthResponse: FlaxLoginAuthResponse? = null
 
     private var isMicMute = false
@@ -170,13 +156,6 @@ class RMLiveStreamViewModel @Inject constructor(
         _messageList.postValue(listChat)
     }
 
-    private fun resetData() {
-        performer = PerformerInfo()
-        _isMuteMic.postValue(false)
-        _isMuteSpeaker.postValue(true)
-        lastPoint = 0
-    }
-
     override fun onHandleMessage(jsonMessage: JSONObject) {
         try {
             val result: String = jsonMessage.getString(SocketInfo.KEY_RESULT)
@@ -262,20 +241,6 @@ class RMLiveStreamViewModel @Inject constructor(
 
     private fun handleSocketCallback() {
         flaxWebSocketManager.setCallback(this)
-    }
-
-
-    fun changeMode(mode: Int) {
-        currentMode = mode
-        _currentModeLiveData.value = currentMode
-    }
-
-    fun handleMicAndCamera() {
-        mActionState.value = LiveStreamActionState.OpenBottomSheetSettingCameraAndMic
-    }
-
-    fun reloadMode() {
-        _currentModeLiveData.value = currentMode
     }
 
     fun sendComment(message: String) {

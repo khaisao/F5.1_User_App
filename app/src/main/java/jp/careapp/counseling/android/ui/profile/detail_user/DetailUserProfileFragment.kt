@@ -108,12 +108,8 @@ class DetailUserProfileFragment :
                 bundle.getSerializable(USER_PROFILE) as? ConsultantResponse
             previousScreen = bundle.getString(BUNDLE_KEY.SCREEN_TYPE, "")
         }
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun onResume() {
-        super.onResume()
         loadData()
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun initView() {
