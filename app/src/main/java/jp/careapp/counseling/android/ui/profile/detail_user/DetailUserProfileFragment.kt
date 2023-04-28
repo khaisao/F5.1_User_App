@@ -109,10 +109,12 @@ class DetailUserProfileFragment :
             previousScreen = bundle.getString(BUNDLE_KEY.SCREEN_TYPE, "")
         }
         super.onViewCreated(view, savedInstanceState)
-        loadData()
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        loadData()
+    }
 
     override fun initView() {
         super.initView()
@@ -306,7 +308,7 @@ class DetailUserProfileFragment :
     private fun showDialogNeedMicrophonePermission() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
-            .setContent(R.string.msg_need_mic_permission)
+            .setDialogTitle(R.string.msg_need_mic_permission)
             .setTextPositiveButton(R.string.setting)
             .setTextNegativeButton(R.string.cancel)
             .setOnPositivePressed {

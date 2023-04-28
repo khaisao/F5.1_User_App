@@ -209,9 +209,13 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                     )
             }
             isReviewEnable = false
-            activity?.let { viewModel.loadMessage(it, this.performerCode, false) }
             shareViewModel.setMessagePerformerCode(performerCode)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadMessage(requireActivity(), this.performerCode, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -406,31 +410,31 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
         binding.ivBack.setOnClickListener {
             appNavigation.navigateUp()
+        }
 
-            binding.llWatchLiveStream.setOnClickListener {
-                if (!isDoubleClick) {
-                    when {
-                        hasPermissions(arrayOf(Manifest.permission.RECORD_AUDIO)) -> {
-                            checkPoint()
-                        }
-                        shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO) -> {
-                            showDialogNeedMicrophonePermission()
-                        }
-                        else -> {
-                            showDialogRequestMicrophonePermission()
-                        }
+        binding.llWatchLiveStream.setOnClickListener {
+            if (!isDoubleClick) {
+                when {
+                    hasPermissions(arrayOf(Manifest.permission.RECORD_AUDIO)) -> {
+                        checkPoint()
                     }
-                    viewerType = 0
-                    viewModel.viewerStatus = 0
+                    shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO) -> {
+                        showDialogNeedMicrophonePermission()
+                    }
+                    else -> {
+                        showDialogRequestMicrophonePermission()
+                    }
                 }
+                viewerType = 0
+                viewModel.viewerStatus = 0
             }
+        }
 
-            binding.llPeep.setOnClickListener {
-                if (!isDoubleClick) {
-                    viewerType = 1
-                    viewModel.viewerStatus = 1
-                    checkPointForPeep()
-                }
+        binding.llPeep.setOnClickListener {
+            if (!isDoubleClick) {
+                viewerType = 1
+                viewModel.viewerStatus = 1
+                checkPointForPeep()
             }
         }
     }
@@ -457,7 +461,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     }
 
     private fun checkPoint() {
-        if ((rxPreferences.getPoint() > 1000)) {
+        if (rxPreferences.getPoint() < 1000) {
             showDialogRequestBuyPoint()
         } else {
             showDialogConfirmCall()
@@ -490,7 +494,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     private fun showDialogNeedMicrophonePermission() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
-            .setContent(R.string.msg_need_mic_permission)
+            .setDialogTitle(R.string.msg_need_mic_permission)
             .setTextPositiveButton(R.string.setting)
             .setTextNegativeButton(R.string.cancel)
             .setOnPositivePressed {
@@ -506,7 +510,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     private fun showDialogRequestBuyPoint() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
-            .setContent(R.string.live_stream_title_request_buy_point)
+            .setDialogTitle(R.string.live_stream_title_request_buy_point)
             .setTextPositiveButton(R.string.live_stream_buy_point)
             .setTextNegativeButton(R.string.cancel_block_alert)
             .setOnPositivePressed { dialog ->
@@ -529,7 +533,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     private fun showDialogRequestBuyPointForPeep() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
-            .setContent(R.string.live_stream_peep_title_request_buy_point)
+            .setDialogTitle(R.string.live_stream_peep_title_request_buy_point)
             .setTextPositiveButton(R.string.live_stream_buy_point)
             .setTextNegativeButton(R.string.cancel_block_alert)
             .setOnPositivePressed { dialog ->
@@ -637,27 +641,29 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     }
 
     private val connectResultHandle: Observer<ConnectResult> = Observer {
-        viewModel.getCurrentConsultant()?.let { performerResponse ->
-            run {
-                val fragment: Fragment? =
-                    childFragmentManager.findFragmentByTag("CallConnectionDialog")
-                val dialog: CallConnectionDialog
-                if (fragment != null) {
-                    dialog = fragment as CallConnectionDialog
-                    dialog.setCallingCancelListener(this@ChatMessageFragment)
-                    if (it.result == SocketInfo.RESULT_NG) {
-                        dialog.setMessage(it.message, true)
+        if (it.result != SocketInfo.RESULT_NONE) {
+            viewModel.getCurrentConsultant()?.let { performerResponse ->
+                run {
+                    val fragment: Fragment? =
+                        childFragmentManager.findFragmentByTag("CallConnectionDialog")
+                    val dialog: CallConnectionDialog
+                    if (fragment != null) {
+                        dialog = fragment as CallConnectionDialog
+                        dialog.setCallingCancelListener(this@ChatMessageFragment)
+                        if (it.result == SocketInfo.RESULT_NG) {
+                            dialog.setMessage(it.message, true)
+                        } else {
+                            dialog.setMessage(getString(R.string.call_content))
+                        }
                     } else {
-                        dialog.setMessage(getString(R.string.call_content))
+                        val message =
+                            if (it.result == SocketInfo.RESULT_NG) it.message else getString(R.string.call_content)
+                        val isError = it.result == SocketInfo.RESULT_NG
+                        dialog =
+                            CallConnectionDialog.newInstance(performerResponse, message, isError)
+                        dialog.setCallingCancelListener(this@ChatMessageFragment)
+                        dialog.show(childFragmentManager, "CallConnectionDialog")
                     }
-                } else {
-                    val message =
-                        if (it.result == SocketInfo.RESULT_NG) it.message else getString(R.string.call_content)
-                    val isError = it.result == SocketInfo.RESULT_NG
-                    dialog =
-                        CallConnectionDialog.newInstance(performerResponse, message, isError)
-                    dialog.setCallingCancelListener(this@ChatMessageFragment)
-                    dialog.show(childFragmentManager, "CallConnectionDialog")
                 }
             }
         }
@@ -665,21 +671,15 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
     private val loginSuccessHandle: Observer<Boolean> = Observer {
         if (it) {
-            val fragment: Fragment? =
-                childFragmentManager.findFragmentByTag("CallConnectionDialog")
+            val fragment: Fragment? = childFragmentManager.findFragmentByTag("CallConnectionDialog")
             if (fragment != null) (fragment as CallConnectionDialog).dismiss()
             val bundle = Bundle().apply {
-                putSerializable(
-                    BUNDLE_KEY.FLAX_LOGIN_AUTH_RESPONSE,
-                    viewModel.flaxLoginAuthResponse
-                )
-                viewModel.getCurrentConsultant()?.let { userProfile ->
-                    putSerializable(BUNDLE_KEY.USER_PROFILE, userProfile)
-                }
+                putSerializable(BUNDLE_KEY.FLAX_LOGIN_AUTH_RESPONSE, viewModel.flaxLoginAuthResponse)
+                putSerializable(BUNDLE_KEY.USER_PROFILE, viewModel.getCurrentConsultant())
                 putInt(BUNDLE_KEY.VIEW_STATUS, viewerType)
-                putInt(BUNDLE_KEY.ROOT_SCREEN, SCREEN_MESSAGE)
+                putInt(BUNDLE_KEY.ROOT_SCREEN, BUNDLE_KEY.SCREEN_DETAIL)
             }
-            appNavigation.openUserDetailToLiveStream(bundle)
+            appNavigation.openChatMessageToLivestreamScreen(bundle)
             viewModel.resetData()
         }
     }

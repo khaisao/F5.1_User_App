@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.counseling.R
-import jp.careapp.counseling.databinding.FragmentLiveStreamNoticeBottomSheetBinding
+import jp.careapp.counseling.databinding.FragmentRmLiveStreamNoticeBottomSheetBinding
 
 @AndroidEntryPoint
 class RMLiveStreamNoticeBottomSheet : BottomSheetDialogFragment() {
 
-    private var _binding: FragmentLiveStreamNoticeBottomSheetBinding? = null
+    private var _binding: FragmentRmLiveStreamNoticeBottomSheetBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +24,7 @@ class RMLiveStreamNoticeBottomSheet : BottomSheetDialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentLiveStreamNoticeBottomSheetBinding.inflate(inflater, container, false)
+        _binding = FragmentRmLiveStreamNoticeBottomSheetBinding.inflate(inflater, container, false)
         return binding.root
     }
 

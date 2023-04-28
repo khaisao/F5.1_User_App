@@ -1,6 +1,7 @@
 package jp.careapp.counseling.android.ui.review_mode.live_stream
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -8,6 +9,7 @@ import android.content.IntentFilter
 import android.graphics.Rect
 import android.media.AudioManager
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowManager
@@ -22,6 +24,7 @@ import jp.careapp.core.base.BaseActivity
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.DeviceUtil.Companion.getScreenHeightWithNavigationBar
 import jp.careapp.core.utils.DeviceUtil.Companion.hideKeyBoardWhenClickOutSide
+import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.core.utils.dialog.RMCommonAlertDialog
 import jp.careapp.core.utils.getHeight
 import jp.careapp.counseling.R
@@ -130,6 +133,11 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
         }
     }
 
+    private var xCameraDown = 0f
+    private var yCameraDown = 0f
+
+    private val listAlertDialogShowing = arrayListOf<RMCommonAlertDialog>()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleBackPress()
@@ -146,12 +154,10 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
 
     override fun onStop() {
         super.onStop()
-
         binding.root.viewTreeObserver.removeOnGlobalLayoutListener(keyboardLayoutListener)
         if (activity is BaseActivity<*, *>) {
             (activity as BaseActivity<*, *>).setHandleDispathTouch(true)
         }
-
     }
 
     override fun initView() {
@@ -183,9 +189,9 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
 
         mAdapter = LiveStreamAdapter()
         binding.rcvCommentList.adapter = mAdapter
-
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun setOnClick() {
         super.setOnClick()
 
@@ -246,10 +252,30 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
         binding.btnCameraFlip.setOnClickListener {
             maruCastManager.switchCamera()
         }
+
+        binding.clMemberCamera.setOnTouchListener { v, event ->
+            when (event?.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    xCameraDown = event.x
+                    yCameraDown = event.y
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    val moveX = event.x
+                    val moveY = event.y
+
+                    val distanceX = moveX - xCameraDown
+                    val distanceY = moveY - yCameraDown
+
+                    v.x = v.x + distanceX
+                    v.y = v.y + distanceY
+                }
+            }
+            true
+        }
     }
 
     private fun showLogoutConfirm() {
-        RMCommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+        val dialog = RMCommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
             .setDialogTitle(R.string.logout_confirm)
             .setTextPositiveButton(R.string.confirm_block_alert)
@@ -260,6 +286,15 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
             }.setOnNegativePressed {
                 it.dismiss()
             }
+        listAlertDialogShowing.add(dialog)
+    }
+
+    private fun dismissAllDialogShowing() {
+        for (item in listAlertDialogShowing) {
+            if (item.isShowing) {
+                item.dismiss()
+            }
+        }
     }
 
     private fun handleBackPress() {
@@ -294,6 +329,20 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
         bindingViewerType()
         bindingTwoShotHandle()
         bindingMessageHandle()
+    }
+
+    override fun onDestroyView() {
+        requireContext().unregisterReceiver(earphoneEventReceiver)
+        dismissAllDialogShowing()
+        try {
+            binding.performerView.release()
+            binding.memberViewCamera.release()
+        } catch (_: Exception) {
+
+        } finally {
+            mViewModel.logout()
+            super.onDestroyView()
+        }
     }
 
 
@@ -420,13 +469,14 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
     }
 
     private fun showErrorDialog(errorMessage: String) {
-        RMCommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+        val dialog = RMCommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
             .setDialogTitle(errorMessage)
             .setTextPositiveButton(R.string.ok)
             .setOnPositivePressed {
                 it.dismiss()
             }
+        listAlertDialogShowing.add(dialog)
     }
 
     private fun showPrivateModeRequest() {

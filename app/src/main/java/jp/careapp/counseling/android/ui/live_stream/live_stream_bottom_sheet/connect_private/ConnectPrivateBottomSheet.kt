@@ -49,7 +49,7 @@ class ConnectPrivateBottomSheet : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        dialog?.setCancelable(false)
         binding.btnCancel.setOnClickListener {
             dismiss()
             listener?.onClickButtonCancelConnectPrivate()

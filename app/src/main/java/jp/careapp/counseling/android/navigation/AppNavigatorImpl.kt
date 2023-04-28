@@ -137,6 +137,10 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_chat_list_to_chat_message, data)
     }
 
+    override fun openChatMessageToLivestreamScreen(data: Bundle?) {
+        openScreen(R.id.action_chatMessageFragment_to_liveStreamFragment, data)
+    }
+
     override fun openChatMessageToBuyPoint(data: Bundle?) {
         openScreen(R.id.action_ChatMessage_to_BuyPoint, data)
     }
