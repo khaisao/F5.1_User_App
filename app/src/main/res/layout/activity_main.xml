@@ -28,37 +28,6 @@
                 app:defaultNavHost="true"
                 app:navGraph="@navigation/main_navigation"
                 tools:context=".MainActivity" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clActiveCall"
-                style="@style/size_auto"
-                android:clickable="true"
-                android:focusable="true"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.1"
-                app:layout_constraintWidth_percent="0.213">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivAvatar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_avatar_default" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_call_active"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"
-                    app:layout_constraintEnd_toEndOf="@+id/ivAvatar" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -207,8 +176,5 @@
                 tools:text="◯◯◯◯◯◯さんからメッセージが届きました" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </RelativeLayout>
-
-
 </layout>
