@@ -24,7 +24,6 @@ import jp.careapp.core.base.BaseActivity
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.DeviceUtil.Companion.getScreenHeightWithNavigationBar
 import jp.careapp.core.utils.DeviceUtil.Companion.hideKeyBoardWhenClickOutSide
-import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.core.utils.dialog.RMCommonAlertDialog
 import jp.careapp.core.utils.getHeight
 import jp.careapp.counseling.R
@@ -116,20 +115,23 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
 
     private var isKeyboardShowing = false
     private val keyboardLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
-        val r = Rect()
-        binding.root.getWindowVisibleDisplayFrame(r)
-        val screenHeight = binding.root.rootView.height
-        val keypadHeight = screenHeight - r.bottom
-        if (keypadHeight > screenHeight * 0.15) {
-            if (!isKeyboardShowing) {
-                isKeyboardShowing = true
+        try {
+            val r = Rect()
+            binding.root.getWindowVisibleDisplayFrame(r)
+            val screenHeight = binding.root.rootView.height
+            val keypadHeight = screenHeight - r.bottom
+            if (keypadHeight > screenHeight * 0.15) {
+                if (!isKeyboardShowing) {
+                    isKeyboardShowing = true
+                }
+            } else {
+                if (isKeyboardShowing) {
+                    binding.memberCommentViewGroup.isVisible = false
+                    mViewModel.reloadMode()
+                    isKeyboardShowing = false
+                }
             }
-        } else {
-            if (isKeyboardShowing) {
-                binding.memberCommentViewGroup.isVisible = false
-                mViewModel.reloadMode()
-                isKeyboardShowing = false
-            }
+        } catch (_: Exception) {
         }
     }
 
@@ -511,13 +513,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
     }
 
     override fun onCameraChange(_isCameraMute: Boolean) {
-        if (_isCameraMute) {
-            binding.memberViewCamera.visibility = View.INVISIBLE
-            binding.btnCameraFlip.visibility = View.INVISIBLE
-        } else {
-            binding.memberViewCamera.visibility = View.VISIBLE
-            binding.btnCameraFlip.visibility = View.VISIBLE
-        }
+        binding.clMemberCamera.visibility = if (_isCameraMute) View.INVISIBLE else View.VISIBLE
         mViewModel.updateCameraSetting(_isCameraMute)
     }
 }
