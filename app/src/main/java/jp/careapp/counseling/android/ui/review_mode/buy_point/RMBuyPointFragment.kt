@@ -98,7 +98,14 @@ class RMBuyPointFragment : BaseFragment<FragmentRmBuyPointBinding, RMBuyPointVie
             BUY_POINT_RM.FIST_BUY_COIN_3.costFirst,
             BUY_POINT_RM.FIST_BUY_COIN_3.money
         )
-        costPointAdapter.run { submitList(listOf(item1, item2, item3)) }
+        val item4 = ItemPoint(
+            BUY_POINT_RM.FIST_BUY_COIN_4.id,
+            firstBuy,
+            BUY_POINT_RM.FIST_BUY_COIN_4.pointCountFirst,
+            BUY_POINT_RM.FIST_BUY_COIN_4.costFirst,
+            BUY_POINT_RM.FIST_BUY_COIN_4.money
+        )
+        costPointAdapter.submitList(listOf(item1, item2, item3, item4))
         binding.costPointRv.adapter = costPointAdapter
     }
 
