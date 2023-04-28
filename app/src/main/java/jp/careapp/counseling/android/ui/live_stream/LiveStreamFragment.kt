@@ -10,7 +10,6 @@ import android.graphics.Rect
 import android.media.AudioManager
 import android.os.Bundle
 import android.view.MotionEvent
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewTreeObserver
@@ -151,6 +150,8 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             }
         }
     }
+
+    private val listAlertDialogShowing = arrayListOf<CommonAlertDialog>()
 
     override fun onResume() {
         super.onResume()
@@ -536,7 +537,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     }
 
     private fun showErrorDialog(errorMessage: String) {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+        val dialog = CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
             .setDialogTitle(errorMessage)
             .setTextOkButton(R.string.close)
@@ -544,6 +545,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             .setOnOkButtonPressed {
                 it.dismiss()
             }
+        listAlertDialogShowing.add(dialog)
     }
 
     private fun showPrivateModeDenied() {
@@ -576,17 +578,26 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     }
 
     private fun showLogoutConfirm() {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+        val dialog = CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
             .setDialogTitle(R.string.logout_confirm)
             .setTextPositiveButton(R.string.confirm_block_alert)
             .setTextNegativeButton(R.string.cancel_block_alert)
             .setOnPositivePressed {
                 it.dismiss()
-                logout()
+                appNavigation.navigateUp()
             }.setOnNegativePressed {
                 it.dismiss()
             }
+        listAlertDialogShowing.add(dialog)
+    }
+
+    private fun dismissAllDialogShowing() {
+        for (item in listAlertDialogShowing) {
+            if (item.isShowing) {
+                item.dismiss()
+            }
+        }
     }
 
     private fun showPointPurchaseBottomSheet(typeBuyPoint: Int) {
@@ -650,6 +661,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
     override fun onDestroyView() {
         requireContext().unregisterReceiver(earphoneEventReceiver)
+        dismissAllDialogShowing()
         try {
             binding.performerView.release()
             binding.memberViewCamera.release()
