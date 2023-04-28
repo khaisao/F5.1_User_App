@@ -109,10 +109,12 @@ class DetailUserProfileFragment :
             previousScreen = bundle.getString(BUNDLE_KEY.SCREEN_TYPE, "")
         }
         super.onViewCreated(view, savedInstanceState)
-        loadData()
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        loadData()
+    }
 
     override fun initView() {
         super.initView()

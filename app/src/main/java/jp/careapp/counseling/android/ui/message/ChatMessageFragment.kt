@@ -209,9 +209,13 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                     )
             }
             isReviewEnable = false
-            activity?.let { viewModel.loadMessage(it, this.performerCode, false) }
             shareViewModel.setMessagePerformerCode(performerCode)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadMessage(requireActivity(), this.performerCode, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
