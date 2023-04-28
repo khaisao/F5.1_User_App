@@ -2,12 +2,9 @@ package jp.careapp.counseling.android.ui.main
 
 import android.animation.ObjectAnimator
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.media.AudioManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.TextUtils
@@ -112,12 +109,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private var listNotiNewMessage = mutableListOf<SocketActionSend>()
     private var currentList = mutableListOf<SocketActionSend>()
 
-    private val audioManager: AudioManager by lazy {
-        getSystemService(Context.AUDIO_SERVICE) as AudioManager
-    }
-
-    private var dialogWarningPoint: CommonAlertDialog? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         window.statusBarColor = Color.TRANSPARENT
         super.onCreate(savedInstanceState)
@@ -127,7 +118,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         val layoutparam = binding.statusBarView.layoutParams
         layoutparam.height = DeviceUtil.getStatusBarHeight(this)
         binding.statusBarView.layoutParams = layoutparam
-        window?.statusBarColor = Color.TRANSPARENT
+        window?.statusBarColor = Color.RED
         transparentStatusBar(this)
 
         LoadingDialog.getInstance(this)?.destroyLoadingDialog()
@@ -180,14 +171,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
         (Objects.requireNonNull(activity) as AppCompatActivity).supportActionBar?.hide()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            activity.window.statusBarColor = Color.TRANSPARENT
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                activity.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            }
-        }
+        activity.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        activity.window.statusBarColor = Color.TRANSPARENT
     }
 
     private fun handleLaunchAppWithDeepLinkMain(intent: Intent, isOpenDirect: Boolean) {
@@ -535,9 +520,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         FirebaseInstanceId.getInstance().instanceId
             .addOnSuccessListener(this) { instanceIdResult ->
                 val fcmToken = instanceIdResult.token
-                if (fcmToken != null) {
-                    viewModel.registerDeviceToken(fcmToken)
-                }
+                viewModel.registerDeviceToken(fcmToken)
             }
     }
 
@@ -645,7 +628,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                         handleResult = (
                                                 { isContainInBackstack, bundle ->
                                                     if (isContainInBackstack) {
-                                                        var bundle = Bundle()
+                                                        val bundle = Bundle()
                                                         bundle.putString(
                                                             BUNDLE_KEY.PERFORMER_CODE,
                                                             performerCode.toString()

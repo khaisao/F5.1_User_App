@@ -101,6 +101,24 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
     private var rootScreen: Int = 0
 
+    private var xDown = 0f
+    private var yDown = 0f
+    private var initCameraX = 0f
+    private var initCameraY = 0f
+    private var initFlipCameraX = 0f
+    private var initFlipCameraY = 0f
+
+    private val cameraChangeVisibilityListener = ViewTreeObserver.OnGlobalLayoutListener {
+        val newVis: Int = binding.memberViewCamera.visibility
+        if (newVis == VISIBLE) {
+            initCameraX = binding.memberViewCamera.x
+            initCameraY = binding.memberViewCamera.y
+            initFlipCameraX = binding.btnCameraFlip.x
+            initFlipCameraY = binding.btnCameraFlip.y
+            removeVisibilityChangeListener()
+        }
+    }
+
     private var earphoneEventReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val action = intent!!.action ?: return
@@ -145,7 +163,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         } else {
             if (isKeyboardShowing) {
                 binding.memberCommentViewGroup.isVisible = false
-                mViewModel.reloadMode()
+                updateModeStatus()
                 isKeyboardShowing = false
             }
         }
@@ -171,7 +189,6 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun initView() {
         super.initView()
 
@@ -203,33 +220,6 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         mAdapter = LiveStreamAdapter()
         binding.rcvCommentList.adapter = mAdapter
 
-        binding.btnCameraFlip.bringToFront()
-        binding.memberViewCamera.setOnTouchListener { v, event ->
-            var xDown = 0f
-            var yDown = 0f
-            when (event?.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    xDown = event.x
-                    yDown = event.y
-                }
-                MotionEvent.ACTION_MOVE -> {
-                    val moveX = event.x
-                    val moveY = event.y
-
-                    val distanceX = moveX - xDown
-                    val distanceY = moveY - yDown
-
-                    v.x = v.x + distanceX
-                    v.y = v.y + distanceY
-
-                    xDown = moveX
-                    yDown = moveY
-                }
-            }
-
-            true
-        }
-
         mViewModel.handleConnect(requireActivity(), this)
 
         updateModeStatus()
@@ -243,6 +233,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         handleBackPress()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun setOnClick() {
         super.setOnClick()
 
@@ -267,6 +258,12 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 binding.btnSendComment.getHeight { binding.edtComment.minimumHeight = it }
                 binding.edtComment.requestFocus()
                 requireContext().showSoftKeyboard(binding.edtComment)
+
+                /** Handle camera view to initialize position*/
+                binding.memberViewCamera.x = initCameraX
+                binding.memberViewCamera.y = initCameraY
+                binding.btnCameraFlip.x = initFlipCameraX
+                binding.btnCameraFlip.y = initFlipCameraY
             }
         }
 
@@ -346,36 +343,44 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 maruCastManager.switchCamera()
             }
         }
+
+        binding.memberViewCamera.setOnTouchListener { v, event ->
+            v?.let {
+                when (event?.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        xDown = event.x
+                        yDown = event.y
+                    }
+                    MotionEvent.ACTION_MOVE -> {
+                        val moveX = event.x
+                        val moveY = event.y
+
+                        val distanceX = moveX - xDown
+                        val distanceY = moveY - yDown
+
+                        val newCameraX: Float = when {
+                            it.x + distanceX > resources.displayMetrics.widthPixels - it.width -> (resources.displayMetrics.widthPixels - it.width).toFloat()
+                            it.x + distanceX > 0 -> it.x + distanceX
+                            else -> 0f
+                        }
+                        val newCameraY: Float = when {
+                            it.y + distanceY > resources.displayMetrics.heightPixels - it.height -> (resources.displayMetrics.heightPixels - it.height).toFloat()
+                            it.y + distanceY > 0 -> it.y + distanceY
+                            else -> 0f
+                        }
+                        binding.btnCameraFlip.x = binding.btnCameraFlip.x + (newCameraX - it.x)
+                        binding.btnCameraFlip.y = binding.btnCameraFlip.y + (newCameraY - it.y)
+                        it.x = newCameraX
+                        it.y = newCameraY
+                    }
+                }
+            }
+            true
+        }
     }
 
     override fun bindingStateView() {
         super.bindingStateView()
-
-        mViewModel.currentModeLiveData.observe(viewLifecycleOwner) {
-            binding.groupAllBtn.isVisible = false
-            when (it) {
-                LiveStreamMode.PARTY -> {
-                    binding.llItemParty.isVisible = true
-                    binding.groupButtonPartyMode.isVisible = true
-                }
-
-                LiveStreamMode.PRIVATE -> {
-                    binding.llItemPrivate.isVisible = true
-                    binding.groupButtonPrivateMode.isVisible = true
-                }
-
-                LiveStreamMode.PREMIUM_PRIVATE -> {
-                    binding.llItemPremiumPrivate.isVisible = true
-                    binding.groupButtonPrivateMode.isVisible = true
-                }
-
-                LiveStreamMode.PEEP -> {
-                    binding.llItemPeeping.isVisible = true
-                    binding.groupButtonPeepingMode.isVisible = true
-                }
-            }
-        }
-
         bindingConnectResult()
         bindingUpdateUIMode()
         bindingViewerType()
@@ -493,45 +498,35 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         when (currentMode) {
             LiveStreamMode.PEEP -> {
                 binding.llItemPeeping.visibility = VISIBLE
-                binding.llItemParty.visibility = GONE
-                binding.llItemPrivate.visibility = GONE
                 binding.llItemPremiumPrivate.visibility = GONE
-                binding.btnParty.visibility = VISIBLE
-                binding.btnPrivate.visibility = GONE
-                binding.btnComment.visibility = GONE
-                binding.btnVideoMic.visibility = GONE
+                binding.llItemPrivate.visibility = GONE
+                binding.llItemParty.visibility = GONE
+                binding.groupAllBtn.visibility = GONE
+                binding.groupButtonPeepingMode.visibility = VISIBLE
             }
             LiveStreamMode.PARTY -> {
                 binding.llItemPeeping.visibility = GONE
-                binding.llItemParty.visibility = VISIBLE
-                binding.llItemPrivate.visibility = GONE
                 binding.llItemPremiumPrivate.visibility = GONE
-                binding.btnParty.visibility = GONE
-                binding.btnPrivate.visibility = VISIBLE
-                binding.btnComment.visibility = VISIBLE
-                binding.btnVideoMic.visibility = GONE
+                binding.llItemPrivate.visibility = GONE
+                binding.llItemParty.visibility = VISIBLE
+                binding.groupAllBtn.visibility = GONE
+                binding.groupButtonPartyMode.visibility = VISIBLE
             }
             LiveStreamMode.PRIVATE -> {
                 binding.llItemPeeping.visibility = GONE
+                binding.llItemPremiumPrivate.visibility = GONE
                 binding.llItemParty.visibility = GONE
                 binding.llItemPrivate.visibility = VISIBLE
-                binding.llItemPremiumPrivate.visibility = GONE
-                binding.btnParty.visibility = VISIBLE
-                binding.btnPrivate.visibility = GONE
-                binding.btnComment.visibility = VISIBLE
-                binding.btnWhisper.visibility = GONE
-                binding.btnVideoMic.visibility = VISIBLE
+                binding.groupAllBtn.visibility = GONE
+                binding.groupButtonPrivateMode.visibility = VISIBLE
             }
             LiveStreamMode.PREMIUM_PRIVATE -> {
                 binding.llItemPeeping.visibility = GONE
                 binding.llItemParty.visibility = GONE
                 binding.llItemPrivate.visibility = GONE
                 binding.llItemPremiumPrivate.visibility = VISIBLE
-                binding.btnParty.visibility = VISIBLE
-                binding.btnPrivate.visibility = GONE
-                binding.btnComment.visibility = VISIBLE
-                binding.btnWhisper.visibility = GONE
-                binding.btnVideoMic.visibility = VISIBLE
+                binding.groupAllBtn.visibility = GONE
+                binding.groupButtonPrivateMode.visibility = VISIBLE
             }
         }
     }
@@ -636,6 +631,12 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         if (fragment != null) (fragment as ConnectPrivateBottomSheet).dismiss()
     }
 
+    private fun removeVisibilityChangeListener() {
+        binding.memberViewCamera.viewTreeObserver.removeOnGlobalLayoutListener(
+            cameraChangeVisibilityListener
+        )
+    }
+
     override fun onClickButtonOKConfirmBottomSheet(mode: String) {
         when (mode) {
             PREMIUM_PRIVATE_MODE_REGISTER -> {
@@ -675,6 +676,9 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
     override fun onSwitchViewerGroupVisible(isVisible: Boolean) {
         binding.memberCameraViewGroup.visibility = if (isVisible) VISIBLE else GONE
+        binding.memberViewCamera.viewTreeObserver.addOnGlobalLayoutListener(
+            cameraChangeVisibilityListener
+        )
     }
 
     override fun getPresenterView(): VideoRendererView {
@@ -691,5 +695,6 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
     override fun onCameraChange(_isCameraMute: Boolean) {
         mViewModel.updateCameraSetting(_isCameraMute)
+        binding.memberCameraViewGroup.visibility = if (_isCameraMute) GONE else VISIBLE
     }
 }

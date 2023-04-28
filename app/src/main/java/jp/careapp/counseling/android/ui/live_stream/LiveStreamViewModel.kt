@@ -54,11 +54,6 @@ class LiveStreamViewModel @Inject constructor(
     private val audioManager: AudioManager
 ) : BaseViewModel(), CallingWebSocketClient.ChatWebSocketCallBack {
 
-    private var currentMode = LiveStreamMode.PARTY
-    private val _currentModeLiveData = MutableLiveData(currentMode)
-    val currentModeLiveData: LiveData<Int>
-        get() = _currentModeLiveData
-
     private val _messageList = MutableLiveData<ArrayList<LiveStreamChatResponse>>()
     val messageList: LiveData<ArrayList<LiveStreamChatResponse>>
         get() = _messageList
@@ -101,10 +96,6 @@ class LiveStreamViewModel @Inject constructor(
     init {
         configAudio()
         handleSocketCallback()
-    }
-
-    fun reloadMode() {
-        _currentModeLiveData.value = currentMode
     }
 
     fun sendChatMessage(message: String) {

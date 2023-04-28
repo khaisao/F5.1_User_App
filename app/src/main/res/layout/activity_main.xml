@@ -170,8 +170,5 @@
                 tools:text="◯◯◯◯◯◯さんからメッセージが届きました" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </RelativeLayout>
-
-
 </layout>

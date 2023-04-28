@@ -326,11 +326,11 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:fontFamily="@font/hiragino_sans_w6"
                 android:gravity="center"
-                android:maxWidth="300dp"
                 android:maxLines="1"
+                android:paddingEnd="@dimen/margin_24"
                 android:textColor="@color/white"
+                tools:ignore="RtlSymmetry"
                 tools:text="レー・ブー・ハイ・ダン" />
         </LinearLayout>
 
