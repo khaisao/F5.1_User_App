@@ -152,20 +152,24 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
     private var isKeyboardShowing = false
     private val keyboardLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
-        val r = Rect()
-        binding.root.getWindowVisibleDisplayFrame(r)
-        val screenHeight = binding.root.rootView.height
-        val keypadHeight = screenHeight - r.bottom
-        if (keypadHeight > screenHeight * 0.15) {
-            if (!isKeyboardShowing) {
-                isKeyboardShowing = true
+        try {
+            val r = Rect()
+            binding.root.getWindowVisibleDisplayFrame(r)
+            val screenHeight = binding.root.rootView.height
+            val keypadHeight = screenHeight - r.bottom
+            if (keypadHeight > screenHeight * 0.15) {
+                if (!isKeyboardShowing) {
+                    isKeyboardShowing = true
+                }
+            } else {
+                if (isKeyboardShowing) {
+                    binding.memberCommentViewGroup.isVisible = false
+                    updateModeStatus()
+                    isKeyboardShowing = false
+                }
             }
-        } else {
-            if (isKeyboardShowing) {
-                binding.memberCommentViewGroup.isVisible = false
-                updateModeStatus()
-                isKeyboardShowing = false
-            }
+        } catch (_: Exception) {
+
         }
     }
 
