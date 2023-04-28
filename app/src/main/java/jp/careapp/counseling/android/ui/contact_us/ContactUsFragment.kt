@@ -1,5 +1,6 @@
 package jp.careapp.counseling.android.ui.contact_us
 
+import android.view.WindowManager
 import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
@@ -51,6 +52,12 @@ class ContactUsFragment : BaseFragment<FragmentContactUsBinding, ContactUsViewMo
         super.onResume()
 
         binding.autoCompleteTextView.setAdapter(adapterSpinner)
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
     }
 
     override fun bindingStateView() {
