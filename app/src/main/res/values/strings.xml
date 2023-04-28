@@ -62,7 +62,7 @@
     <string name="tab_chat">メッセージ</string>
     <string name="tab_rank">ランキング</string>
     <string name="tab_my_page">マイページ</string>
-    <string name="content_notification">%1$sさんからメッセージが届きました</string>
+    <string name="content_notification">%1$sさんから\nメッセージが届きました</string>
 
     <string name="title_navigation_rank">ランキング</string>
     <string name="title_navigation_list_message">相談履歴</string>
