@@ -1,5 +1,6 @@
 package jp.careapp.counseling.android.ui.registration
 
+import androidx.activity.addCallback
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -31,6 +32,8 @@ class RegistrationFragment :
         binding.edtNickName.addTextChangedListener {
             binding.btnRegistration.isEnabled = it.toString().trim().isNotEmpty()
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {}
     }
 
     override fun setOnClick() {
@@ -55,4 +58,6 @@ class RegistrationFragment :
             }
         }
     }
+
+
 }
