@@ -14,64 +14,27 @@
             android:layout_height="50dp"
             android:background="@color/color_background_common" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clContainer"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/status_bar_view">
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/nav_host"
-                android:name="androidx.navigation.fragment.NavHostFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:defaultNavHost="true"
-                app:navGraph="@navigation/main_navigation"
-                tools:context=".MainActivity" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clActiveCall"
-                style="@style/size_auto"
-                android:clickable="true"
-                android:focusable="true"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.1"
-                app:layout_constraintWidth_percent="0.213">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivAvatar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_avatar_default" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_call_active"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"
-                    app:layout_constraintEnd_toEndOf="@+id/ivAvatar" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_below="@+id/status_bar_view"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/main_navigation"
+            tools:context=".MainActivity" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/notification_view_1"
+            android:id="@+id/notificationView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="10dp"
+            android:alpha="0.0"
             android:background="@drawable/bg_notification_message"
             android:minHeight="60dp"
             android:onClick="openChatByNotification"
-            android:visibility="gone"
+            android:visibility="invisible"
             tools:visibility="visible">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -111,16 +74,16 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/notification_view_2"
+            android:id="@+id/notificationView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="10dp"
+            android:alpha="0.0"
             android:background="@drawable/bg_notification_message"
             android:minHeight="60dp"
             android:onClick="openChatByNotification"
-            android:visibility="gone"
+            android:visibility="invisible"
             tools:visibility="visible">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -160,16 +123,16 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/notification_view_3"
+            android:id="@+id/notificationView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="10dp"
+            android:alpha="0.0"
             android:background="@drawable/bg_notification_message"
             android:minHeight="60dp"
             android:onClick="openChatByNotification"
-            android:visibility="gone"
+            android:visibility="invisible"
             tools:visibility="visible">
 
             <androidx.appcompat.widget.AppCompatImageView
