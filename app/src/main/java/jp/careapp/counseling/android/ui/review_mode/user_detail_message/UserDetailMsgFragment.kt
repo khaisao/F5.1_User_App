@@ -54,10 +54,7 @@ import jp.careapp.counseling.android.ui.review_mode.user_detail_message.RMUserDe
 import jp.careapp.counseling.android.ui.review_mode.user_detail_message.UserDetailMsgViewModel.Companion.DISABLE_LOAD_MORE
 import jp.careapp.counseling.android.ui.review_mode.user_detail_message.UserDetailMsgViewModel.Companion.ENABLE_LOAD_MORE
 import jp.careapp.counseling.android.ui.review_mode.user_detail_message.UserDetailMsgViewModel.Companion.HIDDEN_LOAD_MORE
-import jp.careapp.counseling.android.utils.ActionState
-import jp.careapp.counseling.android.utils.BUNDLE_KEY
-import jp.careapp.counseling.android.utils.Define
-import jp.careapp.counseling.android.utils.SocketInfo
+import jp.careapp.counseling.android.utils.*
 import jp.careapp.counseling.android.utils.extensions.hasPermissions
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler
 import jp.careapp.counseling.databinding.FragmentRmUserDetailMessageBinding
@@ -240,6 +237,17 @@ class UserDetailMsgFragment :
             }
             else -> binding.bottomBar.visibility = VISIBLE
         }
+
+        when (performerDetail?.callStatus) {
+            RMPresenceStatus.AWAY -> {
+                binding.toolBar.btnCamera.setImageResource(R.drawable.ic_video)
+                binding.toolBar.btnCamera.isEnabled = false
+            }
+            RMPresenceStatus.ACCEPTING -> {
+                binding.toolBar.btnCamera.setImageResource(R.drawable.ic_video_active)
+                binding.toolBar.btnCamera.isEnabled = true
+            }
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -335,11 +343,9 @@ class UserDetailMsgFragment :
     private fun handleButtonSend(msgLength: Int) {
         isEnableSend = if (msgLength == 0) {
             binding.ivSend.setImageResource(R.drawable.ic_send_user_detail_msg_disable)
-            binding.toolBar.btnCamera.setImageResource(R.drawable.ic_video)
             false
         } else {
             binding.ivSend.setImageResource(R.drawable.ic_send_user_detail_msg_enable)
-            binding.toolBar.btnCamera.setImageResource(R.drawable.ic_video_active)
             true
         }
     }
