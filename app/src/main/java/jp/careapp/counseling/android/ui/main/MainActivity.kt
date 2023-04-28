@@ -41,7 +41,6 @@ import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.BuyPointFragment
 import jp.careapp.counseling.android.ui.message.ChatMessageFragment
-import jp.careapp.counseling.android.ui.my_page.MyPageFragment
 import jp.careapp.counseling.android.ui.news.NewsFragment
 import jp.careapp.counseling.android.ui.profile.list_user_profile.UserProfileFragment
 import jp.careapp.counseling.android.ui.registration.RegistrationFragment
@@ -53,8 +52,6 @@ import jp.careapp.counseling.android.utils.Define.Companion.PREFIX_CARE_APP
 import jp.careapp.counseling.android.utils.event.NetworkEvent
 import jp.careapp.counseling.android.utils.event.NetworkState
 import jp.careapp.counseling.android.utils.extensions.dismissAllDialog
-import jp.careapp.counseling.android.utils.listener.OnDragTouchListener
-import jp.careapp.counseling.android.utils.service.CallingService
 import jp.careapp.counseling.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -85,7 +82,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private val viewModel: MainViewModel by viewModels()
     private val shareViewModel: ShareViewModel by viewModels()
 
-    private val listView: List<NotificationView> by lazy {
+    private val listNotificationView: List<NotificationView> by lazy {
         listOf(
             NotificationView(
                 StateView.HIDE,
@@ -153,19 +150,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                         when ((getCurrentFragment() as TopFragment).getInstanceCurrentFragment()) {
                             "HomeFragment" -> {
                                 listNotiNewMessage.add(it)
-                                checkList(Define.HEIGHT * 5)
+                                checkList()
                             }
                             "RankFragment" -> {
-                                checkList(Define.HEIGHT * 5)
+                                checkList()
                                 listNotiNewMessage.add(it)
                             }
                             "MyPageFragment" -> {
                                 listNotiNewMessage.add(it)
-                                checkList(Define.HEIGHT * 5)
-                            }
-                            "LaboFragment" -> {
-                                listNotiNewMessage.add(it)
-                                checkList(Define.HEIGHT * 5)
+                                checkList()
                             }
                             else -> listNotiNewMessage.clear()
                         }
@@ -173,54 +166,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     is UserProfileFragment -> {
                         listNotiNewMessage.add(it)
                         if ((getCurrentFragment() as UserProfileFragment).showBottomDialog())
-                            checkList(Define.HEIGHT * 20)
-                        else checkList(Define.HEIGHT * 8)
+                            checkList()
+                        else checkList()
                     }
                     else -> listNotiNewMessage.clear()
                 }
             }
-        }
-
-        binding.apply {
-            clActiveCall.setOnTouchListener(OnDragTouchListener(clActiveCall, clContainer) {
-                handleNavigateBeforeOpenCalling()
-            })
-        }
-    }
-
-    private fun handleNavigateBeforeOpenCalling() {
-        if (appNavigation.currentFragmentId() == R.id.buyPointFragment
-            || appNavigation.currentFragmentId() == R.id.webViewFragment
-        ) {
-            appNavigation.navigateUp()
-        } else {
-            appNavigation.containScreenInBackStack(R.id.chatMessageFragment) { isContain, bundle ->
-                if (isContain) {
-                    val isOpenFromCalling =
-                        bundle?.getBoolean(BUNDLE_KEY.IS_OPEN_FROM_CALLING, false) ?: false
-                    if (isOpenFromCalling) {
-                        appNavigation.navigateUp()
-                    }
-                }
-            }
-        }
-    }
-
-    private fun startCallingService() {
-        Intent(this, CallingService::class.java).also {
-            try {
-                startForegroundService(it)
-            } catch (e: Exception) {
-                Timber.tag(TAG).e(e)
-            }
-        }
-    }
-
-    private fun stopCallingService() {
-        try {
-            stopService(Intent(this, CallingService::class.java))
-        } catch (e: Exception) {
-            Timber.tag(TAG).e(e)
         }
     }
 
@@ -400,12 +351,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 }
                 appNavigation.openScreenToWebview(bundle)
             }
-            Define.Intent.CONTACT -> {
-                val bundle = Bundle().apply {
-                    putString(Define.TYPE_CONTACT, MyPageFragment::class.java.simpleName)
-                }
-//                appNavigation.openMyPageToContact(bundle)
-            }
         }
     }
 
@@ -567,7 +512,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onDestroy() {
         CommonAlertDialog.getInstanceCommonAlertdialog(this@MainActivity)
             .dismiss()
-        stopCallingService()
         super.onDestroy()
     }
 
@@ -860,42 +804,41 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
 
-    fun checkList(height: Float) {
+    private fun checkList() {
         currentList.addAll(listNotiNewMessage)
         listNotiNewMessage.clear()
 
         if (currentList.size == 1) {
-            val item = currentList[0]
-            showNotification(height, item)
+            showNotification(currentList[0])
         }
     }
 
-    private fun showNotification(height: Float, item: SocketActionSend) {
-        val notiView = findViewToShowNotification() ?: return
+    private fun showNotification(item: SocketActionSend) {
+        val notifyView = findViewToShowNotification() ?: return
         val position = findPositionToShow() ?: return
 
-        notiView.notificationView.visibility = View.VISIBLE
-        notiView.tvContent.text = getString(R.string.content_notification, item.senderName)
+        notifyView.notificationView.visibility = View.VISIBLE
+        notifyView.tvContent.text = getString(R.string.content_notification, item.senderName)
         if (item.senderCode == Define.Intent.SUPPORTER_CODE) {
-            notiView.itemCode = Define.Intent.CODE_OPEN_CHAT_SUPPORTER
+            notifyView.itemCode = Define.Intent.CODE_OPEN_CHAT_SUPPORTER
         } else {
-            notiView.itemCode = item.senderCode
+            notifyView.itemCode = item.senderCode
         }
         when (position) {
             Position.DOWN -> {
                 currentList.remove(item)
-                animShowToDown(notiView, height)
+                animShowToDown(notifyView)
             }
 
             Position.TOP -> {
                 currentList.remove(item)
-                animShowToUp(notiView, height)
+                animShowToUp(notifyView)
             }
         }
     }
 
     private fun findViewToShowNotification(): NotificationView? {
-        listView.forEach {
+        listNotificationView.forEach {
             if (it.state == StateView.HIDE) {
                 return it
             }
@@ -915,7 +858,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun findNotificationOnTop(): NotificationView? {
-        listView.forEach {
+        listNotificationView.forEach {
             if (it.state == StateView.SHOWING_TO_UP || it.state == StateView.SHOW_UP) {
                 return it
             }
@@ -924,7 +867,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun findNotificationOnBottom(): NotificationView? {
-        listView.forEach {
+        listNotificationView.forEach {
             if (it.state == StateView.SHOWING_TO_DOWN || it.state == StateView.SHOW_DOWN || it.state == StateView.MOVE_UP_TO_DOWN) {
                 return it
             }
@@ -933,12 +876,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun animShowToUp(
-        notificationView: NotificationView,
-        height: Float
+        notificationView: NotificationView
     ) {
-
+        val height =
+            0 - heightToolbar - 2 * getSpacingAnim() - notificationView.notificationView.height
         val animationUp =
-            animMoveNotification(notificationView.notificationView, 0f, height + Define.HEIGHT * 6)
+            animMoveNotification(notificationView.notificationView, 0f, height)
         animationUp.apply {
             doOnStart {
                 notificationView.notificationView.animate().alpha(1.0f).duration =
@@ -947,18 +890,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             }
             doOnEnd {
                 notificationView.state = StateView.SHOW_UP
-                handleTimeHideView(notificationView, height)
+                handleTimeHideView(notificationView)
             }
             interpolator = DecelerateInterpolator()
             animationUp.start()
         }
     }
 
-    private fun animShowToDown(
-        notificationView: NotificationView,
-        height: Float
-    ) {
-
+    private fun animShowToDown(notificationView: NotificationView) {
+        val height = 0 - getSpacingAnim() - heightToolbar
         val animToDown = animMoveNotification(notificationView.notificationView, 0f, height)
         animToDown.apply {
             doOnStart {
@@ -968,18 +908,18 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             }
             doOnEnd {
                 notificationView.state = StateView.SHOW_DOWN
-                handleTimeHideView(notificationView, height)
+                handleTimeHideView(notificationView)
             }
             interpolator = DecelerateInterpolator()
             animToDown.start()
         }
     }
 
-    private fun animMoveUpToDown(notificationView: NotificationView, height: Float) {
+    private fun animMoveUpToDown(notificationView: NotificationView) {
         val animUpToDown = animMoveNotification(
             notificationView.notificationView,
-            height + Define.HEIGHT * 5,
-            height
+            0 - heightToolbar - 2 * getSpacingAnim() - notificationView.notificationView.height,
+            0 - heightToolbar - getSpacingAnim()
         )
         animUpToDown.apply {
             doOnStart {
@@ -992,8 +932,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
     }
 
-    private fun animHiding(notificationView: NotificationView, height: Float) {
-        val animHiding = animMoveNotification(notificationView.notificationView, height, 0f)
+    private fun animHiding(notificationView: NotificationView) {
+        val animHiding = animMoveNotification(
+            notificationView.notificationView,
+            0 - heightToolbar - getSpacingAnim(),
+            0f
+        )
         animHiding.apply {
             doOnStart {
                 notificationView.state = StateView.HIDING
@@ -1004,7 +948,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             doOnEnd {
                 notificationView.state = StateView.HIDE
                 if (currentList.isNotEmpty()) {
-                    showNotification(height, currentList[0])
+                    showNotification(currentList[0])
                 }
             }
             notificationView.notificationView.visibility = View.INVISIBLE
@@ -1012,10 +956,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
     }
 
-    private fun handleTimeHideView(
-        notificationView: NotificationView,
-        height: Float
-    ) {
+    private fun handleTimeHideView(notificationView: NotificationView) {
         notificationView.timerView?.cancel()
         notificationView.timerView =
             object : CountDownTimer(Define.TIME_SHOW_NOTIFICATION, Define.COUNT_DOWN_INTERVAL) {
@@ -1025,9 +966,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 override fun onFinish() {
                     val view = findNotificationOnTop()
                     if (view != null) {
-                        animMoveUpToDown(view, height)
+                        animMoveUpToDown(view)
                     }
-                    animHiding(notificationView, height)
+                    animHiding(notificationView)
                 }
             }.start()
     }
@@ -1035,7 +976,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     fun openChatByNotification(view: View) {
         val bundle = Bundle()
 
-        listView.forEach {
+        listNotificationView.forEach {
             if (view.id == it.notificationView.id) {
                 bundle.putString(
                     BUNDLE_KEY.PERFORMER_CODE,
@@ -1050,13 +991,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     fun closeNotification(view: View) {
-        listView.forEach {
+        listNotificationView.forEach {
             if (view.id == it.ivCloseView.id) {
                 it.timerView?.cancel()
                 it.timerView?.onFinish()
             }
         }
     }
+
+    private fun getSpacingAnim() = resources.getDimensionPixelSize(R.dimen.margin_10)
+
+    var heightToolbar = 0f
 
     private fun animMoveNotification(
         view: View,

@@ -1,21 +1,15 @@
 package jp.careapp.counseling.android.ui.top
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Rect
 import android.os.Bundle
-import android.text.Html
-import android.view.Menu
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatButton
+import android.view.ViewTreeObserver
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -27,12 +21,12 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.badge.BadgeDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
-import jp.careapp.core.utils.getDrawableCompat
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.MemberResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.navigation.AppNavigation
+import jp.careapp.counseling.android.ui.main.MainActivity
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.MODE_USER
@@ -147,8 +141,20 @@ class TopFragment : BaseFragment<FragmentTopBinding, TopViewModel>() {
         }
     }
 
+    private val bottomHeightListener = ViewTreeObserver.OnGlobalLayoutListener {
+        if (requireActivity() is MainActivity) {
+            (requireActivity() as MainActivity).heightToolbar = binding.bottomNav.height.toFloat()
+        }
+        removeListener()
+    }
+
+    private fun removeListener() {
+        binding.bottomNav.viewTreeObserver.removeOnGlobalLayoutListener(bottomHeightListener)
+    }
+
     private fun setupBottomNavigationBar() {
         val bottomNavigationView = binding.bottomNav
+        bottomNavigationView.viewTreeObserver.addOnGlobalLayoutListener(bottomHeightListener)
         bottomNavigationView.itemIconTintList = null
 
         navController =

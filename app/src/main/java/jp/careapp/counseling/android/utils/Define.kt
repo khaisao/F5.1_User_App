@@ -89,7 +89,6 @@ class Define {
         const val INVALID_VALUE_OF_CATEGORY = -1
 
         //Height search result
-        const val HEIGHT = -30f
         const val DURATION_ALPHA = 800L
         const val TIME_SHOW_NOTIFICATION = 5000L
         const val COUNT_DOWN_INTERVAL = 5000L
