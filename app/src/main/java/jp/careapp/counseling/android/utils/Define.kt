@@ -491,38 +491,50 @@ enum class BUY_POINT_RM(
     FIST_BUY_COIN_1(
         IN_APP_PURCHASE_KEY_1,
         false,
-        "1,000",
-        "0",
-        "1000",
-        " ¥1,100 ",
-        pointToNumber = 1000,
-        pointSecondToNumber = 0,
-        moneyToNumber = 1100,
-        promote = 0
+        "1,890",
+        "1,800",
+        "3600",
+        "¥3,600",
+        pointToNumber = 1890,
+        pointSecondToNumber = 1800,
+        moneyToNumber = 3600,
+        promote = 90
     ),
     FIST_BUY_COIN_2(
         IN_APP_PURCHASE_KEY_2,
         false,
-        "3,000",
-        "0",
-        "3,000p",
-        " ¥3,300 ",
-        pointToNumber = 3000,
-        pointSecondToNumber = 0,
-        moneyToNumber = 3300,
-        promote = 0
+        "3,290",
+        "3,060",
+        "5,800",
+        "¥5,800",
+        pointToNumber = 3290,
+        pointSecondToNumber = 3060,
+        moneyToNumber = 5800,
+        promote = 230
     ),
     FIST_BUY_COIN_3(
         IN_APP_PURCHASE_KEY_3,
-        true,
-        "5,000",
-        "0",
-        "5,000",
-        " ¥5,500 ",
-        pointToNumber = 5000,
-        pointSecondToNumber = 0,
-        moneyToNumber = 5500,
-        promote = 0
+        false,
+        "6,400",
+        "5,550",
+        "10,800",
+        "¥10,800",
+        pointToNumber = 6400,
+        pointSecondToNumber = 5550,
+        moneyToNumber = 10800,
+        promote = 850
+    ),
+    FIST_BUY_COIN_4(
+        IN_APP_PURCHASE_KEY_4,
+        false,
+        "9,700",
+        "8,300",
+        "15,800",
+        "¥15,800",
+        pointToNumber = 9700,
+        pointSecondToNumber = 8300,
+        moneyToNumber = 15800,
+        promote = 1400
     )
 }
 
@@ -532,15 +544,6 @@ class LoadMoreState {
         const val HIDDEN_LOAD_MORE = 1
         const val DISABLE_LOAD_MORE = 2
         const val ENABLE_LOAD_MORE = 3
-    }
-}
-
-class LabStatus {
-    companion object {
-        const val DEFAULT = 0
-        const val ACCEPTING_ANSWERS = 1
-        const val WAITING_BEST_ANSWERS = 2
-        const val SOLVED = 3
     }
 }
 
@@ -607,25 +610,6 @@ object GenderId {
     const val MALE_ID = 1
     const val FEMALE_ID = 2
     const val OTHER_ID = 3
-}
-
-object DesiredResponseId {
-    const val DEFAULT_ID = 0
-    const val ADVICE_ID = 2
-    const val FEELING_ID = 3
-    const val SORT_FEELING_ID = 4
-    const val OTHER_ID = 5
-}
-
-object PayWay {
-    const val ADD_ONLY = 0
-    const val BANK_TRANSFER = 1
-    const val CREDIT = 2
-    const val CONVENIENCE_STORE = 4
-    const val PAY_PAY = 8
-    const val PLAY_STORE = 15
-    const val APPLE_STORE = 17
-    const val AMAZON_PAY = 21
 }
 
 object CallStatus {
