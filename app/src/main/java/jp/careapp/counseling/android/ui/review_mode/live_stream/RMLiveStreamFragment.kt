@@ -107,6 +107,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
                 ).show(childFragmentManager, "CameraMicroSwitchBottomSheet")
                 if (!mViewModel.isMicMute() && !mViewModel.isCameraMute()) {
                     maruCastManager.publishStream()
+                    binding.clMemberCamera.visibility = View.VISIBLE
                 }
             }
             PermissionUtils.PermissionState.PermanentlyDenied -> {
