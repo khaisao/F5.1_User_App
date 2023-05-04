@@ -14,7 +14,9 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,6 +28,8 @@ import jp.careapp.core.utils.DeviceUtil.Companion.getScreenHeightWithNavigationB
 import jp.careapp.core.utils.DeviceUtil.Companion.hideKeyBoardWhenClickOutSide
 import jp.careapp.core.utils.dialog.RMCommonAlertDialog
 import jp.careapp.core.utils.getHeight
+import jp.careapp.core.utils.setMargins
+import jp.careapp.core.utils.setMarginsInDp
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.FlaxLoginAuthResponse
 import jp.careapp.counseling.android.navigation.AppNavigation
@@ -68,7 +72,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
     private val mViewModel: RMLiveStreamViewModel by viewModels()
     override fun getVM() = mViewModel
 
-    private var mAdapter: LiveStreamAdapter? = null
+    private var mAdapter: RMLiveStreamAdapter? = null
 
     private var currentMode = LiveStreamMode.PARTY
 
@@ -123,9 +127,31 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
             if (keypadHeight > screenHeight * 0.15) {
                 if (!isKeyboardShowing) {
                     isKeyboardShowing = true
+                    binding.rcvCommentList.apply {
+                        updateLayoutParams<ConstraintLayout.LayoutParams> {
+                            bottomToTop = binding.edtComment.id
+                        }
+                        setMarginsInDp(
+                            8,
+                            0,
+                            0,
+                            8
+                        )
+                    }
                 }
             } else {
                 if (isKeyboardShowing) {
+                    binding.rcvCommentList.apply {
+                        updateLayoutParams<ConstraintLayout.LayoutParams> {
+                            bottomToTop = binding.barrier2.id
+                        }
+                        setMarginsInDp(
+                            8,
+                            0,
+                            0,
+                            20
+                        )
+                    }
                     binding.memberCommentViewGroup.isVisible = false
                     updateModeStatus()
                     isKeyboardShowing = false
@@ -200,7 +226,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
         }
         requireContext().registerReceiver(earphoneEventReceiver, filter)
 
-        mAdapter = LiveStreamAdapter()
+        mAdapter = RMLiveStreamAdapter()
         binding.rcvCommentList.adapter = mAdapter
     }
 
@@ -212,9 +238,10 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
             if (!isDoubleClick) {
                 binding.groupAllBtn.visibility = View.INVISIBLE
                 binding.memberCommentViewGroup.isVisible = true
-                binding.btnSendComment.getHeight { binding.edtComment.minimumHeight = it }
                 binding.edtComment.requestFocus()
                 requireContext().showSoftKeyboard(binding.edtComment)
+                binding.btnSendComment.getHeight { binding.edtComment.minimumHeight = it }
+                binding.edtComment.text?.clear()
 
                 /** Handle camera view to initialize position*/
                 binding.clMemberCamera.x = initCameraX
@@ -428,26 +455,27 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
 
     private fun bindingMessageHandle() {
         mViewModel.messageList.observe(viewLifecycleOwner) {
-            mAdapter?.submitList(it)
-            binding.rcvCommentList.scrollToPosition(mAdapter?.itemCount?.minus(1) ?: 0)
+            if(it.isEmpty()){
+                binding.rcvCommentList.visibility=View.GONE
+            }
+            else{
+                binding.rcvCommentList.visibility=View.VISIBLE
+                mAdapter?.submitList(it)
+                binding.rcvCommentList.scrollToPosition(mAdapter?.itemCount?.minus(1) ?: 0)
+            }
+
         }
     }
 
     private fun updateModeStatus() {
         when (currentMode) {
             LiveStreamMode.PARTY -> {
-                binding.btnParty.visibility = View.GONE
-                binding.btnPrivate.visibility = View.VISIBLE
-                binding.btnComment.visibility = View.VISIBLE
-                binding.btnVideoMic.visibility = View.GONE
-                binding.btnEndCall.visibility = View.VISIBLE
+                binding.groupAllBtn.visibility = View.GONE
+                binding.groupButtonPartyMode.visibility = View.VISIBLE
             }
             LiveStreamMode.PREMIUM_PRIVATE -> {
-                binding.btnParty.visibility = View.VISIBLE
-                binding.btnPrivate.visibility = View.GONE
-                binding.btnComment.visibility = View.VISIBLE
-                binding.btnVideoMic.visibility = View.VISIBLE
-                binding.btnEndCall.visibility = View.VISIBLE
+                binding.groupAllBtn.visibility = View.GONE
+                binding.groupButtonPrivateMode.visibility = View.VISIBLE
             }
         }
     }
@@ -536,7 +564,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
     }
 
     override fun onCameraChange(_isCameraMute: Boolean) {
-        binding.clMemberCamera.visibility = if (_isCameraMute) View.INVISIBLE else View.VISIBLE
+//        binding.clMemberCamera.visibility = if (_isCameraMute) View.INVISIBLE else View.VISIBLE
         mViewModel.updateCameraSetting(_isCameraMute)
     }
 }

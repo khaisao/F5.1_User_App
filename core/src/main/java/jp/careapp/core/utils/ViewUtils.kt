@@ -140,6 +140,21 @@ fun View.setMargins(start: Int, top: Int, end: Int, bottom: Int) {
     }
 }
 
+fun View.setMarginsInDp(start: Int, top: Int, end: Int, bottom: Int) {
+    val density = resources.displayMetrics.density
+    if (layoutParams is ViewGroup.MarginLayoutParams) {
+        val params = layoutParams as ViewGroup.MarginLayoutParams
+        params.setMargins(
+            (start * density).toInt(),
+            (top * density).toInt(),
+            (end * density).toInt(),
+            (bottom * density).toInt()
+        )
+        requestLayout()
+    }
+}
+
+
 fun Context.convertSourceToPixel(dimenSource: Int): Int {
     return this.resources.getDimension(dimenSource).toInt()
 }
