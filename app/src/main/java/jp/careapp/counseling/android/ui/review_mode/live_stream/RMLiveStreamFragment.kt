@@ -2,6 +2,7 @@ package jp.careapp.counseling.android.ui.review_mode.live_stream
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -28,7 +29,6 @@ import jp.careapp.core.utils.DeviceUtil.Companion.getScreenHeightWithNavigationB
 import jp.careapp.core.utils.DeviceUtil.Companion.hideKeyBoardWhenClickOutSide
 import jp.careapp.core.utils.dialog.RMCommonAlertDialog
 import jp.careapp.core.utils.getHeight
-import jp.careapp.core.utils.setMargins
 import jp.careapp.core.utils.setMarginsInDp
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.FlaxLoginAuthResponse
@@ -37,7 +37,6 @@ import jp.careapp.counseling.android.network.socket.MaruCastManager
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.CHANGE_TO_PARTY_MODE
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.PREMIUM_PRIVATE_MODE_REGISTER
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.PRIVATE_MODE_REGISTER
-import jp.careapp.counseling.android.ui.live_stream.LiveStreamAdapter
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamMode
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.connect_private.LiveStreamConnectPrivateListener
@@ -48,6 +47,7 @@ import jp.careapp.counseling.android.ui.review_mode.live_stream.rm_live_stream_b
 import jp.careapp.counseling.android.ui.review_mode.live_stream.rm_live_stream_bottom_sheet.notice.RMLiveStreamNoticeBottomSheet
 import jp.careapp.counseling.android.ui.review_mode.live_stream.rm_live_stream_bottom_sheet.rm_connect_private.RMConnectPrivateBottomSheet
 import jp.careapp.counseling.android.ui.review_mode.live_stream.rm_live_stream_bottom_sheet.rm_connect_private.RMLiveStreamConnectPrivateListener
+import jp.careapp.counseling.android.ui.review_mode.live_stream.rm_live_stream_dialog.RMLogoutConfirmDialog
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.PermissionUtils
 import jp.careapp.counseling.android.utils.PermissionUtils.launchMultiplePermission
@@ -175,7 +175,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
         }
     }
 
-    private val listAlertDialogShowing = arrayListOf<RMCommonAlertDialog>()
+    private val listAlertDialogShowing = arrayListOf<Dialog>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -333,11 +333,8 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
     }
 
     private fun showLogoutConfirm() {
-        val dialog = RMCommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+        val dialog = RMLogoutConfirmDialog(requireContext())
             .showDialog()
-            .setDialogTitle(R.string.logout_confirm)
-            .setTextPositiveButton(R.string.confirm_block_alert)
-            .setTextNegativeButton(R.string.cancel_block_alert)
             .setOnPositivePressed {
                 it.dismiss()
                 logout()
@@ -564,7 +561,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
     }
 
     override fun onCameraChange(_isCameraMute: Boolean) {
-//        binding.clMemberCamera.visibility = if (_isCameraMute) View.INVISIBLE else View.VISIBLE
         mViewModel.updateCameraSetting(_isCameraMute)
+        binding.memberCameraViewGroup.visibility = if (_isCameraMute) View.GONE else View.VISIBLE
     }
 }
