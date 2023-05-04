@@ -134,6 +134,7 @@
                             android:maxLines="1"
                             android:paddingBottom="@dimen/padding_6dp"
                             android:text="Size"
+                            android:layout_marginEnd="@dimen/margin_2"
                             android:textColor="@color/color_text_F0F0F0" />
 
                         <TextView

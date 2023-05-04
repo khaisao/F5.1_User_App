@@ -2,6 +2,7 @@ package jp.careapp.counseling.android.ui.review_mode.live_stream
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -14,7 +15,9 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,6 +29,7 @@ import jp.careapp.core.utils.DeviceUtil.Companion.getScreenHeightWithNavigationB
 import jp.careapp.core.utils.DeviceUtil.Companion.hideKeyBoardWhenClickOutSide
 import jp.careapp.core.utils.dialog.RMCommonAlertDialog
 import jp.careapp.core.utils.getHeight
+import jp.careapp.core.utils.setMarginsInDp
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.FlaxLoginAuthResponse
 import jp.careapp.counseling.android.navigation.AppNavigation
@@ -33,7 +37,6 @@ import jp.careapp.counseling.android.network.socket.MaruCastManager
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.CHANGE_TO_PARTY_MODE
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.PREMIUM_PRIVATE_MODE_REGISTER
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.PRIVATE_MODE_REGISTER
-import jp.careapp.counseling.android.ui.live_stream.LiveStreamAdapter
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamMode
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.connect_private.LiveStreamConnectPrivateListener
@@ -44,6 +47,7 @@ import jp.careapp.counseling.android.ui.review_mode.live_stream.rm_live_stream_b
 import jp.careapp.counseling.android.ui.review_mode.live_stream.rm_live_stream_bottom_sheet.notice.RMLiveStreamNoticeBottomSheet
 import jp.careapp.counseling.android.ui.review_mode.live_stream.rm_live_stream_bottom_sheet.rm_connect_private.RMConnectPrivateBottomSheet
 import jp.careapp.counseling.android.ui.review_mode.live_stream.rm_live_stream_bottom_sheet.rm_connect_private.RMLiveStreamConnectPrivateListener
+import jp.careapp.counseling.android.ui.review_mode.live_stream.rm_live_stream_dialog.RMLogoutConfirmDialog
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.PermissionUtils
 import jp.careapp.counseling.android.utils.PermissionUtils.launchMultiplePermission
@@ -68,7 +72,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
     private val mViewModel: RMLiveStreamViewModel by viewModels()
     override fun getVM() = mViewModel
 
-    private var mAdapter: LiveStreamAdapter? = null
+    private var mAdapter: RMLiveStreamAdapter? = null
 
     private var currentMode = LiveStreamMode.PARTY
 
@@ -103,6 +107,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
                 ).show(childFragmentManager, "CameraMicroSwitchBottomSheet")
                 if (!mViewModel.isMicMute() && !mViewModel.isCameraMute()) {
                     maruCastManager.publishStream()
+                    binding.clMemberCamera.visibility = View.VISIBLE
                 }
             }
             PermissionUtils.PermissionState.PermanentlyDenied -> {
@@ -123,9 +128,31 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
             if (keypadHeight > screenHeight * 0.15) {
                 if (!isKeyboardShowing) {
                     isKeyboardShowing = true
+                    binding.rcvCommentList.apply {
+                        updateLayoutParams<ConstraintLayout.LayoutParams> {
+                            bottomToTop = binding.edtComment.id
+                        }
+                        setMarginsInDp(
+                            8,
+                            0,
+                            0,
+                            8
+                        )
+                    }
                 }
             } else {
                 if (isKeyboardShowing) {
+                    binding.rcvCommentList.apply {
+                        updateLayoutParams<ConstraintLayout.LayoutParams> {
+                            bottomToTop = binding.barrier2.id
+                        }
+                        setMarginsInDp(
+                            8,
+                            0,
+                            0,
+                            20
+                        )
+                    }
                     binding.memberCommentViewGroup.isVisible = false
                     updateModeStatus()
                     isKeyboardShowing = false
@@ -149,7 +176,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
         }
     }
 
-    private val listAlertDialogShowing = arrayListOf<RMCommonAlertDialog>()
+    private val listAlertDialogShowing = arrayListOf<Dialog>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -200,7 +227,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
         }
         requireContext().registerReceiver(earphoneEventReceiver, filter)
 
-        mAdapter = LiveStreamAdapter()
+        mAdapter = RMLiveStreamAdapter()
         binding.rcvCommentList.adapter = mAdapter
     }
 
@@ -212,9 +239,10 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
             if (!isDoubleClick) {
                 binding.groupAllBtn.visibility = View.INVISIBLE
                 binding.memberCommentViewGroup.isVisible = true
-                binding.btnSendComment.getHeight { binding.edtComment.minimumHeight = it }
                 binding.edtComment.requestFocus()
                 requireContext().showSoftKeyboard(binding.edtComment)
+                binding.btnSendComment.getHeight { binding.edtComment.minimumHeight = it }
+                binding.edtComment.text?.clear()
 
                 /** Handle camera view to initialize position*/
                 binding.clMemberCamera.x = initCameraX
@@ -306,11 +334,8 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
     }
 
     private fun showLogoutConfirm() {
-        val dialog = RMCommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+        val dialog = RMLogoutConfirmDialog(requireContext())
             .showDialog()
-            .setDialogTitle(R.string.logout_confirm)
-            .setTextPositiveButton(R.string.confirm_block_alert)
-            .setTextNegativeButton(R.string.cancel_block_alert)
             .setOnPositivePressed {
                 it.dismiss()
                 logout()
@@ -428,26 +453,27 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
 
     private fun bindingMessageHandle() {
         mViewModel.messageList.observe(viewLifecycleOwner) {
-            mAdapter?.submitList(it)
-            binding.rcvCommentList.scrollToPosition(mAdapter?.itemCount?.minus(1) ?: 0)
+            if(it.isEmpty()){
+                binding.rcvCommentList.visibility=View.GONE
+            }
+            else{
+                binding.rcvCommentList.visibility=View.VISIBLE
+                mAdapter?.submitList(it)
+                binding.rcvCommentList.scrollToPosition(mAdapter?.itemCount?.minus(1) ?: 0)
+            }
+
         }
     }
 
     private fun updateModeStatus() {
         when (currentMode) {
             LiveStreamMode.PARTY -> {
-                binding.btnParty.visibility = View.GONE
-                binding.btnPrivate.visibility = View.VISIBLE
-                binding.btnComment.visibility = View.VISIBLE
-                binding.btnVideoMic.visibility = View.GONE
-                binding.btnEndCall.visibility = View.VISIBLE
+                binding.groupAllBtn.visibility = View.GONE
+                binding.groupButtonPartyMode.visibility = View.VISIBLE
             }
             LiveStreamMode.PREMIUM_PRIVATE -> {
-                binding.btnParty.visibility = View.VISIBLE
-                binding.btnPrivate.visibility = View.GONE
-                binding.btnComment.visibility = View.VISIBLE
-                binding.btnVideoMic.visibility = View.VISIBLE
-                binding.btnEndCall.visibility = View.VISIBLE
+                binding.groupAllBtn.visibility = View.GONE
+                binding.groupButtonPrivateMode.visibility = View.VISIBLE
             }
         }
     }
@@ -536,7 +562,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
     }
 
     override fun onCameraChange(_isCameraMute: Boolean) {
-        binding.clMemberCamera.visibility = if (_isCameraMute) View.INVISIBLE else View.VISIBLE
         mViewModel.updateCameraSetting(_isCameraMute)
+        binding.memberCameraViewGroup.visibility = if (_isCameraMute) View.GONE else View.VISIBLE
     }
 }

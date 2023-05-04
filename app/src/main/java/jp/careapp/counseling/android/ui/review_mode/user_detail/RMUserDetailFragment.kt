@@ -3,10 +3,8 @@ package jp.careapp.counseling.android.ui.review_mode.user_detail
 import android.Manifest
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,6 +21,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.dialog.RMCommonAlertDialog
+import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.live_stream.ConnectResult
 import jp.careapp.counseling.android.model.network.RMUserDetailResponse
@@ -81,29 +80,7 @@ class RMUserDetailFragment : BaseFragment<FragmentRmUserDetailBinding, RMUserDet
         viewModel.user.observe(viewLifecycleOwner) {
             user = it
             callingViewModel.userCode = it.code.toString()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                Glide.with(binding.ivProfile).load(
-                    resources.getIdentifier(
-                        "ic_no_image",
-                        "drawable", requireContext().packageName
-                    )
-                )
-                    .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen._20sdp)))
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(binding.ivProfile)
-            } else {
-                Glide.with(binding.ivProfile).load(
-                    resources.getIdentifier(
-                        "ic_no_image",
-                        "drawable", requireContext().packageName
-                    )
-                ).transforms(
-                    CenterCrop(),
-                    RoundedCorners(resources.getDimensionPixelSize(R.dimen._20sdp))
-                )
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(binding.ivProfile)
-            }
+            binding.ivProfile.loadImage(user.thumbnailImageUrl, R.drawable.ic_no_image)
             binding.tvNickName.text = it.name
             binding.tvNickName.bringToFront()
             binding.executePendingBindings()

@@ -75,15 +75,10 @@ class FavoriteAdapter(
             val statusBg = PerformerStatusHandler.getStatusBg(status)
 
             binding.tvStatus.setBackgroundResource(statusBg)
+
             binding.tvStatus.text = statusText
 
-            val bustSize = context.getBustSize(consultant.bust)
-            if (bustSize == "") {
-                binding.tvSize.visibility = View.GONE
-            } else {
-                binding.tvSize.visibility = View.VISIBLE
-                binding.tvSize.text = bustSize
-            }
+            binding.tvSize.text = context.getBustSize(consultant.bust)
 
             binding.tvAge.text = consultant.age.toString() + context.resources.getString(R.string.age_raw)
 

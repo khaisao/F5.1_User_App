@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/margin_48dp"
+    android:layout_marginRight="@dimen/margin_48dp"
+    android:background="@drawable/bg_rm_radius_12">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin_24dp"
+        android:paddingTop="@dimen/margin_24dp"
+        android:paddingRight="@dimen/margin_24dp"
+        android:paddingBottom="@dimen/margin_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/text_bold_16"
+            android:gravity="center"
+            android:textColor="@color/color_070707"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/logout_confirm" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_32dp"
+            android:layout_marginBottom="@dimen/margin_40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+            <TextView
+                android:id="@+id/tv_cancel_log_out"
+                style="@style/text_14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:layout_weight="1"
+                android:background="@drawable/bg_rm_cancel_calling"
+                android:gravity="center"
+                android:paddingVertical="@dimen/padding_15dp"
+                android:text="@string/cancel_block_alert"
+                android:textColor="@color/color_4985FE" />
+
+            <TextView
+                android:id="@+id/tv_confirm_log_out"
+                style="@style/text_14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_rm_common"
+                android:fontFamily="@font/hiragino_sans_w6"
+                android:gravity="center"
+                android:paddingVertical="@dimen/padding_15dp"
+                android:textColor="@color/background_color_white"
+                android:textSize="@dimen/text_size_14"
+                android:text="@string/confirm_block_alert" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

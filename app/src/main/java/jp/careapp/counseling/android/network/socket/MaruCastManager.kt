@@ -141,18 +141,27 @@ class MaruCastManager @Inject constructor(
     }
 
     fun setMicOff(isOff: Boolean) {
-        if (isOff) {
-            mediaClient.muteAudio()
-        } else {
-            mediaClient.unmuteAudio()
+        //To handle error No audio Producer
+        try {
+            if (isOff) {
+                mediaClient.muteAudio()
+            } else {
+                mediaClient.unmuteAudio()
+            }
+        } catch (_: Exception) {
         }
+
     }
 
     fun setCameraOff(isOff: Boolean) {
-        if (isOff) {
-            mediaClient.muteVideo()
-        } else {
-            mediaClient.unmuteVideo()
+        //To handle error No audio Producer
+        try {
+            if (isOff) {
+                mediaClient.muteVideo()
+            } else {
+                mediaClient.unmuteVideo()
+            }
+        } catch (_: Exception) {
         }
     }
 

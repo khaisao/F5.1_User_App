@@ -584,7 +584,11 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             .setTextNegativeButton(R.string.cancel_block_alert)
             .setOnPositivePressed {
                 it.dismiss()
-                appNavigation.navigateUp()
+                val bundle = Bundle().apply {
+                    putSerializable(BUNDLE_KEY.USER_PROFILE, consultantResponse)
+                    putInt(ROOT_SCREEN, rootScreen)
+                }
+                appNavigation.openLiveStreamToExitLiveStream(bundle)
             }.setOnNegativePressed {
                 it.dismiss()
             }

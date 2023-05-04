@@ -26,11 +26,7 @@ class RMCallConnectionDialog : BaseDialogFragment<FragmentRmCallingBinding>() {
             arguments?.get(BUNDLE_KEY.PERFORMER) as PerformerInfo
         binding.apply {
             tvName.text = getString(R.string.call_connection_message, performerInfo.name)
-            if (performerInfo.imageUrl.isNotEmpty()) {
-                ivAvatar.loadImage(performerInfo.imageUrl, false)
-            } else {
-                ivAvatar.loadImage(R.drawable.ic_avatar_default, false)
-            }
+            ivAvatar.loadImage(performerInfo.imageUrl, R.drawable.ic_no_image)
             Glide.with(this@RMCallConnectionDialog).asGif().load(R.drawable.ic_rm_call_loading)
                 .into(binding.ivMotion)
             ivEndCall.setOnClickListener {

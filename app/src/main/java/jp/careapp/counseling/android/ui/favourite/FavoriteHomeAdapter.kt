@@ -65,12 +65,7 @@ class FavoriteHomeAdapter(
             binding.tvLiveStreamCount.visibility = if (status == PerformerStatus.LIVE_STREAM) View.VISIBLE else View.GONE
             binding.tvLiveStreamCount.text = (consultant.loginMemberCount + consultant.peepingMemberCount).toString()
             val bustSize = context.getBustSize(consultant.bust)
-            if (bustSize == "") {
-                binding.tvSize.visibility = View.GONE
-            } else {
-                binding.tvSize.visibility = View.VISIBLE
-                binding.tvSize.text = "(" + bustSize + ")"
-            }
+            binding.tvSize.text = "(" + bustSize + ")"
             binding.tvAge.text =
                 String.format(binding.root.context.getString(R.string.age_pattern), consultant.age)
             binding.ivRanking.setImageResource(
