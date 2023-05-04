@@ -90,12 +90,7 @@ class ConsultantAdapter(
             binding.tvLiveStreamCount.visibility = if (status == PerformerStatus.LIVE_STREAM) View.VISIBLE else View.GONE
             binding.tvLiveStreamCount.text = (consultant.loginMemberCount + consultant.peepingMemberCount).toString()
             val bustSize = context.getBustSize(consultant.bust)
-            if (bustSize == "") {
-                binding.tvSize.visibility = View.GONE
-            } else {
-                binding.tvSize.visibility = View.VISIBLE
-                binding.tvSize.text = "(" + bustSize + ")"
-            }
+            binding.tvSize.text = "(" + bustSize + ")"
         }
     }
 

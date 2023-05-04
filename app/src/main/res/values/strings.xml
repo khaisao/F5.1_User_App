@@ -270,7 +270,7 @@
     <string name="ranking_daily">前日</string>
     <string name="number_point_per_char">%dpts</string>
     <string name="cup">カップ</string>
-    <string name="secret">ひみつ</string>
+    <string name="secret">秘密</string>
 
     <!--    trouble sheet  -->
     <string name="trouble_title">お悩みシート</string>

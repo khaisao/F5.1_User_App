@@ -61,12 +61,8 @@ class ChatListAdapter constructor(
                             binding.llRanking.visibility = VISIBLE
                             binding.ivPerson.loadImage(consultant.imageUrl, R.drawable.default_avt_performer, false)
                             val bustSize = context.getBustSize(consultant.bust)
-                            if (bustSize == "") {
-                                binding.tvSize.visibility = GONE
-                            } else {
-                                binding.tvSize.visibility = VISIBLE
-                                binding.tvSize.text = bustSize
-                            }
+                            binding.tvSize.visibility = VISIBLE
+                            binding.tvSize.text = bustSize
                             binding.ivStateBeginner.visibility = if(consultant.isRookie == 1) View.VISIBLE else View.GONE
                             binding.tvName.text = consultant.name
                             binding.tvAge.text = String.format(context.getString(R.string.age_pattern),consultant.age)
@@ -96,6 +92,8 @@ class ChatListAdapter constructor(
                                 .into(binding.ivPerson)
                             binding.llRanking.visibility = INVISIBLE
                             binding.tvName.text = context.resources.getString(R.string.notice_from_management)
+                            binding.tvAge.text = ""
+                            binding.tvSize.text = ""
                         }
                     }
                 }
