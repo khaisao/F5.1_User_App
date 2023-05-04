@@ -154,7 +154,6 @@ fun View.setMarginsInDp(start: Int, top: Int, end: Int, bottom: Int) {
     }
 }
 
-
 fun Context.convertSourceToPixel(dimenSource: Int): Int {
     return this.resources.getDimension(dimenSource).toInt()
 }
