@@ -36,8 +36,7 @@
                 android:id="@+id/scMicrophone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                app:kswBackDrawable="@drawable/rm_track_selector"
+                app:kswBackDrawable="@drawable/rm_track_camera_selector"
                 app:kswThumbDrawable="@drawable/rm_thumb_selector"
                 app:layout_constraintBottom_toBottomOf="@+id/tvMicrophone"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +70,7 @@
                 android:id="@+id/scCamera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:kswBackDrawable="@drawable/rm_track_selector"
+                app:kswBackDrawable="@drawable/rm_track_camera_selector"
                 app:kswThumbDrawable="@drawable/rm_thumb_selector"
                 app:layout_constraintBottom_toBottomOf="@+id/tvCamera"
                 app:layout_constraintEnd_toEndOf="parent"

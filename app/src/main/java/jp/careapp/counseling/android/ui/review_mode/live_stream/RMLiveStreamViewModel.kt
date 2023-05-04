@@ -14,6 +14,7 @@ import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.live_stream.ConnectResult
 import jp.careapp.counseling.android.data.network.FlaxLoginAuthResponse
 import jp.careapp.counseling.android.data.network.LiveStreamChatResponse
+import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.network.socket.CallingWebSocketClient
 import jp.careapp.counseling.android.network.socket.FlaxWebSocketManager
 import jp.careapp.counseling.android.network.socket.MaruCastManager
@@ -35,7 +36,8 @@ class RMLiveStreamViewModel @Inject constructor(
     private val mRepository: LiveStreamRepository,
     private val flaxWebSocketManager: FlaxWebSocketManager,
     private val maruCastManager: MaruCastManager,
-    private val audioManager: AudioManager
+    private val audioManager: AudioManager,
+    private val rxPreferences: RxPreferences,
 ) : BaseViewModel(), CallingWebSocketClient.ChatWebSocketCallBack {
 
     private val _messageList = MutableLiveData<ArrayList<LiveStreamChatResponse>>()
@@ -246,6 +248,6 @@ class RMLiveStreamViewModel @Inject constructor(
     fun sendComment(message: String) {
         if (message.isEmpty()) return
         flaxWebSocketManager.sendMessage(message)
-        updateChatLog(message, name = "あなた", false)
+        updateChatLog(message, name = rxPreferences.getNickName() ?: "あなた", false)
     }
 }

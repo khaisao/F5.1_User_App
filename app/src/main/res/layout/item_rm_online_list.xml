@@ -41,7 +41,7 @@
             android:adjustViewBounds="true"
             app:layout_constraintBottom_toBottomOf="@+id/image"
             app:layout_constraintEnd_toEndOf="@+id/image"
-            tools:src="@drawable/bg_rm_online_status" />
+            android:src="@drawable/bg_rm_online_status" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewNickName"

@@ -28,13 +28,23 @@ class RMPerformerAdapter(private val onClickUser: (Int) -> Unit) :
 
         fun bind(user: RMPerformerResponse) {
             binding.user = user
-            Glide.with(binding.image).load(R.drawable.ic_no_image)
-                .transform(
-                    CenterCrop(),
-                    RoundedCorners(binding.image.resources.getDimensionPixelSize(R.dimen._20sdp))
-                )
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.image)
+            if (user.thumbnailImageUrl != null) {
+                Glide.with(binding.image).load(user.thumbnailImageUrl)
+                    .transform(
+                        CenterCrop(),
+                        RoundedCorners(binding.image.resources.getDimensionPixelSize(R.dimen._20sdp))
+                    )
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(binding.image)
+            } else {
+                Glide.with(binding.image).load(R.drawable.ic_no_image)
+                    .transform(
+                        CenterCrop(),
+                        RoundedCorners(binding.image.resources.getDimensionPixelSize(R.dimen._20sdp))
+                    )
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(binding.image)
+            }
             binding.executePendingBindings()
         }
     }
