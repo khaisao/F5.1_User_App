@@ -454,7 +454,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     private fun bindingMessageHandle() {
         mViewModel.messageList.observe(viewLifecycleOwner) {
             mAdapter?.submitList(it)
-            binding.rcvCommentList.scrollToPosition(mAdapter?.itemCount?.minus(1) ?: 0)
+            binding.rcvCommentList.smoothScrollToPosition(mAdapter?.itemCount?.minus(0) ?: 0)
         }
     }
 
@@ -542,7 +542,11 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             .setTextOkButton(R.string.close)
             .setOnOkButtonBackground(R.drawable.bg_cancel_btn)
             .setOnOkButtonPressed {
-                it.dismiss()
+                if (errorMessage == resources.getString(R.string.already_log_out)) {
+                    logout()
+                } else {
+                    it.dismiss()
+                }
             }
         listAlertDialogShowing.add(dialog)
     }

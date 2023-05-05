@@ -210,9 +210,7 @@
                     android:layout_height="180dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginBottom="6dp"
-                    android:fadingEdge="vertical|horizontal"
                     android:orientation="vertical"
-                    android:requiresFadingEdge="vertical|horizontal"
                     app:itemAnimator="@{null}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toTopOf="@id/barrier2"
@@ -261,12 +259,12 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/ic_microphone"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="centerCrop"
             app:layout_constraintWidth_percent="0.106"
-            tools:src="@tools:sample/avatars" />
+            android:src="@drawable/default_avt_performer" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -320,10 +318,12 @@
 
             <TextView
                 android:id="@+id/tvPerformerName"
-                style="@style/text_12"
+                style="@style/text_bold_12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:shadowColor="#99000000"
+                android:shadowRadius="15"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center"

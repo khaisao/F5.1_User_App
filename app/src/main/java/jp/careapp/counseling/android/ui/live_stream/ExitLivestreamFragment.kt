@@ -120,11 +120,7 @@ class ExitLivestreamFragment :
     override fun setOnClick() {
         super.setOnClick()
         binding.ivClose.setOnClickListener {
-            if (rootScreen == SCREEN_DETAIL) {
-                openDetailScreen()
-            } else {
-                openChatScreen()
-            }
+            appNavigation.navigateUp()
         }
 
         binding.ivMessage.setOnClickListener {
