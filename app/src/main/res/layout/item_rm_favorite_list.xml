@@ -21,27 +21,39 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/bg_rm_favorite_item">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginVertical="8dp"
             android:layout_marginStart="8dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_no_image"
+            app:cardBackgroundColor="@color/white"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="@dimen/margin_20"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.16" />
+            app:layout_constraintWidth_percent="0.16">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_no_image" />
+
+        </com.google.android.material.card.MaterialCardView>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/statusImage"
             iv_status_online="@{user.presenceStatus}"
             android:layout_width="@dimen/_12sdp"
             android:layout_height="@dimen/_12sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/image"
-            app:layout_constraintEnd_toEndOf="@+id/image"
+            android:translationZ="100dp"
+            app:layout_constraintBottom_toBottomOf="@+id/cv_image"
+            app:layout_constraintEnd_toEndOf="@+id/cv_image"
             tools:src="@drawable/bg_rm_online_status" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -50,10 +62,10 @@
             android:layout_height="0dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/ic_btn_remove"
-            app:layout_constraintBottom_toBottomOf="@+id/image"
+            app:layout_constraintBottom_toBottomOf="@+id/cv_image"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/image"
+            app:layout_constraintTop_toTopOf="@+id/cv_image"
             app:layout_constraintWidth_percent="0.0525" />
 
         <LinearLayout
@@ -62,10 +74,10 @@
             android:layout_marginHorizontal="16dp"
             android:orientation="vertical"
             android:weightSum="2"
-            app:layout_constraintBottom_toBottomOf="@id/image"
+            app:layout_constraintBottom_toBottomOf="@id/cv_image"
             app:layout_constraintEnd_toStartOf="@id/btn_delete"
-            app:layout_constraintStart_toEndOf="@id/image"
-            app:layout_constraintTop_toTopOf="@id/image">
+            app:layout_constraintStart_toEndOf="@id/cv_image"
+            app:layout_constraintTop_toTopOf="@id/cv_image">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textViewNickName"
