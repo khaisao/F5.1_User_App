@@ -239,10 +239,10 @@ class LiveStreamViewModel @Inject constructor(
                     ConnectResult(
                         RESULT_NG,
                         jsonMessage.getString(KEY_ERROR),
-                        isLogout = true
+                        isLogout = false
                     )
                 )
-                isLogout = true
+                isLogout = false
             } else if (result == RESULT_NG) {
                 val errorMsg =
                     if (jsonMessage.has(KEY_ERROR)) jsonMessage.getString(KEY_ERROR) else "エラーが発生しました"

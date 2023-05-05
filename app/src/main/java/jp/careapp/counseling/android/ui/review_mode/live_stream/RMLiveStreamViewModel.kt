@@ -174,10 +174,10 @@ class RMLiveStreamViewModel @Inject constructor(
                     ConnectResult(
                         SocketInfo.RESULT_NG,
                         jsonMessage.getString(SocketInfo.KEY_ERROR),
-                        isLogout = true
+                        isLogout = false
                     )
                 )
-                isLogout = true
+                isLogout = false
             } else if (result == SocketInfo.RESULT_NG) {
                 val errorMsg =
                     if (jsonMessage.has(SocketInfo.KEY_ERROR)) jsonMessage.getString(SocketInfo.KEY_ERROR) else "エラーが発生しました"

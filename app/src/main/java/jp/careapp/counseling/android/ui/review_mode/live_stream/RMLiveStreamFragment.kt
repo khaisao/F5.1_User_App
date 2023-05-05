@@ -522,7 +522,11 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
             .setDialogTitle(errorMessage)
             .setTextPositiveButton(R.string.ok)
             .setOnPositivePressed {
-                it.dismiss()
+                if (errorMessage == resources.getString(R.string.already_log_out)) {
+                    logout()
+                } else {
+                    it.dismiss()
+                }
             }
         listAlertDialogShowing.add(dialog)
     }

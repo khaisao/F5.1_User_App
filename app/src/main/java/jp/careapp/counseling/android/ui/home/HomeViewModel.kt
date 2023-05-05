@@ -2,24 +2,20 @@ package jp.careapp.counseling.android.ui.home
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.realm.Realm
-import io.realm.RealmResults
 import jp.careapp.core.base.BaseViewModel
-import jp.careapp.counseling.android.data.database.ConsultantDatabase
 import jp.careapp.counseling.android.data.network.ApiObjectResponse
 import jp.careapp.counseling.android.data.network.BannerResponse
 import jp.careapp.counseling.android.data.network.BlockedConsultantResponse
 import jp.careapp.counseling.android.data.network.ConsultantResponse
+import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.network.ApiInterface
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.math.ceil
@@ -29,7 +25,8 @@ const val LIMIT_NUMBER = 50
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val apiInterface: ApiInterface
+    private val apiInterface: ApiInterface,
+    private val rxPreferences: RxPreferences
 ) : BaseViewModel() {
 
     var listConsultantResult = MutableLiveData<ArrayList<ConsultantResponse>>(arrayListOf())
@@ -52,6 +49,7 @@ class HomeViewModel @Inject constructor(
         isFirstTimeLoadData = true
         isShowHideLoading = true
         getListBlockedConsultant()
+        getMemberInfo()
     }
 
     fun getListBanner() {
@@ -64,6 +62,29 @@ class HomeViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 Timber.e(e)
+            }
+        }
+    }
+
+    private fun getMemberInfo() {
+        viewModelScope.launch(Dispatchers.IO) {
+            supervisorScope {
+                try {
+                    val response = apiInterface.getMember()
+                    if (response.errors.isEmpty()) {
+                        val dataResponse = response.dataResponse
+                        rxPreferences.saveMemberInfoEditProfile(
+                            dataResponse.name,
+                            dataResponse.mail,
+                            dataResponse.age,
+                            dataResponse.birth,
+                            dataResponse.sex,
+                            dataResponse.point,
+                            dataResponse.pushMail
+                        )
+                    }
+                } catch (_: Exception) {
+                }
             }
         }
     }
