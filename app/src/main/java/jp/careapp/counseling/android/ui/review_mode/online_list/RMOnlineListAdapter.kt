@@ -5,10 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.adapter.BaseAdapterLoadMore
 import jp.careapp.counseling.android.model.network.RMPerformerResponse
@@ -28,23 +25,7 @@ class RMPerformerAdapter(private val onClickUser: (Int) -> Unit) :
 
         fun bind(user: RMPerformerResponse) {
             binding.user = user
-            if (user.thumbnailImageUrl != null) {
-                Glide.with(binding.image).load(user.thumbnailImageUrl)
-                    .transform(
-                        CenterCrop(),
-                        RoundedCorners(binding.image.resources.getDimensionPixelSize(R.dimen._20sdp))
-                    )
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(binding.image)
-            } else {
-                Glide.with(binding.image).load(R.drawable.ic_no_image)
-                    .transform(
-                        CenterCrop(),
-                        RoundedCorners(binding.image.resources.getDimensionPixelSize(R.dimen._20sdp))
-                    )
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(binding.image)
-            }
+            binding.image.loadImage(user.thumbnailImageUrl, R.drawable.ic_no_image)
             binding.executePendingBindings()
         }
     }

@@ -23,15 +23,24 @@
         android:paddingTop="@dimen/margin_8"
         android:paddingBottom="@dimen/margin_16">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_image"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_no_image"
+            app:cardCornerRadius="@dimen/margin_20"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@android:color/transparent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_no_image" />
+        </com.google.android.material.card.MaterialCardView>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/statusImage"
@@ -39,8 +48,9 @@
             android:layout_width="@dimen/_10sdp"
             android:layout_height="@dimen/_10sdp"
             android:adjustViewBounds="true"
-            app:layout_constraintBottom_toBottomOf="@+id/image"
-            app:layout_constraintEnd_toEndOf="@+id/image"
+            android:translationZ="100dp"
+            app:layout_constraintBottom_toBottomOf="@+id/cv_image"
+            app:layout_constraintEnd_toEndOf="@+id/cv_image"
             android:src="@drawable/bg_rm_online_status" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -55,7 +65,7 @@
             android:textColor="@color/color_070707"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image"
+            app:layout_constraintTop_toBottomOf="@+id/cv_image"
             tools:text="ニックネーム" />
 
         <LinearLayout
