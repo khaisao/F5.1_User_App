@@ -35,10 +35,14 @@ class SplashViewModel @ViewModelInject constructor(
         const val SCREEN_CODE_START = 1
         const val SCREEN_CODE_BAD_USER = 2
         const val SCREEN_CODE_REGISTER = 3
+        const val SCREEN_CODE_BAD_USER_RM = 6
+//        Remove the comment to access normal mode without using VPN
         const val SCREEN_CODE_TOP_RM = 4
         const val SCREEN_CODE_START_RM = 5
-        const val SCREEN_CODE_BAD_USER_RM = 6
         const val SCREEN_CODE_REGISTER_RM = 7
+//        const val SCREEN_CODE_TOP_RM = 0
+//        const val SCREEN_CODE_START_RM = 1
+//        const val SCREEN_CODE_REGISTER_RM = 3
     }
 
     val actionSPlash = SingleLiveEvent<SplashActionState>()
