@@ -499,6 +499,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     }
 
     private fun updateModeStatus() {
+        dismissCameraAndMicBottomSheet()
         when (currentMode) {
             LiveStreamMode.PEEP -> {
                 binding.llItemPeeping.visibility = VISIBLE
@@ -640,6 +641,12 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     private fun dismissPrivateModeConnectionBottomSheet() {
         val fragment: Fragment? =
             childFragmentManager.findFragmentByTag("ConnectPrivateBottomSheet")
+        if (fragment != null) (fragment as ConnectPrivateBottomSheet).dismiss()
+    }
+
+    private fun dismissCameraAndMicBottomSheet() {
+        val fragment: Fragment? =
+            childFragmentManager.findFragmentByTag("CameraMicroSwitchBottomSheet")
         if (fragment != null) (fragment as ConnectPrivateBottomSheet).dismiss()
     }
 
