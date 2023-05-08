@@ -21,6 +21,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseActivity
@@ -229,6 +230,15 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
 
         mAdapter = RMLiveStreamAdapter()
         binding.rcvCommentList.adapter = mAdapter
+        mAdapter!!.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                mViewModel.messageList.value?.let {
+                    binding.rcvCommentList.smoothScrollToPosition(
+                        it.size
+                    )
+                }
+            }
+        })
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -453,19 +463,17 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
 
     private fun bindingMessageHandle() {
         mViewModel.messageList.observe(viewLifecycleOwner) {
-            if(it.isEmpty()){
-                binding.rcvCommentList.visibility=View.GONE
-            }
-            else{
-                binding.rcvCommentList.visibility=View.VISIBLE
+            if (it.isEmpty()) {
+                binding.rcvCommentList.visibility = View.GONE
+            } else {
+                binding.rcvCommentList.visibility = View.VISIBLE
                 mAdapter?.submitList(it)
-                binding.rcvCommentList.scrollToPosition(mAdapter?.itemCount?.minus(1) ?: 0)
             }
-
         }
     }
 
     private fun updateModeStatus() {
+        dismissBottomSheet("CameraMicroSwitchBottomSheet")
         when (currentMode) {
             LiveStreamMode.PARTY -> {
                 binding.groupAllBtn.visibility = View.GONE
