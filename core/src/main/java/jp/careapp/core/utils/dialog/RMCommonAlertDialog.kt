@@ -18,6 +18,7 @@ import jp.careapp.core.utils.Constants
 class RMCommonAlertDialog constructor(context: Context) : Dialog(context) {
 
     lateinit var btnConfirm: Button
+    lateinit var btnConfirmSmall: Button
     lateinit var tvTitle: TextView
     lateinit var tvSubTitle: TextView
     lateinit var tvCancel: TextView
@@ -40,6 +41,7 @@ class RMCommonAlertDialog constructor(context: Context) : Dialog(context) {
         tvTitle = findViewById(R.id.tv_title)
         tvSubTitle = findViewById(R.id.tv_subTitle)
         tvCancel = findViewById(R.id.tv_cancel)
+        btnConfirmSmall = findViewById(R.id.btn_confirm_small)
         setCanceledOnTouchOutside(false)
         setOnPositivePressed {
             this.dismiss()
@@ -51,6 +53,13 @@ class RMCommonAlertDialog constructor(context: Context) : Dialog(context) {
 
     fun setOnPositivePressed(onPositivePressed: ((RMCommonAlertDialog) -> Unit)?): RMCommonAlertDialog {
         btnConfirm.setOnClickListener {
+            onPositivePressed?.invoke(this)
+        }
+        return this
+    }
+
+    fun setOnPositiveSmallPressed(onPositivePressed: ((RMCommonAlertDialog) -> Unit)?): RMCommonAlertDialog {
+        btnConfirmSmall.setOnClickListener {
             onPositivePressed?.invoke(this)
         }
         return this
@@ -71,6 +80,15 @@ class RMCommonAlertDialog constructor(context: Context) : Dialog(context) {
 
     fun setTextPositiveButton(@StringRes textId: Int): RMCommonAlertDialog {
         btnConfirm.text = context.resources.getString(textId)
+        btnConfirmSmall.visibility = View.GONE
+        btnConfirm.visibility = View.VISIBLE
+        return this
+    }
+
+    fun setTextPositiveSmallButton(@StringRes textId: Int): RMCommonAlertDialog {
+        btnConfirmSmall.text = context.resources.getString(textId)
+        btnConfirmSmall.visibility = View.VISIBLE
+        btnConfirm.visibility = View.GONE
         return this
     }
 

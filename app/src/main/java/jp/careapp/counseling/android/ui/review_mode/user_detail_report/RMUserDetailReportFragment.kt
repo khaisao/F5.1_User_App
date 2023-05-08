@@ -5,6 +5,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
+import jp.careapp.core.utils.dialog.RMCommonAlertDialog
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.utils.ActionState
@@ -67,7 +68,14 @@ class RMUserDetailReportFragment :
         mViewModel.actionState.observe(viewLifecycleOwner) {
             if (it is ActionState.SendReportSuccess) {
                 if (it.isSuccess) {
-                    appNavigation.navigateUp()
+                    RMCommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+                        .showDialog()
+                        .setDialogTitle(resources.getString(R.string.thank_for_report))
+                        .setTextPositiveButton(R.string.ok_en)
+                        .setOnPositivePressed { dialog ->
+                            dialog.dismiss()
+                            binding.edtReasonReport.text?.clear()
+                        }
                 }
             }
         }

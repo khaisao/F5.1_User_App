@@ -528,8 +528,8 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
         val dialog = RMCommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
             .setDialogTitle(errorMessage)
-            .setTextPositiveButton(R.string.ok)
-            .setOnPositivePressed {
+            .setTextPositiveSmallButton(R.string.close)
+            .setOnPositiveSmallPressed {
                 if (errorMessage == resources.getString(R.string.already_log_out)) {
                     logout()
                 } else {
