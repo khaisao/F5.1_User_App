@@ -473,11 +473,12 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
     }
 
     private fun updateModeStatus() {
-        dismissBottomSheet("CameraMicroSwitchBottomSheet")
         when (currentMode) {
             LiveStreamMode.PARTY -> {
                 binding.groupAllBtn.visibility = View.GONE
                 binding.groupButtonPartyMode.visibility = View.VISIBLE
+                dismissBottomSheet("CameraMicroSwitchBottomSheet")
+                dismissBottomSheet("LiveStreamConfirmBottomSheet")
             }
             LiveStreamMode.PREMIUM_PRIVATE -> {
                 binding.groupAllBtn.visibility = View.GONE
@@ -501,7 +502,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
         listener: RMLiveStreamConfirmBottomSheetDialogListener
     ) {
         val bottomSheet = RMLiveStreamConfirmBottomSheet.newInstance(mode, listener)
-        bottomSheet.show(childFragmentManager, "")
+        bottomSheet.show(childFragmentManager, "LiveStreamConfirmBottomSheet")
     }
 
     override fun onClickButtonOKConfirmBottomSheet(mode: String) {

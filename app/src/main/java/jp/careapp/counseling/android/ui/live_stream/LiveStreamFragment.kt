@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseActivity
 import jp.careapp.core.base.BaseFragment
@@ -499,7 +500,6 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     }
 
     private fun updateModeStatus() {
-        dismissCameraAndMicBottomSheet()
         when (currentMode) {
             LiveStreamMode.PEEP -> {
                 binding.llItemPeeping.visibility = VISIBLE
@@ -516,6 +516,8 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 binding.llItemParty.visibility = VISIBLE
                 binding.groupAllBtn.visibility = GONE
                 binding.groupButtonPartyMode.visibility = VISIBLE
+                dismissBottomSheet("CameraMicroSwitchBottomSheet")
+                dismissBottomSheet("LiveStreamConfirmBottomSheet")
             }
             LiveStreamMode.PRIVATE -> {
                 binding.llItemPeeping.visibility = GONE
@@ -543,7 +545,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             .setTextOkButton(R.string.close)
             .setOnOkButtonBackground(R.drawable.bg_cancel_btn)
             .setOnOkButtonPressed {
-                if (errorMessage == resources.getString(R.string.already_log_out)) {
+                if (errorMessage == resources.getString(R.string.already_log_out) || errorMessage == resources.getString(R.string.already_log_out_by_private_mode_with_another_person)) {
                     logout()
                 } else {
                     it.dismiss()
@@ -644,10 +646,9 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         if (fragment != null) (fragment as ConnectPrivateBottomSheet).dismiss()
     }
 
-    private fun dismissCameraAndMicBottomSheet() {
-        val fragment: Fragment? =
-            childFragmentManager.findFragmentByTag("CameraMicroSwitchBottomSheet")
-        if (fragment != null) (fragment as ConnectPrivateBottomSheet).dismiss()
+    private fun dismissBottomSheet(tag: String) {
+        val fragment: Fragment? = childFragmentManager.findFragmentByTag(tag)
+        if (fragment != null) (fragment as BottomSheetDialogFragment).dismiss()
     }
 
     private fun removeVisibilityChangeListener() {

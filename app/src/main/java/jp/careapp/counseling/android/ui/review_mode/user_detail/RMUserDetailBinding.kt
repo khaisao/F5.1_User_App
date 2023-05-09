@@ -40,8 +40,8 @@ fun LinearLayout.setChatButtonStatus(presenceStatus: Int) {
 }
 
 @BindingAdapter("callButtonStatus")
-fun LinearLayout.setCallButtonStatus(chatStatus: Int) {
-    when (chatStatus) {
+fun LinearLayout.setCallButtonStatus(callStatus: Int) {
+    when (callStatus) {
         RMCallStatus.OFFLINE -> {
             background = ContextCompat.getDrawable(context, R.drawable.bg_rm_btn_chat_msg_disable)
             isEnabled = false
