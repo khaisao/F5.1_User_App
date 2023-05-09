@@ -47,6 +47,21 @@
                     app:layout_constraintGuide_percent="0.982" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btnEmpty"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_btn_live_stream"
+                    android:minHeight="40dp"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline9"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintWidth_percent="0.106"
+                    android:visibility="invisible"
+                    app:srcCompat="@drawable/ic_live_stream_comment" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/btnComment"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -213,7 +228,7 @@
                     android:orientation="vertical"
                     app:itemAnimator="@{null}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toTopOf="@id/barrier2"
+                    app:layout_constraintBottom_toTopOf="@id/btnEmpty"
                     app:layout_constraintEnd_toStartOf="@id/guideline10"
                     app:layout_constraintStart_toStartOf="parent"
                     app:stackFromEnd="true"

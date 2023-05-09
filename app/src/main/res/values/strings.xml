@@ -747,7 +747,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="service_act_title">資金決済法に基づく表示</string>
     <string name="term_title">会員規約</string>
     <string name="already_log_out">既にログアウトされています</string>
-    <string name="already_log_out_by_private_mode_with_another_person">既にログアウトされています</string>
+    <string name="already_log_out_by_private_mode_with_another_person">他の方とのプライベートモード開始によりログアウトされました</string>
 
 
     <string-array name="nm_contact_us_category">

@@ -14,7 +14,9 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewTreeObserver
 import androidx.activity.OnBackPressedCallback
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -161,9 +163,19 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             if (keypadHeight > screenHeight * 0.15) {
                 if (!isKeyboardShowing) {
                     isKeyboardShowing = true
+                    binding.rcvCommentList.apply {
+                        updateLayoutParams<ConstraintLayout.LayoutParams> {
+                            bottomToTop = binding.edtComment.id
+                        }
+                    }
                 }
             } else {
                 if (isKeyboardShowing) {
+                    binding.rcvCommentList.apply {
+                        updateLayoutParams<ConstraintLayout.LayoutParams> {
+                            bottomToTop = binding.btnEmpty.id
+                        }
+                    }
                     binding.memberCommentViewGroup.isVisible = false
                     updateModeStatus()
                     isKeyboardShowing = false
@@ -399,14 +411,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     private fun bindingConnectResult() {
         mViewModel.connectResult.observe(viewLifecycleOwner) {
             if (it.result == RESULT_NG) {
-                when {
-                    it.isLogout -> {
-                        logout()
-                    }
-                    else -> {
-                        showErrorDialog(it.message)
-                    }
-                }
+                showErrorDialog(it.message, it.isLogout)
             }
         }
     }
@@ -518,7 +523,8 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 binding.groupAllBtn.visibility = GONE
                 binding.groupButtonPartyMode.visibility = VISIBLE
                 dismissBottomSheet("CameraMicroSwitchBottomSheet")
-                dismissBottomSheet("LiveStreamConfirmBottomSheet")
+                dismissBottomSheet(PREMIUM_PRIVATE_MODE_REGISTER)
+                dismissBottomSheet(CHANGE_TO_PARTY_MODE)
             }
             LiveStreamMode.PRIVATE -> {
                 binding.llItemPeeping.visibility = GONE
@@ -539,14 +545,17 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         }
     }
 
-    private fun showErrorDialog(errorMessage: String) {
+    private fun showErrorDialog(errorMessage: String, isLogout: Boolean = false) {
+        if (isLogout) {
+            dismissAllDialogShowing()
+        }
         val dialog = CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
             .setDialogTitle(errorMessage)
             .setTextOkButton(R.string.close)
             .setOnOkButtonBackground(R.drawable.bg_cancel_btn)
             .setOnOkButtonPressed {
-                if (errorMessage == resources.getString(R.string.already_log_out) || errorMessage == resources.getString(R.string.already_log_out_by_private_mode_with_another_person)) {
+                if (isLogout) {
                     logout()
                 } else {
                     it.dismiss()
@@ -565,7 +574,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         listener: LiveStreamConfirmBottomSheetDialogListener
     ) {
         val bottomSheet = LiveStreamConfirmBottomSheet.newInstance(mode, listener)
-        bottomSheet.show(childFragmentManager, "LiveStreamConfirmBottomSheet")
+        bottomSheet.show(childFragmentManager, mode)
     }
 
     private fun showPerformerInfoBottomSheet(itemView: ClickItemView) {
@@ -661,17 +670,26 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     override fun onClickButtonOKConfirmBottomSheet(mode: String) {
         when (mode) {
             PREMIUM_PRIVATE_MODE_REGISTER -> {
-                mViewModel.updateMode(PREMIUM_PRIVATE)
-                currentMode = LiveStreamMode.PREMIUM_PRIVATE
-                updateModeStatus()
+                if (currentMode != LiveStreamMode.PREMIUM_PRIVATE) {
+                    mViewModel.updateMode(PREMIUM_PRIVATE)
+                    currentMode = LiveStreamMode.PREMIUM_PRIVATE
+                    updateModeStatus()
+                }
             }
+
             PRIVATE_MODE_REGISTER -> {
-                mViewModel.updateMode(PRIVATE)
+                if (currentMode != LiveStreamMode.PRIVATE) {
+                    mViewModel.updateMode(PRIVATE)
+                }
             }
+
             CHANGE_TO_PARTY_MODE -> {
-                mViewModel.updateMode(PARTY)
-                mViewModel.setViewerStatus(0)
+                if (currentMode != LiveStreamMode.PARTY) {
+                    mViewModel.updateMode(PARTY)
+                    mViewModel.setViewerStatus(0)
+                }
             }
+
             PERFORMER_OUT_CONFIRM -> {}
         }
     }
