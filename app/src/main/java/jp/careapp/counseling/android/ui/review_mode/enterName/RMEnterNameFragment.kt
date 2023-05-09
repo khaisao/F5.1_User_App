@@ -3,7 +3,7 @@ package jp.careapp.counseling.android.ui.review_mode.enterName
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
-import jp.careapp.core.utils.dialog.CommonAlertDialog
+import jp.careapp.core.utils.dialog.RMCommonAlertDialog
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.navigation.AppNavigation
@@ -27,8 +27,8 @@ class RMEnterNameFragment : BaseFragment<FragmentRmEnterNameBinding, RMEnterName
     override fun initView() {
         super.initView()
 
-        binding.edtNickName.setTextChangeListener { count ->
-            binding.btnSubmit.isEnabled = count != 0
+        binding.edtNickName.setTextChangeListener {
+            binding.btnSubmit.isEnabled = binding.edtNickName.getText().isNotBlank()
         }
     }
 
@@ -53,11 +53,11 @@ class RMEnterNameFragment : BaseFragment<FragmentRmEnterNameBinding, RMEnterName
             if (binding.edtNickName.getText().isNotBlank()) {
                 mViewModel.submitNickName(binding.edtNickName.getText())
             } else {
-                CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+                RMCommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
                     .showDialog()
                     .setDialogTitle(R.string.your_name_not_enter)
-                    .setTextOkButton(R.string.ok)
-                    .setOnOkButtonPressed {
+                    .setTextPositiveSmallButton(R.string.ok)
+                    .setOnPositiveSmallPressed {
                         it.dismiss()
                     }
             }
