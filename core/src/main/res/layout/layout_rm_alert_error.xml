@@ -26,6 +26,7 @@
             android:gravity="center"
             android:textColor="@color/color_070707"
             android:visibility="gone"
+            android:lineSpacingExtra="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -62,6 +63,26 @@
             android:fontFamily="@font/hiragino_sans_w6"
             app:layout_constraintTop_toBottomOf="@+id/tv_subTitle"
             tools:ignore="MissingConstraints"
+            android:visibility="visible"
+            tools:text="@string/text_OK" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_confirm_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_32dp"
+            android:layout_marginBottom="@dimen/margin_40dp"
+            android:background="@drawable/bg_rm_common"
+            android:gravity="center"
+            android:paddingVertical="@dimen/padding_15dp"
+            android:textColor="@color/background_color_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="@dimen/text_size_14"
+            android:fontFamily="@font/hiragino_sans_w6"
+            app:layout_constraintTop_toBottomOf="@+id/tv_subTitle"
+            app:layout_constraintWidth_percent="0.55"
+            android:visibility="gone"
             tools:text="@string/text_OK" />
 
         <TextView
