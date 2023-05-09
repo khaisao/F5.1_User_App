@@ -438,6 +438,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 mViewModel.twoShot.value == TWO_SHOT_VALUE_0 -> currentMode = LiveStreamMode.PARTY
                 mViewModel.twoShot.value == TWO_SHOT_VALUE_2 -> currentMode = LiveStreamMode.PRIVATE
             }
+            updateModeStatus()
         }
     }
 
@@ -669,6 +670,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             }
             CHANGE_TO_PARTY_MODE -> {
                 mViewModel.updateMode(PARTY)
+                mViewModel.setViewerStatus(0)
             }
             PERFORMER_OUT_CONFIRM -> {}
         }
