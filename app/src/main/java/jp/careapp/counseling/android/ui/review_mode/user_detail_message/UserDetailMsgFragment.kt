@@ -22,10 +22,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseActivity
@@ -33,6 +29,7 @@ import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.DeviceUtil
 import jp.careapp.core.utils.convertSourceToPixel
 import jp.careapp.core.utils.dialog.RMCommonAlertDialog
+import jp.careapp.core.utils.loadImage
 import jp.careapp.core.utils.onTextChange
 import jp.careapp.core.utils.setMargins
 import jp.careapp.counseling.R
@@ -81,6 +78,7 @@ class UserDetailMsgFragment :
 
     private var performerCode = ""
     private var performerName = ""
+    private var performerThumbnailUrl = ""
 
     private var isMessageFromServer = false
     private var isEnableSend = false
@@ -117,6 +115,7 @@ class UserDetailMsgFragment :
             arguments?.apply {
                 performerCode = getString(BUNDLE_KEY.PERFORMER_CODE, "")
                 performerName = getString(BUNDLE_KEY.PERFORMER_NAME, "")
+                performerThumbnailUrl = getString(BUNDLE_KEY.PERFORMER_IMAGE, "")
             }
 
             activity?.let {
@@ -199,29 +198,7 @@ class UserDetailMsgFragment :
             }
         )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            Glide.with(binding.toolBar.userAvatar).load(
-                resources.getIdentifier(
-                    "ic_no_image",
-                    "drawable", requireContext().packageName
-                )
-            )
-                .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen.margin_10)))
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.toolBar.userAvatar)
-        } else {
-            Glide.with(binding.toolBar.userAvatar).load(
-                resources.getIdentifier(
-                    "ic_no_image",
-                    "drawable", requireContext().packageName
-                )
-            ).transforms(
-                CenterCrop(),
-                RoundedCorners(resources.getDimensionPixelSize(R.dimen.margin_10))
-            )
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.toolBar.userAvatar)
-        }
+        binding.toolBar.userAvatar.loadImage(performerThumbnailUrl,R.drawable.ic_no_image)
     }
 
     private fun setViewPerformer(performerDetail: RMConsultantResponse?) {
