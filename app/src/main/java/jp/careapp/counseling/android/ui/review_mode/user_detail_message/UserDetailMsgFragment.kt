@@ -9,7 +9,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.Editable
-import android.util.Log
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -20,6 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -56,6 +56,8 @@ import jp.careapp.counseling.android.utils.extensions.hasPermissions
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler
 import jp.careapp.counseling.databinding.FragmentRmUserDetailMessageBinding
 import jp.careapp.counseling.databinding.LlRvUserDetailBottomSheetBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -117,15 +119,6 @@ class UserDetailMsgFragment :
                 performerName = getString(BUNDLE_KEY.PERFORMER_NAME, "")
                 performerThumbnailUrl = getString(BUNDLE_KEY.PERFORMER_IMAGE, "")
             }
-
-            activity?.let {
-                viewModel.loadMessage(
-                    it,
-                    performerCode,
-                    false,
-                    needLoadUserInfo = true
-                )
-            }
         }
     }
 
@@ -155,6 +148,12 @@ class UserDetailMsgFragment :
     override fun onStart() {
         super.onStart()
         binding.rootLayout.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)
+        viewModel.loadMessage(
+            requireActivity(),
+            performerCode,
+            false,
+            needLoadUserInfo = true
+        )
     }
 
     override fun initView() {
@@ -602,8 +601,17 @@ class UserDetailMsgFragment :
         super.onDestroy()
     }
 
-    override fun callingCancel() {
-        callingViewModel.cancelCall()
+    override fun callingCancel(isError: Boolean) {
+        callingViewModel.cancelCall(isError)
         callingViewModel.resetData()
+        lifecycleScope.launch {
+            delay(500)
+            viewModel.loadMessage(
+                requireActivity(),
+                performerCode,
+                isLoadMore = false,
+                isShowLoading = false
+            )
+        }
     }
 }

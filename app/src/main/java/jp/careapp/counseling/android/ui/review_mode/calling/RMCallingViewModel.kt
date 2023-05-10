@@ -123,8 +123,11 @@ class RMCallingViewModel @Inject constructor(
         }
     }
 
-    fun cancelCall() {
-        flaxWebSocketManager.sendMessage(SafeCallApi.gson.toJson(SocketSendMessage(action = SocketInfo.ACTION_CANCEL_CALL)))
+    fun cancelCall(isError: Boolean) {
+        connectResult.value = ConnectResult(result = SocketInfo.RESULT_NONE)
+        if (!isError) {
+            flaxWebSocketManager.cancelCall()
+        }
     }
 
     private fun handlePerformerLogin() {

@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -56,7 +57,6 @@ import jp.careapp.counseling.android.ui.message.template.TemplateAdapter
 import jp.careapp.counseling.android.ui.message.template.TemplateBottomFragment
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.CHAT_MESSAGE
-import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.SCREEN_MESSAGE
 import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.THRESHOLD_SHOW_REVIEW_APP
 import jp.careapp.counseling.android.utils.CallRestriction
 import jp.careapp.counseling.android.utils.Define
@@ -68,6 +68,8 @@ import jp.careapp.counseling.android.utils.extensions.toPayPoint
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatus
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler
 import jp.careapp.counseling.databinding.FragmentChatMessageBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -213,11 +215,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.loadMessage(requireActivity(), this.performerCode, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity is BaseActivity<*, *>) {
@@ -230,6 +227,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     override fun onStart() {
         super.onStart()
         binding.rootLayout.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)
+        viewModel.loadMessage(requireActivity(), this.performerCode, false)
     }
 
     override fun initView() {
@@ -856,6 +854,10 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
     override fun callingCancel(isError: Boolean) {
         viewModel.cancelCall(isError)
+        lifecycleScope.launch {
+            delay(500)
+            viewModel.loadMessage(requireActivity(), performerCode, false)
+        }
     }
 
     fun reloadData() {

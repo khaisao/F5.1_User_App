@@ -31,7 +31,7 @@ class RMCallConnectionDialog : BaseDialogFragment<FragmentRmCallingBinding>() {
                 .into(binding.ivMotion)
             ivEndCall.setOnClickListener {
                 if (!isDoubleClick) {
-                    callingCancelListener?.callingCancel()
+                    callingCancelListener?.callingCancel(isError)
                     dismiss()
                 }
             }
@@ -55,7 +55,7 @@ class RMCallConnectionDialog : BaseDialogFragment<FragmentRmCallingBinding>() {
     }
 
     interface CallingCancelListener {
-        fun callingCancel()
+        fun callingCancel(isError: Boolean)
     }
 
     companion object {

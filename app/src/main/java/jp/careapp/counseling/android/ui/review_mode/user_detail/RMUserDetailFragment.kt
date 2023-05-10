@@ -296,8 +296,8 @@ class RMUserDetailFragment : BaseFragment<FragmentRmUserDetailBinding, RMUserDet
         }
     }
 
-    override fun callingCancel() {
-        callingViewModel.cancelCall()
+    override fun callingCancel(isError: Boolean) {
+        callingViewModel.cancelCall(isError)
         callingViewModel.resetData()
     }
 
