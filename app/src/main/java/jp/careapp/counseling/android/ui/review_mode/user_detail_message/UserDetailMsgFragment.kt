@@ -198,7 +198,7 @@ class UserDetailMsgFragment :
             }
         )
 
-        binding.toolBar.userAvatar.loadImage(performerThumbnailUrl,R.drawable.ic_no_image)
+        binding.toolBar.userAvatar.loadImage(performerThumbnailUrl, R.drawable.ic_no_image)
     }
 
     private fun setViewPerformer(performerDetail: RMConsultantResponse?) {
@@ -431,8 +431,6 @@ class UserDetailMsgFragment :
             val fragment: Fragment? = childFragmentManager.findFragmentByTag("CallConnectionDialog")
             if (fragment != null) (fragment as RMCallConnectionDialog).dismiss()
             val bundle = Bundle().apply {
-
-                Log.d("asgagwawg", "${callingViewModel.flaxLoginAuthResponse}: ")
                 putSerializable(
                     BUNDLE_KEY.PERFORMER,
                     PerformerInfo(
