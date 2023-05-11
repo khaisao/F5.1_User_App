@@ -28,6 +28,7 @@ import jp.careapp.core.base.BaseActivity
 import jp.careapp.core.utils.DeviceUtil
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.core.utils.dialog.LoadingDialog
+import jp.careapp.core.utils.dialog.RMCommonAlertDialog
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.network.socket.SocketActionSend
@@ -46,6 +47,7 @@ import jp.careapp.counseling.android.ui.top.TopFragment
 import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeFragment
 import jp.careapp.counseling.android.utils.*
 import jp.careapp.counseling.android.utils.Define.Companion.PREFIX_CARE_APP
+import jp.careapp.counseling.android.utils.Define.Companion.REVIEW_MODE
 import jp.careapp.counseling.android.utils.event.NetworkEvent
 import jp.careapp.counseling.android.utils.event.NetworkState
 import jp.careapp.counseling.android.utils.extensions.dismissAllDialog
@@ -479,13 +481,23 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                     dataError = ""
                                     networkEvent.publish(NetworkState.ERROR)
                                 }
-                                CommonAlertDialog.getInstanceCommonAlertdialog(this@MainActivity)
-                                    .showDialog()
-                                    .setDialogTitleWithString(dataError)
-                                    .setTextOkButton(R.string.confirm_block_alert)
-                                    .setOnOkButtonPressed {
-                                        it.dismiss()
-                                    }
+                                if (rxPreferences.getAppMode() == REVIEW_MODE) {
+                                    RMCommonAlertDialog.getInstanceCommonAlertdialog(this@MainActivity)
+                                        .showDialog()
+                                        .setDialogTitleWithString(dataError)
+                                        .setTextPositiveSmallButton(R.string.confirm_block_alert)
+                                        .setOnPositiveSmallPressed {
+                                            it.dismiss()
+                                        }
+                                } else {
+                                    CommonAlertDialog.getInstanceCommonAlertdialog(this@MainActivity)
+                                        .showDialog()
+                                        .setDialogTitleWithString(dataError)
+                                        .setTextOkButton(R.string.confirm_block_alert)
+                                        .setOnOkButtonPressed {
+                                            it.dismiss()
+                                        }
+                                }
                             }
                             networkEvent.publish(NetworkState.INITIALIZE)
                         }

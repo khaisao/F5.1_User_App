@@ -9,7 +9,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.Editable
-import android.util.Log
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -20,12 +19,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseActivity
@@ -33,6 +29,7 @@ import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.DeviceUtil
 import jp.careapp.core.utils.convertSourceToPixel
 import jp.careapp.core.utils.dialog.RMCommonAlertDialog
+import jp.careapp.core.utils.loadImage
 import jp.careapp.core.utils.onTextChange
 import jp.careapp.core.utils.setMargins
 import jp.careapp.counseling.R
@@ -59,6 +56,8 @@ import jp.careapp.counseling.android.utils.extensions.hasPermissions
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler
 import jp.careapp.counseling.databinding.FragmentRmUserDetailMessageBinding
 import jp.careapp.counseling.databinding.LlRvUserDetailBottomSheetBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -81,6 +80,7 @@ class UserDetailMsgFragment :
 
     private var performerCode = ""
     private var performerName = ""
+    private var performerThumbnailUrl = ""
 
     private var isMessageFromServer = false
     private var isEnableSend = false
@@ -117,15 +117,7 @@ class UserDetailMsgFragment :
             arguments?.apply {
                 performerCode = getString(BUNDLE_KEY.PERFORMER_CODE, "")
                 performerName = getString(BUNDLE_KEY.PERFORMER_NAME, "")
-            }
-
-            activity?.let {
-                viewModel.loadMessage(
-                    it,
-                    performerCode,
-                    false,
-                    needLoadUserInfo = true
-                )
+                performerThumbnailUrl = getString(BUNDLE_KEY.PERFORMER_IMAGE, "")
             }
         }
     }
@@ -156,6 +148,12 @@ class UserDetailMsgFragment :
     override fun onStart() {
         super.onStart()
         binding.rootLayout.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)
+        viewModel.loadMessage(
+            requireActivity(),
+            performerCode,
+            false,
+            needLoadUserInfo = true
+        )
     }
 
     override fun initView() {
@@ -199,29 +197,7 @@ class UserDetailMsgFragment :
             }
         )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            Glide.with(binding.toolBar.userAvatar).load(
-                resources.getIdentifier(
-                    "ic_no_image",
-                    "drawable", requireContext().packageName
-                )
-            )
-                .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen.margin_10)))
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.toolBar.userAvatar)
-        } else {
-            Glide.with(binding.toolBar.userAvatar).load(
-                resources.getIdentifier(
-                    "ic_no_image",
-                    "drawable", requireContext().packageName
-                )
-            ).transforms(
-                CenterCrop(),
-                RoundedCorners(resources.getDimensionPixelSize(R.dimen.margin_10))
-            )
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.toolBar.userAvatar)
-        }
+        binding.toolBar.userAvatar.loadImage(performerThumbnailUrl, R.drawable.ic_no_image)
     }
 
     private fun setViewPerformer(performerDetail: RMConsultantResponse?) {
@@ -454,8 +430,6 @@ class UserDetailMsgFragment :
             val fragment: Fragment? = childFragmentManager.findFragmentByTag("CallConnectionDialog")
             if (fragment != null) (fragment as RMCallConnectionDialog).dismiss()
             val bundle = Bundle().apply {
-
-                Log.d("asgagwawg", "${callingViewModel.flaxLoginAuthResponse}: ")
                 putSerializable(
                     BUNDLE_KEY.PERFORMER,
                     PerformerInfo(
@@ -627,8 +601,17 @@ class UserDetailMsgFragment :
         super.onDestroy()
     }
 
-    override fun callingCancel() {
-        callingViewModel.cancelCall()
+    override fun callingCancel(isError: Boolean) {
+        callingViewModel.cancelCall(isError)
         callingViewModel.resetData()
+        lifecycleScope.launch {
+            delay(500)
+            viewModel.loadMessage(
+                requireActivity(),
+                performerCode,
+                isLoadMore = false,
+                isShowLoading = false
+            )
+        }
     }
 }
