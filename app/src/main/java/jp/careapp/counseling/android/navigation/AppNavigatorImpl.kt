@@ -165,6 +165,10 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_to_login, data)
     }
 
+    override fun openActionToLoginAndClearBackstack(data: Bundle?) {
+        openScreen(R.id.action_to_login_and_delete_all_back_stack, data)
+    }
+
     override fun openReviewConsultant(data: Bundle) {
         openScreen(R.id.action_ChatMessage_to_ReviewConsultant, data)
     }
