@@ -83,6 +83,8 @@ interface AppNavigation : BaseNavigator {
 
     fun openActionToLogin(data: Bundle? = null)
 
+    fun openActionToLoginAndClearBackstack(data: Bundle? = null)
+
     fun openReviewConsultant(data: Bundle)
 
     fun openMainToChatMessage(data: Bundle? = null)
