@@ -20,38 +20,48 @@
             app:src_left="@drawable/ic_rm_arrow_left"
             app:string_title="@string/rv_push_notification_settings" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
-            android:background="@android:color/white"
-            android:minHeight="44dp"
-            android:paddingHorizontal="@dimen/margin_16">
+            app:cardBackgroundColor="@color/transparent"
+            app:cardCornerRadius="@dimen/margin_16"
+            app:cardElevation="0dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_start"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/hiragino_sans_w3"
-                android:gravity="center_vertical"
-                android:text="@string/rv_push_notification"
-                android:textColor="#070707"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:background="@android:color/white"
+                android:minHeight="44dp"
+                android:paddingHorizontal="@dimen/margin_16">
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/scNotification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:thumb="@drawable/thumb_selector"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_start"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_start"
-                app:track="@drawable/rm_track_selector"
-                tools:checked="true" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/rv_push_notification"
+                    android:textColor="#070707"
+                    style="@style/text_14"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/scNotification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:thumb="@drawable/thumb_selector"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_start"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_start"
+                    app:track="@drawable/rm_track_selector"
+                    tools:checked="true" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
     </LinearLayout>
+
 </layout>
