@@ -10,10 +10,10 @@ import jp.careapp.counseling.android.model.buy_point.ItemPoint
 import jp.careapp.counseling.android.network.ApiInterface
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.Define
-import jp.careapp.counseling.android.utils.Define.Companion.IN_APP_PURCHASE_KEY_5
-import jp.careapp.counseling.android.utils.Define.Companion.IN_APP_PURCHASE_KEY_6
-import jp.careapp.counseling.android.utils.Define.Companion.IN_APP_PURCHASE_KEY_7
-import jp.careapp.counseling.android.utils.Define.Companion.IN_APP_PURCHASE_KEY_8
+import jp.careapp.counseling.android.utils.Define.Companion.IN_APP_PURCHASE_KEY_1
+import jp.careapp.counseling.android.utils.Define.Companion.IN_APP_PURCHASE_KEY_2
+import jp.careapp.counseling.android.utils.Define.Companion.IN_APP_PURCHASE_KEY_3
+import jp.careapp.counseling.android.utils.Define.Companion.IN_APP_PURCHASE_KEY_4
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,7 +21,6 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import org.json.JSONObject
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -158,14 +157,10 @@ class BillingManager @Inject constructor(
     fun querySkuDetails() {
         val skuList =
             listOf(
-                // IN_APP_PURCHASE_KEY_1,
-                // IN_APP_PURCHASE_KEY_2,
-                // IN_APP_PURCHASE_KEY_3,
-                // IN_APP_PURCHASE_KEY_4,
-                IN_APP_PURCHASE_KEY_5,
-                IN_APP_PURCHASE_KEY_6,
-                IN_APP_PURCHASE_KEY_7,
-                IN_APP_PURCHASE_KEY_8,
+                 IN_APP_PURCHASE_KEY_1,
+                 IN_APP_PURCHASE_KEY_2,
+                 IN_APP_PURCHASE_KEY_3,
+                 IN_APP_PURCHASE_KEY_4,
             )
         val params = SkuDetailsParams.newBuilder()
         params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP)
