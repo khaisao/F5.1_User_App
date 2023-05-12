@@ -119,7 +119,7 @@ class DetailUserProfileFragment :
             override fun onGlobalLayout() {
                 binding.avatarIv.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 galleryAdapter = GalleryAdapter(requireContext(), binding.avatarIv.height) {
-                    Glide.with(requireContext()).load(it.thumbnailImage?.url).into(binding.avatarIv)
+                    binding.avatarIv.loadImage(it.image?.url, R.drawable.default_avt_performer)
                 }
                 binding.rvGallery.layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

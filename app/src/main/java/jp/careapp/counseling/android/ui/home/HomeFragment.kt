@@ -61,12 +61,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     private val swipeBannerRunnable: Runnable by lazy {
         object : Runnable {
             override fun run() {
-                if (binding.vpBanner.currentItem < bannerAdapter.itemCount - 1) {
-                    binding.vpBanner.setCurrentItem(binding.vpBanner.currentItem + 1, true)
-                } else {
-                    binding.vpBanner.setCurrentItem(0, false)
+                try {
+                    if (binding.vpBanner.currentItem < bannerAdapter.itemCount - 1) {
+                        binding.vpBanner.setCurrentItem(binding.vpBanner.currentItem + 1, true)
+                    } else {
+                        binding.vpBanner.setCurrentItem(0, false)
+                    }
+                    handler.postDelayed(this, intervalSwipeBanner)
+                } catch (e: Exception) {
+
                 }
-                handler.postDelayed(this, intervalSwipeBanner)
             }
         }
     }

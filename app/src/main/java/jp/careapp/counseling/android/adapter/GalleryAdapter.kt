@@ -41,7 +41,7 @@ class GalleryAdapter(
 
         fun bind(item: GalleryResponse) {
             itemView.layoutParams.height = screenWidth / 3
-            binding.ivMain.loadImage(item.thumbnailImage?.url, R.drawable.default_avt_performer)
+            binding.ivMain.loadImage(item.image?.url, R.drawable.default_avt_performer)
             binding.ivMain.setOnClickListener {
                 onClickListener(item)
             }

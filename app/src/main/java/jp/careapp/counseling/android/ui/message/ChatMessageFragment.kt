@@ -688,23 +688,8 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
     private var messageResultResponse: Observer<DataMessage> = Observer {
         if (!it.isLoadMore && it.dataMsg.isEmpty()) {
-            mAdapter.submitList(
-                listOf(MessageResponse(body = getString(R.string.message_default_performer)))
-            )
-            activity?.let { it1 ->
-                isSendFirstMsg = true
-                viewModel.sendFirstMessage(
-                    MessageRequest(
-                        this.performerCode,
-                        getString(R.string.subject_message_first),
-                        getString(R.string.message_default_member),
-                        ""
-                    ),
-                    it1
-                )
-            }
+//            if empty message
         } else {
-            val lastItemCount = mAdapter.itemCount
             val firstPerformer =
                 it.dataMsg.filter { data -> data.typeMessage == 2 }[0] as MessageResponse
             isMessageFromServer = firstPerformer.fromOwnerMail
@@ -719,15 +704,14 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
             }
 
             if (isLoadMore) {
-                mAdapter.notifyItemRangeInserted(0, listMessage.size - lastItemCount)
-                binding.messageRv.scrollToPosition(listMessage.size - lastItemCount)
+                mAdapter.submitList(listMessage)
+                binding.messageRv.scrollToPosition(listMessage.size)
             } else {
                 when {
                     viewModel.isLoadMessageAfterSend -> {
                         if (!isSendFirstMsg) {
-                            mAdapter.notifyItemRangeInserted(
-                                lastItemCount,
-                                listMessage.size - lastItemCount
+                            mAdapter.submitList(
+                                listMessage
                             )
                         } else {
                             mAdapter.submitList(listMessage)
@@ -735,10 +719,12 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                         }
                         viewModel.isLoadMessageAfterSend = false
                     }
+
                     viewModel.isMessageFromSocket -> {
-                        mAdapter.notifyDataSetChanged()
+                        mAdapter.submitList(listMessage)
                         viewModel.isMessageFromSocket = false
                     }
+
                     else -> {
                         mAdapter.submitList(listMessage)
                     }
