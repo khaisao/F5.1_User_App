@@ -2,12 +2,10 @@ package jp.careapp.counseling.android.ui.favourite
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import jp.careapp.core.utils.getDurationBreakdown
 import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.HistoryResponse
@@ -53,13 +51,10 @@ class HistoryAdapter(
             val dateString = consultant.lastLoginDate
             if (dateString != "" && dateString != null) {
                 try {
-                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
-                    val date = sdf.parse(dateString)
-                    val startDate = date?.time
-                    if (startDate != null) {
-                        binding.tvTime.text =
-                            context.getDurationBreakdown(System.currentTimeMillis() - startDate)
-                    }
+                    val sdfInput = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+                    val date = sdfInput.parse(dateString)
+                    val sdfOutput = SimpleDateFormat("MM/dd HH:mm", Locale.US)
+                    binding.tvTime.text = date?.let { sdfOutput.format(it) }
                 } catch (e: Exception) {
                     binding.tvTime.text = ""
                 }

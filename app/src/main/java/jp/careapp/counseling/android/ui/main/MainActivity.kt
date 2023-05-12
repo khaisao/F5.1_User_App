@@ -490,10 +490,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                             it.dismiss()
                                         }
                                 } else {
+                                    val okButtonText =
+                                        if (dataError == resources.getString(R.string.title_dialog_not_use_free_message)) R.string.ok_en else R.string.confirm_block_alert
                                     CommonAlertDialog.getInstanceCommonAlertdialog(this@MainActivity)
                                         .showDialog()
                                         .setDialogTitleWithString(dataError)
-                                        .setTextOkButton(R.string.confirm_block_alert)
+                                        .setTextOkButton(okButtonText)
                                         .setOnOkButtonPressed {
                                             it.dismiss()
                                         }
