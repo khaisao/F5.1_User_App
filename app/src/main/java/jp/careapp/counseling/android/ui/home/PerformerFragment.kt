@@ -89,10 +89,8 @@ class PerformerFragment : BaseFragment<FragmentPerformerBinding,HomeViewModel>()
             ) {
                 if (!it.isNullOrEmpty()) {
                     shareViewModel.saveListPerformerSearch(it)
-                    binding.llNoResult.visibility = View.GONE
                     binding.rvConsultant.visibility = View.VISIBLE
                 } else {
-                    binding.llNoResult.visibility = View.VISIBLE
                     binding.rvConsultant.visibility = View.GONE
                 }
                 mConsultantAdapter.submitList(it)

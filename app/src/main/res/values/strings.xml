@@ -483,6 +483,8 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="view_history">視聴履歴</string>
     <string name="remove_favorite_ques">さんのお気に入りを解除しますか？</string>
     <string name="block_this_woman">この女性をブロックしますか？</string>
+    <string name="no_viewing_history_yet">まだ視聴履歴はありません？</string>
+    <string name="dont_follow_any_girl_yet">まだフォローしている女性はいません？</string>
 
 
     <!--    labo-->
@@ -748,6 +750,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="term_title">会員規約</string>
     <string name="already_log_out">既にログアウトされています</string>
     <string name="already_log_out_by_private_mode_with_another_person">他の方とのプライベートモード開始によりログアウトされました</string>
+    <string name="no_message_yet">まだメッセージはありません</string>
 
 
     <string-array name="nm_contact_us_category">

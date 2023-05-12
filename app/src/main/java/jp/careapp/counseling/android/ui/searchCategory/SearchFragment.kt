@@ -66,16 +66,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
         DeviceUtil.showKeyboardWithFocus(binding.edtInputName,requireActivity())
         initRecyclerView()
 
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            showHideLoading(true)
-
-            if (!binding.progressBar.isVisible) {
-                searchResultViewModel.isShowHideLoading.value = true
-                searchResultViewModel.getListBlockedConsultant()
-                }
-            binding.swipeRefreshLayout.isRefreshing = false
-        }
-
         binding.rvConsultantSearch.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)

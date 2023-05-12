@@ -16,7 +16,7 @@
         android:id="@+id/tabFavorite"
         android:contentDescription="@string/tab_lab"
         android:icon="@drawable/ic_tab_favorite"
-        android:title="@string/favorite" />
+        android:title="@string/tab_lab" />
 
     <item
         android:id="@+id/tabRank"

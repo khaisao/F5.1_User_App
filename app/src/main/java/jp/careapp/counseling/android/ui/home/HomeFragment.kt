@@ -29,6 +29,7 @@ import jp.careapp.counseling.android.ui.main.MainActivity
 import jp.careapp.counseling.android.ui.main.MainViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.Define
+import jp.careapp.counseling.android.utils.Define.Companion.NORMAL_MODE
 import jp.careapp.counseling.android.utils.Define.Companion.PREFIX_CARE_APP
 import jp.careapp.counseling.databinding.FragmentHomeBinding
 import timber.log.Timber
