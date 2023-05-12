@@ -160,56 +160,44 @@ class BuyPointBottomFragment : BottomSheetDialogFragment() {
             }
         }
         val item1 = ItemPoint(
-            BUY_POINT.FIST_BUY_COIN_5.id,
+            BUY_POINT.FIST_BUY_COIN_1.id,
             firstBuy,
-            BUY_POINT.FIST_BUY_COIN_5.pointCountFirst,
-            BUY_POINT.FIST_BUY_COIN_5.costFirst,
-            BUY_POINT.FIST_BUY_COIN_5.money,
-            pointToNumber = BUY_POINT.FIST_BUY_COIN_5.pointToNumber,
-            moneyToNumber = BUY_POINT.FIST_BUY_COIN_5.moneyToNumber,
-            promote = BUY_POINT.FIST_BUY_COIN_5.promote
+            BUY_POINT.FIST_BUY_COIN_1.pointCountFirst,
+            BUY_POINT.FIST_BUY_COIN_1.costFirst,
+            BUY_POINT.FIST_BUY_COIN_1.money,
+            pointToNumber = BUY_POINT.FIST_BUY_COIN_1.pointToNumber,
+            moneyToNumber = BUY_POINT.FIST_BUY_COIN_1.moneyToNumber,
+            promote = BUY_POINT.FIST_BUY_COIN_1.promote
         )
         val item2 = ItemPoint(
-            BUY_POINT.FIST_BUY_COIN_6.id,
+            BUY_POINT.FIST_BUY_COIN_2.id,
             firstBuy,
-            // if (firstBuy) BUY_POINT.FIST_BUY_COIN_6.pointCountFirst else BUY_POINT.FIST_BUY_COIN_6.pointCountFromSecond,
-            // if (firstBuy) BUY_POINT.FIST_BUY_COIN_6.costFirst else "",
-            BUY_POINT.FIST_BUY_COIN_6.pointCountFirst,
-            BUY_POINT.FIST_BUY_COIN_6.costFirst,
-            BUY_POINT.FIST_BUY_COIN_6.money,
-            // pointToNumber = if (firstBuy) BUY_POINT.FIST_BUY_COIN_6.pointToNumber else BUY_POINT.FIST_BUY_COIN_6.pointSecondToNumber,
-            pointToNumber = BUY_POINT.FIST_BUY_COIN_6.pointToNumber,
-            moneyToNumber = BUY_POINT.FIST_BUY_COIN_6.moneyToNumber,
-            // promote = if (firstBuy) BUY_POINT.FIST_BUY_COIN_6.promote else 0
-            promote = BUY_POINT.FIST_BUY_COIN_6.promote
+            BUY_POINT.FIST_BUY_COIN_2.pointCountFirst,
+            BUY_POINT.FIST_BUY_COIN_2.costFirst,
+            BUY_POINT.FIST_BUY_COIN_2.money,
+            pointToNumber = BUY_POINT.FIST_BUY_COIN_2.pointToNumber,
+            moneyToNumber = BUY_POINT.FIST_BUY_COIN_2.moneyToNumber,
+            promote = BUY_POINT.FIST_BUY_COIN_2.promote
         )
         val item3 = ItemPoint(
-            BUY_POINT.FIST_BUY_COIN_7.id,
+            BUY_POINT.FIST_BUY_COIN_3.id,
             firstBuy,
-            // if (firstBuy) BUY_POINT.FIST_BUY_COIN_7.pointCountFirst else BUY_POINT.FIST_BUY_COIN_7.pointCountFromSecond,
-            // if (firstBuy) BUY_POINT.FIST_BUY_COIN_7.costFirst else "",
-            BUY_POINT.FIST_BUY_COIN_7.pointCountFirst,
-            BUY_POINT.FIST_BUY_COIN_7.costFirst,
-            BUY_POINT.FIST_BUY_COIN_7.money,
-            // pointToNumber = if (firstBuy) BUY_POINT.FIST_BUY_COIN_7.pointToNumber else BUY_POINT.FIST_BUY_COIN_7.pointSecondToNumber,
-            pointToNumber = BUY_POINT.FIST_BUY_COIN_7.pointToNumber,
-            moneyToNumber = BUY_POINT.FIST_BUY_COIN_7.moneyToNumber,
-            // promote = if (firstBuy) BUY_POINT.FIST_BUY_COIN_7.promote else 0
-            promote = BUY_POINT.FIST_BUY_COIN_7.promote
+            BUY_POINT.FIST_BUY_COIN_3.pointCountFirst,
+            BUY_POINT.FIST_BUY_COIN_3.costFirst,
+            BUY_POINT.FIST_BUY_COIN_3.money,
+            pointToNumber = BUY_POINT.FIST_BUY_COIN_3.pointToNumber,
+            moneyToNumber = BUY_POINT.FIST_BUY_COIN_3.moneyToNumber,
+            promote = BUY_POINT.FIST_BUY_COIN_3.promote
         )
         val item4 = ItemPoint(
-            BUY_POINT.FIST_BUY_COIN_8.id,
+            BUY_POINT.FIST_BUY_COIN_4.id,
             firstBuy,
-            // if (firstBuy) BUY_POINT.FIST_BUY_COIN_8.pointCountFirst else BUY_POINT.FIST_BUY_COIN_8.pointCountFromSecond,
-            // if (firstBuy) BUY_POINT.FIST_BUY_COIN_8.costFirst else "",
-            BUY_POINT.FIST_BUY_COIN_8.pointCountFirst,
-            BUY_POINT.FIST_BUY_COIN_8.costFirst,
-            BUY_POINT.FIST_BUY_COIN_8.money,
-            // pointToNumber = if (firstBuy) BUY_POINT.FIST_BUY_COIN_8.pointToNumber else BUY_POINT.FIST_BUY_COIN_8.pointSecondToNumber,
-            pointToNumber = BUY_POINT.FIST_BUY_COIN_8.pointToNumber,
-            moneyToNumber = BUY_POINT.FIST_BUY_COIN_8.moneyToNumber,
-            // promote = if (firstBuy) BUY_POINT.FIST_BUY_COIN_8.promote else 0
-            promote = BUY_POINT.FIST_BUY_COIN_8.promote
+            BUY_POINT.FIST_BUY_COIN_4.pointCountFirst,
+            BUY_POINT.FIST_BUY_COIN_4.costFirst,
+            BUY_POINT.FIST_BUY_COIN_4.money,
+            pointToNumber = BUY_POINT.FIST_BUY_COIN_4.pointToNumber,
+            moneyToNumber = BUY_POINT.FIST_BUY_COIN_4.moneyToNumber,
+            promote = BUY_POINT.FIST_BUY_COIN_4.promote
         )
         mAdapter.run { submitList(listOf(item1, item2, item3, item4)) }
         binding.costPointRv.adapter = mAdapter

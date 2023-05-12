@@ -4,18 +4,18 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.MemberResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
-import jp.careapp.counseling.databinding.FragmentBuyPointBinding
 import jp.careapp.counseling.android.model.buy_point.ItemPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.utils.BUY_POINT
 import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.customView.ToolBarCommon
-import dagger.hilt.android.AndroidEntryPoint
+import jp.careapp.counseling.databinding.FragmentBuyPointBinding
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
@@ -68,40 +68,32 @@ class BuyPointFragment : BaseFragment<FragmentBuyPointBinding, BuyPointViewModel
             }
         }
         val item1 = ItemPoint(
-            BUY_POINT.FIST_BUY_COIN_5.id,
+            BUY_POINT.FIST_BUY_COIN_1.id,
             firstBuy,
-            // if (firstBuy) BUY_POINT.FIST_BUY_COIN_5.pointCountFirst else BUY_POINT.FIST_BUY_COIN_5.pointCountFromSecond,
-            // if (firstBuy) BUY_POINT.FIST_BUY_COIN_5.costFirst else "",
-            BUY_POINT.FIST_BUY_COIN_5.pointCountFirst,
-            BUY_POINT.FIST_BUY_COIN_5.costFirst,
-            BUY_POINT.FIST_BUY_COIN_5.money
+            BUY_POINT.FIST_BUY_COIN_1.pointCountFirst,
+            BUY_POINT.FIST_BUY_COIN_1.costFirst,
+            BUY_POINT.FIST_BUY_COIN_1.money
         )
         val item2 = ItemPoint(
-            BUY_POINT.FIST_BUY_COIN_6.id,
+            BUY_POINT.FIST_BUY_COIN_2.id,
             firstBuy,
-            // if (firstBuy) BUY_POINT.FIST_BUY_COIN_6.pointCountFirst else BUY_POINT.FIST_BUY_COIN_6.pointCountFromSecond,
-            // if (firstBuy) BUY_POINT.FIST_BUY_COIN_6.costFirst else "",
-            BUY_POINT.FIST_BUY_COIN_6.pointCountFirst,
-            BUY_POINT.FIST_BUY_COIN_6.costFirst,
-            BUY_POINT.FIST_BUY_COIN_6.money
+            BUY_POINT.FIST_BUY_COIN_2.pointCountFirst,
+            BUY_POINT.FIST_BUY_COIN_2.costFirst,
+            BUY_POINT.FIST_BUY_COIN_2.money
         )
         val item3 = ItemPoint(
-            BUY_POINT.FIST_BUY_COIN_7.id,
+            BUY_POINT.FIST_BUY_COIN_3.id,
             firstBuy,
-            // if (firstBuy) BUY_POINT.FIST_BUY_COIN_7.pointCountFirst else BUY_POINT.FIST_BUY_COIN_7.pointCountFromSecond,
-            // if (firstBuy) BUY_POINT.FIST_BUY_COIN_7.costFirst else "",
-            BUY_POINT.FIST_BUY_COIN_7.pointCountFirst,
-            BUY_POINT.FIST_BUY_COIN_7.costFirst,
-            BUY_POINT.FIST_BUY_COIN_7.money
+            BUY_POINT.FIST_BUY_COIN_3.pointCountFirst,
+            BUY_POINT.FIST_BUY_COIN_3.costFirst,
+            BUY_POINT.FIST_BUY_COIN_3.money
         )
         val item4 = ItemPoint(
-            BUY_POINT.FIST_BUY_COIN_8.id,
+            BUY_POINT.FIST_BUY_COIN_4.id,
             firstBuy,
-            // if (firstBuy) BUY_POINT.FIST_BUY_COIN_8.pointCountFirst else BUY_POINT.FIST_BUY_COIN_8.pointCountFromSecond,
-            // if (firstBuy) BUY_POINT.FIST_BUY_COIN_8.costFirst else "",
-            BUY_POINT.FIST_BUY_COIN_8.pointCountFirst,
-            BUY_POINT.FIST_BUY_COIN_8.costFirst,
-            BUY_POINT.FIST_BUY_COIN_8.money
+            BUY_POINT.FIST_BUY_COIN_4.pointCountFirst,
+            BUY_POINT.FIST_BUY_COIN_4.costFirst,
+            BUY_POINT.FIST_BUY_COIN_4.money
         )
         mAdapter.run { submitList(listOf(item1, item2, item3, item4)) }
         binding.costPointRv.adapter = mAdapter

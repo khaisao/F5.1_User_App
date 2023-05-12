@@ -10,10 +10,6 @@ import jp.careapp.counseling.android.utils.Define.Companion.IN_APP_PURCHASE_KEY_
 import jp.careapp.counseling.android.utils.Define.Companion.IN_APP_PURCHASE_KEY_2
 import jp.careapp.counseling.android.utils.Define.Companion.IN_APP_PURCHASE_KEY_3
 import jp.careapp.counseling.android.utils.Define.Companion.IN_APP_PURCHASE_KEY_4
-import jp.careapp.counseling.android.utils.Define.Companion.IN_APP_PURCHASE_KEY_5
-import jp.careapp.counseling.android.utils.Define.Companion.IN_APP_PURCHASE_KEY_6
-import jp.careapp.counseling.android.utils.Define.Companion.IN_APP_PURCHASE_KEY_7
-import jp.careapp.counseling.android.utils.Define.Companion.IN_APP_PURCHASE_KEY_8
 
 class Define {
     companion object {
@@ -28,14 +24,10 @@ class Define {
         const val BUY_POINT_CHAT_MESSAGE = 3
 
         // key of in app purchase
-        const val IN_APP_PURCHASE_KEY_1: String = "careapp_tier_980"
-        const val IN_APP_PURCHASE_KEY_2: String = "careapp_tier_2940"
-        const val IN_APP_PURCHASE_KEY_3: String = "careapp_tier_4900"
-        const val IN_APP_PURCHASE_KEY_4: String = "careapp_tier_9000"
-        const val IN_APP_PURCHASE_KEY_5: String = "careapp_tier_3300"
-        const val IN_APP_PURCHASE_KEY_6: String = "careapp_tier_5500"
-        const val IN_APP_PURCHASE_KEY_7: String = "careapp_tier_10000"
-        const val IN_APP_PURCHASE_KEY_8: String = "careapp_tier_15000"
+        const val IN_APP_PURCHASE_KEY_1: String = "sl_tier_3600"
+        const val IN_APP_PURCHASE_KEY_2: String = "sl_tier_5800"
+        const val IN_APP_PURCHASE_KEY_3: String = "sl_tier_10800"
+        const val IN_APP_PURCHASE_KEY_4: String = "sl_tier_15800"
 
         // screen name
         const val SEND_MESSAGE_SCREEN = "SEND_MESSAGE_SCREEN"
@@ -72,10 +64,11 @@ class Define {
         const val URL_LIST_POINT_CREDIT =
             "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/stripe/buy-point-list.html"
         const val URL_LIVE_STREAM_POINT_PURCHASE = "${BuildConfig.WEB_DOMAIN}/popup/payment/credit"
+
         // TODO (Change  owner_code)
         //  const val OWNER_CODE = 6257353
         const val OWNER_CODE = 249085
-        const val APP_CODE = "CareappAndroid"
+        const val APP_CODE = "SparkLiveAndroid"
         const val PREFIX_CARE_APP = "careapp://"
         const val CALL_BACK_BUY_POINT_GOOGLE_ = "careapp://buypoint"
         const val CALL_BACK_BUY_POINT_CREDIT_CLOSE = "sparklive://close"
@@ -425,54 +418,6 @@ enum class BUY_POINT(
         pointSecondToNumber = 6000,
         moneyToNumber = 9000,
         promote = 6000
-    ),
-    FIST_BUY_COIN_5(
-        IN_APP_PURCHASE_KEY_5,
-        true,
-        "1,890pts",
-        "1,800pts",
-        "90ptsお得!",
-        "¥3,300",
-        pointToNumber = 1890,
-        pointSecondToNumber = 1800,
-        moneyToNumber = 3300,
-        promote = 90
-    ),
-    FIST_BUY_COIN_6(
-        IN_APP_PURCHASE_KEY_6,
-        true,
-        "3,290pts",
-        "3,060pts",
-        "230ptsお得!",
-        "¥5,500",
-        pointToNumber = 3290,
-        pointSecondToNumber = 3060,
-        moneyToNumber = 5500,
-        promote = 230
-    ),
-    FIST_BUY_COIN_7(
-        IN_APP_PURCHASE_KEY_7,
-        true,
-        "6,200pts",
-        "5,550pts",
-        "650ptsお得!",
-        "¥10,000",
-        pointToNumber = 6200,
-        pointSecondToNumber = 5550,
-        moneyToNumber = 10000,
-        promote = 650
-    ),
-    FIST_BUY_COIN_8(
-        IN_APP_PURCHASE_KEY_8,
-        true,
-        "9,370pts",
-        "8,300pts",
-        "1,070ptsお得!",
-        "¥15,000",
-        pointToNumber = 9370,
-        pointSecondToNumber = 8300,
-        moneyToNumber = 15000,
-        promote = 1070
     )
 }
 
