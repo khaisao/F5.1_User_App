@@ -161,16 +161,13 @@ class PerformerRankingHandler {
         }
 
         fun getImageViewForRank(ranking: RankingResponse?, recommendRanking: Int): Int {
-            return   if(ranking == null){
+            return if (ranking == null) {
                 getIconForRecommend(recommendRanking)
+            } else if (recommendRanking == 0 || ranking.ranking <= recommendRanking) {
+                getIconForRank(ranking)
             } else {
-                if(ranking.ranking >= recommendRanking){
-                    getIconForRank(ranking)
-                } else {
-                    getIconForRecommend(recommendRanking)
-                }
+                getIconForRecommend(recommendRanking)
             }
-
         }
     }
 }

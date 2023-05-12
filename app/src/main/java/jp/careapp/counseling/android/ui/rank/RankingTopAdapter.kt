@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.TypeRankingResponse
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
+import jp.careapp.counseling.android.utils.BUNDLE_KEY.Companion.TYPE_RECOMMEND
 import jp.careapp.counseling.android.utils.extensions.getBustSize
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler
 import jp.careapp.counseling.databinding.*
@@ -174,10 +175,14 @@ class RankingTopAdapter(
 
 
     override fun getItemViewType(position: Int): Int {
-        if(position == 0 || position == 1){
-            return RANKING_TOP_1_2
+        val item = getItem(position)
+        return if (typeRankingLayout == TYPE_RECOMMEND && (item.recommendRanking == 1 || item.recommendRanking == 2)) {
+            RANKING_TOP_1_2
+        } else if (item.ranking == 1 || item.ranking == 2) {
+            RANKING_TOP_1_2
+        } else {
+            RANKING_TOP_3
         }
-        return RANKING_TOP_3
     }
 
     companion object {

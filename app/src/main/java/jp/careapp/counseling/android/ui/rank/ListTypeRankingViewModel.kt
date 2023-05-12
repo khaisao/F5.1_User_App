@@ -37,17 +37,19 @@ class ListTypeRankingViewModel @ViewModelInject constructor(
                 rankingResponse.let {
                     val listRankingTop: ArrayList<TypeRankingResponse> = arrayListOf()
                     val listRankingTemp: ArrayList<TypeRankingResponse> = arrayListOf()
-                    if (!it.dataResponse.isNullOrEmpty()) {
-                        if (it.dataResponse.size > 3) {
-                            for (i in 0 until 3) {
+                    var haveRankLargeThanThree = false
+                    if (it.dataResponse.isNotEmpty()) {
+                        for (i in 0 until it.dataResponse.size) {
+                            if (it.dataResponse[i].ranking <= 3) {
                                 listRankingTop.add(it.dataResponse[i])
-                            }
-                            for (i in 3 until it.dataResponse.size) {
+                            } else {
+                                haveRankLargeThanThree = true
                                 listRankingTemp.add(it.dataResponse[i])
                             }
-                            rankingTopResult.value = listRankingTop
-                            listRankingResult.value = listRankingTemp
-                        } else {
+                        }
+                        rankingTopResult.value = listRankingTop
+                        listRankingResult.value = listRankingTemp
+                        if (!haveRankLargeThanThree) {
                             rankingTopResult.value = it.dataResponse!!
                         }
                         setListConsultant(it.dataResponse)
@@ -79,17 +81,21 @@ class ListTypeRankingViewModel @ViewModelInject constructor(
                 rankingResponse.let {
                     val listRankingTop: ArrayList<TypeRankingResponse> = arrayListOf()
                     val listRankingTemp: ArrayList<TypeRankingResponse> = arrayListOf()
-                    if (!it.dataResponse.isNullOrEmpty()) {
-                        if (it.dataResponse.size > 3) {
-                            for (i in 0 until 3) {
-                                listRankingTop.add(it.dataResponse[i])
+                    var haveRankLargeThanThree = false
+                    if (it.dataResponse.isNotEmpty()) {
+                        for(i in 0 until it.dataResponse.size){
+                            if(it.dataResponse[i].recommendRanking != null){
+                                if(it.dataResponse[i].recommendRanking!! <=3){
+                                    listRankingTop.add(it.dataResponse[i])
+                                } else {
+                                    haveRankLargeThanThree = true
+                                    listRankingTemp.add(it.dataResponse[i])
+                                }
                             }
-                            for (i in 3 until it.dataResponse.size) {
-                                listRankingTemp.add(it.dataResponse[i])
-                            }
-                            rankingTopResult.value = listRankingTop
-                            listRankingResult.value = listRankingTemp
-                        } else {
+                        }
+                        rankingTopResult.value = listRankingTop
+                        listRankingResult.value = listRankingTemp
+                        if(!haveRankLargeThanThree){
                             rankingTopResult.value = it.dataResponse!!
                         }
                         setListConsultant(it.dataResponse)

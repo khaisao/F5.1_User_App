@@ -108,15 +108,18 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
                     rvFavorite.layoutManager =
                         LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                     rvFavorite.adapter = adapterFavorite
+                    tvNoResult.text = requireContext().resources.getString(R.string.dont_follow_any_girl_yet)
                 }
                 BUNDLE_KEY.TYPE_HISTORY -> {
                     rvFavorite.layoutManager =
                         LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                     rvFavorite.adapter = adapterHistory
+                    tvNoResult.text = requireContext().resources.getString(R.string.no_viewing_history_yet)
                 }
                 else -> {
                     rvFavorite.layoutManager = GridLayoutManager(requireContext(), 2)
                     rvFavorite.adapter = adapterFavoriteHome
+                    tvNoResult.text = requireContext().resources.getString(R.string.dont_follow_any_girl_yet)
                 }
             }
         }

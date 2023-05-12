@@ -1,5 +1,6 @@
 package jp.careapp.counseling.android.ui.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -12,15 +13,14 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.adapter.BannerAdapter
 import jp.careapp.counseling.android.adapter.BasePagerAdapter
-import jp.careapp.counseling.android.adapter.ConsultantAdapter
 import jp.careapp.counseling.android.data.network.BannerResponse
-import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.navigation.AppNavigation
@@ -76,6 +76,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     private val fragmentAllPerformerFollow = FavoriteFragment.newInstance(BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_HOME)
 
 
+    @SuppressLint("ResourceType")
     override fun initView() {
         super.initView()
         binding.vpBanner.apply {
@@ -140,17 +141,37 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         super.onDestroyView()
     }
 
+    private fun onInfinitePageChangeCallback(listSize: Int) {
+        binding.vpBanner.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+                handler.removeCallbacks(swipeBannerRunnable)
+                handler.postDelayed(swipeBannerRunnable, intervalSwipeBanner)
+                if (state == ViewPager2.SCROLL_STATE_IDLE) {
+                    when (binding.vpBanner.currentItem) {
+                        listSize - 1 -> binding.vpBanner.setCurrentItem(1, false)
+                        0 -> binding.vpBanner.setCurrentItem(listSize - 2, false)
+                    }
+                }
+            }
+        })
+    }
 
     override fun bindingStateView() {
         super.bindingStateView()
+
         viewModel.lisBanner.observe(viewLifecycleOwner) {
             it?.let {
                 binding.vpBanner.isVisible = it.isNotEmpty()
-                bannerAdapter.submitList(it) {
-                    binding.vpBanner.setCurrentItem(0, false)
+                val newList: List<BannerResponse> =
+                    listOf(it.last()) + it + listOf(it.first())
+                bannerAdapter.submitList(newList) {
+                    binding.vpBanner.setCurrentItem(1, false)
                 }
+                onInfinitePageChangeCallback(newList.size)
             }
         }
+
         viewModel.isLoading.observe(viewLifecycleOwner, isLoadingObserver)
 
         mainViewModels.currentFragment.observe(

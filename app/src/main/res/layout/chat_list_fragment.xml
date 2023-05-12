@@ -41,7 +41,7 @@
                     android:layout_marginTop="@dimen/margin_20"
                     android:gravity="center_horizontal"
                     style="@style/text_14"
-                    android:text="@string/no_history_data"
+                    android:text="@string/no_message_yet"
                     android:textColor="@color/gray_dark"
                  />
             </LinearLayout>
