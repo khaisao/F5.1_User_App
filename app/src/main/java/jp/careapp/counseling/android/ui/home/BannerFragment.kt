@@ -34,9 +34,6 @@ class BannerFragment : BaseFragment<FragmentBannerItemBinding, BannerItemViewMod
     }
 
     private fun setUpContentWithType() {
-        context?.let { ctx ->
-            backgroundResId?.let { binding.ivBanner.setDrawableCompat(ctx, it) }
-        }
         binding.ivBanner.setOnClickListener {
             if (isDoubleClick) {
                 return@setOnClickListener
@@ -49,13 +46,6 @@ class BannerFragment : BaseFragment<FragmentBannerItemBinding, BannerItemViewMod
             }
         }
     }
-
-    private val backgroundResId: Int?
-        get() = when (bannerType) {
-            BANNER_TYPE_REUNION -> R.drawable.bg_banner_hukuen
-            BANNER_TYPE_PURCHASE -> R.drawable.banner_buy_points
-            else -> null
-        }
 
     private fun openHelpPage() {
         val webViewBundle = Bundle().apply {
