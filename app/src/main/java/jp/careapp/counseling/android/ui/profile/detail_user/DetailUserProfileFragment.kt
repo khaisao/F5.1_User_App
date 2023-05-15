@@ -507,24 +507,12 @@ class DetailUserProfileFragment :
             thumbnailImage = ThumbnailImageResponse(url = uriNoImage),
             comment = ""
         )
-        if (it != null && it.isNotEmpty()) {
+        if (!it.isNullOrEmpty()) {
             val listGallery = it.toMutableList()
             when {
-                listGallery.size <= 3 -> {
+                it.size <= 3 -> {
                     numberTimeCanScrollDown = 0
                     binding.ivArrowDown.visibility = GONE
-                    if (it.size % 3 == 1) {
-                        listGallery.add(
-                            itemNoGallery
-                        )
-                        listGallery.add(
-                            itemNoGallery
-                        )
-                    } else if (it.size % 3 == 2) {
-                        listGallery.add(
-                            itemNoGallery
-                        )
-                    }
                 }
                 it.size % 3 == 0 -> {
                     numberTimeCanScrollDown = it.size / 3 - 1
