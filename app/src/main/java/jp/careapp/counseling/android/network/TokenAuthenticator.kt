@@ -14,12 +14,14 @@ import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
+import timber.log.Timber
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.IOException
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 class TokenAuthenticator @Inject constructor(
@@ -27,22 +29,30 @@ class TokenAuthenticator @Inject constructor(
     private val gson: Gson,
     private val networkEvent: NetworkEvent,
 ) : Authenticator {
+    private val isRefreshing = AtomicBoolean(false)
 
     @ExperimentalCoroutinesApi
     override fun authenticate(route: Route?, response: Response): Request? {
-        val refreshResult = refreshToken("${jp.careapp.counseling.BuildConfig.BASE_URL}api/login")
-        return if (refreshResult)
-            response.request.newBuilder()
-                .header("Authorization", "Bearer ${rxPreferences.getToken().toString()}")
-                .build()
-        else {
-            networkEvent.publish(NetworkState.UNAUTHORIZED)
+        return if (!isRefreshing.getAndSet(true)) {
+            val refreshResult =
+                refreshToken("${jp.careapp.counseling.BuildConfig.BASE_URL}api/login")
+            isRefreshing.set(false)
+            if (refreshResult) {
+                response.request.newBuilder()
+                    .header("Authorization", "Bearer ${rxPreferences.getToken().toString()}")
+                    .build()
+            } else {
+                networkEvent.publish(NetworkState.UNAUTHORIZED)
+                null
+            }
+        } else {
             null
         }
     }
 
     @Throws(IOException::class)
     fun refreshToken(url: String): Boolean {
+        Timber.d("Refresh token")
         val refreshUrl = URL(url)
         val urlConnection = refreshUrl.openConnection() as HttpURLConnection
         urlConnection.apply {

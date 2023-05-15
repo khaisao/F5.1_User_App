@@ -394,7 +394,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                         .setOnOkButtonPressed {
                                             it.dismiss()
                                         }
-                                    appNavigation.openActionToLogin()
+                                    appNavigation.openActionToLoginAndClearBackstack()
                                 }
                             }
                             networkEvent.publish(NetworkState.INITIALIZE)
