@@ -1,7 +1,6 @@
 package jp.careapp.counseling.android.ui.profile.list_user_profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -12,7 +11,6 @@ import androidx.lifecycle.observe
 import androidx.viewpager.widget.ViewPager
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
-import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.user_profile.ActionLoadProfile
 import jp.careapp.counseling.android.data.network.ConsultantResponse
@@ -20,14 +18,10 @@ import jp.careapp.counseling.android.data.network.MemberResponse
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.navigation.AppNavigation
-import jp.careapp.counseling.android.ui.profile.list_user_profile.UserProfileViewModel
 import jp.careapp.counseling.android.ui.profile.block_report.BlockAndReportBottomFragment
 import jp.careapp.counseling.android.ui.profile.detail_user.DetailUserProfileFragment
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
-import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.Define.Intent.Companion.OPEN_DIRECT_FROM_NOTIFICATION
-import jp.careapp.counseling.android.utils.MODE_USER
-import jp.careapp.counseling.android.utils.customView.ToolbarPoint
 import jp.careapp.counseling.databinding.FragmentUserProfileBinding
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -55,8 +49,6 @@ class UserProfileFragment :
     override fun getVM(): UserProfileViewModel = viewModel
 
     private var isFromNotification = false
-
-    var isShow = false
 
     private val shareViewModel: ShareViewModel by activityViewModels()
 
@@ -154,7 +146,6 @@ class UserProfileFragment :
         val df = DecimalFormat()
         df.decimalFormatSymbols = symbols
         df.groupingSize = 3
-        binding.toolBar.setPoint(String.format(getString(R.string.point), df.format(point)))
     }
 
     private var handleBlockResult: Observer<Boolean> = Observer {
@@ -171,85 +162,7 @@ class UserProfileFragment :
 
     override fun setOnClick() {
         super.setOnClick()
-        binding.toolBar.setToolBarPointListener(
-            object : ToolbarPoint.ToolBarPointListener() {
-                override fun clickLeftBtn() {
-                    super.clickLeftBtn()
-                    if (isFromNotification) {
-                        appNavigation.openProfileUserToTopScreen()
-                    } else {
-                        appNavigation.navigateUp()
-                    }
-                }
 
-                override fun clickPointBtn() {
-                    if (!isDoubleClick) {
-                        if (viewModel.memberInFoResult.value?.disPlay == MODE_USER.MODE_ALL) {
-                            val bundle = Bundle().apply {
-                                putString(Define.TITLE_WEB_VIEW, getString(R.string.buy_point))
-                                putString(Define.URL_WEB_VIEW, Define.URL_BUY_POINT)
-                            }
-                            appNavigation.openScreenToWebview(bundle)
-                        } else
-                            appNavigation.openUserProfileToBuyPointScreen()
-                    }
-                }
-
-                override fun clickRightBtn() {
-                    super.clickRightBtn()
-                    if (!isDoubleClick) {
-                        BlockAndReportBottomFragment.showBlockAndReportBottomSheet(
-                            childFragmentManager,
-                            object : BlockAndReportBottomFragment.ClickItemView {
-                                override fun clickBlock() {
-                                    if (!isDoubleClick) {
-                                        if (!listUser.isNullOrEmpty() && listUser?.size ?: 0 >= pageSelected) {
-                                            val user = listUser?.get(pageSelected)
-                                            user?.let { data ->
-                                                CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-                                                    .showDialog()
-                                                    .setDialogTitleWithString(
-                                                        String.format(
-                                                            getString(R.string.title_confirm_block),
-                                                            data.name ?: ""
-                                                        )
-                                                    )
-                                                    .setTextPositiveButton(R.string.ok)
-                                                    .setTextNegativeButton(R.string.cancel)
-                                                    .setOnPositivePressed {
-                                                        it.dismiss()
-                                                        activity?.let { it1 ->
-                                                            viewModel.handleClickBlock(
-                                                                data.code ?: "",
-                                                                it1
-                                                            )
-                                                        }
-                                                    }.setOnNegativePressed {
-                                                        it.dismiss()
-                                                    }
-                                            }
-                                        }
-                                    }
-                                }
-
-                                override fun clickReport() {
-                                    if (!isDoubleClick) {
-                                        if (!listUser.isNullOrEmpty() && listUser?.size ?: 0 >= pageSelected) {
-                                            val user = listUser?.get(pageSelected)
-                                            var bundle = Bundle()
-                                            if (user != null) {
-                                                bundle.putString(BUNDLE_KEY.USER_PROFILE, user.code)
-                                            }
-                                            appNavigation.openUserProfileToReportScreen(bundle)
-                                        }
-                                    }
-                                }
-                            }
-                        )
-                    }
-                }
-            }
-        )
         binding.userProfileVp.addOnPageChangeListener(
             object : ViewPager.OnPageChangeListener {
                 override fun onPageScrollStateChanged(state: Int) {

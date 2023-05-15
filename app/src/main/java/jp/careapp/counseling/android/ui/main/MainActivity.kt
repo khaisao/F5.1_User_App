@@ -46,6 +46,7 @@ import jp.careapp.counseling.android.ui.splash.SplashFragment
 import jp.careapp.counseling.android.ui.top.TopFragment
 import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeFragment
 import jp.careapp.counseling.android.utils.*
+import jp.careapp.counseling.android.utils.Define.Companion.NORMAL_MODE
 import jp.careapp.counseling.android.utils.Define.Companion.PREFIX_CARE_APP
 import jp.careapp.counseling.android.utils.Define.Companion.REVIEW_MODE
 import jp.careapp.counseling.android.utils.event.NetworkEvent
@@ -384,17 +385,31 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                 if (currentFragment is SplashFragment)
                                     appNavigation.openActionToLogin()
                                 else {
-                                    CommonAlertDialog.getInstanceCommonAlertdialog(
-                                        this@MainActivity,
-                                        TYPE_DIALOG.UN_AUTHEN
-                                    )
-                                        .showDialog()
-                                        .setDialogTitle(R.string.wrong_email_address_or_password)
-                                        .setTextOkButton(R.string.text_OK)
-                                        .setOnOkButtonPressed {
-                                            it.dismiss()
-                                        }
-                                    appNavigation.openActionToLogin()
+                                    if (rxPreferences.getAppMode() == NORMAL_MODE) {
+                                        CommonAlertDialog.getInstanceCommonAlertdialog(
+                                            this@MainActivity,
+                                            TYPE_DIALOG.UN_AUTHEN
+                                        )
+                                            .showDialog()
+                                            .setDialogTitle(R.string.wrong_email_address_or_password)
+                                            .setTextOkButton(R.string.text_OK)
+                                            .setOnOkButtonPressed {
+                                                it.dismiss()
+                                            }
+                                        appNavigation.openActionToLoginAndClearBackstack()
+                                    } else {
+                                        RMCommonAlertDialog.getInstanceCommonAlertdialog(
+                                            this@MainActivity,
+                                            TYPE_DIALOG.UN_AUTHEN
+                                        )
+                                            .showDialog()
+                                            .setDialogTitle(R.string.wrong_email_address_or_password)
+                                            .setTextPositiveSmallButton(R.string.text_OK)
+                                            .setOnPositiveSmallPressed {
+                                                it.dismiss()
+                                            }
+                                        appNavigation.openActionToRMLoginAndClearBackstack()
+                                    }
                                 }
                             }
                             networkEvent.publish(NetworkState.INITIALIZE)
