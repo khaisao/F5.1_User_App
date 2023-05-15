@@ -139,6 +139,11 @@ class DetailUserProfileFragment :
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.avatarIv.loadImage(consultantResponse?.imageUrl, R.drawable.default_avt_performer)
+    }
+
     override fun setOnClick() {
         super.setOnClick()
 

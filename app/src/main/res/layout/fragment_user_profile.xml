@@ -6,17 +6,6 @@
         android:layout_height="match_parent"
         android:background="@color/color_background_common">
 
-        <jp.careapp.counseling.android.utils.customView.ToolbarPoint
-            android:id="@+id/tool_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:is_show_point="true"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:src_left_p="@drawable/ic_arrow_left"
-            app:src_right_p="@drawable/ic_more" />
-
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/user_profile_vp"
             android:layout_width="0dp"
@@ -24,7 +13,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tool_bar" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
             android:id="@+id/guide_user_fr"

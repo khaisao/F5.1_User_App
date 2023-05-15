@@ -367,7 +367,10 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                     llPeep.visibility = GONE
                 }
                 tvName.text = performerDetail.name
-                ivAvtBackground.loadImage(performerDetail.thumbnailImageUrl)
+                ivAvtBackground.loadImage(
+                    performerDetail.thumbnailImageUrl,
+                    R.drawable.default_avt_performer
+                )
             }
         }
     }

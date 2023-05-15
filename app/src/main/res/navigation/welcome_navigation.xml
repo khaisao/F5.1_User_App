@@ -44,6 +44,16 @@
         app:popUpTo="@id/rmTopFragment"
         app:popUpToInclusive="true" />
 
+    <action
+        android:id="@+id/action_to_rm_start_and_delete_all_back_stack"
+        app:destination="@id/RMStartFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left"
+        app:popUpTo="@id/welcome_navigation"
+        app:popUpToInclusive="true" />
+
     <fragment
         android:id="@+id/RMStartFragment"
         android:name="jp.careapp.counseling.android.ui.review_mode.start.RMStartFragment"
