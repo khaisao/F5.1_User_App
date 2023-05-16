@@ -25,6 +25,7 @@ import jp.careapp.counseling.android.ui.buy_point.BuyPointViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.BUY_POINT
 import jp.careapp.counseling.android.utils.Define
+import jp.careapp.counseling.android.utils.formatDecimalSeparator
 import jp.careapp.counseling.databinding.FragmentBuyPointBottomBinding
 import org.greenrobot.eventbus.EventBus
 import java.text.DecimalFormat
@@ -161,43 +162,27 @@ class BuyPointBottomFragment : BottomSheetDialogFragment() {
         }
         val item1 = ItemPoint(
             BUY_POINT.FIST_BUY_COIN_1.id,
-            firstBuy,
-            BUY_POINT.FIST_BUY_COIN_1.pointCountFirst,
-            BUY_POINT.FIST_BUY_COIN_1.costFirst,
+            (BUY_POINT.FIST_BUY_COIN_1.pointCount + BUY_POINT.FIST_BUY_COIN_1.pointBonus).formatDecimalSeparator()
+                .plus(getString(R.string.point_unit)),
             BUY_POINT.FIST_BUY_COIN_1.money,
-            pointToNumber = BUY_POINT.FIST_BUY_COIN_1.pointToNumber,
-            moneyToNumber = BUY_POINT.FIST_BUY_COIN_1.moneyToNumber,
-            promote = BUY_POINT.FIST_BUY_COIN_1.promote
         )
         val item2 = ItemPoint(
             BUY_POINT.FIST_BUY_COIN_2.id,
-            firstBuy,
-            BUY_POINT.FIST_BUY_COIN_2.pointCountFirst,
-            BUY_POINT.FIST_BUY_COIN_2.costFirst,
+            (BUY_POINT.FIST_BUY_COIN_2.pointCount + BUY_POINT.FIST_BUY_COIN_2.pointBonus).formatDecimalSeparator()
+                .plus(getString(R.string.point_unit)),
             BUY_POINT.FIST_BUY_COIN_2.money,
-            pointToNumber = BUY_POINT.FIST_BUY_COIN_2.pointToNumber,
-            moneyToNumber = BUY_POINT.FIST_BUY_COIN_2.moneyToNumber,
-            promote = BUY_POINT.FIST_BUY_COIN_2.promote
         )
         val item3 = ItemPoint(
             BUY_POINT.FIST_BUY_COIN_3.id,
-            firstBuy,
-            BUY_POINT.FIST_BUY_COIN_3.pointCountFirst,
-            BUY_POINT.FIST_BUY_COIN_3.costFirst,
+            (BUY_POINT.FIST_BUY_COIN_3.pointCount + BUY_POINT.FIST_BUY_COIN_3.pointBonus).formatDecimalSeparator()
+                .plus(getString(R.string.point_unit)),
             BUY_POINT.FIST_BUY_COIN_3.money,
-            pointToNumber = BUY_POINT.FIST_BUY_COIN_3.pointToNumber,
-            moneyToNumber = BUY_POINT.FIST_BUY_COIN_3.moneyToNumber,
-            promote = BUY_POINT.FIST_BUY_COIN_3.promote
         )
         val item4 = ItemPoint(
             BUY_POINT.FIST_BUY_COIN_4.id,
-            firstBuy,
-            BUY_POINT.FIST_BUY_COIN_4.pointCountFirst,
-            BUY_POINT.FIST_BUY_COIN_4.costFirst,
+            (BUY_POINT.FIST_BUY_COIN_4.pointCount + BUY_POINT.FIST_BUY_COIN_4.pointBonus).formatDecimalSeparator()
+                .plus(getString(R.string.point_unit)),
             BUY_POINT.FIST_BUY_COIN_4.money,
-            pointToNumber = BUY_POINT.FIST_BUY_COIN_4.pointToNumber,
-            moneyToNumber = BUY_POINT.FIST_BUY_COIN_4.moneyToNumber,
-            promote = BUY_POINT.FIST_BUY_COIN_4.promote
         )
         mAdapter.run { submitList(listOf(item1, item2, item3, item4)) }
         binding.costPointRv.adapter = mAdapter

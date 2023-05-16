@@ -70,7 +70,7 @@ interface RMEventBuyPointAction {
 
 object MyPageDiffCallBack : DiffUtil.ItemCallback<ItemPoint>() {
     override fun areItemsTheSame(oldItem: ItemPoint, newItem: ItemPoint): Boolean =
-        oldItem.costFirst == newItem.costFirst
+        oldItem.itemId == newItem.itemId
 
     override fun areContentsTheSame(oldItem: ItemPoint, newItem: ItemPoint): Boolean =
         oldItem == newItem

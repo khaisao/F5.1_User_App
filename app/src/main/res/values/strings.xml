@@ -751,6 +751,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="already_log_out">既にログアウトされています</string>
     <string name="already_log_out_by_private_mode_with_another_person">他の方とのプライベートモード開始によりログアウトされました</string>
     <string name="no_message_yet">まだメッセージはありません</string>
+    <string name="point_unit">pts</string>
 
 
     <string-array name="nm_contact_us_category">

@@ -276,10 +276,16 @@ class DetailUserProfileFragment :
     }
 
     private fun checkPoint() {
-        if (rxPreferences.getPoint() < 1000) {
-            showDialogRequestBuyPoint()
-        } else {
-            showDialogConfirmCall()
+        when {
+            rxPreferences.getPoint() == 0 -> {
+                showDialogRequestBuyPointForPeep()
+            }
+            rxPreferences.getPoint() < 1000 -> {
+                showDialogRequestBuyPoint()
+            }
+            else -> {
+                showDialogConfirmCall()
+            }
         }
     }
 

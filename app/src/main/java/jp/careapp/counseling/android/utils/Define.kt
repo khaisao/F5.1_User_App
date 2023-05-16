@@ -361,125 +361,65 @@ class TYPE_DIALOG {
 
 enum class BUY_POINT(
     val id: String,
-    val isFirstBuy: Boolean,
-    val pointCountFirst: String,
-    val pointCountFromSecond: String,
-    val costFirst: String,
-    val money: String,
-    val pointToNumber: Int = 0,
-    val pointSecondToNumber: Int = 0,
-    val moneyToNumber: Int = 0,
-    val promote: Int = 0
+    val pointCount: Int,
+    val pointBonus: Int,
+    val money: String
 ) {
     FIST_BUY_COIN_1(
         IN_APP_PURCHASE_KEY_1,
-        true,
-        "1,307pts",
-        "653pts",
-        "653ptsお得!",
-        " ¥980 ",
-        pointToNumber = 1307,
-        pointSecondToNumber = 653,
-        moneyToNumber = 980,
-        promote = 653
+        1800,
+        90,
+        " ¥3,600 ",
     ),
     FIST_BUY_COIN_2(
         IN_APP_PURCHASE_KEY_2,
-        true,
-        "3,920pts",
-        "1,960pts",
-        "1,960ptsお得!",
-        " ¥2,940 ",
-        pointToNumber = 3920,
-        pointSecondToNumber = 1960,
-        moneyToNumber = 2940,
-        promote = 1960
+        3060,
+        230,
+        " ¥5,800 ",
     ),
     FIST_BUY_COIN_3(
         IN_APP_PURCHASE_KEY_3,
-        true,
-        "6,533pts",
-        "3,267pts",
-        "3,267ptsお得!",
-        " ¥4,900 ",
-        pointToNumber = 6533,
-        pointSecondToNumber = 3267,
-        moneyToNumber = 4900,
-        promote = 3267
+        5550,
+        850,
+        " ¥10,800 ",
     ),
     FIST_BUY_COIN_4(
         IN_APP_PURCHASE_KEY_4,
-        true,
-        "12,000pts",
-        "6,000pts",
-        "6,000ptsお得!",
-        "¥9,000",
-        pointToNumber = 12000,
-        pointSecondToNumber = 6000,
-        moneyToNumber = 9000,
-        promote = 6000
+        8300,
+        1400,
+        "¥15,800",
     )
 }
 
 enum class BUY_POINT_RM(
     val id: String,
-    val isFirstBuy: Boolean,
-    val pointCountFirst: String,
-    val pointCountFromSecond: String,
-    val costFirst: String,
+    val pointCount: Int,
+    val pointBonus: Int,
     val money: String,
-    val pointToNumber: Int = 0,
-    val pointSecondToNumber: Int = 0,
-    val moneyToNumber: Int = 0,
-    val promote: Int = 0
 ) {
     FIST_BUY_COIN_1(
         IN_APP_PURCHASE_KEY_1,
-        false,
-        "1,890",
-        "1,800",
-        "3600",
+        1800,
+        90,
         "¥3,600",
-        pointToNumber = 1890,
-        pointSecondToNumber = 1800,
-        moneyToNumber = 3600,
-        promote = 90
     ),
     FIST_BUY_COIN_2(
         IN_APP_PURCHASE_KEY_2,
-        false,
-        "3,290",
-        "3,060",
-        "5,800",
+        3060,
+        230,
         "¥5,800",
-        pointToNumber = 3290,
-        pointSecondToNumber = 3060,
-        moneyToNumber = 5800,
-        promote = 230
     ),
     FIST_BUY_COIN_3(
         IN_APP_PURCHASE_KEY_3,
-        false,
-        "6,400",
-        "5,550",
-        "10,800",
+        5550,
+        850,
         "¥10,800",
-        pointToNumber = 6400,
-        pointSecondToNumber = 5550,
-        moneyToNumber = 10800,
-        promote = 850
     ),
     FIST_BUY_COIN_4(
         IN_APP_PURCHASE_KEY_4,
-        false,
-        "9,700",
-        "8,300",
-        "15,800",
+        8300,
+        1400,
         "¥15,800",
-        pointToNumber = 9700,
-        pointSecondToNumber = 8300,
-        moneyToNumber = 15800,
-        promote = 1400
     )
 }
 

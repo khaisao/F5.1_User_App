@@ -2,7 +2,6 @@ package jp.careapp.counseling.android.handle
 
 import android.app.Activity
 import android.content.Context
-import android.util.Log
 import com.android.billingclient.api.*
 import dagger.hilt.android.qualifiers.ApplicationContext
 import jp.careapp.counseling.android.data.pref.RxPreferences
@@ -21,7 +20,9 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import org.json.JSONObject
+import timber.log.Timber
 import javax.inject.Inject
+
 
 /**
  * Carelear
@@ -54,18 +55,25 @@ class BillingManager @Inject constructor(
     }
 
     private var requestConnect = 0
-    private var skuDetailsList: List<SkuDetails>? = null
+    private var productDetailsList: List<ProductDetails>? = null
 
     private fun processPurchases(purchasesResult: Set<Purchase>) =
         CoroutineScope(Job() + Dispatchers.IO).launch {
             val validPurchases = HashSet<Purchase>(purchasesResult.size)
             purchasesResult.forEach { purchase ->
-                if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
-                    validPurchases.add(purchase)
-                } else if (purchase.purchaseState == Purchase.PurchaseState.PENDING) {
-                    Log.d(TAG, "Received a pending purchase of SKU: ${purchase.skus}")
-                } else {
-                    Log.d(TAG, "Received a status: ${purchase.purchaseState}")
+                when (purchase.purchaseState) {
+                    Purchase.PurchaseState.PURCHASED -> {
+                        validPurchases.add(purchase)
+                    }
+                    Purchase.PurchaseState.PENDING -> {
+                        Timber.d(
+                            TAG,
+                            "Received a pending purchase of Product: ${purchase.products}"
+                        )
+                    }
+                    else -> {
+                        Timber.d(TAG, "Received a status: ${purchase.purchaseState}")
+                    }
                 }
             }
             if (validPurchases.isNullOrEmpty()) {
@@ -73,25 +81,25 @@ class BillingManager @Inject constructor(
             }
             validPurchases.forEach {
                 val retry = 0
-                verifiTokenBiling(it, retry)
+                verifyTokenBilling(it, retry)
             }
             statusBilling = CANCEL
         }
 
-    suspend fun verifiTokenBiling(purchase: Purchase, retry: Int) {
+    private suspend fun verifyTokenBilling(purchase: Purchase, retry: Int) {
         if (retry > 3) {
             handleActionBilling?.statusBilling(ERROR)
             return
         }
         statusBilling = ERROR
         try {
-            var jsonObject = JSONObject()
+            val jsonObject = JSONObject()
             jsonObject.put(BUNDLE_KEY.OWNER_CODE, Define.OWNER_CODE)
             jsonObject.put(BUNDLE_KEY.MEMBER_CODE, rxPreferences.getMemberCode())
             jsonObject.put(BUNDLE_KEY.APP_CODE, Define.APP_CODE)
-            jsonObject.put(BUNDLE_KEY.RECEIPT, JSONObject(purchase.originalJson.toString()))
+            jsonObject.put(BUNDLE_KEY.RECEIPT, JSONObject(purchase.originalJson))
             jsonObject.put(BUNDLE_KEY.SIGNATURE, purchase.signature)
-            var body: RequestBody =
+            val body: RequestBody =
                 RequestBody.create(
                     "application/json".toMediaTypeOrNull(),
                     jsonObject.toString()
@@ -100,10 +108,10 @@ class BillingManager @Inject constructor(
                 Define.URL_CONFIRM_POINT,
                 body
             )
-            if (response.equals("OK")) {
+            if (response == "OK") {
                 val params =
                     ConsumeParams.newBuilder().setPurchaseToken(purchase.purchaseToken).build()
-                billingClient?.consumeAsync(params) { billingResult, purchaseToken ->
+                billingClient?.consumeAsync(params) { billingResult, _ ->
                     when (billingResult.responseCode) {
                         BillingClient.BillingResponseCode.OK -> {
                             handleActionBilling?.statusBilling(SUCCESS)
@@ -116,12 +124,12 @@ class BillingManager @Inject constructor(
             }
         } catch (e: Exception) {
             statusBilling = ERROR
-            verifiTokenBiling(purchase, retry + 1)
+            verifyTokenBilling(purchase, retry + 1)
         }
     }
 
     fun startConnectionBilling() {
-        if (!(billingClient?.isReady ?: false)) {
+        if (billingClient?.isReady != true) {
             billingClient?.startConnection(
                 object : BillingClientStateListener {
                     override fun onBillingSetupFinished(billingResult: BillingResult) {
@@ -157,48 +165,64 @@ class BillingManager @Inject constructor(
     fun querySkuDetails() {
         val skuList =
             listOf(
-                 IN_APP_PURCHASE_KEY_1,
-                 IN_APP_PURCHASE_KEY_2,
-                 IN_APP_PURCHASE_KEY_3,
-                 IN_APP_PURCHASE_KEY_4,
+                createInAppProduct(IN_APP_PURCHASE_KEY_1),
+                createInAppProduct(IN_APP_PURCHASE_KEY_2),
+                createInAppProduct(IN_APP_PURCHASE_KEY_3),
+                createInAppProduct(IN_APP_PURCHASE_KEY_4),
             )
-        val params = SkuDetailsParams.newBuilder()
-        params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP)
-        billingClient?.querySkuDetailsAsync(params.build()) { billingResult, skuDetailsList ->
-            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
-                this@BillingManager.skuDetailsList = skuDetailsList
+        val params = QueryProductDetailsParams.newBuilder()
+            .setProductList(skuList)
+            .build()
+        billingClient?.queryProductDetailsAsync(params) { billingResult, skuDetailsList ->
+            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                this@BillingManager.productDetailsList = skuDetailsList
             }
         }
     }
+
+    private fun createInAppProduct(productId: String) =
+        QueryProductDetailsParams.Product.newBuilder()
+            .setProductId(productId)
+            .setProductType(BillingClient.ProductType.INAPP)
+            .build()
 
     /**
      * query Purchases don't veryfi
      */
     fun queryPurchasesAsync() {
         val purchasesResult = HashSet<Purchase>()
-        var result = billingClient?.queryPurchases(BillingClient.SkuType.INAPP)
-        result?.purchasesList?.apply {
-            purchasesResult.addAll(this)
+        billingClient?.queryPurchasesAsync(
+            QueryPurchasesParams.newBuilder()
+                .setProductType(BillingClient.ProductType.INAPP)
+                .build()
+        ) { _, listPurchase ->
+            purchasesResult.addAll(listPurchase)
+            processPurchases(purchasesResult)
         }
-        processPurchases(purchasesResult)
     }
 
     fun startBilling(itemPoint: ItemPoint, activity: Activity) {
         // run main thread
-        if (!skuDetailsList.isNullOrEmpty()) {
-            val skuDetail = skuDetailsList?.firstOrNull {
-                it.sku == itemPoint.itemId
+        if (!productDetailsList.isNullOrEmpty()) {
+            val productDetail = productDetailsList?.firstOrNull {
+                it.productId == itemPoint.itemId
             }
-            if (skuDetail == null) {
+            if (productDetail == null) {
                 handleActionBilling?.statusBilling(CANCEL)
             }
-            skuDetail?.let {
-                if (billingClient?.isFeatureSupported(BillingClient.FeatureType.IN_APP_ITEMS_ON_VR)?.responseCode == BillingClient.BillingResponseCode.OK) {
+            productDetail?.let {
+                if (billingClient?.isFeatureSupported(BillingClient.FeatureType.IN_APP_MESSAGING)?.responseCode == BillingClient.BillingResponseCode.OK) {
+                    val offerToken = it.subscriptionOfferDetails?.get(0)?.offerToken ?: ""
+                    val productDetailsParamsList = listOf(
+                        BillingFlowParams.ProductDetailsParams.newBuilder()
+                            .setProductDetails(it)
+                            .setOfferToken(offerToken)
+                            .build()
+                    )
                     val flowParams = BillingFlowParams.newBuilder()
-                        .setSkuDetails(it)
+                        .setProductDetailsParamsList(productDetailsParamsList)
                         .build()
-                    val responseCode =
-                        billingClient?.launchBillingFlow(activity, flowParams)?.responseCode
+                    billingClient?.launchBillingFlow(activity, flowParams)
                 } else {
                     handleActionBilling?.statusBilling(CANCEL)
                 }
@@ -212,7 +236,7 @@ class BillingManager @Inject constructor(
         billingResult: BillingResult,
         purchases: MutableList<Purchase>?
     ) {
-        Log.d(TAG, billingResult.debugMessage)
+        Timber.d(TAG, billingResult.debugMessage)
 
         when (billingResult.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
@@ -232,8 +256,8 @@ class BillingManager @Inject constructor(
         }
     }
 
-    public fun onDestroy() {
-        if (billingClient?.isReady ?: false) {
+    fun onDestroy() {
+        if (billingClient?.isReady == true) {
             billingClient?.endConnection()
         }
     }

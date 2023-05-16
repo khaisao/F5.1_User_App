@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_24"
                 app:hl_cornerRadius="@dimen/margin_64"
-                app:hl_shadowBackColor="@color/color_background_common"
+                app:hl_layoutBackground="@color/color_background_common"
                 app:hl_shadowColor="@color/color_dialog_border_shadow"
                 app:hl_shadowLimit="@dimen/margin_13">
 
