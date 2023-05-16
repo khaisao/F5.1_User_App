@@ -87,8 +87,6 @@ interface AppNavigation : BaseNavigator {
 
     fun openActionToRMLoginAndClearBackstack(data: Bundle? = null)
 
-    fun openReviewConsultant(data: Bundle)
-
     fun openMainToChatMessage(data: Bundle? = null)
 
     fun openTopToChatMessage(bundle: Bundle? = null)

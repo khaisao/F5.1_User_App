@@ -111,8 +111,8 @@ class BuyPointFragment : BaseFragment<FragmentBuyPointBinding, BuyPointViewModel
             CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
                 .showDialog()
                 .setDialogTitle(R.string.buy_point_suscess)
-                .setTextPositiveButton(R.string.text_OK)
-                .setOnPositivePressed {
+                .setTextOkButton(R.string.text_OK)
+                .setOnOkButtonPressed {
                     viewModel.isLoading.value = false
                     it.dismiss()
                 }

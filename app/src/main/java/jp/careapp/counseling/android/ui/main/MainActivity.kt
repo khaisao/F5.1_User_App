@@ -364,19 +364,35 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                             appNavigation.openMainToMaintenance(bundle)
                             networkEvent.publish(NetworkState.INITIALIZE)
                         }
+
                         is NetworkState.ERROR -> {
-                            CommonAlertDialog.getInstanceCommonAlertdialog(
-                                this@MainActivity,
-                                TYPE_DIALOG.GENERIC
-                            )
-                                .showDialog()
-                                .setDialogTitle(R.string.error_maintenance)
-                                .setTextOkButton(R.string.confirm_block_alert)
-                                .setOnOkButtonPressed {
-                                    it.dismiss()
-                                    networkEvent.publish(NetworkState.INITIALIZE)
-                                }
+                            if (rxPreferences.getAppMode() == NORMAL_MODE) {
+                                CommonAlertDialog.getInstanceCommonAlertdialog(
+                                    this@MainActivity,
+                                    TYPE_DIALOG.GENERIC
+                                )
+                                    .showDialog()
+                                    .setDialogTitle(R.string.error_maintenance)
+                                    .setTextOkButton(R.string.confirm_block_alert)
+                                    .setOnOkButtonPressed {
+                                        it.dismiss()
+                                        networkEvent.publish(NetworkState.INITIALIZE)
+                                    }
+                            } else {
+                                RMCommonAlertDialog.getInstanceCommonAlertdialog(
+                                    this@MainActivity,
+                                    TYPE_DIALOG.GENERIC
+                                )
+                                    .showDialog()
+                                    .setDialogTitle(R.string.error_maintenance)
+                                    .setTextPositiveSmallButton(R.string.confirm_block_alert)
+                                    .setOnPositiveSmallPressed {
+                                        it.dismiss()
+                                        networkEvent.publish(NetworkState.INITIALIZE)
+                                    }
+                            }
                         }
+
                         is NetworkState.UNAUTHORIZED -> {
                             if (!TextUtils.isEmpty(rxPreferences.getToken())) {
                                 rxPreferences.logout()
@@ -414,59 +430,117 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                             }
                             networkEvent.publish(NetworkState.INITIALIZE)
                         }
+
                         is NetworkState.NO_INTERNET -> {
-                            CommonAlertDialog.getInstanceCommonAlertdialog(
-                                this@MainActivity,
-                                TYPE_DIALOG.NO_INTERNET
-                            )
-                                .showDialog()
-                                .setDialogTitle(jp.careapp.core.R.string.no_internet)
-                                .setTextOkButton(R.string.ok)
-                                .setOnOkButtonPressed {
-                                    it.dismiss()
-                                }
+                            if (rxPreferences.getAppMode() == NORMAL_MODE) {
+                                CommonAlertDialog.getInstanceCommonAlertdialog(
+                                    this@MainActivity,
+                                    TYPE_DIALOG.NO_INTERNET
+                                )
+                                    .showDialog()
+                                    .setDialogTitle(jp.careapp.core.R.string.no_internet)
+                                    .setTextOkButton(R.string.ok)
+                                    .setOnOkButtonPressed {
+                                        it.dismiss()
+                                    }
+                            } else {
+                                RMCommonAlertDialog.getInstanceCommonAlertdialog(
+                                    this@MainActivity,
+                                    TYPE_DIALOG.NO_INTERNET
+                                )
+                                    .showDialog()
+                                    .setDialogTitle(jp.careapp.core.R.string.no_internet)
+                                    .setTextPositiveSmallButton(R.string.ok)
+                                    .setOnPositiveSmallPressed {
+                                        it.dismiss()
+                                    }
+                            }
                             networkEvent.publish(NetworkState.INITIALIZE)
                         }
+
                         is NetworkState.BAD_REQUEST -> {
-                            CommonAlertDialog.getInstanceCommonAlertdialog(
-                                this@MainActivity,
-                                TYPE_DIALOG.BAD_REQUEST
-                            )
-                                .showDialog()
-                                .setDialogTitle(R.string.status_400)
-                                .setTextOkButton(R.string.confirm_block_alert)
-                                .setOnOkButtonPressed {
-                                    it.dismiss()
-                                    appNavigation.navigateUp()
-                                }
+                            if (rxPreferences.getAppMode() == NORMAL_MODE) {
+                                CommonAlertDialog.getInstanceCommonAlertdialog(
+                                    this@MainActivity,
+                                    TYPE_DIALOG.BAD_REQUEST
+                                )
+                                    .showDialog()
+                                    .setDialogTitle(R.string.status_400)
+                                    .setTextOkButton(R.string.confirm_block_alert)
+                                    .setOnOkButtonPressed {
+                                        it.dismiss()
+                                        appNavigation.navigateUp()
+                                    }
+                            } else {
+                                RMCommonAlertDialog.getInstanceCommonAlertdialog(
+                                    this@MainActivity,
+                                    TYPE_DIALOG.BAD_REQUEST
+                                )
+                                    .showDialog()
+                                    .setDialogTitle(R.string.status_400)
+                                    .setTextPositiveSmallButton(R.string.confirm_block_alert)
+                                    .setOnPositiveSmallPressed {
+                                        it.dismiss()
+                                        appNavigation.navigateUp()
+                                    }
+                            }
                             networkEvent.publish(NetworkState.INITIALIZE)
                         }
+
                         is NetworkState.CONNECTION_LOST -> {
-                            CommonAlertDialog.getInstanceCommonAlertdialog(
-                                this@MainActivity,
-                                TYPE_DIALOG.CONNECTION_LOST
-                            )
-                                .showDialog()
-                                .setDialogTitle(R.string.time_out)
-                                .setTextOkButton(R.string.confirm_block_alert)
-                                .setOnOkButtonPressed {
-                                    it.dismiss()
-                                }
+                            if (rxPreferences.getAppMode() == NORMAL_MODE) {
+                                CommonAlertDialog.getInstanceCommonAlertdialog(
+                                    this@MainActivity,
+                                    TYPE_DIALOG.CONNECTION_LOST
+                                )
+                                    .showDialog()
+                                    .setDialogTitle(R.string.time_out)
+                                    .setTextOkButton(R.string.confirm_block_alert)
+                                    .setOnOkButtonPressed {
+                                        it.dismiss()
+                                    }
+                            } else {
+                                RMCommonAlertDialog.getInstanceCommonAlertdialog(
+                                    this@MainActivity,
+                                    TYPE_DIALOG.CONNECTION_LOST
+                                )
+                                    .showDialog()
+                                    .setDialogTitle(R.string.time_out)
+                                    .setTextPositiveSmallButton(R.string.confirm_block_alert)
+                                    .setOnPositiveSmallPressed {
+                                        it.dismiss()
+                                    }
+                            }
                             networkEvent.publish(NetworkState.INITIALIZE)
                         }
+
                         is NetworkState.FORBIDDEN, NetworkState.NOT_FOUND -> {
-                            CommonAlertDialog.getInstanceCommonAlertdialog(
-                                this@MainActivity,
-                                TYPE_DIALOG.NOT_FOUND
-                            )
-                                .showDialog()
-                                .setDialogTitle(R.string.general_error)
-                                .setTextOkButton(R.string.confirm_block_alert)
-                                .setOnOkButtonPressed {
-                                    it.dismiss()
-                                }
+                            if (rxPreferences.getAppMode() == NORMAL_MODE) {
+                                CommonAlertDialog.getInstanceCommonAlertdialog(
+                                    this@MainActivity,
+                                    TYPE_DIALOG.NOT_FOUND
+                                )
+                                    .showDialog()
+                                    .setDialogTitle(R.string.general_error)
+                                    .setTextOkButton(R.string.confirm_block_alert)
+                                    .setOnOkButtonPressed {
+                                        it.dismiss()
+                                    }
+                            } else {
+                                RMCommonAlertDialog.getInstanceCommonAlertdialog(
+                                    this@MainActivity,
+                                    TYPE_DIALOG.NOT_FOUND
+                                )
+                                    .showDialog()
+                                    .setDialogTitle(R.string.general_error)
+                                    .setTextPositiveSmallButton(R.string.confirm_block_alert)
+                                    .setOnPositiveSmallPressed {
+                                        it.dismiss()
+                                    }
+                            }
                             networkEvent.publish(NetworkState.INITIALIZE)
                         }
+
                         is NetworkState.GENERIC -> {
                             val currentFragment: Fragment =
                                 navHostFragment.childFragmentManager.fragments[0]

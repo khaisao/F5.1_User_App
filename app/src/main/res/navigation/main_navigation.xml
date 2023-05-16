@@ -364,14 +364,7 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_ChatMessage_to_ReviewConsultant"
-            app:destination="@id/reviewConsultant"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpToInclusive="true" />
+
         <action
             android:id="@+id/action_chatMessageFragment_to_liveStreamFragment"
             app:destination="@id/liveStreamFragment"
@@ -388,11 +381,6 @@
         app:exitAnim="@anim/slide_out_right"
         app:popEnterAnim="@anim/slide_in_right"
         app:popExitAnim="@anim/slide_out_left" />
-
-    <fragment
-        android:id="@+id/reviewConsultant"
-        android:name="jp.careapp.counseling.android.ui.reviewConsultant.ReviewConsultantFragment"
-        android:label="ReviewConsultantFragment" />
 
     <action
         android:id="@+id/action_MainActivity_to_ChatMessage"
