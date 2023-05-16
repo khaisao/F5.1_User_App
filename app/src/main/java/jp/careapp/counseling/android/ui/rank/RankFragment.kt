@@ -16,6 +16,7 @@ import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.databinding.RankFragmentBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -70,6 +71,13 @@ class RankFragment : BaseFragment<RankFragmentBinding, RankViewModel>() {
         shareViewModel.isShowRankLoading.observe(viewLifecycleOwner) {
             showHideLoading(it)
         }
+
+        lifecycleScope.launch {
+            viewModel.positionTabLayout.collect {
+                setUpViewTabLayout(it)
+            }
+        }
+
     }
 
     override fun setOnClick() {
@@ -114,7 +122,7 @@ class RankFragment : BaseFragment<RankFragmentBinding, RankViewModel>() {
                     lifecycleScope.launch(Dispatchers.Main) {
                         forceLoadData(position)
                         delay(150)
-                        setUpViewTabLayout(position)
+                        viewModel.positionTabLayout.value = position
                     }
                 }
 
