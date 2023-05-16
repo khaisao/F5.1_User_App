@@ -16,6 +16,7 @@ import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.utils.BUY_POINT_RM
 import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.customView.ToolBarCommon
+import jp.careapp.counseling.android.utils.formatDecimalSeparator
 import jp.careapp.counseling.databinding.FragmentRmBuyPointBinding
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -51,7 +52,7 @@ class RMBuyPointFragment : BaseFragment<FragmentRmBuyPointBinding, RMBuyPointVie
         super.initView()
         val bundle = arguments
         formatPoint(rxPreferences.getPoint())
-        initAdapter(rxPreferences.getTimeBuy() == 0L)
+        initAdapter()
         if (bundle != null) {
             if (bundle.containsKey(Define.Intent.OPEN_DIRECT_FROM_NOTIFICATION)) {
                 isFromNotification =
@@ -66,7 +67,7 @@ class RMBuyPointFragment : BaseFragment<FragmentRmBuyPointBinding, RMBuyPointVie
         viewModel.connectBilling()
     }
 
-    private fun initAdapter(firstBuy: Boolean) {
+    private fun initAdapter() {
         costPointAdapter = RMPointAdapter(
             viewLifecycleOwner,
             object : RMEventBuyPointAction {
@@ -79,30 +80,22 @@ class RMBuyPointFragment : BaseFragment<FragmentRmBuyPointBinding, RMBuyPointVie
         )
         val item1 = ItemPoint(
             BUY_POINT_RM.FIST_BUY_COIN_1.id,
-            firstBuy,
-            BUY_POINT_RM.FIST_BUY_COIN_1.pointCountFirst,
-            BUY_POINT_RM.FIST_BUY_COIN_1.costFirst,
+            (BUY_POINT_RM.FIST_BUY_COIN_1.pointCount + BUY_POINT_RM.FIST_BUY_COIN_1.pointBonus).formatDecimalSeparator(),
             BUY_POINT_RM.FIST_BUY_COIN_1.money
         )
         val item2 = ItemPoint(
             BUY_POINT_RM.FIST_BUY_COIN_2.id,
-            firstBuy,
-            BUY_POINT_RM.FIST_BUY_COIN_2.pointCountFirst,
-            BUY_POINT_RM.FIST_BUY_COIN_2.costFirst,
+            (BUY_POINT_RM.FIST_BUY_COIN_2.pointCount + BUY_POINT_RM.FIST_BUY_COIN_2.pointBonus).formatDecimalSeparator(),
             BUY_POINT_RM.FIST_BUY_COIN_2.money
         )
         val item3 = ItemPoint(
             BUY_POINT_RM.FIST_BUY_COIN_3.id,
-            firstBuy,
-            BUY_POINT_RM.FIST_BUY_COIN_3.pointCountFirst,
-            BUY_POINT_RM.FIST_BUY_COIN_3.costFirst,
+            (BUY_POINT_RM.FIST_BUY_COIN_3.pointCount + BUY_POINT_RM.FIST_BUY_COIN_3.pointBonus).formatDecimalSeparator(),
             BUY_POINT_RM.FIST_BUY_COIN_3.money
         )
         val item4 = ItemPoint(
             BUY_POINT_RM.FIST_BUY_COIN_4.id,
-            firstBuy,
-            BUY_POINT_RM.FIST_BUY_COIN_4.pointCountFirst,
-            BUY_POINT_RM.FIST_BUY_COIN_4.costFirst,
+            (BUY_POINT_RM.FIST_BUY_COIN_4.pointCount + BUY_POINT_RM.FIST_BUY_COIN_4.pointBonus).formatDecimalSeparator(),
             BUY_POINT_RM.FIST_BUY_COIN_4.money
         )
         costPointAdapter.submitList(listOf(item1, item2, item3, item4))
@@ -117,7 +110,7 @@ class RMBuyPointFragment : BaseFragment<FragmentRmBuyPointBinding, RMBuyPointVie
 
     private var handleBuyPointResult: Observer<Boolean> = Observer {
         if (it) {
-            initAdapter(false)
+            initAdapter()
             RMCommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
                 .showDialog()
                 .setDialogTitle(R.string.buy_point_suscess)

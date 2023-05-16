@@ -67,7 +67,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_11"
                             app:hl_cornerRadius="@dimen/margin_10"
-                            app:hl_shadowBackColor="@color/color_background_common"
+                            app:hl_layoutBackground="@color/color_background_common"
                             app:hl_shadowColor="#80FF3FEE"
                             app:hl_shadowLimit="@dimen/margin_13"
                             app:layout_constraintEnd_toEndOf="parent"
