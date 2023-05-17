@@ -1,18 +1,14 @@
 package jp.careapp.counseling.android.ui.message
 
-import android.Manifest
-import android.content.Intent
 import android.graphics.Rect
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.text.TextUtils
 import android.view.View
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.WindowManager
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -36,7 +32,12 @@ import jp.careapp.core.utils.loadImage
 import jp.careapp.core.utils.setMargins
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.live_stream.ConnectResult
-import jp.careapp.counseling.android.data.model.message.*
+import jp.careapp.counseling.android.data.model.message.BaseMessageResponse
+import jp.careapp.counseling.android.data.model.message.DataMessage
+import jp.careapp.counseling.android.data.model.message.FreeTemplateRequest
+import jp.careapp.counseling.android.data.model.message.MessageRequest
+import jp.careapp.counseling.android.data.model.message.MessageResponse
+import jp.careapp.counseling.android.data.model.message.SendMessageResponse
 import jp.careapp.counseling.android.data.network.ConsultantResponse
 import jp.careapp.counseling.android.data.network.FreeTemplateResponse
 import jp.careapp.counseling.android.data.network.MemberResponse
@@ -62,7 +63,6 @@ import jp.careapp.counseling.android.utils.CallRestriction
 import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.Define.Companion.BUY_POINT_CHAT_MESSAGE
 import jp.careapp.counseling.android.utils.SocketInfo
-import jp.careapp.counseling.android.utils.extensions.hasPermissions
 import jp.careapp.counseling.android.utils.extensions.toPayLength
 import jp.careapp.counseling.android.utils.extensions.toPayPoint
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatus
@@ -187,14 +187,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     }
 
     private var templateMessageBottom: TemplateBottomFragment? = null
-
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            checkPoint()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -415,17 +407,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
         binding.llWatchLiveStream.setOnClickListener {
             if (!isDoubleClick) {
-                when {
-                    hasPermissions(arrayOf(Manifest.permission.RECORD_AUDIO)) -> {
-                        checkPoint()
-                    }
-                    shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO) -> {
-                        showDialogNeedMicrophonePermission()
-                    }
-                    else -> {
-                        showDialogRequestMicrophonePermission()
-                    }
-                }
+                checkPoint()
                 viewerType = 0
                 viewModel.viewerStatus = 0
             }
@@ -433,9 +415,9 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
         binding.llPeep.setOnClickListener {
             if (!isDoubleClick) {
+                checkPointForPeep()
                 viewerType = 1
                 viewModel.viewerStatus = 1
-                checkPointForPeep()
             }
         }
     }
@@ -481,37 +463,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         } else {
             showDialogConfirmCall()
         }
-    }
-
-    private fun showDialogRequestMicrophonePermission() {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-            .showDialog()
-            .setDialogTitle(R.string.msg_title_request_mic)
-            .setContent(R.string.msg_explain_request_mic)
-            .setTextPositiveButton(R.string.accept_permission)
-            .setTextNegativeButton(R.string.denied_permission)
-            .setOnPositivePressed {
-                requestPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
-                it.dismiss()
-            }.setOnNegativePressed {
-                it.dismiss()
-            }
-    }
-
-    private fun showDialogNeedMicrophonePermission() {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-            .showDialog()
-            .setDialogTitle(R.string.msg_need_mic_permission)
-            .setTextPositiveButton(R.string.setting)
-            .setTextNegativeButton(R.string.cancel)
-            .setOnPositivePressed {
-                startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                    data = Uri.fromParts("package", context?.packageName, null)
-                })
-                it.dismiss()
-            }.setOnNegativePressed {
-                it.dismiss()
-            }
     }
 
     private fun showDialogRequestBuyPoint() {

@@ -1,8 +1,11 @@
 package jp.careapp.counseling.android.network.socket
 
-import android.app.Activity
+import android.content.Context
 import jp.careapp.counseling.android.data.network.FlaxLoginAuthResponse
+import jp.careapp.counseling.android.utils.SocketInfo.AUDIO_KIND
+import jp.careapp.counseling.android.utils.SocketInfo.KEY_KIND
 import jp.careapp.counseling.android.utils.SocketInfo.KEY_SESSION_CODE
+import jp.careapp.counseling.android.utils.SocketInfo.VIDEO_KIND
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,6 +16,7 @@ import org.marge.marucast_android_client.event.LoginEvent
 import org.marge.marucast_android_client.media.CameraPosition
 import org.marge.marucast_android_client.models.Config
 import org.marge.marucast_android_client.models.PresenterRoom
+import org.marge.marucast_android_client.models.Resolution
 import org.marge.marucast_android_client.views.VideoRendererView
 import timber.log.Timber
 import javax.inject.Inject
@@ -22,20 +26,25 @@ import javax.inject.Singleton
 class MaruCastManager @Inject constructor(
     private val mediaClient: MediaClient
 ) : LoginEvent {
-    private var activity: Activity? = null
+    private var isLiveStreamOn: Boolean = false
     private var isPublishing = false
     private var isRoomExists = false
-    private var loginCallBack: CallingWebSocketClient.MaruCastLoginCallBack? = null
+    private var isAudioTrackReady = false
+    private var isVideoTrackReady = false
+    private var callBack: CallingWebSocketClient.MaruCastCallBack? = null
     private var switchViewerCallback: SwitchViewerCallback? = null
     private var flaxLoginAuthResponse: FlaxLoginAuthResponse? = null
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
-    fun setLoginCallBack(callBack: CallingWebSocketClient.MaruCastLoginCallBack?) {
-        this.loginCallBack = callBack
+    fun setCallBack(callBack: CallingWebSocketClient.MaruCastCallBack?) {
+        this.callBack = callBack
     }
 
-    fun removeLoginCallBack() {
-        loginCallBack = null
+    fun setLiveStreamStateOn(isOn: Boolean) {
+        this.isLiveStreamOn = isOn
+    }
+
+    fun removeCallBack() {
+        callBack = null
     }
 
     fun setSwitchViewerCallBack(callBack: SwitchViewerCallback?) {
@@ -46,45 +55,29 @@ class MaruCastManager @Inject constructor(
         switchViewerCallback = null
     }
 
-    fun connectServer(flaxLoginAuthResponse: FlaxLoginAuthResponse) {
+    fun loginRoom(flaxLoginAuthResponse: FlaxLoginAuthResponse, context: Context?) {
         this.flaxLoginAuthResponse = flaxLoginAuthResponse
-        try {
-            setMediaClientEventListener()
-            mediaClient.connectServer(
-                flaxLoginAuthResponse.mediaServerOwnerCode,
-                flaxLoginAuthResponse.mediaServer
-            )
-        } catch (e: Exception) {
-            Timber.e("サーバーへの接続に失敗しました$e")
-        }
-    }
-
-    fun logoutRoom() {
-        //To handler log out when performer log out livestream
-        try {
-            if (!isRoomExists) return
-            mediaClient.logoutRoom()
-        } catch (e: Exception) {
-        }
-    }
-
-    fun handleConnected(activity: Activity?) {
-        this.activity = activity
+        this.isAudioTrackReady = false
+        this.isVideoTrackReady = false
 
         // マルキャスコンフィグの設定
         val config = Config.Builder(true, true)
             .isCamera2(true)
             .cameraPosition(CameraPosition.FRONT)
+            .videoResolution(Resolution.QVGA)
             .build()
         // セッションの初期化処理を行う
         try {
-            mediaClient.initSession(config, this.activity)
+            setMediaClientEventListener()
+            mediaClient.initSession(config, context)
             val customUserData = JSONObject()
-            customUserData.put(KEY_SESSION_CODE, flaxLoginAuthResponse!!.sessionCode)
+            customUserData.put(KEY_SESSION_CODE, flaxLoginAuthResponse.sessionCode)
             mediaClient.loginRoom(
-                flaxLoginAuthResponse!!.mediaServerOwnerCode,
-                flaxLoginAuthResponse!!.performerCode,
-                flaxLoginAuthResponse!!.memberCode,
+                this.flaxLoginAuthResponse!!.mediaServerOwnerCode,
+                this.flaxLoginAuthResponse!!.performerCode,
+                this.flaxLoginAuthResponse!!.memberCode,
+                null,
+                flaxLoginAuthResponse.mediaServer,
                 false,
                 customUserData,
                 this
@@ -92,6 +85,16 @@ class MaruCastManager @Inject constructor(
         } catch (ex: java.lang.Exception) {
             Timber.e("" + ex)
         }
+    }
+
+    fun logoutRoom() {
+        if (!isRoomExists) return
+        try {
+            mediaClient.logoutRoom()
+        } catch (ie: IllegalStateException) {
+            Timber.e("already logout")
+        }
+        setRoomExists(true)
     }
 
     fun switchCamera() {
@@ -107,29 +110,50 @@ class MaruCastManager @Inject constructor(
     }
 
     private fun setMediaClientEventListener() {
-        mediaClient.setMediaEventListener { mediaEvent: String?, _: Any? ->
+        mediaClient.setMediaEventListener { mediaEvent: String?, data: Any? ->
             when (mediaEvent) {
-                Event.ON_CONNECT ->
-                    // 接続に成功
-                    loginCallBack!!.loginSuccess()
-                else -> Timber.i(mediaEvent!!)
+                Event.ON_REMOTE_TRACK_READY -> {
+                    try {
+                        val json = JSONObject(data.toString())
+                        val kind = json.getString(KEY_KIND)
+
+                        if (kind == VIDEO_KIND) isVideoTrackReady = true
+                        else if (kind == AUDIO_KIND) isAudioTrackReady = true
+
+                        if (!isVideoTrackReady || !isAudioTrackReady) return@setMediaEventListener
+
+                        callBack!!.remoteTrackCompleted()
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                else -> Timber.i(mediaEvent)
             }
         }
     }
 
-    fun publishStream() {
-        if (activity == null) return
-        activity?.runOnUiThread {
-            mediaClient.publishStream(activity?.baseContext, switchViewerCallback?.getViewerView())
+    fun publishStream(context: Context?) {
+        if (!isLiveStreamOn) return
+        CoroutineScope((Dispatchers.Main)).launch {
+            mediaClient.publishStream(context, switchViewerCallback?.getViewerView())
             isPublishing = true
             switchViewerCallback?.onSwitchViewerGroupVisible(true)
         }
     }
 
+    fun playStream(rendererView: VideoRendererView?) {
+        try {
+            mediaClient.playStream(rendererView)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
     fun stopPublish() {
-        if (activity == null || !isPublishing) return
+        if (!isLiveStreamOn || !isPublishing) return
         Timber.i("すとっぷぱぶりっしゅ")
-        activity!!.runOnUiThread {
+        CoroutineScope((Dispatchers.Main)).launch {
             try {
                 mediaClient.stopPublish()
                 isPublishing = false
@@ -168,15 +192,9 @@ class MaruCastManager @Inject constructor(
     override fun onLoginSuccess(presenterRoom: PresenterRoom) {
         Timber.i("ろぐいんせいこう")
         setRoomExists(true)
-        coroutineScope.launch {
-            mediaClient.playStream(switchViewerCallback?.getPresenterView())
-        }
     }
 
     override fun onLoginFailure(s: String) {
-        coroutineScope.launch {
-            switchViewerCallback?.getPresenterView()?.release()
-        }
     }
 
     interface SwitchViewerCallback {

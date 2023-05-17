@@ -1,6 +1,7 @@
 package jp.careapp.counseling.android.ui.message
 
 import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
@@ -50,24 +51,25 @@ class ChatMessageViewModel @ViewModelInject constructor(
     private val rxPreferences: RxPreferences,
     private val flaxWebSocketManager: FlaxWebSocketManager,
     private val maruCastManager: MaruCastManager,
+    private val application: Application
 ) : BaseViewModel(), CallingWebSocketClient.ChatWebSocketCallBack,
-    CallingWebSocketClient.MaruCastLoginCallBack {
+    CallingWebSocketClient.MaruCastCallBack {
     var page = 1
 
-    // result handle show/hide/disable loadmore
+    // result handle show/hide/disable LoadMore
     var hiddenLoadMoreHandle = MutableLiveData<Int>()
 
     // result list message
     var messageResult = MutableLiveData<DataMessage>()
 
-    // user detail info chating
+    // user detail info chatting
     val userProfileResult = MutableLiveData<ConsultantResponse>()
 
     // result when send 1 message
     val sendMessageResult = MutableLiveData<SendMessageResponse?>()
     var subtractPoint = MutableLiveData<Boolean>()
 
-    // listten result of socket
+    // listen result of socket
     val responseSocket = MutableLiveData<SocketActionSend>()
 
     // result load info of self when update point
@@ -76,7 +78,7 @@ class ChatMessageViewModel @ViewModelInject constructor(
     // result when first send message,if send first success,remove first message
     val isCloseFirstMessageInLocal = MutableLiveData<Boolean>()
 
-    // hash map contain list message fillter to date
+    // hash map contain list message filter to date
     var dataMessageMap = LinkedHashMap<String, MutableList<BaseMessageResponse>>()
 
     var openPayMessageResult = MutableLiveData<SendMessageResponse>()
@@ -641,11 +643,11 @@ class ChatMessageViewModel @ViewModelInject constructor(
             message.getString(SocketInfo.KEY_PERFORMER_THUMB_IMAGE),
             message.getInt(BUNDLE_KEY.STATUS)
         )
-        maruCastManager.setLoginCallBack(this)
-        maruCastManager.connectServer(flaxLoginAuthResponse!!)
+        maruCastManager.setCallBack(this)
+        maruCastManager.loginRoom(flaxLoginAuthResponse!!, application.applicationContext)
     }
 
-    override fun loginSuccess() {
+    override fun remoteTrackCompleted() {
         isButtonEnable.postValue(true)
         isLoginSuccess.postValue(true)
         rxPreferences.setCallToken("")

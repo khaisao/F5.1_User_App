@@ -1,15 +1,12 @@
 package jp.careapp.counseling.android.ui.review_mode.live_stream
 
-import android.app.Activity
 import android.app.Application
 import android.media.AudioManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
-import jp.careapp.core.utils.SingleLiveEvent
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.live_stream.ConnectResult
 import jp.careapp.counseling.android.data.network.FlaxLoginAuthResponse
@@ -18,8 +15,6 @@ import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.network.socket.CallingWebSocketClient
 import jp.careapp.counseling.android.network.socket.FlaxWebSocketManager
 import jp.careapp.counseling.android.network.socket.MaruCastManager
-import jp.careapp.counseling.android.ui.live_stream.LiveStreamActionState
-import jp.careapp.counseling.android.ui.live_stream.LiveStreamRepository
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.SocketInfo
@@ -28,12 +23,12 @@ import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import org.marge.marucast_android_client.views.VideoRendererView
 import javax.inject.Inject
 
 @HiltViewModel
 class RMLiveStreamViewModel @Inject constructor(
     private val application: Application,
-    private val mRepository: LiveStreamRepository,
     private val flaxWebSocketManager: FlaxWebSocketManager,
     private val maruCastManager: MaruCastManager,
     private val audioManager: AudioManager,
@@ -58,14 +53,10 @@ class RMLiveStreamViewModel @Inject constructor(
     val viewerStatus: LiveData<Int>
         get() = _viewerStatus
 
-    val mActionState = SingleLiveEvent<LiveStreamActionState>()
-
     private var isLogout = false
     private var oldAudioMode = 0
     private var oldSpeakerPhone = false
 
-
-    private val gson by lazy { Gson() }
     private var flaxLoginAuthResponse: FlaxLoginAuthResponse? = null
 
     private var isMicMute = false
@@ -125,6 +116,7 @@ class RMLiveStreamViewModel @Inject constructor(
     fun logout() {
         audioManager.mode = oldAudioMode
         audioManager.isSpeakerphoneOn = oldSpeakerPhone
+        maruCastManager.setLiveStreamStateOn(false)
         maruCastManager.logoutRoom()
         flaxWebSocketManager.flaxLogout()
     }
@@ -133,10 +125,11 @@ class RMLiveStreamViewModel @Inject constructor(
         flaxWebSocketManager.privateModeCancel()
     }
 
-    fun handleConnect(activity: Activity, callBack: MaruCastManager.SwitchViewerCallback?) {
-        maruCastManager.removeLoginCallBack()
+    fun handleConnect(rendererView: VideoRendererView?, callBack: MaruCastManager.SwitchViewerCallback?) {
+        maruCastManager.removeCallBack()
         maruCastManager.setSwitchViewerCallBack(callBack)
-        maruCastManager.handleConnected(activity)
+        maruCastManager.setLiveStreamStateOn(true)
+        maruCastManager.playStream(rendererView)
     }
 
     fun setAudioConfig(audioMode: Int, isSpeakerPhoneOn: Boolean) {

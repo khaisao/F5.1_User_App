@@ -151,11 +151,7 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
         binding.toolBar.setOnToolBarClickListener(object : ToolBarCommon.OnToolBarClickListener() {
             override fun onClickLeft() {
                 super.onClickLeft()
-                if (binding.webView.canGoBack()) {
-                    binding.webView.goBack()
-                } else {
-                    appNavigation.navigateUp()
-                }
+                appNavigation.navigateUp()
             }
 
             override fun onClickRight() {

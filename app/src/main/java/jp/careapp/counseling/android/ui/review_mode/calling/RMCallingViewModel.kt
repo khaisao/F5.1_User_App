@@ -13,7 +13,6 @@ import jp.careapp.counseling.BuildConfig
 import jp.careapp.counseling.android.data.model.live_stream.ConnectResult
 import jp.careapp.counseling.android.data.network.FlaxLoginAuthResponse
 import jp.careapp.counseling.android.data.network.FssMemberAuthResponse
-import jp.careapp.counseling.android.data.network.socket.SocketSendMessage
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.network.ApiInterface
 import jp.careapp.counseling.android.network.socket.CallingWebSocketClient
@@ -47,12 +46,12 @@ class RMCallingViewModel @Inject constructor(
     private val maruCastManager: MaruCastManager,
 
     ) : BaseViewModel(), CallingWebSocketClient.ChatWebSocketCallBack,
-    CallingWebSocketClient.MaruCastLoginCallBack {
+    CallingWebSocketClient.MaruCastCallBack {
     val actionState = SingleLiveEvent<jp.careapp.counseling.android.utils.ActionState>()
 
     var userCode: String = ""
 
-    val isButtonEnable = MutableLiveData<Boolean>()
+    private val isButtonEnable = MutableLiveData<Boolean>()
     val isLoginSuccess = MutableLiveData(false)
     val connectResult = MutableLiveData<ConnectResult>()
     private var cancelButtonClickedFlag = false
@@ -201,11 +200,11 @@ class RMCallingViewModel @Inject constructor(
             message.getString(SocketInfo.KEY_PERFORMER_THUMB_IMAGE),
             message.getInt(BUNDLE_KEY.STATUS)
         )
-        maruCastManager.setLoginCallBack(this)
-        maruCastManager.connectServer(flaxLoginAuthResponse!!)
+        maruCastManager.setCallBack(this)
+        maruCastManager.loginRoom(flaxLoginAuthResponse!!, application.applicationContext)
     }
 
-    override fun loginSuccess() {
+    override fun remoteTrackCompleted() {
         isButtonEnable.postValue(true)
         isLoginSuccess.postValue(true)
         rxPreferences.setCallToken("")

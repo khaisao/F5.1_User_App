@@ -49,6 +49,7 @@ import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companio
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.TWO_SHOT_VALUE_2
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.UI_BUY_POINT
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.UI_DISMISS_PRIVATE_MODE
+import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.UI_OTHER_USER_REQUEST
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.UI_SHOW_CONFIRM_CLOSE_PRIVATE_MODE
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.UI_SHOW_WAITING_PRIVATE_MODE
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.buy_point.PurchasePointBottomSheet
@@ -144,9 +145,15 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             PermissionUtils.PermissionState.Denied -> {
                 binding.btnVideoMic.isEnabled = false
             }
+
             PermissionUtils.PermissionState.Granted -> {
-                showLiveStreamConfirmBottomSheet(PREMIUM_PRIVATE_MODE_REGISTER, this)
+                if (currentMode != LiveStreamMode.PREMIUM_PRIVATE) {
+                    mViewModel.updateMode(PREMIUM_PRIVATE)
+                    currentMode = LiveStreamMode.PREMIUM_PRIVATE
+                    updateModeStatus()
+                }
             }
+
             PermissionUtils.PermissionState.PermanentlyDenied -> {
                 binding.btnVideoMic.isEnabled = false
             }
@@ -237,7 +244,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         mAdapter = LiveStreamAdapter()
         binding.rcvCommentList.adapter = mAdapter
 
-        mViewModel.handleConnect(requireActivity(), this)
+        mViewModel.handleConnect(binding.performerView, this)
 
         updateModeStatus()
 
@@ -320,12 +327,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         binding.btnVideoMic.setOnClickListener {
             if (!isDoubleClick) {
                 if (currentMode == LiveStreamMode.PRIVATE) {
-                    cameraAndAudioPermissionLauncher.launchMultiplePermission(
-                        arrayOf(
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.RECORD_AUDIO
-                        )
-                    )
+                    showLiveStreamConfirmBottomSheet(PREMIUM_PRIVATE_MODE_REGISTER, this)
                 } else if (currentMode == LiveStreamMode.PREMIUM_PRIVATE) {
                     CameraMicroSwitchBottomSheet.newInstance(
                         mViewModel.isMicMute(),
@@ -368,6 +370,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                         xDown = event.x
                         yDown = event.y
                     }
+
                     MotionEvent.ACTION_MOVE -> {
                         val moveX = event.x
                         val moveY = event.y
@@ -422,13 +425,20 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 UI_DISMISS_PRIVATE_MODE -> {
                     dismissPrivateModeConnectionBottomSheet()
                 }
+
                 UI_SHOW_CONFIRM_CLOSE_PRIVATE_MODE -> {
                     dismissPrivateModeConnectionBottomSheet()
                     showPrivateModeDenied()
                 }
+
                 UI_SHOW_WAITING_PRIVATE_MODE -> {
                     showPrivateModeRequest()
                 }
+
+                UI_OTHER_USER_REQUEST -> {
+                    showErrorDialog(getString(R.string.other_member_requested))
+                }
+
                 UI_BUY_POINT -> {
 
                 }
@@ -480,10 +490,12 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 PointState.PointUnder1000 -> {
                     showPointPurchaseBottomSheet(Define.INSU_POINT)
                 }
+
                 PointState.PointUnder500 -> {
                     showPointPurchaseBottomSheet(Define.BUY_POINT_UNDER_500)
                     mViewModel.endPointChecking()
                 }
+
                 else -> {}
             }
         }
@@ -515,6 +527,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 binding.groupAllBtn.visibility = GONE
                 binding.groupButtonPeepingMode.visibility = VISIBLE
             }
+
             LiveStreamMode.PARTY -> {
                 binding.llItemPeeping.visibility = GONE
                 binding.llItemPremiumPrivate.visibility = GONE
@@ -526,6 +539,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 dismissBottomSheet(PREMIUM_PRIVATE_MODE_REGISTER)
                 dismissBottomSheet(CHANGE_TO_PARTY_MODE)
             }
+
             LiveStreamMode.PRIVATE -> {
                 binding.llItemPeeping.visibility = GONE
                 binding.llItemPremiumPrivate.visibility = GONE
@@ -534,6 +548,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 binding.groupAllBtn.visibility = GONE
                 binding.groupButtonPrivateMode.visibility = VISIBLE
             }
+
             LiveStreamMode.PREMIUM_PRIVATE -> {
                 binding.llItemPeeping.visibility = GONE
                 binding.llItemParty.visibility = GONE
@@ -670,11 +685,12 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     override fun onClickButtonOKConfirmBottomSheet(mode: String) {
         when (mode) {
             PREMIUM_PRIVATE_MODE_REGISTER -> {
-                if (currentMode != LiveStreamMode.PREMIUM_PRIVATE) {
-                    mViewModel.updateMode(PREMIUM_PRIVATE)
-                    currentMode = LiveStreamMode.PREMIUM_PRIVATE
-                    updateModeStatus()
-                }
+                cameraAndAudioPermissionLauncher.launchMultiplePermission(
+                    arrayOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.RECORD_AUDIO
+                    )
+                )
             }
 
             PRIVATE_MODE_REGISTER -> {

@@ -1,6 +1,9 @@
 package jp.careapp.counseling.android.network.socket
 
+import jp.careapp.counseling.android.utils.Define.Companion.FLAX_STATUS_PREMIUM_PRIVATE
+import jp.careapp.counseling.android.utils.Define.Companion.FLAX_STATUS_PRIVATE
 import jp.careapp.counseling.android.utils.SocketInfo
+import jp.careapp.counseling.android.utils.SocketInfo.ACTION_CHANGE_TWO_SHOT_STATUS
 import jp.careapp.counseling.android.utils.SocketInfo.KEY_ACTION
 import jp.careapp.counseling.android.utils.SocketInfo.KEY_COLOR
 import jp.careapp.counseling.android.utils.SocketInfo.KEY_MESSAGE_TYPE
@@ -81,7 +84,7 @@ class FlaxWebSocketManager @Inject constructor() {
         try {
             val json = JSONObject()
             json.put(KEY_ACTION, SocketInfo.ACTION_TWO_SHOT_REQUEST)
-            json.put(KEY_SHOT_STATUS, 1)
+            json.put(KEY_SHOT_STATUS, FLAX_STATUS_PRIVATE)
             socketClient?.sendMessage(json.toString())
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -92,7 +95,7 @@ class FlaxWebSocketManager @Inject constructor() {
         try {
             val json = JSONObject()
             json.put(KEY_ACTION, SocketInfo.ACTION_CANCEL_TWO_SHOT)
-            json.put(KEY_SHOT_STATUS, 1)
+            json.put(KEY_SHOT_STATUS, FLAX_STATUS_PRIVATE)
             socketClient?.sendMessage(json.toString())
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -103,6 +106,17 @@ class FlaxWebSocketManager @Inject constructor() {
         try {
             val json = JSONObject()
             json.put(KEY_ACTION, SocketInfo.ACTION_DESTROY_TWO_SHOT)
+            socketClient?.sendMessage(json.toString())
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+    }
+
+    fun premiumPrivateModeInvitation() {
+        val json = JSONObject()
+        try {
+            json.put(KEY_ACTION, ACTION_CHANGE_TWO_SHOT_STATUS)
+            json.put(KEY_SHOT_STATUS, FLAX_STATUS_PREMIUM_PRIVATE)
             socketClient?.sendMessage(json.toString())
         } catch (e: JSONException) {
             e.printStackTrace()
