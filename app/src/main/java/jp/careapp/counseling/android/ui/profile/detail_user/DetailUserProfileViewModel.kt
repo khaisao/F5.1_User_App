@@ -1,6 +1,7 @@
 package jp.careapp.counseling.android.ui.profile.detail_user
 
 import android.app.Activity
+import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -57,8 +58,9 @@ class DetailUserProfileViewModel @ViewModelInject constructor(
     private val rxPreferences: RxPreferences,
     private val flaxWebSocketManager: FlaxWebSocketManager,
     private val maruCastManager: MaruCastManager,
+    private val application: Application
 ) : BaseViewModel(), CallingWebSocketClient.ChatWebSocketCallBack,
-    CallingWebSocketClient.MaruCastLoginCallBack {
+    CallingWebSocketClient.MaruCastCallBack {
     val userProfileResult = MutableLiveData<ConsultantResponse?>()
     val userGallery = MutableLiveData<List<GalleryResponse>?>()
     val statusFavorite = MutableLiveData<Boolean>()
@@ -306,11 +308,11 @@ class DetailUserProfileViewModel @ViewModelInject constructor(
             message.getString(KEY_PERFORMER_THUMB_IMAGE),
             message.getInt(STATUS)
         )
-        maruCastManager.setLoginCallBack(this)
-        maruCastManager.connectServer(flaxLoginAuthResponse!!)
+        maruCastManager.setCallBack(this)
+        maruCastManager.loginRoom(flaxLoginAuthResponse!!, application.applicationContext)
     }
 
-    override fun loginSuccess() {
+    override fun remoteTrackCompleted() {
         isButtonEnable.postValue(true)
         isLoginSuccess.postValue(true)
         rxPreferences.setCallToken("")

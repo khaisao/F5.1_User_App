@@ -107,7 +107,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
                     this
                 ).show(childFragmentManager, "CameraMicroSwitchBottomSheet")
                 if (!mViewModel.isMicMute() && !mViewModel.isCameraMute()) {
-                    maruCastManager.publishStream()
+                    maruCastManager.publishStream(requireContext())
                     binding.clMemberCamera.visibility = View.VISIBLE
                 }
             }
@@ -218,7 +218,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
         binding.performerView.layoutParams.height =
             getScreenHeightWithNavigationBar(requireActivity())
 
-        mViewModel.handleConnect(requireActivity(), this)
+        mViewModel.handleConnect(binding.performerView, this)
 
         updateModeStatus()
 

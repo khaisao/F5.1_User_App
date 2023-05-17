@@ -107,8 +107,8 @@ class CallingWebSocketClient {
         fun onHandleMessage(jsonMessage: JSONObject)
     }
 
-    interface MaruCastLoginCallBack {
-        fun loginSuccess()
+    interface MaruCastCallBack {
+        fun remoteTrackCompleted()
     }
 
     interface WhisperEventListener : EventListener {

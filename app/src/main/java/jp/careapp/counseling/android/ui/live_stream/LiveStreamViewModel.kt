@@ -1,6 +1,5 @@
 package jp.careapp.counseling.android.ui.live_stream
 
-import android.app.Activity
 import android.app.Application
 import android.media.AudioManager
 import androidx.lifecycle.LiveData
@@ -43,6 +42,7 @@ import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import org.marge.marucast_android_client.views.VideoRendererView
 import javax.inject.Inject
 
 @HiltViewModel
@@ -151,7 +151,8 @@ class LiveStreamViewModel @Inject constructor(
                 privateModeCancel()
             }
             PREMIUM_PRIVATE -> {
-                maruCastManager.publishStream()
+                flaxWebSocketManager.premiumPrivateModeInvitation()
+                maruCastManager.publishStream(application.baseContext)
             }
             BUY_POINT -> {
                 _updateUIMode.postValue(UI_BUY_POINT)
@@ -166,6 +167,7 @@ class LiveStreamViewModel @Inject constructor(
     fun logout() {
         audioManager.mode = oldAudioMode
         audioManager.isSpeakerphoneOn = oldSpeakerPhone
+        maruCastManager.setLiveStreamStateOn(false)
         maruCastManager.logoutRoom()
         flaxWebSocketManager.flaxLogout()
     }
@@ -174,10 +176,11 @@ class LiveStreamViewModel @Inject constructor(
         flaxWebSocketManager.privateModeCancel()
     }
 
-    fun handleConnect(activity: Activity, callBack: MaruCastManager.SwitchViewerCallback?) {
-        maruCastManager.removeLoginCallBack()
+    fun handleConnect(rendererView: VideoRendererView?, callBack: MaruCastManager.SwitchViewerCallback?) {
+        maruCastManager.removeCallBack()
         maruCastManager.setSwitchViewerCallBack(callBack)
-        maruCastManager.handleConnected(activity)
+        maruCastManager.setLiveStreamStateOn(true)
+        maruCastManager.playStream(rendererView)
     }
 
     fun setAudioConfig(audioMode: Int, isSpeakerPhoneOn: Boolean) {
@@ -301,6 +304,8 @@ class LiveStreamViewModel @Inject constructor(
                     val newTwoShotValue: String = jsonMessage.getString(KEY_TWO_SHOT)
                     if (newTwoShotValue == TWO_SHOT_VALUE_2) {
                         _updateUIMode.postValue(UI_DISMISS_PRIVATE_MODE)
+                    } else if (newTwoShotValue == TWO_SHOT_VALUE_11) {
+                        _updateUIMode.postValue(UI_OTHER_USER_REQUEST)
                     } else if (newTwoShotValue == TWO_SHOT_VALUE_0 && _twoShot.value == TWO_SHOT_VALUE_2) {
                         _connectResult.postValue(
                             ConnectResult(
@@ -316,7 +321,7 @@ class LiveStreamViewModel @Inject constructor(
                 if (!jsonMessage.has(KEY_TWO_SHOT_CANCEL) && jsonMessage.has(KEY_TWO_SHOT_CANCEL_2)
                     && jsonMessage.getString(KEY_TWO_SHOT_CANCEL_2) == PERFORMER
                 ) {
-                    _updateUIMode.postValue(UI_SHOW_CONFIRM_CLOSE_PRIVATE_MODE) // TODO Dismiss & show confirm dialog
+                    _updateUIMode.postValue(UI_SHOW_CONFIRM_CLOSE_PRIVATE_MODE)
                 }
             }
         } catch (e: JSONException) {
@@ -327,12 +332,14 @@ class LiveStreamViewModel @Inject constructor(
     companion object {
         const val TWO_SHOT_VALUE_0 = "0"
         const val TWO_SHOT_VALUE_2 = "2"
+        const val TWO_SHOT_VALUE_11 = "11"
 
         const val UI_NORMAL_MODE = 0
         const val UI_DISMISS_PRIVATE_MODE = 1
         const val UI_SHOW_CONFIRM_CLOSE_PRIVATE_MODE = 2
         const val UI_SHOW_WAITING_PRIVATE_MODE = 3
         const val UI_BUY_POINT = 4
+        const val UI_OTHER_USER_REQUEST = 5
 
         // MODE
         const val PARTY = 0
@@ -341,13 +348,6 @@ class LiveStreamViewModel @Inject constructor(
         const val PREMIUM_PRIVATE = 30
         const val BUY_POINT = 20
     }
-}
-
-sealed class LiveStreamActionState {
-    object ChangeToPremiumPrivateFromPrivate : LiveStreamActionState()
-    object OpenBottomSheetSettingCameraAndMic : LiveStreamActionState()
-    object EndCall : LiveStreamActionState()
-    object ShowDialogWarningPoint : LiveStreamActionState()
 }
 
 sealed class PointState {

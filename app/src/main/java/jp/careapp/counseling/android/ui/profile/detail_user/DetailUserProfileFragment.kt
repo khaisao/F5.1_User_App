@@ -1,15 +1,10 @@
 package jp.careapp.counseling.android.ui.profile.detail_user
 
-import android.Manifest.permission.RECORD_AUDIO
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewTreeObserver
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -44,7 +39,6 @@ import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.SocketInfo
 import jp.careapp.counseling.android.utils.SocketInfo.RESULT_NG
 import jp.careapp.counseling.android.utils.extensions.getBustSize
-import jp.careapp.counseling.android.utils.extensions.hasPermissions
 import jp.careapp.counseling.android.utils.performer_extension.PerformerRankingHandler
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatus
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler
@@ -90,14 +84,6 @@ class DetailUserProfileFragment :
 
     // item check favorite when first chat
     private var isShowFromUserDisable: Boolean = false
-
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            checkPoint()
-        }
-    }
 
     private lateinit var  galleryAdapter:  GalleryAdapter
 
@@ -213,17 +199,7 @@ class DetailUserProfileFragment :
 
         binding.llCallConsult.setOnClickListener {
             if (!isDoubleClick) {
-                when {
-                    hasPermissions(arrayOf(RECORD_AUDIO)) -> {
-                        checkPoint()
-                    }
-                    shouldShowRequestPermissionRationale(RECORD_AUDIO) -> {
-                        showDialogNeedMicrophonePermission()
-                    }
-                    else -> {
-                        showDialogRequestMicrophonePermission()
-                    }
-                }
+                checkPoint()
                 viewerType = 0
                 viewModel.viewerStatus = 0
             }
@@ -295,37 +271,6 @@ class DetailUserProfileFragment :
         } else {
             showDialogConfirmCall()
         }
-    }
-
-    private fun showDialogRequestMicrophonePermission() {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-            .showDialog()
-            .setDialogTitle(R.string.msg_title_request_mic)
-            .setContent(R.string.msg_explain_request_mic)
-            .setTextPositiveButton(R.string.accept_permission)
-            .setTextNegativeButton(R.string.denied_permission)
-            .setOnPositivePressed {
-                requestPermissionLauncher.launch(RECORD_AUDIO)
-                it.dismiss()
-            }.setOnNegativePressed {
-                it.dismiss()
-            }
-    }
-
-    private fun showDialogNeedMicrophonePermission() {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-            .showDialog()
-            .setDialogTitle(R.string.msg_need_mic_permission)
-            .setTextPositiveButton(R.string.setting)
-            .setTextNegativeButton(R.string.cancel)
-            .setOnPositivePressed {
-                startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                    data = Uri.fromParts("package", context?.packageName, null)
-                })
-                it.dismiss()
-            }.setOnNegativePressed {
-                it.dismiss()
-            }
     }
 
     private fun showDialogRequestBuyPoint() {
@@ -561,7 +506,7 @@ class DetailUserProfileFragment :
         if (it) {
             shareViewModel.isBlockConsultant.value = true
             // open from chat message
-            if (typeScreen.equals(BUNDLE_KEY.CHAT_MESSAGE)) {
+            if (typeScreen == BUNDLE_KEY.CHAT_MESSAGE) {
                 appNavigation.popopBackStackToDetination(R.id.topFragment)
             } else {
                 appNavigation.navigateUp()

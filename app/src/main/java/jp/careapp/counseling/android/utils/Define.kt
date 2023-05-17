@@ -98,6 +98,10 @@ class Define {
 
         // Live stream
         const val KEY_ALIAS = "member_key"
+
+        const val FLAX_STATUS_PRIVATE = 0
+
+        const val FLAX_STATUS_PREMIUM_PRIVATE = 1
     }
 
     class SearchCondition {
@@ -555,11 +559,15 @@ object SocketInfo {
     const val KEY_MESSAGE_TYPE = "messageType"
     const val KEY_MSG = "msg"
     const val KEY_COLOR = "color"
+    const val KEY_KIND = "kind"
+    const val VIDEO_KIND = "video"
+    const val AUDIO_KIND = "audio"
 
     // Action
     const val ACTION_READ = "read"
     const val ACTION_SEND = "send"
     const val ACTION_CHANGE_STATUS = "changeStatus"
+    const val ACTION_CHANGE_TWO_SHOT_STATUS = "ChangeTwoShotStatus"
     const val ACTION_WRITE = "Write"
     const val ACTION_MESSAGE = "message"
     const val ACTION_WHISPER = "Whisper"
