@@ -113,13 +113,16 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     private var initFlipCameraY = 0f
 
     private val cameraChangeVisibilityListener = ViewTreeObserver.OnGlobalLayoutListener {
-        val newVis: Int = binding.memberViewCamera.visibility
-        if (newVis == VISIBLE) {
-            initCameraX = binding.memberViewCamera.x
-            initCameraY = binding.memberViewCamera.y
-            initFlipCameraX = binding.btnCameraFlip.x
-            initFlipCameraY = binding.btnCameraFlip.y
-            removeVisibilityChangeListener()
+        try {
+            val newVis: Int = binding.memberViewCamera.visibility
+            if (newVis == VISIBLE) {
+                initCameraX = binding.memberViewCamera.x
+                initCameraY = binding.memberViewCamera.y
+                initFlipCameraX = binding.btnCameraFlip.x
+                initFlipCameraY = binding.btnCameraFlip.y
+                removeVisibilityChangeListener()
+            }
+        } catch (_: Exception) {
         }
     }
 

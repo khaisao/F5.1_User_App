@@ -151,6 +151,8 @@ class LiveStreamViewModel @Inject constructor(
                 privateModeCancel()
             }
             PREMIUM_PRIVATE -> {
+                updateCameraSetting(false)
+                updateMicSetting(false)
                 flaxWebSocketManager.premiumPrivateModeInvitation()
                 maruCastManager.publishStream(application.baseContext)
             }

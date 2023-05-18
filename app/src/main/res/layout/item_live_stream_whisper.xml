@@ -2,23 +2,31 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:background="@drawable/bg_item_live_stream_comment">
 
+        <ImageView
+            android:src="@drawable/ic_live_stream_whisper_comment"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginStart="@dimen/margin_6"
+            android:adjustViewBounds="true"
+            android:layout_height="wrap_content"/>
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_live_stream_whisper_comment"
             android:drawablePadding="4dp"
             android:fontFamily="@font/hiragino_sans_w6"
             android:gravity="center_vertical"
             android:padding="6dp"
+            android:lineSpacingExtra="@dimen/margin_3"
             android:textColor="@android:color/white"
             android:textSize="13sp"
             tools:text="視聴者名 メッセージメッセージメッセージ" />
-    </FrameLayout>
+    </LinearLayout>
 </layout>
