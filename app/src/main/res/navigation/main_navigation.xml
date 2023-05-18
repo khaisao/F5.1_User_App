@@ -283,6 +283,15 @@
         <argument
             android:name="TITLE_WEB_VIEW"
             app:argType="string" />
+        <action
+            android:id="@+id/action_webView_to_buy_point_and_close_webView"
+            app:destination="@id/buyPointFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@+id/webViewFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <action
         android:id="@+id/action_screen_to_webview"
@@ -319,13 +328,7 @@
         android:id="@+id/welcomeActivity"
         android:name="jp.careapp.counseling.android.ui.welcome.WelcomeActivity"
         android:label="WelcomeActivity" />
-    <action
-        android:id="@+id/action_mypage_to_buyPoint"
-        app:destination="@id/buyPointFragment"
-        app:enterAnim="@anim/slide_in_left"
-        app:exitAnim="@anim/slide_out_right"
-        app:popEnterAnim="@anim/slide_in_right"
-        app:popExitAnim="@anim/slide_out_left" />
+
     <include app:graph="@navigation/search_navigation" />
     <include app:graph="@navigation/maintenance_navigation" />
 
