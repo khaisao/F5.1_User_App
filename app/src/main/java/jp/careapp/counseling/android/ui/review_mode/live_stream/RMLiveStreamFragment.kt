@@ -169,11 +169,14 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
     private var initCameraY = 0f
 
     private val cameraChangeVisibilityListener = ViewTreeObserver.OnGlobalLayoutListener {
-        val newVis: Int = binding.clMemberCamera.visibility
-        if (newVis == View.VISIBLE) {
-            initCameraX = binding.clMemberCamera.x
-            initCameraY = binding.clMemberCamera.y
-            removeVisibilityChangeListener()
+        try {
+            val newVis: Int = binding.clMemberCamera.visibility
+            if (newVis == View.VISIBLE) {
+                initCameraX = binding.clMemberCamera.x
+                initCameraY = binding.clMemberCamera.y
+                removeVisibilityChangeListener()
+            }
+        } catch (_: Exception) {
         }
     }
 

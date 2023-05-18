@@ -107,6 +107,8 @@ class RMLiveStreamViewModel @Inject constructor(
                 }
             }
             LiveStreamViewModel.PREMIUM_PRIVATE -> {
+                updateCameraSetting(false)
+                updateMicSetting(false)
                 flaxWebSocketManager.privateModeInvitation()
                 _updateUIMode.postValue(LiveStreamViewModel.UI_SHOW_WAITING_PRIVATE_MODE)
             }
