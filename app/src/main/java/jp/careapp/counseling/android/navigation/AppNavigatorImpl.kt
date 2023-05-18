@@ -41,6 +41,10 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_TopFragment_to_BuyPointFragment, bundle)
     }
 
+    override fun openWebViewToBuyPointAndCloseWebView(bundle: Bundle?) {
+        openScreen(R.id.action_webView_to_buy_point_and_close_webView, bundle)
+    }
+
     override fun openRegistrationToTopScreen(bundle: Bundle?) {
         openScreen(R.id.action_registrationFragment_to_topFragment, bundle)
     }
@@ -111,10 +115,6 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openRankingToUserProfileScreen(bundle: Bundle?) {
         openScreen(R.id.action_ranking_to_userProfilefragment, bundle)
-    }
-
-    override fun openMyPageToBuyPointScreen(bundle: Bundle?) {
-        openScreen(R.id.action_mypage_to_buyPoint, bundle)
     }
 
     override fun openScreenToWebview(bundle: Bundle?) {

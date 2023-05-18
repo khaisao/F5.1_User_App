@@ -21,6 +21,8 @@ interface AppNavigation : BaseNavigator {
 
     fun openTopToBuyPointScreen(bundle: Bundle? = null)
 
+    fun openWebViewToBuyPointAndCloseWebView(bundle: Bundle? = null)
+
     fun openRegistrationToTopScreen(bundle: Bundle? = null)
 
     fun openTopToUserProfileScreen(bundle: Bundle)
@@ -52,8 +54,6 @@ interface AppNavigation : BaseNavigator {
     fun openWelcomeToMaintenance(bundle: Bundle? = null)
 
     fun openMaintenanceToWebview(bundle: Bundle? = null)
-
-    fun openMyPageToBuyPointScreen(bundle: Bundle? = null)
 
     fun openScreenToWebview(bundle: Bundle? = null)
 

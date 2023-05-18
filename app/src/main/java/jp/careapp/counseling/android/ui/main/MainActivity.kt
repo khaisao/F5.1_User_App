@@ -45,6 +45,7 @@ import jp.careapp.counseling.android.ui.registration.RegistrationFragment
 import jp.careapp.counseling.android.ui.splash.SplashFragment
 import jp.careapp.counseling.android.ui.top.TopFragment
 import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeFragment
+import jp.careapp.counseling.android.ui.webView.WebViewFragment
 import jp.careapp.counseling.android.utils.*
 import jp.careapp.counseling.android.utils.Define.Companion.NORMAL_MODE
 import jp.careapp.counseling.android.utils.Define.Companion.PREFIX_CARE_APP
@@ -222,16 +223,22 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 }
             }
             Define.Intent.BUY_POINT -> {
-                val currentFragment: Fragment =
-                    navHostFragment.childFragmentManager.fragments[0]
-                if (currentFragment is BuyPointFragment) {
-                    appNavigation.popopBackStackToDetination(R.id.buyPointFragment)
-                } else {
-                    val bundle = Bundle()
-                    if (isOpenDirect) {
-                        bundle.putBoolean(Define.Intent.OPEN_DIRECT_FROM_NOTIFICATION, isOpenDirect)
+                when (navHostFragment.childFragmentManager.fragments[0]) {
+                    is BuyPointFragment -> {
+                        appNavigation.popopBackStackToDetination(R.id.buyPointFragment)
                     }
-                    appNavigation.openTopToBuyPointScreen(bundle)
+
+                    is WebViewFragment -> {
+                        appNavigation.openWebViewToBuyPointAndCloseWebView()
+                    }
+
+                    else -> {
+                        val bundle = Bundle()
+                        if (isOpenDirect) {
+                            bundle.putBoolean(Define.Intent.OPEN_DIRECT_FROM_NOTIFICATION, isOpenDirect)
+                        }
+                        appNavigation.openTopToBuyPointScreen(bundle)
+                    }
                 }
             }
             Define.Intent.FREE_POINT -> {

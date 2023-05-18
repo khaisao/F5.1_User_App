@@ -151,7 +151,7 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
         binding.toolBar.setOnToolBarClickListener(object : ToolBarCommon.OnToolBarClickListener() {
             override fun onClickLeft() {
                 super.onClickLeft()
-                appNavigation.navigateUp()
+                onBackPressClickListener()
             }
 
             override fun onClickRight() {
@@ -167,11 +167,19 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
     private fun handleBackPress() {
         val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                notifyUpdateIfNeed()
-                appNavigation.navigateUp()
+                onBackPressClickListener()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    private fun onBackPressClickListener() {
+        if (binding.webView.canGoBack()) {
+            binding.webView.goBack()
+        } else {
+            notifyUpdateIfNeed()
+            appNavigation.navigateUp()
+        }
     }
 
     private fun notifyUpdateIfNeed() {
