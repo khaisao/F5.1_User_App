@@ -21,7 +21,6 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 class TokenAuthenticator @Inject constructor(
@@ -29,24 +28,22 @@ class TokenAuthenticator @Inject constructor(
     private val gson: Gson,
     private val networkEvent: NetworkEvent,
 ) : Authenticator {
-    private val isRefreshing = AtomicBoolean(false)
+
+    private val lock = Object()
 
     @ExperimentalCoroutinesApi
     override fun authenticate(route: Route?, response: Response): Request? {
-        return if (!isRefreshing.getAndSet(true)) {
+        synchronized(lock) {
             val refreshResult =
                 refreshToken("${jp.careapp.counseling.BuildConfig.BASE_URL}api/login")
-            isRefreshing.set(false)
-            if (refreshResult) {
+            return if (refreshResult)
                 response.request.newBuilder()
                     .header("Authorization", "Bearer ${rxPreferences.getToken().toString()}")
                     .build()
-            } else {
+            else {
                 networkEvent.publish(NetworkState.UNAUTHORIZED)
                 null
             }
-        } else {
-            null
         }
     }
 
