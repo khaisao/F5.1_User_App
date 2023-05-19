@@ -49,7 +49,6 @@ import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companio
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.TWO_SHOT_VALUE_2
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.UI_BUY_POINT
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.UI_DISMISS_PRIVATE_MODE
-import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.UI_OTHER_USER_REQUEST
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.UI_SHOW_CONFIRM_CLOSE_PRIVATE_MODE
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel.Companion.UI_SHOW_WAITING_PRIVATE_MODE
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.buy_point.PurchasePointBottomSheet
@@ -317,7 +316,11 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
         binding.btnPrivate.setOnClickListener {
             if (!isDoubleClick) {
-                showLiveStreamConfirmBottomSheet(PRIVATE_MODE_REGISTER, this)
+                if (mViewModel.twoShot.value == LiveStreamViewModel.TWO_SHOT_VALUE_11) {
+                    showErrorDialog(getString(R.string.other_member_requested))
+                } else {
+                    showLiveStreamConfirmBottomSheet(PRIVATE_MODE_REGISTER, this)
+                }
             }
         }
 
@@ -436,10 +439,6 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
                 UI_SHOW_WAITING_PRIVATE_MODE -> {
                     showPrivateModeRequest()
-                }
-
-                UI_OTHER_USER_REQUEST -> {
-                    showErrorDialog(getString(R.string.other_member_requested))
                 }
 
                 UI_BUY_POINT -> {
