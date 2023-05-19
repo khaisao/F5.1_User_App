@@ -155,6 +155,7 @@ class LiveStreamViewModel @Inject constructor(
                 updateMicSetting(false)
                 flaxWebSocketManager.premiumPrivateModeInvitation()
                 maruCastManager.publishStream(application.baseContext)
+                updateCameraSetting(false)
             }
             BUY_POINT -> {
                 _updateUIMode.postValue(UI_BUY_POINT)
@@ -306,8 +307,6 @@ class LiveStreamViewModel @Inject constructor(
                     val newTwoShotValue: String = jsonMessage.getString(KEY_TWO_SHOT)
                     if (newTwoShotValue == TWO_SHOT_VALUE_2) {
                         _updateUIMode.postValue(UI_DISMISS_PRIVATE_MODE)
-                    } else if (newTwoShotValue == TWO_SHOT_VALUE_11) {
-                        _updateUIMode.postValue(UI_OTHER_USER_REQUEST)
                     } else if (newTwoShotValue == TWO_SHOT_VALUE_0 && _twoShot.value == TWO_SHOT_VALUE_2) {
                         _connectResult.postValue(
                             ConnectResult(
@@ -341,7 +340,6 @@ class LiveStreamViewModel @Inject constructor(
         const val UI_SHOW_CONFIRM_CLOSE_PRIVATE_MODE = 2
         const val UI_SHOW_WAITING_PRIVATE_MODE = 3
         const val UI_BUY_POINT = 4
-        const val UI_OTHER_USER_REQUEST = 5
 
         // MODE
         const val PARTY = 0
