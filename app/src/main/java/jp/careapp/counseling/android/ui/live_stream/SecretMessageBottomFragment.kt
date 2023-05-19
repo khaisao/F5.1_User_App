@@ -1,8 +1,10 @@
 package jp.careapp.counseling.android.ui.live_stream
 
+import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
@@ -11,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
-import jp.careapp.core.utils.DeviceUtil
 import jp.careapp.core.utils.screenHeight
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.LiveStreamChatResponse
@@ -137,12 +138,6 @@ class SecretMessageBottomFragment : BottomSheetDialogFragment() {
             }
         }
 
-        binding.messageRv.setOnClickListener {
-            DeviceUtil.hideSoftKeyboard(activity)
-            if (binding.contentMessageEdt.isFocused) {
-                binding.contentMessageEdt.clearFocus()
-            }
-        }
         setOnClickView()
 
         val listWhisperMessage: ArrayList<LiveStreamChatResponse>? =
@@ -164,6 +159,15 @@ class SecretMessageBottomFragment : BottomSheetDialogFragment() {
                 binding.contentMessageEdt.text?.clear()
             }
         }
+
+        binding.vToHideKeyBoard.setOnClickListener {
+            val imm: InputMethodManager =
+                binding.contentMessageEdt.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            if (imm.isActive) {
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS)
+            }
+        }
+
     }
 
     override fun onDestroyView() {

@@ -38,10 +38,12 @@ import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.handle.HandleBuyPoint
 import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.ui.buy_point.BuyPointFragment
+import jp.careapp.counseling.android.ui.email.InputAndEditEmailFragment
 import jp.careapp.counseling.android.ui.message.ChatMessageFragment
 import jp.careapp.counseling.android.ui.news.NewsFragment
 import jp.careapp.counseling.android.ui.profile.list_user_profile.UserProfileFragment
 import jp.careapp.counseling.android.ui.registration.RegistrationFragment
+import jp.careapp.counseling.android.ui.review_mode.start.RMStartFragment
 import jp.careapp.counseling.android.ui.splash.SplashFragment
 import jp.careapp.counseling.android.ui.top.TopFragment
 import jp.careapp.counseling.android.ui.verifyCode.VerifyCodeFragment
@@ -409,29 +411,33 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                     appNavigation.openActionToLogin()
                                 else {
                                     if (rxPreferences.getAppMode() == NORMAL_MODE) {
-                                        CommonAlertDialog.getInstanceCommonAlertdialog(
-                                            this@MainActivity,
-                                            TYPE_DIALOG.UN_AUTHEN
-                                        )
-                                            .showDialog()
-                                            .setDialogTitle(R.string.wrong_email_address_or_password)
-                                            .setTextOkButton(R.string.text_OK)
-                                            .setOnOkButtonPressed {
-                                                it.dismiss()
-                                            }
-                                        appNavigation.openActionToLoginAndClearBackstack()
+                                        if (currentFragment !is InputAndEditEmailFragment) {
+                                            CommonAlertDialog.getInstanceCommonAlertdialog(
+                                                this@MainActivity,
+                                                TYPE_DIALOG.UN_AUTHEN
+                                            )
+                                                .showDialog()
+                                                .setDialogTitle(R.string.wrong_email_address_or_password)
+                                                .setTextOkButton(R.string.text_OK)
+                                                .setOnOkButtonPressed {
+                                                    it.dismiss()
+                                                }
+                                            appNavigation.openActionToLoginAndClearBackstack()
+                                        }
                                     } else {
-                                        RMCommonAlertDialog.getInstanceCommonAlertdialog(
-                                            this@MainActivity,
-                                            TYPE_DIALOG.UN_AUTHEN
-                                        )
-                                            .showDialog()
-                                            .setDialogTitle(R.string.wrong_email_address_or_password)
-                                            .setTextPositiveSmallButton(R.string.text_OK)
-                                            .setOnPositiveSmallPressed {
-                                                it.dismiss()
-                                            }
-                                        appNavigation.openActionToRMLoginAndClearBackstack()
+                                        if (currentFragment !is RMStartFragment) {
+                                            RMCommonAlertDialog.getInstanceCommonAlertdialog(
+                                                this@MainActivity,
+                                                TYPE_DIALOG.UN_AUTHEN
+                                            )
+                                                .showDialog()
+                                                .setDialogTitle(R.string.wrong_email_address_or_password)
+                                                .setTextPositiveSmallButton(R.string.text_OK)
+                                                .setOnPositiveSmallPressed {
+                                                    it.dismiss()
+                                                }
+                                            appNavigation.openActionToRMLoginAndClearBackstack()
+                                        }
                                     }
                                 }
                             }
