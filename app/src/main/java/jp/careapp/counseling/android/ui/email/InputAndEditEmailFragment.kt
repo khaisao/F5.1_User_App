@@ -1,12 +1,13 @@
 package jp.careapp.counseling.android.ui.email
 
 import android.graphics.Rect
-import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.text.TextUtils
 import android.view.MotionEvent
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.OnFocusChangeListener
+import android.view.View.VISIBLE
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.WindowManager
 import androidx.core.text.HtmlCompat
@@ -64,13 +65,27 @@ class InputAndEditEmailFragment :
             } else {
                 codeScreen = SCREEN_REGISTER_WITH_EMAIL
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
         changeStatusButton()
         displayView()
 
         binding.etInputEmail.addTextChangedListener {
-            validateEmailPattern(it.toString().trim())
+            if (it.isValidEmail()) {
+                enableButton()
+                binding.llErrorEmail.visibility = GONE
+            } else {
+                disableButton()
+            }
+        }
+
+        binding.etInputEmail.onFocusChangeListener = OnFocusChangeListener { view, hasFocus ->
+            if (!hasFocus && getEmail() != "") {
+                validateEmailPattern(getEmail())
+            }
+            if (!hasFocus && getEmail() == "") {
+                binding.llErrorEmail.visibility = GONE
+            }
         }
     }
 
@@ -168,22 +183,11 @@ class InputAndEditEmailFragment :
 
     override fun onStart() {
         super.onStart()
-        binding.rlInputEmail.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)
+        binding.rlInputEmail.viewTreeObserver?.addOnGlobalLayoutListener(keyboardLayoutListener)
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.isComeBackFromBackGround.observe(viewLifecycleOwner, isFocusObserver)
-
-        binding.rlInputEmail.setOnTouchListener { v, event ->
-            if (event.action === MotionEvent.ACTION_DOWN) {
-                isFocusEditEmail = false
-                binding.etInputEmail.clearFocus()
-                DeviceUtil.hideSoftKeyboard(activity)
-            }
-            false
-        }
-
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN or WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
     }
 
@@ -225,7 +229,6 @@ class InputAndEditEmailFragment :
     override fun bindingStateView() {
         super.bindingStateView()
         viewModel.isSuccess.observeForever(isSuccessObserver)
-        viewModel.isComeBackFromBackGround.observe(viewLifecycleOwner, isFocusObserver)
     }
 
     private var isSuccessObserver: Observer<Boolean> = Observer {
@@ -237,31 +240,6 @@ class InputAndEditEmailFragment :
             }
             appNavigation.openInputEmailToVerifyCode(bundle)
             shareViewModel.setFocusVerifyCode(false)
-        }
-    }
-
-    private var isFocusObserver: Observer<Boolean> = Observer {
-        if (it) {
-            if (binding.etInputEmail.isFocused) {
-                isFocusEditEmail = true
-                binding.etInputEmail.requestFocus()
-                activity?.let { DeviceUtil.showKeyboardWithFocus(binding.etInputEmail, it) }
-                handleShowOrHideKeyBoard(true)
-            } else {
-                activity?.let { DeviceUtil.hideKeyBoard(it) }
-            }
-        }
-        binding.etInputEmail.setOnFocusChangeListener { view, b ->
-            if (view.isFocused && binding.etInputEmail.text.toString()
-                    .isNotEmpty()
-            ) {
-                binding.etInputEmail.requestFocus()
-                isFocusEditEmail = true
-                activity?.let { DeviceUtil.showKeyboardWithFocus(binding.etInputEmail, it) }
-                handleShowOrHideKeyBoard(isEnableEditName)
-            } else {
-                isFocusEditEmail = false
-            }
         }
     }
 
@@ -297,7 +275,6 @@ class InputAndEditEmailFragment :
                     isFocusEditEmail = false
                     binding.etInputEmail.clearFocus()
                     DeviceUtil.hideSoftKeyboard(activity)
-                    viewModel.setComebackFromBackGround(false)
                 }
                 false
             }
@@ -306,8 +283,6 @@ class InputAndEditEmailFragment :
 
     override fun onPause() {
         super.onPause()
-        viewModel.setComebackFromBackGround(true)
-
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE or WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
     }
 
@@ -315,26 +290,21 @@ class InputAndEditEmailFragment :
         activity?.let {
             DeviceUtil.hideKeyBoard(it)
         }
-        viewModel.setComebackFromBackGround(false)
-        super.onDestroyView()
         viewModel.isSuccess.removeObservers(viewLifecycleOwner)
         viewModel.isLoading.removeObservers(viewLifecycleOwner)
         if (activity is BaseActivity<*, *>) {
             (activity as BaseActivity<*, *>).setHandleDispathTouch(true)
         }
+
+        super.onDestroyView()
     }
 
     override fun onStop() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            binding.rlInputEmail.viewTreeObserver
-                .removeOnGlobalLayoutListener(keyboardLayoutListener)
-        } else {
-            binding.rlInputEmail.viewTreeObserver
-                .removeGlobalOnLayoutListener(keyboardLayoutListener)
-        }
-        super.onStop()
+        binding.rlInputEmail.viewTreeObserver
+            .removeOnGlobalLayoutListener(keyboardLayoutListener)
         activity?.let {
             DeviceUtil.hideSoftKeyboard(it)
         }
+        super.onStop()
     }
 }

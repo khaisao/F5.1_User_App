@@ -10,6 +10,7 @@ import jp.careapp.core.utils.SingleLiveEvent
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.AppApplication
 import jp.careapp.counseling.android.data.network.ApiObjectResponse
+import jp.careapp.counseling.android.data.network.InfoUserResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
@@ -36,6 +37,8 @@ class VerifyCodeViewModel @Inject constructor(
         countError = 0
     }
 
+    lateinit var dataResponseRegister : InfoUserResponse
+
     fun sendVerifyCode(email: String, authCode: String) {
         isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
@@ -43,17 +46,19 @@ class VerifyCodeViewModel @Inject constructor(
                 try {
                     val response = mRepository.sendVerifyCode(email, authCode)
                     if (response.errors.isEmpty()) {
-                        val dataResponse = response.dataResponse
-                        val token = dataResponse.token.toString()
-                        val tokenExpire = dataResponse.tokenExpire.toString()
-                        val password = dataResponse.password.toString()
-                        val memberCode = dataResponse.memberCode.toString()
-                        mRepository.saveUserInfo(token, tokenExpire, password, memberCode)
-                        mRepository.saveEmail(email)
+                        dataResponseRegister = response.dataResponse
                         withContext(Dispatchers.Main) {
-                            when (dataResponse.status) {
-                                SCREEN_CODE_TOP -> mActionState.value =
-                                    VerifyCodeActionState.NavigateToTop
+                            when (dataResponseRegister.status) {
+                                SCREEN_CODE_TOP -> {
+                                    val token = dataResponseRegister.token.toString()
+                                    val tokenExpire = dataResponseRegister.tokenExpire.toString()
+                                    val password = dataResponseRegister.password.toString()
+                                    val memberCode = dataResponseRegister.memberCode.toString()
+                                    mRepository.saveUserInfo(token, tokenExpire, password, memberCode)
+                                    mRepository.saveEmail(email)
+                                    mActionState.value =
+                                        VerifyCodeActionState.NavigateToTop
+                                }
                                 SCREEN_CODE_REGISTER -> mActionState.value =
                                     VerifyCodeActionState.NavigateToRegister
                             }
