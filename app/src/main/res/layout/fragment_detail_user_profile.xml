@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_background_common">
@@ -23,7 +23,7 @@
                     android:layout_height="0dp"
                     android:fillViewport="true"
                     app:layout_constraintBottom_toTopOf="@id/divider"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@id/cl_toolbar">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layout_info"
@@ -175,10 +175,10 @@
                         <ImageView
                             android:id="@+id/iv_bg_message_notice"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="52dp"
                             android:layout_marginHorizontal="@dimen/margin_4dp"
                             android:adjustViewBounds="true"
-                            android:src="@drawable/bg_message_notice"
+                            android:background="@drawable/bg_message_notice"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/straight_line_bottom_ranking" />
@@ -322,16 +322,53 @@
 
                 </androidx.core.widget.NestedScrollView>
 
-                <ImageView
-                    android:id="@+id/iv_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_6"
-                    android:layout_marginTop="@dimen/margin_8"
-                    android:padding="@dimen/padding_4"
-                    android:src="@drawable/ic_back_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_toolbar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="match_parent"
+                    android:background="@color/color_background_common"
+                    android:layout_height="@dimen/margin_44">
+
+                    <ImageView
+                        android:id="@+id/iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_6"
+                        android:layout_marginTop="@dimen/margin_8"
+                        android:padding="@dimen/padding_4"
+                        android:src="@drawable/ic_back_white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_16"
+                        android:background="@drawable/bg_point_detail_screen"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="@dimen/margin_6"
+                        android:paddingVertical="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_width="@dimen/margin_18"
+                            android:layout_height="@dimen/margin_18"
+                            android:layout_marginEnd="@dimen/margin_4dp"
+                            android:src="@drawable/ic_point_yellow" />
+
+                        <TextView
+                            android:id="@+id/tv_current_point"
+                            style="@style/text_bold_12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10000"
+                            android:textColor="@color/color_FFD600" />
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
                     android:id="@+id/divider"
@@ -490,5 +527,5 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 </layout>

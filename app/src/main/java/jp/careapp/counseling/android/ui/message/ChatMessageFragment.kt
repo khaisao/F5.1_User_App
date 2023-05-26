@@ -360,7 +360,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                 }
                 tvName.text = performerDetail.name
                 ivAvtBackground.loadImage(
-                    performerDetail.thumbnailImageUrl,
+                    performerDetail.imageUrl,
                     R.drawable.default_avt_performer
                 )
             }

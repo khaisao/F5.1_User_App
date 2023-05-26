@@ -39,6 +39,7 @@ import jp.careapp.counseling.android.utils.Define
 import jp.careapp.counseling.android.utils.SocketInfo
 import jp.careapp.counseling.android.utils.SocketInfo.RESULT_NG
 import jp.careapp.counseling.android.utils.extensions.getBustSize
+import jp.careapp.counseling.android.utils.formatDecimalSeparator
 import jp.careapp.counseling.android.utils.performer_extension.PerformerRankingHandler
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatus
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler
@@ -123,6 +124,8 @@ class DetailUserProfileFragment :
                 binding.swipeRefreshLayout.isEnabled = false
             }
         }
+
+        binding.tvCurrentPoint.text = rxPreferences.getPoint().formatDecimalSeparator()
     }
 
     override fun onResume() {

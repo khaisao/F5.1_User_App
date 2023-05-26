@@ -15,7 +15,7 @@
             android:layout_marginRight="@dimen/margin_4dp"
             android:layout_marginBottom="@dimen/margin_3"
             android:text="@string/read"
-            android:textColor="@color/color_B2A9CC"
+            android:textColor="@color/color_CAC3E1"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/time_send_tv"
             app:layout_constraintEnd_toStartOf="@+id/content_message_tv" />
@@ -23,28 +23,37 @@
         <TextView
             android:id="@+id/time_send_tv"
             style="@style/text_10"
-            android:layout_marginRight="@dimen/margin_4dp"
+            android:layout_marginEnd="@dimen/margin_4dp"
+            android:layout_marginBottom="@dimen/margin_5dp"
             android:textColor="@color/color_B2A9CC"
             app:layout_constraintBottom_toBottomOf="@+id/content_message_tv"
             app:layout_constraintEnd_toStartOf="@+id/content_message_tv" />
 
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_item_message_send"
+            app:layout_constraintBottom_toBottomOf="@id/content_message_tv"
+            app:layout_constraintEnd_toEndOf="@id/content_message_tv"
+            app:layout_constraintStart_toStartOf="@id/content_message_tv"
+            app:layout_constraintTop_toTopOf="@id/content_message_tv" />
 
         <TextView
             android:id="@+id/content_message_tv"
             style="@style/text_14"
             android:layout_width="0dp"
-            android:gravity="center_vertical"
+            android:minWidth="52dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_item_message_send"
-            android:paddingLeft="@dimen/margin_12"
-            android:paddingRight="@dimen/margin_12"
-            android:textColor="@color/white"
+            android:layout_marginStart="@dimen/margin_8"
+            android:padding="@dimen/margin_20dp"
+            android:text="l"
             android:lineSpacingExtra="@dimen/margin_3"
+            android:textColor="@color/white"
             android:textIsSelectable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_max="wrap"
-            app:layout_constraintWidth_percent="0.6"
-            tools:text="aawgawgawggggggggbc" />
+            app:layout_constraintWidth_percent="0.7" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
