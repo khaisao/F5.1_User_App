@@ -27,26 +27,9 @@ class UsePointsGuideFragment :
     private val mViewModel: UsePointsGuideViewModel by viewModels()
     override fun getVM() = mViewModel
 
-    private var mAdapter: UsePointsListAdapter? = null
-
     override fun initView() {
         super.initView()
-
         setUpToolBar()
-
-        mAdapter = UsePointsListAdapter()
-        binding.rcvUsePointsGuideList.apply {
-            adapter = mAdapter
-            setHasFixedSize(true)
-        }
-    }
-
-    override fun bindingStateView() {
-        super.bindingStateView()
-
-        mViewModel.usePointsGuideList.observe(viewLifecycleOwner) {
-            mAdapter?.submitList(it)
-        }
     }
 
     private fun setUpToolBar() {
@@ -72,11 +55,5 @@ class UsePointsGuideFragment :
                 )
             }
         }
-    }
-
-    override fun onDestroyView() {
-        binding.rcvUsePointsGuideList.adapter = null
-        mAdapter = null
-        super.onDestroyView()
     }
 }

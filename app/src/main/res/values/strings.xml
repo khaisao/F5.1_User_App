@@ -640,6 +640,8 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="input_name">なまえで検索</string>
     <string name="message">メッセージ</string>
     <string name="peep">のぞく</string>
+    <string name="live_stream">ライブ配信</string>
+    <string name="premium_private">プレミアムプライベート</string>
     <string name="go_home">ホームへ戻る</string>
 
     <string name="you_dont_want_to_receive_an_email_for_a_long_time">1週間経ってもご連絡が届かない場合\n・迷惑フォルダに届いている\n・ご登録メールアドレスが間違っている\n・ドメイン指定受信を設定している \n　@sparklive.jpの受信を許可してください</string>
@@ -706,7 +708,19 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="already_log_out_by_private_mode_with_another_person">他の方とのプライベートモード開始によりログアウトされました</string>
     <string name="no_message_yet">まだメッセージはありません</string>
     <string name="point_unit">pts</string>
+    <string name="point_unit_1">%dpts/通</string>
+    <string name="point_unit_2">%dpts/分</string>
+    <string name="bronze_jp">ブロンズ</string>
+    <string name="silver_jp">シルバー</string>
+    <string name="gold_jp">ゴールド</string>
+    <string name="platinum_jp">プラチナ</string>
     <string name="other_member_requested">現在、他の方が申し込み中です</string>
+    <string name="point_guide_messenger">女の子に好きなタイミングでメッセージを送信することができます。</string>
+    <string name="point_guide_live_stream">ライブ配信モードでは女の子の映像を視聴しながら、チャットでメッセージのやりとりができます。</string>
+    <string name="point_guide_peep">のぞき視聴モードでは他の会員様に気を使わずに、女の子の映像をこっそりと視聴することができます。</string>
+    <string name="point_guide_private">女の子と２人きりで誰にも見られずにライブ配信を独占できます。</string>
+    <string name="point_guide_premium_private">女の子と２人きりでライブ配信を独占できる他に、会員様もマイクとカメラを使って映像と音声を配信できます。</string>
+    <string name="point_guide_whisper">ライブ配信中に他の会員様に見られずに、こっそりと女の子だけに秘密のチャットを送ることができます。</string>
 
 
     <string-array name="nm_contact_us_category">

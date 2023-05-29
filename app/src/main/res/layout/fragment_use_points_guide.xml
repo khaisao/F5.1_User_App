@@ -3,80 +3,183 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#0d002c"
-        android:orientation="vertical"
-        tools:context=".android.ui.use_points_guide.UsePointsGuideFragment">
+        android:layout_height="match_parent">
 
-        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
-            android:id="@+id/toolBar"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:color_title="@color/color_F0F0F0"
-            app:src_left="@drawable/ic_arrow_left"
-            app:string_title="@string/use_points_guide" />
+            android:background="#0d002c"
+            android:orientation="vertical"
+            tools:context=".android.ui.use_points_guide.UsePointsGuideFragment">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#2A1F45" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="16dp"
-            android:orientation="vertical">
-
-            <TextView
+            <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+                android:id="@+id/toolBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:fontFamily="@font/hiragino_sans_w6"
+                app:color_title="@color/color_F0F0F0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:src_left="@drawable/ic_arrow_left"
+                app:string_title="@string/use_points_guide" />
+
+            <View
+                android:id="@+id/toolBarDivider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/color_2A1F45"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolBar" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHeader"
+                style="@style/text_bold_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_32"
                 android:gravity="center_vertical"
                 android:text="@string/consumption_points"
-                android:textColor="#f0f0f0"
-                android:textSize="16sp" />
+                android:textColor="@color/color_text_F0F0F0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolBarDivider" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcvUsePointsGuideList"
-                android:layout_width="match_parent"
+            <jp.careapp.counseling.android.utils.customView.PointGuideView
+                android:id="@+id/pgvMessenger"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="vertical"
-                android:overScrollMode="never"
-                app:itemAnimator="@{null}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:itemCount="5"
-                tools:listitem="@layout/item_use_points_guide" />
+                android:layout_marginTop="@dimen/margin_16"
+                app:itemBronzeFee="100"
+                app:itemDescription="@string/point_guide_messenger"
+                app:itemDrawable="@drawable/ic_price_message"
+                app:itemGoldFee="100"
+                app:itemPlatinumFee="100"
+                app:itemSilverFee="100"
+                app:itemTitle="@string/message"
+                app:layout_constraintEnd_toEndOf="@+id/tvHeader"
+                app:layout_constraintStart_toStartOf="@+id/tvHeader"
+                app:layout_constraintTop_toBottomOf="@+id/tvHeader" />
 
-            <TextView
-                android:layout_width="match_parent"
+            <jp.careapp.counseling.android.utils.customView.PointGuideView
+                android:id="@+id/pgvLiveStream"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/hiragino_sans_w3"
+                android:layout_marginTop="@dimen/margin_16"
+                app:isMinuteCalculate="true"
+                app:itemBronzeFee="100"
+                app:itemDescription="@string/point_guide_live_stream"
+                app:itemDrawable="@drawable/ic_price_live"
+                app:itemGoldFee="200"
+                app:itemPlatinumFee="250"
+                app:itemSilverFee="150"
+                app:itemTitle="@string/live_stream"
+                app:layout_constraintEnd_toEndOf="@+id/tvHeader"
+                app:layout_constraintStart_toStartOf="@+id/tvHeader"
+                app:layout_constraintTop_toBottomOf="@+id/pgvMessenger" />
+
+            <jp.careapp.counseling.android.utils.customView.PointGuideView
+                android:id="@+id/pgvPeep"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                app:isMinuteCalculate="true"
+                app:itemBronzeFee="100"
+                app:itemDescription="@string/point_guide_peep"
+                app:itemDrawable="@drawable/ic_price_peeping"
+                app:itemGoldFee="200"
+                app:itemPlatinumFee="250"
+                app:itemSilverFee="150"
+                app:itemTitle="@string/peep"
+                app:layout_constraintEnd_toEndOf="@+id/tvHeader"
+                app:layout_constraintStart_toStartOf="@+id/tvHeader"
+                app:layout_constraintTop_toBottomOf="@+id/pgvLiveStream" />
+
+            <jp.careapp.counseling.android.utils.customView.PointGuideView
+                android:id="@+id/pgvPrivate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                app:isMinuteCalculate="true"
+                app:itemBronzeFee="250"
+                app:itemDescription="@string/point_guide_private"
+                app:itemDrawable="@drawable/ic_price_private"
+                app:itemGoldFee="350"
+                app:itemPlatinumFee="400"
+                app:itemSilverFee="300"
+                app:itemTitle="@string/item_live_stream_private"
+                app:layout_constraintEnd_toEndOf="@+id/tvHeader"
+                app:layout_constraintStart_toStartOf="@+id/tvHeader"
+                app:layout_constraintTop_toBottomOf="@+id/pgvPeep" />
+
+            <jp.careapp.counseling.android.utils.customView.PointGuideView
+                android:id="@+id/pgvPremiumPrivate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                app:isMinuteCalculate="true"
+                app:itemBronzeFee="350"
+                app:itemDescription="@string/point_guide_premium_private"
+                app:itemDrawable="@drawable/ic_price_premium"
+                app:itemGoldFee="450"
+                app:itemPlatinumFee="500"
+                app:itemSilverFee="400"
+                app:itemTitle="@string/premium_private"
+                app:layout_constraintEnd_toEndOf="@+id/tvHeader"
+                app:layout_constraintStart_toStartOf="@+id/tvHeader"
+                app:layout_constraintTop_toBottomOf="@+id/pgvPrivate" />
+
+            <jp.careapp.counseling.android.utils.customView.PointGuideView
+                android:id="@+id/pgvWhisper"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                app:itemBronzeFee="200"
+                app:itemDescription="@string/point_guide_whisper"
+                app:itemDrawable="@drawable/ic_price_whisper"
+                app:itemGoldFee="200"
+                app:itemPlatinumFee="200"
+                app:itemSilverFee="200"
+                app:itemTitle="@string/secret_story"
+                app:layout_constraintEnd_toEndOf="@+id/tvHeader"
+                app:layout_constraintStart_toStartOf="@+id/tvHeader"
+                app:layout_constraintTop_toBottomOf="@+id/pgvPremiumPrivate" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNote"
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
                 android:gravity="center_vertical"
                 android:text="@string/use_points_note"
-                android:textColor="#b2a9cc"
-                android:textSize="10sp" />
+                android:textColor="@color/color_B2A9CC"
+                app:layout_constraintEnd_toEndOf="@+id/tvHeader"
+                app:layout_constraintStart_toStartOf="@+id/tvHeader"
+                app:layout_constraintTop_toBottomOf="@+id/pgvWhisper" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnBuyPoints"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginHorizontal="@dimen/margin_24"
+                android:layout_marginVertical="@dimen/margin_32"
                 android:background="@drawable/bg_nm_btn_primary"
                 android:enabled="true"
                 android:fontFamily="@font/hiragino_sans_w6"
                 android:gravity="center"
                 android:minHeight="44dp"
-                android:paddingVertical="16dp"
+                android:paddingVertical="@dimen/margin_16"
                 android:text="@string/buy_points_here"
                 android:textColor="@drawable/color_text_btn_primary"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-    </LinearLayout>
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvNote"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
