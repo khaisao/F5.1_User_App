@@ -20,7 +20,6 @@ import kotlinx.coroutines.withContext
 
 class FavoriteViewModel @ViewModelInject constructor(
     private val apiService: ApiInterface,
-    private val appNavigation: AppNavigation
 ) : BaseViewModel() {
 
     private val _refreshFavorite = MutableLiveData<Unit>()

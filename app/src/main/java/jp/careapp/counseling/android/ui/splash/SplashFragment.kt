@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.UpdateAvailability
 import dagger.hilt.android.AndroidEntryPoint
@@ -94,10 +93,10 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
         super.bindingStateView()
 
         viewModel.screenCode.observe(viewLifecycleOwner) { screenCode ->
-            viewModel.isUpdate.observe(viewLifecycleOwner, Observer {
-                if (!it)
+            if (viewModel.isUpdate.value != null) {
+                if (!viewModel.isUpdate.value!!) {
                     when (screenCode) {
-                        SplashViewModel.SCREEN_CODE_START -> appNavigation.openActionToLogin()
+                        SplashViewModel.SCREEN_CODE_START -> appNavigation.openActionToLoginAndClearBackstack()
                         SplashViewModel.SCREEN_CODE_TOP -> {
                             appNavigation.openSplashToTopScreen()
                             shareViewModel.setHaveToken(true)
@@ -106,7 +105,8 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
                         SplashViewModel.SCREEN_CODE_REGISTER_RM -> appNavigation.openSplashToRMStart()
                         SplashViewModel.SCREEN_CODE_TOP_RM -> appNavigation.openSplashToRMTop()
                     }
-            })
+                }
+            }
         }
     }
 

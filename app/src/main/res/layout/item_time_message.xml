@@ -9,6 +9,6 @@
         android:layout_marginTop="@dimen/margin_4dp"
         android:layout_marginBottom="@dimen/margin_16"
         android:gravity="center"
-        android:textColor="@color/color_868990"
+        android:textColor="@color/color_F0F0F0"
         tools:text="11/15(日)" />
 </layout>

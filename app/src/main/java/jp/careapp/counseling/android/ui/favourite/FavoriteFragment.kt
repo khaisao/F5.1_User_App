@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import jp.careapp.core.base.BaseFragment
@@ -39,8 +38,6 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
 
     private lateinit var adapterHistory: HistoryAdapter
 
-    private lateinit var adapterFavoriteHome: FavoriteHomeAdapter
-
     private var typeFavoriteScreen: Int? = 0
 
     private var favorites: MutableList<FavoriteResponse> = mutableListOf()
@@ -69,14 +66,6 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
             listener = { position, listData ->
                 if (!isDoubleClick) {
                     onClickHistoryItem(position, listData)
-                }
-            })
-
-        adapterFavoriteHome = FavoriteHomeAdapter(
-            context = requireContext(),
-            listener = { position, listData ->
-                if (!isDoubleClick) {
-                    onClickFavouriteItem(position, listData)
                 }
             })
 
@@ -115,11 +104,6 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
                         LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                     rvFavorite.adapter = adapterHistory
                     tvNoResult.text = requireContext().resources.getString(R.string.no_viewing_history_yet)
-                }
-                else -> {
-                    rvFavorite.layoutManager = GridLayoutManager(requireContext(), 2)
-                    rvFavorite.adapter = adapterFavoriteHome
-                    tvNoResult.text = requireContext().resources.getString(R.string.dont_follow_any_girl_yet)
                 }
             }
         }
@@ -181,10 +165,6 @@ class FavoriteFragment : BaseFragment<FragmentFavouriteBinding, FavoriteViewMode
             Observer {
                 if (typeFavoriteScreen == BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_FAVORITE) {
                     adapterFavorite.submitList(it.toMutableList())
-                    showNoData(it.isEmpty())
-                }
-                if (typeFavoriteScreen == BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_HOME) {
-                    adapterFavoriteHome.submitList(it.toMutableList())
                     showNoData(it.isEmpty())
                 }
             }

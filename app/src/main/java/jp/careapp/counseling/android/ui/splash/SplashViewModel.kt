@@ -49,7 +49,7 @@ class SplashViewModel @ViewModelInject constructor(
 
     val appMode = MutableLiveData<Int>()
 
-    val screenCode = MutableLiveData<Int>()
+    val screenCode = SingleLiveEvent<Int>()
 
     private val handler = Handler(Looper.getMainLooper())
 
@@ -238,8 +238,8 @@ class SplashViewModel @ViewModelInject constructor(
         super.onCleared()
     }
 
-    private val _isUpdate = MutableLiveData<Boolean>(false)
-    val isUpdate: LiveData<Boolean> = _isUpdate
+    private val _isUpdate = MutableLiveData<Boolean?>(null)
+    val isUpdate: LiveData<Boolean?> = _isUpdate
     fun setUpdateable(isUpdate: Boolean) {
         _isUpdate.value = isUpdate
     }

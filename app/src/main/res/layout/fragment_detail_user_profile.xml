@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_background_common">
@@ -23,7 +23,7 @@
                     android:layout_height="0dp"
                     android:fillViewport="true"
                     app:layout_constraintBottom_toTopOf="@id/divider"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@id/cl_toolbar">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layout_info"
@@ -175,10 +175,10 @@
                         <ImageView
                             android:id="@+id/iv_bg_message_notice"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="52dp"
                             android:layout_marginHorizontal="@dimen/margin_4dp"
                             android:adjustViewBounds="true"
-                            android:src="@drawable/bg_message_notice"
+                            android:background="@drawable/bg_message_notice"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/straight_line_bottom_ranking" />
@@ -322,16 +322,53 @@
 
                 </androidx.core.widget.NestedScrollView>
 
-                <ImageView
-                    android:id="@+id/iv_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_6"
-                    android:layout_marginTop="@dimen/margin_8"
-                    android:padding="@dimen/padding_4"
-                    android:src="@drawable/ic_back_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_toolbar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="match_parent"
+                    android:background="@color/color_background_common"
+                    android:layout_height="@dimen/margin_44">
+
+                    <ImageView
+                        android:id="@+id/iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_6"
+                        android:layout_marginTop="@dimen/margin_8"
+                        android:padding="@dimen/padding_4"
+                        android:src="@drawable/ic_back_white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_16"
+                        android:background="@drawable/bg_point_detail_screen"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="@dimen/margin_6"
+                        android:paddingVertical="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_width="@dimen/margin_18"
+                            android:layout_height="@dimen/margin_18"
+                            android:layout_marginEnd="@dimen/margin_4dp"
+                            android:src="@drawable/ic_point_yellow" />
+
+                        <TextView
+                            android:id="@+id/tv_current_point"
+                            style="@style/text_bold_12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10000"
+                            android:textColor="@color/color_FFD600" />
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
                     android:id="@+id/divider"
@@ -355,15 +392,16 @@
                     android:adjustViewBounds="true"
                     android:src="@drawable/ic_ballon_call"
                     android:visibility="gone"
+                    android:layout_marginStart="@dimen/margin_5dp"
                     app:layout_constraintBottom_toTopOf="@id/line_bottom_ballon"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/gl_vertical_50" />
 
                 <ImageView
                     android:id="@+id/iv_ballon_peep"
-                    android:layout_width="160dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_8"
+                    android:layout_marginEnd="@dimen/margin_5dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/ic_ballon_peep"
                     android:visibility="gone"
@@ -376,20 +414,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.49" />
+                    app:layout_constraintGuide_percent="0.5" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/gl_vertical_66"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.67" />
+                    app:layout_constraintGuide_percent="0.66" />
 
                 <LinearLayout
                     android:id="@+id/clAction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_2"
+                    android:layout_marginStart="@dimen/margin_3"
                     android:layout_marginEnd="@dimen/margin_3"
                     android:gravity="center_vertical"
                     android:paddingVertical="@dimen/margin_6"
@@ -400,80 +438,29 @@
                         android:id="@+id/iv_message"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
-                        android:layout_marginStart="@dimen/margin_2"
                         android:layout_weight="1"
                         android:adjustViewBounds="true"
                         android:src="@drawable/ic_message_large_detail" />
 
-                    <LinearLayout
+                    <ImageView
                         android:id="@+id/ll_call_consult"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_1"
-                        android:layout_marginEnd="@dimen/margin_5dp"
+                        android:layout_height="60dp"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:src="@drawable/ic_call_small_detail"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="gone"/>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="42dp"
-                            android:adjustViewBounds="true"
-                            android:background="@drawable/bg_gradient"
-                            android:gravity="center"
-                            android:src="@drawable/ic_watch_live_stream_detail">
-
-                            <ImageView
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
-                                android:layout_marginEnd="@dimen/margin_6"
-                                android:src="@drawable/ic_call_detail" />
-
-                            <TextView
-                                style="@style/text_bold_14"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/live_viewing"
-                                android:textColor="@color/white" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <ImageView
                         android:id="@+id/ll_peep"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_5dp"
+                        android:layout_height="60dp"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:src="@drawable/ic_peep_small_detail"
                         android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="42dp"
-                            android:adjustViewBounds="true"
-                            android:background="@drawable/bg_gradient_orangered"
-                            android:gravity="center">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/margin_6"
-                                android:src="@drawable/ic_peep" />
-
-                            <TextView
-                                style="@style/text_bold_14"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/peep"
-                                android:textColor="@color/white" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
+                        android:visibility="gone"/>
 
                     <ImageView
                         android:id="@+id/iv_private_delivery"
@@ -490,5 +477,5 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 </layout>

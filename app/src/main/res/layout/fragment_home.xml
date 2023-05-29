@@ -6,11 +6,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -41,40 +36,15 @@
                     app:tabIndicatorFullWidth="false"
                     app:tabTextAppearance="@style/tab_text" />
 
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/vp_banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="@dimen/margin_6"
-                    android:visibility="gone"
-                    app:layout_constraintDimensionRatio="375:96"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tl_main" />
-
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabIndicator"
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:layout_marginBottom="4dp"
-                    android:background="@color/transparent"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/vp_banner"
-                    app:tabBackground="@drawable/tab_indicator"
-                    app:tabGravity="center"
-                    app:tabIndicatorHeight="0dp" />
-
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/vp_main"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="@dimen/margin_6"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/vp_banner" />
-
+                    app:layout_constraintTop_toBottomOf="@id/tl_main" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ProgressBar
             android:id="@+id/progressBar"

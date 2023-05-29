@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.SingleLiveEvent
+import jp.careapp.counseling.android.data.pref.RxPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
-    private val mRepository: RegistrationRepository
+    private val mRepository: RegistrationRepository,
+    private val rxPreferences: RxPreferences
 ) : BaseViewModel() {
 
     val mActionState = SingleLiveEvent<RegistrationActionState>()
@@ -22,12 +24,13 @@ class RegistrationViewModel @Inject constructor(
         return 0
     }
 
-    fun register(userName: String, receiveMail: Boolean) {
+    fun register(userName: String, receiveMail: Boolean, tokenInput: String, email: String) {
         isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             supervisorScope {
                 try {
-                    val response = mRepository.register(userName, setReceiveMail(receiveMail))
+                    val response =
+                        mRepository.register(userName, setReceiveMail(receiveMail), tokenInput)
                     if (response.errors.isEmpty()) {
                         val dataResponse = response.dataResponse
                         val token = dataResponse.token.toString()
@@ -36,6 +39,7 @@ class RegistrationViewModel @Inject constructor(
                         val memberCode = dataResponse.memberCode.toString()
                         mRepository.saveUserInfo(token, tokenExpire, password, memberCode)
                         mRepository.saveMemberName(userName)
+                        rxPreferences.saveEmail(email)
                         mRepository.setFirstRegister()
                         withContext(Dispatchers.Main) {
                             mActionState.value = RegistrationActionState.SetNickNameSuccess
