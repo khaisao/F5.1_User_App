@@ -7,9 +7,7 @@
         android:id="@+id/rlInputEmail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_background_dialog"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
+        android:background="@color/color_background_dialog">
 
         <com.lihang.ShadowLayout
             android:id="@+id/sl_input_email"
@@ -61,6 +59,8 @@
                         style="@style/text_bold_14"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
                         android:layout_marginTop="@dimen/margin_24"
                         android:layout_marginHorizontal="@dimen/margin_24"
                         android:background="@drawable/bg_input_text"

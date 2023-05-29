@@ -4,7 +4,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/rlConsultant"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_marginEnd="@dimen/margin_3"
@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="@dimen/margin_12">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -24,7 +24,7 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_avatar"
                     android:layout_width="match_parent"
-                    android:layout_height="270dp"
+                    android:layout_height="@dimen/_239sdp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
                     android:src="@drawable/default_avt_performer"
@@ -33,6 +33,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/iv_avatar"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:background="@color/color_2A1F45"
                     android:paddingHorizontal="@dimen/margin_4dp"
                     android:paddingBottom="@dimen/padding_6dp">
@@ -166,7 +168,7 @@
                         app:layout_constraintTop_toBottomOf="@id/ll_info" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
 

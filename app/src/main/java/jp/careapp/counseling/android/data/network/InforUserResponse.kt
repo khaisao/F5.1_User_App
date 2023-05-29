@@ -1,6 +1,7 @@
 package jp.careapp.counseling.android.data.network
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 class InfoUserResponse(
     @SerializedName("status") val status: Int?,
@@ -8,4 +9,4 @@ class InfoUserResponse(
     @SerializedName("token_expire") val tokenExpire: String?,
     @SerializedName("member_code") val memberCode: String?,
     @SerializedName("password") val password: String?
-)
+): Serializable

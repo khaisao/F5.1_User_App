@@ -1,5 +1,6 @@
 package jp.careapp.counseling.android.ui.favourite
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -12,7 +13,6 @@ import jp.careapp.counseling.android.adapter.BasePagerAdapter
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.data.shareData.ShareViewModel
 import jp.careapp.counseling.android.navigation.AppNavigation
-import jp.careapp.counseling.android.ui.home.PerformerFragment
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.databinding.FragmentFavoriteMainBinding
 import javax.inject.Inject
@@ -40,6 +40,7 @@ class FavoriteMainFragment :  BaseFragment<FragmentFavoriteMainBinding, Favorite
 
     private val fragmentHistory = FavoriteFragment.newInstance(BUNDLE_KEY.TYPE_HISTORY)
     private val fragmentAllPerformerFollow = FavoriteFragment.newInstance(BUNDLE_KEY.TYPE_ALL_PERFORMER_FOLLOW_FAVORITE)
+    @SuppressLint("ResourceType")
     override fun initView() {
         super.initView()
         setupViewPager()

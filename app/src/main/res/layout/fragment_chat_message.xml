@@ -17,7 +17,7 @@
             android:src="@drawable/default_avt_performer" />
 
         <FrameLayout
-            android:background="#4D000000"
+            android:background="#990D002C"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
@@ -113,9 +113,10 @@
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </jp.careapp.counseling.android.utils.customView.DisableScrollNestedScrollView>
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </jp.careapp.counseling.android.utils.customView.DisableScrollNestedScrollView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/tool_bar"

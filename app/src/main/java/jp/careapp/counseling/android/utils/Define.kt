@@ -237,6 +237,8 @@ class BUNDLE_KEY {
         const val LAB_ID: String = "LAB_ID"
         const val IS_SHOW_FREE_MESS: String = "IS_SHOW_FREE_MESS"
         const val CALL_RESTRICTION: String = "CALL_RESTRICTION"
+        const val DATA_RESPONSE_REGISTER: String = "DATA_RESPONSE_REGISTER"
+        const val EMAIL_REGISTER: String = "EMAIL_REGISTER"
 
         // param
         const val PARAM_CATEGORY = "category"

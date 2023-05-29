@@ -341,7 +341,15 @@ class VerifyCodeFragment :
                     appNavigation.openVerifyCodeToTopScreen()
                     shareViewModel.setHaveToken(true)
                 }
-                is VerifyCodeActionState.NavigateToRegister -> appNavigation.openVerifyCodeToRegistrationScreen()
+                is VerifyCodeActionState.NavigateToRegister -> {
+                    val bundle = Bundle()
+                    bundle.putSerializable(
+                        BUNDLE_KEY.DATA_RESPONSE_REGISTER,
+                        viewModel.dataResponseRegister
+                    )
+                    bundle.putString(BUNDLE_KEY.EMAIL_REGISTER, email)
+                    appNavigation.openVerifyCodeToRegistrationScreen(bundle)
+                }
             }
         }
     }

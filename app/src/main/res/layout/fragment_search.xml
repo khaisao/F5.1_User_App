@@ -102,7 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_20"
-                        android:text="@string/not_found_performer"
+                        android:text="@string/not_found_performer_search"
                         android:textColor="@color/gray_dark" />
                 </LinearLayout>
 
