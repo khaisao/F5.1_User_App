@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_item_notification"
+        android:paddingVertical="@dimen/margin_10">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivItemIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@null"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ic_price_message" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivNavigationItem"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:contentDescription="@null"
+            app:layout_constraintBottom_toBottomOf="@+id/ivItemIcon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ivItemIcon"
+            tools:srcCompat="@drawable/ic_arrow_down_point_guide" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvItemTitle"
+            style="@style/text_bold_14"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_text_F0F0F0"
+            app:layout_constraintBottom_toBottomOf="@id/ivItemIcon"
+            app:layout_constraintEnd_toStartOf="@+id/ivNavigationItem"
+            app:layout_constraintStart_toEndOf="@id/ivItemIcon"
+            app:layout_constraintTop_toTopOf="@id/ivItemIcon"
+            tools:text="@string/message" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clPointGuide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_20"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivItemIcon"
+            tools:visibility="visible">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvItemDescription"
+                style="@style/text_14"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="@color/color_text_F0F0F0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="女の子に好きなタイミングでメッセージを送信することができます。" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvItemBronzeFeeTitle"
+                style="@style/text_bold_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_25"
+                android:gravity="center"
+                android:text="@string/bronze_jp"
+                android:textColor="@color/color_text_F0F0F0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvItemDescription" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvItemBronzeFeeValue"
+                style="@style/text_bold_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_text_F0F0F0"
+                app:layout_constraintBottom_toBottomOf="@+id/tvItemBronzeFeeTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvItemBronzeFeeTitle"
+                tools:text="100pts/通" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/white_20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvItemBronzeFeeTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvItemSilverFeeTitle"
+                style="@style/text_bold_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_31"
+                android:text="@string/silver_jp"
+                android:textColor="@color/color_text_F0F0F0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvItemBronzeFeeTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvItemSilverFeeValue"
+                style="@style/text_bold_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/color_text_F0F0F0"
+                app:layout_constraintBottom_toBottomOf="@+id/tvItemSilverFeeTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvItemSilverFeeTitle"
+                tools:text="100pts/通" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/white_20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvItemSilverFeeTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvItemGoldFeeTitle"
+                style="@style/text_bold_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_31"
+                android:text="@string/gold_jp"
+                android:textColor="@color/color_text_F0F0F0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvItemSilverFeeTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvItemGoldFeeValue"
+                style="@style/text_bold_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/color_text_F0F0F0"
+                app:layout_constraintBottom_toBottomOf="@+id/tvItemGoldFeeTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvItemGoldFeeTitle"
+                tools:text="100pts/通" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/white_20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvItemGoldFeeTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvItemPlatinumFeeTitle"
+                style="@style/text_bold_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_31"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:text="@string/platinum_jp"
+                android:textColor="@color/color_text_F0F0F0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvItemGoldFeeTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvItemPlatinumFeeValue"
+                style="@style/text_bold_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/color_text_F0F0F0"
+                app:layout_constraintBottom_toBottomOf="@+id/tvItemPlatinumFeeTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvItemPlatinumFeeTitle"
+                tools:text="100pts/通" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

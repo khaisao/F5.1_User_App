@@ -47,4 +47,15 @@
         <attr name="tv_right_search" format="string" />
         <attr name="string_hint_search" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="PointGuide">
+        <attr name="itemDrawable" format="reference" />
+        <attr name="itemTitle" format="string" />
+        <attr name="itemDescription" format="string" />
+        <attr name="itemBronzeFee" format="integer" />
+        <attr name="itemSilverFee" format="integer" />
+        <attr name="itemGoldFee" format="integer" />
+        <attr name="itemPlatinumFee" format="integer" />
+        <attr name="isMinuteCalculate" format="boolean" />
+    </declare-styleable>
 </resources>
