@@ -7,6 +7,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
+import android.view.WindowManager
 import jp.careapp.core.R
 import java.lang.ref.WeakReference
 
@@ -65,6 +66,7 @@ class LoadingDialog private constructor(private var context: Context?) {
             if (dialog.window != null) {
                 dialog.window!!
                     .setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                dialog.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
             }
             dialog.setCancelable(false)
             dialog.setCanceledOnTouchOutside(false)
