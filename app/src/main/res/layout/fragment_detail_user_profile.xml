@@ -392,15 +392,16 @@
                     android:adjustViewBounds="true"
                     android:src="@drawable/ic_ballon_call"
                     android:visibility="gone"
+                    android:layout_marginStart="@dimen/margin_5dp"
                     app:layout_constraintBottom_toTopOf="@id/line_bottom_ballon"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/gl_vertical_50" />
 
                 <ImageView
                     android:id="@+id/iv_ballon_peep"
-                    android:layout_width="160dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_8"
+                    android:layout_marginEnd="@dimen/margin_5dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/ic_ballon_peep"
                     android:visibility="gone"
@@ -413,20 +414,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.49" />
+                    app:layout_constraintGuide_percent="0.5" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/gl_vertical_66"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.67" />
+                    app:layout_constraintGuide_percent="0.66" />
 
                 <LinearLayout
                     android:id="@+id/clAction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_2"
+                    android:layout_marginStart="@dimen/margin_3"
                     android:layout_marginEnd="@dimen/margin_3"
                     android:gravity="center_vertical"
                     android:paddingVertical="@dimen/margin_6"
@@ -437,80 +438,29 @@
                         android:id="@+id/iv_message"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
-                        android:layout_marginStart="@dimen/margin_2"
                         android:layout_weight="1"
                         android:adjustViewBounds="true"
                         android:src="@drawable/ic_message_large_detail" />
 
-                    <LinearLayout
+                    <ImageView
                         android:id="@+id/ll_call_consult"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_1"
-                        android:layout_marginEnd="@dimen/margin_5dp"
+                        android:layout_height="60dp"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:src="@drawable/ic_call_small_detail"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="gone"/>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="42dp"
-                            android:adjustViewBounds="true"
-                            android:background="@drawable/bg_gradient"
-                            android:gravity="center"
-                            android:src="@drawable/ic_watch_live_stream_detail">
-
-                            <ImageView
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
-                                android:layout_marginEnd="@dimen/margin_6"
-                                android:src="@drawable/ic_call_detail" />
-
-                            <TextView
-                                style="@style/text_bold_14"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/live_viewing"
-                                android:textColor="@color/white" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <ImageView
                         android:id="@+id/ll_peep"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_5dp"
+                        android:layout_height="60dp"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:src="@drawable/ic_peep_small_detail"
                         android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="42dp"
-                            android:adjustViewBounds="true"
-                            android:background="@drawable/bg_gradient_orangered"
-                            android:gravity="center">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/margin_6"
-                                android:src="@drawable/ic_peep" />
-
-                            <TextView
-                                style="@style/text_bold_14"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/peep"
-                                android:textColor="@color/white" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
+                        android:visibility="gone"/>
 
                     <ImageView
                         android:id="@+id/iv_private_delivery"

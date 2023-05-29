@@ -695,6 +695,14 @@ class DetailUserProfileFragment :
                     llStatusViewerCount.visibility = GONE
                 }
 
+                if(status == PerformerStatus.WAITING){
+                    llCallConsult.loadImage(R.drawable.ic_call_large_detail)
+                }
+
+                if(status == PerformerStatus.LIVE_STREAM){
+                    llCallConsult.loadImage(R.drawable.ic_call_small_detail)
+                }
+
                 llCallConsult.visibility =
                     if (status == PerformerStatus.WAITING || status == PerformerStatus.LIVE_STREAM) VISIBLE else GONE
                 ivBallonPeep.visibility =

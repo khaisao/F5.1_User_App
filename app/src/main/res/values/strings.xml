@@ -539,7 +539,6 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="mic_off">マイクをオフ</string>
     <string name="speaker_on">スピーカーを\nオン</string>
     <string name="speaker_off">スピーカーを\nオフ</string>
-    <string name="msg_need_mic_permission">設定＞Careappでマイクへのアクセスを許可してください</string>
     <string name="msg_confirm_call">電話相談希望(無料メッセージ)を先\n生にお伝え頂き、受諾後に発信をお\n願い致します。</string>
     <string name="content_confirm_call">%sさんに発信します\nよろしいですか？</string>
     <string name="confirm_call">発信する</string>
