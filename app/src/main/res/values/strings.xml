@@ -3,7 +3,6 @@
     <string name="default_notification_channel_id">CareApp</string>
     <string name="incoming_call_channel_id">calling_in_app</string>
     <string name="incoming_call_channel_name">Calling In App</string>
-    <string name="app_is_calling">ケアプリオーディオ</string>
 
     <!--start screen-->
     <string name="sign_in_with_email">メールアドレスでログイン</string>
@@ -166,24 +165,7 @@
     <string name="pointButtonText">￥%1$d/%2$dpts</string>
 
     <!--   Registration-->
-    <string name="enter_your_profile_to_start">プロフィールを入力して\n早速はじめましょう！</string>
     <string name="register_complete">認証が完了しました</string>
-    <string name="change_your_profile">プロフィールはあとから変更できます</string>
-    <string name="lb_name">お名前</string>
-    <string name="lb_gender">性別</string>
-    <string name="lb_birthday">生年月日</string>
-    <string name="required">必須</string>
-    <string name="please_enter">入力してください</string>
-    <string name="please_choose">選択してください</string>
-    <string name="receive_email">メルマガ受信</string>
-    <string name="content_receive_email">メルマガ受信を許可して頂くと、ケアプリからのお得なお知らせをメールで受け取ることができます。</string>
-    <string name="receiver_notice_email">メッセージ受信通知メール</string>
-    <string name="term_and_service">利用規約</string>
-    <string name="tv_agree">に同意する</string>
-    <string name="start">この条件で検索</string>
-    <string name="un_registration">ケアプリを退会するとお持ちの●●ポイントが失効します。</string>
-    <string name="withdrawal_confirm">新しくアカウントを作り直しても体験ポイントはもらえなくなります、退会しますか？メールアドレス連携をすれば、再入会や再インストールしても同じアカウントをご利用いただけます。</string>
-    <string name="link_email">メールアドレスを連携する</string>
 
     <!--    update Profile-->
     <string name="updated_profile">プロフィールを更新しました</string>
@@ -311,18 +293,9 @@
     <string name="service">サービス</string>
     <string name="version">バージョン%s</string>
     <string name="withdrawal">退会</string>
-    <string name="EvaluateKearia">ケアプリを評価する</string>
-    <string name="AboutCharges">料金について</string>
-    <string name="BlockList">ブロックリスト</string>
-    <string name="HowToUse">使い方</string>
-    <string name="TermsOfService">利用規約</string>
     <string name="PrivacyPolicy">プライバシーポリシー</string>
-    <string name="DisplayBased">特定商取引法に基づく表示</string>
-    <string name="url_AboutCharges">ケアプリの使い方</string>
-    <!--    blocked-->
-    <string name="block_list">ブロックリスト</string>
+
     <!--    withdrawal-->
-    <string name="please_use_Celia">ケアプリをご利用いただき\n 誠にありがとうございました</string>
     <string name="finally_tks">退会手続きが完了するとお客様のアカウントデータは削除され、ログインできなくなります。\nメッセージ通知をOFFにしてアカウントを残しておく場合は<u><font color="#b47aff">こちら</font></u>から設定してください。</string>
     <string name="reason_for_withdrawal">退会理由を入力</string>
     <string name="withdraw">退会する</string>
@@ -333,8 +306,6 @@
 ※アプリのご利用を再開されたい場合は再入会のお問合せをお願いいたします。
 
 SPARK LIVEをご利用いただき誠にありがとうございました。</string>
-
-    <string name="in_app_review_error">In-app review request failed</string>
 
     <!--search-->
     <string name="cancel_search">クリア</string>
@@ -376,7 +347,6 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <!--    maintenance-->
     <string name="under_maintenance">メンテナンス中</string>
     <string name="careia_maintenance">SPARK LIVEはただいまメンテナンス中のため、ご利用いただくことができません。\nメンテナンス情報、終了時刻などはTwitterのSPARK LIVE公式アカウントにてご案内しております。</string>
-    <string name="careia_error">たいへん申し訳ございません。\n現在ケアプリをご利用いただく事ができません。\nしばらく時間をおいて、再度お試しください。\n\n緊急メンテナンスなどの場合、\nTwitter公式アカウントにてご案内しております。</string>
     <string name="error_maintenance">エラーが発生しました。</string>
 
     <!--message-->
@@ -422,7 +392,6 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <!--    handle error-->
     <string name="status_400">400 Bad Request</string>
     <string name="time_out">通信環境の良いところで再度お試し下さい。</string>
-    <string name="no_internet">ケアプリにアクセスできません。\nインターネット接続を確認してください。</string>
     <string name="retry">リトライ</string>
     <string name="general_error">エラーが発生しました。</string>
     <string name="donot_input_email">お悩みシートに絵文字は入力できません</string>
@@ -537,27 +506,11 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="later"><u>今はしない</u></string>
     <string name="update_now"><u>アップデート</u></string>
     <string name="update_notie"><u>アップデートのお知らせ</u></string>
-    <string name="update_notie_content"><u>ケアプリの新しいバージョンをご利用頂けます。引き続きアプリを安全にご利用頂くため、最新版へのアップデートをお願い致します。</u></string>
+    <string name="update_notie_content"><u>SPARK LIVEの新しいバージョンをご利用頂けます。引き続きアプリを安全にご利用頂くため、最新版へのアップデートをお願い致します。</u></string>
     <string name="credit_card_payment">クレジットカード決済</string>
     <string name="google_play_payment">Google Play決済</string>
     <string name="url_credit_payment">%s?point=%d&amp;&amp;money=%d&amp;&amp;realPoint=%d</string>
 
-    <string name="delete_account">アカウントの削除</string>
-    <string name="msg_confirm_delete_account">アカウントを削除すると、復旧することはできなくなります。削除を行ってもよろしいですか?</string>
-    <string name="please_use_Keappli">ケアプリをご利用頂き\n誠にありがとうございました。</string>
-    <string name="reason_delete_account">最後に、アカウントを削除される理由をご入力いただけましたら幸いでございます。\nまた機会がございましたらケアプリをよろしくお願いいたします。</string>
-    <string name="hint_reason_delete_account">アカウント削除の理由を入力</string>
-    <string name="confirm_delete_account">アカウントを削除する</string>
-    <string name="delete_my_account">アカウントを削除しました。</string>
-    <string name="pay_message">🔒鑑定結果・アドバイスが届いています。\nご確認をお願い致します。</string>
-    <string name="report_labo"><u>この投稿を通報する</u></string>
-    <string name="choose_reason_report">通報理由を選択</string>
-    <string name="reason_violent_content">暴力的なコンテンツ</string>
-    <string name="reason_offensive_content">不快なコンテンツ</string>
-    <string name="reason_dangerous_content">危険なコンテンツ</string>
-    <string name="reason_copyrighted_content">著作権保護コンテンツ</string>
-    <string name="enter_your_partner_info">お相手の情報を入力してください</string>
-    <string name="you_can_enter_or_change_it_later">あとから入力・変更できます。</string>
     <string name="partner_name">お相手の名前</string>
     <string name="partner_gender">お相手の性別</string>
     <string name="partner_birthday">お相手の生年月日</string>
