@@ -37,7 +37,7 @@ import jp.careapp.counseling.android.navigation.AppNavigation
 import jp.careapp.counseling.android.network.socket.MaruCastManager
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.CHANGE_TO_PARTY_MODE
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.PREMIUM_PRIVATE_MODE_REGISTER
-import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.PRIVATE_MODE_REGISTER
+import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.PRIVATE_MODE_REGISTER_REVIEW_MODE
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamMode
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel
 import jp.careapp.counseling.android.ui.live_stream.live_stream_bottom_sheet.connect_private.LiveStreamConnectPrivateListener
@@ -271,7 +271,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
 
         binding.btnPrivate.setOnClickListener {
             if (!isDoubleClick) {
-                showLiveStreamConfirmBottomSheet(PRIVATE_MODE_REGISTER, this)
+                showLiveStreamConfirmBottomSheet(PRIVATE_MODE_REGISTER_REVIEW_MODE, this)
             }
         }
 
@@ -511,7 +511,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
 
     override fun onClickButtonOKConfirmBottomSheet(mode: String) {
         when (mode) {
-            PRIVATE_MODE_REGISTER -> {
+            PRIVATE_MODE_REGISTER_REVIEW_MODE -> {
                 mViewModel.updateMode(LiveStreamViewModel.PREMIUM_PRIVATE)
             }
             PREMIUM_PRIVATE_MODE_REGISTER -> {

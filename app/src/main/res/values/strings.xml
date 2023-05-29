@@ -157,6 +157,7 @@
     <string name="buy_point_suscess">ポイント購入が完了しました。</string>
     <string name="let_buy_point">まずはポイントを購入しましょう</string>
     <string name="not_found_performer">該当の女性は見つかりませんでした</string>
+    <string name="not_found_performer_search">該当の女の子は見つかりませんでした</string>
     <string name="point_purchase">ポイント購入</string>
     <string name="point_purchase_under_1000">所持ポイントが1000ptsになりました</string>
     <string name="point_purchase_under_500">所持ポイントが500ptsになりました</string>
@@ -642,7 +643,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="peep">のぞく</string>
     <string name="go_home">ホームへ戻る</string>
 
-    <string name="you_dont_want_to_receive_an_email_for_a_long_time">1週間経ってもご連絡が届かない場合\n・迷惑フォルダに届いている\n・ご登録メールアドレスが間違っている\n・ドメイン指定受信を設定している \n　@peaklive.jpの受信を許可してください</string>
+    <string name="you_dont_want_to_receive_an_email_for_a_long_time">1週間経ってもご連絡が届かない場合\n・迷惑フォルダに届いている\n・ご登録メールアドレスが間違っている\n・ドメイン指定受信を設定している \n　@sparklive.jpの受信を許可してください</string>
     <string name="back_to_home">ホームに戻る</string>
     <string name="use_points_guide">料金説明</string>
     <string name="consumption_points">消費ポイント</string>
@@ -668,6 +669,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="premium_private_mode_register">プレミアムプライベートモードではカメラとマイクが利用可能です。1分毎の消費ポイントが変わりますので、ご注意ください。</string>
     <string name="private_mode_register_confirm">プライベートモードを申し込みますか？</string>
     <string name="private_mode_register">プライベートモードでは女の子と2人きりとなります。1分毎の消費ポイントが変わりますので、ご注意ください。</string>
+    <string name="private_mode_register_review_mode">プライベートモードではアドバイザーに1対1で相談できます。1分毎の消費ポイントが変わりますので、ご注意ください。</string>
     <string name="change_to_party_mode">パーティーモードへ移行しますか？</string>
     <string name="performer_out_confirm">パフォーマーよりプライベートモードの解除申請がありました</string>
     <string name="private_mode_connecting">プライベートモード申請中</string>

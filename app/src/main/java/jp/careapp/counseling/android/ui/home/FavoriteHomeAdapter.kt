@@ -1,4 +1,4 @@
-package jp.careapp.counseling.android.ui.favourite
+package jp.careapp.counseling.android.ui.home
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import jp.careapp.core.utils.loadImage
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.network.FavoriteResponse
+import jp.careapp.counseling.android.ui.favourite.FavoriteDiffCallBack
 import jp.careapp.counseling.android.utils.extensions.getBustSize
 import jp.careapp.counseling.android.utils.performer_extension.PerformerRankingHandler
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatus

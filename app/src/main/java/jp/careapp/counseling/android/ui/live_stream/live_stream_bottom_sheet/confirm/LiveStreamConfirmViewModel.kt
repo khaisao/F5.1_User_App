@@ -13,6 +13,7 @@ import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.CHANGE_TO_P
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.PERFORMER_OUT_CONFIRM
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.PREMIUM_PRIVATE_MODE_REGISTER
 import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.PRIVATE_MODE_REGISTER
+import jp.careapp.counseling.android.ui.live_stream.LiveStreamAction.PRIVATE_MODE_REGISTER_REVIEW_MODE
 import javax.inject.Inject
 
 const val LIVE_STREAM_CONFIRM_BOTTOM_SHEET_MODE = "LIVE_STREAM_CONFIRM_BOTTOM_SHEET_MODE"
@@ -56,6 +57,16 @@ class LiveStreamConfirmViewModel @Inject constructor(
                     R.color.color_ff288b,
                     25,
                     41
+                )
+            }
+
+            PRIVATE_MODE_REGISTER_REVIEW_MODE -> {
+                _title.value = application.getString(R.string.private_mode_register_confirm)
+                _content.value = application.applicationContext.convertStringToSpannableString(
+                    R.string.private_mode_register_review_mode,
+                    R.color.color_ff288b,
+                    29,
+                    45
                 )
             }
 
