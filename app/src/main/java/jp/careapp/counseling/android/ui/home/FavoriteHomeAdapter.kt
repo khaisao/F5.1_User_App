@@ -45,7 +45,7 @@ class FavoriteHomeAdapter(
             binding.tvName.text = consultant.name
 
             binding.ivAvatar.loadImage(
-                consultant.thumbnailImageUrl,
+                consultant.imageUrl,
                 R.drawable.default_avt_performer
             )
 

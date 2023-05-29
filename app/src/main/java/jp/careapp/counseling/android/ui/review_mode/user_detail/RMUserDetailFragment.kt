@@ -103,19 +103,9 @@ class RMUserDetailFragment : BaseFragment<FragmentRmUserDetailBinding, RMUserDet
 
         binding.btnCallVideo.setOnClickListener {
             if (!isDoubleClick) {
-                when {
-                    hasPermissions(arrayOf(Manifest.permission.RECORD_AUDIO)) -> {
-                        val status =
-                            PerformerStatusHandler.getStatus(user.callStatus ?: 0, user.chatStatus ?: 0)
-                        callingViewModel.connectLiveStream(user.code ?: "", status)
-                    }
-                    shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO) -> {
-                        showDialogNeedMicrophonePermission()
-                    }
-                    else -> {
-                        showDialogRequestMicrophonePermission()
-                    }
-                }
+                val status =
+                    PerformerStatusHandler.getStatus(user.callStatus ?: 0, user.chatStatus ?: 0)
+                callingViewModel.connectLiveStream(user.code ?: "", status)
                 viewerType = 0
                 callingViewModel.viewerStatus = 0
             }
@@ -153,37 +143,6 @@ class RMUserDetailFragment : BaseFragment<FragmentRmUserDetailBinding, RMUserDet
                     it.dismiss()
                 }
         }
-    }
-
-    private fun showDialogRequestMicrophonePermission() {
-        RMCommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-            .showDialog()
-            .setDialogTitle(R.string.msg_title_request_mic)
-            .setContent(R.string.msg_explain_request_mic)
-            .setTextPositiveButton(R.string.accept_permission)
-            .setTextNegativeButton(R.string.denied_permission)
-            .setOnPositivePressed {
-                requestPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
-                it.dismiss()
-            }.setOnNegativePressed {
-                it.dismiss()
-            }
-    }
-
-    private fun showDialogNeedMicrophonePermission() {
-        RMCommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-            .showDialog()
-            .setDialogTitle(R.string.msg_need_mic_permission)
-            .setTextPositiveButton(R.string.setting)
-            .setTextNegativeButton(R.string.cancel)
-            .setOnPositivePressed {
-                startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                    data = Uri.fromParts("package", context?.packageName, null)
-                })
-                it.dismiss()
-            }.setOnNegativePressed {
-                it.dismiss()
-            }
     }
 
     private fun showBlockBottomSheet() {
