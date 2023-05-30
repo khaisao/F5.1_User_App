@@ -40,8 +40,8 @@ class RMOnlineListViewModel @Inject constructor(
     init {
         getDummyPerformers(true)
     }
-    private val temp = arrayListOf<RMPerformerResponse>()
 
+    private val temp = arrayListOf<RMPerformerResponse>()
 
     fun getDummyPerformers(isShowLoading: Boolean = false, isLoadMore: Boolean = false) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -78,6 +78,12 @@ class RMOnlineListViewModel @Inject constructor(
                 _loadMoreState.postValue(LoadMoreState.HIDDEN_LOAD_MORE)
             }
         }
+    }
+
+    fun clearData(){
+        temp.clear()
+        _onlineListLiveData.value?.clear()
+        page = 1
     }
 
     private fun removeBlockListIfNeed(
