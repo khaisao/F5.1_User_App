@@ -34,11 +34,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/margin_32"
-                android:fontFamily="@font/hiragino_sans_w6"
                 android:gravity="center"
                 android:text="@string/register_complete"
                 android:textColor="#f0f0f0"
                 android:textSize="@dimen/text_size_20"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView6" />
