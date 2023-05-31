@@ -14,6 +14,7 @@ import jp.careapp.counseling.BuildConfig
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.network.*
 import jp.careapp.counseling.android.utils.event.NetworkEvent
+import kotlinx.coroutines.CoroutineScope
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -146,8 +147,10 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun providerNetworkEvent() =
-        NetworkEvent()
+    fun providerNetworkEvent(
+        @CoroutineScopeMain coroutineScopeMain: CoroutineScope
+    ) =
+        NetworkEvent(coroutineScopeMain)
 
     @Provides
     @Singleton

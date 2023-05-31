@@ -52,7 +52,6 @@ import jp.careapp.counseling.android.ui.review_mode.user_detail_message.UserDeta
 import jp.careapp.counseling.android.ui.review_mode.user_detail_message.UserDetailMsgViewModel.Companion.ENABLE_LOAD_MORE
 import jp.careapp.counseling.android.ui.review_mode.user_detail_message.UserDetailMsgViewModel.Companion.HIDDEN_LOAD_MORE
 import jp.careapp.counseling.android.utils.*
-import jp.careapp.counseling.android.utils.extensions.hasPermissions
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler
 import jp.careapp.counseling.databinding.FragmentRmUserDetailMessageBinding
 import jp.careapp.counseling.databinding.LlRvUserDetailBottomSheetBinding
