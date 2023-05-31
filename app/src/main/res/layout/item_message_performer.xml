@@ -42,7 +42,7 @@
             android:id="@+id/content_message_tv"
             style="@style/text_14"
             android:layout_width="0dp"
-            android:minWidth="52dp"
+            android:minWidth="44dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_8"
             android:paddingHorizontal="@dimen/margin_15"

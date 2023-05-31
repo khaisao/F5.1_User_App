@@ -1,13 +1,11 @@
 package jp.careapp.counseling.android.utils.event
 
-import android.os.Handler
-import android.os.Looper
 import jp.careapp.counseling.android.data.network.ApiException
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
+import jp.careapp.counseling.android.module.CoroutineScopeMain
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 sealed class NetworkState {
@@ -23,23 +21,16 @@ sealed class NetworkState {
     data class GENERIC(val exception: ApiException) : NetworkState()
 }
 
-class NetworkEvent @Inject constructor() {
+class NetworkEvent @Inject constructor(
+    @CoroutineScopeMain private val coroutineScopeMain: CoroutineScope,
+) {
+    private val _observableNetworkState: MutableStateFlow<NetworkState> =
+        MutableStateFlow(NetworkState.INITIALIZE)
+    val observableNetworkState: StateFlow<NetworkState> get() = _observableNetworkState
 
-    @ExperimentalCoroutinesApi
-    private val events: ConflatedBroadcastChannel<NetworkState> by lazy {
-        ConflatedBroadcastChannel<NetworkState>().also { channel ->
-            channel.offer(NetworkState.INITIALIZE)
-        }
-    }
-
-    @FlowPreview
-    @ExperimentalCoroutinesApi
-    val observableNetworkState: Flow<NetworkState> = events.asFlow()
-
-    @ExperimentalCoroutinesApi
     fun publish(networkState: NetworkState) {
-        Handler(Looper.getMainLooper()).post {
-            events.offer(networkState)
+        coroutineScopeMain.launch {
+            _observableNetworkState.value = networkState
         }
     }
 }

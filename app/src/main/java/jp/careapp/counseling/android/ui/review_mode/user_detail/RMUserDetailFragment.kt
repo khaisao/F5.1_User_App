@@ -33,7 +33,6 @@ import jp.careapp.counseling.android.ui.review_mode.top.RMTopViewModel
 import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.SocketInfo
 import jp.careapp.counseling.android.utils.customView.ToolBarCommon
-import jp.careapp.counseling.android.utils.extensions.hasPermissions
 import jp.careapp.counseling.android.utils.performer_extension.PerformerStatusHandler
 import jp.careapp.counseling.databinding.FragmentRmUserDetailBinding
 import jp.careapp.counseling.databinding.LlRvUserDetailBottomSheetBinding

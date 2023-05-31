@@ -56,6 +56,7 @@ class RMOnlineListFragment : BaseFragment<FragmentRmOnlineListBinding, RMOnlineL
         binding.srOnline.apply {
             setOnRefreshListener {
                 isRefreshing = false
+                viewModel.clearData()
                 viewModel.getDummyPerformers(true)
             }
         }

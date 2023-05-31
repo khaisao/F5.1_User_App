@@ -2,22 +2,15 @@ package jp.careapp.counseling.android.utils.extensions
 
 import android.app.Dialog
 import android.content.Context
-import android.content.pm.PackageManager
 import android.graphics.Rect
-import android.graphics.Typeface
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import androidx.constraintlayout.widget.Group
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.realm.RealmModel
@@ -79,33 +72,11 @@ fun ViewGroup.howFarDownIs(descendant: View): Int? {
 }
 
 fun Context.isNetworkAvailable(): Boolean {
-    val manager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    val connection = manager.activeNetworkInfo
-    return connection != null && connection.isConnectedOrConnecting
-}
-
-fun ChipGroup.updateTextStyleChecked() {
-    for (i in 0 until childCount) {
-        val chip: Chip = getChildAt(i) as Chip
-        if (chip.isChecked) {
-            chip.setTypeface(chip.typeface, Typeface.BOLD)
-        } else {
-            chip.setTypeface(null, Typeface.NORMAL)
-        }
-
-    }
-}
-
-fun RadioGroup.updateTextStyleChecked() {
-    for (i in 0 until childCount) {
-        (getChildAt(i) as? RadioButton)?.let { radio ->
-            if (radio.isChecked) {
-                radio.setTypeface(radio.typeface, Typeface.BOLD)
-            } else {
-                radio.setTypeface(radio.typeface, Typeface.BOLD)
-            }
-        }
-    }
+    val connectivityManager =
+        this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val network = connectivityManager.activeNetwork
+    val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
+    return networkCapabilities != null && networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
 }
 
 fun Fragment.dismissAllDialog() {
@@ -119,33 +90,6 @@ fun Fragment.dismissAllDialog() {
                 }
             }
     }
-}
-
-fun Fragment.hasPermissions(permissions: Array<String>): Boolean = permissions.all {
-    ActivityCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
-}
-
-fun Group.setAllOnClickListener(listener: View.OnClickListener?) {
-    referencedIds.forEach { id ->
-        rootView.findViewById<View>(id).setOnClickListener(listener)
-    }
-}
-
-fun Int.toDurationTime(): String {
-    val hours = this / 3600
-    val secondsLeft = this - hours * 3600
-    val minutes = secondsLeft / 60
-    val seconds = secondsLeft - minutes * 60
-    var formattedTime = ""
-    if (hours > 0) {
-        if (hours < 10) formattedTime += "0"
-        formattedTime += "$hours:"
-    }
-    if (minutes < 10) formattedTime += "0"
-    formattedTime += "$minutes:"
-    if (seconds < 10) formattedTime += "0"
-    formattedTime += seconds
-    return formattedTime
 }
 
 fun String.toPayLength() = this.replace("\n", "").replace("\r", "").trim().length
