@@ -98,12 +98,13 @@
                         android:src="@drawable/iv_avatar_performer_default" />
 
                     <TextView
-                        style="@style/text_14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_20"
+                        android:fontFamily="@font/hira_kaku_w3"
                         android:text="@string/not_found_performer_search"
-                        android:textColor="@color/gray_dark" />
+                        android:textColor="@color/gray_dark"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
