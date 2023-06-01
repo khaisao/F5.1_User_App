@@ -42,6 +42,21 @@ class ListTypeRankingFragment :
             typeRanking = it.getInt(BUNDLE_KEY.TYPE_RANKING)
         }
 
+        when (typeRanking) {
+            BUNDLE_KEY.TYPE_DAILY -> {
+                binding.scrollViewRanking.setBackgroundResource(R.drawable.bg_rank_daily_behind)
+            }
+            BUNDLE_KEY.TYPE_WEEKLY -> {
+                binding.scrollViewRanking.setBackgroundResource(R.drawable.bg_rank_weekly_behind)
+            }
+            BUNDLE_KEY.TYPE_MONTHLY -> {
+                binding.scrollViewRanking.setBackgroundResource(R.drawable.bg_rank_monthly_behind)
+            }
+            else -> {
+                binding.scrollViewRanking.setBackgroundResource(R.drawable.bg_rank_best_behind)
+            }
+        }
+
         ranking13Adapter = RankingTopAdapter(
             requireContext(),
             onClickListener = { position ->
