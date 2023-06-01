@@ -11,13 +11,11 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:id="@+id/scrollViewRanking"
-            android:layout_height="match_parent"
-            android:background="@color/color_background_common">
+            android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/color_background_common">
+                android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_ranking_13"

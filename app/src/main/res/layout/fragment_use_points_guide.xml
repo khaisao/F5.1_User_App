@@ -5,12 +5,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
+        android:background="#0d002c"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#0d002c"
             android:orientation="vertical"
             tools:context=".android.ui.use_points_guide.UsePointsGuideFragment">
 
@@ -48,6 +48,32 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/toolBarDivider" />
 
+            <TextView
+                android:id="@+id/tv_subTitle"
+                style="@style/text_14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                android:lineSpacingExtra="@dimen/margin_3"
+                android:text="@string/pricing_varies_by_stage"
+                android:textColor="@color/color_F0F0F0"
+                app:layout_constraintEnd_toEndOf="@id/tvHeader"
+                app:layout_constraintStart_toStartOf="@id/tvHeader"
+                app:layout_constraintTop_toBottomOf="@id/tvHeader" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNote"
+                style="@style/text_10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:gravity="center_vertical"
+                android:text="@string/use_points_note"
+                android:textColor="@color/color_B2A9CC"
+                app:layout_constraintEnd_toEndOf="@+id/tvHeader"
+                app:layout_constraintStart_toStartOf="@+id/tvHeader"
+                app:layout_constraintTop_toBottomOf="@+id/tv_subTitle" />
+
             <jp.careapp.counseling.android.utils.customView.PointGuideView
                 android:id="@+id/pgvMessenger"
                 android:layout_width="0dp"
@@ -62,7 +88,7 @@
                 app:itemTitle="@string/message"
                 app:layout_constraintEnd_toEndOf="@+id/tvHeader"
                 app:layout_constraintStart_toStartOf="@+id/tvHeader"
-                app:layout_constraintTop_toBottomOf="@+id/tvHeader" />
+                app:layout_constraintTop_toBottomOf="@+id/tvNote" />
 
             <jp.careapp.counseling.android.utils.customView.PointGuideView
                 android:id="@+id/pgvLiveStream"
@@ -148,19 +174,6 @@
                 app:layout_constraintStart_toStartOf="@+id/tvHeader"
                 app:layout_constraintTop_toBottomOf="@+id/pgvPremiumPrivate" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvNote"
-                style="@style/text_10"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_16"
-                android:gravity="center_vertical"
-                android:text="@string/use_points_note"
-                android:textColor="@color/color_B2A9CC"
-                app:layout_constraintEnd_toEndOf="@+id/tvHeader"
-                app:layout_constraintStart_toStartOf="@+id/tvHeader"
-                app:layout_constraintTop_toBottomOf="@+id/pgvWhisper" />
-
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnBuyPoints"
                 android:layout_width="0dp"
@@ -178,7 +191,7 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvNote"
+                app:layout_constraintTop_toBottomOf="@+id/pgvWhisper"
                 app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
