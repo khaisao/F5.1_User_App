@@ -64,7 +64,7 @@
     <string name="content_notification">%1$sさんから\nメッセージが届きました</string>
 
     <string name="title_navigation_rank">ランキング</string>
-    <string name="title_navigation_list_message">相談履歴</string>
+    <string name="title_navigation_list_message">メッセージ</string>
     <string name="title_navigation_my_page">マイメニュー</string>
 
     <!-- start Screen-->
