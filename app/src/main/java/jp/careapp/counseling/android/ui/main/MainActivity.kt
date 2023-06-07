@@ -227,7 +227,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                                     TYPE_DIALOG.UN_AUTHEN
                                                 )
                                                     .showDialog()
-                                                    .setDialogTitle(R.string.wrong_email_address_or_password)
+                                                    .setDialogTitle(R.string.already_login_another_device)
                                                     .setTextOkButton(R.string.text_OK)
                                                     .setOnOkButtonPressed {
                                                         it.dismiss()
@@ -241,7 +241,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                                     TYPE_DIALOG.UN_AUTHEN
                                                 )
                                                     .showDialog()
-                                                    .setDialogTitle(R.string.wrong_email_address_or_password)
+                                                    .setDialogTitle(R.string.already_login_another_device)
                                                     .setTextPositiveSmallButton(R.string.text_OK)
                                                     .setOnPositiveSmallPressed {
                                                         it.dismiss()
@@ -390,6 +390,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                     try {
                                         dataError = status.exception.errors.joinToString()
                                         if (dataError == getString(R.string.wrong_email_address_or_password)) {
+                                            rxPreferences.logout()
                                             dataError =
                                                 getString(R.string.already_login_another_device)
                                         }
