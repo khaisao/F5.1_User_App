@@ -92,6 +92,8 @@ class AppPreferences @Inject constructor(
 
     override fun logout() {
         remove(PREF_KEY_UNREAD_MESSAGE)
+        remove(PREF_PARAM_EMAIL_USER)
+        remove(PREF_PARAM_PASSWORD)
     }
 
     override fun saveEmail(email: String) = put(PREF_PARAM_EMAIL_USER, email)

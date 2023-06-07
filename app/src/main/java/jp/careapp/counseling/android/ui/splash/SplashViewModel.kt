@@ -160,10 +160,10 @@ class SplashViewModel @ViewModelInject constructor(
             isLoading.value = true
             val deviceName = Build.MODEL
             try {
-                loginResult.value = rxPreferences.getEmail()?.let {
-                    apiInterface.login(
-                        it,
-                        rxPreferences.getPassword() ?: "",
+                if(!rxPreferences.getEmail().isNullOrEmpty() && !rxPreferences.getPassword().isNullOrEmpty()){
+                    loginResult.value = apiInterface.login(
+                        rxPreferences.getEmail()!!,
+                        rxPreferences.getPassword()!!,
                         deviceName
                     )
                 }
