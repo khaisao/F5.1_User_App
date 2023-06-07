@@ -398,6 +398,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="donot_input_email">お悩みシートに絵文字は入力できません</string>
     <string name="enter_the_reason">具体的にお問い合わせ内容をご記入ください。</string>
     <string name="wrong_email_address_or_password">メールアドレスまたはパスワードが違います。</string>
+    <string name="already_login_another_device">別の端末でログインしたため、ログアウトされました。</string>
 
     <string name="your_name_not_enter">お名前が入力されていません</string>
     <string name="authentication_code_incorrect">認証コードが正しくありません</string>

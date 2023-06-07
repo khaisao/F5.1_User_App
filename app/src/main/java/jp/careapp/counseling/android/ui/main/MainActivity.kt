@@ -389,6 +389,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                     var dataError: String
                                     try {
                                         dataError = status.exception.errors.joinToString()
+                                        if (dataError == getString(R.string.wrong_email_address_or_password)) {
+                                            dataError =
+                                                getString(R.string.already_login_another_device)
+                                        }
                                     } catch (e: java.lang.Exception) {
                                         dataError = ""
                                         networkEvent.publish(NetworkState.ERROR)
