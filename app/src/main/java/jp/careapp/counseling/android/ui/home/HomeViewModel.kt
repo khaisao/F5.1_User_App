@@ -57,7 +57,9 @@ class HomeViewModel @Inject constructor(
             try {
                 apiInterface.getListBanner().apply {
                     if (errors.isEmpty()) {
-                        _listBanner.postValue(dataResponse)
+                        if(dataResponse != null){
+                            _listBanner.postValue(dataResponse!!)
+                        }
                     }
                 }
             } catch (e: Exception) {

@@ -50,55 +50,55 @@
 
                 <data
                     android:host="notice"
-                    android:scheme="careapp" />
+                    android:scheme="sparklive" />
                 <data
                     android:host="ranking"
-                    android:scheme="careapp" />
+                    android:scheme="sparklive" />
                 <data
                     android:host="buypoint"
                     android:scheme="sparklive" />
                 <data
                     android:host="freepoint"
-                    android:scheme="careapp" />
+                    android:scheme="sparklive" />
                 <data
                     android:host="counselor"
-                    android:scheme="careapp" />
+                    android:scheme="sparklive" />
                 <data
                     android:host="mymenu"
-                    android:scheme="careapp" />
+                    android:scheme="sparklive" />
                 <data
                     android:host="labo"
-                    android:scheme="careapp" />
+                    android:scheme="sparklive" />
                 <data
                     android:host="setting_notification"
-                    android:scheme="careapp" />
+                    android:scheme="sparklive" />
                 <data
                     android:host="edit_seet"
-                    android:scheme="careapp" />
+                    android:scheme="sparklive" />
                 <data
                     android:host="message"
-                    android:scheme="careapp" />
+                    android:scheme="sparklive" />
                 <data
                     android:host="payment_method"
-                    android:scheme="careapp" />
+                    android:scheme="sparklive" />
                 <data
                     android:host="payment_01"
-                    android:scheme="careapp" />
+                    android:scheme="sparklive" />
                 <data
                     android:host="payment_02"
-                    android:scheme="careapp" />
+                    android:scheme="sparklive" />
                 <data
                     android:host="payment_03"
-                    android:scheme="careapp" />
+                    android:scheme="sparklive" />
                 <data
                     android:host="payment_04"
-                    android:scheme="careapp" />
+                    android:scheme="sparklive" />
                 <data
                     android:host="blog"
-                    android:scheme="careapp" />
+                    android:scheme="sparklive" />
                 <data
                     android:host="contact"
-                    android:scheme="careapp" />
+                    android:scheme="sparklive" />
             </intent-filter>
 
             <intent-filter android:autoVerify="true">
@@ -108,7 +108,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="careapp.onelink.me"
+                    android:host="sparklive.onelink.me"
                     android:pathPrefix="/JSsf"
                     android:scheme="https" />
             </intent-filter>
