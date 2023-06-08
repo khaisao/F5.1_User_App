@@ -90,15 +90,15 @@ android {
             buildConfigField "String", "WS_ORIGIN", "\"https://web.sparklive.jp\""
             buildConfigField "String", "WS_OWNER", "\"sparklive\""
             buildConfigField "String", "WEB_DOMAIN", "\"https://web.sparklive.jp\""
-            buildConfigField "String", "WEB_PURCHASE_DOMAIN", "\"https://pay.careapp.jp\""
+            buildConfigField "String", "WEB_PURCHASE_DOMAIN", "\"https://pay.sparklive.jp\""
             buildConfigField "String", "ADJUST_APP_TOKEN", "\"u9iestwac3r4\""
             buildConfigField "String", "REGISTRATION_EVENT_TOKEN", "\"9h0pzd\""
             buildConfigField "String", "REGISTRATION_EVENT_TOKEN_2", "\"35yund\""
             buildConfigField "String", "IN_APP_PURCHASE_EVENT_TOKEN", "\"v9fp8y\""
             buildConfigField "String", "ADJUST_EVENT_TOKEN", "\"e3czfn\""
             buildConfigField "String", "APPS_FLYER_APP_ID", "\"jp.slapp.android\""
-            buildConfigField "String", "URL_GET_CALL_CONFIG", "\"https://app.careapp.jp/\""
-            buildConfigField "String", "WS_URL_LOGIN_CALL", "\"wss://sc.careapp.jp/jetty_flax/login/\""
+            buildConfigField "String", "URL_GET_CALL_CONFIG", "\"https://app.sparklive.jp/\""
+            buildConfigField "String", "WS_URL_LOGIN_CALL", "\"wss://sc.sparklive.jp/jetty_flax/login/\""
             buildConfigField "String", "BROWSER_DOMAIN", "\"https://counselor.careapp.jp/\""
 
             signingConfig signingConfigs.release
@@ -117,6 +117,10 @@ android {
 
     buildFeatures {
         dataBinding = true
+    }
+
+    lintOptions {
+        disable "Instantiatable"
     }
 }
 

@@ -66,11 +66,11 @@ class Define {
         const val URL_LIVE_STREAM_POINT_PURCHASE = "${BuildConfig.WEB_DOMAIN}/popup/payment/credit"
 
         // TODO (Change  owner_code)
-        //  const val OWNER_CODE = 6257353
-        const val OWNER_CODE = 249085
+          const val OWNER_CODE = 6257353
+//        const val OWNER_CODE = 249085
         const val APP_CODE = "SparkLiveAndroid"
-        const val PREFIX_CARE_APP = "careapp://"
-        const val CALL_BACK_BUY_POINT_GOOGLE_ = "careapp://buypoint"
+        const val PREFIX_CARE_APP = "sparklive://"
+        const val CALL_BACK_BUY_POINT_GOOGLE_ = "sparklive://buypoint"
         const val CALL_BACK_BUY_POINT_CREDIT_CLOSE = "sparklive://close"
         const val CALL_BACK_BUY_POINT_PAYPAY = "careapp://mymenu"
         const val TYPE_ERROR = "ERROR"
@@ -177,7 +177,7 @@ class Define {
             const val SENDER_CODE: String = "sender_code"
             const val SUPPORTER_CODE: String = "0"
             const val CODE_OPEN_CHAT_SUPPORTER = ""
-            const val ONE_LINK = "careapp.onelink.me"
+            const val ONE_LINK = "sparklive.onelink.me"
             const val DEEP_LINK_VALUE = "deep_link_value"
             const val DEEP_LINK_URL_SCHEME = "af_dp"
         }

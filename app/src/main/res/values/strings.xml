@@ -85,7 +85,7 @@
     <string name="correct_your_email_address">メールアドレスを修正</string>
     <string name="please_check_email_reception_setting">メールの受信設定を確認してください</string>
     <string name="description_information_help"><![CDATA[<font color=\'#F0F0F0\'>お客様が迷惑メール対策などで、ドメイン指定受信を設定されている場合に、メールが正しく届かないことがあります。</font><br />
-    「 <font color=\'#FF2875\'><b>no-reply@mail.careapp.jp</b></font> 」<font color=\'#E3DFEF\'>からのメールを受信できるように設定をお願いいたします。詳しくはヘルプをご参照ください。<br />
+    「 <font color=\'#FF2875\'><b>no-reply@mail.sparklive.jp</b></font> 」<font color=\'#E3DFEF\'>からのメールを受信できるように設定をお願いいたします。詳しくはヘルプをご参照ください。<br />
      異常を設定完了後に「確認用メールを再送信」ボタンからメールを受け取ってください。</font>]]></string>
     <string name="resend_confirmation_email">確認用メールを再送信</string>
     <string name="above_method_not_solve_problem">上記の方法で解決しない場合</string>
@@ -236,7 +236,7 @@
     <string name="tks_inquiry">お問い合わせありがとうございます</string>
     <string name="we_will_contact_you">数日以内にご登録メールアドレス宛にご連絡いたしますので、今しばらくお待ちくださいませ。</string>
     <string name="if_you_do_not_receive">1週間経ってもご連絡が届かない場合</string>
-    <string name="receive_a_message">・迷惑フォルダに届いている\n・ご登録メールアドレスが間違っている\n・ドメイン指定受信を設定している\n  @careapp.jpの受信を許可してください</string>
+    <string name="receive_a_message">・迷惑フォルダに届いている\n・ご登録メールアドレスが間違っている\n・ドメイン指定受信を設定している\n  @sparklive.jpの受信を許可してください</string>
     <string name="please_select">選択してください</string>
     <string name="contact_content_with_code">会員CODE：%s\n\n%s</string>
 
