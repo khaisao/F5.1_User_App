@@ -6,14 +6,13 @@ import com.appsflyer.AFInAppEventType
 import com.appsflyer.AppsFlyerLib
 import com.appsflyer.attribution.AppsFlyerRequestListener
 import jp.careapp.counseling.BuildConfig
-import jp.careapp.counseling.android.utils.AdjustUtils
 import timber.log.Timber
 import kotlin.collections.HashMap
 
 class AppsFlyerUtil {
 
     companion object {
-        private const val AF_DEV_KEY = "m2VAir6FhN62ynjwuJG2yC"
+        private const val AF_DEV_KEY = BuildConfig.AF_DEV_KEY;
         private const val TAG = "Appsflyer"
 
         private lateinit var appsFlyer: AppsFlyerLib

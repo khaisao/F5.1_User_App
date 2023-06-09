@@ -551,7 +551,7 @@ class ChatMessageViewModel @ViewModelInject constructor(
             append("&roomCode=$performerCode")
             append("&token=${rxPreferences.getCallToken()}")
             append("&performerCode=$performerCode")
-            append("&ownerCode=${Define.OWNER_CODE}")
+            append("&ownerCode=${BuildConfig.OWNER_CODE}")
         }
         flaxWebSocketManager.flaxConnect(urlStartCall, this@ChatMessageViewModel)
     }

@@ -103,7 +103,7 @@ class RMCallingViewModel @Inject constructor(
                         append("&roomCode=$performerCode")
                         append("&token=$token")
                         append("&performerCode=$performerCode")
-                        append("&ownerCode=${Define.OWNER_CODE}")
+                        append("&ownerCode=${BuildConfig.OWNER_CODE}")
                     }
                     flaxWebSocketManager.flaxConnect(urlStartCall, this@RMCallingViewModel)
                     lastPoint = rxPreferences.getPoint()

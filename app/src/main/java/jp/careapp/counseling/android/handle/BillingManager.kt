@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import com.android.billingclient.api.*
 import dagger.hilt.android.qualifiers.ApplicationContext
+import jp.careapp.counseling.BuildConfig
 import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.model.buy_point.ItemPoint
 import jp.careapp.counseling.android.network.ApiInterface
@@ -94,7 +95,7 @@ class BillingManager @Inject constructor(
         statusBilling = ERROR
         try {
             val jsonObject = JSONObject()
-            jsonObject.put(BUNDLE_KEY.OWNER_CODE, Define.OWNER_CODE)
+            jsonObject.put(BUNDLE_KEY.OWNER_CODE, BuildConfig.OWNER_CODE)
             jsonObject.put(BUNDLE_KEY.MEMBER_CODE, rxPreferences.getMemberCode())
             jsonObject.put(BUNDLE_KEY.APP_CODE, Define.APP_CODE)
             jsonObject.put(BUNDLE_KEY.RECEIPT, JSONObject(purchase.originalJson))

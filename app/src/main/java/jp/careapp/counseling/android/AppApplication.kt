@@ -4,14 +4,12 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
-import com.adjust.sdk.Adjust
 import dagger.hilt.android.HiltAndroidApp
 import io.realm.DynamicRealm
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmMigration
 import jp.careapp.counseling.BuildConfig
-import jp.careapp.counseling.android.utils.AdjustUtils
 import jp.careapp.counseling.android.utils.appsflyer.AppsFlyerUtil
 import timber.log.Timber
 import javax.inject.Inject
@@ -43,20 +41,15 @@ class AppApplication @Inject constructor() : Application() {
             .deleteRealmIfMigrationNeeded().build()
         Realm.setDefaultConfiguration(config)
 
-        AdjustUtils.setUpTrackingAdjust(this)
         registerActivityLifecycleCallbacks(AdjustLifecycleCallbacks())
 
         AppsFlyerUtil.createAppsFlyer(this)
     }
 
     private class AdjustLifecycleCallbacks : ActivityLifecycleCallbacks {
-        override fun onActivityResumed(activity: Activity) {
-            Adjust.onResume()
-        }
+        override fun onActivityResumed(activity: Activity) {}
 
-        override fun onActivityPaused(activity: Activity) {
-            Adjust.onPause()
-        }
+        override fun onActivityPaused(activity: Activity) {}
 
         override fun onActivityStarted(activity: Activity) {}
 

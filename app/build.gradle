@@ -57,6 +57,8 @@ android {
             buildConfigField "String", "URL_GET_CALL_CONFIG", "\"https://app-sl.flax5.com/\""
             buildConfigField "String", "WS_URL_LOGIN_CALL", "\"wss://sc-sl.flax5.com/jetty_flax/login/\""
             buildConfigField "String", "BROWSER_DOMAIN", "\"https://counselor.flax5.com/\""
+            buildConfigField "String", "AF_DEV_KEY", "\"m2VAir6FhN62ynjwuJG2yC\""
+            buildConfigField "String", "OWNER_CODE", "\"249085\""
         }
 
         stagging {
@@ -82,6 +84,9 @@ android {
             buildConfigField "String", "URL_GET_CALL_CONFIG", "\"https://app-sl.flax5.com/\""
             buildConfigField "String", "WS_URL_LOGIN_CALL", "\"wss://sc-sl.flax5.com/jetty_flax/login/\""
             buildConfigField "String", "BROWSER_DOMAIN", "\"https://counselor.flax5.com/\""
+            buildConfigField "String", "AF_DEV_KEY", "\"m2VAir6FhN62ynjwuJG2yC\""
+            buildConfigField "String", "OWNER_CODE", "\"249085\""
+
         }
 
         release {
@@ -100,6 +105,8 @@ android {
             buildConfigField "String", "URL_GET_CALL_CONFIG", "\"https://app.sparklive.jp/\""
             buildConfigField "String", "WS_URL_LOGIN_CALL", "\"wss://sc.sparklive.jp/jetty_flax/login/\""
             buildConfigField "String", "BROWSER_DOMAIN", "\"https://counselor.careapp.jp/\""
+            buildConfigField "String", "AF_DEV_KEY", "\"nJT5tjqhr6pb2SwYZPhYaS\""
+            buildConfigField "String", "OWNER_CODE", "\"6257353\""
 
             signingConfig signingConfigs.release
             minifyEnabled false
@@ -195,7 +202,6 @@ dependencies {
     implementation libraries.badge
 
     //tracking adjust
-    implementation libraries.adjust
     implementation libraries.installreferrer
     implementation libraries.adsIdentifier
 
