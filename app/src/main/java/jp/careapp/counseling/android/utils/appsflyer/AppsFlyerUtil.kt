@@ -13,7 +13,7 @@ import kotlin.collections.HashMap
 class AppsFlyerUtil {
 
     companion object {
-        private const val AF_DEV_KEY = "m2VAir6FhN62ynjwuJG2yC"
+        private const val AF_DEV_KEY = BuildConfig.AF_DEV_KEY;
         private const val TAG = "Appsflyer"
 
         private lateinit var appsFlyer: AppsFlyerLib
