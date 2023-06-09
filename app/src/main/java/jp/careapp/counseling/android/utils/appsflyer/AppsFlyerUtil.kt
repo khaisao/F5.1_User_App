@@ -6,7 +6,6 @@ import com.appsflyer.AFInAppEventType
 import com.appsflyer.AppsFlyerLib
 import com.appsflyer.attribution.AppsFlyerRequestListener
 import jp.careapp.counseling.BuildConfig
-import jp.careapp.counseling.android.utils.AdjustUtils
 import timber.log.Timber
 import kotlin.collections.HashMap
 

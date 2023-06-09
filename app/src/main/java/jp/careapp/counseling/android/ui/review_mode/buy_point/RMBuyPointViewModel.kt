@@ -11,7 +11,6 @@ import jp.careapp.counseling.android.data.pref.RxPreferences
 import jp.careapp.counseling.android.handle.BillingManager
 import jp.careapp.counseling.android.model.buy_point.ItemPoint
 import jp.careapp.counseling.android.network.ApiInterface
-import jp.careapp.counseling.android.utils.AdjustUtils
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,11 +33,6 @@ class RMBuyPointViewModel @Inject constructor(
                 override fun statusBilling(status: Int) {
                     when (status) {
                         BillingManager.SUCCESS -> {
-                            if (itemSelected != null) {
-                                val price = itemSelected!!.money.trim().replace("¥", "")
-                                    .replace(",", "").toDouble()
-                                AdjustUtils.trackEventInAppPurchase(price)
-                            }
                             statusBuyPoint.postValue(true)
                         }
                         BillingManager.LOADING -> {

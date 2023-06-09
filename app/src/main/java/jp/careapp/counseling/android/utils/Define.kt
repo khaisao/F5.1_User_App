@@ -65,9 +65,6 @@ class Define {
             "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/stripe/buy-point-list.html"
         const val URL_LIVE_STREAM_POINT_PURCHASE = "${BuildConfig.WEB_DOMAIN}/popup/payment/credit"
 
-        // TODO (Change  owner_code)
-          const val OWNER_CODE = 6257353
-//        const val OWNER_CODE = 249085
         const val APP_CODE = "SparkLiveAndroid"
         const val PREFIX_CARE_APP = "sparklive://"
         const val CALL_BACK_BUY_POINT_GOOGLE_ = "sparklive://buypoint"
@@ -529,7 +526,7 @@ object SocketInfo {
     const val HEADER_ORIGIN = "Origin"
 
     const val URL_GET_CALL_CONFIG =
-        BuildConfig.URL_GET_CALL_CONFIG + "flax/fss/${Define.OWNER_CODE}/memberConfig.json"
+        BuildConfig.URL_GET_CALL_CONFIG + "flax/fss/${BuildConfig.OWNER_CODE}/memberConfig.json"
 
     // AUTH
     const val AUTH_OWN_NAME = "ownerName"
