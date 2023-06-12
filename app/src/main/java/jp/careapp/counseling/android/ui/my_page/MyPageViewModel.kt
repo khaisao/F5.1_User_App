@@ -115,7 +115,9 @@ class MyPageViewModel @Inject constructor(
                             dataResponse.birth,
                             dataResponse.sex,
                             dataResponse.point,
-                            dataResponse.pushMail
+                            dataResponse.pushMail,
+                            dataResponse.receiveNoticeMail,
+                            dataResponse.receiveNewsletterMail
                         )
                         withContext(Dispatchers.Main) {
                             _memberName.value = mRepository.getMemberNickName()

@@ -82,7 +82,9 @@ class HomeViewModel @Inject constructor(
                             dataResponse.birth,
                             dataResponse.sex,
                             dataResponse.point,
-                            dataResponse.pushMail
+                            dataResponse.pushMail,
+                            dataResponse.receiveNoticeMail,
+                            dataResponse.receiveNewsletterMail
                         )
                     }
                 } catch (_: Exception) {

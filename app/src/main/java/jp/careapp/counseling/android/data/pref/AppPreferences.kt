@@ -8,10 +8,15 @@ import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.qualifiers.ApplicationContext
 import jp.careapp.core.utils.Constants
 import jp.careapp.counseling.android.data.model.CreditItem
-import jp.careapp.counseling.android.data.network.*
+import jp.careapp.counseling.android.data.network.CategoryResponse
+import jp.careapp.counseling.android.data.network.ConfigCallResponse
+import jp.careapp.counseling.android.data.network.FreeTemplateResponse
+import jp.careapp.counseling.android.data.network.LastBuyLog
+import jp.careapp.counseling.android.data.network.MemberResponse
+import jp.careapp.counseling.android.data.network.TroubleSheetResponse
+import jp.careapp.counseling.android.data.network.defaultConfigCall
 import jp.careapp.counseling.android.ui.review_mode.setting_push.RMSettingPushFragment.Companion.PUSH_RECEIVE
 import jp.careapp.counseling.android.utils.Define.Companion.NORMAL_MODE
-import jp.careapp.counseling.android.utils.MODE_USER
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -55,6 +60,8 @@ class AppPreferences @Inject constructor(
         const val PREF_KEY_MEMBER_BIRTH = "PREF_KEY_MEMBER_BIRTH"
         const val PREF_KEY_MEMBER_SEX = "PREF_KEY_MEMBER_SEX"
         const val PREF_KEY_MEMBER_STATUS_NOTIFICATION = "PREF_KEY_MEMBER_STATUS_NOTIFICATION"
+        const val PREF_KEY_MEMBER_STATUS_RECEIVE_NOTICE_MAIL = "PREF_KEY_MEMBER_STATUS_RECEIVE_NOTICE_MAIL"
+        const val PREF_KEY_MEMBER_STATUS_RECEIVE_NEWSLETTER_NOTICE_MAIL = "PREF_KEY_MEMBER_STATUS_RECEIVE_NEWSLETTER_NOTICE_MAIL"
         const val PREF_KEY_MEMBER_POINT = "PREF_KEY_MEMBER_POINT"
     }
 
@@ -401,7 +408,9 @@ class AppPreferences @Inject constructor(
         birth: String,
         sex: Int,
         point: Int,
-        statusNotification: Int
+        statusNotification: Int,
+        statusNoticeMail: Int,
+        statusNewsLetterMail: Int
     ) {
         mPrefs.edit().apply {
             putString(PREF_KEY_NICK_NAME, name)
@@ -411,6 +420,9 @@ class AppPreferences @Inject constructor(
             putInt(PREF_KEY_MEMBER_SEX, sex)
             putInt(PREF_KEY_MEMBER_POINT, point)
             putInt(PREF_KEY_MEMBER_STATUS_NOTIFICATION, statusNotification)
+            putInt(PREF_KEY_MEMBER_STATUS_RECEIVE_NOTICE_MAIL, statusNoticeMail)
+            putInt(PREF_KEY_MEMBER_STATUS_RECEIVE_NEWSLETTER_NOTICE_MAIL, statusNewsLetterMail)
+
         }.apply()
     }
 
@@ -430,6 +442,22 @@ class AppPreferences @Inject constructor(
 
     override fun getSettingNotificationNM(): Int =
         mPrefs.getInt(PREF_KEY_MEMBER_STATUS_NOTIFICATION, 1)
+
+    override fun getSettingReceiveNoticeMail(): Int = mPrefs.getInt(PREF_KEY_MEMBER_STATUS_RECEIVE_NOTICE_MAIL, 1)
+
+    override fun getSettingReceiveNewsLetterNoticeMail(): Int = mPrefs.getInt(PREF_KEY_MEMBER_STATUS_RECEIVE_NEWSLETTER_NOTICE_MAIL, 1)
+
+    override fun saveSettingReceiveNoticeMail(status: Int) {
+        mPrefs.edit().apply {
+            putInt(PREF_KEY_MEMBER_STATUS_RECEIVE_NOTICE_MAIL, status)
+        }.also { it.apply() }
+    }
+
+    override fun saveSettingReceiveNewsLetterNoticeMail(status: Int) {
+        mPrefs.edit().apply {
+            putInt(PREF_KEY_MEMBER_STATUS_RECEIVE_NEWSLETTER_NOTICE_MAIL, status)
+        }.also { it.apply() }
+    }
 
     override fun saveMemberAge(age: Int) {
         mPrefs.edit().apply {

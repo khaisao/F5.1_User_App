@@ -31,7 +31,11 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding, Notificat
         super.bindingStateView()
 
         mViewModel.statusSwitch.observe(viewLifecycleOwner) {
-            binding.scNotification.isChecked = it == PUSH_RECEIVE
+            binding.scNotification.isChecked = it == PUSH_RECEIVE_NOTIFICATION
+        }
+
+        mViewModel.statusSwitchReceiveMail.observe(viewLifecycleOwner) {
+            binding.scPermissionToReceiveMail.isChecked = it == PUSH_RECEIVE_MAIL
         }
     }
 
@@ -47,6 +51,10 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding, Notificat
     private fun setUpSwitch() {
         binding.scNotification.setOnCheckedChangeListener { compoundButton, isChecked ->
             if (compoundButton.isPressed) mViewModel.updateSettingNotification(isChecked)
+        }
+
+        binding.scPermissionToReceiveMail.setOnCheckedChangeListener { compoundButton, isChecked ->
+            if (compoundButton.isPressed) mViewModel.updateSettingMail(isChecked)
         }
     }
 }
