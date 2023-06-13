@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import jp.careapp.counseling.R
 import jp.careapp.counseling.android.data.model.CreditItem
+import jp.careapp.counseling.android.utils.formatDecimalSeparator
 import jp.careapp.counseling.databinding.ItemLivestreamBuyPointBinding
 
 class PurchasePointAdapter(private val onClickItem: (CreditItem) -> Unit) :
@@ -20,6 +21,17 @@ class PurchasePointAdapter(private val onClickItem: (CreditItem) -> Unit) :
             binding.executePendingBindings()
 
             binding.root.setOnClickListener { onClickItem.invoke(item) }
+            var totalPoint = 0
+            if (item.buyPoint != null && item.bonusPoint != null) {
+                totalPoint = item.buyPoint + item.bonusPoint
+            }
+            binding.tvPoint.text = buildString {
+                append("¥")
+                append((item.price?.formatDecimalSeparator() ?: ""))
+                append(" / ")
+                append(totalPoint.formatDecimalSeparator())
+                append("pts")
+            }
         }
     }
 

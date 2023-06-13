@@ -16,6 +16,7 @@ import jp.careapp.counseling.android.utils.BUNDLE_KEY
 import jp.careapp.counseling.android.utils.Define.Companion.BUY_POINT_CHAT_MESSAGE
 import jp.careapp.counseling.android.utils.Define.Companion.BUY_POINT_UNDER_500
 import jp.careapp.counseling.android.utils.Define.Companion.INSU_POINT
+import jp.careapp.counseling.android.utils.formatDecimalSeparator
 import jp.careapp.counseling.databinding.FragmentPurchasePointBottomBinding
 import javax.inject.Inject
 
@@ -90,8 +91,9 @@ class PurchasePointBottomSheet : BottomSheetDialogFragment() {
             }
             else -> {
                 binding.titlePointTv.text = getString(R.string.point_purchase)
-                binding.tvCurrentPoint.text =
-                    getString(R.string.format_point, rxPreferences.getPoint().toString())
+                binding.tvCurrentPoint.text = getString(
+                    R.string.format_point, rxPreferences.getPoint().formatDecimalSeparator()
+                )
                 binding.tvCurrentPoint.visibility = VISIBLE
             }
         }
