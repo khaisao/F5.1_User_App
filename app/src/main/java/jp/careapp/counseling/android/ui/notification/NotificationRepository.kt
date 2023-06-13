@@ -15,6 +15,14 @@ class NotificationRepository @Inject constructor(
 
     fun getMemberSettingNotification() = rxPreferences.getSettingNotificationNM()
 
+    fun getMemberSettingReceiveNoticeMail() = rxPreferences.getSettingReceiveNoticeMail()
+
+    fun getMemberSettingReceiveNewsLetterNoticeMail() = rxPreferences.getSettingReceiveNewsLetterNoticeMail()
+
+    fun saveMemberSettingReceiveNoticeMail(status: Int) = rxPreferences.saveSettingReceiveNoticeMail(status)
+
+    fun saveMemberSettingReceiveNewsLetterNoticeMail(status: Int) = rxPreferences.saveSettingReceiveNewsLetterNoticeMail(status)
+
     suspend fun updateNotification(updateNotificationParams: UpdateNotificationParams) =
         apiInterface.updateNotification(updateNotificationParams)
 }

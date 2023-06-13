@@ -18,7 +18,9 @@ class MyPageRepository @Inject constructor(
         birth: String,
         sex: Int,
         point: Int,
-        statusNotification: Int
+        statusNotification: Int,
+        receiveNoticeMail: Int,
+        receiveNewsLetterMail: Int
     ) = rxPreferences.saveMemberInfoEditProfile(
         nickName,
         mail,
@@ -26,7 +28,9 @@ class MyPageRepository @Inject constructor(
         birth,
         sex,
         point,
-        statusNotification
+        statusNotification,
+        receiveNoticeMail,
+        receiveNewsLetterMail
     )
 
     fun getMemberNickName() = rxPreferences.getNickName()

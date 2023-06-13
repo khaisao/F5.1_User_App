@@ -139,7 +139,9 @@ interface RxPreferences {
         birth: String,
         sex: Int,
         point: Int,
-        statusNotification: Int
+        statusNotification: Int,
+        statusNoticeMail: Int,
+        statusNewsLetterMail: Int
     )
 
     fun getMemberAge(): Int
@@ -153,6 +155,14 @@ interface RxPreferences {
     fun saveSettingNotificationNM(statusNotification: Int)
 
     fun getSettingNotificationNM(): Int
+
+    fun getSettingReceiveNoticeMail(): Int
+
+    fun getSettingReceiveNewsLetterNoticeMail(): Int
+
+    fun saveSettingReceiveNoticeMail(status: Int)
+
+    fun saveSettingReceiveNewsLetterNoticeMail(status: Int)
 
     fun saveMemberAge(age: Int)
 

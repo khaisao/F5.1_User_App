@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_background_common"
@@ -11,6 +11,7 @@
 
         <jp.careapp.counseling.android.utils.customView.ToolBarCommon
             android:id="@+id/toolBar"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:src_left="@drawable/ic_arrow_left"
@@ -18,16 +19,19 @@
             app:titleTextColor="@color/color_F0F0F0" />
 
         <View
+            app:layout_constraintTop_toBottomOf="@id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#2A1F45" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_receive_push_noti"
             android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/toolBar"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/bg_item_notification"
+            android:background="@drawable/bg_item_notification_radius_top"
             android:minHeight="44dp"
             android:paddingHorizontal="@dimen/margin_16">
 
@@ -37,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/hiragino_sans_w3"
                 android:gravity="center_vertical"
-                android:text="@string/receive_mail_permission"
+                android:text="@string/receive_push_notification"
                 android:textColor="#f0f0f0"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -55,5 +59,50 @@
                 app:track="@drawable/track_selector"
                 tools:checked="true" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+
+        <View
+            android:id="@+id/straight_line"
+            app:layout_constraintBottom_toTopOf="@+id/cl_permission_to_receive_mail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="32dp"
+            android:background="#453B5D"
+            android:layout_height="1dp"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_permission_to_receive_mail"
+            app:layout_constraintTop_toBottomOf="@id/cl_receive_push_noti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/bg_item_notification_radius_bottom"
+            android:minHeight="44dp"
+            android:paddingHorizontal="@dimen/margin_16">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_permission_to_receive_mail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/hiragino_sans_w3"
+                android:gravity="center_vertical"
+                android:text="@string/receive_mail_permission"
+                android:textColor="#f0f0f0"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sc_permission_to_receive_mail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:thumb="@drawable/thumb_selector"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_permission_to_receive_mail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_permission_to_receive_mail"
+                app:track="@drawable/track_selector"
+                tools:checked="true" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
