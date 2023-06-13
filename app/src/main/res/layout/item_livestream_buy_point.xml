@@ -18,12 +18,12 @@
         android:background="@drawable/bg_item_buy_points">
 
         <TextView
+            android:id="@+id/tv_point"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/hiragino_sans_w6"
             android:gravity="center"
             android:paddingVertical="16dp"
-            android:text="@{`¥` + data.price + ` / ` + (data.buyPoint + data.bonusPoint) + `pts`}"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             tools:text="¥000 / 000pts" />

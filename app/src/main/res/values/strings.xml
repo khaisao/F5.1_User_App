@@ -159,7 +159,7 @@
     <string name="not_found_performer">該当の女性は見つかりませんでした</string>
     <string name="not_found_performer_search">該当の女の子は見つかりませんでした</string>
     <string name="point_purchase">ポイント購入</string>
-    <string name="point_purchase_under_1000">所持ポイントが1000ptsになりました</string>
+    <string name="point_purchase_under_1000">所持ポイントが1,000ptsになりました</string>
     <string name="point_purchase_under_500">所持ポイントが500ptsになりました</string>
     <string name="point_purchase_reason">このままだと\nテキストテキストテキストテキスト</string>
     <string name="pointLoadingText">しばらくお待ちください</string>
