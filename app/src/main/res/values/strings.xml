@@ -302,11 +302,9 @@
     <string name="withdraw">退会する</string>
     <string name="unsubscribed">退会手続き</string>
     <string name="title_confirm_withdraw">アプリを退会すると残りポイントは失効されます。\n退会のお手続きを行ってもよろしいですか？</string>
-    <string name="we_have_accepted">退会申請を受け付けました</string>
-    <string name="tks_for_using">いただいた申請は24時間以内に処理され、退会が完了するとアプリにログインできなくなります。
-※アプリのご利用を再開されたい場合は再入会のお問合せをお願いいたします。
-
-SPARK LIVEをご利用いただき誠にありがとうございました。</string>
+    <string name="we_have_accepted">退会申請が完了しました</string>
+    <string name="tks_for_using">退会処理が完了いたしました。\nこれまでのご利用、誠にありがとうございました。
+\n\n再度ご利用いただく場合は、お手数ですが改めて会員登録をお願いいたします。</string>
 
     <!--search-->
     <string name="cancel_search">クリア</string>
@@ -674,7 +672,7 @@ SPARK LIVEをご利用いただき誠にありがとうございました。</st
     <string name="private_mode_register_confirm">プライベートモードを申し込みますか？</string>
     <string name="private_mode_register">プライベートモードでは女の子と2人きりとなります。1分毎の消費ポイントが変わりますので、ご注意ください。</string>
     <string name="private_mode_register_review_mode">プライベートモードではアドバイザーに1対1で相談できます。1分毎の消費ポイントが変わりますので、ご注意ください。</string>
-    <string name="change_to_party_mode">パーティーモードへ移行しますか？</string>
+    <string name="change_to_party_mode">プライベートモードを解除しますか？</string>
     <string name="performer_out_confirm">パフォーマーよりプライベートモードの解除申請がありました</string>
     <string name="private_mode_connecting">プライベートモード申請中</string>
     <string name="use_microphone">マイクを使用</string>

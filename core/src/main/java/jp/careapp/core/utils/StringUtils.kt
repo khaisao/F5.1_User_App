@@ -22,7 +22,7 @@ object EdtState {
 object StringUtils {
 
     const val REGEX_EMAIL =
-        "^[a-z][a-z0-9_\\-\\.+]{2,32}[a-z0-9\\-_]@[a-z0-9]{2,}(\\.[a-z0-9]{2,}){1,2}\$"
+        "^[a-z][a-z0-9_\\-\\.+]{2,32}[a-z0-9\\-_]@[a-z0-9]{1,}(\\.[a-z0-9]{2,}){1,2}\$"
 
     fun String.validatepassword(): Int {
         if (TextUtils.isEmpty(this) || TextUtils.isEmpty(this.trim())) {
