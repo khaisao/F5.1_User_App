@@ -371,25 +371,25 @@ enum class BUY_POINT(
     FIST_BUY_COIN_1(
         IN_APP_PURCHASE_KEY_1,
         1800,
-        90,
+        0,
         " ¥3,600 ",
     ),
     FIST_BUY_COIN_2(
         IN_APP_PURCHASE_KEY_2,
-        3060,
-        230,
+        2900,
+        0,
         " ¥5,800 ",
     ),
     FIST_BUY_COIN_3(
         IN_APP_PURCHASE_KEY_3,
-        5550,
-        850,
+        5900,
+        0,
         " ¥10,800 ",
     ),
     FIST_BUY_COIN_4(
         IN_APP_PURCHASE_KEY_4,
-        8300,
-        1400,
+        8900,
+        0,
         "¥15,800",
     )
 }
@@ -403,25 +403,25 @@ enum class BUY_POINT_RM(
     FIST_BUY_COIN_1(
         IN_APP_PURCHASE_KEY_1,
         1800,
-        90,
+        0,
         "¥3,600",
     ),
     FIST_BUY_COIN_2(
         IN_APP_PURCHASE_KEY_2,
-        3060,
-        230,
+        2900,
+        0,
         "¥5,800",
     ),
     FIST_BUY_COIN_3(
         IN_APP_PURCHASE_KEY_3,
-        5550,
-        850,
+        5900,
+        0,
         "¥10,800",
     ),
     FIST_BUY_COIN_4(
         IN_APP_PURCHASE_KEY_4,
-        8300,
-        1400,
+        8900,
+        0,
         "¥15,800",
     )
 }
