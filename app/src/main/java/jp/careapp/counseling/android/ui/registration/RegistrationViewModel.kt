@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.SingleLiveEvent
 import jp.careapp.counseling.android.data.pref.RxPreferences
+import jp.careapp.counseling.android.utils.appsflyer.AppsFlyerUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
@@ -41,6 +42,7 @@ class RegistrationViewModel @Inject constructor(
                         mRepository.saveMemberName(userName)
                         rxPreferences.saveEmail(email)
                         mRepository.setFirstRegister()
+                        AppsFlyerUtil.handleEventRegistration(memberCode)
                         withContext(Dispatchers.Main) {
                             mActionState.value = RegistrationActionState.SetNickNameSuccess
                         }
