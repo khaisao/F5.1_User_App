@@ -10,7 +10,6 @@
     <dimen name="margin_top_email_24">8dp</dimen>
     <dimen name="text_size_input_email_14">10sp</dimen>
     <dimen name="text_size_error_email_12">10sp</dimen>
-    <dimen name="text_size_send_email_14">10sp</dimen>
 
     <!--verify code-->
     <dimen name="margin_title_verify_code_55">15dp</dimen>

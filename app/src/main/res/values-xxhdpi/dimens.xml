@@ -12,7 +12,6 @@
     <dimen name="margin_top_email_24">24dp</dimen>
     <dimen name="text_size_input_email_14">14sp</dimen>
     <dimen name="text_size_error_email_12">12sp</dimen>
-    <dimen name="text_size_send_email_14">14sp</dimen>
 
     <!--verify code-->
     <dimen name="margin_title_verify_code_55">55dp</dimen>
