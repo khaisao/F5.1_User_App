@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="jp.careapp.counseling.android.ui.splash.SplashFragment"
+        android:name="jp.slapp.android.android.ui.splash.SplashFragment"
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
 
@@ -56,7 +56,7 @@
 
     <fragment
         android:id="@+id/RMStartFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.start.RMStartFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.start.RMStartFragment"
         android:label="RMStartFragment"
         tools:layout="@layout/fragment_rm_start">
         <action
@@ -70,7 +70,7 @@
 
     <fragment
         android:id="@+id/RMEnterNameFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.enterName.RMEnterNameFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.enterName.RMEnterNameFragment"
         android:label="RMEnterNameFragment"
         tools:layout="@layout/fragment_rm_enter_name">
 
@@ -86,12 +86,12 @@
     </fragment>
     <fragment
         android:id="@+id/RMPrivacyPolicyFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.privacy_policy.RMPrivacyPolicyFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.privacy_policy.RMPrivacyPolicyFragment"
         android:label="RMPrivacyPolicyFragment"
         tools:layout="@layout/fragment_rm_privacy_policy" />
     <fragment
         android:id="@+id/RMTermsOfServiceFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.terms_of_service.RMTermsOfServiceFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.terms_of_service.RMTermsOfServiceFragment"
         android:label="RMTermsOfServiceFragment"
         tools:layout="@layout/fragment_rm_terms_of_service" />
     <action

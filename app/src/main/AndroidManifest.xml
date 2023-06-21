@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="jp.careapp.counseling">
+    package="jp.slapp.android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -10,7 +10,7 @@
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
     <application
-        android:name="jp.careapp.counseling.android.AppApplication"
+        android:name="jp.slapp.android.android.AppApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,14 +22,14 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name="jp.careapp.counseling.android.ui.welcome.WelcomeActivity"
+            android:name="jp.slapp.android.android.ui.welcome.WelcomeActivity"
             android:configChanges="locale|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name="jp.careapp.counseling.android.ui.main.MainActivity"
+            android:name="jp.slapp.android.android.ui.main.MainActivity"
             android:configChanges="locale|orientation|screenSize"
             android:exported="true"
             android:launchMode="singleTask"
@@ -117,7 +117,7 @@
 
         <!--        Firebase notification-->
         <service
-            android:name="jp.careapp.counseling.android.notification.AppFirebaseMessagingService"
+            android:name="jp.slapp.android.android.notification.AppFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

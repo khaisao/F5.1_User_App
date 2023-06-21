@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="jp.careapp.counseling.android.model.buy_point.ItemPoint" />
+            type="jp.slapp.android.android.model.buy_point.ItemPoint" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

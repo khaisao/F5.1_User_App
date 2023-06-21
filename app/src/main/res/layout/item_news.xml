@@ -7,7 +7,7 @@
 
         <variable
             name="news"
-            type="jp.careapp.counseling.android.data.network.NewsResponse" />
+            type="jp.slapp.android.android.data.network.NewsResponse" />
 
     </data>
 

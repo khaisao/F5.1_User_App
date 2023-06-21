@@ -10,7 +10,7 @@
         android:orientation="vertical"
         tools:context=".android.ui.review_mode.settingNickName.RMSettingNickNameFragment">
 
-        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+        <jp.slapp.android.android.utils.customView.ToolBarCommon
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
             app:src_left="@drawable/ic_rm_arrow_left"
             app:string_title="@string/nickname_update" />
 
-        <jp.careapp.counseling.android.ui.custom.EditTextCounterRM
+        <jp.slapp.android.android.ui.custom.EditTextCounterRM
             android:id="@+id/edtNickName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

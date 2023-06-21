@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="jp.careapp.counseling.android.ui.contact_us.confirm.ContactUsConfirmViewModel" />
+        <import type="jp.slapp.android.android.ui.contact_us.confirm.ContactUsConfirmViewModel" />
 
         <variable
             name="viewModel"
@@ -19,7 +19,7 @@
         android:orientation="vertical"
         tools:context=".android.ui.contact_us.confirm.ContactUsConfirmFragment">
 
-        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+        <jp.slapp.android.android.utils.customView.ToolBarCommon
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

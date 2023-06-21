@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="jp.careapp.counseling.android.ui.news.NewsViewModel" />
+            type="jp.slapp.android.android.ui.news.NewsViewModel" />
     </data>
 
     <LinearLayout

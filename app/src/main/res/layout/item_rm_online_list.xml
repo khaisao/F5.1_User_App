@@ -7,7 +7,7 @@
 
         <import type="android.view.View" />
 
-        <import type="jp.careapp.counseling.android.model.network.RMPerformerResponse" />
+        <import type="jp.slapp.android.android.model.network.RMPerformerResponse" />
 
         <variable
             name="user"

@@ -9,7 +9,7 @@
 
         <variable
             name="menu"
-            type="jp.careapp.counseling.android.data.model.MenuItem" />
+            type="jp.slapp.android.android.data.model.MenuItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

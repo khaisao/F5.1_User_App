@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/verifyCodeFragment"
-        android:name="jp.careapp.counseling.android.ui.verifyCode.VerifyCodeFragment"
+        android:name="jp.slapp.android.android.ui.verifyCode.VerifyCodeFragment"
         android:label="VerifyCodeFragment"
         tools:layout="@layout/fragment_verify_code">
         <action
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/verificationCodeHelpFragment"
-        android:name="jp.careapp.counseling.android.ui.verificationCodeHelp.VerificationCodeHelpFragment"
+        android:name="jp.slapp.android.android.ui.verificationCodeHelp.VerificationCodeHelpFragment"
         android:label="VerificationCodeHelpFragment"
         tools:layout="@layout/fragment_verification_code_help">
         <action
@@ -43,7 +43,7 @@
 
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="jp.careapp.counseling.android.ui.registration.RegistrationFragment"
+        android:name="jp.slapp.android.android.ui.registration.RegistrationFragment"
         android:label="RegistrationFragment"
         tools:layout="@layout/fragment_registration" />
 </navigation>

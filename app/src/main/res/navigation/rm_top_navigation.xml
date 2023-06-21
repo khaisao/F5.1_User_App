@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/tabOnlineList"
-        android:name="jp.careapp.counseling.android.ui.review_mode.online_list.RMOnlineListFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.online_list.RMOnlineListFragment"
         android:label="RvOnlineListFragment"
         tools:layout="@layout/fragment_rm_online_list" />
     <fragment
         android:id="@+id/tabFavoriteList"
-        android:name="jp.careapp.counseling.android.ui.review_mode.favorite_list.RMFavoriteListFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.favorite_list.RMFavoriteListFragment"
         android:label="RvFavoriteListFragment"
         tools:layout="@layout/fragment_rm_favorite_list" />
     <fragment
         android:id="@+id/tabMyMenu"
-        android:name="jp.careapp.counseling.android.ui.review_mode.my_menu.RMMyMenuFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.my_menu.RMMyMenuFragment"
         android:label="RvMyMenuFragment"
         tools:layout="@layout/fragment_rm_my_menu" />
 </navigation>

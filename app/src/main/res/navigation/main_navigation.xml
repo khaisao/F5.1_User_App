@@ -35,7 +35,7 @@
 
     <fragment
         android:id="@+id/topFragment"
-        android:name="jp.careapp.counseling.android.ui.top.TopFragment"
+        android:name="jp.slapp.android.android.ui.top.TopFragment"
         android:label="TopFragment"
         tools:layout="@layout/fragment_top">
 
@@ -126,7 +126,7 @@
 
     <fragment
         android:id="@+id/buyPointFragment"
-        android:name="jp.careapp.counseling.android.ui.buy_point.BuyPointFragment"
+        android:name="jp.slapp.android.android.ui.buy_point.BuyPointFragment"
         android:label="BuyPointFragment"
         tools:layout="@layout/fragment_buy_point">
 
@@ -155,7 +155,7 @@
 
     <fragment
         android:id="@+id/userProfileFragment"
-        android:name="jp.careapp.counseling.android.ui.profile.list_user_profile.UserProfileFragment"
+        android:name="jp.slapp.android.android.ui.profile.list_user_profile.UserProfileFragment"
         android:label="UserProfileFragment"
         tools:layout="@layout/fragment_user_profile">
         <action
@@ -203,7 +203,7 @@
 
     <fragment
         android:id="@+id/liveStreamFragment"
-        android:name="jp.careapp.counseling.android.ui.live_stream.LiveStreamFragment"
+        android:name="jp.slapp.android.android.ui.live_stream.LiveStreamFragment"
         android:label="LiveStreamFragment"
         tools:layout="@layout/fragment_live_stream">
 
@@ -220,7 +220,7 @@
 
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="jp.careapp.counseling.android.ui.favourite.FavoriteFragment"
+        android:name="jp.slapp.android.android.ui.favourite.FavoriteFragment"
         android:label="FavoriteFragment" />
 
     <action
@@ -238,16 +238,16 @@
 
     <fragment
         android:id="@+id/fragmentNotification"
-        android:name="jp.careapp.counseling.android.ui.notification.NotificationFragment"
+        android:name="jp.slapp.android.android.ui.notification.NotificationFragment"
         android:label="FragmentNotification"
         tools:layout="@layout/fragment_notification">
         <argument
             android:name="member"
-            app:argType="jp.careapp.counseling.android.data.network.MemberResponse" />
+            app:argType="jp.slapp.android.android.data.network.MemberResponse" />
     </fragment>
     <fragment
         android:id="@+id/newsFragment"
-        android:name="jp.careapp.counseling.android.ui.news.NewsFragment"
+        android:name="jp.slapp.android.android.ui.news.NewsFragment"
         android:label="NewsFragment">
         <action
             android:id="@+id/action_news_to_TopFragment"
@@ -263,7 +263,7 @@
         app:destination="@id/newsFragment" />
     <fragment
         android:id="@+id/fragmentEditProfile"
-        android:name="jp.careapp.counseling.android.ui.edit_profile.EditProfileFragment"
+        android:name="jp.slapp.android.android.ui.edit_profile.EditProfileFragment"
         android:label="FragmentEditProfile"
         tools:layout="@layout/fragment_edit_profile">
         <action
@@ -277,7 +277,7 @@
 
     <fragment
         android:id="@+id/webViewFragment"
-        android:name="jp.careapp.counseling.android.ui.webView.WebViewFragment"
+        android:name="jp.slapp.android.android.ui.webView.WebViewFragment"
         android:label="WebViewFragment"
         tools:layout="@layout/fragment_web_view">
         <argument
@@ -300,19 +300,19 @@
         app:popExitAnim="@anim/slide_down" />
     <fragment
         android:id="@+id/reportUserFragment"
-        android:name="jp.careapp.counseling.android.ui.profile.block_report.ReportFragment"
+        android:name="jp.slapp.android.android.ui.profile.block_report.ReportFragment"
         android:label="ReportFragment"
         tools:layout="@layout/fragment_user_report" />
 
     <fragment
         android:id="@+id/blockedFragment"
-        android:name="jp.careapp.counseling.android.ui.blocked.BlockedFragment"
+        android:name="jp.slapp.android.android.ui.blocked.BlockedFragment"
         android:label="BlockedFragment"
         tools:layout="@layout/fragment_blocked" />
 
     <fragment
         android:id="@+id/withdrawalFragment"
-        android:name="jp.careapp.counseling.android.ui.withdrawal.WithdrawalFragment"
+        android:name="jp.slapp.android.android.ui.withdrawal.WithdrawalFragment"
         android:label="WithdrawalFragment"
         tools:layout="@layout/fragment_withdrawal">
         <action
@@ -326,7 +326,7 @@
 
     <activity
         android:id="@+id/welcomeActivity"
-        android:name="jp.careapp.counseling.android.ui.welcome.WelcomeActivity"
+        android:name="jp.slapp.android.android.ui.welcome.WelcomeActivity"
         android:label="WelcomeActivity" />
 
     <include app:graph="@navigation/search_navigation" />
@@ -348,7 +348,7 @@
 
     <fragment
         android:id="@+id/chatMessageFragment"
-        android:name="jp.careapp.counseling.android.ui.message.ChatMessageFragment"
+        android:name="jp.slapp.android.android.ui.message.ChatMessageFragment"
         android:label="BlockedFragment">
 
         <action
@@ -402,7 +402,7 @@
 
     <fragment
         android:id="@+id/withdrawalFinishFragment"
-        android:name="jp.careapp.counseling.android.ui.withdrawal.finish.WithdrawalFinishFragment"
+        android:name="jp.slapp.android.android.ui.withdrawal.finish.WithdrawalFinishFragment"
         android:label="WithdrawalFinishFragment">
         <action
             android:id="@+id/action_withdrawalFragment_to_welcomeActivity"
@@ -411,27 +411,27 @@
 
     <fragment
         android:id="@+id/termsOfServiceFragment"
-        android:name="jp.careapp.counseling.android.ui.terms_of_service.TermsOfServiceFragment"
+        android:name="jp.slapp.android.android.ui.terms_of_service.TermsOfServiceFragment"
         android:label="TermsOfServiceFragment"
         tools:layout="@layout/fragment_terms_of_service" />
     <fragment
         android:id="@+id/privacyPolicyFragment"
-        android:name="jp.careapp.counseling.android.ui.privacy_policy.PrivacyPolicyFragment"
+        android:name="jp.slapp.android.android.ui.privacy_policy.PrivacyPolicyFragment"
         android:label="PrivacyPolicyFragment"
         tools:layout="@layout/fragment_privacy_policy" />
     <fragment
         android:id="@+id/usePointsGuideFragment"
-        android:name="jp.careapp.counseling.android.ui.use_points_guide.UsePointsGuideFragment"
+        android:name="jp.slapp.android.android.ui.use_points_guide.UsePointsGuideFragment"
         android:label="UsePointsGuideFragment"
         tools:layout="@layout/fragment_use_points_guide" />
     <fragment
         android:id="@+id/editNickNameFragment"
-        android:name="jp.careapp.counseling.android.ui.edit_nick_name.EditNickNameFragment"
+        android:name="jp.slapp.android.android.ui.edit_nick_name.EditNickNameFragment"
         android:label="EditNickNameFragment"
         tools:layout="@layout/fragment_edit_nick_name" />
     <fragment
         android:id="@+id/contactUsFragment"
-        android:name="jp.careapp.counseling.android.ui.contact_us.ContactUsFragment"
+        android:name="jp.slapp.android.android.ui.contact_us.ContactUsFragment"
         android:label="ContactUsFragment"
         tools:layout="@layout/fragment_contact_us">
         <action
@@ -444,7 +444,7 @@
     </fragment>
     <fragment
         android:id="@+id/contactUsConfirmFragment"
-        android:name="jp.careapp.counseling.android.ui.contact_us.confirm.ContactUsConfirmFragment"
+        android:name="jp.slapp.android.android.ui.contact_us.confirm.ContactUsConfirmFragment"
         android:label="ContactUsConfirmFragment"
         tools:layout="@layout/fragment_contact_us_confirm">
         <action
@@ -459,12 +459,12 @@
     </fragment>
     <fragment
         android:id="@+id/contactUsFinishFragment"
-        android:name="jp.careapp.counseling.android.ui.contact_us.finish.ContactUsFinishFragment"
+        android:name="jp.slapp.android.android.ui.contact_us.finish.ContactUsFinishFragment"
         android:label="ContactUsFinishFragment"
         tools:layout="@layout/fragment_contact_us_finish" />
     <fragment
         android:id="@+id/FAQFragment"
-        android:name="jp.careapp.counseling.android.ui.faq.FAQFragment"
+        android:name="jp.slapp.android.android.ui.faq.FAQFragment"
         android:label="FAQFragment"
         tools:layout="@layout/fragment_faq">
         <action
@@ -477,7 +477,7 @@
     </fragment>
     <fragment
         android:id="@+id/exitLivestreamFragment"
-        android:name="jp.careapp.counseling.android.ui.live_stream.ExitLivestreamFragment"
+        android:name="jp.slapp.android.android.ui.live_stream.ExitLivestreamFragment"
         android:label="ExitLiveStreamFragment"
         tools:layout="@layout/fragment_exit_livestream">
         <action

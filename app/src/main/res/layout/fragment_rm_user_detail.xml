@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="jp.careapp.counseling.android.ui.review_mode.user_detail.RMUserDetailViewModel" />
+        <import type="jp.slapp.android.android.ui.review_mode.user_detail.RMUserDetailViewModel" />
 
         <variable
             name="viewModel"
@@ -19,7 +19,7 @@
         android:background="@color/dodger_blue"
         tools:context=".android.ui.review_mode.user_detail.RMUserDetailFragment">
 
-        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+        <jp.slapp.android.android.utils.customView.ToolBarCommon
             android:id="@+id/toolBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

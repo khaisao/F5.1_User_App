@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:background="@color/duck_egg_blue">
 
-        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+        <jp.slapp.android.android.utils.customView.ToolBarCommon
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

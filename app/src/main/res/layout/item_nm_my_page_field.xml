@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="jp.careapp.counseling.android.ui.my_page.NMMenuItem.NMMenuItemField" />
+        <import type="jp.slapp.android.android.ui.my_page.NMMenuItem.NMMenuItemField" />
 
         <import type="android.view.View" />
 

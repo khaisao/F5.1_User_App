@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="jp.careapp.counseling.android.model.buy_point.ItemPoint" />
+        <import type="jp.slapp.android.android.model.buy_point.ItemPoint" />
 
         <variable
             name="data"
@@ -19,7 +19,7 @@
         android:background="@drawable/ic_bg_item_buy_points"
         android:padding="28dp">
 
-        <jp.careapp.counseling.android.ui.custom.OutlineTextView
+        <jp.slapp.android.android.ui.custom.OutlineTextView
             android:id="@+id/tvPointCount"
             android:layout_width="wrap_content"
             android:layout_height="0dp"

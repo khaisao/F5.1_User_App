@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <jp.careapp.counseling.android.utils.customView.DisableScrollNestedScrollView
+        <jp.slapp.android.android.utils.customView.DisableScrollNestedScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -116,7 +116,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </jp.careapp.counseling.android.utils.customView.DisableScrollNestedScrollView>
+        </jp.slapp.android.android.utils.customView.DisableScrollNestedScrollView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/tool_bar"

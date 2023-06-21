@@ -14,7 +14,7 @@
             android:orientation="vertical"
             tools:context=".android.ui.use_points_guide.UsePointsGuideFragment">
 
-            <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+            <jp.slapp.android.android.utils.customView.ToolBarCommon
                 android:id="@+id/toolBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                 app:layout_constraintStart_toStartOf="@+id/tvHeader"
                 app:layout_constraintTop_toBottomOf="@+id/tv_subTitle" />
 
-            <jp.careapp.counseling.android.utils.customView.PointGuideView
+            <jp.slapp.android.android.utils.customView.PointGuideView
                 android:id="@+id/pgvMessenger"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                 app:layout_constraintStart_toStartOf="@+id/tvHeader"
                 app:layout_constraintTop_toBottomOf="@+id/tvNote" />
 
-            <jp.careapp.counseling.android.utils.customView.PointGuideView
+            <jp.slapp.android.android.utils.customView.PointGuideView
                 android:id="@+id/pgvLiveStream"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
                 app:layout_constraintStart_toStartOf="@+id/tvHeader"
                 app:layout_constraintTop_toBottomOf="@+id/pgvMessenger" />
 
-            <jp.careapp.counseling.android.utils.customView.PointGuideView
+            <jp.slapp.android.android.utils.customView.PointGuideView
                 android:id="@+id/pgvPeep"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                 app:layout_constraintStart_toStartOf="@+id/tvHeader"
                 app:layout_constraintTop_toBottomOf="@+id/pgvLiveStream" />
 
-            <jp.careapp.counseling.android.utils.customView.PointGuideView
+            <jp.slapp.android.android.utils.customView.PointGuideView
                 android:id="@+id/pgvPrivate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
                 app:layout_constraintStart_toStartOf="@+id/tvHeader"
                 app:layout_constraintTop_toBottomOf="@+id/pgvPeep" />
 
-            <jp.careapp.counseling.android.utils.customView.PointGuideView
+            <jp.slapp.android.android.utils.customView.PointGuideView
                 android:id="@+id/pgvPremiumPrivate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -158,7 +158,7 @@
                 app:layout_constraintStart_toStartOf="@+id/tvHeader"
                 app:layout_constraintTop_toBottomOf="@+id/pgvPrivate" />
 
-            <jp.careapp.counseling.android.utils.customView.PointGuideView
+            <jp.slapp.android.android.utils.customView.PointGuideView
                 android:id="@+id/pgvWhisper"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

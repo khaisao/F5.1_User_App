@@ -31,7 +31,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/guideline3" />
 
-        <jp.careapp.counseling.android.ui.custom.EditTextCounterRM
+        <jp.slapp.android.android.ui.custom.EditTextCounterRM
             android:id="@+id/edtNickName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

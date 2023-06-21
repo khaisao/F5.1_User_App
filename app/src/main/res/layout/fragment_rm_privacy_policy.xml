@@ -10,7 +10,7 @@
         android:orientation="vertical"
         tools:context=".android.ui.review_mode.privacy_policy.RMPrivacyPolicyFragment">
 
-        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+        <jp.slapp.android.android.utils.customView.ToolBarCommon
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
