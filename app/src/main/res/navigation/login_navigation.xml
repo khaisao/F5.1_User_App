@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/inputEmailFragment"
-        android:name="jp.careapp.counseling.android.ui.email.InputAndEditEmailFragment"
+        android:name="jp.slapp.android.android.ui.email.InputAndEditEmailFragment"
         android:label="InputAndEditEmailFragment"
         tools:layout="@layout/fragment_input_and_edit_email">
 

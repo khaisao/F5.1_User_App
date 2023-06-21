@@ -10,7 +10,7 @@
         android:background="@color/color_background_common"
         android:orientation="vertical">
 
-        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+        <jp.slapp.android.android.utils.customView.ToolBarCommon
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

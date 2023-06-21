@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/maintenanceFragment"
-        android:name="jp.careapp.counseling.android.ui.maintenance.MaintenanceFragment"
+        android:name="jp.slapp.android.android.ui.maintenance.MaintenanceFragment"
         android:label="MaintenanceFragment" >
         <action
             android:id="@+id/action_maintenanceFragment_to_webViewFragment2"
@@ -19,6 +19,6 @@
     </fragment>
     <fragment
         android:id="@+id/webViewFragment2"
-        android:name="jp.careapp.counseling.android.ui.webView.WebViewFragment"
+        android:name="jp.slapp.android.android.ui.webView.WebViewFragment"
         android:label="WebViewFragment" />
 </navigation>

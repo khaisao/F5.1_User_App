@@ -9,33 +9,33 @@
 
     <fragment
         android:id="@+id/tabHome"
-        android:name="jp.careapp.counseling.android.ui.home.HomeFragment"
+        android:name="jp.slapp.android.android.ui.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/tabRank"
-        android:name="jp.careapp.counseling.android.ui.rank.RankFragment"
+        android:name="jp.slapp.android.android.ui.rank.RankFragment"
         android:label="RankFragment"
         tools:layout="@layout/rank_fragment" />
 
     <fragment
         android:id="@+id/tabMyPage"
-        android:name="jp.careapp.counseling.android.ui.my_page.MyPageFragment"
+        android:name="jp.slapp.android.android.ui.my_page.MyPageFragment"
         android:label="MyPageFragment"
         tools:layout="@layout/fragment_mypage" />
 
     <fragment
         android:id="@+id/tabFavorite"
         tools:layout="@layout/fragment_favorite_main"
-        android:name="jp.careapp.counseling.android.ui.favourite.FavoriteMainFragment"
+        android:name="jp.slapp.android.android.ui.favourite.FavoriteMainFragment"
         android:label="FavoriteMainFragment" />
 
     <include app:graph="@navigation/main_navigation" />
 
     <fragment
         android:id="@+id/tabMessage"
-        android:name="jp.careapp.counseling.android.ui.message.MessageMainFragment"
+        android:name="jp.slapp.android.android.ui.message.MessageMainFragment"
         tools:layout="@layout/fragment_message_main"
         android:label="MessageMainFragment" />
 

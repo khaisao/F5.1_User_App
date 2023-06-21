@@ -4,7 +4,7 @@
 
     <data>
 
-        <import type="jp.careapp.counseling.android.ui.faq.FAQModelRecyclerView.ItemHeader" />
+        <import type="jp.slapp.android.android.ui.faq.FAQModelRecyclerView.ItemHeader" />
 
         <variable
             name="item"

@@ -35,7 +35,7 @@
                 android:text="@string/specialty_genre"
                 android:textColor="@color/color_E3DFEF" />
 
-            <jp.careapp.counseling.android.utils.customView.TagView
+            <jp.slapp.android.android.utils.customView.TagView
                 android:id="@+id/tagview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -7,11 +7,11 @@
 
         <import type="android.view.View" />
 
-        <import type="jp.careapp.counseling.android.model.network.RMBlockListResponse" />
+        <import type="jp.slapp.android.android.model.network.RMBlockListResponse" />
 
         <variable
             name="user"
-            type="jp.careapp.counseling.android.model.network.RMBlockListResponse" />
+            type="jp.slapp.android.android.model.network.RMBlockListResponse" />
 
     </data>
 

@@ -5,11 +5,11 @@
 
     <data>
 
-        <import type="jp.careapp.counseling.android.ui.review_mode.live_stream.RMLiveStreamViewModel" />
+        <import type="jp.slapp.android.android.ui.review_mode.live_stream.RMLiveStreamViewModel" />
 
         <variable
             name="viewModel"
-            type="jp.careapp.counseling.android.ui.review_mode.live_stream.RMLiveStreamViewModel" />
+            type="jp.slapp.android.android.ui.review_mode.live_stream.RMLiveStreamViewModel" />
 
     </data>
 

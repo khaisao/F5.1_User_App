@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="jp.careapp.counseling.android.ui.live_stream.LiveStreamViewModel" />
+        <import type="jp.slapp.android.android.ui.live_stream.LiveStreamViewModel" />
 
         <variable
             name="viewModel"

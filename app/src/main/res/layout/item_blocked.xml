@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="jp.careapp.counseling.android.data.network.FavoriteResponse" />
+        <import type="jp.slapp.android.android.data.network.FavoriteResponse" />
 
         <variable
             name="blocked"

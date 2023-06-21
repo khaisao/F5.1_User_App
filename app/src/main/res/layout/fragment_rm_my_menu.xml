@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="jp.careapp.counseling.android.ui.review_mode.my_menu.RMMyMenuViewModel" />
+        <import type="jp.slapp.android.android.ui.review_mode.my_menu.RMMyMenuViewModel" />
 
         <variable
             name="viewModel"

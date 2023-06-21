@@ -14,7 +14,7 @@
         android:orientation="vertical"
         tools:context=".android.ui.edit_nick_name.EditNickNameFragment">
 
-        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+        <jp.slapp.android.android.utils.customView.ToolBarCommon
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             android:layout_marginTop="16dp"
             android:orientation="vertical">
 
-            <jp.careapp.counseling.android.ui.custom.EditTextCounter
+            <jp.slapp.android.android.ui.custom.EditTextCounter
                 android:id="@+id/edtNickName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

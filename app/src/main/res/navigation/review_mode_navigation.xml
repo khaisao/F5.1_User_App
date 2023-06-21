@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/rmTopFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.top.RMTopFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.top.RMTopFragment"
         android:label="RMTopFragment"
         tools:layout="@layout/fragment_rm_top">
         <action
@@ -73,13 +73,13 @@
 
     <fragment
         android:id="@+id/RMSettingNickNameFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.settingNickName.RMSettingNickNameFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.settingNickName.RMSettingNickNameFragment"
         android:label="RMSettingNickNameFragment"
         tools:layout="@layout/fragment_rm_setting_nick_name" />
 
     <fragment
         android:id="@+id/RMBlockListFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.block_list.RMBlockListFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.block_list.RMBlockListFragment"
         android:label="RMBlockListFragment"
         tools:layout="@layout/fragment_block_list">
         <action
@@ -93,7 +93,7 @@
 
     <fragment
         android:id="@+id/RMUserDetailFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.user_detail.RMUserDetailFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.user_detail.RMUserDetailFragment"
         android:label="RMUserDetailFragment"
         tools:layout="@layout/fragment_rm_user_detail">
         <action
@@ -121,24 +121,24 @@
 
     <fragment
         android:id="@+id/RMSettingProfileMessageFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.setting_profile_message.RMSettingProfileMessageFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.setting_profile_message.RMSettingProfileMessageFragment"
         android:label="RMSettingProfileMessageFragment"
         tools:layout="@layout/fragment_rm_setting_profile_message" />
 
     <fragment
         android:id="@+id/RMUserDetailReportFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.user_detail_report.RMUserDetailReportFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.user_detail_report.RMUserDetailReportFragment"
         android:label="RMUserDetailReportFragment"
         tools:layout="@layout/fragment_rm_user_detail_report" />
     <fragment
         android:id="@+id/RMSettingPushFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.setting_push.RMSettingPushFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.setting_push.RMSettingPushFragment"
         android:label="RMSettingPushFragment"
         tools:layout="@layout/fragment_notification" />
 
     <fragment
         android:id="@+id/RMSettingContactFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.settingContact.RMSettingContactFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.settingContact.RMSettingContactFragment"
         android:label="RMSettingContactFragment"
         tools:layout="@layout/fragment_rm_setting_contact">
         <action
@@ -154,12 +154,12 @@
 
     <fragment
         android:id="@+id/RMSettingContactFinishFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.settingContact.finish.RMSettingContactFinishFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.settingContact.finish.RMSettingContactFinishFragment"
         android:label="RMSettingContactFinishFragment"
         tools:layout="@layout/fragment_rm_setting_contact_finish" />
     <fragment
         android:id="@+id/userDetailMsgFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.user_detail_message.UserDetailMsgFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.user_detail_message.UserDetailMsgFragment"
         android:label="UserDetailMsgFragment"
         tools:layout="@layout/fragment_rm_user_detail_message">
         <action
@@ -176,13 +176,13 @@
 
     <fragment
         android:id="@+id/rmBuyPointFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.buy_point.RMBuyPointFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.buy_point.RMBuyPointFragment"
         android:label="RMBuyPointFragment"
         tools:layout="@layout/fragment_rm_buy_point" />
 
     <fragment
         android:id="@+id/RMLiveStreamFragment"
-        android:name="jp.careapp.counseling.android.ui.review_mode.live_stream.RMLiveStreamFragment"
+        android:name="jp.slapp.android.android.ui.review_mode.live_stream.RMLiveStreamFragment"
         android:label="RMLiveStreamFragment"
         tools:layout="@layout/fragment_rm_live_stream"/>
 </navigation>

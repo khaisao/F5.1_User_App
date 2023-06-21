@@ -11,7 +11,7 @@
         android:focusable="true"
         tools:ignore="RtlCompat">
 
-        <jp.careapp.counseling.android.utils.customView.ToolBarCommon
+        <jp.slapp.android.android.utils.customView.ToolBarCommon
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
