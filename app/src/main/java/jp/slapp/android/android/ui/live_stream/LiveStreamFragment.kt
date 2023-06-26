@@ -453,7 +453,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
     private fun changeUiOfCameraIcon() {
         val isCameraMute = mViewModel.isCameraMute()
-        if (currentMode == LiveStreamMode.PARTY) {
+        if (currentMode == LiveStreamMode.PRIVATE) {
             binding.btnCameraLiveStream.loadImage(R.drawable.ic_camera_off_white)
             binding.btnCameraLiveStream.setBackgroundResource(R.drawable.bg_btn_live_stream_gradient)
         } else {
