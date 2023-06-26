@@ -90,17 +90,18 @@
                     app:layout_constraintWidth_percent="0.106" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/btnPrivate"
+                    android:id="@+id/btnMicLiveStream"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/bg_btn_live_stream"
+                    android:background="@drawable/bg_btn_live_stream_gradient"
                     android:minHeight="40dp"
                     android:padding="8dp"
-                    android:src="@drawable/ic_live_stream_private"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline9"
-                    app:layout_constraintDimensionRatio="1:1"
+                    android:src="@drawable/ic_mic_off_white"
+                    app:layout_constraintBottom_toTopOf="@id/btnCameraLiveStream"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginBottom="@dimen/margin_12"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintWidth_percent="0.106" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
@@ -120,16 +121,15 @@
                     tools:visibility="gone" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/btnVideoMic"
+                    android:id="@+id/btnCameraLiveStream"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="12dp"
-                    android:background="@drawable/bg_btn_live_stream"
+                    android:background="@drawable/bg_btn_live_stream_gradient"
                     android:minHeight="40dp"
                     android:padding="8dp"
-                    android:src="@drawable/ic_live_stream_video_mic"
-                    android:visibility="gone"
+                    android:src="@drawable/ic_camera_off_white"
                     app:layout_constraintBottom_toTopOf="@id/btnParty"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -141,7 +141,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:barrierDirection="top"
-                    app:constraint_referenced_ids="btnPrivate, btnVideoMic" />
+                    app:constraint_referenced_ids="btnMicLiveStream, btnCameraLiveStream" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/btnPoint"
@@ -241,14 +241,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    app:constraint_referenced_ids="btnComment, btnWhisper, btnPrivate,  btnParty, btnVideoMic, btnPoint" />
+                    app:constraint_referenced_ids="btnComment, btnWhisper, btnMicLiveStream,  btnParty, btnCameraLiveStream, btnPoint" />
 
                 <androidx.constraintlayout.widget.Group
                     android:id="@+id/groupButtonPartyMode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    app:constraint_referenced_ids="btnComment, btnWhisper, btnPrivate, btnPoint"
+                    app:constraint_referenced_ids="btnComment, btnWhisper, btnMicLiveStream, btnPoint"
                     tools:visibility="visible" />
 
                 <androidx.constraintlayout.widget.Group
@@ -256,7 +256,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    app:constraint_referenced_ids="btnComment, btnParty, btnVideoMic, btnPoint"
+                    app:constraint_referenced_ids="btnComment, btnParty, btnCameraLiveStream, btnMicLiveStream, btnPoint"
                     tools:visibility="visible" />
 
                 <androidx.constraintlayout.widget.Group
@@ -278,6 +278,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:scaleType="centerCrop"
+            android:layout_marginTop="@dimen/margin_12"
             app:layout_constraintWidth_percent="0.106"
             android:src="@drawable/default_avt_performer" />
 
@@ -375,7 +376,7 @@
             app:layout_constraintWidth_percent="0.235"
             app:scaling_type="fit" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/btnCameraFlip"
             android:layout_width="0dp"
             android:layout_height="0dp"
