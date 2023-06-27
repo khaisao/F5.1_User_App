@@ -55,8 +55,8 @@ class LiveStreamConfirmViewModel @Inject constructor(
                 _content.value = application.applicationContext.convertStringToSpannableString(
                     R.string.private_mode_register,
                     R.color.color_ff288b,
-                    25,
-                    41
+                    41,
+                    57
                 )
             }
 

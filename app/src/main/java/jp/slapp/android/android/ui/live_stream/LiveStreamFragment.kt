@@ -11,6 +11,7 @@ import android.media.AudioManager
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View.GONE
+import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewTreeObserver
 import androidx.activity.OnBackPressedCallback
@@ -20,6 +21,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -30,6 +32,7 @@ import jp.careapp.core.utils.DeviceUtil
 import jp.careapp.core.utils.DeviceUtil.Companion.hideKeyBoardWhenClickOutSide
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.careapp.core.utils.getHeight
+import jp.careapp.core.utils.loadImage
 import jp.slapp.android.R
 import jp.slapp.android.android.data.network.ConsultantResponse
 import jp.slapp.android.android.data.network.FlaxLoginAuthResponse
@@ -52,8 +55,6 @@ import jp.slapp.android.android.ui.live_stream.LiveStreamViewModel.Companion.UI_
 import jp.slapp.android.android.ui.live_stream.LiveStreamViewModel.Companion.UI_SHOW_CONFIRM_CLOSE_PRIVATE_MODE
 import jp.slapp.android.android.ui.live_stream.LiveStreamViewModel.Companion.UI_SHOW_WAITING_PRIVATE_MODE
 import jp.slapp.android.android.ui.live_stream.live_stream_bottom_sheet.buy_point.PurchasePointBottomSheet
-import jp.slapp.android.android.ui.live_stream.live_stream_bottom_sheet.camera_micrro_switch.CameraMicroSwitchBottomSheet
-import jp.slapp.android.android.ui.live_stream.live_stream_bottom_sheet.camera_micrro_switch.LiveStreamMicAndCameraChangeCallback
 import jp.slapp.android.android.ui.live_stream.live_stream_bottom_sheet.confirm.LiveStreamConfirmBottomSheet
 import jp.slapp.android.android.ui.live_stream.live_stream_bottom_sheet.confirm.LiveStreamConfirmBottomSheetDialogListener
 import jp.slapp.android.android.ui.live_stream.live_stream_bottom_sheet.connect_private.ConnectPrivateBottomSheet
@@ -63,11 +64,15 @@ import jp.slapp.android.android.utils.BUNDLE_KEY
 import jp.slapp.android.android.utils.BUNDLE_KEY.Companion.ROOT_SCREEN
 import jp.slapp.android.android.utils.Define
 import jp.slapp.android.android.utils.PermissionUtils
+import jp.slapp.android.android.utils.PermissionUtils.allPermissionGranted
 import jp.slapp.android.android.utils.PermissionUtils.launchMultiplePermission
 import jp.slapp.android.android.utils.PermissionUtils.registerPermission
 import jp.slapp.android.android.utils.SocketInfo.RESULT_NG
 import jp.slapp.android.android.utils.showSoftKeyboard
 import jp.slapp.android.databinding.FragmentLiveStreamBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.marge.marucast_android_client.views.VideoRendererView
 import timber.log.Timber
 import javax.inject.Inject
@@ -75,7 +80,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamViewModel>(),
     LiveStreamConfirmBottomSheetDialogListener, LiveStreamConnectPrivateListener,
-    MaruCastManager.SwitchViewerCallback, LiveStreamMicAndCameraChangeCallback {
+    MaruCastManager.SwitchViewerCallback {
 
     @Inject
     lateinit var appNavigation: AppNavigation
@@ -111,6 +116,8 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     private var initFlipCameraX = 0f
     private var initFlipCameraY = 0f
 
+    private val cameraResponseTime = 2000L
+
     private val cameraChangeVisibilityListener = ViewTreeObserver.OnGlobalLayoutListener {
         try {
             val newVis: Int = binding.memberViewCamera.visibility
@@ -145,19 +152,14 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     private fun onCameraAndAudioPermissionResult(state: PermissionUtils.PermissionState) {
         when (state) {
             PermissionUtils.PermissionState.Denied -> {
-                binding.btnVideoMic.isEnabled = false
+                binding.btnMicLiveStream.isEnabled = false
             }
 
             PermissionUtils.PermissionState.Granted -> {
-                if (currentMode != LiveStreamMode.PREMIUM_PRIVATE) {
-                    mViewModel.updateMode(PREMIUM_PRIVATE)
-                    currentMode = LiveStreamMode.PREMIUM_PRIVATE
-                    updateModeStatus()
-                }
             }
 
             PermissionUtils.PermissionState.PermanentlyDenied -> {
-                binding.btnVideoMic.isEnabled = false
+                binding.btnMicLiveStream.isEnabled = false
             }
         }
     }
@@ -314,12 +316,31 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             }
         }
 
-        binding.btnPrivate.setOnClickListener {
+        binding.btnMicLiveStream.setOnClickListener {
             if (!isDoubleClick) {
-                if (mViewModel.twoShot.value == LiveStreamViewModel.TWO_SHOT_VALUE_11) {
-                    showErrorDialog(getString(R.string.other_member_requested))
-                } else {
-                    showLiveStreamConfirmBottomSheet(PRIVATE_MODE_REGISTER, this)
+                cameraAndAudioPermissionLauncher.launchMultiplePermission(
+                    arrayOf(
+                        Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.CAMERA
+                    )
+                )
+                if (requireContext().allPermissionGranted(
+                        arrayOf(
+                            Manifest.permission.RECORD_AUDIO,
+                            Manifest.permission.CAMERA
+                        )
+                    )
+                ) {
+                    if (currentMode == LiveStreamMode.PARTY) {
+                        if (mViewModel.twoShot.value == LiveStreamViewModel.TWO_SHOT_VALUE_11) {
+                            showErrorDialog(getString(R.string.other_member_requested))
+                        } else {
+                            showLiveStreamConfirmBottomSheet(PRIVATE_MODE_REGISTER, this)
+                        }
+                    } else {
+                        mViewModel.updateMicSetting(!mViewModel.isMicMute())
+                        changeUiOfMicIcon()
+                    }
                 }
             }
         }
@@ -330,16 +351,13 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             }
         }
 
-        binding.btnVideoMic.setOnClickListener {
+        binding.btnCameraLiveStream.setOnClickListener {
             if (!isDoubleClick) {
                 if (currentMode == LiveStreamMode.PRIVATE) {
                     showLiveStreamConfirmBottomSheet(PREMIUM_PRIVATE_MODE_REGISTER, this)
                 } else if (currentMode == LiveStreamMode.PREMIUM_PRIVATE) {
-                    CameraMicroSwitchBottomSheet.newInstance(
-                        mViewModel.isMicMute(),
-                        mViewModel.isCameraMute(),
-                        this
-                    ).show(childFragmentManager, "CameraMicroSwitchBottomSheet")
+                    mViewModel.updateCameraSetting(!mViewModel.isCameraMute())
+                    changeUiOfCameraIcon()
                 }
             }
         }
@@ -415,6 +433,43 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         bindingWhisperHandle()
         bindingPointCheckingHandle()
         bindingCurrentPointHandle()
+    }
+
+    private fun changeUiOfMicIcon() {
+        val isMicMute = mViewModel.isMicMute()
+        if (currentMode == LiveStreamMode.PARTY) {
+            binding.btnMicLiveStream.loadImage(R.drawable.ic_mic_off_white)
+            binding.btnMicLiveStream.setBackgroundResource(R.drawable.bg_btn_live_stream_gradient)
+        } else {
+            if (isMicMute) {
+                binding.btnMicLiveStream.loadImage(R.drawable.ic_mic_on_white)
+                binding.btnMicLiveStream.setBackgroundResource(R.drawable.bg_btn_live_stream)
+            } else {
+                binding.btnMicLiveStream.loadImage(R.drawable.ic_mic_off_white)
+                binding.btnMicLiveStream.setBackgroundResource(R.drawable.bg_btn_live_stream)
+            }
+        }
+    }
+
+    private fun changeUiOfCameraIcon() {
+        val isCameraMute = mViewModel.isCameraMute()
+        if (currentMode == LiveStreamMode.PRIVATE) {
+            binding.btnCameraLiveStream.loadImage(R.drawable.ic_camera_off_white)
+            binding.btnCameraLiveStream.setBackgroundResource(R.drawable.bg_btn_live_stream_gradient)
+        } else {
+            if (isCameraMute) {
+                binding.btnCameraLiveStream.loadImage(R.drawable.ic_camera_on_white)
+                binding.btnCameraLiveStream.setBackgroundResource(R.drawable.bg_btn_live_stream)
+                if (currentMode == LiveStreamMode.PREMIUM_PRIVATE) {
+                    binding.memberCameraViewGroup.visibility = VISIBLE
+                }
+            } else {
+                binding.btnCameraLiveStream.loadImage(R.drawable.ic_camera_off_white)
+                binding.btnCameraLiveStream.setBackgroundResource(R.drawable.bg_btn_live_stream)
+                binding.memberCameraViewGroup.visibility = INVISIBLE
+
+            }
+        }
     }
 
     private fun bindingConnectResult() {
@@ -540,6 +595,10 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 dismissBottomSheet("CameraMicroSwitchBottomSheet")
                 dismissBottomSheet(PREMIUM_PRIVATE_MODE_REGISTER)
                 dismissBottomSheet(CHANGE_TO_PARTY_MODE)
+                mViewModel.resetCameraAndMic()
+                changeUiOfCameraIcon()
+                changeUiOfMicIcon()
+
             }
 
             LiveStreamMode.PRIVATE -> {
@@ -549,6 +608,14 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 binding.llItemPrivate.visibility = VISIBLE
                 binding.groupAllBtn.visibility = GONE
                 binding.groupButtonPrivateMode.visibility = VISIBLE
+                binding.memberCameraViewGroup.visibility = GONE
+                changeUiOfCameraIcon()
+                changeUiOfMicIcon()
+                lifecycleScope.launch(Dispatchers.Main){
+                    delay(cameraResponseTime)
+                    mViewModel.updateCameraSetting(true)
+                    mViewModel.updateMicSetting(false)
+                }
             }
 
             LiveStreamMode.PREMIUM_PRIVATE -> {
@@ -558,6 +625,9 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 binding.llItemPremiumPrivate.visibility = VISIBLE
                 binding.groupAllBtn.visibility = GONE
                 binding.groupButtonPrivateMode.visibility = VISIBLE
+                binding.memberCameraViewGroup.visibility = VISIBLE
+                mViewModel.updateCameraSetting(false)
+                changeUiOfCameraIcon()
             }
         }
     }
@@ -687,12 +757,11 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     override fun onClickButtonOKConfirmBottomSheet(mode: String) {
         when (mode) {
             PREMIUM_PRIVATE_MODE_REGISTER -> {
-                cameraAndAudioPermissionLauncher.launchMultiplePermission(
-                    arrayOf(
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.RECORD_AUDIO
-                    )
-                )
+                if (currentMode != LiveStreamMode.PREMIUM_PRIVATE) {
+                    mViewModel.updateMode(PREMIUM_PRIVATE)
+                    currentMode = LiveStreamMode.PREMIUM_PRIVATE
+                    updateModeStatus()
+                }
             }
 
             PRIVATE_MODE_REGISTER -> {
@@ -733,7 +802,6 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     }
 
     override fun onSwitchViewerGroupVisible(isVisible: Boolean) {
-        binding.memberCameraViewGroup.visibility = if (isVisible) VISIBLE else GONE
         binding.memberViewCamera.viewTreeObserver.addOnGlobalLayoutListener(
             cameraChangeVisibilityListener
         )
@@ -745,14 +813,5 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
     override fun getViewerView(): VideoRendererView {
         return binding.memberViewCamera
-    }
-
-    override fun onMicChange(_isMicMute: Boolean) {
-        mViewModel.updateMicSetting(_isMicMute)
-    }
-
-    override fun onCameraChange(_isCameraMute: Boolean) {
-        mViewModel.updateCameraSetting(_isCameraMute)
-        binding.memberCameraViewGroup.visibility = if (_isCameraMute) GONE else VISIBLE
     }
 }

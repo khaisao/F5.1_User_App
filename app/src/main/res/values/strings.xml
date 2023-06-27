@@ -670,7 +670,7 @@
     <string name="premium_private_mode_register_confirm">プレミアムプライベートモードを申し込みますか？</string>
     <string name="premium_private_mode_register">プレミアムプライベートモードではカメラとマイクが利用可能です。1分毎の消費ポイントが変わりますので、ご注意ください。</string>
     <string name="private_mode_register_confirm">プライベートモードを申し込みますか？</string>
-    <string name="private_mode_register">プライベートモードでは女の子と2人きりとなります。1分毎の消費ポイントが変わりますので、ご注意ください。</string>
+    <string name="private_mode_register">プライベートモードでは女の子と２人きりとなり、会員様もマイクを利用できます。また、１分毎の消費ポイントが変わりますので、ご注意ください。</string>
     <string name="private_mode_register_review_mode">プライベートモードではアドバイザーに1対1で相談できます。1分毎の消費ポイントが変わりますので、ご注意ください。</string>
     <string name="change_to_party_mode">プライベートモードを解除しますか？</string>
     <string name="performer_out_confirm">パフォーマーよりプライベートモードの解除申請がありました</string>
@@ -719,8 +719,8 @@
     <string name="point_guide_messenger">女の子に好きなタイミングでメッセージを送信することができます。</string>
     <string name="point_guide_live_stream">ライブ配信モードでは女の子の映像を視聴しながら、チャットでメッセージのやりとりができます。</string>
     <string name="point_guide_peep">のぞき視聴モードでは他の会員様に気を使わずに、女の子の映像をこっそりと視聴することができます。</string>
-    <string name="point_guide_private">女の子と２人きりで誰にも見られずにライブ配信を独占できます。</string>
-    <string name="point_guide_premium_private">女の子と２人きりでライブ配信を独占できる他に、会員様もマイクとカメラを使って映像と音声を配信できます。</string>
+    <string name="point_guide_private">女の子と２人きりで誰にも見られずにライブ配信を独占できる他に、会員様もマイクを利用することができます。</string>
+    <string name="point_guide_premium_private">女の子と２人きりでライブ配信を独占でき、マイクを利用できることに加えて、会員様もカメラを使って映像を配信することができます。</string>
     <string name="point_guide_whisper">ライブ配信中に他の会員様に見られずに、こっそりと女の子だけに秘密のチャットを送ることができます。</string>
 
 

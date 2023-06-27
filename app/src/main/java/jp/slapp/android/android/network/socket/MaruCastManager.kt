@@ -122,7 +122,7 @@ class MaruCastManager @Inject constructor(
 
                         if (!isVideoTrackReady || !isAudioTrackReady) return@setMediaEventListener
 
-                        callBack!!.remoteTrackCompleted()
+                        callBack?.remoteTrackCompleted()
                     } catch (e: java.lang.Exception) {
                         e.printStackTrace()
                     }
