@@ -10,6 +10,7 @@ import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.convertStringToSpannableString
 import jp.slapp.android.R
 import jp.slapp.android.android.ui.live_stream.LiveStreamAction.CHANGE_TO_PARTY_MODE
+import jp.slapp.android.android.ui.live_stream.LiveStreamAction.CHANGE_TO_PARTY_MODE_FROM_PEEP
 import jp.slapp.android.android.ui.live_stream.LiveStreamAction.PERFORMER_OUT_CONFIRM
 import jp.slapp.android.android.ui.live_stream.LiveStreamAction.PREMIUM_PRIVATE_MODE_REGISTER
 import jp.slapp.android.android.ui.live_stream.LiveStreamAction.PRIVATE_MODE_REGISTER
@@ -76,6 +77,10 @@ class LiveStreamConfirmViewModel @Inject constructor(
 
             CHANGE_TO_PARTY_MODE -> {
                 _title.value = application.getString(R.string.change_to_party_mode)
+            }
+
+            CHANGE_TO_PARTY_MODE_FROM_PEEP -> {
+                _title.value = application.getString(R.string.want_to_switch_to_party_mode)
             }
         }
     }
