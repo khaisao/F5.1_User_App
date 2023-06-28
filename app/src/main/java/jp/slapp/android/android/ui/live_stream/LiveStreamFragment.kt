@@ -9,6 +9,7 @@ import android.content.IntentFilter
 import android.graphics.Rect
 import android.media.AudioManager
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View.GONE
 import android.view.View.INVISIBLE
@@ -42,6 +43,7 @@ import jp.slapp.android.android.navigation.AppNavigation
 import jp.slapp.android.android.network.socket.MaruCastManager
 import jp.slapp.android.android.ui.live_stream.InformationPerformerBottomFragment.ClickItemView
 import jp.slapp.android.android.ui.live_stream.LiveStreamAction.CHANGE_TO_PARTY_MODE
+import jp.slapp.android.android.ui.live_stream.LiveStreamAction.CHANGE_TO_PARTY_MODE_FROM_PEEP
 import jp.slapp.android.android.ui.live_stream.LiveStreamAction.PERFORMER_OUT_CONFIRM
 import jp.slapp.android.android.ui.live_stream.LiveStreamAction.PREMIUM_PRIVATE_MODE_REGISTER
 import jp.slapp.android.android.ui.live_stream.LiveStreamAction.PRIVATE_MODE_REGISTER
@@ -347,7 +349,11 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
         binding.btnParty.setOnClickListener {
             if (!isDoubleClick) {
-                showLiveStreamConfirmBottomSheet(CHANGE_TO_PARTY_MODE, this)
+                if (currentMode == LiveStreamMode.PEEP) {
+                    showLiveStreamConfirmBottomSheet(CHANGE_TO_PARTY_MODE_FROM_PEEP, this)
+                } else {
+                    showLiveStreamConfirmBottomSheet(CHANGE_TO_PARTY_MODE, this)
+                }
             }
         }
 
@@ -770,7 +776,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 }
             }
 
-            CHANGE_TO_PARTY_MODE -> {
+            CHANGE_TO_PARTY_MODE, CHANGE_TO_PARTY_MODE_FROM_PEEP -> {
                 if (currentMode != LiveStreamMode.PARTY) {
                     mViewModel.updateMode(PARTY)
                     mViewModel.setViewerStatus(0)

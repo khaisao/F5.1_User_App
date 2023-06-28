@@ -722,6 +722,7 @@
     <string name="point_guide_private">女の子と２人きりで誰にも見られずにライブ配信を独占できる他に、会員様もマイクを利用することができます。</string>
     <string name="point_guide_premium_private">女の子と２人きりでライブ配信を独占でき、マイクを利用できることに加えて、会員様もカメラを使って映像を配信することができます。</string>
     <string name="point_guide_whisper">ライブ配信中に他の会員様に見られずに、こっそりと女の子だけに秘密のチャットを送ることができます。</string>
+    <string name="want_to_switch_to_party_mode">パーティモードへ移行しますか？</string>
 
 
     <string-array name="nm_contact_us_category">
