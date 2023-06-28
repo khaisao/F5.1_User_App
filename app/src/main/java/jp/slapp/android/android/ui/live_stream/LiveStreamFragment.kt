@@ -349,7 +349,6 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
         binding.btnParty.setOnClickListener {
             if (!isDoubleClick) {
-                Log.d("asgasgasgsag", "setOnClick: $currentMode")
                 if (currentMode == LiveStreamMode.PEEP) {
                     showLiveStreamConfirmBottomSheet(CHANGE_TO_PARTY_MODE_FROM_PEEP, this)
                 } else {
