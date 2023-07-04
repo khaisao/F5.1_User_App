@@ -185,6 +185,7 @@ class MODE_USER {
     companion object {
         // mode user 1. mode view 2. mode all
         const val MODE_ALL = 2
+        const val MEMBER_APP_REVIEW_MODE = 97
     }
 }
 

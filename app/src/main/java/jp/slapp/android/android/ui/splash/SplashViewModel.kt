@@ -16,6 +16,7 @@ import jp.slapp.android.android.data.network.MemberResponse
 import jp.slapp.android.android.data.pref.RxPreferences
 import jp.slapp.android.android.network.ApiInterface
 import jp.slapp.android.android.utils.Define.Companion.NORMAL_MODE
+import jp.slapp.android.android.utils.MODE_USER.Companion.MEMBER_APP_REVIEW_MODE
 import jp.slapp.android.android.utils.dummyCategoryData
 import jp.slapp.android.android.utils.dummyFreeTemplateData
 import kotlinx.coroutines.Dispatchers
@@ -202,8 +203,14 @@ class SplashViewModel @ViewModelInject constructor(
                 if (response.errors.isEmpty()) {
                     when (response.dataResponse.status) {
                         Constants.MemberStatus.NOMARL.index -> {
-                            screenCode.value =
-                                if (appMode.value == NORMAL_MODE) SCREEN_CODE_TOP else SCREEN_CODE_TOP_RM
+                            if (appMode.value == NORMAL_MODE) {
+                                screenCode.value =
+                                    if (response.dataResponse.disPlay == MEMBER_APP_REVIEW_MODE) {
+                                        SCREEN_CODE_TOP_RM
+                                    } else {
+                                        SCREEN_CODE_TOP
+                                    }
+                            }
                         }
                         Constants.MemberStatus.UNREGISTED.index -> {
                             screenCode.value =

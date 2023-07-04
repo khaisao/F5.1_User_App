@@ -115,6 +115,10 @@ interface AppNavigation : BaseNavigator {
 
     fun openSplashToRMTop(bundle: Bundle? = null)
 
+    fun openVerifyCodeToRMTop(bundle: Bundle? = null)
+
+    fun openRegistrationToRMTop(bundle: Bundle? = null)
+
     fun openRMUserDetailToRMUserDetailReport(bundle: Bundle? = null)
 
     fun openRMMyMenuToRMSettingContact(bundle: Bundle? = null)

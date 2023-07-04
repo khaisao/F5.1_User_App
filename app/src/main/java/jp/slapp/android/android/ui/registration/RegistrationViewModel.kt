@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.SingleLiveEvent
 import jp.slapp.android.android.data.pref.RxPreferences
+import jp.slapp.android.android.utils.MODE_USER
 import jp.slapp.android.android.utils.appsflyer.AppsFlyerUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,10 +31,10 @@ class RegistrationViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             supervisorScope {
                 try {
-                    val response =
+                    val registerResponse =
                         mRepository.register(userName, setReceiveMail(receiveMail), tokenInput)
-                    if (response.errors.isEmpty()) {
-                        val dataResponse = response.dataResponse
+                    if (registerResponse.errors.isEmpty()) {
+                        val dataResponse = registerResponse.dataResponse
                         val token = dataResponse.token.toString()
                         val tokenExpire = dataResponse.tokenExpire.toString()
                         val password = dataResponse.password.toString()
@@ -43,8 +44,17 @@ class RegistrationViewModel @Inject constructor(
                         rxPreferences.saveEmail(email)
                         mRepository.setFirstRegister()
                         AppsFlyerUtil.handleEventRegistration(memberCode)
-                        withContext(Dispatchers.Main) {
-                            mActionState.value = RegistrationActionState.SetNickNameSuccess
+                        val getMemberInfoResponse = mRepository.getMemberInfo()
+                        if (getMemberInfoResponse.errors.isEmpty()) {
+                            val dataGetMemberInfoResponse =
+                                getMemberInfoResponse.dataResponse
+                            withContext(Dispatchers.Main) {
+                                if (dataGetMemberInfoResponse.disPlay == MODE_USER.MEMBER_APP_REVIEW_MODE) {
+                                    mActionState.value = RegistrationActionState.NavigateToTopRM
+                                } else {
+                                    mActionState.value = RegistrationActionState.NavigateToTop
+                                }
+                            }
                         }
                     }
                 } catch (e: Exception) {
@@ -60,5 +70,6 @@ class RegistrationViewModel @Inject constructor(
 }
 
 sealed class RegistrationActionState {
-    object SetNickNameSuccess : RegistrationActionState()
+    object NavigateToTop : RegistrationActionState()
+    object NavigateToTopRM : RegistrationActionState()
 }
