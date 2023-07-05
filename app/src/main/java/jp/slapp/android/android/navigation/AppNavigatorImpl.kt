@@ -225,6 +225,14 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_splashFragment_to_rmTopFragment, bundle)
     }
 
+    override fun openVerifyCodeToRMTop(bundle: Bundle?) {
+        openScreen(R.id.action_verifyCodeFragment_to_rmTopFragment, bundle)
+    }
+
+    override fun openRegistrationToRMTop(bundle: Bundle?) {
+        openScreen(R.id.action_registrationFragment_to_review_mode_navigation, bundle)
+    }
+
     override fun openRMTopToRMBLockList(bundle: Bundle?) {
         openScreen(R.id.action_rmTopFragment_to_rmBlockListFragment, bundle)
     }

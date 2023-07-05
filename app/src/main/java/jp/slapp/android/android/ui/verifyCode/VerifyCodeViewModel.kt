@@ -11,6 +11,7 @@ import jp.slapp.android.R
 import jp.slapp.android.android.AppApplication
 import jp.slapp.android.android.data.network.ApiObjectResponse
 import jp.slapp.android.android.data.network.InfoUserResponse
+import jp.slapp.android.android.utils.MODE_USER.Companion.MEMBER_APP_REVIEW_MODE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
@@ -44,9 +45,9 @@ class VerifyCodeViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             supervisorScope {
                 try {
-                    val response = mRepository.sendVerifyCode(email, authCode)
-                    if (response.errors.isEmpty()) {
-                        dataResponseRegister = response.dataResponse
+                    val sendVerifyCodeResponse = mRepository.sendVerifyCode(email, authCode)
+                    if (sendVerifyCodeResponse.errors.isEmpty()) {
+                        dataResponseRegister = sendVerifyCodeResponse.dataResponse
                         withContext(Dispatchers.Main) {
                             when (dataResponseRegister.status) {
                                 SCREEN_CODE_TOP -> {
@@ -56,8 +57,18 @@ class VerifyCodeViewModel @Inject constructor(
                                     val memberCode = dataResponseRegister.memberCode.toString()
                                     mRepository.saveUserInfo(token, tokenExpire, password, memberCode)
                                     mRepository.saveEmail(email)
-                                    mActionState.value =
-                                        VerifyCodeActionState.NavigateToTop
+                                    val getMemberInfoResponse = mRepository.getMemberInfo()
+                                    if (getMemberInfoResponse.errors.isEmpty()) {
+                                        val dataGetMemberInfoResponse =
+                                            getMemberInfoResponse.dataResponse
+                                        if (dataGetMemberInfoResponse.disPlay == MEMBER_APP_REVIEW_MODE) {
+                                            mActionState.value =
+                                                VerifyCodeActionState.NavigateToTopRM
+                                        } else {
+                                            mActionState.value =
+                                                VerifyCodeActionState.NavigateToTop
+                                        }
+                                    }
                                 }
                                 SCREEN_CODE_REGISTER -> mActionState.value =
                                     VerifyCodeActionState.NavigateToRegister
@@ -145,6 +156,8 @@ sealed class VerifyCodeActionState {
     object EditEmailSuccess : VerifyCodeActionState()
 
     object NavigateToTop : VerifyCodeActionState()
+
+    object NavigateToTopRM : VerifyCodeActionState()
 
     object NavigateToRegister : VerifyCodeActionState()
 }

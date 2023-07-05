@@ -12,6 +12,8 @@ class VerifyCodeRepository @Inject constructor(
     suspend fun sendVerifyCode(email: String, authCode: String) =
         apiInterface.sendVerifyCode(email, authCode)
 
+    suspend fun getMemberInfo() = apiInterface.getMember()
+
     fun saveUserInfo(
         token: String,
         tokenExpire: String,

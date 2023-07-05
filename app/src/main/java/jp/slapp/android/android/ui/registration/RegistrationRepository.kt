@@ -15,6 +15,8 @@ class RegistrationRepository @Inject constructor(
     private val application: Application
 ) {
 
+    suspend fun getMemberInfo() = apiInterface.getMember()
+
     suspend fun register(userName: String, receiveMail: Int, token: String) = apiInterface.register(
         InforRegistrationRequest(
             token = token,

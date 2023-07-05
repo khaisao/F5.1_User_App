@@ -73,8 +73,12 @@ class RegistrationFragment :
 
         mViewModel.mActionState.observe(viewLifecycleOwner) {
             when (it) {
-                is RegistrationActionState.SetNickNameSuccess -> {
+                is RegistrationActionState.NavigateToTop -> {
                     appNavigation.openRegistrationToTopScreen()
+                    shareViewModel.setHaveToken(true)
+                }
+                is RegistrationActionState.NavigateToTopRM -> {
+                    appNavigation.openRegistrationToRMTop()
                     shareViewModel.setHaveToken(true)
                 }
             }
