@@ -22,3 +22,7 @@ object LiveStreamAction {
     const val CHANGE_TO_PARTY_MODE = "CHANGE_TO_PARTY_MODE"
     const val CHANGE_TO_PARTY_MODE_FROM_PEEP = "CHANGE_TO_PARTY_MODE_FROM_PEEP"
 }
+
+object DialogTag{
+    const val CAMERA_MICRO_SWITCH_BOTTOM_SHEET = "CameraMicroSwitchBottomSheet"
+}

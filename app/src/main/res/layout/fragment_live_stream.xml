@@ -40,6 +40,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <View
+                    android:id="@+id/view_hide_all_button"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"/>
+
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline9"
                     android:layout_width="wrap_content"
@@ -267,8 +274,18 @@
                     android:visibility="gone"
                     app:constraint_referenced_ids="btnWhisper, btnParty, btnPoint"
                     tools:visibility="visible" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.core.widget.NestedScrollView>
+
+        <View
+            android:id="@+id/view_show_all_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivPerformer"
@@ -284,6 +301,7 @@
             android:src="@drawable/default_avt_performer" />
 
         <LinearLayout
+            android:id="@+id/ll_performer_info"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -364,6 +382,16 @@
             app:layout_constraintTop_toTopOf="@id/ivPerformer"
             app:layout_constraintWidth_percent="0.05" />
 
+        <View
+            android:id="@+id/memberViewCameraEmpty"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintDimensionRatio="88:156"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivPerformer"
+            app:layout_constraintWidth_percent="0.235" />
+
         <org.marge.marucast_android_client.views.VideoRendererView
             android:id="@+id/memberViewCamera"
             android:layout_width="0dp"
@@ -376,6 +404,19 @@
             app:layout_constraintTop_toBottomOf="@id/ivPerformer"
             app:layout_constraintWidth_percent="0.235"
             app:scaling_type="fit" />
+
+        <ImageView
+            android:id="@+id/btnCameraFlipEmpty"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="@id/memberViewCamera"
+            app:layout_constraintTop_toTopOf="@id/memberViewCamera"
+            app:layout_constraintWidth_percent="0.06"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_live_stream_camera_flip" />
 
         <ImageView
             android:id="@+id/btnCameraFlip"
@@ -396,5 +437,12 @@
             android:visibility="gone"
             app:constraint_referenced_ids="memberViewCamera, btnCameraFlip"
             tools:visibility="visible" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_performer_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="ivPerformer, ll_performer_info" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
