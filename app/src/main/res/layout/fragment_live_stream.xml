@@ -22,7 +22,7 @@
             android:id="@+id/performerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:isMirror="true"
+            app:isMirror="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,6 +30,7 @@
             app:scaling_type="fit" />
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/main_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
