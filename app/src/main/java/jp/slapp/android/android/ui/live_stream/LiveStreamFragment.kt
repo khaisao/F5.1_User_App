@@ -9,7 +9,6 @@ import android.content.IntentFilter
 import android.graphics.Rect
 import android.media.AudioManager
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View.GONE
 import android.view.View.INVISIBLE
@@ -41,6 +40,7 @@ import jp.slapp.android.android.data.pref.RxPreferences
 import jp.slapp.android.android.handle.HandleBuyPoint
 import jp.slapp.android.android.navigation.AppNavigation
 import jp.slapp.android.android.network.socket.MaruCastManager
+import jp.slapp.android.android.ui.live_stream.DialogTag.CAMERA_MICRO_SWITCH_BOTTOM_SHEET
 import jp.slapp.android.android.ui.live_stream.InformationPerformerBottomFragment.ClickItemView
 import jp.slapp.android.android.ui.live_stream.LiveStreamAction.CHANGE_TO_PARTY_MODE
 import jp.slapp.android.android.ui.live_stream.LiveStreamAction.CHANGE_TO_PARTY_MODE_FROM_PEEP
@@ -113,26 +113,8 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
     private var xDown = 0f
     private var yDown = 0f
-    private var initCameraX = 0f
-    private var initCameraY = 0f
-    private var initFlipCameraX = 0f
-    private var initFlipCameraY = 0f
 
     private val cameraResponseTime = 2000L
-
-    private val cameraChangeVisibilityListener = ViewTreeObserver.OnGlobalLayoutListener {
-        try {
-            val newVis: Int = binding.memberViewCamera.visibility
-            if (newVis == VISIBLE) {
-                initCameraX = binding.memberViewCamera.x
-                initCameraY = binding.memberViewCamera.y
-                initFlipCameraX = binding.btnCameraFlip.x
-                initFlipCameraY = binding.btnCameraFlip.y
-                removeVisibilityChangeListener()
-            }
-        } catch (_: Exception) {
-        }
-    }
 
     private var earphoneEventReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -181,6 +163,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                             bottomToTop = binding.edtComment.id
                         }
                     }
+                    binding.viewHideAllButton.isVisible = false
                 }
             } else {
                 if (isKeyboardShowing) {
@@ -190,8 +173,9 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                         }
                     }
                     binding.memberCommentViewGroup.isVisible = false
-                    updateModeStatus()
                     isKeyboardShowing = false
+                    binding.viewHideAllButton.isVisible = true
+                    updateModeStatus(true)
                 }
             }
         } catch (_: Exception) {
@@ -290,10 +274,10 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 requireContext().showSoftKeyboard(binding.edtComment)
 
                 /** Handle camera view to initialize position*/
-                binding.memberViewCamera.x = initCameraX
-                binding.memberViewCamera.y = initCameraY
-                binding.btnCameraFlip.x = initFlipCameraX
-                binding.btnCameraFlip.y = initFlipCameraY
+                binding.memberViewCamera.x =  binding.memberViewCameraEmpty.x
+                binding.memberViewCamera.y = binding.memberViewCameraEmpty.y
+                binding.btnCameraFlip.x = binding.btnCameraFlipEmpty.x
+                binding.btnCameraFlip.y = binding.btnCameraFlipEmpty.y
             }
         }
 
@@ -302,6 +286,18 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
             arrayListOf(binding.btnSendComment, binding.rcvCommentList),
             requireActivity()
         )
+
+        binding.viewHideAllButton.setOnClickListener {
+            binding.mainScrollView.isVisible = false
+            binding.groupPerformerInfo.visibility = INVISIBLE
+            binding.viewShowAllButton.isVisible = true
+        }
+
+        binding.viewShowAllButton.setOnClickListener {
+            binding.mainScrollView.isVisible = true
+            binding.groupPerformerInfo.visibility = VISIBLE
+            binding.viewShowAllButton.isVisible = false
+        }
 
         binding.btnWhisper.setOnClickListener {
             if (!isDoubleClick) {
@@ -473,7 +469,6 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 binding.btnCameraLiveStream.loadImage(R.drawable.ic_camera_off_white)
                 binding.btnCameraLiveStream.setBackgroundResource(R.drawable.bg_btn_live_stream)
                 binding.memberCameraViewGroup.visibility = INVISIBLE
-
             }
         }
     }
@@ -580,7 +575,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
-    private fun updateModeStatus() {
+    private fun updateModeStatus(isOnlyUpdateUI: Boolean = false) {
         when (currentMode) {
             LiveStreamMode.PEEP -> {
                 binding.llItemPeeping.visibility = VISIBLE
@@ -598,13 +593,14 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 binding.llItemParty.visibility = VISIBLE
                 binding.groupAllBtn.visibility = GONE
                 binding.groupButtonPartyMode.visibility = VISIBLE
-                dismissBottomSheet("CameraMicroSwitchBottomSheet")
+                dismissBottomSheet(CAMERA_MICRO_SWITCH_BOTTOM_SHEET)
                 dismissBottomSheet(PREMIUM_PRIVATE_MODE_REGISTER)
                 dismissBottomSheet(CHANGE_TO_PARTY_MODE)
-                mViewModel.resetCameraAndMic()
-                changeUiOfCameraIcon()
-                changeUiOfMicIcon()
-
+                if (!isOnlyUpdateUI) {
+                    mViewModel.resetCameraAndMic()
+                    changeUiOfCameraIcon()
+                    changeUiOfMicIcon()
+                }
             }
 
             LiveStreamMode.PRIVATE -> {
@@ -615,12 +611,14 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 binding.groupAllBtn.visibility = GONE
                 binding.groupButtonPrivateMode.visibility = VISIBLE
                 binding.memberCameraViewGroup.visibility = GONE
-                changeUiOfCameraIcon()
-                changeUiOfMicIcon()
-                lifecycleScope.launch(Dispatchers.Main){
-                    delay(cameraResponseTime)
-                    mViewModel.updateCameraSetting(true)
-                    mViewModel.updateMicSetting(false)
+                if (!isOnlyUpdateUI) {
+                    changeUiOfCameraIcon()
+                    changeUiOfMicIcon()
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        delay(cameraResponseTime)
+                        mViewModel.updateCameraSetting(true)
+                        mViewModel.updateMicSetting(false)
+                    }
                 }
             }
 
@@ -632,8 +630,10 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 binding.groupAllBtn.visibility = GONE
                 binding.groupButtonPrivateMode.visibility = VISIBLE
                 binding.memberCameraViewGroup.visibility = VISIBLE
-                mViewModel.updateCameraSetting(false)
-                changeUiOfCameraIcon()
+                if (!isOnlyUpdateUI) {
+                    mViewModel.updateCameraSetting(false)
+                    changeUiOfCameraIcon()
+                }
             }
         }
     }
@@ -754,12 +754,6 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         if (fragment != null) (fragment as BottomSheetDialogFragment).dismiss()
     }
 
-    private fun removeVisibilityChangeListener() {
-        binding.memberViewCamera.viewTreeObserver.removeOnGlobalLayoutListener(
-            cameraChangeVisibilityListener
-        )
-    }
-
     override fun onClickButtonOKConfirmBottomSheet(mode: String) {
         when (mode) {
             PREMIUM_PRIVATE_MODE_REGISTER -> {
@@ -808,9 +802,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     }
 
     override fun onSwitchViewerGroupVisible(isVisible: Boolean) {
-        binding.memberViewCamera.viewTreeObserver.addOnGlobalLayoutListener(
-            cameraChangeVisibilityListener
-        )
+        //Nothing
     }
 
     override fun getPresenterView(): VideoRendererView {
