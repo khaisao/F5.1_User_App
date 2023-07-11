@@ -6,7 +6,7 @@ ext {
             compileSdk           : 31,
             targetSdk            : 31,
             buildTools           : '30.0.2',
-            versionCode          : 8,
+            versionCode          : 9,
             versionName          : '1.2',
 
             // For app
