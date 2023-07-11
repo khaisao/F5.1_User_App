@@ -6,8 +6,8 @@ ext {
             compileSdk           : 31,
             targetSdk            : 31,
             buildTools           : '30.0.2',
-            versionCode          : 9,
-            versionName          : '1.2',
+            versionCode          : 10,
+            versionName          : '1.3',
 
             // For app
             fragment             : '1.3.2',
