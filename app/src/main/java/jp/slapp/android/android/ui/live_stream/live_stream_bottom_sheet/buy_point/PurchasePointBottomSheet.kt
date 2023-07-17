@@ -104,8 +104,8 @@ class PurchasePointBottomSheet : BottomSheetDialogFragment() {
                     point = it.buyPoint + it.bonusPoint,
                     money = it.price
                 )
-                dismiss()
             }
+            dismiss()
         }
         binding.costPointRv.adapter = purchasePointAdapter
     }
