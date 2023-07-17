@@ -127,43 +127,59 @@ class RankingTopAdapter(
     ) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(typeRanking: TypeRankingResponse) {
-            typeRanking.let {
-                typeRanking.performerResponse?.let { consultant ->
-                    Glide.with(context).load(consultant.imageUrl)
-                        .apply(RequestOptions().placeholder(R.drawable.default_avt_performer))
-                        .into(binding.ivAvatar)
-
-                    val status = PerformerStatusHandler.getStatus(consultant.callStatus,consultant.chatStatus)
-
-                    val statusText = PerformerStatusHandler.getStatusText(status, context.resources)
-
-                    val statusBg = PerformerStatusHandler.getStatusBg(status)
-
-                    binding.tvStatus.text = statusText
-
-                    binding.tvStatus.setBackgroundResource(statusBg)
-
-                    val bustSize = context.getBustSize(consultant.bust)
-                    if (bustSize == "") {
-                        binding.tvSize.visibility = View.GONE
-                    } else {
-                        binding.tvSize.visibility = View.VISIBLE
-                        binding.tvSize.text = bustSize
-                    }
-                    binding.tvAge.text = consultant.age.toString() + context.resources.getString(R.string.age_raw)
-                    binding.tvName.text = consultant.name
-                }
-            }
-            binding.ivBackgroundMain.setImageResource(when (typeRankingLayout) {
-                BUNDLE_KEY.TYPE_DAILY -> R.drawable.ic_ranking_daily_3
-                BUNDLE_KEY.TYPE_WEEKLY -> R.drawable.ic_ranking_week_3
-                BUNDLE_KEY.TYPE_MONTHLY -> R.drawable.ic_ranking_monthly_3
-                else -> R.drawable.ic_ranking_best_3
-            })
-                binding.clRanking.setOnClickListener {
+            val nullValue = TypeRankingResponse()
+            if (typeRanking != nullValue) {
+                binding.ivBackgroundMain.translationZ = 0F
                 typeRanking.let {
-                    onClickListener.invoke(absoluteAdapterPosition)
+                    typeRanking.performerResponse?.let { consultant ->
+                        Glide.with(context).load(consultant.imageUrl)
+                            .apply(RequestOptions().placeholder(R.drawable.default_avt_performer))
+                            .into(binding.ivAvatar)
+
+                        val status = PerformerStatusHandler.getStatus(consultant.callStatus,consultant.chatStatus)
+
+                        val statusText = PerformerStatusHandler.getStatusText(status, context.resources)
+
+                        val statusBg = PerformerStatusHandler.getStatusBg(status)
+
+                        binding.tvStatus.text = statusText
+
+                        binding.tvStatus.setBackgroundResource(statusBg)
+
+                        val bustSize = context.getBustSize(consultant.bust)
+                        if (bustSize == "") {
+                            binding.tvSize.visibility = View.GONE
+                        } else {
+                            binding.tvSize.visibility = View.VISIBLE
+                            binding.tvSize.text = bustSize
+                        }
+                        binding.tvAge.text = consultant.age.toString() + context.resources.getString(R.string.age_raw)
+                        binding.tvName.text = consultant.name
+                    }
                 }
+                binding.ivBackgroundMain.setImageResource(
+                    when (typeRankingLayout) {
+                        BUNDLE_KEY.TYPE_DAILY -> R.drawable.ic_ranking_daily_3
+                        BUNDLE_KEY.TYPE_WEEKLY -> R.drawable.ic_ranking_week_3
+                        BUNDLE_KEY.TYPE_MONTHLY -> R.drawable.ic_ranking_monthly_3
+                        else -> R.drawable.ic_ranking_best_3
+                    }
+                )
+                binding.clRanking.setOnClickListener {
+                    typeRanking.let {
+                        onClickListener.invoke(absoluteAdapterPosition)
+                    }
+                }
+            } else {
+                val drawableRes =
+                    when (typeRankingLayout) {
+                        BUNDLE_KEY.TYPE_DAILY -> R.drawable.bg_rank_daily_behind
+                        BUNDLE_KEY.TYPE_WEEKLY -> R.drawable.bg_rank_weekly_behind
+                        BUNDLE_KEY.TYPE_MONTHLY -> R.drawable.bg_rank_monthly_behind
+                        else -> R.drawable.bg_rank_best_behind
+                    }
+                binding.ivBackgroundMain.setImageResource(drawableRes)
+                binding.ivBackgroundMain.translationZ = 99F
             }
         }
     }
