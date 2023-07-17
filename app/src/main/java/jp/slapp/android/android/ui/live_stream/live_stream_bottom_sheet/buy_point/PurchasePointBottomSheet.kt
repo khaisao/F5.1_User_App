@@ -99,7 +99,7 @@ class PurchasePointBottomSheet : BottomSheetDialogFragment() {
         }
         mViewModel.getCreditPrices()
         purchasePointAdapter = PurchasePointAdapter {
-            purchasePointCallback?.onPointItemClick(it.buyPoint ?: 0, it.price ?: 0)
+            purchasePointCallback?.onPointItemClick(it.buyPoint!! + it.bonusPoint!!, it.price ?: 0)
             dismiss()
         }
         binding.costPointRv.adapter = purchasePointAdapter
