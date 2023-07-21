@@ -49,6 +49,10 @@ class Define {
         const val URL_SETTLEMENT = "https://web.careapp.jp/webview/fund_settlement.html"
         const val URL_FREE_POINT =
             "${BuildConfig.WEB_DOMAIN}/webview/member/freepoint/free-point.html"
+        const val URL_PAY_TYPE_CREDIT =
+            "${BuildConfig.WEB_DOMAIN}/payment/buy-point?kind=credit"
+        const val URL_PAY_TYPE_BANK =
+            "${BuildConfig.WEB_DOMAIN}/payment/buy-point?kind=bank"
         const val URL_STRIPE_BUY_POINT =
             "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/stripe/buy-point-list.html"
         const val URL_BUY_POINT =
@@ -177,6 +181,16 @@ class Define {
             const val ONE_LINK = "sparklive.onelink.me"
             const val DEEP_LINK_VALUE = "deep_link_value"
             const val DEEP_LINK_URL_SCHEME = "af_dp"
+            const val TOP = "top"
+            const val MESSAGE_HISTORY = "message_history"
+            const val RANKING_DAY = "ranking_day"
+            const val RANKING_WEEK = "ranking_week"
+            const val RANKING_MONTH = "ranking_month"
+            const val RANKING_RECOMMEND = "ranking_recommend"
+            const val WITHDRAW = "withdraw"
+            const val PAYMENT_1 = "payment_1"
+            const val PAYMENT_2 = "payment_2"
+            const val FAQ = "faq"
         }
     }
 }

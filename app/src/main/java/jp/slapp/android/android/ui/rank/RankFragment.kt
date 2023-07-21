@@ -5,7 +5,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager.widget.ViewPager
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
@@ -78,6 +80,33 @@ class RankFragment : BaseFragment<RankFragmentBinding, RankViewModel>() {
             }
         }
 
+    }
+
+    override fun bindingStateView() {
+        super.bindingStateView()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                shareViewModel.tabRankingTypeDeeplinkFlow.collect {
+                    when (it) {
+                        TabRankingType.RankingDay -> {
+                            binding.viewPager.currentItem = 0
+                        }
+
+                        TabRankingType.RankingWeek -> {
+                            binding.viewPager.currentItem = 1
+                        }
+
+                        TabRankingType.RankingMonth -> {
+                            binding.viewPager.currentItem = 2
+                        }
+
+                        TabRankingType.RankingRecommend -> {
+                            binding.viewPager.currentItem = 3
+                        }
+                    }
+                }
+            }
+        }
     }
 
     override fun setOnClick() {
@@ -185,4 +214,8 @@ class RankFragment : BaseFragment<RankFragmentBinding, RankViewModel>() {
             }
         }
     }
+}
+
+enum class TabRankingType {
+    RankingDay, RankingWeek, RankingMonth, RankingRecommend
 }

@@ -99,6 +99,36 @@
                 <data
                     android:host="contact"
                     android:scheme="sparklive" />
+                <data
+                    android:host="top"
+                    android:scheme="sparklive" />
+                <data
+                    android:host="message_history"
+                    android:scheme="sparklive" />
+                <data
+                    android:host="ranking_day"
+                    android:scheme="sparklive" />
+                <data
+                    android:host="ranking_week"
+                    android:scheme="sparklive" />
+                <data
+                    android:host="ranking_month"
+                    android:scheme="sparklive" />
+                <data
+                    android:host="ranking_recommend"
+                    android:scheme="sparklive" />
+                <data
+                    android:host="withdraw"
+                    android:scheme="sparklive" />
+                <data
+                    android:host="payment_1"
+                    android:scheme="sparklive" />
+                <data
+                    android:host="payment_2"
+                    android:scheme="sparklive" />
+                <data
+                    android:host="faq"
+                    android:scheme="sparklive" />
             </intent-filter>
 
             <intent-filter android:autoVerify="true">

@@ -159,6 +159,10 @@ class MyPageViewModel @Inject constructor(
             CONTACT_US -> mActionState.value = MyPageActionState.NavigateToContactUs
         }
     }
+
+    fun navigateToBuyPoint(){
+        mActionState.value = MyPageActionState.NavigateToBuyPoints
+    }
 }
 
 sealed class MyPageActionState {

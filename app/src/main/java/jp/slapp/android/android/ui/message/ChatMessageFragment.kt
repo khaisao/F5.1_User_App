@@ -9,6 +9,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.WindowManager
+import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -448,7 +449,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
             rxPreferences.getPoint() == 0 -> {
                 showDialogRequestBuyPointForPeep()
             }
-            rxPreferences.getPoint() < 1000 -> {
+            rxPreferences.getPoint() < 1 -> {
                 showDialogRequestBuyPoint()
             }
             else -> {
@@ -602,25 +603,55 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         if (it.result != SocketInfo.RESULT_NONE) {
             viewModel.getCurrentConsultant()?.let { performerResponse ->
                 run {
-                    val fragment: Fragment? =
-                        childFragmentManager.findFragmentByTag("CallConnectionDialog")
-                    val dialog: CallConnectionDialog
-                    if (fragment != null) {
-                        dialog = fragment as CallConnectionDialog
-                        dialog.setCallingCancelListener(this@ChatMessageFragment)
-                        if (it.result == SocketInfo.RESULT_NG) {
-                            dialog.setMessage(it.message, true)
+                    if (it.message != null) {
+                        if (it.message == getString(R.string.error_not_enough_point_from_socket)) {
+                            CommonAlertDialog.getInstanceCommonAlertdialog(
+                                requireContext()
+                            )
+                                .showDialog()
+                                .setDialogTitle(R.string.error_not_enough_point)
+                                .setTextNegativeButton(R.string.text_OK)
+                                .setTextPositiveButton(R.string.buy_point)
+                                .setOnNegativePressed { dialog ->
+                                    dialog.dismiss()
+                                }.setOnPositivePressed { dialog ->
+                                    dialog.dismiss()
+                                    handleBuyPoint.buyPoint(childFragmentManager, bundleOf(),
+                                        object : BuyPointBottomFragment.HandleBuyPoint {
+                                            override fun buyPointSucess() {
+                                            }
+                                        }
+                                    )
+                                    viewModel.connectResult.value?.message = null
+                                }
                         } else {
-                            dialog.setMessage(getString(R.string.call_content))
+                            val fragment: Fragment? =
+                                childFragmentManager.findFragmentByTag("CallConnectionDialog")
+                            val dialog: CallConnectionDialog
+                            if (fragment != null) {
+                                dialog = fragment as CallConnectionDialog
+                                dialog.setCallingCancelListener(this@ChatMessageFragment)
+                                if (it.result == SocketInfo.RESULT_NG) {
+                                    dialog.setMessage(it.message, true)
+                                } else {
+                                    dialog.setMessage(getString(R.string.call_content))
+                                }
+                            } else {
+                                val message =
+                                    if (it.result == SocketInfo.RESULT_NG) it.message!! else getString(
+                                        R.string.call_content
+                                    )
+                                val isError = it.result == SocketInfo.RESULT_NG
+                                dialog =
+                                    CallConnectionDialog.newInstance(
+                                        performerResponse,
+                                        message,
+                                        isError
+                                    )
+                                dialog.setCallingCancelListener(this@ChatMessageFragment)
+                                dialog.show(childFragmentManager, "CallConnectionDialog")
+                            }
                         }
-                    } else {
-                        val message =
-                            if (it.result == SocketInfo.RESULT_NG) it.message else getString(R.string.call_content)
-                        val isError = it.result == SocketInfo.RESULT_NG
-                        dialog =
-                            CallConnectionDialog.newInstance(performerResponse, message, isError)
-                        dialog.setCallingCancelListener(this@ChatMessageFragment)
-                        dialog.show(childFragmentManager, "CallConnectionDialog")
                     }
                 }
             }

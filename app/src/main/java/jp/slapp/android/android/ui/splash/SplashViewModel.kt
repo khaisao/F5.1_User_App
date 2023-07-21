@@ -202,7 +202,7 @@ class SplashViewModel @ViewModelInject constructor(
                 memberResult.value = response
                 if (response.errors.isEmpty()) {
                     when (response.dataResponse.status) {
-                        Constants.MemberStatus.NOMARL.index -> {
+                        Constants.MemberStatus.NOMARL.index, Constants.MemberStatus.STAFF.index -> {
                             if (appMode.value == NORMAL_MODE) {
                                 screenCode.value =
                                     if (response.dataResponse.disPlay == MEMBER_APP_REVIEW_MODE) {

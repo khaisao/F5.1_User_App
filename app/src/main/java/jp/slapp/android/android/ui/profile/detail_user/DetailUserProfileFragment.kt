@@ -5,11 +5,14 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewTreeObserver
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,6 +48,7 @@ import jp.slapp.android.android.utils.performer_extension.PerformerStatus
 import jp.slapp.android.android.utils.performer_extension.PerformerStatusHandler
 import jp.slapp.android.databinding.FragmentDetailUserProfileBinding
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -131,10 +135,18 @@ class DetailUserProfileFragment :
     override fun onResume() {
         super.onResume()
         binding.avatarIv.loadImage(consultantResponse?.imageUrl, R.drawable.default_avt_performer)
+        viewModel.getMemberInfo()
     }
 
     override fun setOnClick() {
         super.setOnClick()
+
+        binding.avatarIv.setOnClickListener {
+            binding.avatarIv.loadImage(
+                consultantResponse?.imageUrl,
+                R.drawable.default_avt_performer
+            )
+        }
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             loadData()
@@ -202,9 +214,13 @@ class DetailUserProfileFragment :
 
         binding.llCallConsult.setOnClickListener {
             if (!isDoubleClick) {
-                checkPoint()
-                viewerType = 0
-                viewModel.viewerStatus = 0
+                if (viewModel.userProfileResult.value?.isBlocked == true) {
+                    showDialogBlockedByPerformer()
+                } else {
+                    checkPoint()
+                    viewerType = 0
+                    viewModel.viewerStatus = 0
+                }
             }
         }
 
@@ -218,6 +234,15 @@ class DetailUserProfileFragment :
 
         binding.ivPrivateDelivery.setOnClickListener {
             openChatScreen()
+        }
+
+        binding.llMemberPoint.setOnClickListener {
+            handleBuyPoint.buyPoint(childFragmentManager, bundleOf(),
+                object : BuyPointBottomFragment.HandleBuyPoint {
+                    override fun buyPointSucess() {
+                    }
+                }
+            )
         }
     }
 
@@ -259,7 +284,7 @@ class DetailUserProfileFragment :
             rxPreferences.getPoint() == 0 -> {
                 showDialogRequestBuyPointForPeep()
             }
-            rxPreferences.getPoint() < 1000 -> {
+            rxPreferences.getPoint() < 1 -> {
                 showDialogRequestBuyPoint()
             }
             else -> {
@@ -318,6 +343,16 @@ class DetailUserProfileFragment :
                 )
                 dialog.dismiss()
             }.setOnNegativePressed {
+                it.dismiss()
+            }
+    }
+
+    private fun showDialogBlockedByPerformer() {
+        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+            .showDialog()
+            .setDialogTitle(R.string.blocked_by_performer)
+            .setTextOkButton(R.string.confirm_block_alert)
+            .setOnOkButtonPressed {
                 it.dismiss()
             }
     }
@@ -404,31 +439,68 @@ class DetailUserProfileFragment :
         viewModel.connectResult.observe(viewLifecycleOwner, connectResultHandle)
         viewModel.isButtonEnable.observe(viewLifecycleOwner, buttonEnableHandle)
         viewModel.isLoginSuccess.observe(viewLifecycleOwner, loginSuccessHandle)
+        viewModel.isLoginSuccess.observe(viewLifecycleOwner, loginSuccessHandle)
+        viewModel.isLoginSuccess.observe(viewLifecycleOwner, loginSuccessHandle)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.currentPoint.collect {
+                    binding.tvCurrentPoint.text = it
+                }
+            }
+        }
     }
 
     private val connectResultHandle: Observer<ConnectResult> = Observer {
         if (it.result != SocketInfo.RESULT_NONE) {
             consultantResponse?.let { performerResponse ->
                 run {
-                    val fragment: Fragment? =
-                        childFragmentManager.findFragmentByTag("CallConnectionDialog")
-                    val dialog: CallConnectionDialog
-                    if (fragment != null) {
-                        dialog = fragment as CallConnectionDialog
-                        dialog.setCallingCancelListener(this@DetailUserProfileFragment)
-                        if (it.result == RESULT_NG) {
-                            dialog.setMessage(it.message, true)
+                    if (it.message != null) {
+                        if (it.message == getString(R.string.error_not_enough_point_from_socket)) {
+                            CommonAlertDialog.getInstanceCommonAlertdialog(
+                                requireContext()
+                            )
+                                .showDialog()
+                                .setDialogTitle(R.string.error_not_enough_point)
+                                .setTextNegativeButton(R.string.text_OK)
+                                .setTextPositiveButton(R.string.buy_point)
+                                .setOnNegativePressed { dialog ->
+                                    dialog.dismiss()
+                                }.setOnPositivePressed { dialog ->
+                                    dialog.dismiss()
+                                    handleBuyPoint.buyPoint(childFragmentManager, bundleOf(),
+                                        object : BuyPointBottomFragment.HandleBuyPoint {
+                                            override fun buyPointSucess() {
+                                            }
+                                        }
+                                    )
+                                    viewModel.connectResult.value?.message = null
+                                }
                         } else {
-                            dialog.setMessage(getString(R.string.call_content))
+                            val fragment: Fragment? =
+                                childFragmentManager.findFragmentByTag("CallConnectionDialog")
+                            val dialog: CallConnectionDialog
+                            if (fragment != null) {
+                                dialog = fragment as CallConnectionDialog
+                                dialog.setCallingCancelListener(this@DetailUserProfileFragment)
+                                if (it.result == RESULT_NG) {
+                                    dialog.setMessage(it.message, true)
+                                } else {
+                                    dialog.setMessage(getString(R.string.call_content))
+                                }
+                            } else {
+                                val message =
+                                    if (it.result == RESULT_NG) it.message!! else getString(R.string.call_content)
+                                val isError = it.result == RESULT_NG
+                                dialog =
+                                    CallConnectionDialog.newInstance(
+                                        performerResponse,
+                                        message,
+                                        isError
+                                    )
+                                dialog.setCallingCancelListener(this@DetailUserProfileFragment)
+                                dialog.show(childFragmentManager, "CallConnectionDialog")
+                            }
                         }
-                    } else {
-                        val message =
-                            if (it.result == RESULT_NG) it.message else getString(R.string.call_content)
-                        val isError = it.result == RESULT_NG
-                        dialog =
-                            CallConnectionDialog.newInstance(performerResponse, message, isError)
-                        dialog.setCallingCancelListener(this@DetailUserProfileFragment)
-                        dialog.show(childFragmentManager, "CallConnectionDialog")
                     }
                 }
             }

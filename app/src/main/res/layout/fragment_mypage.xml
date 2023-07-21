@@ -43,6 +43,7 @@
             tools:text="２２歳" />
 
         <TextView
+            android:id="@+id/tv_member_point"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

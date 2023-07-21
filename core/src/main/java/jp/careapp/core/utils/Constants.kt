@@ -68,7 +68,8 @@ object Constants {
         NOMARL(0), // registered
         UNREGISTED(1),
         BAD(2),
-        WITHDRAWAL(3)
+        WITHDRAWAL(3),
+        STAFF(4),
     }
 
     enum class OptionSearch {
