@@ -678,6 +678,19 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     appNavigation.openSettingNotification()
                 }
             }
+
+            Define.Intent.MESSAGE -> {
+                val currentFragment: Fragment =
+                    navHostFragment.childFragmentManager.fragments[0]
+                if (currentFragment is ChatMessageFragment && shareViewModel.getMessagePerformerCode() == code) {
+                    appNavigation.popopBackStackToDetination(R.id.chatMessageFragment)
+                } else {
+                    val bundle = Bundle()
+                    bundle.putString(BUNDLE_KEY.PERFORMER_CODE, code)
+                    currentFragment.dismissAllDialog()
+                    appNavigation.openTopToChatMessage(bundle)
+                }
+            }
         }
     }
 
