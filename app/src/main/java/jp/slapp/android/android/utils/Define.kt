@@ -15,7 +15,6 @@ class Define {
     companion object {
         const val USER_BAD = 3
         const val USER_WITH_DRAWAL = 4
-        const val NAME_MAX_LENGTH = 10
 
         // Insufficient points
         const val INSU_POINT = 0
@@ -29,26 +28,12 @@ class Define {
         const val IN_APP_PURCHASE_KEY_3: String = "sl_tier_10800"
         const val IN_APP_PURCHASE_KEY_4: String = "sl_tier_15800"
 
-        // screen name
-        const val SEND_MESSAGE_SCREEN = "SEND_MESSAGE_SCREEN"
-
         // webView
         const val TITLE_WEB_VIEW = "TITLE_WEB_VIEW"
         const val URL_WEB_VIEW = "URL_WEB_VIEW"
-        const val URL_TROUBLE_LOGIN =
-            "https://careapp.tayori.com/q/careapp-helpcenter/detail/228005"
-        const val URL_TERMS = "https://web.careapp.jp/webview/terms.html"
-        const val URL_PRIVACY = "https://web.careapp.jp/webview/privacy.html"
         const val URL_OPEN_FROM_HOME =
             "https://careapp.tayori.com/q/careapp-helpcenter/detail/234970"
-        const val URL_ABOUT_CHARGES =
-            "https://careapp.tayori.com/q/careapp-helpcenter/detail/225211"
-        const val URL_HOW_TO_USE = "https://careapp.tayori.com/q/careapp-helpcenter/category/34544"
-        const val URL_LEGAL = "http://web.careapp.jp/webview/legal.html"
         const val URL_TWITTER = "https://twitter.com/SPARKLIVE_JP"
-        const val URL_SETTLEMENT = "https://web.careapp.jp/webview/fund_settlement.html"
-        const val URL_FREE_POINT =
-            "${BuildConfig.WEB_DOMAIN}/webview/member/freepoint/free-point.html"
         const val URL_PAY_TYPE_CREDIT =
             "${BuildConfig.WEB_DOMAIN}/payment/buy-point?kind=credit"
         const val URL_PAY_TYPE_BANK =
@@ -65,40 +50,22 @@ class Define {
             "webview/member/purchase/stripe/purchase-confirm.html"
         const val URL_BUY_POINT_CREDIT_CARD_ONECLICK_CONFIRM_SEGMENT =
             "webview/member/purchase/stripe/purchase-oneclick-confirm.html"
-        const val URL_LIST_POINT_CREDIT =
-            "${BuildConfig.WEB_DOMAIN}/webview/member/purchase/stripe/buy-point-list.html"
         const val URL_LIVE_STREAM_POINT_PURCHASE = "${BuildConfig.WEB_DOMAIN}/popup/payment/credit"
 
         const val APP_CODE = "SparkLiveAndroid"
         const val PREFIX_CARE_APP = "sparklive://"
         const val CALL_BACK_BUY_POINT_GOOGLE_ = "sparklive://buypoint"
         const val CALL_BACK_BUY_POINT_CREDIT_CLOSE = "sparklive://close"
-        const val CALL_BACK_BUY_POINT_PAYPAY = "careapp://mymenu"
-        const val TYPE_ERROR = "ERROR"
         const val TYPE_MAINTENANCE = "MAINTENANCE"
-        const val RESPONSE = 1
-
-        const val MAX_LENGTH_CONTENT_NEW_QUESTION = 128
-        const val LIMIT_CHAR_CONTENT = 30
-        const val INVALID_VALUE_OF_CATEGORY = -1
 
         //Height search result
         const val DURATION_ALPHA = 800L
         const val TIME_SHOW_NOTIFICATION = 5000L
         const val COUNT_DOWN_INTERVAL = 5000L
 
-        const val BLOG_ID = "id"
-        const val TYPE_CONTACT = "type_contact"
-
-        const val PRIVACY_POLICY_PATH = "support/privacy"
-        const val TERM_PATH = "support/terms"
-
         // App mode
         const val NORMAL_MODE = 2
         const val REVIEW_MODE = 97
-
-        // Live stream
-        const val KEY_ALIAS = "member_key"
 
         const val FLAX_STATUS_PRIVATE = 0
 
@@ -117,14 +84,6 @@ class Define {
             const val GENRES_11 = 11
             const val GENRES_12 = 12
             const val GENRES_32 = 32
-            val GENRES_IDS = listOf(
-                GENRES_6, GENRES_7, GENRES_9, GENRES_10,
-                GENRES_11, GENRES_12, GENRES_32
-            )
-
-            // Gender
-            const val MALE = 1
-            const val FEMALE = 2
 
             // Ranking
             const val DIAMOND = 6
@@ -139,8 +98,6 @@ class Define {
 
             // Review
             const val HAVE_REVIEW = 1
-            const val THREE_OR_MORE = 1
-            const val FOUR_OR_MORE = 2
 
             // Status
             const val ONLY_DURING_RECEPTION = 1
@@ -154,19 +111,12 @@ class Define {
             const val PERFORMER_CODE: String = "performer_code"
             const val DATA_FROM_NOTIFICATION: String = "DATA_FROM_NOTIFICATION"
             const val TYPE: String = "deeplink_kind"
-            const val NOTICE = "notice"
-            const val RANKING = "ranking"
             const val BUY_POINT = "buypoint"
-            const val FREE_POINT = "freepoint"
             const val MESSAGE = "message"
             const val ONLINE = "online"
             const val COUNSELOR = "counselor"
             const val MY_MENU = "mymenu"
-            const val LABO = "labo"
             const val PAYMENT_METHOD = "payment_method"
-            const val CREDIT = "payment_01"
-            const val BANK = "payment_04"
-            const val BLOG = "blog"
             const val CONTACT = "contact"
             const val SETTING_NOTIFICATION = "setting_notification"
             const val NUMBER_UNREAD_MESSAGE = "NUMBER_UNREAD_MESSAGE"
@@ -174,8 +124,6 @@ class Define {
             const val ACTION_RECEIVE_NOTIFICATION: String = "ACTION_RECEIVE_NOTIFICATION"
             const val QUESTION_ID: String = "question_id"
             const val CODE: String = "code"
-            const val OPEN_DIRECT: String = "OPEN_DIRECT"
-            const val SENDER_CODE: String = "sender_code"
             const val SUPPORTER_CODE: String = "0"
             const val CODE_OPEN_CHAT_SUPPORTER = ""
             const val ONE_LINK = "sparklive.onelink.me"
@@ -203,50 +151,19 @@ class MODE_USER {
     }
 }
 
-class ORDER {
-    companion object {
-        const val ASC = "asc"
-        const val DESC = "desc"
-    }
-}
-
-class SORT {
-    companion object {
-        const val CREATE_AT = "created_at"
-        const val ANSWER_ACOUNT = "answer_count"
-        const val LAST_ANSWERED_AT = "last_answered_at"
-        const val DEFAULT = "こだわらない"
-    }
-}
-
 
 class BUNDLE_KEY {
     companion object {
-        const val NEW_QUESTION_SUCCESS: String = "NEW_QUESTION_SUCCESS"
-        const val TITLE_TROUBLE_SHEET: String = "TITLE_TROUBLE_SHEET"
-        const val CHOOSE_TYPE_TROUBLE: String = "CHOOSE_TYPE_TROUBLE"
         const val TYPE_BUY_POINT: String = "TYPE_BUY_POINT"
-        const val ITEM_SELECT: String = "ITEM_SELECT"
-        const val DESIRED_RESPONSE: String = "DESIRED_RESPONSE"
         const val PROFILE_SCREEN: String = "PROFILE_SCREEN"
-        const val FIRST_CHAT: String = "FIRST_CHAT"
         const val LIST_USER_PROFILE: String = "LIST_USER_PROFILE"
         const val POSITION_SELECT: String = "POSITION_SELECT"
-        const val TYPE_SEARCH: String = "TYPE_SEARCH"
-        const val TITLE: String = "TITLE"
-        const val HAVE_POINT: String = "HAVE_POINT"
         const val USER_PROFILE: String = "USER_PROFILE"
         const val USER_PROFILE_BOTTOM_SHEET: String = "USER_PROFILE_BOTTOM_SHEET"
-        const val FIRST_BUY_POINT = "FIRST_BUY_POINT"
-        const val NAME = "NAME"
-        const val MAX_LENGTH_NAME = 10
         const val TYPE_RANKING = "TYPE_RANKING"
         const val TYPE_ONLINE_LIST_SCREEN = "TYPE_ONLINE_LIST_SCREEN"
         const val TYPE_MESSAGE_SCREEN = "TYPE_MESSAGE_LIST_SCREEN"
         const val GENRES_SELECTED = "GENRES_SELECTED"
-        const val POSITION_USER: String = "POSITION_USER"
-        const val LAB: String = "LAB"
-        const val LAB_ID: String = "LAB_ID"
         const val IS_SHOW_FREE_MESS: String = "IS_SHOW_FREE_MESS"
         const val CALL_RESTRICTION: String = "CALL_RESTRICTION"
         const val DATA_RESPONSE_REGISTER: String = "DATA_RESPONSE_REGISTER"
@@ -263,15 +180,6 @@ class BUNDLE_KEY {
         const val PARAM_ODER_2 = "order2"
         const val PARAM_SORT_3 = "sort3"
         const val PARAM_ODER_3 = "order3"
-        const val PARAM_GENRE: String = "PARAM_GENRE"
-        const val PARAM_REGISTRATION: String = "PARAM_REGISTRATION"
-        const val PARAM_PRESENCE_STATUS: String = "presence_status"
-        const val PARAM_NAME: String = "name"
-        const val PARAM_REVIEW_TOTAL_NUMBER: String = "review_total_number"
-        const val PARAM_SEX: String = "sex"
-        const val PARAM_GENRES: String = "genres"
-        const val PARAM_STAGE: String = "stage"
-        const val PARAM_REVIEW_AVERAGE: String = "review_average"
         const val PRESENCE_STATUS = "presence_status"
         const val LAST_AUTHENTICATION_DATE = "last_authentication_date"
         const val LAST_LOGIN_DATE = "last_login_date"
@@ -286,13 +194,9 @@ class BUNDLE_KEY {
         const val POINT = "point"
         const val INTERVAL = "interval"
         const val STATUS = "status"
-        const val STATUS_ALL = "all"
-        const val ANSWER_ID = "answer_id"
-        const val IS_ENABLE = "is_enable"
 
         //online_user_list
         const val TYPE_ALL_PERFORMER = 0
-        const val TYPE_ALL_PERFORMER_FOLLOW_HOME = 1
         const val TYPE_ALL_PERFORMER_FOLLOW_FAVORITE = 2
         const val TYPE_HISTORY = 3
 
@@ -310,49 +214,31 @@ class BUNDLE_KEY {
         const val APP_CODE = "appCode"
         const val RECEIPT = "receipt"
         const val SIGNATURE = "signature"
-        const val SCREEN_NAME: String = "SCREEN_NAME"
         const val SEND_DATE = "send_date"
         const val PERFORMER_CODE = "performer_code"
         const val PERFORMER_NAME = "performer_name"
         const val PERFORMER_IMAGE = "performer_image"
         const val PERFORMER = "performer"
         const val IS_HIDDEN_OWNER_MAIL = "is_hidden_owner_mail"
-        const val MULTIPLE_SELECTION = "multiple_selection"
-        const val DATA = "DATA"
-        const val DATA_PERFORMER = "DATA_PERFORMER"
         const val OS_ANDROID = "Android"
         const val FOCUS_EDITTEXT_EMAIL = "FOCUS_EDITTEXT_EMAIL"
         const val FOCUS_EDITTEXT_VERIFY = "FOCUS_EDITTEXT_VERIFY"
 
         // message
-        const val MESSAGE_REVIEW = "@@COUNSELOR_REVIEW@@"
         const val SCREEN_TYPE = "SCREEN_TYPE"
         const val NEXT_TO_SCREEN = "NEXT_TO_SCREEN"
         const val CHAT_MESSAGE = "CHAT_MESSAGE"
-        const val POSITION_TYPE_TROUBLE = "position"
 
         // REVIEW
-        const val PERFORMER_REVIEW_STATUS = "performer_review_status"
-        const val PERFORMER_REVIEW_POINT = "performer_review_point"
-        const val PERFORMER_REVIEW_REVIEW = "performer_review_review"
-        const val PERFORMER_REVIEW_ID = "performer_review_id"
         const val POINT_REVIEW = "POINT_REVIEW"
         const val THRESHOLD_SHOW_REVIEW_APP = 3
         const val PERFORMER_MSG_SHOW_REVIEW_APP = 10
 
-        //search
-        const val CRITERIA = "CRITERIA"
-
         // Banner
         const val BANNER_TYPE = "BANNER_TYPE"
-        const val IS_OPEN_FROM_CALLING = "IS_OPEN_FROM_CALLING"
 
-        const val IS_SHOW_TOOLBAR = "IS_SHOW_TOOLBAR"
         const val LIST_TEMPLATE = "LIST_TEMPLATE"
         const val BACK_TO_CHAT_BOX = "BACK_TO_CHAT_BOX"
-
-        // Buy Point
-        const val POINT_URL = "POINT_URL"
 
         // Live Stream
         const val FLAX_LOGIN_AUTH_RESPONSE = "FLAX_LOGIN_AUTH_RESPONSE"
@@ -361,13 +247,11 @@ class BUNDLE_KEY {
         const val MIC_SETTING = "MIC_SETTING"
         const val ROOT_SCREEN = "ROOT_SCREEN"
         const val SCREEN_DETAIL = 0
-        const val SCREEN_MESSAGE = 1
     }
 }
 
 class TYPE_DIALOG {
     companion object {
-        const val DEFAULT = -1
         const val UN_AUTHEN = 1
         const val NO_INTERNET = 2
         const val BAD_REQUEST = 3
@@ -443,7 +327,6 @@ enum class BUY_POINT_RM(
 
 class LoadMoreState {
     companion object {
-        const val SHOW_LOAD_MORE = 0
         const val HIDDEN_LOAD_MORE = 1
         const val DISABLE_LOAD_MORE = 2
         const val ENABLE_LOAD_MORE = 3
@@ -508,25 +391,13 @@ class NotificationView(
     var itemCode: String = ""
 )
 
-object GenderId {
-    const val DEFAULT_ID = 0
-    const val MALE_ID = 1
-    const val FEMALE_ID = 2
-    const val OTHER_ID = 3
-}
-
 object CallStatus {
-    const val OFFLINE = 0
     const val ONLINE = 1
-    const val INCOMING_CALL = 2
     const val DEFAULT_CALL_STATUS = ONLINE
 }
 
 object ChatStatus {
     const val OFFLINE = 0
-    const val WAITING = 1
-    const val CHATTING = 2
-    const val TWO_SHOT_CHAT = 3
     const val DEFAULT_CHAT_STATUS = OFFLINE
 }
 
@@ -545,7 +416,6 @@ object SocketInfo {
 
     // AUTH
     const val AUTH_OWN_NAME = "ownerName"
-    const val AUTH_OWN_NAME_VALUE = "careapp"
     const val AUTH_USER = "user"
     const val AUTH_USER_VALUE = "member"
     const val AUTH_TOKEN = "token"
