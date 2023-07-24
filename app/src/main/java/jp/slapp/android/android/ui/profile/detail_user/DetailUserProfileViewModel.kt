@@ -86,40 +86,6 @@ class DetailUserProfileViewModel @ViewModelInject constructor(
         getConfigCall()
     }
 
-    fun getMemberInfo() {
-        isLoading.value = true
-        viewModelScope.launch(Dispatchers.IO) {
-            supervisorScope {
-                try {
-                    val response = apiInterface.getMember()
-                    if (response.errors.isEmpty()) {
-                        val dataResponse = response.dataResponse
-                        rxPreferences.saveMemberInfoEditProfile(
-                            dataResponse.name,
-                            dataResponse.mail,
-                            dataResponse.age,
-                            dataResponse.birth,
-                            dataResponse.sex,
-                            dataResponse.point,
-                            dataResponse.pushMail,
-                            dataResponse.receiveNoticeMail,
-                            dataResponse.receiveNewsletterMail
-                        )
-                        withContext(Dispatchers.Main) {
-                            currentPoint.value = rxPreferences.getPoint().formatDecimalSeparator()
-                        }
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                } finally {
-                    withContext(Dispatchers.Main) {
-                        isLoading.value = false
-                    }
-                }
-            }
-        }
-    }
-
     private fun getConfigCall() {
         viewModelScope.launch(NonCancellable + Dispatchers.IO) {
             try {

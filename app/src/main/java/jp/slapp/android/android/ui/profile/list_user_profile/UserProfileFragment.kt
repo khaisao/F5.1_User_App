@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager.widget.ViewPager
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
@@ -17,12 +21,17 @@ import jp.slapp.android.android.data.network.ConsultantResponse
 import jp.slapp.android.android.data.network.MemberResponse
 import jp.slapp.android.android.data.pref.RxPreferences
 import jp.slapp.android.android.data.shareData.ShareViewModel
+import jp.slapp.android.android.handle.HandleBuyPoint
 import jp.slapp.android.android.navigation.AppNavigation
+import jp.slapp.android.android.ui.buy_point.bottom_sheet.BuyPointBottomFragment
 import jp.slapp.android.android.ui.profile.block_report.BlockAndReportBottomFragment
 import jp.slapp.android.android.ui.profile.detail_user.DetailUserProfileFragment
 import jp.slapp.android.android.utils.BUNDLE_KEY
 import jp.slapp.android.android.utils.Define.Intent.Companion.OPEN_DIRECT_FROM_NOTIFICATION
+import jp.slapp.android.android.utils.formatDecimalSeparator
 import jp.slapp.android.databinding.FragmentUserProfileBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -41,6 +50,9 @@ class UserProfileFragment :
 
     @Inject
     lateinit var rxPreferences: RxPreferences
+
+    @Inject
+    lateinit var handleBuyPoint: HandleBuyPoint
 
     override val layoutId = R.layout.fragment_user_profile
 
@@ -84,6 +96,8 @@ class UserProfileFragment :
                 shareViewModel.isShowBuyPoint.value = false
             }
         }
+
+        binding.tvCurrentPoint.text = rxPreferences.getPoint().formatDecimalSeparator()
     }
 
     private fun initAdapter() {
@@ -131,6 +145,18 @@ class UserProfileFragment :
         super.bindingStateView()
         viewModel.memberInFoResult.observe(viewLifecycleOwner, handleMemberResult)
         viewModel.blockUserResult.observe(viewLifecycleOwner, handleBlockResult)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.currentPoint.collect {
+                    binding.tvCurrentPoint.text = it
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getMemberInfo()
     }
 
     private var handleMemberResult: Observer<MemberResponse?> = Observer {
@@ -187,6 +213,21 @@ class UserProfileFragment :
         binding.guideUserFr.setOnClickListener {
             rxPreferences.saveFirstShowGuideUser(false)
             binding.guideUserFr.visibility = GONE
+        }
+
+        binding.ivBack.setOnClickListener {
+            if (!isDoubleClick) {
+                appNavigation.navigateUp()
+            }
+        }
+
+        binding.llMemberPoint.setOnClickListener {
+            handleBuyPoint.buyPoint(childFragmentManager, bundleOf(),
+                object : BuyPointBottomFragment.HandleBuyPoint {
+                    override fun buyPointSucess() {
+                    }
+                }
+            )
         }
     }
 

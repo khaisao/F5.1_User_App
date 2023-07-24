@@ -9,10 +9,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,13 +40,11 @@ import jp.slapp.android.android.utils.Define
 import jp.slapp.android.android.utils.SocketInfo
 import jp.slapp.android.android.utils.SocketInfo.RESULT_NG
 import jp.slapp.android.android.utils.extensions.getBustSize
-import jp.slapp.android.android.utils.formatDecimalSeparator
 import jp.slapp.android.android.utils.performer_extension.PerformerRankingHandler
 import jp.slapp.android.android.utils.performer_extension.PerformerStatus
 import jp.slapp.android.android.utils.performer_extension.PerformerStatusHandler
 import jp.slapp.android.databinding.FragmentDetailUserProfileBinding
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -129,13 +125,11 @@ class DetailUserProfileFragment :
             }
         }
 
-        binding.tvCurrentPoint.text = rxPreferences.getPoint().formatDecimalSeparator()
     }
 
     override fun onResume() {
         super.onResume()
         binding.avatarIv.loadImage(consultantResponse?.imageUrl, R.drawable.default_avt_performer)
-        viewModel.getMemberInfo()
     }
 
     override fun setOnClick() {
@@ -151,12 +145,6 @@ class DetailUserProfileFragment :
         binding.swipeRefreshLayout.setOnRefreshListener {
             loadData()
             binding.swipeRefreshLayout.isRefreshing = false
-        }
-
-        binding.ivBack.setOnClickListener {
-            if (!isDoubleClick) {
-                appNavigation.navigateUp()
-            }
         }
 
         binding.addFavoriteTv.setOnClickListener {
@@ -217,7 +205,7 @@ class DetailUserProfileFragment :
                 if (viewModel.userProfileResult.value?.isBlocked == true) {
                     showDialogBlockedByPerformer()
                 } else {
-                    checkPoint()
+                    checkPointForNormal()
                     viewerType = 0
                     viewModel.viewerStatus = 0
                 }
@@ -226,23 +214,18 @@ class DetailUserProfileFragment :
 
         binding.llPeep.setOnClickListener {
             if (!isDoubleClick) {
-                viewerType = 1
-                viewModel.viewerStatus = 1
-                checkPointForPeep()
+                if (viewModel.userProfileResult.value?.isBlocked == true) {
+                    showDialogBlockedByPerformer()
+                } else {
+                    viewerType = 1
+                    viewModel.viewerStatus = 1
+                    checkPointForPeep()
+                }
             }
         }
 
         binding.ivPrivateDelivery.setOnClickListener {
             openChatScreen()
-        }
-
-        binding.llMemberPoint.setOnClickListener {
-            handleBuyPoint.buyPoint(childFragmentManager, bundleOf(),
-                object : BuyPointBottomFragment.HandleBuyPoint {
-                    override fun buyPointSucess() {
-                    }
-                }
-            )
         }
     }
 
@@ -279,71 +262,48 @@ class DetailUserProfileFragment :
         appNavigation.openDetailUserToChatMessage(bundle)
     }
 
-    private fun checkPoint() {
-        when {
-            rxPreferences.getPoint() == 0 -> {
-                showDialogRequestBuyPointForPeep()
-            }
-            rxPreferences.getPoint() < 1 -> {
+    private fun checkPointForNormal() {
+        if (consultantResponse != null) {
+            if (rxPreferences.getPoint() < (consultantResponse!!.pointSetting?.normalChatPerMinute
+                    ?: Int.MAX_VALUE)
+            ) {
                 showDialogRequestBuyPoint()
-            }
-            else -> {
+            } else {
                 showDialogConfirmCall()
             }
         }
     }
 
     private fun checkPointForPeep() {
-        if (rxPreferences.getPoint() == 0) {
-            showDialogRequestBuyPointForPeep()
-        } else {
-            showDialogConfirmCall()
+        if (consultantResponse != null) {
+            if (rxPreferences.getPoint() < (consultantResponse!!.pointSetting?.peepingPerMinute
+                    ?: Int.MAX_VALUE)
+            ) {
+                showDialogRequestBuyPoint()
+            } else {
+                showDialogConfirmCall()
+            }
         }
     }
 
     private fun showDialogRequestBuyPoint() {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+        CommonAlertDialog.getInstanceCommonAlertdialog(
+            requireContext()
+        )
             .showDialog()
-            .setDialogTitle(R.string.live_stream_title_request_buy_point)
-            .setTextPositiveButton(R.string.live_stream_buy_point)
-            .setTextNegativeButton(R.string.cancel_block_alert)
-            .setOnPositivePressed { dialog ->
-                val bundle = Bundle().also {
-                    it.putInt(BUNDLE_KEY.TYPE_BUY_POINT, Define.BUY_POINT_FIRST)
-                }
-                handleBuyPoint.buyPoint(childFragmentManager, bundle,
+            .setDialogTitle(R.string.error_not_enough_point)
+            .setTextNegativeButton(R.string.text_OK)
+            .setTextPositiveButton(R.string.buy_point)
+            .setOnNegativePressed { dialog ->
+                dialog.dismiss()
+            }.setOnPositivePressed { dialog ->
+                dialog.dismiss()
+                handleBuyPoint.buyPoint(childFragmentManager, bundleOf(),
                     object : BuyPointBottomFragment.HandleBuyPoint {
                         override fun buyPointSucess() {
-                            checkPoint()
                         }
                     }
                 )
-                dialog.dismiss()
-            }.setOnNegativePressed {
-                it.dismiss()
-            }
-    }
-
-    private fun showDialogRequestBuyPointForPeep() {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-            .showDialog()
-            .setDialogTitle(R.string.live_stream_peep_title_request_buy_point)
-            .setTextPositiveButton(R.string.live_stream_buy_point)
-            .setTextNegativeButton(R.string.cancel_block_alert)
-            .setOnPositivePressed { dialog ->
-                val bundle = Bundle().also {
-                    it.putInt(BUNDLE_KEY.TYPE_BUY_POINT, Define.BUY_POINT_FIRST)
-                }
-                handleBuyPoint.buyPoint(childFragmentManager, bundle,
-                    object : BuyPointBottomFragment.HandleBuyPoint {
-                        override fun buyPointSucess() {
-                            checkPointForPeep()
-                        }
-                    }
-                )
-                dialog.dismiss()
-            }.setOnNegativePressed {
-                it.dismiss()
             }
     }
 
@@ -441,66 +401,31 @@ class DetailUserProfileFragment :
         viewModel.isLoginSuccess.observe(viewLifecycleOwner, loginSuccessHandle)
         viewModel.isLoginSuccess.observe(viewLifecycleOwner, loginSuccessHandle)
         viewModel.isLoginSuccess.observe(viewLifecycleOwner, loginSuccessHandle)
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.currentPoint.collect {
-                    binding.tvCurrentPoint.text = it
-                }
-            }
-        }
     }
 
     private val connectResultHandle: Observer<ConnectResult> = Observer {
         if (it.result != SocketInfo.RESULT_NONE) {
             consultantResponse?.let { performerResponse ->
                 run {
-                    if (it.message != null) {
-                        if (it.message == getString(R.string.error_not_enough_point_from_socket)) {
-                            CommonAlertDialog.getInstanceCommonAlertdialog(
-                                requireContext()
-                            )
-                                .showDialog()
-                                .setDialogTitle(R.string.error_not_enough_point)
-                                .setTextNegativeButton(R.string.text_OK)
-                                .setTextPositiveButton(R.string.buy_point)
-                                .setOnNegativePressed { dialog ->
-                                    dialog.dismiss()
-                                }.setOnPositivePressed { dialog ->
-                                    dialog.dismiss()
-                                    handleBuyPoint.buyPoint(childFragmentManager, bundleOf(),
-                                        object : BuyPointBottomFragment.HandleBuyPoint {
-                                            override fun buyPointSucess() {
-                                            }
-                                        }
-                                    )
-                                    viewModel.connectResult.value?.message = null
-                                }
+                    val fragment: Fragment? =
+                        childFragmentManager.findFragmentByTag("CallConnectionDialog")
+                    val dialog: CallConnectionDialog
+                    if (fragment != null) {
+                        dialog = fragment as CallConnectionDialog
+                        dialog.setCallingCancelListener(this@DetailUserProfileFragment)
+                        if (it.result == RESULT_NG) {
+                            dialog.setMessage(it.message, true)
                         } else {
-                            val fragment: Fragment? =
-                                childFragmentManager.findFragmentByTag("CallConnectionDialog")
-                            val dialog: CallConnectionDialog
-                            if (fragment != null) {
-                                dialog = fragment as CallConnectionDialog
-                                dialog.setCallingCancelListener(this@DetailUserProfileFragment)
-                                if (it.result == RESULT_NG) {
-                                    dialog.setMessage(it.message, true)
-                                } else {
-                                    dialog.setMessage(getString(R.string.call_content))
-                                }
-                            } else {
-                                val message =
-                                    if (it.result == RESULT_NG) it.message!! else getString(R.string.call_content)
-                                val isError = it.result == RESULT_NG
-                                dialog =
-                                    CallConnectionDialog.newInstance(
-                                        performerResponse,
-                                        message,
-                                        isError
-                                    )
-                                dialog.setCallingCancelListener(this@DetailUserProfileFragment)
-                                dialog.show(childFragmentManager, "CallConnectionDialog")
-                            }
+                            dialog.setMessage(getString(R.string.call_content))
                         }
+                    } else {
+                        val message =
+                            if (it.result == RESULT_NG) it.message else getString(R.string.call_content)
+                        val isError = it.result == RESULT_NG
+                        dialog =
+                            CallConnectionDialog.newInstance(performerResponse, message, isError)
+                        dialog.setCallingCancelListener(this@DetailUserProfileFragment)
+                        dialog.show(childFragmentManager, "CallConnectionDialog")
                     }
                 }
             }
@@ -800,8 +725,6 @@ class DetailUserProfileFragment :
         const val BRONZE = 1
         const val SILVER = 2
         const val GOLD = 3
-        const val PLATINUM = 4
-        const val DIAMOND = 6
 
         @JvmStatic
         fun getInstance(

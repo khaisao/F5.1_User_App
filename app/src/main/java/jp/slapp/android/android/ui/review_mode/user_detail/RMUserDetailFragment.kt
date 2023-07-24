@@ -201,35 +201,33 @@ class RMUserDetailFragment : BaseFragment<FragmentRmUserDetailBinding, RMUserDet
         if (it.result != SocketInfo.RESULT_NONE) {
             user.let { performerResponse ->
                 run {
-                    if (it.message != null) {
-                        val fragment: Fragment? =
-                            childFragmentManager.findFragmentByTag("CallConnectionDialog")
-                        val dialog: RMCallConnectionDialog
-                        if (fragment != null) {
-                            dialog = fragment as RMCallConnectionDialog
-                            dialog.setCallingCancelListener(this@RMUserDetailFragment)
-                            if (it.result == SocketInfo.RESULT_NG) {
-                                dialog.setMessage(it.message, true)
-                            } else {
-                                dialog.setMessage(getString(R.string.call_content))
-                            }
+                    val fragment: Fragment? =
+                        childFragmentManager.findFragmentByTag("CallConnectionDialog")
+                    val dialog: RMCallConnectionDialog
+                    if (fragment != null) {
+                        dialog = fragment as RMCallConnectionDialog
+                        dialog.setCallingCancelListener(this@RMUserDetailFragment)
+                        if (it.result == SocketInfo.RESULT_NG) {
+                            dialog.setMessage(it.message, true)
                         } else {
-                            val message =
-                                if (it.result == SocketInfo.RESULT_NG) it.message!! else getString(R.string.call_content)
-                            val isError = it.result == SocketInfo.RESULT_NG
-                            dialog =
-                                RMCallConnectionDialog.newInstance(
-                                    PerformerInfo(
-                                        name = user.name ?: "",
-                                        performerCode = user.code ?: "",
-                                        imageUrl = user.thumbnailImageUrl ?: ""
-                                    ),
-                                    message,
-                                    isError
-                                )
-                            dialog.setCallingCancelListener(this@RMUserDetailFragment)
-                            dialog.show(childFragmentManager, "CallConnectionDialog")
+                            dialog.setMessage(getString(R.string.call_content))
                         }
+                    } else {
+                        val message =
+                            if (it.result == SocketInfo.RESULT_NG) it.message else getString(R.string.call_content)
+                        val isError = it.result == SocketInfo.RESULT_NG
+                        dialog =
+                            RMCallConnectionDialog.newInstance(
+                                PerformerInfo(
+                                    name = user.name ?: "",
+                                    performerCode = user.code ?: "",
+                                    imageUrl = user.thumbnailImageUrl ?: ""
+                                ),
+                                message,
+                                isError
+                            )
+                        dialog.setCallingCancelListener(this@RMUserDetailFragment)
+                        dialog.show(childFragmentManager, "CallConnectionDialog")
                     }
                 }
             }

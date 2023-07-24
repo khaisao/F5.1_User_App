@@ -475,8 +475,8 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
     private fun bindingConnectResult() {
         mViewModel.connectResult.observe(viewLifecycleOwner) {
-            if (it.result == RESULT_NG && it.message != null) {
-                showErrorDialog(it.message!!, it.isLogout)
+            if (it.result == RESULT_NG) {
+                showErrorDialog(it.message, it.isLogout)
             }
         }
     }

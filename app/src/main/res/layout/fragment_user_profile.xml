@@ -6,6 +6,54 @@
         android:layout_height="match_parent"
         android:background="@color/color_background_common">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_toolbar"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:background="@color/color_background_common"
+            android:layout_height="@dimen/margin_44">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_6"
+                android:layout_marginTop="@dimen/margin_8"
+                android:padding="@dimen/padding_4"
+                android:src="@drawable/ic_back_white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/ll_member_point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:background="@drawable/bg_point_detail_screen"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/margin_6"
+                android:paddingVertical="@dimen/margin_5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="@dimen/margin_18"
+                    android:layout_height="@dimen/margin_18"
+                    android:layout_marginEnd="@dimen/margin_4dp"
+                    android:src="@drawable/ic_point_yellow" />
+
+                <TextView
+                    android:id="@+id/tv_current_point"
+                    style="@style/text_bold_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10000"
+                    android:textColor="@color/color_FFD600" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/user_profile_vp"
             android:layout_width="0dp"
@@ -13,7 +61,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/cl_toolbar" />
 
         <FrameLayout
             android:id="@+id/guide_user_fr"

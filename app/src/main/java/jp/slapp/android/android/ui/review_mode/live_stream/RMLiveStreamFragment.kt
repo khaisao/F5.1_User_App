@@ -414,9 +414,7 @@ class RMLiveStreamFragment : BaseFragment<FragmentRmLiveStreamBinding, RMLiveStr
                         logout()
                     }
                     else -> {
-                        if (it.message != null) {
-                            showErrorDialog(it.message!!)
-                        }
+                        showErrorDialog(it.message)
                     }
                 }
             }
