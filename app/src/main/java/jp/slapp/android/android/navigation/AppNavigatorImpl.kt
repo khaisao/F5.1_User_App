@@ -105,6 +105,10 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.topFragment, bundle)
     }
 
+    override fun openToTopScreen(bundle: Bundle?) {
+        openScreen(R.id.action_to_TopFragment, bundle)
+    }
+
     override fun openUserProfileToReportScreen(bundle: Bundle?) {
         openScreen(R.id.action_UserProfile_to_ReportUser, bundle)
     }
@@ -347,5 +351,13 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openExitLiveStreamToUserDetailFragment(bundle: Bundle?) {
         openScreen(R.id.action_exitLivestreamFragment_to_userProfileFragment, bundle)
+    }
+
+    override fun openGlobalToWithdrawFragment(bundle: Bundle?) {
+        openScreen(R.id.action_global_to_withdrawFragment, bundle)
+    }
+
+    override fun openGlobalToFAQFragment(bundle: Bundle?) {
+        openScreen(R.id.action_global_to_FAQFragment, bundle)
     }
 }

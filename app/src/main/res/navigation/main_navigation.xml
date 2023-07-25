@@ -18,6 +18,14 @@
         app:popUpToInclusive="true" />
 
     <action
+        android:id="@+id/action_to_TopFragment"
+        app:destination="@id/topFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+
+    <action
         android:id="@+id/action_registrationFragment_to_topFragment"
         app:destination="@id/topFragment"
         app:enterAnim="@anim/slide_in_left"
@@ -310,6 +318,14 @@
         android:label="BlockedFragment"
         tools:layout="@layout/fragment_blocked" />
 
+    <action
+        android:id="@+id/action_global_to_withdrawFragment"
+        app:destination="@id/withdrawalFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
+
     <fragment
         android:id="@+id/withdrawalFragment"
         android:name="jp.slapp.android.android.ui.withdrawal.WithdrawalFragment"
@@ -462,6 +478,13 @@
         android:name="jp.slapp.android.android.ui.contact_us.finish.ContactUsFinishFragment"
         android:label="ContactUsFinishFragment"
         tools:layout="@layout/fragment_contact_us_finish" />
+    <action
+        android:id="@+id/action_global_to_FAQFragment"
+        app:destination="@id/FAQFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_right"
+        app:popExitAnim="@anim/slide_out_left" />
     <fragment
         android:id="@+id/FAQFragment"
         android:name="jp.slapp.android.android.ui.faq.FAQFragment"

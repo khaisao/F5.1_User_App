@@ -67,6 +67,8 @@ interface AppNavigation : BaseNavigator {
 
     fun openOtherScreenToTopScreen(bundle: Bundle? = null)
 
+    fun openToTopScreen(bundle: Bundle? = null)
+
     fun openChatMessageToChatListScreen(data: Bundle? = null)
 
     fun openChatMessageToLivestreamScreen(data: Bundle? = null)
@@ -174,4 +176,8 @@ interface AppNavigation : BaseNavigator {
     fun openVerifyCodeHelpToVerifyCode(bundle: Bundle? = null)
 
     fun openExitLiveStreamToUserDetailFragment(bundle: Bundle? = null)
+
+    fun openGlobalToWithdrawFragment(bundle: Bundle? = null)
+
+    fun openGlobalToFAQFragment(bundle: Bundle? = null)
 }

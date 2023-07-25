@@ -212,7 +212,10 @@ class TopFragment : BaseFragment<FragmentTopBinding, TopViewModel>() {
 
     private var handleTabSelected: Observer<Int> = Observer {
         when (it) {
-            ShareViewModel.TAB_HOME_SELECTED -> changeToolbarUI(R.id.tabHome)
+            ShareViewModel.TAB_HOME_SELECTED -> {
+                binding.bottomNav.selectedItemId = R.id.tabHome
+                changeToolbarUI(R.id.tabHome)
+            }
             ShareViewModel.TAB_RANKING_SELECTED -> {
                 binding.bottomNav.selectedItemId = R.id.tabRank
                 changeToolbarUI(R.id.tabRank)

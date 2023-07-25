@@ -15,6 +15,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -40,20 +41,31 @@ import jp.slapp.android.android.data.shareData.ShareViewModel
 import jp.slapp.android.android.handle.HandleBuyPoint
 import jp.slapp.android.android.navigation.AppNavigation
 import jp.slapp.android.android.ui.buy_point.BuyPointFragment
+import jp.slapp.android.android.ui.contact_us.ContactUsFragment
 import jp.slapp.android.android.ui.email.InputAndEditEmailFragment
+import jp.slapp.android.android.ui.faq.FAQFragment
 import jp.slapp.android.android.ui.message.ChatMessageFragment
-import jp.slapp.android.android.ui.news.NewsFragment
+import jp.slapp.android.android.ui.notification.NotificationFragment
 import jp.slapp.android.android.ui.profile.list_user_profile.UserProfileFragment
+import jp.slapp.android.android.ui.rank.TabRankingType
 import jp.slapp.android.android.ui.registration.RegistrationFragment
 import jp.slapp.android.android.ui.review_mode.start.RMStartFragment
 import jp.slapp.android.android.ui.splash.SplashFragment
 import jp.slapp.android.android.ui.top.TopFragment
 import jp.slapp.android.android.ui.verifyCode.VerifyCodeFragment
 import jp.slapp.android.android.ui.webView.WebViewFragment
-import jp.slapp.android.android.utils.*
+import jp.slapp.android.android.ui.withdrawal.WithdrawalFragment
+import jp.slapp.android.android.utils.BUNDLE_KEY
+import jp.slapp.android.android.utils.CONTACT_US_MODE
+import jp.slapp.android.android.utils.ContactUsMode
+import jp.slapp.android.android.utils.Define
 import jp.slapp.android.android.utils.Define.Companion.NORMAL_MODE
 import jp.slapp.android.android.utils.Define.Companion.PREFIX_CARE_APP
 import jp.slapp.android.android.utils.Define.Companion.REVIEW_MODE
+import jp.slapp.android.android.utils.NotificationView
+import jp.slapp.android.android.utils.Position
+import jp.slapp.android.android.utils.StateView
+import jp.slapp.android.android.utils.TYPE_DIALOG
 import jp.slapp.android.android.utils.event.NetworkEvent
 import jp.slapp.android.android.utils.event.NetworkState
 import jp.slapp.android.android.utils.extensions.dismissAllDialog
@@ -61,7 +73,7 @@ import jp.slapp.android.databinding.ActivityMainBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.util.*
+import java.util.Objects
 import javax.inject.Inject
 
 const val TAG = "MainActivity"
@@ -455,29 +467,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             }
         }
         when (linkType) {
-            Define.Intent.NOTICE -> {
-                val currentFragment: Fragment =
-                    navHostFragment.childFragmentManager.fragments[0]
-                if (currentFragment is NewsFragment) {
-                    appNavigation.popopBackStackToDetination(R.id.newsFragment)
-                } else {
-                    val bundle = Bundle()
-                    if (isOpenDirect) {
-                        bundle.putBoolean(Define.Intent.OPEN_DIRECT_FROM_NOTIFICATION, isOpenDirect)
-                    }
-                    appNavigation.openTopToNewsScreen(bundle)
-                }
-            }
-            Define.Intent.RANKING -> {
-                val currentFragment: Fragment =
-                    navHostFragment.childFragmentManager.fragments[0]
-                if (currentFragment is TopFragment) {
-                    shareViewModel.setTabSelected(ShareViewModel.TAB_RANKING_SELECTED)
-                } else {
-                    appNavigation.openOtherScreenToTopScreen()
-                    shareViewModel.setTabSelected(ShareViewModel.TAB_RANKING_SELECTED)
-                }
-            }
             Define.Intent.BUY_POINT -> {
                 when (navHostFragment.childFragmentManager.fragments[0]) {
                     is BuyPointFragment -> {
@@ -491,49 +480,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     else -> {
                         val bundle = Bundle()
                         if (isOpenDirect) {
-                            bundle.putBoolean(Define.Intent.OPEN_DIRECT_FROM_NOTIFICATION, isOpenDirect)
+                            bundle.putBoolean(
+                                Define.Intent.OPEN_DIRECT_FROM_NOTIFICATION,
+                                isOpenDirect
+                            )
                         }
                         appNavigation.openTopToBuyPointScreen(bundle)
                     }
                 }
             }
-            Define.Intent.FREE_POINT -> {
-                appNavigation.containScreenInBackStack(
-                    R.id.webViewFragment,
-                    handleResult = (
-                            { isContainInBackstack, bundle ->
-                                if (isContainInBackstack) {
-                                    if (bundle != null && bundle.getString(
-                                            Define.TITLE_WEB_VIEW,
-                                            ""
-                                        )
-                                        == getString(R.string.point_free)
-                                    ) {
-                                        appNavigation.popopBackStackToDetination(R.id.webViewFragment)
-                                    } else {
-                                        val bundle = Bundle().apply {
-                                            putString(
-                                                Define.TITLE_WEB_VIEW,
-                                                getString(R.string.point_free)
-                                            )
-                                            putString(Define.URL_WEB_VIEW, Define.URL_FREE_POINT)
-                                        }
-                                        appNavigation.openScreenToWebview(bundle)
-                                    }
-                                } else {
-                                    val bundle = Bundle().apply {
-                                        putString(
-                                            Define.TITLE_WEB_VIEW,
-                                            getString(R.string.point_free)
-                                        )
-                                        putString(Define.URL_WEB_VIEW, Define.URL_FREE_POINT)
-                                    }
-                                    appNavigation.openScreenToWebview(bundle)
-                                }
-                            }
-                            )
-                )
-            }
+
             Define.Intent.COUNSELOR -> {
                 val currentFragment: Fragment =
                     navHostFragment.childFragmentManager.fragments[0]
@@ -555,18 +511,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     appNavigation.openTopToUserProfileScreen(bundle)
                 }
             }
-            Define.Intent.LABO -> {
-                val currentFragment: Fragment =
-                    navHostFragment.childFragmentManager.fragments[0]
-                if (currentFragment is TopFragment) {
-                    shareViewModel.setTabSelected(ShareViewModel.TAB_FAVORITE_SELECTED)
-                } else {
-                    currentFragment.dismissAllDialog()
-                    appNavigation.openOtherScreenToTopScreen()
-                    shareViewModel.setTabSelected(ShareViewModel.TAB_FAVORITE_SELECTED)
-                }
-                shareViewModel.laboTabSelected.value = 0
-            }
+
             Define.Intent.MY_MENU -> {
                 val currentFragment: Fragment =
                     navHostFragment.childFragmentManager.fragments[0]
@@ -574,10 +519,166 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     shareViewModel.setTabSelected(ShareViewModel.TAB_MY_PAGE_SELECTED)
                 } else {
                     currentFragment.dismissAllDialog()
-                    appNavigation.openOtherScreenToTopScreen()
+                    appNavigation.openToTopScreen()
                     shareViewModel.setTabSelected(ShareViewModel.TAB_MY_PAGE_SELECTED)
                 }
             }
+
+            Define.Intent.PAYMENT_METHOD -> {
+                val currentFragment: Fragment =
+                    navHostFragment.childFragmentManager.fragments[0]
+                currentFragment.dismissAllDialog()
+                val bundle = Bundle().apply {
+                    putString(Define.URL_WEB_VIEW, Define.URL_BUY_POINT)
+                }
+                appNavigation.openScreenToWebview(bundle)
+            }
+
+            Define.Intent.TOP -> {
+                val currentFragment: Fragment =
+                    navHostFragment.childFragmentManager.fragments[0]
+                if (currentFragment is TopFragment) {
+                    appNavigation.openOtherScreenToTopScreen()
+                    shareViewModel.setTabSelected(ShareViewModel.TAB_HOME_SELECTED)
+                } else {
+                    currentFragment.dismissAllDialog()
+                    appNavigation.openToTopScreen()
+                    shareViewModel.setTabSelected(ShareViewModel.TAB_HOME_SELECTED)
+                }
+            }
+
+            Define.Intent.MESSAGE_HISTORY -> {
+                val currentFragment: Fragment =
+                    navHostFragment.childFragmentManager.fragments[0]
+                if (currentFragment is TopFragment) {
+                    appNavigation.openOtherScreenToTopScreen()
+                    shareViewModel.setTabSelected(ShareViewModel.TAB_CHAT_LIST_SELECTED)
+                } else {
+                    currentFragment.dismissAllDialog()
+                    appNavigation.openToTopScreen()
+                    shareViewModel.setTabSelected(ShareViewModel.TAB_CHAT_LIST_SELECTED)
+                }
+            }
+
+            Define.Intent.RANKING_DAY -> {
+                val currentFragment: Fragment =
+                    navHostFragment.childFragmentManager.fragments[0]
+                if (currentFragment is TopFragment) {
+                    appNavigation.openOtherScreenToTopScreen()
+                    shareViewModel.setTabSelected(ShareViewModel.TAB_RANKING_SELECTED)
+                    shareViewModel.setTabRankingTypeDeeplink(TabRankingType.RankingDay)
+                } else {
+                    currentFragment.dismissAllDialog()
+                    appNavigation.openToTopScreen()
+                    shareViewModel.setTabSelected(ShareViewModel.TAB_RANKING_SELECTED)
+                    shareViewModel.setTabRankingTypeDeeplink(TabRankingType.RankingDay)
+                }
+            }
+
+            Define.Intent.RANKING_WEEK -> {
+                val currentFragment: Fragment =
+                    navHostFragment.childFragmentManager.fragments[0]
+                if (currentFragment is TopFragment) {
+                    appNavigation.openOtherScreenToTopScreen()
+                    shareViewModel.setTabSelected(ShareViewModel.TAB_RANKING_SELECTED)
+                    shareViewModel.setTabRankingTypeDeeplink(TabRankingType.RankingWeek)
+                } else {
+                    currentFragment.dismissAllDialog()
+                    appNavigation.openToTopScreen()
+                    shareViewModel.setTabSelected(ShareViewModel.TAB_RANKING_SELECTED)
+                    shareViewModel.setTabRankingTypeDeeplink(TabRankingType.RankingWeek)
+                }
+            }
+
+            Define.Intent.RANKING_MONTH -> {
+                val currentFragment: Fragment =
+                    navHostFragment.childFragmentManager.fragments[0]
+                if (currentFragment is TopFragment) {
+                    appNavigation.openOtherScreenToTopScreen()
+                    shareViewModel.setTabSelected(ShareViewModel.TAB_RANKING_SELECTED)
+                    shareViewModel.setTabRankingTypeDeeplink(TabRankingType.RankingMonth)
+                } else {
+                    currentFragment.dismissAllDialog()
+                    appNavigation.openToTopScreen()
+                    shareViewModel.setTabSelected(ShareViewModel.TAB_RANKING_SELECTED)
+                    shareViewModel.setTabRankingTypeDeeplink(TabRankingType.RankingMonth)
+                }
+            }
+
+            Define.Intent.RANKING_RECOMMEND -> {
+                val currentFragment: Fragment =
+                    navHostFragment.childFragmentManager.fragments[0]
+                if (currentFragment is TopFragment) {
+                    appNavigation.openOtherScreenToTopScreen()
+                    shareViewModel.setTabSelected(ShareViewModel.TAB_RANKING_SELECTED)
+                    shareViewModel.setTabRankingTypeDeeplink(TabRankingType.RankingRecommend)
+                } else {
+                    currentFragment.dismissAllDialog()
+                    appNavigation.openToTopScreen()
+                    shareViewModel.setTabSelected(ShareViewModel.TAB_RANKING_SELECTED)
+                    shareViewModel.setTabRankingTypeDeeplink(TabRankingType.RankingRecommend)
+                }
+            }
+
+            Define.Intent.WITHDRAW -> {
+                val currentFragment: Fragment =
+                    navHostFragment.childFragmentManager.fragments[0]
+                if (currentFragment !is WithdrawalFragment) {
+                    appNavigation.openGlobalToWithdrawFragment()
+                }
+            }
+
+            Define.Intent.PAYMENT_1 -> {
+                val currentFragment: Fragment =
+                    navHostFragment.childFragmentManager.fragments[0]
+                currentFragment.dismissAllDialog()
+                val bundle = Bundle().apply {
+                    putString(Define.URL_WEB_VIEW, Define.URL_PAY_TYPE_CREDIT)
+                }
+                appNavigation.openScreenToWebview(bundle)
+            }
+
+            Define.Intent.PAYMENT_2 -> {
+                val currentFragment: Fragment =
+                    navHostFragment.childFragmentManager.fragments[0]
+                currentFragment.dismissAllDialog()
+                val bundle = Bundle().apply {
+                    putString(Define.URL_WEB_VIEW, Define.URL_PAY_TYPE_BANK)
+                }
+                appNavigation.openScreenToWebview(bundle)
+            }
+
+            Define.Intent.FAQ -> {
+                val currentFragment: Fragment =
+                    navHostFragment.childFragmentManager.fragments[0]
+                currentFragment.dismissAllDialog()
+                if (currentFragment !is FAQFragment) {
+                    appNavigation.openGlobalToFAQFragment()
+                }
+            }
+
+            Define.Intent.CONTACT -> {
+                val currentFragment: Fragment =
+                    navHostFragment.childFragmentManager.fragments[0]
+                currentFragment.dismissAllDialog()
+                if (currentFragment !is ContactUsFragment) {
+                    appNavigation.openContactUs(
+                        bundleOf(
+                            CONTACT_US_MODE to ContactUsMode.CONTACT_WITHOUT_MAIL
+                        )
+                    )
+                }
+            }
+
+            Define.Intent.SETTING_NOTIFICATION -> {
+                val currentFragment: Fragment =
+                    navHostFragment.childFragmentManager.fragments[0]
+                currentFragment.dismissAllDialog()
+                if (currentFragment !is NotificationFragment) {
+                    appNavigation.openSettingNotification()
+                }
+            }
+
             Define.Intent.MESSAGE -> {
                 val currentFragment: Fragment =
                     navHostFragment.childFragmentManager.fragments[0]
@@ -590,26 +691,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     appNavigation.openTopToChatMessage(bundle)
                 }
             }
-            Define.Intent.PAYMENT_METHOD, Define.Intent.CREDIT, Define.Intent.BANK -> {
-                if (appNavigation.currentFragmentId() != R.id.buyPointFragment) {
-                    appNavigation.openWebBuyPointToBuyPointGoogle()
-                }
-            }
-            Define.Intent.BLOG -> {
-                val blogId = uri.getQueryParameter(Define.BLOG_ID)
-                val bundle = Bundle().apply {
-                    putString(Define.BLOG_ID, blogId)
-                }
-                appNavigation.openScreenToWebview(bundle)
-            }
-        }
-    }
-
-    private fun getUrlWebView(linkType: String): String {
-        return when (linkType) {
-            Define.Intent.PAYMENT_METHOD -> Define.URL_BUY_POINT
-            Define.Intent.CREDIT -> Define.URL_LIST_POINT_CREDIT
-            else -> ""
         }
     }
 
@@ -734,7 +815,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                                             }
                                         }
                                     } else {
-                                        var bundle = Bundle()
+                                        val bundle = Bundle()
                                         bundle.putString(
                                             BUNDLE_KEY.PERFORMER_CODE,
                                             performerCode.toString()
@@ -773,7 +854,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     if (shareViewModel.getPerformerCode() == performerCode.toString()) {
                         appNavigation.popopBackStackToDetination(R.id.userProfileFragment)
                     } else {
-                        var bundle = Bundle()
+                        val bundle = Bundle()
                         bundle.putInt(BUNDLE_KEY.POSITION_SELECT, 0)
                         val listData =
                             listOf(ConsultantResponse(code = performerCode.toString()))
@@ -787,7 +868,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                         appNavigation.openTopToUserProfileScreen(bundle)
                     }
                 } else {
-                    var bundle = Bundle()
+                    val bundle = Bundle()
                     bundle.putInt(BUNDLE_KEY.POSITION_SELECT, 0)
                     val listData =
                         listOf(ConsultantResponse(code = performerCode.toString()))

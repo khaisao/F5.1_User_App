@@ -8,6 +8,9 @@ import jp.careapp.core.utils.SingleLiveEvent
 import jp.slapp.android.android.data.network.ConsultantResponse
 import jp.slapp.android.android.data.pref.RxPreferences
 import jp.slapp.android.android.network.ApiInterface
+import jp.slapp.android.android.ui.rank.TabRankingType
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -50,7 +53,14 @@ class ShareViewModel @ViewModelInject constructor(
     val detectRefreshDataFollowerHome = MutableLiveData(true)
     val detectRefreshDataFavorite = MutableLiveData(true)
     val detectRefreshDataHistory = MutableLiveData(true)
+    private val tabRankingTypeDeeplinkChannel = Channel<TabRankingType>()
+    val tabRankingTypeDeeplinkFlow = tabRankingTypeDeeplinkChannel.receiveAsFlow()
 
+    fun setTabRankingTypeDeeplink(type: TabRankingType) {
+        viewModelScope.launch {
+            tabRankingTypeDeeplinkChannel.send(type)
+        }
+    }
 
     fun setTabSelected(tab: Int) {
         tabSelected.value = tab

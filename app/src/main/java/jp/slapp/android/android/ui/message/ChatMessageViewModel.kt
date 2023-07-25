@@ -3,7 +3,6 @@ package jp.slapp.android.android.ui.message
 import android.app.Activity
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -29,13 +28,14 @@ import jp.slapp.android.android.network.socket.MaruCastManager
 import jp.slapp.android.android.ui.chatList.ChatListViewModel
 import jp.slapp.android.android.utils.BUNDLE_KEY
 import jp.slapp.android.android.utils.BUNDLE_KEY.Companion.PERFORMER_MSG_SHOW_REVIEW_APP
-import jp.slapp.android.android.utils.Define
 import jp.slapp.android.android.utils.SocketInfo
 import jp.slapp.android.android.utils.dummyFreeTemplateData
 import jp.slapp.android.android.utils.performer_extension.PerformerStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.withContext
 import me.leolin.shortcutbadger.ShortcutBadger
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -109,6 +109,37 @@ class ChatMessageViewModel @ViewModelInject constructor(
     init {
         saveListFreeTemplate()
         getConfigCall()
+    }
+
+    fun getMemberInfo() {
+        isLoading.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            supervisorScope {
+                try {
+                    val response = apiInterface.getMember()
+                    if (response.errors.isEmpty()) {
+                        val dataResponse = response.dataResponse
+                        rxPreferences.saveMemberInfoEditProfile(
+                            dataResponse.name,
+                            dataResponse.mail,
+                            dataResponse.age,
+                            dataResponse.birth,
+                            dataResponse.sex,
+                            dataResponse.point,
+                            dataResponse.pushMail,
+                            dataResponse.receiveNoticeMail,
+                            dataResponse.receiveNewsletterMail
+                        )
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                } finally {
+                    withContext(Dispatchers.Main) {
+                        isLoading.value = false
+                    }
+                }
+            }
+        }
     }
 
     fun loadMessage(
@@ -378,30 +409,6 @@ class ChatMessageViewModel @ViewModelInject constructor(
         }
     }
 
-    fun sendFirstMessage(messageRequest: MessageRequest, activity: Activity) {
-        viewModelScope.launch {
-            try {
-                val response = apiInterface.sendFirstMessage(messageRequest)
-                response.let {
-                    if (it.errors.isEmpty()) {
-                        it.dataResponse.let { data ->
-                            isCloseFirstMessageInLocal.value = true
-                            sendMessageResult.value = data
-                        }
-                    }
-                }
-            } catch (throwable: Throwable) {
-                handleThowable(
-                    activity,
-                    throwable,
-                    reloadData = {
-                        sendFirstMessage(messageRequest, activity)
-                    }
-                )
-            }
-        }
-    }
-
     fun sendFreeTemplate(freeTemplateRequest: FreeTemplateRequest, activity: Activity) {
         viewModelScope.launch {
             isLoading.value = true
@@ -461,7 +468,6 @@ class ChatMessageViewModel @ViewModelInject constructor(
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     open fun onMessageEvent(event: SocketActionSend) {
-        Log.e("ChatMessageViewModel", "onMessageEvent: $event")
         responseSocket.value = event
         isMessageFromSocket = true
     }

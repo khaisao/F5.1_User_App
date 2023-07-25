@@ -21,6 +21,7 @@ import javax.inject.Inject
 
 const val SCREEN_CODE_TOP = 0
 const val SCREEN_CODE_REGISTER = 1
+const val SCREEN_CODE_STAFF = 4
 
 @HiltViewModel
 class VerifyCodeViewModel @Inject constructor(
@@ -50,12 +51,17 @@ class VerifyCodeViewModel @Inject constructor(
                         dataResponseRegister = sendVerifyCodeResponse.dataResponse
                         withContext(Dispatchers.Main) {
                             when (dataResponseRegister.status) {
-                                SCREEN_CODE_TOP -> {
+                                SCREEN_CODE_TOP, SCREEN_CODE_STAFF -> {
                                     val token = dataResponseRegister.token.toString()
                                     val tokenExpire = dataResponseRegister.tokenExpire.toString()
                                     val password = dataResponseRegister.password.toString()
                                     val memberCode = dataResponseRegister.memberCode.toString()
-                                    mRepository.saveUserInfo(token, tokenExpire, password, memberCode)
+                                    mRepository.saveUserInfo(
+                                        token,
+                                        tokenExpire,
+                                        password,
+                                        memberCode
+                                    )
                                     mRepository.saveEmail(email)
                                     val getMemberInfoResponse = mRepository.getMemberInfo()
                                     if (getMemberInfoResponse.errors.isEmpty()) {

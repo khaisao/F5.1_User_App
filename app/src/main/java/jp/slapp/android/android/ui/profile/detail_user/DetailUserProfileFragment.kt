@@ -5,6 +5,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewTreeObserver
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -39,7 +40,6 @@ import jp.slapp.android.android.utils.Define
 import jp.slapp.android.android.utils.SocketInfo
 import jp.slapp.android.android.utils.SocketInfo.RESULT_NG
 import jp.slapp.android.android.utils.extensions.getBustSize
-import jp.slapp.android.android.utils.formatDecimalSeparator
 import jp.slapp.android.android.utils.performer_extension.PerformerRankingHandler
 import jp.slapp.android.android.utils.performer_extension.PerformerStatus
 import jp.slapp.android.android.utils.performer_extension.PerformerStatusHandler
@@ -125,7 +125,6 @@ class DetailUserProfileFragment :
             }
         }
 
-        binding.tvCurrentPoint.text = rxPreferences.getPoint().formatDecimalSeparator()
     }
 
     override fun onResume() {
@@ -136,15 +135,16 @@ class DetailUserProfileFragment :
     override fun setOnClick() {
         super.setOnClick()
 
+        binding.avatarIv.setOnClickListener {
+            binding.avatarIv.loadImage(
+                consultantResponse?.imageUrl,
+                R.drawable.default_avt_performer
+            )
+        }
+
         binding.swipeRefreshLayout.setOnRefreshListener {
             loadData()
             binding.swipeRefreshLayout.isRefreshing = false
-        }
-
-        binding.ivBack.setOnClickListener {
-            if (!isDoubleClick) {
-                appNavigation.navigateUp()
-            }
         }
 
         binding.addFavoriteTv.setOnClickListener {
@@ -202,17 +202,25 @@ class DetailUserProfileFragment :
 
         binding.llCallConsult.setOnClickListener {
             if (!isDoubleClick) {
-                checkPoint()
-                viewerType = 0
-                viewModel.viewerStatus = 0
+                if (viewModel.userProfileResult.value?.isBlocked == true) {
+                    showDialogBlockedByPerformer()
+                } else {
+                    checkPointForNormal()
+                    viewerType = 0
+                    viewModel.viewerStatus = 0
+                }
             }
         }
 
         binding.llPeep.setOnClickListener {
             if (!isDoubleClick) {
-                viewerType = 1
-                viewModel.viewerStatus = 1
-                checkPointForPeep()
+                if (viewModel.userProfileResult.value?.isBlocked == true) {
+                    showDialogBlockedByPerformer()
+                } else {
+                    viewerType = 1
+                    viewModel.viewerStatus = 1
+                    checkPointForPeep()
+                }
             }
         }
 
@@ -254,70 +262,57 @@ class DetailUserProfileFragment :
         appNavigation.openDetailUserToChatMessage(bundle)
     }
 
-    private fun checkPoint() {
-        when {
-            rxPreferences.getPoint() == 0 -> {
-                showDialogRequestBuyPointForPeep()
-            }
-            rxPreferences.getPoint() < 1000 -> {
+    private fun checkPointForNormal() {
+        if (consultantResponse != null) {
+            if (rxPreferences.getPoint() < (consultantResponse!!.pointSetting?.normalChatPerMinute
+                    ?: Int.MAX_VALUE)
+            ) {
                 showDialogRequestBuyPoint()
-            }
-            else -> {
+            } else {
                 showDialogConfirmCall()
             }
         }
     }
 
     private fun checkPointForPeep() {
-        if (rxPreferences.getPoint() == 0) {
-            showDialogRequestBuyPointForPeep()
-        } else {
-            showDialogConfirmCall()
+        if (consultantResponse != null) {
+            if (rxPreferences.getPoint() < (consultantResponse!!.pointSetting?.peepingPerMinute
+                    ?: Int.MAX_VALUE)
+            ) {
+                showDialogRequestBuyPoint()
+            } else {
+                showDialogConfirmCall()
+            }
         }
     }
 
     private fun showDialogRequestBuyPoint() {
-        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+        CommonAlertDialog.getInstanceCommonAlertdialog(
+            requireContext()
+        )
             .showDialog()
-            .setDialogTitle(R.string.live_stream_title_request_buy_point)
-            .setTextPositiveButton(R.string.live_stream_buy_point)
-            .setTextNegativeButton(R.string.cancel_block_alert)
-            .setOnPositivePressed { dialog ->
-                val bundle = Bundle().also {
-                    it.putInt(BUNDLE_KEY.TYPE_BUY_POINT, Define.BUY_POINT_FIRST)
-                }
-                handleBuyPoint.buyPoint(childFragmentManager, bundle,
+            .setDialogTitle(R.string.error_not_enough_point)
+            .setTextNegativeButton(R.string.text_OK)
+            .setTextPositiveButton(R.string.buy_point)
+            .setOnNegativePressed { dialog ->
+                dialog.dismiss()
+            }.setOnPositivePressed { dialog ->
+                dialog.dismiss()
+                handleBuyPoint.buyPoint(childFragmentManager, bundleOf(),
                     object : BuyPointBottomFragment.HandleBuyPoint {
                         override fun buyPointSucess() {
-                            checkPoint()
                         }
                     }
                 )
-                dialog.dismiss()
-            }.setOnNegativePressed {
-                it.dismiss()
             }
     }
 
-    private fun showDialogRequestBuyPointForPeep() {
+    private fun showDialogBlockedByPerformer() {
         CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
             .showDialog()
-            .setDialogTitle(R.string.live_stream_peep_title_request_buy_point)
-            .setTextPositiveButton(R.string.live_stream_buy_point)
-            .setTextNegativeButton(R.string.cancel_block_alert)
-            .setOnPositivePressed { dialog ->
-                val bundle = Bundle().also {
-                    it.putInt(BUNDLE_KEY.TYPE_BUY_POINT, Define.BUY_POINT_FIRST)
-                }
-                handleBuyPoint.buyPoint(childFragmentManager, bundle,
-                    object : BuyPointBottomFragment.HandleBuyPoint {
-                        override fun buyPointSucess() {
-                            checkPointForPeep()
-                        }
-                    }
-                )
-                dialog.dismiss()
-            }.setOnNegativePressed {
+            .setDialogTitle(R.string.blocked_by_performer)
+            .setTextOkButton(R.string.confirm_block_alert)
+            .setOnOkButtonPressed {
                 it.dismiss()
             }
     }
@@ -403,6 +398,8 @@ class DetailUserProfileFragment :
         viewModel.userGallery.observe(viewLifecycleOwner, handleResultUserGallery)
         viewModel.connectResult.observe(viewLifecycleOwner, connectResultHandle)
         viewModel.isButtonEnable.observe(viewLifecycleOwner, buttonEnableHandle)
+        viewModel.isLoginSuccess.observe(viewLifecycleOwner, loginSuccessHandle)
+        viewModel.isLoginSuccess.observe(viewLifecycleOwner, loginSuccessHandle)
         viewModel.isLoginSuccess.observe(viewLifecycleOwner, loginSuccessHandle)
     }
 
@@ -728,8 +725,6 @@ class DetailUserProfileFragment :
         const val BRONZE = 1
         const val SILVER = 2
         const val GOLD = 3
-        const val PLATINUM = 4
-        const val DIAMOND = 6
 
         @JvmStatic
         fun getInstance(

@@ -41,6 +41,7 @@ data class ConsultantResponse(
     @SerializedName("call_status") val callStatus: Int = DEFAULT_CALL_STATUS,
     @SerializedName("chat_status") val chatStatus: Int = DEFAULT_CALL_STATUS,
     @SerializedName("call_restriction") val callRestriction: Int? = 0, // 1=possible, null=not possible
+    @SerializedName("is_blocked") val isBlocked: Boolean = false,
 ) : Serializable {
     companion object {
         const val PREVIOUS = 0

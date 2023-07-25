@@ -79,6 +79,13 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>() {
         }
     }
 
+    override fun setOnClick() {
+        super.setOnClick()
+        binding.tvMemberPoint.setOnClickListener {
+            mViewModel.navigateToBuyPoint()
+        }
+    }
+
     override fun onDestroyView() {
         binding.rcvMyPageMenu.adapter = null
         mAdapter = null
