@@ -117,6 +117,15 @@ interface ApiInterface {
     @GET("api/performers")
     suspend fun getListConsultant(@QueryMap params: MutableMap<String, Any>): ApiObjectResponse<ArrayList<ConsultantResponse>>
 
+    @GET("api/chat-performers/online")
+    suspend fun getListConsultantOnline(): ApiObjectResponse<ConsultantOnlineResponse>
+
+    @GET("api/chat-performers/wait")
+    suspend fun getListConsultantWait(): ApiObjectResponse<ArrayList<ConsultantResponse>>
+
+    @GET("api/chat-performers/offline")
+    suspend fun getListConsultantOffline(@QueryMap params: MutableMap<String, Any>): ApiObjectResponse<ArrayList<ConsultantResponse>>
+
     @GET("api/member/watch-latest-histories")
     suspend fun getPerformerHaveSeen(@QueryMap params: MutableMap<String, Any>): ApiObjectResponse<ArrayList<HistoryResponse>>
 

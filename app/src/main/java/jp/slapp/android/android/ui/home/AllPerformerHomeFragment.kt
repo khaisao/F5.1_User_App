@@ -96,18 +96,15 @@ class AllPerformerHomeFragment : BaseFragment<FragmentPerformerBinding, HomeView
 
         binding.rvConsultant.layoutManager = GridLayoutManager(context, 2)
         binding.rvConsultant.adapter = mConsultantAdapter
-
+        viewModel.getAllData()
         binding.rvConsultant.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                val listDataSize = viewModel.listConsultantResult.value?.size ?: 0
+                val listDataSize = viewModel.listConsultant.value?.size ?: 0
                 if (listDataSize > 0) {
                     val layoutManager = binding.rvConsultant.layoutManager as LinearLayoutManager
-                    if (!viewModel.isLoadMoreData) {
-                        if ((layoutManager.findLastCompletelyVisibleItemPosition() == listDataSize - 1) && viewModel.isCanLoadMoreData()) {
-                            viewModel.isLoadMoreData = true
-                            viewModel.loadMoreData()
-                        }
+                    if ((layoutManager.findLastCompletelyVisibleItemPosition() == listDataSize - 1) && viewModel.isCanLoadMoreData()) {
+                        viewModel.getAllData(true)
                     }
                 }
             }
@@ -116,7 +113,7 @@ class AllPerformerHomeFragment : BaseFragment<FragmentPerformerBinding, HomeView
 
     override fun bindingStateView() {
         super.bindingStateView()
-        if (typeOnlineListScreen == BUNDLE_KEY.TYPE_ALL_PERFORMER) viewModel.listConsultantResult.observe(
+        if (typeOnlineListScreen == BUNDLE_KEY.TYPE_ALL_PERFORMER) viewModel.listConsultant.observe(
             viewLifecycleOwner
         ) {
             if (!it.isNullOrEmpty()) {
@@ -144,7 +141,6 @@ class AllPerformerHomeFragment : BaseFragment<FragmentPerformerBinding, HomeView
         super.setOnClick()
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.clearData()
-            viewModel.getListBlockedConsultant()
             shareViewModel.detectRefreshDataFollowerHome.value =
                 !shareViewModel.detectRefreshDataFollowerHome.value!!
             binding.swipeRefreshLayout.isRefreshing = false

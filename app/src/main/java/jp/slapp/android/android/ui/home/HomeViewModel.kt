@@ -1,27 +1,26 @@
 package jp.slapp.android.android.ui.home
 
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.careapp.core.base.BaseViewModel
-import jp.slapp.android.android.data.network.ApiObjectResponse
 import jp.slapp.android.android.data.network.BannerResponse
 import jp.slapp.android.android.data.network.BlockedConsultantResponse
+import jp.slapp.android.android.data.network.ConsultantOnlineResponse
 import jp.slapp.android.android.data.network.ConsultantResponse
 import jp.slapp.android.android.data.pref.RxPreferences
 import jp.slapp.android.android.network.ApiInterface
 import jp.slapp.android.android.utils.BUNDLE_KEY
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.math.ceil
-import kotlin.math.roundToInt
 
-const val LIMIT_NUMBER = 50
+const val LIMIT_NUMBER = 100
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -29,26 +28,16 @@ class HomeViewModel @Inject constructor(
     private val rxPreferences: RxPreferences
 ) : BaseViewModel() {
 
-    var listConsultantResult = MutableLiveData<ArrayList<ConsultantResponse>>(arrayListOf())
-    private val listBlockedConsultantResult =
-        MutableLiveData<ApiObjectResponse<ArrayList<BlockedConsultantResponse>>>()
     private val _listBanner = MutableLiveData<List<BannerResponse>>()
     val lisBanner: MutableLiveData<List<BannerResponse>> = _listBanner
-
-    private lateinit var listConsultantTemp: ArrayList<ConsultantResponse>
-    private var totalConsultant = 0
     private var totalPage = 0
-    private val mHandler = Handler(Looper.getMainLooper())
-    private var isFirstTimeLoadData = false
-    var isShowHideLoading: Boolean = false
+    private var totalConsultant = 0
     private var currentPage = 1
-    var isLoadMoreData: Boolean = false
+    var listConsultant = MutableLiveData<List<ConsultantResponse>>(emptyList())
+    private var listBlockedConsultantResponse: List<BlockedConsultantResponse> = emptyList()
 
     init {
         getListBanner()
-        isFirstTimeLoadData = true
-        isShowHideLoading = true
-        getListBlockedConsultant()
         getMemberInfo()
     }
 
@@ -57,7 +46,7 @@ class HomeViewModel @Inject constructor(
             try {
                 apiInterface.getListBanner().apply {
                     if (errors.isEmpty()) {
-                        if(dataResponse != null){
+                        if (dataResponse != null) {
                             _listBanner.postValue(dataResponse!!)
                         }
                     }
@@ -93,65 +82,130 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getListBlockedConsultant() {
-        listConsultantTemp = arrayListOf()
-        listBlockedConsultantResult.value?.dataResponse?.clear()
+    private suspend fun getAllListConsultantOnline(): ConsultantOnlineResponse {
+        try {
+            apiInterface.getListConsultantOnline().let {
+                if (it.errors.isEmpty()) {
+                    return it.dataResponse
+                } else {
+                    return ConsultantOnlineResponse()
+                }
+            }
+        } catch (throwable: Throwable) {
+            return ConsultantOnlineResponse()
+        }
+    }
+
+    private suspend fun getAllListConsultantWait(): List<ConsultantResponse> {
+        try {
+            apiInterface.getListConsultantWait().let {
+                if (it.errors.isEmpty()) {
+                    return it.dataResponse
+                } else {
+                    return emptyList()
+                }
+            }
+        } catch (throwable: Throwable) {
+            return emptyList()
+        }
+    }
+
+    fun getAllData(isLoadMore: Boolean = false) {
         viewModelScope.launch {
             try {
-                apiInterface.getListBlockedConsultant().let {
-                    if (it.errors.isEmpty()) {
-                        listBlockedConsultantResult.value = it
-                        getTotalNumberConsultant()
+                isLoading.value = true
+                if (!isLoadMore) {
+                    val onlineDeferred = async { getAllListConsultantOnline() }
+                    val waitDeferred = async { getAllListConsultantWait() }
+                    val offlineDeferred = async { getAllListConsultantOffline() }
+                    val blockedDeferred = async { getListBlockedConsultant() }
+                    val onlineDataResponse = onlineDeferred.await()
+                    val waitDataResponse = waitDeferred.await()
+                    val offlineResponse = offlineDeferred.await()
+                    listBlockedConsultantResponse = blockedDeferred.await()
+                    listConsultant.value =
+                        onlineDataResponse.listChat + onlineDataResponse.listTwoShot
+                    if (listConsultant.value != null) {
+                        if (listConsultant.value!!.isNotEmpty()) {
+                            listConsultant.value = listConsultant.value!!.sortedByDescending {
+                                it.loginMemberCount + it.peepingMemberCount
+                            }
+                        }
                     }
-                }
-            } catch (throwable: Throwable) {
-                getTotalNumberConsultant()
-            }
-        }
-    }
-
-    private fun getTotalNumberConsultant() {
-        val params: MutableMap<String, Any> = HashMap()
-        viewModelScope.launch {
-            isLoading.value = isShowHideLoading
-            try {
-                apiInterface.getTotalNumberConsultant(params).let {
-                    totalConsultant = it.dataResponse.count
-                    totalPage = (ceil((totalConsultant / LIMIT_NUMBER).toFloat()).roundToInt()) + 1
-                    getAllListConsultant()
-                }
-            } catch (throwable: Throwable) {
-                isLoading.value = false
-            }
-        }
-    }
-
-    private fun getAllListConsultant(page: Int = 1, isShowLoading: Boolean = true) {
-        val params: MutableMap<String, Any> = HashMap()
-        params[BUNDLE_KEY.PARAM_SORT] = BUNDLE_KEY.LAST_AUTHENTICATION_DATE
-        params[BUNDLE_KEY.PARAM_ODER] = BUNDLE_KEY.DESC
-        params[BUNDLE_KEY.PARAM_SORT_2] = BUNDLE_KEY.LAST_LOGIN_DATE
-        params[BUNDLE_KEY.PARAM_ODER_2] = BUNDLE_KEY.DESC
-        params[BUNDLE_KEY.PARAM_SORT_3] = BUNDLE_KEY.POINT
-        params[BUNDLE_KEY.PARAM_ODER_3] = BUNDLE_KEY.DESC
-        params[BUNDLE_KEY.LIMIT] = LIMIT_NUMBER
-        params[BUNDLE_KEY.PAGE] = page
-        viewModelScope.launch {
-            if (isShowLoading) isLoading.value = true
-            try {
-                apiInterface.getListConsultant(params).let {
+                    listConsultant.value =
+                        listConsultant.value!! + waitDataResponse + offlineResponse
+                    filterBlockConsultant(listConsultant, listBlockedConsultantResponse)
                     isLoading.value = false
-                    val currentListData =
-                        if (page == 1) mutableListOf() else listConsultantTemp.toMutableList()
-                    currentListData.addAll(it.dataResponse)
-                    listConsultantTemp = currentListData as ArrayList<ConsultantResponse>
-                    currentPage = page
-                    getListConsultant()
-                    if (isLoadMoreData) isLoadMoreData = false
+                } else {
+                    val offlineDeferred =
+                        async { getAllListConsultantOffline(page = currentPage + 1) }
+                    awaitAll(offlineDeferred)
+                    val offlineResponse = offlineDeferred.await()
+                    listConsultant.value =
+                        listConsultant.value!!.plus(offlineResponse)
+                    filterBlockConsultant(listConsultant, listBlockedConsultantResponse)
+                    isLoading.value = false
                 }
             } catch (throwable: Throwable) {
                 isLoading.value = false
             }
+        }
+    }
+
+    private fun filterBlockConsultant(
+        listConsultant: MutableLiveData<List<ConsultantResponse>>,
+        listBlockedConsultantResponse: List<BlockedConsultantResponse>
+    ) {
+        val nonNullConsultantList = listConsultant.value?.filterNotNull() ?: emptyList()
+        listConsultant.value = nonNullConsultantList.filterNot { consultant ->
+            listBlockedConsultantResponse.any {
+                it.code == consultant.code
+            }
+        }
+    }
+
+
+    private suspend fun getListBlockedConsultant(): List<BlockedConsultantResponse> {
+        try {
+            apiInterface.getListBlockedConsultant().let {
+                if (it.errors.isEmpty()) {
+                    return it.dataResponse
+                } else {
+                    return emptyList()
+                }
+            }
+        } catch (throwable: Throwable) {
+            return emptyList()
+        }
+    }
+
+    private suspend fun getAllListConsultantOffline(
+        page: Int = 1,
+        limit: Int = LIMIT_NUMBER
+    ): List<ConsultantResponse> {
+        currentPage = page
+        var limitTemp = limit
+        if (totalPage != 0 && totalConsultant != 0) {
+            if ((totalConsultant - (limitTemp * page)) < limitTemp) {
+                limitTemp = totalConsultant - ((page - 1) * LIMIT_NUMBER)
+            }
+        }
+        val params: MutableMap<String, Any> = HashMap()
+        params[BUNDLE_KEY.LIMIT] = limitTemp
+        params[BUNDLE_KEY.PAGE] = page
+        try {
+            apiInterface.getListConsultantOffline(params).let {
+                if (it.errors.isEmpty()) {
+                    totalPage =
+                        ceil(it.pagination.total.toDouble() / LIMIT_NUMBER.toDouble()).toInt()
+                    totalConsultant = it.pagination.total
+                    return it.dataResponse
+                } else {
+                    return emptyList()
+                }
+            }
+        } catch (throwable: Throwable) {
+            return emptyList()
         }
     }
 
@@ -159,51 +213,10 @@ class HomeViewModel @Inject constructor(
         return currentPage < totalPage
     }
 
-    fun loadMoreData() {
-        if (++currentPage <= totalPage) getAllListConsultant(
-            page = currentPage,
-            isShowLoading = false
-        )
-    }
-
-    private fun getListConsultant() {
-        if (listBlockedConsultantResult.value != null && listBlockedConsultantResult.value!!.dataResponse.isNotEmpty()) {
-            val dataResult = listConsultantTemp.filterNot { consultant ->
-                listBlockedConsultantResult.value!!.dataResponse.any {
-                    it.code == consultant.code
-                }
-            }
-            listConsultantTemp.clear()
-            listConsultantTemp.addAll(dataResult)
-        }
-        loadDataSuccess()
-    }
-
-    private fun loadDataSuccess() {
-        isShowHideLoading = false
-        listConsultantResult.value = listConsultantTemp
-        if (isFirstTimeLoadData) {
-            mHandler.postDelayed(runnable, 500)
-            isFirstTimeLoadData = false
-        } else {
-            isLoading.value = false
-        }
-    }
-
-    private val runnable = Runnable {
-        isLoading.value = false
-    }
-
-    override fun onCleared() {
-        mHandler.removeCallbacks(runnable)
-        super.onCleared()
-    }
-
     fun clearData() {
-        totalConsultant = 0
         totalPage = 0
-        isFirstTimeLoadData = false
-        currentPage = 1
-        isLoadMoreData = false
+        currentPage = 0
+        totalConsultant = 0
+        getAllData()
     }
 }

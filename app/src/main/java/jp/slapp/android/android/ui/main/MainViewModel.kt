@@ -93,11 +93,6 @@ class MainViewModel @ViewModelInject constructor(
         }
     }
 
-    private val _currentFragment = MutableLiveData<String>()
-    val currentFragment: LiveData<String> = _currentFragment
-    fun setCurrentFragment(fragment: String) {
-        _currentFragment.value = fragment
-    }
     private val _error = MediatorLiveData<Event<String>>().apply {
         addSource(_refreshToken) { rs ->
             if (rs is Result.Error)
