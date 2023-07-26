@@ -292,11 +292,8 @@ class DetailUserProfileFragment :
         )
             .showDialog()
             .setDialogTitle(R.string.error_not_enough_point)
-            .setTextNegativeButton(R.string.text_OK)
-            .setTextPositiveButton(R.string.buy_point)
-            .setOnNegativePressed { dialog ->
-                dialog.dismiss()
-            }.setOnPositivePressed { dialog ->
+            .setTextOkButton(R.string.buy_point)
+            .setOnOkButtonPressed { dialog ->
                 dialog.dismiss()
                 handleBuyPoint.buyPoint(childFragmentManager, bundleOf(),
                     object : BuyPointBottomFragment.HandleBuyPoint {

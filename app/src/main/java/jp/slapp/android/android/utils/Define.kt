@@ -15,6 +15,7 @@ class Define {
     companion object {
         const val USER_BAD = 3
         const val USER_WITH_DRAWAL = 4
+        const val USER_AGENT_STRING = "spark_live"
 
         // Insufficient points
         const val INSU_POINT = 0

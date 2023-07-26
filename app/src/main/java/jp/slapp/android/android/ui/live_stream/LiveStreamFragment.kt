@@ -2,12 +2,17 @@ package jp.slapp.android.android.ui.live_stream
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothHeadset
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Rect
+import android.media.AudioDeviceInfo.TYPE_BLUETOOTH_A2DP
+import android.media.AudioDeviceInfo.TYPE_BLUETOOTH_SCO
 import android.media.AudioManager
+import android.media.AudioManager.GET_DEVICES_OUTPUTS
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View.GONE
@@ -77,6 +82,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.marge.marucast_android_client.views.VideoRendererView
 import timber.log.Timber
+import java.util.Arrays
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -116,17 +122,90 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
     private val cameraResponseTime = 2000L
 
+    @Inject
+    lateinit var audioManager: AudioManager
+    private var firstTimeCheckBluetooth = true
+    private var isWiredEarphoneConnected = false
+    private var isBluetoothEarphoneConnected = false
+    private var lastTypeHeadPhoneConnected: TypeHeadPhone = TypeHeadPhone.Speaker
+
     private var earphoneEventReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            val action = intent!!.action ?: return
-            if (Intent.ACTION_HEADSET_PLUG == action) {
-                Timber.i("Intent.ACTION_HEADSET_PLUG")
-                val state = intent.getIntExtra("state", -1)
-                val mode =
-                    if (state == 0) AudioManager.MODE_IN_COMMUNICATION else AudioManager.MODE_IN_CALL
-                val isSpeakerphoneOn = state == 0
-                mViewModel.setAudioConfig(mode, isSpeakerphoneOn)
+            val action = intent?.action ?: return
+            if (firstTimeCheckBluetooth) {
+                isBluetoothEarphoneConnected =
+                    Arrays.stream(audioManager.getDevices(GET_DEVICES_OUTPUTS))
+                        .anyMatch { info -> info.getType() === TYPE_BLUETOOTH_SCO || info.getType() === TYPE_BLUETOOTH_A2DP }
+                firstTimeCheckBluetooth = false
+                if (isBluetoothEarphoneConnected) {
+                    lastTypeHeadPhoneConnected = TypeHeadPhone.Bluetooth
+                }
             }
+            when (action) {
+                Intent.ACTION_HEADSET_PLUG -> {
+                    Timber.i("Intent.ACTION_HEADSET_PLUG")
+                    val state = intent.getIntExtra("state", -1)
+                    if (state == 1) {
+                        isWiredEarphoneConnected = true
+                        lastTypeHeadPhoneConnected = TypeHeadPhone.Wired
+                    } else if (state == 0) {
+                        isWiredEarphoneConnected = false
+                    }
+                    updateAudioConfig()
+                }
+
+                BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED -> {
+                    val state = intent.getIntExtra(
+                        BluetoothHeadset.EXTRA_STATE,
+                        BluetoothHeadset.STATE_DISCONNECTED
+                    )
+                    if (state == BluetoothHeadset.STATE_CONNECTED) {
+                        isBluetoothEarphoneConnected = true
+                        lastTypeHeadPhoneConnected = TypeHeadPhone.Bluetooth
+                    } else if (state == BluetoothHeadset.STATE_DISCONNECTED) {
+                        isBluetoothEarphoneConnected = false
+                    }
+                    updateAudioConfig()
+                }
+            }
+        }
+    }
+
+    private fun updateAudioConfig() {
+        if (isWiredEarphoneConnected && isBluetoothEarphoneConnected) {
+            if (lastTypeHeadPhoneConnected == TypeHeadPhone.Wired) {
+                mViewModel.setAudioConfig(
+                    AudioManager.MODE_NORMAL,
+                    isSpeakerPhoneOn = false,
+                    isBluetoothOn = false
+                )
+            }
+            if (lastTypeHeadPhoneConnected == TypeHeadPhone.Bluetooth) {
+                mViewModel.setAudioConfig(
+                    AudioManager.MODE_NORMAL,
+                    isSpeakerPhoneOn = false,
+                    isBluetoothOn = true
+                )
+            }
+
+        } else if (isWiredEarphoneConnected) {
+            mViewModel.setAudioConfig(
+                AudioManager.MODE_NORMAL,
+                isSpeakerPhoneOn = false,
+                isBluetoothOn = false
+            )
+        } else if (isBluetoothEarphoneConnected) {
+            mViewModel.setAudioConfig(
+                AudioManager.MODE_NORMAL,
+                isSpeakerPhoneOn = false,
+                isBluetoothOn = true
+            )
+        } else {
+            mViewModel.setAudioConfig(
+                AudioManager.MODE_NORMAL,
+                isSpeakerPhoneOn = true,
+                isBluetoothOn = false
+            )
         }
     }
 
@@ -241,6 +320,8 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         filter = IntentFilter().apply {
             addAction(Intent.ACTION_HEADSET_PLUG)
             addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
+            addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
+            addAction(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED)
         }
         requireContext().registerReceiver(earphoneEventReceiver, filter)
 
@@ -812,4 +893,8 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
     override fun getViewerView(): VideoRendererView {
         return binding.memberViewCamera
     }
+}
+
+enum class TypeHeadPhone {
+    Wired, Bluetooth, Speaker
 }
