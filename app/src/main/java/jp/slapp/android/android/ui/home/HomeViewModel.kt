@@ -125,15 +125,12 @@ class HomeViewModel @Inject constructor(
                     listBlockedConsultantResponse = blockedDeferred.await()
                     listConsultant.value =
                         onlineDataResponse.listChat + onlineDataResponse.listTwoShot
-                    if (listConsultant.value != null) {
-                        if (listConsultant.value!!.isNotEmpty()) {
-                            listConsultant.value = listConsultant.value!!.sortedByDescending {
-                                it.loginMemberCount + it.peepingMemberCount
-                            }
-                        }
-                    }
                     listConsultant.value =
-                        listConsultant.value!! + waitDataResponse + offlineResponse
+                        (listConsultant.value ?: emptyList()).sortedByDescending {
+                            it.loginMemberCount + it.peepingMemberCount
+                        }
+                    listConsultant.value =
+                        (listConsultant.value ?: emptyList()) + waitDataResponse + offlineResponse
                     filterBlockConsultant(listConsultant, listBlockedConsultantResponse)
                     isLoading.value = false
                 } else {
@@ -142,7 +139,7 @@ class HomeViewModel @Inject constructor(
                     awaitAll(offlineDeferred)
                     val offlineResponse = offlineDeferred.await()
                     listConsultant.value =
-                        listConsultant.value!!.plus(offlineResponse)
+                        (listConsultant.value ?: emptyList()).plus(offlineResponse)
                     filterBlockConsultant(listConsultant, listBlockedConsultantResponse)
                     isLoading.value = false
                 }
@@ -163,7 +160,6 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-
 
     private suspend fun getListBlockedConsultant(): List<BlockedConsultantResponse> {
         try {
