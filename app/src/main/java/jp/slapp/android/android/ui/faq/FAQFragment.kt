@@ -15,6 +15,7 @@ import jp.slapp.android.R
 import jp.slapp.android.android.navigation.AppNavigation
 import jp.slapp.android.android.utils.CONTACT_US_MODE
 import jp.slapp.android.android.utils.ContactUsMode
+import jp.slapp.android.android.utils.Define
 import jp.slapp.android.android.utils.customView.ToolBarCommon
 import jp.slapp.android.databinding.FragmentFaqBinding
 import timber.log.Timber
@@ -46,6 +47,7 @@ class FAQFragment : BaseFragment<FragmentFaqBinding, FAQViewModel>() {
     private fun configWebView() {
         binding.webView.apply {
             settings.domStorageEnabled = true
+            settings.userAgentString = Define.USER_AGENT_STRING
             webViewClient = object : WebViewClient() {
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                     super.onPageStarted(view, url, favicon)
@@ -80,15 +82,15 @@ class FAQFragment : BaseFragment<FragmentFaqBinding, FAQViewModel>() {
                 super.onProgressChanged(view, newProgress)
                 if (view.url != null) {
                     if (view.url == INQUIRY_URL) {
-                        appNavigation.openFAQToWithdrawal()
-                        binding.webView.loadUrl(FAQ_URL)
-                    }
-                    if (view.url == UNSUBSCRIBE_URL) {
                         appNavigation.openContactUs(
                             bundleOf(
                                 CONTACT_US_MODE to ContactUsMode.CONTACT_WITHOUT_MAIL
                             )
                         )
+                        binding.webView.loadUrl(FAQ_URL)
+                    }
+                    if (view.url == UNSUBSCRIBE_URL) {
+                        appNavigation.openFAQToWithdrawal()
                         binding.webView.loadUrl(FAQ_URL)
                     }
                 }

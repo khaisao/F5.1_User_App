@@ -90,16 +90,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
         viewModel.isLoading.observe(viewLifecycleOwner, isLoadingObserver)
 
-        mainViewModels.currentFragment.observe(
-            viewLifecycleOwner,
-            Observer {
-                if (isVisible)
-                    viewModel.getListBlockedConsultant()
-                else
-                    return@Observer
-            }
-        )
-
         shareViewModel.isScrollToTop.observe(viewLifecycleOwner) {
             if (it) {
                 shareViewModel.doneScrollView()
@@ -112,7 +102,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
         shareViewModel.isBlockConsultant.observe(viewLifecycleOwner) {
             if (it) {
-                viewModel.getListBlockedConsultant()
                 shareViewModel.isBlockConsultant.value = false
             }
         }

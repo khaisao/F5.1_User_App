@@ -20,7 +20,6 @@ import jp.slapp.android.android.network.socket.CallingWebSocketClient
 import jp.slapp.android.android.network.socket.FlaxWebSocketManager
 import jp.slapp.android.android.network.socket.MaruCastManager
 import jp.slapp.android.android.utils.BUNDLE_KEY.Companion.STATUS
-import jp.slapp.android.android.utils.Define
 import jp.slapp.android.android.utils.SocketInfo
 import jp.slapp.android.android.utils.SocketInfo.ACTION_CANCEL_CALL
 import jp.slapp.android.android.utils.SocketInfo.ACTION_LOGIN
@@ -43,14 +42,11 @@ import jp.slapp.android.android.utils.SocketInfo.KEY_SESSION_CODE
 import jp.slapp.android.android.utils.SocketInfo.RESULT_NG
 import jp.slapp.android.android.utils.SocketInfo.RESULT_NONE
 import jp.slapp.android.android.utils.SocketInfo.RESULT_OK
-import jp.slapp.android.android.utils.formatDecimalSeparator
 import jp.slapp.android.android.utils.performer_extension.PerformerStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.supervisorScope
-import kotlinx.coroutines.withContext
 import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
@@ -73,7 +69,6 @@ class DetailUserProfileViewModel @ViewModelInject constructor(
     val isButtonEnable = MutableLiveData<Boolean>()
     val isLoginSuccess = MutableLiveData(false)
     val connectResult = MutableLiveData<ConnectResult>()
-    val currentPoint = MutableStateFlow("")
     private var cancelButtonClickedFlag = false
     var flaxLoginAuthResponse: FlaxLoginAuthResponse? = null
     var viewerStatus: Int = 0
