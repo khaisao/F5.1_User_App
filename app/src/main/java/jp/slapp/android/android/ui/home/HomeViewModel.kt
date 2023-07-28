@@ -123,14 +123,13 @@ class HomeViewModel @Inject constructor(
                     val waitDataResponse = waitDeferred.await()
                     val offlineResponse = offlineDeferred.await()
                     listBlockedConsultantResponse = blockedDeferred.await()
-                    listConsultant.value =
-                        onlineDataResponse.listChat + onlineDataResponse.listTwoShot
-                    listConsultant.value =
-                        (listConsultant.value ?: emptyList()).sortedByDescending {
-                            it.loginMemberCount + it.peepingMemberCount
-                        }
-                    listConsultant.value =
-                        (listConsultant.value ?: emptyList()) + waitDataResponse + offlineResponse
+                    listConsultant.value = waitDataResponse
+                    val listOnlineSortedByDescending = onlineDataResponse.listChat.sortedByDescending {
+                        it.loginMemberCount + it.peepingMemberCount
+                    }
+                    listConsultant.value = (listConsultant.value ?: emptyList())  + listOnlineSortedByDescending
+                    listConsultant.value = (listConsultant.value ?: emptyList())  + onlineDataResponse.listTwoShot
+                    listConsultant.value = (listConsultant.value ?: emptyList())  + offlineResponse
                     filterBlockConsultant(listConsultant, listBlockedConsultantResponse)
                     isLoading.value = false
                 } else {
