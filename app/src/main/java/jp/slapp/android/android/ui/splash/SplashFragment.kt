@@ -44,8 +44,8 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
                     .setCancelableDialog(false)
                     .setDialogTitle(R.string.update_notie)
                     .setContent(R.string.update_notie_content)
-                    .setTextPositiveButton(R.string.update_now)
-                    .setOnPositivePressed {
+                    .setTextOkButton(R.string.update_now)
+                    .setOnOkButtonPressed {
                         try {
                             requireContext().startActivity(
                                 Intent(
