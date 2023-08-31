@@ -27,6 +27,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_rm_point_info"
+                android:paddingBottom="@dimen/margin_24"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -42,22 +43,6 @@
                     android:textSize="16sp"
                     tools:text="@string/nick_name" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/tvPoint"
-                    style="@style/text_bold_16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="24dp"
-                    android:background="@drawable/bg_rm_btn_point"
-                    android:drawablePadding="4dp"
-                    android:minHeight="36dp"
-                    android:paddingHorizontal="36dp"
-                    android:paddingVertical="8dp"
-                    android:text="@{String.valueOf(viewModel.userPoint)}"
-                    android:textColor="@color/color_070707"
-                    app:drawableStartCompat="@drawable/ic_rv_point"
-                    tools:text="10,000" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SL</string>
+    <string name="app_name">スパクラ</string>
     <string name="default_notification_channel_id">SparkLive</string>
     <string name="incoming_call_channel_id">calling_in_app</string>
     <string name="incoming_call_channel_name">Calling In App</string>
