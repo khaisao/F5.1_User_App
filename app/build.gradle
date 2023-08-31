@@ -15,7 +15,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "jp.slapp.android"
+        applicationId "jp.supakura.android"
         minSdkVersion 27
         targetSdkVersion versions.targetSdk
         versionCode versions.versionCode
@@ -26,17 +26,17 @@ android {
         stagging {
             //keystore
             storeFile file("../keystore/key_store_careapp.jks")
-            storePassword "careapp123456789a@"
-            keyAlias "key_alias_careapp"
-            keyPassword "careapp123456789a@"
+            storePassword "supakura123456789a@"
+            keyAlias "key_alias_supakura"
+            keyPassword "supakura123456789a@"
         }
 
         release {
             //keystore
             storeFile file("../keystore/key_store_careapp.jks")
-            storePassword "careapp123456789a@"
-            keyAlias "key_alias_careapp"
-            keyPassword "careapp123456789a@"
+            storePassword "supakura123456789a@"
+            keyAlias "key_alias_supakura"
+            keyPassword "supakura123456789a@"
         }
     }
 

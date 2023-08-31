@@ -49,15 +49,6 @@ class RMMyMenuFragment : BaseFragment<FragmentRmMyMenuBinding, RMMyMenuViewModel
         binding.executePendingBindings()
     }
 
-    override fun setOnClick() {
-        super.setOnClick()
-        binding.tvPoint.setOnClickListener {
-            if (!isDoubleClick) {
-                appNavigation.openRMTopToRMBuyPoint()
-            }
-        }
-    }
-
     private fun onClickItemMenu(menuItem: MenuItem) {
         when (menuItem) {
             MenuItem.CHANGE_NICKNAME -> {

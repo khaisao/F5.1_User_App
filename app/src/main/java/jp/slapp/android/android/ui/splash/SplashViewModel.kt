@@ -210,6 +210,8 @@ class SplashViewModel @ViewModelInject constructor(
                                     } else {
                                         SCREEN_CODE_TOP
                                     }
+                            } else {
+                                screenCode.value = SCREEN_CODE_TOP_RM
                             }
                         }
                         Constants.MemberStatus.UNREGISTED.index -> {
