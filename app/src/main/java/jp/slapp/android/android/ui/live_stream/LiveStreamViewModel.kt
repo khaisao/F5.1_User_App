@@ -2,6 +2,7 @@ package jp.slapp.android.android.ui.live_stream
 
 import android.app.Application
 import android.media.AudioManager
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -16,6 +17,8 @@ import jp.slapp.android.android.network.socket.CallingWebSocketClient
 import jp.slapp.android.android.network.socket.FlaxWebSocketManager
 import jp.slapp.android.android.network.socket.MaruCastManager
 import jp.slapp.android.android.utils.BUNDLE_KEY
+import jp.slapp.android.android.utils.BUNDLE_KEY.Companion.MEMBER_COUNT
+import jp.slapp.android.android.utils.BUNDLE_KEY.Companion.PEEPING_COUNT
 import jp.slapp.android.android.utils.BUNDLE_KEY.Companion.PERFORMER
 import jp.slapp.android.android.utils.BUNDLE_KEY.Companion.POINT
 import jp.slapp.android.android.utils.SocketInfo.ACTION_ASK_TWO_SHOT
@@ -92,6 +95,14 @@ class LiveStreamViewModel @Inject constructor(
 
     private var isMicMute = true
     private var isCameraMute = false
+
+    private val _memberCount = MutableLiveData<String>()
+    val memberCount: LiveData<String>
+        get() = _memberCount
+
+    private val _peepingCount = MutableLiveData<String>()
+    val peepingCount: LiveData<String>
+        get() = _peepingCount
 
     init {
         configAudio()
@@ -267,6 +278,10 @@ class LiveStreamViewModel @Inject constructor(
             } else if (result == RESULT_OK) {
                 when (action) {
                     ACTION_RELOAD, ACTION_CHAT_LOG -> try {
+                        val memberCount = jsonMessage.getString(MEMBER_COUNT)
+                        val peepingCount = jsonMessage.getString(PEEPING_COUNT)
+                        _memberCount.postValue(memberCount)
+                        _peepingCount.postValue(peepingCount)
                         val point = jsonMessage.getString(POINT).toInt()
                         _currentPoint.postValue(point)
                         if (_pointState.value == PointState.StartCheck && point <= 1000 && point > 500) {

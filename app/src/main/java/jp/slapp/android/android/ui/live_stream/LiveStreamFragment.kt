@@ -516,6 +516,17 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         bindingWhisperHandle()
         bindingPointCheckingHandle()
         bindingCurrentPointHandle()
+        bindingMemberCountHandle()
+    }
+
+    private fun bindingMemberCountHandle() {
+        mViewModel.memberCount.observe(viewLifecycleOwner) {
+            binding.tvChatMemberNum.text = it
+        }
+
+        mViewModel.peepingCount.observe(viewLifecycleOwner) {
+            binding.tvPeepMemberNum.text = it
+        }
     }
 
     private fun changeUiOfMicIcon() {
