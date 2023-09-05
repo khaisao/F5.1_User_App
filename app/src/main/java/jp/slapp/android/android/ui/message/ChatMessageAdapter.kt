@@ -5,6 +5,7 @@ import android.graphics.BlurMaskFilter
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.MaskFilterSpan
+import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -116,15 +117,15 @@ class ChatMessageAdapter constructor(
         ) {
             binding.apply {
                 messageResponse?.let { data ->
-                    timeSendTv.setText(
-                        DateUtil.convertStringToDateString(
-                            data.sendDate,
-                            DATE_FORMAT_1,
-                            DATE_FORMAT_5
-                        )
+                    timeSendTv.text = DateUtil.convertStringToDateString(
+                        data.sendDate,
+                        DATE_FORMAT_1,
+                        DATE_FORMAT_5
                     )
                     statusMessageTv.visibility = if (data.open) View.VISIBLE else View.GONE
-                    contentMessageTv.setText(data.body)
+                    contentMessageTv.text = data.body
+                    Linkify.addLinks(contentMessageTv, Linkify.WEB_URLS)
+
                 }
                 containerItemOwnerCl.setOnClickListener {
                     messageResponse?.let { it1 -> onClickListener.invoke(it1, CLICK_CONTAIN_VIEW) }
@@ -190,6 +191,7 @@ class ChatMessageAdapter constructor(
                 containerItemPerformerCl.setOnClickListener {
                     messageResponse?.let { it1 -> onClickListener.invoke(it1, CLICK_CONTAIN_VIEW) }
                 }
+                Linkify.addLinks(contentMessageTv, Linkify.WEB_URLS)
             }
         }
     }

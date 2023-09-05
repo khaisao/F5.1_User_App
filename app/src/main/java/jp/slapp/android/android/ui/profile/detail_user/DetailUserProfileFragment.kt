@@ -1,6 +1,7 @@
 package jp.slapp.android.android.ui.profile.detail_user
 
 import android.os.Bundle
+import android.text.util.Linkify
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -672,8 +673,10 @@ class DetailUserProfileFragment :
                 tvMemberCount.text = user.favoriteMemberCount.toString()
 
                 tvMessageNotice.text = user.messageOfTheDay
+                Linkify.addLinks(tvMessageNotice, Linkify.WEB_URLS)
 
                 tvMessageOfTheDay.text = user.message
+                Linkify.addLinks(tvMessageOfTheDay, Linkify.WEB_URLS)
 
                 tvAge.text = user.age.toString() + resources.getString(R.string.age_raw)
 
