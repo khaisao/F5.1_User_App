@@ -241,26 +241,6 @@ class AppPreferences @Inject constructor(
         return list
     }
 
-    override fun saveListTemplate(listCategory: List<FreeTemplateResponse>) {
-        val gson = Gson()
-        val json = gson.toJson(listCategory)
-        mPrefs.edit().apply {
-            putString(PREF_KEY_TEMPLATE, json)
-        }.also { it.apply() }
-    }
-
-    override fun getListTemplate(): List<FreeTemplateResponse>? {
-        var list: List<FreeTemplateResponse>? = null
-        try {
-            val templateJson = mPrefs.getString(PREF_KEY_TEMPLATE, "")
-            val gson = Gson()
-            val myType = object : TypeToken<List<FreeTemplateResponse>>() {}.type
-            list = gson.fromJson(templateJson, myType)
-        } catch (e: Exception) {
-        }
-        return list
-    }
-
     override fun setFirstRegister(isTheFirst: Boolean) {
         mPrefs.edit().apply {
             putBoolean(PREF_KEY_THE_REGISTER, isTheFirst)

@@ -70,10 +70,6 @@ interface RxPreferences {
 
     fun getListCategory(): List<CategoryResponse>?
 
-    fun saveListTemplate(listCategory: List<FreeTemplateResponse>)
-
-    fun getListTemplate(): List<FreeTemplateResponse>?
-
     fun setFirstRegister(isTheFirst: Boolean)
 
     fun getFirstRegister(): Boolean

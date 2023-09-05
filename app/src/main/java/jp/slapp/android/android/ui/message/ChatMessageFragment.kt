@@ -100,11 +100,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     private var pointPerchar = 0
     private var payMailCode = ""
     private var isSendFirstMsg = false
-
-    private val listFreeTemplate: List<FreeTemplateResponse>? by lazy {
-        rxPreferences.getListTemplate()
-    }
-
+    
     private var sendMessageEnable = false
     private var consultantResponse: ConsultantResponse? = null
     private var isSendMessageSuccess = false
@@ -271,14 +267,8 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                 remove(BUNDLE_KEY.IS_SHOW_FREE_MESS)
             }
         }
-        val callRestriction = arguments?.getInt(BUNDLE_KEY.CALL_RESTRICTION)
-        val listTemplate = if (callRestriction == CallRestriction.POSSIBLE) {
-            listFreeTemplate
-        } else {
-            listFreeTemplate?.filterNot { it.body == getString(R.string.free_message_consult_call) }
-        }
+        
         binding.rvMessageTemplate.adapter = templateAdapter
-        templateAdapter.submitList(listTemplate)
 
         if(performerCode == ""){
             binding.tvStatus.visibility = GONE
@@ -597,7 +587,26 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         viewModel.connectResult.observe(viewLifecycleOwner, connectResultHandle)
         viewModel.isButtonEnable.observe(viewLifecycleOwner, buttonEnableHandle)
         viewModel.isLoginSuccess.observe(viewLifecycleOwner, loginSuccessHandle)
+        viewModel.freeTemplateResponse.observe(viewLifecycleOwner, freeTemplateResponseHandler)
     }
+
+    private val freeTemplateResponseHandler: Observer<List<FreeTemplateResponse>> =
+        Observer { listFreeTemplate ->
+            val callRestriction = arguments?.getInt(BUNDLE_KEY.CALL_RESTRICTION)
+            val listTemplate = if (callRestriction == CallRestriction.POSSIBLE) {
+                listFreeTemplate.filterNot {
+                    it.body == getString(R.string.message_free_1) || it.body == getString(R.string.message_free_2)
+                }
+            } else {
+                listFreeTemplate?.filterNot {
+                    it.body == getString(R.string.free_message_consult_call)
+                            || it.body == getString(R.string.message_free_1) || it.body == getString(
+                        R.string.message_free_2
+                    )
+                }
+            }
+            templateAdapter.submitList(listTemplate)
+        }
 
     private val connectResultHandle: Observer<ConnectResult> = Observer {
         if (it.result != SocketInfo.RESULT_NONE) {
