@@ -29,7 +29,7 @@ class ShareViewModel @ViewModelInject constructor(
         const val TAB_FAVORITE_SELECTED = 4
     }
 
-    val tabSelected = MutableLiveData<Int>()
+    val tabSelected = SingleLiveEvent<Int>()
     val laboTabSelected = MutableLiveData<Int>()
     var saveFocusTab: Int = 0
 
@@ -41,6 +41,8 @@ class ShareViewModel @ViewModelInject constructor(
     val isFocusVerifyCode = MutableLiveData(false)
 
     val isScrollToTop = SingleLiveEvent<Boolean>()
+    val isRequestLoadPerformer = SingleLiveEvent<Boolean>()
+    val isScrollToTopHomeScreen = SingleLiveEvent<Boolean>()
 
     var performerCode = MutableLiveData<String>()
     var messagePerformerCode = MutableLiveData<String>()
@@ -60,6 +62,14 @@ class ShareViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             tabRankingTypeDeeplinkChannel.send(type)
         }
+    }
+
+    fun setRequestLoadPerformer(isScrollToTop: Boolean) {
+        isRequestLoadPerformer.value = isScrollToTop
+    }
+
+    fun setScrollToTopHomeScreen(isLoadPerformer: Boolean) {
+        isScrollToTopHomeScreen.value = isLoadPerformer
     }
 
     fun setTabSelected(tab: Int) {

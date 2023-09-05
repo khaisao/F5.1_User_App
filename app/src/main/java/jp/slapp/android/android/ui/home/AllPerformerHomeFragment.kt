@@ -135,6 +135,11 @@ class AllPerformerHomeFragment : BaseFragment<FragmentPerformerBinding, HomeView
                 onInfinitePageChangeCallback(newList.size)
             }
         }
+
+        shareViewModel.isScrollToTopHomeScreen.observe(viewLifecycleOwner) {
+            binding.rvConsultant.smoothScrollToPosition(0)
+            binding.alRv.setExpanded(true, true)
+        }
     }
 
     override fun setOnClick() {

@@ -113,6 +113,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 shareViewModel.isBlockConsultant.value = false
             }
         }
+
+        shareViewModel.isRequestLoadPerformer.observe(viewLifecycleOwner) {
+            if (binding.vpMain.currentItem == 0) {
+                shareViewModel.setScrollToTopHomeScreen(true)
+                viewModel.getAllData()
+            }
+        }
     }
 
     private var isLoadingObserver: Observer<Boolean> = Observer {
