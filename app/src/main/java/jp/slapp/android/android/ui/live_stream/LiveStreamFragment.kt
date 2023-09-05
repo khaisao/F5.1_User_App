@@ -175,14 +175,12 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         if (isWiredEarphoneConnected && isBluetoothEarphoneConnected) {
             if (lastTypeHeadPhoneConnected == TypeHeadPhone.Wired) {
                 mViewModel.setAudioConfig(
-                    AudioManager.MODE_NORMAL,
                     isSpeakerPhoneOn = false,
                     isBluetoothOn = false
                 )
             }
             if (lastTypeHeadPhoneConnected == TypeHeadPhone.Bluetooth) {
                 mViewModel.setAudioConfig(
-                    AudioManager.MODE_NORMAL,
                     isSpeakerPhoneOn = false,
                     isBluetoothOn = true
                 )
@@ -190,19 +188,16 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
         } else if (isWiredEarphoneConnected) {
             mViewModel.setAudioConfig(
-                AudioManager.MODE_NORMAL,
                 isSpeakerPhoneOn = false,
                 isBluetoothOn = false
             )
         } else if (isBluetoothEarphoneConnected) {
             mViewModel.setAudioConfig(
-                AudioManager.MODE_NORMAL,
                 isSpeakerPhoneOn = false,
                 isBluetoothOn = true
             )
         } else {
             mViewModel.setAudioConfig(
-                AudioManager.MODE_NORMAL,
                 isSpeakerPhoneOn = true,
                 isBluetoothOn = false
             )

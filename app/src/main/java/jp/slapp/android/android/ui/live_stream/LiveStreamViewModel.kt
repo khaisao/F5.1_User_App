@@ -194,8 +194,8 @@ class LiveStreamViewModel @Inject constructor(
         maruCastManager.playStream(rendererView)
     }
 
-    fun setAudioConfig(audioMode: Int, isSpeakerPhoneOn: Boolean, isBluetoothOn: Boolean) {
-        audioManager.mode = audioMode
+    fun setAudioConfig(isSpeakerPhoneOn: Boolean, isBluetoothOn: Boolean) {
+        audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
         if (isBluetoothOn) {
             audioManager.isSpeakerphoneOn = false
             audioManager.startBluetoothSco()
