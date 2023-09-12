@@ -307,7 +307,7 @@
             android:layout_marginStart="8dp"
             android:orientation="vertical"
             android:weightSum="2"
-            android:gravity="center"
+            android:gravity="center|start"
             app:layout_constraintBottom_toBottomOf="@+id/ivPerformer"
             app:layout_constraintStart_toEndOf="@+id/ivPerformer"
             app:layout_constraintTop_toTopOf="@+id/ivPerformer">

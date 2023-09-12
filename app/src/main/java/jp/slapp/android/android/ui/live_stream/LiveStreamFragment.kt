@@ -19,6 +19,7 @@ import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewTreeObserver
+import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
@@ -261,11 +262,16 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
     override fun onResume() {
         super.onResume()
-
+        requireActivity().window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
         binding.root.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)
         if (activity is BaseActivity<*, *>) {
             (activity as BaseActivity<*, *>).setHandleDispathTouch(false)
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
     }
 
     override fun onStop() {
