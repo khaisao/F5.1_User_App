@@ -24,8 +24,8 @@ class RMStartFragment : BaseFragment<FragmentRmStartBinding, RMStartViewModel>()
 
         binding.btnStartNow.setOnClickListener { if (!isDoubleClick) appNavigation.openRMStartToRMEnterName() }
 
-        binding.tvTermsOfService.setOnClickListener { if (!isDoubleClick) appNavigation.openRMTermOfService() }
+        binding.tvTermsOfService.setOnClickListener { if (!isDoubleClick) appNavigation.openRmStartToRmTerm() }
 
-        binding.tvPrivacyPolicy.setOnClickListener { if (!isDoubleClick) appNavigation.openRMPrivacyPolicy() }
+        binding.tvPrivacyPolicy.setOnClickListener { if (!isDoubleClick) appNavigation.openRmStartToRmPolicy() }
     }
 }

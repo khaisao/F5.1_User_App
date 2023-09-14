@@ -360,4 +360,12 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     override fun openGlobalToFAQFragment(bundle: Bundle?) {
         openScreen(R.id.action_global_to_FAQFragment, bundle)
     }
+
+    override fun openRmStartToRmTerm(bundle: Bundle?) {
+        openScreen(R.id.action_RMStartFragment_to_RMTermsOfServiceFragment, bundle)
+    }
+
+    override fun openRmStartToRmPolicy(bundle: Bundle?) {
+        openScreen(R.id.action_RMStartFragment_to_RMPrivacyPolicyFragment, bundle)
+    }
 }
