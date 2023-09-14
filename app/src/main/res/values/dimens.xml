@@ -53,6 +53,7 @@
     <dimen name="margin_30">30dp</dimen>
     <dimen name="margin_31">31dp</dimen>
     <dimen name="margin_42">42dp</dimen>
+    <dimen name="margin_58">58dp</dimen>
     <dimen name="margin_64">64dp</dimen>
 
     <!--height layout-->
