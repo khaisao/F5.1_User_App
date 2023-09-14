@@ -1,7 +1,10 @@
 package jp.slapp.android.android.ui.home
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.os.Build
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
@@ -38,11 +41,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     private val fragmentAllPerformer = AllPerformerHomeFragment.newInstance(BUNDLE_KEY.TYPE_ALL_PERFORMER)
     private val fragmentAllPerformerFollow = FavoritePerformerHomeFragment.newInstance()
 
+    private val requestNotificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { _ -> }
 
     @SuppressLint("ResourceType")
     override fun initView() {
         super.initView()
-
+        if (Build.VERSION.SDK_INT > 32) {
+            requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
         binding.tlMain.setTabTextColors(Color.parseColor(resources.getString(R.color.gray_dark)), Color.parseColor(resources.getString(R.color.white)))
 
         setupViewPager()
