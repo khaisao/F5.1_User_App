@@ -38,7 +38,7 @@ class MainViewModel @ViewModelInject constructor(
         this.newFcmToken = newFcmToken
         viewModelScope.launch {
             try {
-                val response = apiInterface.registerDeviceToken(BUNDLE_KEY.OS_ANDROID, newFcmToken)
+                val response = apiInterface.registerDeviceToken(BUNDLE_KEY.OS_ANDROID, newFcmToken, 4)
                 isSuccess.value = response.errors.isEmpty()
             } catch (throwable: Throwable) {
                 isSuccess.value = false

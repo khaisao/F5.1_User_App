@@ -245,7 +245,8 @@ interface ApiInterface {
     @POST("api/member/device-token")
     suspend fun registerDeviceToken(
         @Field("os") os: String,
-        @Field("token") content: String
+        @Field("token") content: String,
+        @Field("platform_app_id") platformAppId: Int
     ): ApiObjectResponse<Any>
 
     @POST("api/member/mails")
