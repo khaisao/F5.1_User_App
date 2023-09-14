@@ -592,20 +592,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
     private val freeTemplateResponseHandler: Observer<List<FreeTemplateResponse>> =
         Observer { listFreeTemplate ->
-            val callRestriction = arguments?.getInt(BUNDLE_KEY.CALL_RESTRICTION)
-            val listTemplate = if (callRestriction == CallRestriction.POSSIBLE) {
-                listFreeTemplate.filterNot {
-                    it.body == getString(R.string.message_free_1) || it.body == getString(R.string.message_free_2)
-                }
-            } else {
-                listFreeTemplate?.filterNot {
-                    it.body == getString(R.string.free_message_consult_call)
-                            || it.body == getString(R.string.message_free_1) || it.body == getString(
-                        R.string.message_free_2
-                    )
-                }
-            }
-            templateAdapter.submitList(listTemplate)
+            templateAdapter.submitList(listFreeTemplate)
         }
 
     private val connectResultHandle: Observer<ConnectResult> = Observer {
