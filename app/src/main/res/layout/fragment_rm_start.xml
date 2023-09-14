@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/dodger_blue"
+        android:background="@color/color_030A33"
         tools:context=".android.ui.review_mode.start.RMStartFragment">
 
         <androidx.constraintlayout.widget.Guideline
@@ -14,17 +14,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.32" />
+            app:layout_constraintGuide_percent="0.30" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="0dp"
+            android:id="@+id/iv_logo"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:src="@drawable/ic_splash_logo"
-            app:layout_constraintDimensionRatio="140:78"
+            android:layout_marginHorizontal="@dimen/margin_58"
+            android:adjustViewBounds="true"
+            android:src="@drawable/iv_splash"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideline2"
-            app:layout_constraintWidth_percent="0.373" />
+            app:layout_constraintTop_toBottomOf="@id/guideline2" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline13"
@@ -38,16 +39,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_48"
+            android:layout_marginTop="@dimen/margin_48"
             android:background="@drawable/bg_rm_btn_start"
             android:fontFamily="@font/hiragino_sans_w6"
             android:gravity="center"
             android:minHeight="@dimen/start_now_btn_height"
             android:text="@string/start_now"
-            android:textColor="@color/dodger_blue"
+            android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideline13" />
+            app:layout_constraintTop_toBottomOf="@id/iv_logo" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline14"
@@ -73,7 +75,7 @@
                 android:gravity="center|end"
                 android:padding="8dp"
                 android:text="@string/terms_of_service"
-                android:textColor="@color/white"
+                android:textColor="@color/color_A4AACF"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@id/guideline14"
                 app:layout_constraintStart_toStartOf="@+id/guideline4" />
@@ -88,7 +90,7 @@
                 android:gravity="center|start"
                 android:padding="8dp"
                 android:text="@string/privacy_policy"
-                android:textColor="@color/white"
+                android:textColor="@color/color_A4AACF"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvTermsOfService"
                 app:layout_constraintEnd_toStartOf="@+id/guideline5" />

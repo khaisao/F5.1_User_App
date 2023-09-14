@@ -180,4 +180,8 @@ interface AppNavigation : BaseNavigator {
     fun openGlobalToWithdrawFragment(bundle: Bundle? = null)
 
     fun openGlobalToFAQFragment(bundle: Bundle? = null)
+
+    fun openRmStartToRmTerm(bundle: Bundle? = null)
+
+    fun openRmStartToRmPolicy(bundle: Bundle? = null)
 }
