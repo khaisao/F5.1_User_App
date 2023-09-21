@@ -89,8 +89,6 @@ class ChatMessageViewModel @ViewModelInject constructor(
     // result when load transmission message
     val isEnoughMessageForReview = MutableLiveData<Boolean>()
 
-    val freeTemplateResponse = MutableLiveData<List<FreeTemplateResponse>>()
-
     var isLoadMessageAfterSend = false
     var isMessageFromSocket = false
 
@@ -109,7 +107,6 @@ class ChatMessageViewModel @ViewModelInject constructor(
     var viewerStatus: Int = 0
 
     init {
-        saveListFreeTemplate()
         getConfigCall()
     }
 
@@ -501,20 +498,6 @@ class ChatMessageViewModel @ViewModelInject constructor(
                     }
                 }
             } catch (e: Exception) { // Ignore}
-            }
-        }
-    }
-
-    private fun saveListFreeTemplate() {
-        viewModelScope.launch(NonCancellable + Dispatchers.IO) {
-            try {
-                val response = apiInterface.getListTemplate()
-                response.let {
-                    if (it.errors.isEmpty() && it.dataResponse != null) {
-                        freeTemplateResponse.postValue(it.dataResponse!!)
-                    }
-                }
-            } catch (_: Exception) {
             }
         }
     }
