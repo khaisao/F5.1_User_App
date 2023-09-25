@@ -70,7 +70,6 @@ class SplashViewModel @ViewModelInject constructor(
 
     init {
         saveListCategory()
-        saveListFreeTemplate()
         handler.postDelayed(runnable, DURATION_SPLASH)
     }
 
@@ -109,21 +108,6 @@ class SplashViewModel @ViewModelInject constructor(
                 }
             } catch (e: Exception) {
                 rxPreferences.saveListCategory(dummyCategoryData())
-            }
-        }
-    }
-
-    private fun saveListFreeTemplate() {
-        viewModelScope.launch(NonCancellable + Dispatchers.IO) {
-            try {
-                val response = apiInterface.getListTemplate()
-                response.let {
-                    if (it.errors.isEmpty()) {
-                        rxPreferences.saveListTemplate(it.dataResponse)
-                    }
-                }
-            } catch (e: Exception) {
-                rxPreferences.saveListTemplate(dummyFreeTemplateData())
             }
         }
     }

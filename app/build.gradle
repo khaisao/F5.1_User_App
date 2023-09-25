@@ -223,6 +223,7 @@ dependencies {
     implementation libraries.dimenSp
     implementation libraries.ShadowLayout
     implementation libraries.switchbutton
+    implementation libraries.keyboard
 
     implementation(libraries.socketIoClient) {
         exclude group: 'org.json', module: 'json'

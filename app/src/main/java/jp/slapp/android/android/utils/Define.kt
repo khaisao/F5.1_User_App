@@ -193,6 +193,8 @@ class BUNDLE_KEY {
         const val LIMIT_30 = 30
         const val PAGE = "page"
         const val POINT = "point"
+        const val MEMBER_COUNT = "memberCount"
+        const val PEEPING_COUNT = "peepingCount"
         const val INTERVAL = "interval"
         const val STATUS = "status"
 

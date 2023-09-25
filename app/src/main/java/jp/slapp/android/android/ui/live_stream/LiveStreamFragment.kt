@@ -19,6 +19,7 @@ import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewTreeObserver
+import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
@@ -175,14 +176,12 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         if (isWiredEarphoneConnected && isBluetoothEarphoneConnected) {
             if (lastTypeHeadPhoneConnected == TypeHeadPhone.Wired) {
                 mViewModel.setAudioConfig(
-                    AudioManager.MODE_NORMAL,
                     isSpeakerPhoneOn = false,
                     isBluetoothOn = false
                 )
             }
             if (lastTypeHeadPhoneConnected == TypeHeadPhone.Bluetooth) {
                 mViewModel.setAudioConfig(
-                    AudioManager.MODE_NORMAL,
                     isSpeakerPhoneOn = false,
                     isBluetoothOn = true
                 )
@@ -190,19 +189,16 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
         } else if (isWiredEarphoneConnected) {
             mViewModel.setAudioConfig(
-                AudioManager.MODE_NORMAL,
                 isSpeakerPhoneOn = false,
                 isBluetoothOn = false
             )
         } else if (isBluetoothEarphoneConnected) {
             mViewModel.setAudioConfig(
-                AudioManager.MODE_NORMAL,
                 isSpeakerPhoneOn = false,
                 isBluetoothOn = true
             )
         } else {
             mViewModel.setAudioConfig(
-                AudioManager.MODE_NORMAL,
                 isSpeakerPhoneOn = true,
                 isBluetoothOn = false
             )
@@ -266,11 +262,16 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
 
     override fun onResume() {
         super.onResume()
-
+        requireActivity().window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
         binding.root.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)
         if (activity is BaseActivity<*, *>) {
             (activity as BaseActivity<*, *>).setHandleDispathTouch(false)
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
     }
 
     override fun onStop() {
@@ -516,6 +517,17 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
         bindingWhisperHandle()
         bindingPointCheckingHandle()
         bindingCurrentPointHandle()
+        bindingMemberCountHandle()
+    }
+
+    private fun bindingMemberCountHandle() {
+        mViewModel.memberCount.observe(viewLifecycleOwner) {
+            binding.tvChatMemberNum.text = it
+        }
+
+        mViewModel.peepingCount.observe(viewLifecycleOwner) {
+            binding.tvPeepMemberNum.text = it
+        }
     }
 
     private fun changeUiOfMicIcon() {

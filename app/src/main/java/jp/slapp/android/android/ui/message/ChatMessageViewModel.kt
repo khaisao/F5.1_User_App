@@ -17,6 +17,7 @@ import jp.slapp.android.android.data.model.message.*
 import jp.slapp.android.android.data.model.user_profile.ActionLoadProfile
 import jp.slapp.android.android.data.network.ConsultantResponse
 import jp.slapp.android.android.data.network.FlaxLoginAuthResponse
+import jp.slapp.android.android.data.network.FreeTemplateResponse
 import jp.slapp.android.android.data.network.FssMemberAuthResponse
 import jp.slapp.android.android.data.network.MemberResponse
 import jp.slapp.android.android.data.network.socket.SocketActionSend
@@ -29,7 +30,6 @@ import jp.slapp.android.android.ui.chatList.ChatListViewModel
 import jp.slapp.android.android.utils.BUNDLE_KEY
 import jp.slapp.android.android.utils.BUNDLE_KEY.Companion.PERFORMER_MSG_SHOW_REVIEW_APP
 import jp.slapp.android.android.utils.SocketInfo
-import jp.slapp.android.android.utils.dummyFreeTemplateData
 import jp.slapp.android.android.utils.performer_extension.PerformerStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
@@ -107,7 +107,6 @@ class ChatMessageViewModel @ViewModelInject constructor(
     var viewerStatus: Int = 0
 
     init {
-        saveListFreeTemplate()
         getConfigCall()
     }
 
@@ -499,23 +498,6 @@ class ChatMessageViewModel @ViewModelInject constructor(
                     }
                 }
             } catch (e: Exception) { // Ignore}
-            }
-        }
-    }
-
-    private fun saveListFreeTemplate() {
-        viewModelScope.launch(NonCancellable + Dispatchers.IO) {
-            try {
-                val response = apiInterface.getListTemplate()
-                response.let {
-                    if (it.errors.isEmpty()) {
-                        if (rxPreferences.getListTemplate() == null) {
-                            rxPreferences.saveListTemplate(it.dataResponse)
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                rxPreferences.saveListTemplate(dummyFreeTemplateData())
             }
         }
     }

@@ -307,59 +307,95 @@
             android:layout_marginStart="8dp"
             android:orientation="vertical"
             android:weightSum="2"
+            android:gravity="center|start"
             app:layout_constraintBottom_toBottomOf="@+id/ivPerformer"
             app:layout_constraintStart_toEndOf="@+id/ivPerformer"
             app:layout_constraintTop_toTopOf="@+id/ivPerformer">
 
-            <FrameLayout
-                android:id="@+id/llLiveStreamStatus"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_height="wrap_content">
 
-                <include
-                    android:id="@+id/llItemPremiumPrivate"
-                    layout="@layout/item_live_stream_premium_private"
-                    android:layout_width="match_parent"
+                <FrameLayout
+                    android:id="@+id/llLiveStreamStatus"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    android:layout_weight="1">
 
-                <include
-                    android:id="@+id/llItemPrivate"
-                    layout="@layout/item_live_stream_private"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:visibility="gone" />
+                    <include
+                        android:id="@+id/llItemPremiumPrivate"
+                        layout="@layout/item_live_stream_premium_private"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
 
-                <include
-                    android:id="@+id/llItemPeeping"
-                    layout="@layout/item_live_stream_peeping"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:visibility="gone" />
+                    <include
+                        android:id="@+id/llItemPrivate"
+                        layout="@layout/item_live_stream_private"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:visibility="gone" />
 
-                <include
-                    android:id="@+id/llItemParty"
-                    layout="@layout/item_live_stream_party"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:visibility="gone" />
-            </FrameLayout>
+                    <include
+                        android:id="@+id/llItemPeeping"
+                        layout="@layout/item_live_stream_peeping"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/llItemParty"
+                        layout="@layout/item_live_stream_party"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_chat_member_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_common_gray_12"
+                    android:drawablePadding="@dimen/margin_4dp"
+                    android:drawableStart="@drawable/ic_mini_person"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="@dimen/margin_4dp"
+                    android:paddingHorizontal="@dimen/margin_4dp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_9"
+                    tools:ignore="HardcodedText" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_peep_member_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_common_gray_12"
+                    android:drawablePadding="@dimen/margin_4dp"
+                    android:drawableStart="@drawable/ic_mini_peep"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="@dimen/margin_4dp"
+                    android:paddingHorizontal="@dimen/margin_4dp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_9"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/tvPerformerName"
                 style="@style/text_bold_12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:shadowColor="#99000000"
                 android:shadowRadius="15"
                 android:layout_weight="1"
+                android:layout_marginTop="@dimen/margin_4dp"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="1"

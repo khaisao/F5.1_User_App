@@ -44,26 +44,12 @@
                     android:paddingLeft="@dimen/margin_16"
                     android:paddingRight="@dimen/margin_16"
                     android:paddingBottom="@dimen/margin_16"
-                    app:layout_constraintBottom_toTopOf="@+id/rv_message_template"
+                    app:layout_constraintBottom_toTopOf="@+id/bottom_bar"
                     app:layout_constraintTop_toTopOf="parent"
                     app:reverseLayout="true"
                     app:stackFromEnd="true"
                     tools:listitem="@layout/item_message_performer" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_message_template"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingStart="@dimen/margin_16"
-                    android:layout_marginBottom="@dimen/margin_10"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toTopOf="@id/bottom_bar"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:listitem="@layout/item_template">
-
-                </androidx.recyclerview.widget.RecyclerView>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/bottom_bar"
@@ -82,7 +68,7 @@
                         android:layout_marginTop="@dimen/margin_8"
                         android:background="@drawable/bg_edt_message"
                         android:hint="@string/input_content_message"
-                        android:inputType="textMultiLine"
+                        android:inputType="textMultiLine|textNoSuggestions"
                         android:maxHeight="180dp"
                         android:paddingLeft="@dimen/margin_16"
                         android:paddingTop="@dimen/margin_11"

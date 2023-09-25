@@ -1,13 +1,11 @@
 package jp.slapp.android.android.ui.message
 
-import android.graphics.Rect
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.WindowManager
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
@@ -35,12 +33,10 @@ import jp.slapp.android.R
 import jp.slapp.android.android.data.model.live_stream.ConnectResult
 import jp.slapp.android.android.data.model.message.BaseMessageResponse
 import jp.slapp.android.android.data.model.message.DataMessage
-import jp.slapp.android.android.data.model.message.FreeTemplateRequest
 import jp.slapp.android.android.data.model.message.MessageRequest
 import jp.slapp.android.android.data.model.message.MessageResponse
 import jp.slapp.android.android.data.model.message.SendMessageResponse
 import jp.slapp.android.android.data.network.ConsultantResponse
-import jp.slapp.android.android.data.network.FreeTemplateResponse
 import jp.slapp.android.android.data.network.MemberResponse
 import jp.slapp.android.android.data.network.socket.SocketActionSend
 import jp.slapp.android.android.data.pref.RxPreferences
@@ -55,12 +51,10 @@ import jp.slapp.android.android.ui.message.ChatMessageViewModel.Companion.DISABL
 import jp.slapp.android.android.ui.message.ChatMessageViewModel.Companion.ENABLE_LOAD_MORE
 import jp.slapp.android.android.ui.message.ChatMessageViewModel.Companion.HIDDEN_LOAD_MORE
 import jp.slapp.android.android.ui.message.dialog.OpenPaidMessDialog
-import jp.slapp.android.android.ui.message.template.TemplateAdapter
 import jp.slapp.android.android.ui.message.template.TemplateBottomFragment
 import jp.slapp.android.android.utils.BUNDLE_KEY
 import jp.slapp.android.android.utils.BUNDLE_KEY.Companion.CHAT_MESSAGE
 import jp.slapp.android.android.utils.BUNDLE_KEY.Companion.THRESHOLD_SHOW_REVIEW_APP
-import jp.slapp.android.android.utils.CallRestriction
 import jp.slapp.android.android.utils.Define
 import jp.slapp.android.android.utils.Define.Companion.BUY_POINT_CHAT_MESSAGE
 import jp.slapp.android.android.utils.SocketInfo
@@ -71,6 +65,8 @@ import jp.slapp.android.android.utils.performer_extension.PerformerStatusHandler
 import jp.slapp.android.databinding.FragmentChatMessageBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import javax.inject.Inject
 
 
@@ -100,11 +96,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     private var pointPerchar = 0
     private var payMailCode = ""
     private var isSendFirstMsg = false
-
-    private val listFreeTemplate: List<FreeTemplateResponse>? by lazy {
-        rxPreferences.getListTemplate()
-    }
-
+    
     private var sendMessageEnable = false
     private var consultantResponse: ConsultantResponse? = null
     private var isSendMessageSuccess = false
@@ -142,51 +134,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         }))
     }
 
-    private val templateAdapter: TemplateAdapter by lazy {
-        TemplateAdapter(
-            requireContext(),
-            onClickListener = { message ->
-                CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-                    .showDialog()
-                    .setDialogTitle(R.string.template_title_dialog)
-                    .setContent(message.body)
-                    .setTextPositiveButton(R.string.ok)
-                    .setTextNegativeButton(R.string.cancel_block_alert)
-                    .setOnPositivePressed {
-                        it.dismiss()
-                        val code = this@ChatMessageFragment.performerCode
-                        isSendFreeMessage = true
-                        sendFreeTemplate(code, message.id)
-                    }.setOnNegativePressed {
-                        it.dismiss()
-                    }
-                    .tvSubTitle.visibility = VISIBLE
-            }
-        )
-    }
-
-    private val keyboardLayoutListener = OnGlobalLayoutListener {
-        val r = Rect()
-        binding.rootLayout.getWindowVisibleDisplayFrame(r)
-        val screenHeight = binding.rootLayout.rootView.height
-        val keypadHeight = screenHeight - r.bottom
-        if (keypadHeight > screenHeight * 0.15) {
-            binding.bottomBar.setMargins(
-                0,
-                0,
-                0,
-                0
-            )
-        } else {
-            binding.bottomBar.setMargins(
-                0,
-                0,
-                0,
-                0
-            )
-        }
-    }
-
     private var templateMessageBottom: TemplateBottomFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -219,7 +166,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
 
     override fun onStart() {
         super.onStart()
-        binding.rootLayout.viewTreeObserver.addOnGlobalLayoutListener(keyboardLayoutListener)
         viewModel.loadMessage(requireActivity(), this.performerCode, false)
     }
 
@@ -262,7 +208,7 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         )
         binding.messageRv.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
             if (bottom < oldBottom && mAdapter.itemCount > 0) {
-                binding.messageRv.scrollToPosition(mAdapter.itemCount - 1)
+                binding.messageRv.scrollToPosition(mAdapter.itemCount)
             }
         }
 
@@ -271,21 +217,36 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                 remove(BUNDLE_KEY.IS_SHOW_FREE_MESS)
             }
         }
-        val callRestriction = arguments?.getInt(BUNDLE_KEY.CALL_RESTRICTION)
-        val listTemplate = if (callRestriction == CallRestriction.POSSIBLE) {
-            listFreeTemplate
-        } else {
-            listFreeTemplate?.filterNot { it.body == getString(R.string.free_message_consult_call) }
-        }
-        binding.rvMessageTemplate.adapter = templateAdapter
-        templateAdapter.submitList(listTemplate)
 
-        if(performerCode == ""){
+        if (performerCode == "") {
             binding.tvStatus.visibility = GONE
-            binding.tvName.text = requireContext().resources.getString(R.string.notice_from_management)
+            binding.tvName.text =
+                requireContext().resources.getString(R.string.notice_from_management)
             binding.bottomBar.visibility = GONE
-            binding.rvMessageTemplate.visibility = GONE
         }
+
+        KeyboardVisibilityEvent.setEventListener(
+            requireActivity(),
+            viewLifecycleOwner,
+            object : KeyboardVisibilityEventListener {
+                override fun onVisibilityChanged(isOpen: Boolean) {
+                    if (isOpen) {
+                        binding.bottomBar.setMargins(
+                            0,
+                            0,
+                            0,
+                            0
+                        )
+                    } else {
+                        binding.bottomBar.setMargins(
+                            0,
+                            0,
+                            0,
+                            0
+                        )
+                    }
+                }
+            })
     }
 
     private fun handleBackFromReview() {
@@ -542,12 +503,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
         }
     }
 
-    private fun sendFreeTemplate(code: String, templateId: Int) {
-        activity?.let {
-            viewModel.sendFreeTemplate(FreeTemplateRequest(code, templateId), it)
-        }
-    }
-
     private fun sendMessage(
         code: String,
         message: String,
@@ -783,8 +738,6 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
     }
 
     override fun onStop() {
-        binding.rootLayout.viewTreeObserver
-            .removeOnGlobalLayoutListener(keyboardLayoutListener)
         super.onStop()
         if (activity is BaseActivity<*, *>) {
             (activity as BaseActivity<*, *>).setHandleDispathTouch(true)

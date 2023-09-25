@@ -172,6 +172,9 @@ class TopFragment : BaseFragment<FragmentTopBinding, TopViewModel>() {
             true
         }
         bottomNavigationView.setOnNavigationItemReselectedListener {
+            if (it.itemId == R.id.tabHome) {
+                shareViewModel.setRequestLoadPerformer(true)
+            }
             shareViewModel.setScrollToTop(true)
         }
     }
