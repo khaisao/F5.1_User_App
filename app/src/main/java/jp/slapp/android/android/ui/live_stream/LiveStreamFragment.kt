@@ -616,6 +616,7 @@ class LiveStreamFragment : BaseFragment<FragmentLiveStreamBinding, LiveStreamVie
                 it == TWO_SHOT_VALUE_2 -> {
                     currentMode = LiveStreamMode.PRIVATE
                     binding.tvChatMemberNum.text = 1.toString()
+                    binding.tvPeepMemberNum.text = 0.toString()
                 }
             }
             updateModeStatus()
