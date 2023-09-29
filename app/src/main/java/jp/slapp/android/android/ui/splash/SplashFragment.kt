@@ -1,16 +1,13 @@
 package jp.slapp.android.android.ui.splash
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.model.UpdateAvailability
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.dialog.CommonAlertDialog
+import jp.slapp.android.BuildConfig
 import jp.slapp.android.R
 import jp.slapp.android.android.data.pref.RxPreferences
 import jp.slapp.android.android.data.shareData.ShareViewModel
@@ -33,44 +30,8 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
     @Inject
     lateinit var rxPreferences: RxPreferences
 
-    private fun checkForUpdates() {
-        val appUpdateManager = AppUpdateManagerFactory.create(requireContext())
-        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
-        appUpdateInfoTask.addOnSuccessListener {
-            if (it.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
-                viewModel.setUpdateable(true)
-                CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
-                    .showDialog()
-                    .setCancelableDialog(false)
-                    .setDialogTitle(R.string.update_notie)
-                    .setContent(R.string.update_notie_content)
-                    .setTextOkButton(R.string.update_now)
-                    .setOnOkButtonPressed {
-                        try {
-                            requireContext().startActivity(
-                                Intent(
-                                    Intent.ACTION_VIEW,
-                                    Uri.parse(
-                                        "market://details?id=" +
-                                                requireContext().packageName
-                                    )
-                                )
-                            )
-                        } catch (e: ActivityNotFoundException) {
-                            requireContext().startActivity(
-                                Intent(
-                                    Intent.ACTION_VIEW,
-                                    Uri.parse(
-                                        "http://play.google.com/store/apps/details?id=" +
-                                                requireContext().packageName
-                                    )
-                                )
-                            )
-                        }
-                        it.dismiss()
-                    }
-            }
-        }
+    companion object {
+        private const val DIRECTORY_APK_URL = BuildConfig.WEB_DOMAIN + "/app/supakura.apk"
     }
 
     override fun bindingAction() {
@@ -91,32 +52,41 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
 
     override fun bindingStateView() {
         super.bindingStateView()
-
         viewModel.screenCode.observe(viewLifecycleOwner) { screenCode ->
-            if (viewModel.isUpdate.value != null) {
-                if (!viewModel.isUpdate.value!!) {
-                    when (screenCode) {
-                        SplashViewModel.SCREEN_CODE_START -> appNavigation.openActionToLoginAndClearBackstack()
-                        SplashViewModel.SCREEN_CODE_TOP -> {
-                            appNavigation.openSplashToTopScreen()
-                            shareViewModel.setHaveToken(true)
-                        }
-                        SplashViewModel.SCREEN_CODE_START_RM -> appNavigation.openSplashToRMStart()
-                        SplashViewModel.SCREEN_CODE_REGISTER_RM -> appNavigation.openSplashToRMStart()
-                        SplashViewModel.SCREEN_CODE_TOP_RM -> appNavigation.openSplashToRMTop()
-                    }
+            when (screenCode) {
+                SplashViewModel.SCREEN_CODE_START -> appNavigation.openActionToLoginAndClearBackstack()
+                SplashViewModel.SCREEN_CODE_TOP -> {
+                    appNavigation.openSplashToTopScreen()
+                    shareViewModel.setHaveToken(true)
                 }
+                SplashViewModel.SCREEN_CODE_START_RM -> appNavigation.openSplashToRMStart()
+                SplashViewModel.SCREEN_CODE_REGISTER_RM -> appNavigation.openSplashToRMStart()
+                SplashViewModel.SCREEN_CODE_TOP_RM -> appNavigation.openSplashToRMTop()
+            }
+        }
+
+        viewModel.actionUpdate.observe(viewLifecycleOwner) { isNeedUpdate ->
+            if (isNeedUpdate) {
+                CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+                    .showDialog()
+                    .setCancelableDialog(false)
+                    .setDialogTitle(R.string.update_notie)
+                    .setContent(R.string.update_notie_content)
+                    .setTextOkButton(R.string.update_now)
+                    .setOnOkButtonPressed {
+                        try {
+                            startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse(DIRECTORY_APK_URL)
+                                )
+                            )
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
             }
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        checkForUpdates()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.setUpdateable(false)
-    }
 }

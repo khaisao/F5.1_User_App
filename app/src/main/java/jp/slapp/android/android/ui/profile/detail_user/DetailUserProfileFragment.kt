@@ -397,8 +397,6 @@ class DetailUserProfileFragment :
         viewModel.connectResult.observe(viewLifecycleOwner, connectResultHandle)
         viewModel.isButtonEnable.observe(viewLifecycleOwner, buttonEnableHandle)
         viewModel.isLoginSuccess.observe(viewLifecycleOwner, loginSuccessHandle)
-        viewModel.isLoginSuccess.observe(viewLifecycleOwner, loginSuccessHandle)
-        viewModel.isLoginSuccess.observe(viewLifecycleOwner, loginSuccessHandle)
     }
 
     private val connectResultHandle: Observer<ConnectResult> = Observer {
