@@ -309,4 +309,7 @@ interface ApiInterface {
 
     @GET("api/app-mode")
     suspend fun getAppMode(): ApiObjectResponse<AppModeResponse>
+
+    @GET("api/app-version")
+    suspend fun getAppVersion(): ApiObjectResponse<AppVersionResponse>
 }

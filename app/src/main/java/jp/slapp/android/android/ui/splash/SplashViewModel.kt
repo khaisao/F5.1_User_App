@@ -5,11 +5,15 @@ import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import jp.careapp.core.base.BaseViewModel
-import jp.careapp.core.utils.*
+import jp.careapp.core.utils.Constants
+import jp.careapp.core.utils.DateUtil
+import jp.careapp.core.utils.SingleLiveEvent
+import jp.careapp.core.utils.getCurrentDateTime
+import jp.careapp.core.utils.toDate
+import jp.slapp.android.BuildConfig
 import jp.slapp.android.android.data.network.ApiObjectResponse
 import jp.slapp.android.android.data.network.LoginResponse
 import jp.slapp.android.android.data.network.MemberResponse
@@ -18,10 +22,11 @@ import jp.slapp.android.android.network.ApiInterface
 import jp.slapp.android.android.utils.Define.Companion.NORMAL_MODE
 import jp.slapp.android.android.utils.MODE_USER.Companion.MEMBER_APP_REVIEW_MODE
 import jp.slapp.android.android.utils.dummyCategoryData
-import jp.slapp.android.android.utils.dummyFreeTemplateData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+
 
 const val DURATION_SPLASH = 1000L
 
@@ -47,6 +52,8 @@ class SplashViewModel @ViewModelInject constructor(
     }
 
     val actionSPlash = SingleLiveEvent<SplashActionState>()
+
+    val actionUpdate = SingleLiveEvent<Boolean>()
 
     val appMode = MutableLiveData<Int>()
 
@@ -178,45 +185,86 @@ class SplashViewModel @ViewModelInject constructor(
         }
     }
 
+    private fun isNeedUpdate(currentVersion: String, apiAppVersion: String): Boolean {
+        try {
+            val currentVersionSplit = currentVersion.split(".").toMutableList()
+            val apiAppVersionSplit = apiAppVersion.split(".").toMutableList()
+            while (currentVersionSplit.size < 3) {
+                currentVersionSplit.add("0")
+            }
+            while (apiAppVersionSplit.size < 3) {
+                apiAppVersionSplit.add("0")
+            }
+            if (currentVersionSplit[0].toInt() < apiAppVersionSplit[0].toInt()) {
+                return true
+            } else if (currentVersionSplit[0].toInt() > apiAppVersionSplit[0].toInt()) {
+                return false
+            }
+            if (currentVersionSplit[1].toInt() < apiAppVersionSplit[1].toInt()) {
+                return true
+            } else if (currentVersionSplit[1].toInt() > apiAppVersionSplit[1].toInt()) {
+                return false
+            }
+            if (currentVersionSplit[2].toInt() < apiAppVersionSplit[2].toInt()) {
+                return true
+            } else if (currentVersionSplit[2].toInt() > apiAppVersionSplit[2].toInt()) {
+                return false
+            }
+            return false
+        } catch (e: Exception) {
+            return false
+        }
+    }
+
     private fun getMemberResult() {
         viewModelScope.launch {
             isLoading.value = true
             try {
-                val response = apiInterface.getMember()
-                memberResult.value = response
-                if (response.errors.isEmpty()) {
-                    when (response.dataResponse.status) {
-                        Constants.MemberStatus.NOMARL.index, Constants.MemberStatus.STAFF.index -> {
-                            if (appMode.value == NORMAL_MODE) {
+                val memberDeffer = async { apiInterface.getMember() }
+                val apiVersionAppDeffer = async { apiInterface.getAppVersion() }
+                val memberResponse = memberDeffer.await()
+                val apiVersionAppResponse = apiVersionAppDeffer.await()
+                memberResult.value = memberResponse
+                if (apiVersionAppResponse.errors.isEmpty() && memberResponse.errors.isEmpty()) {
+                    if(!isNeedUpdate(BuildConfig.VERSION_NAME, apiVersionAppResponse.dataResponse.appVersion)){
+                        when (memberResponse.dataResponse.status) {
+                            Constants.MemberStatus.NOMARL.index, Constants.MemberStatus.STAFF.index -> {
+                                if (appMode.value == NORMAL_MODE) {
+                                    screenCode.value =
+                                        if (memberResponse.dataResponse.disPlay == MEMBER_APP_REVIEW_MODE) {
+                                            SCREEN_CODE_TOP_RM
+                                        } else {
+                                            SCREEN_CODE_TOP
+                                        }
+                                } else {
+                                    screenCode.value = SCREEN_CODE_TOP_RM
+                                }
+                            }
+
+                            Constants.MemberStatus.UNREGISTED.index -> {
                                 screenCode.value =
-                                    if (response.dataResponse.disPlay == MEMBER_APP_REVIEW_MODE) {
-                                        SCREEN_CODE_TOP_RM
-                                    } else {
-                                        SCREEN_CODE_TOP
-                                    }
-                            } else {
-                                screenCode.value = SCREEN_CODE_TOP_RM
+                                    if (appMode.value == NORMAL_MODE) SCREEN_CODE_START else SCREEN_CODE_START_RM
+                            }
+
+                            Constants.MemberStatus.BAD.index -> {
+                                screenCode.value =
+                                    if (appMode.value == NORMAL_MODE) SCREEN_CODE_BAD_USER else SCREEN_CODE_BAD_USER_RM
+                            }
+
+                            Constants.MemberStatus.WITHDRAWAL.index -> {
+                                screenCode.value =
+                                    if (appMode.value == NORMAL_MODE) SCREEN_CODE_REGISTER else SCREEN_CODE_REGISTER_RM
                             }
                         }
-                        Constants.MemberStatus.UNREGISTED.index -> {
-                            screenCode.value =
-                                if (appMode.value == NORMAL_MODE) SCREEN_CODE_START else SCREEN_CODE_START_RM
+                        memberResponse.dataResponse.newsLastViewDateTime?.let { it ->
+                            rxPreferences.saveNewLastViewDateTime(
+                                it
+                            )
                         }
-                        Constants.MemberStatus.BAD.index -> {
-                            screenCode.value =
-                                if (appMode.value == NORMAL_MODE) SCREEN_CODE_BAD_USER else SCREEN_CODE_BAD_USER_RM
-                        }
-                        Constants.MemberStatus.WITHDRAWAL.index -> {
-                            screenCode.value =
-                                if (appMode.value == NORMAL_MODE) SCREEN_CODE_REGISTER else SCREEN_CODE_REGISTER_RM
-                        }
+                        rxPreferences.saveEmail(memberResponse.dataResponse.mail)
+                    } else {
+                        actionUpdate.postValue(true)
                     }
-                    response.dataResponse.newsLastViewDateTime?.let { it ->
-                        rxPreferences.saveNewLastViewDateTime(
-                            it
-                        )
-                    }
-                    rxPreferences.saveEmail(response.dataResponse.mail)
                 }
                 isLoading.value = false
             } catch (e: Exception) {
@@ -231,11 +279,6 @@ class SplashViewModel @ViewModelInject constructor(
         super.onCleared()
     }
 
-    private val _isUpdate = MutableLiveData<Boolean?>(null)
-    val isUpdate: LiveData<Boolean?> = _isUpdate
-    fun setUpdateable(isUpdate: Boolean) {
-        _isUpdate.value = isUpdate
-    }
 }
 
 sealed class SplashActionState {

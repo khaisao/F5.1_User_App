@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import android.util.Log
 import android.webkit.*
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
@@ -87,8 +88,19 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewViewModel>()
                             try {
                                 when {
                                     URLUtil.isNetworkUrl(url) -> {
-                                        view?.loadUrl(url)
+                                        val isTargetBlank = request?.hasGesture() ?: false
+                                        if (!isTargetBlank) {
+                                            view?.loadUrl(url)
+                                        } else {
+                                            startActivity(
+                                                Intent(
+                                                    Intent.ACTION_VIEW,
+                                                    Uri.parse(url)
+                                                )
+                                            )
+                                        }
                                     }
+
                                     Define.CALL_BACK_BUY_POINT_GOOGLE_ == url -> {
                                         appNavigation.openWebBuyPointToBuyPointGoogle()
                                     }
