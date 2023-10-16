@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/bg_item_notification_radius_top"
+            android:background="@drawable/bg_item_notification_radius"
             android:minHeight="44dp"
             android:paddingHorizontal="@dimen/margin_16">
 
@@ -60,23 +60,28 @@
                 tools:checked="true" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <View
-            android:id="@+id/straight_line"
-            app:layout_constraintBottom_toTopOf="@+id/cl_permission_to_receive_mail"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="match_parent"
-            android:layout_marginHorizontal="32dp"
-            android:background="#453B5D"
-            android:layout_height="1dp"/>
+        <TextView
+            android:id="@+id/tv_receive_push_noti_des"
+            style="@style/text_12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_9"
+            android:lineSpacingExtra="@dimen/margin_3"
+            android:text="女の子からのメッセージや事務局のお知らせがPUSH通知で届きます。"
+            android:textColor="@color/color_B2A9CC"
+            app:layout_constraintEnd_toEndOf="@id/cl_receive_push_noti"
+            app:layout_constraintStart_toStartOf="@id/cl_receive_push_noti"
+            app:layout_constraintTop_toBottomOf="@id/cl_receive_push_noti" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_permission_to_receive_mail"
-            app:layout_constraintTop_toBottomOf="@id/cl_receive_push_noti"
+            app:layout_constraintTop_toBottomOf="@id/tv_receive_push_noti_des"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:background="@drawable/bg_item_notification_radius_bottom"
+            android:layout_marginTop="@dimen/margin_32"
+            android:background="@drawable/bg_item_notification_radius"
             android:minHeight="44dp"
             android:paddingHorizontal="@dimen/margin_16">
 
@@ -104,5 +109,32 @@
                 app:track="@drawable/track_selector"
                 tools:checked="true" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_receive_mail_des_first"
+            style="@style/text_12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_9"
+            android:lineSpacingExtra="@dimen/margin_3"
+            android:text="@string/receive_mail_des_first"
+            android:textColor="@color/color_B2A9CC"
+            app:layout_constraintEnd_toEndOf="@id/cl_receive_push_noti"
+            app:layout_constraintStart_toStartOf="@id/cl_receive_push_noti"
+            app:layout_constraintTop_toBottomOf="@id/cl_permission_to_receive_mail" />
+
+        <TextView
+            android:id="@+id/tv_receive_mail_des_second"
+            style="@style/text_12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_1"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:lineSpacingExtra="@dimen/margin_3"
+            android:text="@string/receive_mail_des_second"
+            android:textColor="@color/color_B2A9CC"
+            app:layout_constraintEnd_toEndOf="@id/cl_receive_push_noti"
+            app:layout_constraintStart_toStartOf="@id/cl_receive_push_noti"
+            app:layout_constraintTop_toBottomOf="@id/tv_receive_mail_des_first" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

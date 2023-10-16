@@ -35,6 +35,8 @@ interface AppNavigation : BaseNavigator {
 
     fun openMyPageToEditProfile(bundle: Bundle? = null)
 
+    fun openSettingNotificationToEditProfile(bundle: Bundle? = null)
+
     fun openHomeToBannerFirstTimeUseScreen(bundle: Bundle? = null)
 
     fun openUserProfileToReportScreen(bundle: Bundle? = null)
@@ -184,4 +186,10 @@ interface AppNavigation : BaseNavigator {
     fun openRmStartToRmTerm(bundle: Bundle? = null)
 
     fun openRmStartToRmPolicy(bundle: Bundle? = null)
+
+    fun openGreetToInputEmail(bundle: Bundle? = null)
+
+    fun openInputEmailToGreet(bundle: Bundle? = null)
+
+    fun openGreetToRegistration(bundle: Bundle? = null)
 }

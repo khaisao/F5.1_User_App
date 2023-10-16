@@ -252,6 +252,13 @@
         <argument
             android:name="member"
             app:argType="jp.slapp.android.android.data.network.MemberResponse" />
+        <action
+            android:id="@+id/action_fragmentNotification_to_fragmentEditProfile"
+            app:destination="@id/fragmentEditProfile"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
     </fragment>
     <fragment
         android:id="@+id/newsFragment"

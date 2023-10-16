@@ -1,5 +1,7 @@
 package jp.slapp.android.android.ui.notification
 
+import android.text.Html
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
@@ -25,6 +27,20 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding, Notificat
 
         setUpToolBar()
         setUpSwitch()
+
+        binding.tvReceiveMailDesSecond.text = Html.fromHtml(
+            resources.getString(R.string.receive_mail_des_second),
+            HtmlCompat.FROM_HTML_MODE_LEGACY
+        )
+    }
+
+    override fun setOnClick() {
+        super.setOnClick()
+        binding.tvReceiveMailDesSecond.setOnClickListener {
+            if(!isDoubleClick){
+                appNavigation.openSettingNotificationToEditProfile()
+            }
+        }
     }
 
     override fun bindingStateView() {
