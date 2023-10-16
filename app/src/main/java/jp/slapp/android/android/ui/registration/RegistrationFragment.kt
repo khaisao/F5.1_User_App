@@ -57,11 +57,15 @@ class RegistrationFragment :
         super.setOnClick()
 
         binding.btnRegistration.setOnClickListener {
-            if (this::dataResponseRegister.isInitialized && dataResponseRegister.token != null) {
-                mViewModel.register(
-                    getContent(), binding.cbTerm.isChecked,
-                    dataResponseRegister.token!!, emailRegister
-                )
+            if (!isDoubleClick) {
+                if (this::dataResponseRegister.isInitialized && dataResponseRegister.token != null) {
+                    mViewModel.registerWithEmail(
+                        getContent(), true,
+                        dataResponseRegister.token!!, emailRegister
+                    )
+                } else {
+                    mViewModel.registerWithoutEmail(getContent())
+                }
             }
         }
     }

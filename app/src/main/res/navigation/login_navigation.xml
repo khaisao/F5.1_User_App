@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_navigation"
-    app:startDestination="@id/inputEmailFragment">
+    app:startDestination="@id/greetFragment">
 
     <fragment
         android:id="@+id/inputEmailFragment"
@@ -25,9 +25,42 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_inputEmailFragment_to_greetFragment"
+            app:destination="@id/greetFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
 
     </fragment>
 
     <include app:graph="@navigation/verify_code_navigation" />
+    <fragment
+        android:id="@+id/greetFragment"
+        tools:layout="@layout/fragment_greet"
+        android:name="jp.slapp.android.android.ui.greet.GreetFragment"
+        android:label="GreetFragment" >
+        <action
+            android:id="@+id/action_greetFragment_to_inputEmailFragment"
+            app:destination="@id/inputEmailFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_greet_to_registration"
+            app:destination="@id/registrationFragment2"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragment2"
+        tools:layout="@layout/fragment_registration"
+        android:name="jp.slapp.android.android.ui.registration.RegistrationFragment"
+        android:label="RegistrationFragment" />
 
 </navigation>

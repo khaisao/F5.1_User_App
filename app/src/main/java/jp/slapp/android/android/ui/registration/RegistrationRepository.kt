@@ -4,7 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.provider.Settings
 import jp.slapp.android.R
-import jp.slapp.android.android.data.model.InforRegistrationRequest
+import jp.slapp.android.android.data.model.InfoRegistrationWithEmailRequest
+import jp.slapp.android.android.data.model.InfoRegistrationWithoutEmailRequest
 import jp.slapp.android.android.data.pref.RxPreferences
 import jp.slapp.android.android.network.ApiInterface
 import javax.inject.Inject
@@ -17,8 +18,8 @@ class RegistrationRepository @Inject constructor(
 
     suspend fun getMemberInfo() = apiInterface.getMember()
 
-    suspend fun register(userName: String, receiveMail: Int, token: String) = apiInterface.register(
-        InforRegistrationRequest(
+    suspend fun registerWithEmail(userName: String, receiveMail: Int, token: String) = apiInterface.registerWithEmail(
+        InfoRegistrationWithEmailRequest(
             token = token,
             name = userName,
             sex = 1,
@@ -27,6 +28,19 @@ class RegistrationRepository @Inject constructor(
             receiveNoticeMail = receiveMail,
             pushNewsletter = 1,
             pushMail = 1,
+            pushOnline = 1,
+            pushCounseling = 1,
+            androidId = getAndroidId()
+        )
+    )
+
+    suspend fun registerWithoutEmail(userName: String) = apiInterface.registerWithoutEmail(
+        InfoRegistrationWithoutEmailRequest(
+            name = userName,
+            sex = 1,
+            birth = application.getString(R.string.birth_default),
+            pushNewsletter = 1,
+            pushMail = 0,
             pushOnline = 1,
             pushCounseling = 1,
             androidId = getAndroidId()
