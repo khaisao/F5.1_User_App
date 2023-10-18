@@ -192,4 +192,8 @@ interface AppNavigation : BaseNavigator {
     fun openInputEmailToGreet(bundle: Bundle? = null)
 
     fun openGreetToRegistration(bundle: Bundle? = null)
+
+    fun openContactUsToEditProfile(bundle: Bundle? = null)
+
+    fun openReportToEditProfile(bundle: Bundle? = null)
 }

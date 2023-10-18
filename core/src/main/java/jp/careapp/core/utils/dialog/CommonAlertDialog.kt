@@ -16,12 +16,13 @@ import jp.careapp.core.utils.Constants
 
 class CommonAlertDialog constructor(context: Context) : Dialog(context) {
 
-    lateinit var tvTitle: TextView
-    lateinit var tvSubTitle: TextView
+    private lateinit var tvTitle: TextView
+    private lateinit var tvSubTitle: TextView
 
-    lateinit var btnConfirm: AppCompatButton
-    lateinit var btnCancel: AppCompatButton
-    lateinit var btnOk: TextView
+    private lateinit var btnConfirm: AppCompatButton
+    private lateinit var btnCancel: AppCompatButton
+    private lateinit var btnOk: TextView
+    private lateinit var btnOkLarge: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +44,7 @@ class CommonAlertDialog constructor(context: Context) : Dialog(context) {
         btnConfirm = findViewById(R.id.btnConfirm)
         btnCancel = findViewById(R.id.btnCancel)
         btnOk = findViewById(R.id.btnOk)
+        btnOkLarge = findViewById(R.id.btnOkLarge)
         setCanceledOnTouchOutside(false)
         setOnPositivePressed {
             this.dismiss()
@@ -52,11 +54,26 @@ class CommonAlertDialog constructor(context: Context) : Dialog(context) {
         }
     }
 
+    fun setTextLargeOkButton(@StringRes textId: Int): CommonAlertDialog {
+        btnOkLarge.apply {
+            visibility = View.VISIBLE
+            text = context.resources.getString(textId)
+        }
+        btnOk.visibility = View.GONE
+        return this
+    }
+
+    fun setOnOkLargeButtonPressed(onPositivePressed: ((CommonAlertDialog) -> Unit)?): CommonAlertDialog {
+        btnOkLarge.setOnClickListener { onPositivePressed?.invoke(this) }
+        return this
+    }
+
     fun setTextOkButton(@StringRes textId: Int): CommonAlertDialog {
         btnOk.apply {
             visibility = View.VISIBLE
             text = context.resources.getString(textId)
         }
+        btnOkLarge.visibility = View.GONE
         return this
     }
 

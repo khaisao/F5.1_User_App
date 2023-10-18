@@ -164,6 +164,9 @@
     <string name="point_purchase_reason">このままだと\nテキストテキストテキストテキスト</string>
     <string name="pointLoadingText">しばらくお待ちください</string>
     <string name="pointButtonText">￥%1$d/%2$dpts</string>
+    <string name="please_register_email_before_contact">お問い合わせの前にプロフィール画面にてメールアドレスを登録してください。</string>
+    <string name="email_address_settings">メールアドレス設定</string>
+    <string name="please_register_email_before_report">通報を行う前にプロフィール画面にてメールアドレスを登録してください。</string>
 
     <!--   Registration-->
     <string name="register_complete">認証が完了しました</string>

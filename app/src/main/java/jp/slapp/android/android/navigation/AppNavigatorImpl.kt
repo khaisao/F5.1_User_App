@@ -384,4 +384,12 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
     override fun openGreetToRegistration(bundle: Bundle?) {
         openScreen(R.id.action_greet_to_registration, bundle)
     }
+
+    override fun openContactUsToEditProfile(bundle: Bundle?) {
+        openScreen(R.id.action_contactUsFragment_to_fragmentEditProfile, bundle)
+    }
+
+    override fun openReportToEditProfile(bundle: Bundle?) {
+        openScreen(R.id.action_reportUserFragment_to_fragmentEditProfile, bundle)
+    }
 }
