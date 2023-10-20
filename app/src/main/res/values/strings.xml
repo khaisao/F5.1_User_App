@@ -169,7 +169,7 @@
     <string name="please_register_email_before_report">通報を行う前にプロフィール画面にてメールアドレスを登録してください。</string>
 
     <!--   Registration-->
-    <string name="register_complete">認証が完了しました</string>
+    <string name="register_complete">ニックネームを設定してください</string>
 
     <!--    update Profile-->
     <string name="updated_profile">プロフィールを更新しました</string>
@@ -659,7 +659,7 @@
     <string name="mail_address">メールアドレス</string>
     <string name="edit_mail">メールアドレス編集</string>
     <string name="blocked_list">ブロック一覧</string>
-    <string name="receive_push_notification">PUSH通知受信</string>
+    <string name="receive_push_notification">Push通知</string>
     <string name="receive_mail_permission">メール受信許可</string>
     <string name="back">戻る</string>
     <string name="case_payment">決済について</string>
