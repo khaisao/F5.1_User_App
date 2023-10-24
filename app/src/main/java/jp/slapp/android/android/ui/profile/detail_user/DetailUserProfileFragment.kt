@@ -397,6 +397,7 @@ class DetailUserProfileFragment :
         viewModel.connectResult.observe(viewLifecycleOwner, connectResultHandle)
         viewModel.isButtonEnable.observe(viewLifecycleOwner, buttonEnableHandle)
         viewModel.isLoginSuccess.observe(viewLifecycleOwner, loginSuccessHandle)
+        viewModel.isPerformerInWaitingScreen.observe(viewLifecycleOwner, isPerformerInWaitingScreenHandler)
     }
 
     private val connectResultHandle: Observer<ConnectResult> = Observer {
@@ -528,6 +529,20 @@ class DetailUserProfileFragment :
 
     private var handleFirstChat: Observer<Boolean> = Observer {
         this.isFirstChat = it
+    }
+
+    private var isPerformerInWaitingScreenHandler: Observer<Boolean> = Observer {
+        if (it) {
+            val fragment: Fragment? =
+                childFragmentManager.findFragmentByTag("CallConnectionDialog")
+            val dialog: CallConnectionDialog
+            if (fragment != null) {
+                dialog = fragment as CallConnectionDialog
+                dialog.disableCancelCalling()
+                dialog.setMessage(getString(R.string.please_wait_call_content))
+                dialog.setUpTitleIfPerformerInWaiting()
+            }
+        }
     }
 
     private fun setIconFavoriteWhenLoadData(isFavorite: Boolean) {
