@@ -578,6 +578,10 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                         } else {
                             dialog.setMessage(getString(R.string.call_content))
                         }
+                        if (it.message == requireContext().getString(R.string.was_denied)) {
+                            dialog.dismiss()
+                            showDialogPerformerRejectLivestream()
+                        }
                     } else {
                         val message =
                             if (it.result == SocketInfo.RESULT_NG) it.message else getString(R.string.call_content)
@@ -590,6 +594,16 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
                 }
             }
         }
+    }
+
+    private fun showDialogPerformerRejectLivestream() {
+        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+            .showDialog()
+            .setDialogTitle(R.string.was_denied)
+            .setTextOkButton(R.string.close)
+            .setOnOkButtonPressed {
+                it.dismiss()
+            }
     }
 
     private val loginSuccessHandle: Observer<Boolean> = Observer {

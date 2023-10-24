@@ -9,7 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.utils.DateUtil
+import jp.careapp.core.utils.SingleLiveEvent
 import jp.slapp.android.BuildConfig
+import jp.slapp.android.R
 import jp.slapp.android.android.AppApplication
 import jp.slapp.android.android.data.event.EventBusAction
 import jp.slapp.android.android.data.model.live_stream.ConnectResult
@@ -105,6 +107,7 @@ class ChatMessageViewModel @ViewModelInject constructor(
     private var cancelButtonClickedFlag = false
     var flaxLoginAuthResponse: FlaxLoginAuthResponse? = null
     var viewerStatus: Int = 0
+    val isPerformerInWaitingScreen = SingleLiveEvent<Boolean>()
 
     init {
         getConfigCall()
@@ -581,6 +584,8 @@ class ChatMessageViewModel @ViewModelInject constructor(
                 cancelButtonClickedFlag = true
                 flaxWebSocketManager.flaxLogout()
                 isButtonEnable.postValue(true)
+            } else if (action == SocketInfo.ACTION_PERFORMER_CALL_RESPONSE){
+                isPerformerInWaitingScreen.postValue(true)
             }
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -595,7 +600,7 @@ class ChatMessageViewModel @ViewModelInject constructor(
                 when {
                     message.has(SocketInfo.ACTION_MESSAGE) -> message.getString(SocketInfo.ACTION_MESSAGE)
                     message.has(SocketInfo.KEY_ERROR) -> message.getString(SocketInfo.KEY_ERROR)
-                    else -> "拒否されました"
+                    else -> application.getString(R.string.was_denied)
                 }
             connectResult.postValue(ConnectResult(SocketInfo.RESULT_NG, errorMessage))
             flaxWebSocketManager.flaxLogout()
