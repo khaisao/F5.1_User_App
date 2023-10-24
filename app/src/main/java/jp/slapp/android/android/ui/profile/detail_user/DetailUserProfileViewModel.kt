@@ -10,6 +10,7 @@ import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.base.NetworkException
 import jp.careapp.core.utils.SingleLiveEvent
 import jp.slapp.android.BuildConfig
+import jp.slapp.android.R
 import jp.slapp.android.android.data.model.live_stream.ConnectResult
 import jp.slapp.android.android.data.network.ConsultantResponse
 import jp.slapp.android.android.data.network.FlaxLoginAuthResponse
@@ -47,7 +48,6 @@ import jp.slapp.android.android.utils.SocketInfo.RESULT_OK
 import jp.slapp.android.android.utils.performer_extension.PerformerStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
@@ -277,7 +277,7 @@ class DetailUserProfileViewModel @ViewModelInject constructor(
                 when {
                     message.has(ACTION_MESSAGE) -> message.getString(ACTION_MESSAGE)
                     message.has(KEY_ERROR) -> message.getString(KEY_ERROR)
-                    else -> "拒否されました"
+                    else -> application.getString(R.string.was_denied)
                 }
             connectResult.postValue(ConnectResult(RESULT_NG, errorMessage))
             flaxWebSocketManager.flaxLogout()
