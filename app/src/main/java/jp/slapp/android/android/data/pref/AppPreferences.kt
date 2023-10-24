@@ -55,6 +55,7 @@ class AppPreferences @Inject constructor(
         const val PREF_KEY_NICK_NAME = "PREF_KEY_NICK_NAME"
         const val PREF_KEY_CONTENT = "PREF_KEY_CONTENT"
         const val PREF_KEY_PUSH_MAIL = "PREF_KEY_PUSH_MAIL"
+        const val PREF_KEY_SIGN_UP_STATUS = "PREF_KEY_SIGN_UP_STATUS"
 
         const val PREF_KEY_MEMBER_AGE = "PREF_KEY_MEMBER_AGE"
         const val PREF_KEY_MEMBER_BIRTH = "PREF_KEY_MEMBER_BIRTH"
@@ -131,6 +132,10 @@ class AppPreferences @Inject constructor(
 
     override fun getMemberCode() = get(PREF_PARAM_MEMBER_CODE)
 
+    override fun getSignupStatus(): Int {
+        return mPrefs.getInt(PREF_KEY_SIGN_UP_STATUS, 0)
+    }
+
     override fun saveNewLastViewDateTime(dateTime: String) {
         mPrefs.edit().apply {
             putString(PREF_NEW_LAST_VIEW_DATE_TIME, dateTime)
@@ -144,7 +149,9 @@ class AppPreferences @Inject constructor(
             putInt(PREF_KEY_POINT, memberResponse.point)
             putLong(PREF_KEY_BUY_TIME, memberResponse.buyTime)
             putBoolean(PREF_FIRST_BUY_CREDIT, memberResponse.firstBuyCredit)
+            putBoolean(PREF_FIRST_BUY_CREDIT, memberResponse.firstBuyCredit)
             put(PREF_KEY_LAST_BUY_LOG, Gson().toJson(memberResponse.lastBuyLog))
+            putInt(PREF_KEY_SIGN_UP_STATUS, memberResponse.signupStatus)
         }.also { it.apply() }
         saveTroubleSheet(memberResponse.troubleSheetResponse)
     }

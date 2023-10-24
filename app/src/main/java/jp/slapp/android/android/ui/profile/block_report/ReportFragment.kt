@@ -14,6 +14,8 @@ import jp.slapp.android.android.utils.BUNDLE_KEY
 import jp.slapp.android.android.utils.customView.ToolBarCommon
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.utils.dialog.CommonAlertDialog
+import jp.slapp.android.android.data.pref.RxPreferences
+import jp.slapp.android.android.utils.SignupStatusMode
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -27,6 +29,9 @@ class ReportFragment : BaseFragment<FragmentUserReportBinding, ReportViewModel>(
 
     override fun getVM(): ReportViewModel = viewModel
 
+    @Inject
+    lateinit var rxPreferences: RxPreferences
+
     // data screen
     private var performerCode: String = ""
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,6 +39,18 @@ class ReportFragment : BaseFragment<FragmentUserReportBinding, ReportViewModel>(
         val bundle = arguments
         if (bundle != null) {
             performerCode = bundle.getString(BUNDLE_KEY.USER_PROFILE).toString()
+        }
+    }
+
+    private var isNavigateToEdit = false
+
+    override fun initView() {
+        super.initView()
+
+        isNavigateToEdit = false
+
+        if (rxPreferences.getSignupStatus() == SignupStatusMode.WITHOUT_VERIFY_EMAIL) {
+            showNotVerifyWithEmailDialog()
         }
     }
 
@@ -88,5 +105,22 @@ class ReportFragment : BaseFragment<FragmentUserReportBinding, ReportViewModel>(
     private fun checkEnableButton() {
         binding.reportBtn.isEnabled =
             !TextUtils.isEmpty(binding.contentReportEdt.text.toString().trim())
+    }
+
+    private fun showNotVerifyWithEmailDialog() {
+        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+            .showDialog()
+            .setDialogTitle(R.string.please_register_email_before_report)
+            .setTextLargeOkButton(R.string.email_address_settings)
+            .setOnOkLargeButtonPressed {
+                appNavigation.openReportToEditProfile()
+                isNavigateToEdit = true
+                it.dismiss()
+            }
+            .setOnDismissListener {
+                if(!isNavigateToEdit){
+                    appNavigation.navigateUp()
+                }
+            }
     }
 }

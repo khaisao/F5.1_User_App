@@ -13,6 +13,7 @@ import jp.slapp.android.android.data.network.ApiObjectResponse
 import jp.slapp.android.android.data.network.InfoUserResponse
 import jp.slapp.android.android.utils.MODE_USER.Companion.MEMBER_APP_REVIEW_MODE
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
@@ -110,10 +111,17 @@ class VerifyCodeViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             supervisorScope {
                 try {
-                    val response = mRepository.sendVerifyCodeAfterEditEmail(email, authCode)
-                    if (response.errors.isEmpty()) {
+                    val editEmailResponse =
+                        mRepository.sendVerifyCodeAfterEditEmail(email, authCode)
+
+                    if (editEmailResponse.errors.isEmpty()) {
                         mRepository.saveEmail(email)
                         withContext(Dispatchers.Main) {
+                            val memberInfoDeffer = async { mRepository.getMemberInfo() }
+                            val memberInfoResponse = memberInfoDeffer.await()
+                            if (memberInfoResponse.errors.isEmpty()) {
+                                mRepository.saveMemberInfo(memberInfoResponse.dataResponse)
+                            }
                             mActionState.value = VerifyCodeActionState.EditEmailSuccess
                         }
                     }

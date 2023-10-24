@@ -172,6 +172,7 @@
                     app:layout_constraintTop_toTopOf="@+id/textView10" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_email"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="16dp"
@@ -180,7 +181,6 @@
                     android:fontFamily="@font/hiragino_sans_w6"
                     android:gravity="center_vertical|end"
                     android:maxLines="1"
-                    android:text="@{viewModel.memberMail}"
                     android:textColor="#f0f0f0"
                     app:layout_constraintBottom_toBottomOf="@+id/textView10"
                     app:layout_constraintEnd_toStartOf="@id/imageView5"
@@ -189,6 +189,18 @@
                     tools:text="danglvh2@rikkeisoft.com" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                style="@style/text_12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_9"
+                android:gravity="center_horizontal"
+                android:lineSpacingExtra="@dimen/margin_2"
+                android:text="@string/please_set_email"
+                android:textColor="@color/color_B2A9CC"
+                app:layout_constraintTop_toBottomOf="@id/tv_email" />
 
         </LinearLayout>
 

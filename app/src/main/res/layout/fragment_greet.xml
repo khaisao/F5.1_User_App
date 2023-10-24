@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rlInputEmail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background_dialog">
+
+        <com.lihang.ShadowLayout
+            android:id="@+id/sl_input_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_19"
+            app:hl_cornerRadius="@dimen/margin_20"
+            app:hl_shadowColor="@color/color_dialog_border_shadow"
+            app:hl_shadowLimit="@dimen/margin_13"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/color_background_dialog"
+                app:cardCornerRadius="@dimen/margin_20"
+                app:strokeColor="@color/color_dialog_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:id="@+id/ll_input_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/margin_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/tv_title"
+                        android:layout_width="88dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/margin_32"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/app_logo"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/et_input_email"
+                        style="@style/text_bold_16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="@dimen/margin_8"
+                        android:gravity="center"
+                        android:text="ようこそ、SPARK LIVEへ！"
+                        android:textColor="@color/color_F0F0F0" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_error_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_24"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/margin_4dp"
+                            android:src="@drawable/icon_error_email" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_error_email"
+                            style="@style/text_error_email_bold_12"
+                            android:textColor="@color/color_alert_error"
+                            tools:text="@string/alert_error_email" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_24"
+                        android:layout_marginTop="@dimen/margin_24"
+                        android:background="@drawable/bg_gradient"
+                        android:fontFamily="@font/hiragino_sans_w6"
+                        android:text="@string/get_started_now"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_send_email_14"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_already_have_acc"
+                        style="@style/text_12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_17"
+                        android:layout_marginTop="@dimen/margin_24"
+                        android:clickable="true"
+                        android:padding="@dimen/margin_7"
+                        android:text="@string/already_have_acc"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/link_privacy"
+                        style="@style/text_10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_17"
+                        android:layout_marginTop="@dimen/margin_24"
+                        android:layout_marginBottom="@dimen/margin_32"
+                        android:clickable="true"
+                        android:lineSpacingExtra="@dimen/margin_2"
+                        android:padding="@dimen/margin_7"
+                        android:text="@string/link_privacy"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </com.lihang.ShadowLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

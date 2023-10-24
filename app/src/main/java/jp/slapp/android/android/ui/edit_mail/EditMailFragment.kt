@@ -7,9 +7,11 @@ import jp.careapp.core.base.BaseFragment
 import androidx.core.widget.addTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
 import jp.slapp.android.R
+import jp.slapp.android.android.data.pref.RxPreferences
 import jp.slapp.android.android.navigation.AppNavigation
 import jp.slapp.android.android.ui.email.InputAndEditMailViewModel
 import jp.slapp.android.android.utils.BUNDLE_KEY
+import jp.slapp.android.android.utils.SignupStatusMode
 import jp.slapp.android.android.utils.customView.ToolBarCommon
 import jp.slapp.android.databinding.FragmentEditMailBinding
 import javax.inject.Inject
@@ -25,6 +27,9 @@ class EditMailFragment : BaseFragment<FragmentEditMailBinding, EditMailViewModel
     private val mViewModel: EditMailViewModel by viewModels()
     override fun getVM() = mViewModel
 
+    @Inject
+    lateinit var rxPreferences: RxPreferences
+
     override fun initView() {
         super.initView()
 
@@ -38,7 +43,13 @@ class EditMailFragment : BaseFragment<FragmentEditMailBinding, EditMailViewModel
     override fun bindingStateView() {
         super.bindingStateView()
 
-        mViewModel.userEmailLiveData.observe(viewLifecycleOwner) { binding.edtEmail.setText(it) }
+        mViewModel.userEmailLiveData.observe(viewLifecycleOwner) {
+            if (rxPreferences.getSignupStatus() != SignupStatusMode.WITHOUT_VERIFY_EMAIL) {
+                binding.edtEmail.setText(it)
+            } else {
+                binding.edtEmail.text?.clear()
+            }
+        }
 
         mViewModel.isEnableButtonSave.observe(viewLifecycleOwner) { binding.btnSave.isEnabled = it }
 

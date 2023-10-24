@@ -2,13 +2,16 @@ package jp.slapp.android.android.ui.edit_profile
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
 import jp.careapp.core.utils.DateUtil
 import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.slapp.android.R
+import jp.slapp.android.android.data.pref.RxPreferences
 import jp.slapp.android.android.navigation.AppNavigation
+import jp.slapp.android.android.utils.SignupStatusMode
 import jp.slapp.android.android.utils.customView.ToolBarCommon
 import jp.slapp.android.databinding.FragmentEditProfileBinding
 import java.util.*
@@ -24,6 +27,9 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
 
     private val mViewModel: EditProfileViewModel by viewModels()
     override fun getVM() = mViewModel
+
+    @Inject
+    lateinit var rxPreferences: RxPreferences
 
     override fun initView() {
         super.initView()
@@ -51,6 +57,26 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
         mViewModel.mActionState.observe(viewLifecycleOwner) {
             when (it) {
                 is EditProfileActionState.UpdateMemberBirthSuccess -> showDialogUpdateMemberInfoSuccess()
+            }
+        }
+
+        mViewModel.memberMail.observe(viewLifecycleOwner) {
+            if (rxPreferences.getSignupStatus() == SignupStatusMode.WITHOUT_VERIFY_EMAIL) {
+                binding.tvEmail.text = getString(R.string.not_set)
+                binding.tvEmail.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.color_alert_error
+                    )
+                )
+            } else {
+                binding.tvEmail.text = it
+                binding.tvEmail.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.color_text_F0F0F0
+                    )
+                )
             }
         }
     }

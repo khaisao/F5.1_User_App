@@ -2,6 +2,7 @@ package jp.slapp.android.android.data.network
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import jp.slapp.android.android.utils.SignupStatusMode
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -26,10 +27,7 @@ data class MemberResponse(
     @SerializedName("status") val status: Int = 0,
     @SerializedName("point") val point: Int = 0,
     @SerializedName("first_buy_credit") val firstBuyCredit: Boolean = true,
-    @SerializedName("signup_status") val signupStatus: Int? = null,
+    @SerializedName("signup_status") val signupStatus: Int = SignupStatusMode.WITHOUT_VERIFY_EMAIL,
     @SerializedName("sdk_user") val sdkUser: Int? = null,
     @SerializedName("last_buylog") val lastBuyLog: LastBuyLog? = null,
-) : Parcelable {
-    val isHaveTroubleSheet: Boolean
-        get() = troubleSheetResponse.content.isNotEmpty()
-}
+) : Parcelable

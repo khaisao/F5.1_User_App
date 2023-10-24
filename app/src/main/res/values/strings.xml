@@ -164,9 +164,12 @@
     <string name="point_purchase_reason">このままだと\nテキストテキストテキストテキスト</string>
     <string name="pointLoadingText">しばらくお待ちください</string>
     <string name="pointButtonText">￥%1$d/%2$dpts</string>
+    <string name="please_register_email_before_contact">お問い合わせの前にプロフィール画面にてメールアドレスを登録してください。</string>
+    <string name="email_address_settings">メールアドレス設定</string>
+    <string name="please_register_email_before_report">通報を行う前にプロフィール画面にてメールアドレスを登録してください。</string>
 
     <!--   Registration-->
-    <string name="register_complete">認証が完了しました</string>
+    <string name="register_complete">ニックネームを設定してください</string>
 
     <!--    update Profile-->
     <string name="updated_profile">プロフィールを更新しました</string>
@@ -656,7 +659,7 @@
     <string name="mail_address">メールアドレス</string>
     <string name="edit_mail">メールアドレス編集</string>
     <string name="blocked_list">ブロック一覧</string>
-    <string name="receive_push_notification">PUSH通知受信</string>
+    <string name="receive_push_notification">Push通知</string>
     <string name="receive_mail_permission">メール受信許可</string>
     <string name="back">戻る</string>
     <string name="case_payment">決済について</string>
@@ -726,6 +729,10 @@
     <string name="want_to_switch_to_party_mode">パーティモードへ移行しますか？</string>
     <string name="error_not_enough_point">ライブ配信のログインに必要なポイントが不足しています。</string>
     <string name="error_not_enough_point_from_socket">ポイントが不足しています</string>
+    <string name="get_started_now">今すぐはじめる</string>
+    <string name="please_set_email">機種変更などを行なった際にこのアカウントにログインできるようにメールアドレスを設定してください。</string>
+    <string name="receive_mail_des_first">メール受信許可を行うと、女の子からのメッセージがメール転送されます。また事務局からのお得なイベント情報が届きます。</string>
+    <string name="receive_mail_des_second">メールアドレスの設定は<![CDATA[<b><font color=#B47AFF><a href="link">コチラ</a></font></b>]]>からお願いします。</string>
 
 
     <string-array name="nm_contact_us_category">

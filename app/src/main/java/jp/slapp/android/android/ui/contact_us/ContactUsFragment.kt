@@ -7,13 +7,16 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jp.careapp.core.base.BaseFragment
+import jp.careapp.core.utils.dialog.CommonAlertDialog
 import jp.slapp.android.R
+import jp.slapp.android.android.data.pref.RxPreferences
 import jp.slapp.android.android.navigation.AppNavigation
 import jp.slapp.android.android.ui.contact_us.confirm.CONTACT_US_CATEGORY
 import jp.slapp.android.android.ui.contact_us.confirm.CONTACT_US_CONTENT
 import jp.slapp.android.android.ui.contact_us.confirm.CONTACT_US_REPLY
 import jp.slapp.android.android.utils.CONTACT_US_MAIL
 import jp.slapp.android.android.utils.CONTACT_US_MODE
+import jp.slapp.android.android.utils.SignupStatusMode
 import jp.slapp.android.android.utils.customView.ToolBarCommon
 import jp.slapp.android.databinding.FragmentContactUsBinding
 import javax.inject.Inject
@@ -23,6 +26,9 @@ class ContactUsFragment : BaseFragment<FragmentContactUsBinding, ContactUsViewMo
 
     @Inject
     lateinit var appNavigation: AppNavigation
+
+    @Inject
+    lateinit var rxPreferences: RxPreferences
 
     override val layoutId: Int = R.layout.fragment_contact_us
 
@@ -37,11 +43,17 @@ class ContactUsFragment : BaseFragment<FragmentContactUsBinding, ContactUsViewMo
         )
     }
 
+    private var isNavigateToEdit = false
+
     override fun initView() {
         super.initView()
-
+        isNavigateToEdit = false
         binding.autoCompleteTextView.setOnItemClickListener { parent, _, position, _ ->
             mViewModel.setCategory(parent?.getItemAtPosition(position) as String)
+        }
+
+        if (rxPreferences.getSignupStatus() == SignupStatusMode.WITHOUT_VERIFY_EMAIL) {
+            showNotVerifyWithEmailDialog()
         }
 
         setUpToolBar()
@@ -113,4 +125,22 @@ class ContactUsFragment : BaseFragment<FragmentContactUsBinding, ContactUsViewMo
             mViewModel.setContent(it.toString().trim())
         }
     }
+
+    private fun showNotVerifyWithEmailDialog() {
+        CommonAlertDialog.getInstanceCommonAlertdialog(requireContext())
+            .showDialog()
+            .setDialogTitle(R.string.please_register_email_before_contact)
+            .setTextLargeOkButton(R.string.email_address_settings)
+            .setOnOkLargeButtonPressed {
+                appNavigation.openContactUsToEditProfile()
+                isNavigateToEdit = true
+                it.dismiss()
+            }
+            .setOnDismissListener {
+                if(!isNavigateToEdit){
+                    appNavigation.navigateUp()
+                }
+            }
+    }
+
 }

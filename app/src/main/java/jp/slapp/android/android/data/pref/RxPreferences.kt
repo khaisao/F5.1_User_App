@@ -34,6 +34,8 @@ interface RxPreferences {
 
     fun getMemberCode(): String?
 
+    fun getSignupStatus(): Int?
+
     fun saveNewLastViewDateTime(dateTime: String)
 
     fun getNewLastViewDateTime(): String?

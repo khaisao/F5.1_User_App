@@ -3,7 +3,7 @@ package jp.slapp.android.android.data.model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class InforRegistrationRequest(
+data class InfoRegistrationWithEmailRequest(
     var token: String = "",
     var name: String = "",
     var sex: Int = 0,

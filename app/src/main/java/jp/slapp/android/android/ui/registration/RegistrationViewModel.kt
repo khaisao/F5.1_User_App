@@ -26,13 +26,13 @@ class RegistrationViewModel @Inject constructor(
         return 0
     }
 
-    fun register(userName: String, receiveMail: Boolean, tokenInput: String, email: String) {
+    fun registerWithEmail(userName: String, receiveMail: Boolean, tokenInput: String, email: String) {
         isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             supervisorScope {
                 try {
                     val registerResponse =
-                        mRepository.register(userName, setReceiveMail(receiveMail), tokenInput)
+                        mRepository.registerWithEmail(userName, setReceiveMail(receiveMail), tokenInput)
                     if (registerResponse.errors.isEmpty()) {
                         val dataResponse = registerResponse.dataResponse
                         val token = dataResponse.token.toString()
@@ -42,6 +42,48 @@ class RegistrationViewModel @Inject constructor(
                         mRepository.saveUserInfo(token, tokenExpire, password, memberCode)
                         mRepository.saveMemberName(userName)
                         rxPreferences.saveEmail(email)
+                        mRepository.setFirstRegister()
+                        AppsFlyerUtil.handleEventRegistration(memberCode)
+                        val getMemberInfoResponse = mRepository.getMemberInfo()
+                        if (getMemberInfoResponse.errors.isEmpty()) {
+                            val dataGetMemberInfoResponse =
+                                getMemberInfoResponse.dataResponse
+                            withContext(Dispatchers.Main) {
+                                if (dataGetMemberInfoResponse.disPlay == MODE_USER.MEMBER_APP_REVIEW_MODE) {
+                                    mActionState.value = RegistrationActionState.NavigateToTopRM
+                                } else {
+                                    mActionState.value = RegistrationActionState.NavigateToTop
+                                }
+                            }
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                } finally {
+                    withContext(Dispatchers.Main) {
+                        isLoading.value = false
+                    }
+                }
+            }
+        }
+    }
+
+    fun registerWithoutEmail(userName: String) {
+        isLoading.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            supervisorScope {
+                try {
+                    val registerResponse =
+                        mRepository.registerWithoutEmail(userName)
+                    if (registerResponse.errors.isEmpty()) {
+                        val dataResponse = registerResponse.dataResponse
+                        val token = dataResponse.token.toString()
+                        val tokenExpire = dataResponse.tokenExpire.toString()
+                        val password = dataResponse.password.toString()
+                        val memberCode = dataResponse.memberCode.toString()
+                        mRepository.saveUserInfo(token, tokenExpire, password, memberCode)
+                        mRepository.saveMemberName(userName)
+                        dataResponse.email?.let { rxPreferences.saveEmail(it) }
                         mRepository.setFirstRegister()
                         AppsFlyerUtil.handleEventRegistration(memberCode)
                         val getMemberInfoResponse = mRepository.getMemberInfo()

@@ -225,28 +225,37 @@ class ChatMessageFragment : BaseFragment<FragmentChatMessageBinding, ChatMessage
             binding.bottomBar.visibility = GONE
         }
 
-        KeyboardVisibilityEvent.setEventListener(
-            requireActivity(),
-            viewLifecycleOwner,
-            object : KeyboardVisibilityEventListener {
-                override fun onVisibilityChanged(isOpen: Boolean) {
-                    if (isOpen) {
-                        binding.bottomBar.setMargins(
-                            0,
-                            0,
-                            0,
-                            0
-                        )
-                    } else {
-                        binding.bottomBar.setMargins(
-                            0,
-                            0,
-                            0,
-                            0
-                        )
+        val currentSoftInputMode: Int = requireActivity().window.attributes.softInputMode
+        if (currentSoftInputMode != WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN) {
+            requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        }
+        try {
+            KeyboardVisibilityEvent.setEventListener(
+                requireActivity(),
+                viewLifecycleOwner,
+                object : KeyboardVisibilityEventListener {
+                    override fun onVisibilityChanged(isOpen: Boolean) {
+                        if (isOpen) {
+                            binding.bottomBar.setMargins(
+                                0,
+                                0,
+                                0,
+                                0
+                            )
+                        } else {
+                            binding.bottomBar.setMargins(
+                                0,
+                                0,
+                                0,
+                                0
+                            )
+                        }
                     }
-                }
-            })
+                })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     private fun handleBackFromReview() {

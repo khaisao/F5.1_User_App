@@ -69,6 +69,10 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
         openScreen(R.id.action_topFragment_to_fragmentEditProfile, bundle)
     }
 
+    override fun openSettingNotificationToEditProfile(bundle: Bundle?) {
+        openScreen(R.id.action_fragmentNotification_to_fragmentEditProfile, bundle)
+    }
+
     override fun openHomeToBannerFirstTimeUseScreen(bundle: Bundle?) {
         openScreen(R.id.action_homeFragment_to_BannerFirstTimeUseFragment, bundle)
     }
@@ -367,5 +371,25 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(), AppNavigatio
 
     override fun openRmStartToRmPolicy(bundle: Bundle?) {
         openScreen(R.id.action_RMStartFragment_to_RMPrivacyPolicyFragment, bundle)
+    }
+
+    override fun openGreetToInputEmail(bundle: Bundle?) {
+        openScreen(R.id.action_greetFragment_to_inputEmailFragment, bundle)
+    }
+
+    override fun openInputEmailToGreet(bundle: Bundle?) {
+        openScreen(R.id.action_inputEmailFragment_to_greetFragment, bundle)
+    }
+
+    override fun openGreetToRegistration(bundle: Bundle?) {
+        openScreen(R.id.action_greet_to_registration, bundle)
+    }
+
+    override fun openContactUsToEditProfile(bundle: Bundle?) {
+        openScreen(R.id.action_contactUsFragment_to_fragmentEditProfile, bundle)
+    }
+
+    override fun openReportToEditProfile(bundle: Bundle?) {
+        openScreen(R.id.action_reportUserFragment_to_fragmentEditProfile, bundle)
     }
 }

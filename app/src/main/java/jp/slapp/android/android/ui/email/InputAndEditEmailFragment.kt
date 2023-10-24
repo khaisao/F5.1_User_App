@@ -213,10 +213,7 @@ class InputAndEditEmailFragment :
         }
 
         binding.cvRegisterButton.setOnClickListener {
-            val bundle = Bundle().apply {
-                putInt(BUNDLE_KEY.CODE_SCREEN, SCREEN_REGISTER_WITH_EMAIL)
-            }
-            appNavigation.openLoginEmailScreen(bundle)
+            appNavigation.openInputEmailToGreet()
         }
 
         binding.linkPrivacy.setOnClickListener { if (!isDoubleClick) appNavigation.openTermsOfService() }

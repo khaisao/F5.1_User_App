@@ -132,7 +132,37 @@
                 tools:text="@string/text_OK"
                 tools:visibility="visible" />
 
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@id/guideline3"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/tv_subTitle">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnOkLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/bg_nm_btn_primary_enable"
+                    android:fontFamily="@font/hiragino_sans_w6"
+                    android:gravity="center"
+                    android:minHeight="44dp"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="16dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@id/guideline3"
+                    app:layout_constraintStart_toStartOf="@id/guideline2"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_subTitle"
+                    tools:text="Very large textasggggggggggg "
+                    android:visibility="gone"
+                 />
+            </FrameLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

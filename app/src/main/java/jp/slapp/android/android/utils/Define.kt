@@ -512,3 +512,9 @@ object ContactUsMode {
     const val CONTACT_WITH_MAIL = 0
     const val CONTACT_WITHOUT_MAIL = 1
 }
+
+object SignupStatusMode {
+    const val WITH_VERIFY_EMAIL = 1
+    const val WITHOUT_VERIFY_EMAIL = 2
+    const val ACC_TRANSFER_WITHOUT_EMAIL = 3
+}
