@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import jp.careapp.core.base.BaseViewModel
 import jp.careapp.core.base.NetworkException
+import jp.careapp.core.utils.SingleLiveEvent
 import jp.slapp.android.BuildConfig
 import jp.slapp.android.android.data.model.live_stream.ConnectResult
 import jp.slapp.android.android.data.network.ConsultantResponse
@@ -25,6 +26,7 @@ import jp.slapp.android.android.utils.SocketInfo.ACTION_CANCEL_CALL
 import jp.slapp.android.android.utils.SocketInfo.ACTION_LOGIN
 import jp.slapp.android.android.utils.SocketInfo.ACTION_LOGIN_REQUEST
 import jp.slapp.android.android.utils.SocketInfo.ACTION_MESSAGE
+import jp.slapp.android.android.utils.SocketInfo.ACTION_PERFORMER_CALL_RESPONSE
 import jp.slapp.android.android.utils.SocketInfo.ACTION_PERFORMER_LOGIN
 import jp.slapp.android.android.utils.SocketInfo.ACTION_PERFORMER_RESPONSE
 import jp.slapp.android.android.utils.SocketInfo.AUTH_OWN_NAME
@@ -74,6 +76,7 @@ class DetailUserProfileViewModel @ViewModelInject constructor(
     var viewerStatus: Int = 0
 
     val blockUserResult = MutableLiveData<Boolean>()
+    val isPerformerInWaitingScreen = SingleLiveEvent<Boolean>()
 
     private val gson by lazy { Gson() }
 
@@ -258,6 +261,8 @@ class DetailUserProfileViewModel @ViewModelInject constructor(
                 cancelButtonClickedFlag = true
                 flaxWebSocketManager.flaxLogout()
                 isButtonEnable.postValue(true)
+            } else if (action == ACTION_PERFORMER_CALL_RESPONSE){
+                isPerformerInWaitingScreen.postValue(true)
             }
         } catch (e: JSONException) {
             e.printStackTrace()

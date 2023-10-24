@@ -460,6 +460,7 @@ object SocketInfo {
     const val ACTION_WHISPER = "Whisper"
     const val ACTION_CALL = "CALL"
     const val ACTION_LOGIN_REQUEST = "LoginRequest"
+    const val ACTION_PERFORMER_CALL_RESPONSE = "PerformerCallResponse"
     const val ACTION_PERFORMER_LOGIN = "PerformerLogin"
     const val ACTION_LOGIN = "Login"
     const val ACTION_PERFORMER_RESPONSE = "PerformerResponse"

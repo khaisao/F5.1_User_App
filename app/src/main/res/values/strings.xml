@@ -212,6 +212,7 @@
     <string name="watch">視聴中</string>
     <string name="girl_live_steam">ライブ配信中の女の子</string>
     <string name="call_connection_message">%sさんに発信しています</string>
+    <string name="call_connection_performer_waiting_message">%sさんが配信準備中です</string>
 
     <!--    notification-->
     <string name="email_setting">メルマガ設定</string>
@@ -538,6 +539,7 @@
     <string name="denied_permission">許可しない</string>
     <string name="call_note">※お悩みシート、相談履歴、ポイント購入をタップしても\n音声通話は切断されません。</string>
     <string name="call_content">しばらくお待ちください。\n相手の状況により応答できない場合があります。</string>
+    <string name="please_wait_call_content">そのままお待ちください。\nまもなく配信が開始されます。</string>
     <string name="mic_on">マイクをオン</string>
     <string name="mic_off">マイクをオフ</string>
     <string name="speaker_on">スピーカーを\nオン</string>

@@ -116,6 +116,7 @@
                         android:layout_marginTop="@dimen/margin_32"
                         android:background="@drawable/bg_cancel_calling"
                         android:gravity="center"
+                        android:visibility="gone"
                         android:paddingHorizontal="@dimen/margin_30"
                         android:paddingVertical="@dimen/margin_15"
                         android:src="@drawable/ic_call_end"
